@@ -3,7 +3,8 @@ package mod.beethoven92.betterendforge.client.event;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.AuroraCrystalBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-
+import mod.beethoven92.betterendforge.common.init.ModItems;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,5 +25,10 @@ public class ColorHandler
 	{
 		event.getItemColors().register((stack, tintIndex) -> 
 		                 {return AuroraCrystalBlock.getItemColor();}, ModBlocks.AURORA_CRYSTAL.get());
+		
+		event.getItemColors().register((stack, color) -> {
+			return ((SpawnEggItem) stack.getItem()).getColor(color);
+		}, ModItems.DRAGONFLY_SPAWN_EGG.get(), ModItems.END_FISH_SPAWN_EGG.get(),
+				ModItems.SHADOW_WALKER_SPAWN_EGG.get());
 	}
 }
