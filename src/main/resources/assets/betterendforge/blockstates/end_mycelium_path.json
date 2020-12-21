@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/end_mycelium_path" },
+			{ "model": "betterendforge:block/end_mycelium_path", "y": 90 },
+			{ "model": "betterendforge:block/end_mycelium_path", "y": 180 },
+			{ "model": "betterendforge:block/end_mycelium_path", "y": 270 }
+		]
+	}
+}

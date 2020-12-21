@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:end_lotus_stem"
+    }
+  },
+  "result": {
+    "item": "betterendforge:end_lotus_log"
+  }
+}

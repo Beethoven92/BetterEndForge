@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "side": "betterendforge:block/mossy_glowshroom_planks",
+    "bottom": "betterendforge:block/mossy_glowshroom_planks",
+    "top": "betterendforge:block/mossy_glowshroom_planks"
+  }
+}

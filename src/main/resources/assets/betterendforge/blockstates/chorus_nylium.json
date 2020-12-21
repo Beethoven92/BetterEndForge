@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+				{ "model": "betterendforge:block/chorus_nylium" },
+				{ "model": "betterendforge:block/chorus_nylium", "y": 90 },
+				{ "model": "betterendforge:block/chorus_nylium", "y": 180 },
+				{ "model": "betterendforge:block/chorus_nylium", "y": 270 }
+		]
+	}
+}

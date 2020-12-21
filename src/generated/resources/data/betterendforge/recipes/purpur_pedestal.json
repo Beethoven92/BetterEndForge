@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "#",
+    "S"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:purpur_slab"
+    },
+    "#": {
+      "item": "minecraft:purpur_pillar"
+    }
+  },
+  "result": {
+    "item": "betterendforge:purpur_pedestal",
+    "count": 2
+  }
+}

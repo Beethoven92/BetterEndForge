@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:mossy_glowshroom_button",
+    "betterendforge:lacugrove_button",
+    "betterendforge:end_lotus_button",
+    "betterendforge:pythadendron_button",
+    "betterendforge:dragon_tree_button"
+  ]
+}

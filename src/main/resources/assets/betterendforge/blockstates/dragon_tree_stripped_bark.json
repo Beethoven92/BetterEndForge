@@ -1,0 +1,14 @@
+{
+    "variants": {
+        "axis=x": {
+            "model": "betterendforge:block/dragon_tree_stripped_bark", "x": 90, "y": 90
+        }, 
+        "axis=y": {
+            "model": "betterendforge:block/dragon_tree_stripped_bark"
+        }, 
+        "axis=z": {
+            "model": "betterendforge:block/dragon_tree_stripped_bark", 
+            "x": 90
+        }
+    }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "betterendforge:block/pythadendron_leaves"
+  }
+}

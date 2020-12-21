@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "block/end_stone",
+		"east": "betterendforge:block/cave_moss_side",
+		"north": "betterendforge:block/cave_moss_side",
+		"particle": "betterendforge:block/cave_moss_side",
+		"south": "betterendforge:block/cave_moss_side",
+		"up": "betterendforge:block/cave_moss_top",
+		"west": "betterendforge:block/cave_moss_side"
+	}
+}

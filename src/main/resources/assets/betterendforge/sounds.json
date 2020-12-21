@@ -1,0 +1,187 @@
+{
+	"betterendforge.music.foggy_mushroomland": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterendforge:music/dan_henig-eternal_garden",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/dan_henig-nebular_focus",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.music.chorus_forest": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterendforge:music/emmit_fenn-creep",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/jesse_gallagher-the_anunnaki_return",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.music.crystal_mountains": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterendforge:music/jesse_gallagher-spenta_mainyu",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/jesse_gallagher-obelisks",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.music.megalake": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterendforge:music/jesse_gallagher-the_blue_pearl",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/jesse_gallagher-venkatesananda",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.music.dust_wastelands": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterendforge:music/the-tides-ammil",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/vyen-amber",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.music.shadow_forest": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterendforge:music/i_think_i_can_help_you-the_six_realms",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/jesse_gallagher-maestro_tlakaelel",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
+	
+	"betterendforge.ambient.foggy_mushroomland": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterendforge:ambient/foggy_mushroomland",
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.ambient.chorus_forest": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterendforge:ambient/chorus_forest",
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.ambient.megalake": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterendforge:ambient/megalake",
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.ambient.dust_wastelands": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterendforge:ambient/dust_wastelands",
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.ambient.megalake_grove": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterendforge:ambient/megalake_grove",
+				"stream": false
+			}
+		]
+	},
+	
+	"betterendforge.entity.dragonfly": {
+		"category": "entity",
+		"sounds": [
+			{
+				"name": "betterendforge:entity/dragonfly/dragonfly_1",
+				"stream": false
+			},
+			{
+				"name": "betterendforge:entity/dragonfly/dragonfly_2",
+				"stream": false
+			},
+			{
+				"name": "betterendforge:entity/dragonfly/dragonfly_3",
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.entity.shadow_walker": {
+		"category": "entity",
+		"sounds": [
+			{
+				"name": "betterendforge:entity/shadow_walker/shadow_walker_1",
+				"stream": false
+			},
+			{
+				"name": "betterendforge:entity/shadow_walker/shadow_walker_2",
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.entity.shadow_walker_damage": {
+		"category": "entity",
+		"sounds": [
+			{
+				"name": "betterendforge:entity/shadow_walker/shadow_walker_damage",
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.entity.shadow_walker_death": {
+		"category": "entity",
+		"sounds": [
+			{
+				"name": "betterendforge:entity/shadow_walker/shadow_walker_death",
+				"stream": false
+			}
+		]
+	}
+}

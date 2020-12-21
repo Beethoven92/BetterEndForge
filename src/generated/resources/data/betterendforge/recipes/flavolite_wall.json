@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_wall",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:flavolite"
+    }
+  },
+  "result": {
+    "item": "betterendforge:flavolite_wall",
+    "count": 6
+  }
+}

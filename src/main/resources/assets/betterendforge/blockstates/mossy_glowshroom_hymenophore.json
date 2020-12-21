@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/mossy_glowshroom_hymenophore_1" },
+			{ "model": "betterendforge:block/mossy_glowshroom_hymenophore_2" },
+			{ "model": "betterendforge:block/mossy_glowshroom_hymenophore_3" },
+			{ "model": "betterendforge:block/mossy_glowshroom_hymenophore_4" }
+		]
+	}
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "aeternium_ingot",
+  "ingredients": [
+    {
+      "item": "betterendforge:aeternium_block"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:aeternium_ingot",
+    "count": 9
+  }
+}

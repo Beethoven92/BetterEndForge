@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "betterendforge:block/pythadendron_log_top",
+		"east": "betterendforge:block/pythadendron_log_side",
+		"north": "betterendforge:block/pythadendron_log_side",
+		"particle": "betterendforge:block/pythadendron_log_side",
+		"south": "betterendforge:block/pythadendron_log_side",
+		"up": "betterendforge:block/pythadendron_log_top",
+		"west": "betterendforge:block/pythadendron_log_side"
+	}
+}

@@ -1,0 +1,13 @@
+{
+	"variants": {
+		"shape=top": { "model": "betterendforge:block/dense_vine_top" },
+		"shape=middle": [
+			{ "model": "betterendforge:block/dense_vine_middle_1" },
+			{ "model": "betterendforge:block/dense_vine_middle_2" }
+		],
+		"shape=bottom": [
+			{ "model": "betterendforge:block/dense_vine_bottom_1" },
+			{ "model": "betterendforge:block/dense_vine_bottom_2" }
+		]
+	}
+}

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "#",
+    "S"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:quartz_slab"
+    },
+    "#": {
+      "item": "minecraft:quartz_pillar"
+    }
+  },
+  "result": {
+    "item": "betterendforge:quartz_pedestal",
+    "count": 2
+  }
+}

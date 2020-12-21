@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "betterendforge:shadow_berry_raw"
+  },
+  "result": "betterendforge:shadow_berry_cooked",
+  "experience": 0.35,
+  "cookingtime": 200
+}

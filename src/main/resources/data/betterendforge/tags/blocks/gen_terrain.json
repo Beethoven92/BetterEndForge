@@ -1,0 +1,16 @@
+{
+	"replace": false,
+	"values": [
+	    "minecraft:end_stone",
+		"betterendforge:endstone_dust",
+		"betterendforge:crystal_moss",
+		"betterendforge:end_mycelium",
+		"betterendforge:end_moss",
+	    "betterendforge:chorus_nylium",
+		"betterendforge:cave_moss",
+		"betterendforge:shadow_grass",
+		"betterendforge:ender_ore",
+		"betterendforge:flavolite",
+		"betterendforge:violecite"
+	]
+}

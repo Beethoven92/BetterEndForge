@@ -1,0 +1,14 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/cave_grass_01" },
+			{ "model": "betterendforge:block/cave_grass_02" },
+			{ "model": "betterendforge:block/cave_grass_03" },
+			{ "model": "betterendforge:block/cave_grass_04" },
+			{ "model": "betterendforge:block/cave_grass_05" },
+			{ "model": "betterendforge:block/cave_grass_06" },
+			{ "model": "betterendforge:block/cave_grass_07" },
+			{ "model": "betterendforge:block/cave_grass_08" }
+		]
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"axis=x": {
+			"model": "betterendforge:block/end_portal_ax"
+		},
+		"axis=z": {
+			"model": "betterendforge:block/end_portal_az"
+		}
+	}
+}

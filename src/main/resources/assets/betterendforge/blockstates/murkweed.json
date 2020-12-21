@@ -1,0 +1,18 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/murkweed_01" },
+			{ "model": "betterendforge:block/murkweed_02" },
+			{ "model": "betterendforge:block/murkweed_03" },
+			{ "model": "betterendforge:block/murkweed_01", "y": 90 },
+			{ "model": "betterendforge:block/murkweed_02", "y": 90 },
+			{ "model": "betterendforge:block/murkweed_03", "y": 90 },
+			{ "model": "betterendforge:block/murkweed_01", "y": 180 },
+			{ "model": "betterendforge:block/murkweed_02", "y": 180 },
+			{ "model": "betterendforge:block/murkweed_03", "y": 180 },
+			{ "model": "betterendforge:block/murkweed_01", "y": 270 },
+			{ "model": "betterendforge:block/murkweed_02", "y": 270 },
+			{ "model": "betterendforge:block/murkweed_03", "y": 270 }
+		]
+	}
+}

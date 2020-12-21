@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "V V",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:end_stone_bricks"
+    },
+    "V": {
+      "item": "minecraft:bucket"
+    }
+  },
+  "result": {
+    "item": "betterendforge:end_stone_smelter"
+  }
+}

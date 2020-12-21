@@ -1,0 +1,38 @@
+{
+  "textures": [
+    "betterendforge:glowing_sphere_0",
+	"betterendforge:glowing_sphere_1",
+	"betterendforge:glowing_sphere_2",
+	"betterendforge:glowing_sphere_3",
+	"betterendforge:glowing_sphere_4",
+	
+	"betterendforge:glowing_sphere_5",
+	"betterendforge:glowing_sphere_6",
+	"betterendforge:glowing_sphere_7",
+    "betterendforge:glowing_sphere_6",
+    "betterendforge:glowing_sphere_5",
+	
+    "betterendforge:glowing_sphere_4",
+	
+	"betterendforge:glowing_sphere_5",
+	"betterendforge:glowing_sphere_6",
+	"betterendforge:glowing_sphere_7",
+    "betterendforge:glowing_sphere_6",
+    "betterendforge:glowing_sphere_5",
+	
+    "betterendforge:glowing_sphere_4",
+	
+	"betterendforge:glowing_sphere_5",
+	"betterendforge:glowing_sphere_6",
+	"betterendforge:glowing_sphere_7",
+    "betterendforge:glowing_sphere_6",
+    "betterendforge:glowing_sphere_5",
+	
+    "betterendforge:glowing_sphere_4",
+	
+    "betterendforge:glowing_sphere_3",
+    "betterendforge:glowing_sphere_2",
+    "betterendforge:glowing_sphere_1",
+    "betterendforge:glowing_sphere_0"
+  ]
+}

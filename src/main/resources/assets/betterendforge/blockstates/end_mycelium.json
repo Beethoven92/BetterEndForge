@@ -1,0 +1,21 @@
+{
+	"variants": {
+		"": [
+				{
+					"model": "betterendforge:block/end_mycelium"
+				},
+				{
+					"model": "betterendforge:block/end_mycelium",
+					"y": 90
+				},
+				{
+					"model": "betterendforge:block/end_mycelium",
+					"y": 180
+				},
+				{
+					"model": "betterendforge:block/end_mycelium",
+					"y": 270
+				}
+		]
+	}
+}

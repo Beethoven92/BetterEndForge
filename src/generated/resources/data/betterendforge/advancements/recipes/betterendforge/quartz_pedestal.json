@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:quartz_pedestal"
+    ]
+  },
+  "criteria": {
+    "has_quartz_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:quartz_slab"
+          }
+        ]
+      }
+    },
+    "has_quartz_pillar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:quartz_pillar"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:quartz_pedestal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_quartz_slab",
+      "has_quartz_pillar",
+      "has_the_recipe"
+    ]
+  ]
+}

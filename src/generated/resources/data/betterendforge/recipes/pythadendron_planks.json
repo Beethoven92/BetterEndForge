@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "end_planks",
+  "ingredients": [
+    {
+      "tag": "betterendforge:pythadendron_logs"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:pythadendron_planks",
+    "count": 4
+  }
+}

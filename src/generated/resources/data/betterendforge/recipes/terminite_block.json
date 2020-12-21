@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:terminite_ingot"
+    }
+  },
+  "result": {
+    "item": "betterendforge:terminite_block"
+  }
+}

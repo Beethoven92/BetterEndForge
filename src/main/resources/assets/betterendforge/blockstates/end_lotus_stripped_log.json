@@ -1,0 +1,13 @@
+{
+	"variants": {
+		"axis=x": [
+			{ "model": "betterendforge:block/end_lotus_stripped_log", "x": 90, "y": 90 }
+		],
+		"axis=y": [
+			{ "model": "betterendforge:block/end_lotus_stripped_log" }
+		],
+		"axis=z": [
+			{ "model": "betterendforge:block/end_lotus_stripped_log", "x": 90 }
+		]
+	}
+}

@@ -1,0 +1,14 @@
+{
+  "type": "betterendforge:alloying",
+  "ingredients": [
+    {
+      "item": "betterendforge:terminite_ingot"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    }
+  ],
+  "result": "betterendforge:aeternium_ingot",
+  "experience": 4.5,
+  "smelttime": 600
+}

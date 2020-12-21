@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "betterendforge:block/lacugrove_log_top",
+		"east": "betterendforge:block/lacugrove_log_side",
+		"north": "betterendforge:block/lacugrove_log_side",
+		"particle": "betterendforge:block/lacugrove_log_side",
+		"south": "betterendforge:block/lacugrove_log_side",
+		"up": "betterendforge:block/lacugrove_log_top",
+		"west": "betterendforge:block/lacugrove_log_side"
+	}
+}

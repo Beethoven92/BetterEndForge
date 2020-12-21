@@ -1,0 +1,22 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/crystal_grass_1" },
+			{ "model": "betterendforge:block/crystal_grass_2", "weight": 1 },
+			{ "model": "betterendforge:block/crystal_grass_3", "weight": 2 },
+			{ "model": "betterendforge:block/crystal_grass_4", "weight": 3 },
+			{ "model": "betterendforge:block/crystal_grass_1", "y": 90 },
+			{ "model": "betterendforge:block/crystal_grass_2", "y": 90, "weight": 1 },
+			{ "model": "betterendforge:block/crystal_grass_3", "y": 90, "weight": 2 },
+			{ "model": "betterendforge:block/crystal_grass_4", "y": 90, "weight": 3 },
+			{ "model": "betterendforge:block/crystal_grass_1", "y": 180 },
+			{ "model": "betterendforge:block/crystal_grass_2", "y": 180, "weight": 1 },
+			{ "model": "betterendforge:block/crystal_grass_3", "y": 180, "weight": 2 },
+			{ "model": "betterendforge:block/crystal_grass_4", "y": 180, "weight": 3 },
+			{ "model": "betterendforge:block/crystal_grass_1", "y": 270 },
+			{ "model": "betterendforge:block/crystal_grass_2", "y": 270, "weight": 1 },
+			{ "model": "betterendforge:block/crystal_grass_3", "y": 270, "weight": 2 },
+			{ "model": "betterendforge:block/crystal_grass_4", "y": 270, "weight": 3 }
+		]
+	}
+}

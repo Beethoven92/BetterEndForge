@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/cross",
+	"textures": {
+		"cross": "betterendforge:block/mossy_glowshroom_sapling"
+	}
+}

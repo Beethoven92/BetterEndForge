@@ -1,0 +1,16 @@
+{
+  "type": "betterendforge:alloying",
+  "ingredients": [
+    {
+      "item": "minecraft:gold_ore"
+    },
+    {
+      "item": "minecraft:gold_ore"
+    }
+  ],
+  "result": {
+    "item": "minecraft:gold_ingot",
+    "count": 3
+  },
+  "experience": 3.0
+}

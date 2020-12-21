@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "betterendforge:block/mossy_glowshroom_slab_top"
+    },
+    "type=bottom": {
+      "model": "betterendforge:block/mossy_glowshroom_slab"
+    },
+    "type=double": {
+      "model": "betterendforge:block/mossy_glowshroom_planks"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+{
+	"variants": {
+		"": [
+				{
+					"model": "betterendforge:block/shadow_grass"
+				},
+				{
+					"model": "betterendforge:block/shadow_grass",
+					"y": 90
+				},
+				{
+					"model": "betterendforge:block/shadow_grass",
+					"y": 180
+				},
+				{
+					"model": "betterendforge:block/shadow_grass",
+					"y": 270
+				}
+		]
+	}
+}

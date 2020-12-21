@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom",
+  "textures": {
+    "bottom": "betterendforge:block/pythadendron_door_bottom",
+    "top": "betterendforge:block/pythadendron_door_top"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_tile",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:violecite_bricks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:violecite_polished",
+    "count": 4
+  }
+}

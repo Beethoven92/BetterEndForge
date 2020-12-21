@@ -1,0 +1,21 @@
+{
+	"variants": {
+		"": [
+				{
+					"model": "betterendforge:block/end_moss"
+				},
+				{
+					"model": "betterendforge:block/end_moss",
+					"y": 90
+				},
+				{
+					"model": "betterendforge:block/end_moss",
+					"y": 180
+				},
+				{
+					"model": "betterendforge:block/end_moss",
+					"y": 270
+				}
+		]
+	}
+}

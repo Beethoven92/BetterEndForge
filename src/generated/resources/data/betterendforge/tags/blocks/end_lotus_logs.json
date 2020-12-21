@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:end_lotus_log",
+    "betterendforge:end_lotus_bark",
+    "betterendforge:end_lotus_stripped_log",
+    "betterendforge:end_lotus_stripped_bark"
+  ]
+}

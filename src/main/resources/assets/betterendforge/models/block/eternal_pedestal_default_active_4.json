@@ -1,0 +1,9 @@
+{
+	"parent": "betterendforge:block/pedestal_default",
+	"textures": {
+		"top": "betterendforge:block/flavolite_runed_active_4",
+		"base": "betterendforge:block/flavolite_polished",
+		"pillar": "betterendforge:block/flavolite_pillar_side",
+		"bottom": "betterendforge:block/flavolite_polished"
+	}
+}

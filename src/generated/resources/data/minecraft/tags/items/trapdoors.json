@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:mossy_glowshroom_trapdoor",
+    "betterendforge:lacugrove_trapdoor",
+    "betterendforge:end_lotus_trapdoor",
+    "betterendforge:pythadendron_trapdoor",
+    "betterendforge:dragon_tree_trapdoor"
+  ]
+}

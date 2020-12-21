@@ -1,0 +1,16 @@
+{
+	"required": true,
+	"package": "mod.beethoven92.betterendforge.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"refmap": "betterendforge.refmap.json",
+	"mixins": [
+	      "ChorusFlowerBlockMixin",
+	      "ChorusPlantBlockMixin",
+	      "ChorusPlantFeatureMixin",
+	      "DimensionTypeMixin",
+	      "EndermanEntityMixin",
+	      "RepairContainerMixin",
+	      "WorldRendererMixin"
+	],
+  "minVersion": "0.8"
+}

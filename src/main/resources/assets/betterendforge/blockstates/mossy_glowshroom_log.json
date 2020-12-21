@@ -1,0 +1,25 @@
+{
+	"variants": {
+		"axis=x": [
+			{ "model": "betterendforge:block/mossy_glowshroom_log", "x": 90, "y": 90 },
+			{ "model": "betterendforge:block/mossy_glowshroom_log_2", "x": 90, "y": 90 },
+			{ "model": "betterendforge:block/mossy_glowshroom_log_3", "x": 90, "y": 90 },
+			{ "model": "betterendforge:block/mossy_glowshroom_log_4", "x": 90, "y": 90 },
+			{ "model": "betterendforge:block/mossy_glowshroom_log_5", "x": 90, "y": 90 }
+		],
+		"axis=y": [
+			{ "model": "betterendforge:block/mossy_glowshroom_log" },
+			{ "model": "betterendforge:block/mossy_glowshroom_log_2" },
+			{ "model": "betterendforge:block/mossy_glowshroom_log_3" },
+			{ "model": "betterendforge:block/mossy_glowshroom_log_4" },
+			{ "model": "betterendforge:block/mossy_glowshroom_log_5" }
+		],
+		"axis=z": [
+			{ "model": "betterendforge:block/mossy_glowshroom_log", "x": 90 },
+			{ "model": "betterendforge:block/mossy_glowshroom_log_2", "x": 90 },
+			{ "model": "betterendforge:block/mossy_glowshroom_log_3", "x": 90 },
+			{ "model": "betterendforge:block/mossy_glowshroom_log_4", "x": 90 },
+			{ "model": "betterendforge:block/mossy_glowshroom_log_5", "x": 90 }
+		]
+	}
+}

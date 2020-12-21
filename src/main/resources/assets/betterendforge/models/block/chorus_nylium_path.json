@@ -1,0 +1,7 @@
+{   "parent": "betterendforge:block/path",
+    "textures": {
+        "top": "betterendforge:block/chorus_nylium_path_top",
+        "side": "betterendforge:block/chorus_nylium_side",
+        "bottom": "block/end_stone"
+    }
+}

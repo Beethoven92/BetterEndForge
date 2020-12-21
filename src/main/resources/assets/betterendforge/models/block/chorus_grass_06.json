@@ -1,0 +1,6 @@
+{
+    "parent": "betterendforge:block/crop_block",
+    "textures": {
+        "texture": "betterendforge:block/chorus_grass_02"
+    }
+}

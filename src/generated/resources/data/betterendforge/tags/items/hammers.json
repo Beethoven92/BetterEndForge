@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:iron_hammer",
+    "betterendforge:golden_hammer",
+    "betterendforge:diamond_hammer",
+    "betterendforge:netherite_hammer",
+    "betterendforge:terminite_hammer",
+    "betterendforge:aeternium_hammer"
+  ]
+}

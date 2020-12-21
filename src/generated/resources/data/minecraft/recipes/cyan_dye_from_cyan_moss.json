@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "cyan_dye",
+  "ingredients": [
+    {
+      "item": "betterendforge:cyan_moss"
+    }
+  ],
+  "result": {
+    "item": "minecraft:cyan_dye"
+  }
+}

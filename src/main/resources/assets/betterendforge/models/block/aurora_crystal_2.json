@@ -1,0 +1,6 @@
+{
+	"parent": "betterendforge:block/tint_cube_noshade",
+	"textures": {
+		"texture": "betterendforge:block/aurora_crystal_2"
+	}
+}

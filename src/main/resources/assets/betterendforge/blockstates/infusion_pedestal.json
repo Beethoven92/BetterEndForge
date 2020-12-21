@@ -1,0 +1,22 @@
+{
+	"variants": {
+		"state=default": {
+			"model": "betterendforge:block/infusion_pedestal_default"
+		},
+		"state=pedestal_top": {
+			"model": "betterendforge:block/infusion_pedestal_top"
+		},
+		"state=column": {
+			"model": "betterendforge:block/infusion_pedestal_column"
+		},
+		"state=column_top": {
+			"model": "betterendforge:block/infusion_pedestal_column_top"
+		},
+		"state=bottom": {
+			"model": "betterendforge:block/infusion_pedestal_bottom"
+		},
+		"state=pillar": {
+			"model": "betterendforge:block/infusion_pedestal_pillar"
+		}
+	}
+}

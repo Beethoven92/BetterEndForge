@@ -1,0 +1,14 @@
+{
+    "variants": {
+        "axis=x": {
+            "model": "betterendforge:block/pythadendron_stripped_log", "x": 90, "y": 90
+        }, 
+        "axis=y": {
+            "model": "betterendforge:block/pythadendron_stripped_log"
+        }, 
+        "axis=z": {
+            "model": "betterendforge:block/pythadendron_stripped_log", 
+            "x": 90
+        }
+    }
+}

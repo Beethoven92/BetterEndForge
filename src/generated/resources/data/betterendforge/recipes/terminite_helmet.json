@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "betterendforge:terminite_ingot"
+    }
+  },
+  "result": {
+    "item": "betterendforge:terminite_helmet"
+  }
+}

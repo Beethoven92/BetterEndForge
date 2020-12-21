@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:crystal_shards"
+    }
+  },
+  "result": {
+    "item": "betterendforge:aurora_crystal"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_bricks",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:flavolite"
+    }
+  },
+  "result": {
+    "item": "betterendforge:flavolite_bricks",
+    "count": 4
+  }
+}

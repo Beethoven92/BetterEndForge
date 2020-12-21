@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "terminite_ingot",
+  "ingredients": [
+    {
+      "item": "betterendforge:terminite_block"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:terminite_ingot",
+    "count": 9
+  }
+}

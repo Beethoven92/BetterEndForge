@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:terminite_chestplate"
+    ]
+  },
+  "criteria": {
+    "has_terminite_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:terminite_chestplate"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_terminite_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

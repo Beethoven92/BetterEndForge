@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_pillar",
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:violecite_slab"
+    }
+  },
+  "result": {
+    "item": "betterendforge:violecite_pillar"
+  }
+}

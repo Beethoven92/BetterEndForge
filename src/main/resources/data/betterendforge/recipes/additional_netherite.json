@@ -1,0 +1,17 @@
+{
+  "type": "betterendforge:alloying",
+  "ingredients": [
+    {
+      "item": "minecraft:ancient_debris"
+    },
+    {
+      "item": "minecraft:ancient_debris"
+    }
+  ],
+  "result": {
+    "item": "minecraft:netherite_scrap",
+    "count": 3
+  },
+  "experience": 6.0,
+  "smelttime": 500
+}

@@ -1,0 +1,53 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.525
+            }
+          ],
+          "name": "betterendforge:end_lily_leaf"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "betterendforge:end_lily",
+          "properties": {
+            "shape": "top"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.525
+            }
+          ],
+          "name": "betterendforge:end_lily_seed"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "betterendforge:end_lily",
+          "properties": {
+            "shape": "bottom"
+          }
+        }
+      ]
+    }
+  ]
+}

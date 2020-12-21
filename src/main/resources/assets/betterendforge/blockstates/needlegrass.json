@@ -1,0 +1,14 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/needlegrass_01" },
+			{ "model": "betterendforge:block/needlegrass_02" },
+			{ "model": "betterendforge:block/needlegrass_03" },
+			{ "model": "betterendforge:block/needlegrass_04" },
+			{ "model": "betterendforge:block/needlegrass_05" },
+			{ "model": "betterendforge:block/needlegrass_06" },
+			{ "model": "betterendforge:block/needlegrass_07" },
+			{ "model": "betterendforge:block/needlegrass_08" }
+		]
+	}
+}

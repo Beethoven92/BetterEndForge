@@ -1,0 +1,6 @@
+{
+	"parent": "betterendforge:block/plane_bottom",
+	"textures": {
+		"texture": "betterendforge:block/end_lotus_leaf_center"
+	}
+}

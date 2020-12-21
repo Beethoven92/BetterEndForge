@@ -1,0 +1,6 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "betterendforge:block/end_lotus_stripped_log_side"
+	}
+}

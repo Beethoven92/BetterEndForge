@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "betterendforge:endstone_dust"
+  },
+  "result": "minecraft:glass",
+  "experience": 0.35,
+  "cookingtime": 200
+}

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:mossy_glowshroom_stairs",
+    "betterendforge:lacugrove_stairs",
+    "betterendforge:end_lotus_stairs",
+    "betterendforge:pythadendron_stairs",
+    "betterendforge:dragon_tree_stairs"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    " # ",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "X": {
+      "item": "betterendforge:aeternium_ingot"
+    }
+  },
+  "result": {
+    "item": "betterendforge:aeternium_pickaxe"
+  }
+}

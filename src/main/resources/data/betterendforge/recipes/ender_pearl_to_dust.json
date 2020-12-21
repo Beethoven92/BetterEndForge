@@ -1,0 +1,10 @@
+{
+  "type": "betterendforge:anvil_smithing",
+  "input":
+  {
+      "item": "minecraft:ender_pearl"
+  },
+  "result": "betterendforge:ender_dust",
+  "level": 4,
+  "damage": 5
+}
