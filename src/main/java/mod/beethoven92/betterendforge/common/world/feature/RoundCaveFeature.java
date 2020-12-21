@@ -30,6 +30,7 @@ import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraftforge.common.Tags;
 
 public class RoundCaveFeature extends Feature<NoFeatureConfig>
 {
@@ -205,6 +206,8 @@ public class RoundCaveFeature extends Feature<NoFeatureConfig>
 	private boolean isReplaceable(BlockState state) 
 	{
 		return state.isIn(ModTags.GEN_TERRAIN)
+				|| state.isIn(Tags.Blocks.ORES) // Handles floating ores
+				|| state.isIn(Tags.Blocks.END_STONES) // Handles other blocks that could be left floating
 				|| state.getMaterial().isReplaceable()
 				|| state.getMaterial().equals(Material.PLANTS)
 				|| state.getMaterial().equals(Material.LEAVES);
