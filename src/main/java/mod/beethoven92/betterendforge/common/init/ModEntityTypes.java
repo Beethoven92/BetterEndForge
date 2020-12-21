@@ -48,6 +48,10 @@ public class ModEntityTypes
 				EntitySpawnPlacementRegistry.PlacementType.IN_WATER, 
 				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, EndFishEntity::canSpawn);
 		
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.DRAGONFLY.get(), 
+				EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, 
+				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, DragonflyEntity::canSpawn);
+		
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.SHADOW_WALKER.get(), 
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, 
 				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ShadowWalkerEntity::canSpawn);

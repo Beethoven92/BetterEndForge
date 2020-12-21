@@ -1,6 +1,7 @@
 package mod.beethoven92.betterendforge.common.entity;
 
 import java.util.EnumSet;
+import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModEntityTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
@@ -11,6 +12,7 @@ import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -29,6 +31,7 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -125,6 +128,15 @@ public class DragonflyEntity extends AnimalEntity implements IFlyingAnimal
 	public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) 
 	{
 		return ModEntityTypes.DRAGONFLY.get().create(world);
+	}
+	
+	public static boolean canSpawn(EntityType<DragonflyEntity> type, IServerWorld world, SpawnReason spawnReason, 
+			BlockPos pos, Random random)
+	{
+		// Check if the entity would be spawned above the void
+		int h = BlockHelper.downRay(world, new BlockPos(pos), 128);
+		if (h > 100) return false; // Is above void (this should prevent entities spawning under the islands)
+		else return true;
 	}
 	
 	public class DragonflyLookControl extends LookController 
