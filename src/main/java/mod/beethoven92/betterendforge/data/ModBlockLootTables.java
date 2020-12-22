@@ -54,6 +54,9 @@ public class ModBlockLootTables extends BlockLootTables
 	    registerLootTable(ModBlocks.SHADOW_GRASS.get(), (terrain) -> {
 	    	return droppingWithSilkTouch(terrain, Blocks.END_STONE);
 	    });
+	    registerLootTable(ModBlocks.PINK_MOSS.get(), (terrain) -> {
+	    	return droppingWithSilkTouch(terrain, Blocks.END_STONE);
+	    });
 		registerDropSelfLootTable(ModBlocks.ENDSTONE_DUST.get());
 		
 		// PATHS
@@ -187,6 +190,16 @@ public class ModBlockLootTables extends BlockLootTables
 		registerLootTable(ModBlocks.DRAGON_TREE_LEAVES.get(), (block) -> {
 			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.DRAGON_TREE_SAPLING.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
 		});
+		registerDropSelfLootTable(ModBlocks.TENANEA_SAPLING.get());
+		registerLootTable(ModBlocks.TENANEA_LEAVES.get(), (block) -> {
+			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.TENANEA_SAPLING.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
+		});
+		registerLootTable(ModBlocks.TENANEA_FLOWERS.get(), (block) -> {
+			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
+		});
+		registerLootTable(ModBlocks.TENANEA_OUTER_LEAVES.get(), (block) -> {
+			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.TENANEA_SAPLING.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
+		});
 		
 		// WOODEN_MATERIALS
 		registerWoodenMaterialLootTables(ModBlocks.MOSSY_GLOWSHROOM);
@@ -194,6 +207,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerWoodenMaterialLootTables(ModBlocks.END_LOTUS);
 		registerWoodenMaterialLootTables(ModBlocks.PYTHADENDRON);
 		registerWoodenMaterialLootTables(ModBlocks.DRAGON_TREE);
+		registerWoodenMaterialLootTables(ModBlocks.TENANEA);
 		
 		// STONE MATERIALS
 		registerStoneMaterialLootTables(ModBlocks.FLAVOLITE);

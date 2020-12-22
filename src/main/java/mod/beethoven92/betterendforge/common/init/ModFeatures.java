@@ -10,12 +10,16 @@ import mod.beethoven92.betterendforge.common.world.feature.EndLakeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLilyFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLotusFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLotusLeafFeature;
+import mod.beethoven92.betterendforge.common.world.feature.FloatingSpireFeature;
 import mod.beethoven92.betterendforge.common.world.feature.LacugroveFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MossyGlowshroomFeature;
 import mod.beethoven92.betterendforge.common.world.feature.OreLayerFeature;
 import mod.beethoven92.betterendforge.common.world.feature.PythadendronFeature;
 import mod.beethoven92.betterendforge.common.world.feature.RoundCaveFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SinglePlantFeature;
+import mod.beethoven92.betterendforge.common.world.feature.SpireFeature;
+import mod.beethoven92.betterendforge.common.world.feature.TenaneaBushFeature;
+import mod.beethoven92.betterendforge.common.world.feature.TenaneaFeature;
 import mod.beethoven92.betterendforge.common.world.feature.UnderwaterPlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.VineFeature;
 import mod.beethoven92.betterendforge.common.world.feature.WallPlantFeature;
@@ -39,6 +43,7 @@ public class ModFeatures
 	// BUSHES
 	public static final Feature<NoFeatureConfig> PYTHADENDRON_BUSH = new BushFeature(ModBlocks.PYTHADENDRON_LEAVES.get(), ModBlocks.PYTHADENDRON.bark.get());
 	public static final Feature<NoFeatureConfig> DRAGON_TREE_BUSH = new BushFeature(ModBlocks.DRAGON_TREE_LEAVES.get(), ModBlocks.DRAGON_TREE.bark.get());
+	public static final Feature<NoFeatureConfig> TENANEA_BUSH = new TenaneaBushFeature();
 	
 	// PLANTS
 	public static final Feature<NoFeatureConfig> UMBRELLA_MOSS = new DoublePlantFeature(ModBlocks.UMBRELLA_MOSS.get(), ModBlocks.UMBRELLA_MOSS_TALL.get(), 5);
@@ -69,12 +74,15 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> ROUND_CAVE_RARE = new RoundCaveFeature();
 	public static final Feature<NoFeatureConfig> END_LAKE = new EndLakeFeature();
 	public static final Feature<NoFeatureConfig> END_LAKE_RARE = new EndLakeFeature();
+	public static final Feature<NoFeatureConfig> SPIRE = new SpireFeature();
+	public static final Feature<NoFeatureConfig> FLOATING_SPIRE = new FloatingSpireFeature();
 	
 	// TREES
 	public static final Feature<NoFeatureConfig> MOSSY_GLOWSHROOM = new MossyGlowshroomFeature();
 	public static final Feature<NoFeatureConfig> LACUGROVE = new LacugroveFeature();
 	public static final Feature<NoFeatureConfig> PYTHADENDRON = new PythadendronFeature();
 	public static final Feature<NoFeatureConfig> DRAGON_TREE = new DragonTreeFeature();
+	public static final Feature<NoFeatureConfig> TENANEA = new TenaneaFeature();
 	
 	// ORES
 	public static final Feature<OreFeatureConfig> ENDER_ORE = new OreFeature(OreFeatureConfig.CODEC);
@@ -93,6 +101,7 @@ public class ModFeatures
     	//BUSHES
     	BetterEnd.register(event.getRegistry(), PYTHADENDRON_BUSH, "pythadendron_bush"); 
     	BetterEnd.register(event.getRegistry(), DRAGON_TREE_BUSH, "dragon_tree_bush"); 
+    	BetterEnd.register(event.getRegistry(), TENANEA_BUSH, "tenanea_bush"); 
     	// PLANTS
     	BetterEnd.register(event.getRegistry(), UMBRELLA_MOSS, "umbrella_moss");
     	BetterEnd.register(event.getRegistry(), CREEPING_MOSS, "creeping_moss");   	
@@ -119,11 +128,14 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), ROUND_CAVE_RARE, "round_cave_rare");
     	BetterEnd.register(event.getRegistry(), END_LAKE, "end_lake");   
     	BetterEnd.register(event.getRegistry(), END_LAKE_RARE, "end_lake_rare"); 
+    	BetterEnd.register(event.getRegistry(), SPIRE, "spire");   
+    	BetterEnd.register(event.getRegistry(), FLOATING_SPIRE, "floating_spire");
     	// TREES
     	BetterEnd.register(event.getRegistry(), MOSSY_GLOWSHROOM, "mossy_glowshroom");
     	BetterEnd.register(event.getRegistry(), LACUGROVE, "lacugrove");   
     	BetterEnd.register(event.getRegistry(), PYTHADENDRON, "pythadendron"); 
     	BetterEnd.register(event.getRegistry(), DRAGON_TREE, "dragon_tree");
+    	BetterEnd.register(event.getRegistry(), TENANEA, "tenanea");
     	// ORES
     	BetterEnd.register(event.getRegistry(), ENDER_ORE, "ender_ore");
     	BetterEnd.register(event.getRegistry(), FLAVOLITE_LAYER, "flavolite_layer");

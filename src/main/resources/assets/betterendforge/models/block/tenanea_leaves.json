@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "betterendforge:block/tenanea_leaves"
+  }
+}

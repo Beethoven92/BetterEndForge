@@ -33,6 +33,8 @@ import mod.beethoven92.betterendforge.common.block.PythadendronSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.RunedFlavoliteBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowGrassBlock;
+import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
+import mod.beethoven92.betterendforge.common.block.TenaneaSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.TerrainBlock;
 import mod.beethoven92.betterendforge.common.block.TerrainPlantBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaMossBlock;
@@ -106,6 +108,13 @@ public class ModBlocks
                                                                 sound(SoundType.GROUND).
                                                                 tickRandomly()));
 	
+	public static final RegistryObject<Block> PINK_MOSS = registerBlockWithDefaultItem("pink_moss", 
+			() -> new TerrainBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.PINK).
+                                                            setRequiresTool().
+                                                            hardnessAndResistance(3.0F, 9.0F).
+                                                            sound(SoundType.GROUND).
+                                                            tickRandomly()));
+
 	public static final RegistryObject<Block> ENDSTONE_DUST = registerBlockWithDefaultItem("endstone_dust", 
 			() -> new EndstoneDustBlock(AbstractBlock.Properties.create(Material.SAND, Blocks.END_STONE.getMaterialColor()).
 					                                             hardnessAndResistance(0.5F).
@@ -429,10 +438,10 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> DRAGON_TREE_SAPLING = registerBlockWithDefaultItem("dragon_tree_sapling", 
 			() -> new DragonTreeSaplingBlock(AbstractBlock.Properties.create(Material.PLANTS).
-                                                                        zeroHardnessAndResistance().
-                                                                        doesNotBlockMovement().
-                                                                        sound(SoundType.PLANT).
-                                                                        tickRandomly()));
+                                                                      zeroHardnessAndResistance().
+                                                                      doesNotBlockMovement().
+                                                                      sound(SoundType.PLANT).
+                                                                      tickRandomly()));
 	
 	public static final RegistryObject<Block> DRAGON_TREE_LEAVES = registerBlockWithDefaultItem("dragon_tree_leaves", 
 			() -> new LeavesBlock(AbstractBlock.Properties.create(Material.LEAVES, MaterialColor.MAGENTA).
@@ -443,6 +452,35 @@ public class ModBlocks
                                                            setSuffocates((state, world, pos) -> { return false; }).
                                                            setAllowsSpawn((state, reader, pos, entity) -> {return false;}).
                                                            setBlocksVision((state, reader, pos) -> {return false;})));
+	
+	public static final RegistryObject<Block> TENANEA_SAPLING = registerBlockWithDefaultItem("tenanea_sapling", 
+			() -> new TenaneaSaplingBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                                   zeroHardnessAndResistance().
+                                                                   doesNotBlockMovement().
+                                                                   sound(SoundType.PLANT).
+                                                                   tickRandomly()));
+	
+	public static final RegistryObject<Block> TENANEA_LEAVES = registerBlockWithDefaultItem("tenanea_leaves", 
+			() -> new LeavesBlock(AbstractBlock.Properties.create(Material.LEAVES, MaterialColor.PINK).
+					                                       hardnessAndResistance(0.2F).
+					                                       tickRandomly().
+                                                           sound(SoundType.PLANT).
+                                                           notSolid().
+                                                           setSuffocates((state, world, pos) -> { return false; }).
+                                                           setAllowsSpawn((state, reader, pos, entity) -> {return false;}).
+                                                           setBlocksVision((state, reader, pos) -> {return false;})));
+	
+	public static final RegistryObject<Block> TENANEA_FLOWERS = registerBlockWithDefaultItem("tenanea_flowers",
+			() -> new TenaneaFlowersBlock(AbstractBlock.Properties.create(Material.PLANTS).
+					                                               zeroHardnessAndResistance().
+					                                               doesNotBlockMovement().
+					                                               sound(SoundType.PLANT), 15, false));
+	
+	public static final RegistryObject<Block> TENANEA_OUTER_LEAVES = registerBlockWithDefaultItem("tenanea_outer_leaves", 
+			() -> new GlowingFurBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).
+					                                           zeroHardnessAndResistance().
+					                                           doesNotBlockMovement().
+					                                           sound(SoundType.WET_GRASS)));
 	
 	// BLOCKS WITH TILE ENTITY
 	public static final RegistryObject<Block> ETERNAL_PEDESTAL = registerBlockWithDefaultItem("eternal_pedestal", 
@@ -476,6 +514,7 @@ public class ModBlocks
 	public static final WoodenMaterial END_LOTUS = new WoodenMaterial("end_lotus", MaterialColor.LIGHT_BLUE, MaterialColor.CYAN);
 	public static final WoodenMaterial PYTHADENDRON = new WoodenMaterial("pythadendron", MaterialColor.MAGENTA, MaterialColor.PURPLE);
 	public static final WoodenMaterial DRAGON_TREE = new WoodenMaterial("dragon_tree", MaterialColor.BLACK, MaterialColor.MAGENTA);
+	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.BROWN, MaterialColor.PINK);
 	
 	// STONE MATERIALS
     public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
