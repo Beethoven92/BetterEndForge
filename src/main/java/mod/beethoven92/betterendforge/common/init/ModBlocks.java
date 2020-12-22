@@ -231,6 +231,9 @@ public class ModBlocks
 	public static final RegistryObject<Block> SHADOW_PLANT = registerBlockWithDefaultItem("shadow_plant", 
 			() -> new TerrainPlantBlock(SHADOW_GRASS.get()));
 	
+	public static final RegistryObject<Block> BUSHY_GRASS = registerBlockWithDefaultItem("bushy_grass", 
+			() -> new TerrainPlantBlock(PINK_MOSS.get()));
+	
 	public static final RegistryObject<Block> BLUE_VINE_SEED = registerBlockWithDefaultItem("blue_vine_seed", 
 			() -> new BlueVineSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).
 					                                             zeroHardnessAndResistance().

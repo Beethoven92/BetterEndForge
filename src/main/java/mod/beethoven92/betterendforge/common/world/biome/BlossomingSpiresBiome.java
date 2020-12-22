@@ -26,9 +26,9 @@ public class BlossomingSpiresBiome extends BetterEndBiome
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.FLOATING_SPIRE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TENANEA).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TENANEA_BUSH).
-				/*addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BULB_VINE).
+				//addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BULB_VINE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BUSHY_GRASS).
-				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BUSHY_GRASS_WG).*/
+				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BUSHY_GRASS_WG).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TWISTED_MOSS).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TWISTED_MOSS_WOOD).
 				setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 4));

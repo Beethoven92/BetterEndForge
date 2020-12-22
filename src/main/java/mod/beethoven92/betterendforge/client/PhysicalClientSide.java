@@ -99,6 +99,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.NEEDLEGRASS.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.SHADOW_BERRY.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.TWISTED_MOSS.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.BUSHY_GRASS.get(), RenderType.getCutout());
 		// MISC
 		RenderTypeLookup.setRenderLayer(ModBlocks.END_PORTAL_BLOCK.get(), RenderType.getTranslucent());
 		

@@ -56,6 +56,8 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> MURKWEED = new SinglePlantFeature(ModBlocks.MURKWEED.get(), 3);
 	public static final Feature<NoFeatureConfig> NEEDLEGRASS = new SinglePlantFeature(ModBlocks.NEEDLEGRASS.get(), 3);
 	public static final Feature<NoFeatureConfig> SHADOW_BERRY = new SinglePlantFeature(ModBlocks.SHADOW_BERRY.get(), 2);
+	public static final Feature<NoFeatureConfig> BUSHY_GRASS = new SinglePlantFeature(ModBlocks.BUSHY_GRASS.get(), 8, false);
+	public static final Feature<NoFeatureConfig> BUSHY_GRASS_WG = new SinglePlantFeature(ModBlocks.BUSHY_GRASS.get(), 5);
 	
 	// WALL PLANTS
 	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 3);
@@ -115,6 +117,8 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), MURKWEED, "murkweed");  	
     	BetterEnd.register(event.getRegistry(), NEEDLEGRASS, "needlegrass"); 
     	BetterEnd.register(event.getRegistry(), SHADOW_BERRY, "shadow_berry"); 
+    	BetterEnd.register(event.getRegistry(), BUSHY_GRASS, "bushy_grass"); 
+    	BetterEnd.register(event.getRegistry(), BUSHY_GRASS_WG, "bushy_grass_wg"); 
     	// WALL_PLANTS
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE, "purple_polypore");
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE_DENSE, "purple_polypore_dense");
