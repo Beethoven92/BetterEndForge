@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.util.JsonFactory;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
+import mod.beethoven92.betterendforge.common.world.biome.BlossomingSpiresBiome;
 import mod.beethoven92.betterendforge.common.world.biome.ChorusForestBiome;
 import mod.beethoven92.betterendforge.common.world.biome.CrystalMountainsBiome;
 import mod.beethoven92.betterendforge.common.world.biome.DustWastelandsBiome;
@@ -68,6 +69,7 @@ public class ModBiomes
 	public static final BetterEndBiome PAINTED_MOUNTAINS = registerSubBiome(new PaintedMountainsBiome(), DUST_WASTELANDS);
 	public static final BetterEndBiome CHORUS_FOREST = registerBiome(new ChorusForestBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome SHADOW_FOREST = registerBiome(new ShadowForestBiome(), EndBiomeType.LAND);
+	public static final BetterEndBiome BLOSSOMING_SPIRES = registerBiome(new BlossomingSpiresBiome(), EndBiomeType.LAND);
 	
 	public static void register() {}
 	
