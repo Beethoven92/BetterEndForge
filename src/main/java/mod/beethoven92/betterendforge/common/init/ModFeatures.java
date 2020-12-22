@@ -64,6 +64,8 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> TAIL_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.TAIL_MOSS.get(), 4);
 	public static final Feature<NoFeatureConfig> CYAN_MOSS = new WallPlantFeature(ModBlocks.CYAN_MOSS.get(), 3);
 	public static final Feature<NoFeatureConfig> CYAN_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.CYAN_MOSS.get(), 4);
+	public static final Feature<NoFeatureConfig> TWISTED_MOSS = new WallPlantFeature(ModBlocks.TWISTED_MOSS.get(), 6);
+	public static final Feature<NoFeatureConfig> TWISTED_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.TWISTED_MOSS.get(), 6);
 	
 	// VINES
 	public static final Feature<NoFeatureConfig> DENSE_VINE = new VineFeature(ModBlocks.DENSE_VINE.get(), 24);
@@ -120,6 +122,8 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), TAIL_MOSS_WOOD, "tail_moss_wood");  	
     	BetterEnd.register(event.getRegistry(), CYAN_MOSS, "cyan_moss"); 
     	BetterEnd.register(event.getRegistry(), CYAN_MOSS_WOOD, "cyan_moss_wood"); 
+    	BetterEnd.register(event.getRegistry(), TWISTED_MOSS, "twisted_moss"); 
+    	BetterEnd.register(event.getRegistry(), TWISTED_MOSS_WOOD, "twisted_moss_wood"); 
     	// VINES
     	BetterEnd.register(event.getRegistry(), DENSE_VINE, "dense_vine"); 
     	BetterEnd.register(event.getRegistry(), TWISTED_VINE, "twisted_vine"); 

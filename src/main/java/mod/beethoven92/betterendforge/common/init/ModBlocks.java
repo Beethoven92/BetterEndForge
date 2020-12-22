@@ -349,6 +349,11 @@ public class ModBlocks
                                                               doesNotBlockMovement().
                                                               sound(SoundType.PLANT)));
 	
+	public static final RegistryObject<Block> TWISTED_MOSS = registerBlockWithDefaultItem("twisted_moss", 
+			() -> new WallPlantBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                              zeroHardnessAndResistance().
+                                                              doesNotBlockMovement().
+                                                              sound(SoundType.PLANT)));
 	// VINES
 	public static final RegistryObject<Block> DENSE_VINE = registerBlockWithDefaultItem("dense_vine",
 			() -> new EndVineBlock(AbstractBlock.Properties.create(Material.PLANTS).

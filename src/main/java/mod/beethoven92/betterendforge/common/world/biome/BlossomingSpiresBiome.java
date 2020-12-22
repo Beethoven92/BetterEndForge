@@ -7,8 +7,6 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.Features;
-import net.minecraft.world.gen.feature.structure.StructureFeatures;
 
 public class BlossomingSpiresBiome extends BetterEndBiome
 {
@@ -22,17 +20,17 @@ public class BlossomingSpiresBiome extends BetterEndBiome
 				setCaves(false).
 				setSurface(ModBlocks.PINK_MOSS.get()).
 				setParticles(ParticleTypes.PORTAL, 0.01F).
-				//setAmbientSound(ModSoundEvents.AMBIENT_CHORUS_FOREST.get()).
-				//setMusic(ModSoundEvents.MUSIC_CHORUS_FOREST.get()).
+				setAmbientSound(ModSoundEvents.AMBIENT_BLOSSOMING_SPIRES.get()).
+				setMusic(ModSoundEvents.MUSIC_BLOSSOMING_SPIRES.get()).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.SPIRE).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.FLOATING_SPIRE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TENANEA).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TENANEA_BUSH).
 				/*addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BULB_VINE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BUSHY_GRASS).
-				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BUSHY_GRASS_WG).
+				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BUSHY_GRASS_WG).*/
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TWISTED_MOSS).
-				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TWISTED_MOSS_WOOD).*/
+				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TWISTED_MOSS_WOOD).
 				setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 4));
 	}
 }
