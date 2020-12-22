@@ -19,8 +19,10 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -50,6 +52,7 @@ import mod.beethoven92.betterendforge.common.init.ModStructures;
 import mod.beethoven92.betterendforge.common.init.ModSurfaceBuilders;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.world.generator.BetterEndBiomeProvider;
+import mod.beethoven92.betterendforge.config.ClientConfig;
 import mod.beethoven92.betterendforge.server.PhysicalServerSide;
 
 
@@ -84,6 +87,8 @@ public class BetterEnd
     	ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
     	ModSoundEvents.SOUND_EVENTS.register(modEventBus);
     	ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
+    	
+    	ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.getConfig());
     }
 
     private void setupCommon(final FMLCommonSetupEvent event)
