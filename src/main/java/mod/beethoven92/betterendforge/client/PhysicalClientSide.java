@@ -70,7 +70,10 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.PYTHADENDRON_LEAVES.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.DRAGON_TREE_SAPLING.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.DRAGON_TREE_LEAVES.get(), RenderType.getCutout());
-		
+		RenderTypeLookup.setRenderLayer(ModBlocks.TENANEA_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.TENANEA_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.TENANEA_FLOWERS.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.TENANEA_OUTER_LEAVES.get(), RenderType.getCutout());
 		// PLANTS
 		RenderTypeLookup.setRenderLayer(ModBlocks.UMBRELLA_MOSS.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.UMBRELLA_MOSS_TALL.get(), RenderType.getCutout());
@@ -101,6 +104,8 @@ public class PhysicalClientSide implements IPhysicalSide
 		setWoodenMaterialRenderLayers(ModBlocks.LACUGROVE);
 		setWoodenMaterialRenderLayers(ModBlocks.END_LOTUS);
 		setWoodenMaterialRenderLayers(ModBlocks.PYTHADENDRON);
+		setWoodenMaterialRenderLayers(ModBlocks.DRAGON_TREE);
+		setWoodenMaterialRenderLayers(ModBlocks.TENANEA);
 	}
 	
 	private void setWoodenMaterialRenderLayers(WoodenMaterial material)

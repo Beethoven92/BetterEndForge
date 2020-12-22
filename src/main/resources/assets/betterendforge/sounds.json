@@ -89,6 +89,53 @@
 			}
 		]
 	},
+    "betterendforge.music.blossoming_spires": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterendforge:music/benjamin_martins-verve",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/the_tides-somnolent",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
+	
+	"betterendforge.music.amber_land": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterendforge:music/bobby_richards-two_moons",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/astron-peaceful_mind",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
+	
+	"betterendforge.music.sulphur_springs": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterendforge:music/godmode-melancholia",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/asher_fulero-elegy",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
 	
 	"betterendforge.ambient.foggy_mushroomland": {
 		"category": "ambient",
@@ -135,7 +182,25 @@
 			}
 		]
 	},
-	
+	"betterendforge.ambient.blossoming_spires": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterendforge:ambient/blossoming_spires",
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.ambient.sulphur_springs": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterendforge:ambient/sulphur_springs",
+				"volume": 0.3,
+				"stream": false
+			}
+		]
+	},
 	"betterendforge.entity.dragonfly": {
 		"category": "entity",
 		"sounds": [
