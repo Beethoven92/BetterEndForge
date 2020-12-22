@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.block;
 import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
+import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
@@ -37,7 +38,7 @@ public class TenaneaFlowersBlock extends EndVineBlock
 			double x = (double) pos.getX() + rand.nextGaussian() + 0.5;
 			double z = (double) pos.getZ() + rand.nextGaussian() + 0.5;
 			double y = (double) pos.getY() + rand.nextDouble();
-			//worldIn.addParticle(ModParticles.TENANEA_PETAL, x, y, z, 0, 0, 0);
+			worldIn.addParticle(ModParticleTypes.TENANEA_PETAL.get(), x, y, z, 0, 0, 0);
 		}
 	}
 	

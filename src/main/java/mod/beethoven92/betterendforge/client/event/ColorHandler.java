@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.client.event;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.AuroraCrystalBlock;
+import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import net.minecraft.item.SpawnEggItem;
@@ -18,6 +19,8 @@ public class ColorHandler
 	{
 		event.getBlockColors().register((state, reader, pos, color) -> 
 		                 {return AuroraCrystalBlock.getBlockColor(pos);}, ModBlocks.AURORA_CRYSTAL.get());
+		event.getBlockColors().register((state, reader, pos, color) -> 
+		                 {return TenaneaFlowersBlock.getBlockColor(pos);}, ModBlocks.TENANEA_FLOWERS.get());
 	}
 	
 	@SubscribeEvent
@@ -25,6 +28,9 @@ public class ColorHandler
 	{
 		event.getItemColors().register((stack, tintIndex) -> 
 		                 {return AuroraCrystalBlock.getItemColor();}, ModBlocks.AURORA_CRYSTAL.get());
+		
+		event.getItemColors().register((stack, tintIndex) -> 
+                         {return TenaneaFlowersBlock.getItemColor();}, ModBlocks.TENANEA_FLOWERS.get());
 		
 		event.getItemColors().register((stack, color) -> {
 			return ((SpawnEggItem) stack.getItem()).getColor(color);
