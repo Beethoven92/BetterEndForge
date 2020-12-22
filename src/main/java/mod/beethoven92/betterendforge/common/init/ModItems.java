@@ -67,9 +67,11 @@ public class ModItems
 	public static final RegistryObject<HammerItem> NETHERITE_HAMMER = ITEMS.register("netherite_hammer", () -> new HammerItem(ItemTier.NETHERITE, 5.0F, -3.0F, 0.2D, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	
 	// SPAWN EGGS
+	// TODO: Figure out a way to fill SpawnEggItem.EGGS map with the correct spawn eggs, so that IForgeEntity.getPickedResult() works
 	public static final RegistryObject<ModSpawnEggItem> DRAGONFLY_SPAWN_EGG = ITEMS.register("spawn_egg_dragonfly", () -> new ModSpawnEggItem(() -> ModEntityTypes.DRAGONFLY.get(), ModMathHelper.getColor(32, 42, 176), ModMathHelper.getColor(115, 225, 249), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<ModSpawnEggItem> END_FISH_SPAWN_EGG = ITEMS.register("spawn_egg_end_fish", () -> new ModSpawnEggItem(() -> ModEntityTypes.END_FISH.get(), ModMathHelper.getColor(3, 50, 76), ModMathHelper.getColor(120, 206, 255), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<ModSpawnEggItem> SHADOW_WALKER_SPAWN_EGG = ITEMS.register("spawn_egg_shadow_walker", () -> new ModSpawnEggItem(() -> ModEntityTypes.SHADOW_WALKER.get(), ModMathHelper.getColor(30, 30, 30), ModMathHelper.getColor(5, 5, 5), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public static final RegistryObject<ModSpawnEggItem> END_SLIME_SPAWN_EGG = ITEMS.register("spawn_egg_end_slime", () -> new ModSpawnEggItem(() -> ModEntityTypes.END_SLIME.get(), ModMathHelper.getColor(28, 28, 28), ModMathHelper.getColor(99, 11, 99), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 
 	// FOOD ITEMS
     public final static RegistryObject<Item> SHADOW_BERRY_RAW = ITEMS.register("shadow_berry_raw", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(4).saturation(0.5F).build())));

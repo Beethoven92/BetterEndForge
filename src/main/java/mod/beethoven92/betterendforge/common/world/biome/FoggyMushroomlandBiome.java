@@ -40,7 +40,7 @@ public class FoggyMushroomlandBiome extends BetterEndBiome
 				addStructure(StructureFeatures.END_CITY). // END CITY
 				setMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.DRAGONFLY.get(), 80, 2, 5).
 				setMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.END_FISH.get(), 20, 2, 5).
-				//.addMobSpawn(ModEntityTypes.END_SLIME, 10, 1, 2)
+				setMobSpawn(EntityClassification.MONSTER, ModEntityTypes.END_SLIME.get(), 10, 1, 2).
 				setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 10, 1, 2));
 	}
 }
