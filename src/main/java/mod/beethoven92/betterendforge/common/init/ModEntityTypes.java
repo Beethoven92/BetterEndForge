@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.init;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.entity.DragonflyEntity;
 import mod.beethoven92.betterendforge.common.entity.EndFishEntity;
+import mod.beethoven92.betterendforge.common.entity.EndSlimeEntity;
 import mod.beethoven92.betterendforge.common.entity.ShadowWalkerEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -34,12 +35,19 @@ public class ModEntityTypes
 			size(0.6f, 1.95f).
 			build(new ResourceLocation(BetterEnd.MOD_ID, "shadow_walker").toString()));
 	
+	public static final RegistryObject<EntityType<EndSlimeEntity>> END_SLIME = ENTITY_TYPES.register("end_slime", 
+			() -> EntityType.Builder.<EndSlimeEntity>create(EndSlimeEntity::new, EntityClassification.MONSTER).
+			size(2, 2).
+			build(new ResourceLocation(BetterEnd.MOD_ID, "end_slime").toString()));
+
+	
 	
 	public static void registerGlobalEntityAttributes()
 	{
 		GlobalEntityTypeAttributes.put(ModEntityTypes.END_FISH.get(), EndFishEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.DRAGONFLY.get(), DragonflyEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.SHADOW_WALKER.get(), ShadowWalkerEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.END_SLIME.get(), EndSlimeEntity.registerAttributes().create());
 	}
 	
 	public static void registerEntitySpawns()
@@ -55,5 +63,9 @@ public class ModEntityTypes
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.SHADOW_WALKER.get(), 
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, 
 				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ShadowWalkerEntity::canSpawn);
+		
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.END_SLIME.get(), 
+				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, 
+				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, EndSlimeEntity::canSpawn);
 	}
 }

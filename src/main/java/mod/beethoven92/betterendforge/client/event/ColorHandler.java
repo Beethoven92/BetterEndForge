@@ -29,6 +29,6 @@ public class ColorHandler
 		event.getItemColors().register((stack, color) -> {
 			return ((SpawnEggItem) stack.getItem()).getColor(color);
 		}, ModItems.DRAGONFLY_SPAWN_EGG.get(), ModItems.END_FISH_SPAWN_EGG.get(),
-				ModItems.SHADOW_WALKER_SPAWN_EGG.get());
+				ModItems.SHADOW_WALKER_SPAWN_EGG.get(), ModItems.END_SLIME_SPAWN_EGG.get());
 	}
 }

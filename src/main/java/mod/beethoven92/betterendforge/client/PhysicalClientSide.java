@@ -4,6 +4,7 @@ import mod.beethoven92.betterendforge.IPhysicalSide;
 import mod.beethoven92.betterendforge.client.gui.EndStoneSmelterScreen;
 import mod.beethoven92.betterendforge.client.renderer.DragonflyEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.EndFishEntityRenderer;
+import mod.beethoven92.betterendforge.client.renderer.EndSlimeEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.PedestalRenderer;
 import mod.beethoven92.betterendforge.client.renderer.ShadowWalkerEntityRenderer;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
@@ -45,6 +46,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.END_FISH.get(), EndFishEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DRAGONFLY.get(), DragonflyEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SHADOW_WALKER.get(), ShadowWalkerEntityRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.END_SLIME.get(), EndSlimeEntityRenderer::new);
 	}
 	
 	private void registerGUIs()
