@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"shape=top": { "model": "betterendforge:block/bulb_vine_top" },
+		"shape=middle": [
+			{ "model": "betterendforge:block/bulb_vine_middle_1" },
+			{ "model": "betterendforge:block/bulb_vine_middle_2" }
+		],
+		"shape=bottom": { "model": "betterendforge:block/bulb_vine_bottom" }
+	}
+}
