@@ -8,6 +8,8 @@ import mod.beethoven92.betterendforge.common.block.BlueVineBlock;
 import mod.beethoven92.betterendforge.common.block.BlueVineLanternBlock;
 import mod.beethoven92.betterendforge.common.block.BlueVineSeedBlock;
 import mod.beethoven92.betterendforge.common.block.BubbleCoralBlock;
+import mod.beethoven92.betterendforge.common.block.BulbVineBlock;
+import mod.beethoven92.betterendforge.common.block.BulbVineSeedBlock;
 import mod.beethoven92.betterendforge.common.block.ChorusGrassBlock;
 import mod.beethoven92.betterendforge.common.block.DragonTreeSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.EndLilyBlock;
@@ -370,7 +372,7 @@ public class ModBlocks
 					                                        doesNotBlockMovement().
 					                                        sound(SoundType.PLANT), 0, false));
 	
-	/*public static final RegistryObject<Block> BULB_VINE = registerBlockWithDefaultItem("bulb_vine",
+	public static final RegistryObject<Block> BULB_VINE = registerBlockWithDefaultItem("bulb_vine",
 			() -> new BulbVineBlock(AbstractBlock.Properties.create(Material.PLANTS).
 					                                        zeroHardnessAndResistance().
 					                                        doesNotBlockMovement().
@@ -381,7 +383,7 @@ public class ModBlocks
 					                                        zeroHardnessAndResistance().
 					                                        doesNotBlockMovement().
 					                                        tickRandomly().
-					                                        sound(SoundType.PLANT)));*/
+					                                        sound(SoundType.PLANT)));
 	// TREES
 	public static final RegistryObject<Block> MOSSY_GLOWSHROOM_SAPLING = registerBlockWithDefaultItem("mossy_glowshroom_sapling", 
 			() -> new MossyGlowshroomSaplingBlock(AbstractBlock.Properties.create(Material.PLANTS).

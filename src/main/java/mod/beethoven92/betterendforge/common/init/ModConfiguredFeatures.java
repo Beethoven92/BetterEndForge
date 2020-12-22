@@ -143,9 +143,14 @@ public class ModConfiguredFeatures
 	public static final ConfiguredFeature<?, ?> DENSE_VINE = 
 			ModFeatures.DENSE_VINE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(3));
+	
 	public static final ConfiguredFeature<?, ?> TWISTED_VINE = 
 			ModFeatures.TWISTED_VINE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(3));
+	
+	public static final ConfiguredFeature<?, ?> BULB_VINE = 
+			ModFeatures.BULB_VINE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(5));
 	
 	// TERRAIN
 	public static final ConfiguredFeature<?, ?> ROUND_CAVE = 
@@ -251,6 +256,7 @@ public class ModConfiguredFeatures
         // VINES
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "dense_vine"), DENSE_VINE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "twisted_vine"), TWISTED_VINE);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "bulb_vine"), BULB_VINE);
         // TERRAIN
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "round_cave"), ROUND_CAVE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "round_cave_rare"), ROUND_CAVE_RARE);

@@ -72,6 +72,7 @@ public class ModFeatures
 	// VINES
 	public static final Feature<NoFeatureConfig> DENSE_VINE = new VineFeature(ModBlocks.DENSE_VINE.get(), 24);
 	public static final Feature<NoFeatureConfig> TWISTED_VINE = new VineFeature(ModBlocks.TWISTED_VINE.get(), 24);
+	public static final Feature<NoFeatureConfig> BULB_VINE = new VineFeature(ModBlocks.BULB_VINE.get(), 24);
 	
 	// TERRAIN
 	public static final Feature<NoFeatureConfig> ROUND_CAVE = new RoundCaveFeature();
@@ -131,6 +132,7 @@ public class ModFeatures
     	// VINES
     	BetterEnd.register(event.getRegistry(), DENSE_VINE, "dense_vine"); 
     	BetterEnd.register(event.getRegistry(), TWISTED_VINE, "twisted_vine"); 
+    	BetterEnd.register(event.getRegistry(), BULB_VINE, "bulb_vine"); 
     	// TERRAIN
     	BetterEnd.register(event.getRegistry(), ROUND_CAVE, "round_cave");
     	BetterEnd.register(event.getRegistry(), ROUND_CAVE_RARE, "round_cave_rare");

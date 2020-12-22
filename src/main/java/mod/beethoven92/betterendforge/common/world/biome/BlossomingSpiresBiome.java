@@ -5,7 +5,6 @@ import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.gen.GenerationStage.Decoration;
 
 public class BlossomingSpiresBiome extends BetterEndBiome
@@ -19,14 +18,13 @@ public class BlossomingSpiresBiome extends BetterEndBiome
 				setFoliageColor(122, 45, 122).
 				setCaves(false).
 				setSurface(ModBlocks.PINK_MOSS.get()).
-				setParticles(ParticleTypes.PORTAL, 0.01F).
 				setAmbientSound(ModSoundEvents.AMBIENT_BLOSSOMING_SPIRES.get()).
 				setMusic(ModSoundEvents.MUSIC_BLOSSOMING_SPIRES.get()).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.SPIRE).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.FLOATING_SPIRE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TENANEA).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TENANEA_BUSH).
-				//addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BULB_VINE).
+				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BULB_VINE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BUSHY_GRASS).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BUSHY_GRASS_WG).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TWISTED_MOSS).
