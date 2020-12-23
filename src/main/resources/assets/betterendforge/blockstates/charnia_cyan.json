@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/charnia_cyan" },
+			{ "model": "betterendforge:block/charnia_cyan", "y": 90 },
+			{ "model": "betterendforge:block/charnia_cyan", "y": 180 },
+			{ "model": "betterendforge:block/charnia_cyan", "y": 270 }
+		]
+	}
+}

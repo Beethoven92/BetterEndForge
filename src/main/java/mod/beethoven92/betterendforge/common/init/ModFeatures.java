@@ -4,6 +4,7 @@ import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.world.feature.BlueVineFeature;
 import mod.beethoven92.betterendforge.common.world.feature.BushFeature;
 import mod.beethoven92.betterendforge.common.world.feature.CavePlantFeature;
+import mod.beethoven92.betterendforge.common.world.feature.CharniaFeature;
 import mod.beethoven92.betterendforge.common.world.feature.DoublePlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.DragonTreeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLakeFeature;
@@ -41,6 +42,13 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> END_LILY = new EndLilyFeature(6);
 	public static final Feature<NoFeatureConfig> END_LILY_RARE = new EndLilyFeature(3);
 	public static final Feature<NoFeatureConfig> MENGER_SPONGE = new MengerSpongeFeature(5);
+	public static final Feature<NoFeatureConfig> CHARNIA_RED = new CharniaFeature(ModBlocks.CHARNIA_RED.get());
+	public static final Feature<NoFeatureConfig> CHARNIA_PURPLE = new CharniaFeature(ModBlocks.CHARNIA_PURPLE.get());
+	public static final Feature<NoFeatureConfig> CHARNIA_ORANGE = new CharniaFeature(ModBlocks.CHARNIA_ORANGE.get());
+	public static final Feature<NoFeatureConfig> CHARNIA_LIGHT_BLUE = new CharniaFeature(ModBlocks.CHARNIA_LIGHT_BLUE.get());
+	public static final Feature<NoFeatureConfig> CHARNIA_CYAN = new CharniaFeature(ModBlocks.CHARNIA_CYAN.get());
+	public static final Feature<NoFeatureConfig> CHARNIA_GREEN = new CharniaFeature(ModBlocks.CHARNIA_GREEN.get());
+	public static final Feature<NoFeatureConfig> CHARNIA_RED_RARE = new CharniaFeature(ModBlocks.CHARNIA_RED.get());
 	
 	// BUSHES
 	public static final Feature<NoFeatureConfig> PYTHADENDRON_BUSH = new BushFeature(ModBlocks.PYTHADENDRON_LEAVES.get(), ModBlocks.PYTHADENDRON.bark.get());
@@ -106,6 +114,13 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), END_LILY, "end_lily");
     	BetterEnd.register(event.getRegistry(), END_LILY_RARE, "end_lily_rare");  
     	BetterEnd.register(event.getRegistry(), MENGER_SPONGE, "menger_sponge");
+    	BetterEnd.register(event.getRegistry(), CHARNIA_RED, "charnia_red");
+    	BetterEnd.register(event.getRegistry(), CHARNIA_PURPLE, "charnia_purple");  
+    	BetterEnd.register(event.getRegistry(), CHARNIA_ORANGE, "charnia_orange");
+    	BetterEnd.register(event.getRegistry(), CHARNIA_LIGHT_BLUE, "charnia_light_blue");
+    	BetterEnd.register(event.getRegistry(), CHARNIA_CYAN, "charnia_cyan");  
+    	BetterEnd.register(event.getRegistry(), CHARNIA_GREEN, "charnia_green");
+    	BetterEnd.register(event.getRegistry(), CHARNIA_RED_RARE, "charnia_red_rare");
     	//BUSHES
     	BetterEnd.register(event.getRegistry(), PYTHADENDRON_BUSH, "pythadendron_bush"); 
     	BetterEnd.register(event.getRegistry(), DRAGON_TREE_BUSH, "dragon_tree_bush"); 
