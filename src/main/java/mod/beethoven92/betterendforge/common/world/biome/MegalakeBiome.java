@@ -29,6 +29,7 @@ public class MegalakeBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.END_LILY_RARE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.UMBRELLA_MOSS).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CREEPING_MOSS).
+				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.MENGER_SPONGE).
 				addStructure(ModConfiguredStructures.MEGALAKE_STRUCTURE).
 				setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 10, 1, 2).
 				setMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.DRAGONFLY.get(), 50, 1, 3).

@@ -26,6 +26,8 @@ import mod.beethoven92.betterendforge.common.block.GlowingFurBlock;
 import mod.beethoven92.betterendforge.common.block.GlowingMossBlock;
 import mod.beethoven92.betterendforge.common.block.InfusionPedestal;
 import mod.beethoven92.betterendforge.common.block.LacugroveSaplingBlock;
+import mod.beethoven92.betterendforge.common.block.MengerSpongeBlock;
+import mod.beethoven92.betterendforge.common.block.MengerSpongeWetBlock;
 import mod.beethoven92.betterendforge.common.block.MossyGlowshroomCapBlock;
 import mod.beethoven92.betterendforge.common.block.MossyGlowshroomSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.MurkweedBlock;
@@ -384,6 +386,13 @@ public class ModBlocks
 					                                        doesNotBlockMovement().
 					                                        tickRandomly().
 					                                        sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> MENGER_SPONGE = registerBlockWithDefaultItem("menger_sponge",
+			() -> new MengerSpongeBlock(AbstractBlock.Properties.from(Blocks.SPONGE).notSolid()));
+	
+	public static final RegistryObject<Block> MENGER_SPONGE_WET = registerBlockWithDefaultItem("menger_sponge_wet",
+			() -> new MengerSpongeWetBlock(AbstractBlock.Properties.from(Blocks.WET_SPONGE).notSolid()));
+	
 	// TREES
 	public static final RegistryObject<Block> MOSSY_GLOWSHROOM_SAPLING = registerBlockWithDefaultItem("mossy_glowshroom_sapling", 
 			() -> new MossyGlowshroomSaplingBlock(AbstractBlock.Properties.create(Material.PLANTS).

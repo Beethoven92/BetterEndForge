@@ -33,6 +33,7 @@ public class MegalakeGroveBiome extends BetterEndBiome
 			    addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.END_LILY_RARE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.UMBRELLA_MOSS).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CREEPING_MOSS).
+				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.MENGER_SPONGE).
 				setMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.DRAGONFLY.get(), 20, 1, 3).
 				setMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.END_FISH.get(), 20, 3, 8).
 				setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 10, 1, 2));

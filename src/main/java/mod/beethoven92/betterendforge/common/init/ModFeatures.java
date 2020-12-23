@@ -12,6 +12,7 @@ import mod.beethoven92.betterendforge.common.world.feature.EndLotusFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLotusLeafFeature;
 import mod.beethoven92.betterendforge.common.world.feature.FloatingSpireFeature;
 import mod.beethoven92.betterendforge.common.world.feature.LacugroveFeature;
+import mod.beethoven92.betterendforge.common.world.feature.MengerSpongeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MossyGlowshroomFeature;
 import mod.beethoven92.betterendforge.common.world.feature.OreLayerFeature;
 import mod.beethoven92.betterendforge.common.world.feature.PythadendronFeature;
@@ -39,6 +40,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> BUBBLE_CORAL_RARE = new UnderwaterPlantFeature(ModBlocks.BUBBLE_CORAL.get(), 3);
 	public static final Feature<NoFeatureConfig> END_LILY = new EndLilyFeature(6);
 	public static final Feature<NoFeatureConfig> END_LILY_RARE = new EndLilyFeature(3);
+	public static final Feature<NoFeatureConfig> MENGER_SPONGE = new MengerSpongeFeature(5);
 	
 	// BUSHES
 	public static final Feature<NoFeatureConfig> PYTHADENDRON_BUSH = new BushFeature(ModBlocks.PYTHADENDRON_LEAVES.get(), ModBlocks.PYTHADENDRON.bark.get());
@@ -103,6 +105,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), BUBBLE_CORAL_RARE, "bubble_coral_rare");  
     	BetterEnd.register(event.getRegistry(), END_LILY, "end_lily");
     	BetterEnd.register(event.getRegistry(), END_LILY_RARE, "end_lily_rare");  
+    	BetterEnd.register(event.getRegistry(), MENGER_SPONGE, "menger_sponge");
     	//BUSHES
     	BetterEnd.register(event.getRegistry(), PYTHADENDRON_BUSH, "pythadendron_bush"); 
     	BetterEnd.register(event.getRegistry(), DRAGON_TREE_BUSH, "dragon_tree_bush"); 
