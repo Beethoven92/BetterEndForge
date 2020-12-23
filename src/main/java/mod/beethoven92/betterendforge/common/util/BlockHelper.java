@@ -6,9 +6,9 @@ import java.util.Set;
 import com.google.common.collect.Sets;
 
 import mod.beethoven92.betterendforge.common.block.BlueVineBlock;
-import mod.beethoven92.betterendforge.common.block.GlowingFurBlock;
 import mod.beethoven92.betterendforge.common.block.template.DoublePlantBlock;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
+import mod.beethoven92.betterendforge.common.block.template.FurBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -39,6 +39,7 @@ public class BlockHelper
 	
 	private static final Mutable POS = new Mutable();
 	protected static final BlockState AIR = Blocks.AIR.getDefaultState();
+	protected static final BlockState WATER = Blocks.WATER.getDefaultState();
 	
 	public static int upRay(IWorldReader world, BlockPos pos, int maxDist) 
 	{
@@ -111,20 +112,33 @@ public class BlockHelper
 					POS.setY(y);
 					state = world.getBlockState(POS);
 					
-					if (state.getBlock() instanceof GlowingFurBlock) 
+					if (state.getBlock() instanceof FurBlock) 
 					{
 						doubleCheck.add(POS.toImmutable());
 					}
 					// Liquids
 					else if (!state.getFluidState().isEmpty()) 
 					{
+						if (!state.isValidPosition(world, POS)) 
+						{
+							setWithoutUpdate(world, POS, WATER);
+							POS.setY(POS.getY() - 1);
+							state = world.getBlockState(POS);
+							while (!state.isValidPosition(world, POS)) 
+							{
+								state = state.getFluidState().isEmpty() ? AIR : WATER;
+								setWithoutUpdate(world, POS, state);
+								POS.setY(POS.getY() - 1);
+								state = world.getBlockState(POS);
+							}
+						}
 						POS.setY(y - 1);
 						if (world.isAirBlock(POS)) 
 						{
 							POS.setY(y);
 							while (!world.getFluidState(POS).isEmpty()) 
 							{
-								BlockHelper.setWithoutUpdate(world, POS, AIR);
+								setWithoutUpdate(world, POS, AIR);
 								POS.setY(POS.getY() + 1);
 							}
 							continue;
