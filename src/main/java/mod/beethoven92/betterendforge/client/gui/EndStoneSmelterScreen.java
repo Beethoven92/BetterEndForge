@@ -75,6 +75,7 @@ public class EndStoneSmelterScreen extends ContainerScreen<EndStoneSmelterContai
 		this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
 		this.recipeBook.func_238924_c_(matrixStack, guiLeft, guiTop, mouseX, mouseY);
 	}
+	
 	@Override
 	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) 
 	{		
