@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.block;
 import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
+import mod.beethoven92.betterendforge.common.block.template.FurBlock;
 import mod.beethoven92.betterendforge.common.block.template.PlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
@@ -45,12 +46,12 @@ public class BlueVineSeedBlock extends PlantBlockWithAge
 			BlockPos p = pos.offset(dir);
 			if (world.isAirBlock(p)) 
 			{
-				BlockHelper.setWithoutUpdate(world, p, ModBlocks.BLUE_VINE_FUR.get().getDefaultState().with(GlowingFurBlock.FACING, dir));
+				BlockHelper.setWithoutUpdate(world, p, ModBlocks.BLUE_VINE_FUR.get().getDefaultState().with(FurBlock.FACING, dir));
 			}
 		}
 		if (world.isAirBlock(pos.up())) 
 		{
-			BlockHelper.setWithoutUpdate(world, pos.up(), ModBlocks.BLUE_VINE_FUR.get().getDefaultState().with(GlowingFurBlock.FACING, Direction.UP));
+			BlockHelper.setWithoutUpdate(world, pos.up(), ModBlocks.BLUE_VINE_FUR.get().getDefaultState().with(FurBlock.FACING, Direction.UP));
 		}
 	}
 	

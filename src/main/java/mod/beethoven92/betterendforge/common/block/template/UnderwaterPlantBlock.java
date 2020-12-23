@@ -55,8 +55,7 @@ public class UnderwaterPlantBlock extends Block implements IGrowable, ILiquidCon
 	}
 	
 	protected boolean isTerrain(BlockState state) 
-	{
-		
+	{		
 		return state.isIn(ModTags.END_GROUND) || state.getBlock() == ModBlocks.ENDSTONE_DUST.get();
 	}
 	

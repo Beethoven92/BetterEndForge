@@ -85,7 +85,7 @@ public class EndLotusStemBlock extends Block implements IWaterLoggable
 			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
 	    }
 		
-		return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		return stateIn;
 	}
 	
 	@Override

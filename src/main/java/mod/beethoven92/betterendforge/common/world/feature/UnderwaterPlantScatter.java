@@ -34,7 +34,7 @@ public abstract class UnderwaterPlantScatter extends ScatterFeature
 	@Override
 	protected boolean canSpawn(ISeedReader world, BlockPos pos)
 	{
-		return !world.getFluidState(pos).isEmpty();
+		return world.getBlockState(pos).isIn(Blocks.WATER);
 	}
 	
 	@Override
