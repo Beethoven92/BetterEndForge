@@ -6,8 +6,8 @@ import java.util.Random;
 import com.mojang.serialization.Codec;
 
 import mod.beethoven92.betterendforge.BetterEnd;
-import mod.beethoven92.betterendforge.common.block.GlowingFurBlock;
 import mod.beethoven92.betterendforge.common.block.MossyGlowshroomCapBlock;
+import mod.beethoven92.betterendforge.common.block.template.FurBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
@@ -145,13 +145,13 @@ public class GiantMossyGlowshroomStructure extends SDFStructure
 						{
 							if (info.getState(dir) == Blocks.AIR.getDefaultState()) 
 							{
-								info.setBlockPos(info.getPos().offset(dir), ModBlocks.MOSSY_GLOWSHROOM_FUR.get().getDefaultState().with(GlowingFurBlock.FACING, dir));
+								info.setBlockPos(info.getPos().offset(dir), ModBlocks.MOSSY_GLOWSHROOM_FUR.get().getDefaultState().with(FurBlock.FACING, dir));
 							}
 						}
 						
 						if (info.getStateDown().getBlock() != ModBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE.get()) 
 						{
-							info.setBlockPos(info.getPos().down(), ModBlocks.MOSSY_GLOWSHROOM_FUR.get().getDefaultState().with(GlowingFurBlock.FACING, Direction.DOWN));
+							info.setBlockPos(info.getPos().down(), ModBlocks.MOSSY_GLOWSHROOM_FUR.get().getDefaultState().with(FurBlock.FACING, Direction.DOWN));
 						}
 					}
 					return info.getState();

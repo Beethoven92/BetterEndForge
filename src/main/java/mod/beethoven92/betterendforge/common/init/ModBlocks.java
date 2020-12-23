@@ -47,6 +47,7 @@ import mod.beethoven92.betterendforge.common.block.UmbrellaMossTallBlock;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
+import mod.beethoven92.betterendforge.common.block.template.FurBlock;
 import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
 import mod.beethoven92.betterendforge.common.block.template.WallMushroomBlock;
 import mod.beethoven92.betterendforge.common.block.template.WallPlantBlock;
@@ -261,7 +262,7 @@ public class ModBlocks
                                                                     sound(SoundType.WART)));
 	
 	public static final RegistryObject<Block> BLUE_VINE_FUR = registerBlockWithDefaultItem("blue_vine_fur", 
-			() -> new GlowingFurBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).
+			() -> new FurBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).
                                                                zeroHardnessAndResistance().
                                                                setLightLevel((value) -> {return 15;}).
                                                                doesNotBlockMovement().
@@ -453,7 +454,7 @@ public class ModBlocks
                                                      setLightLevel((value) -> {return 15;})));
 	
 	public static final RegistryObject<Block> MOSSY_GLOWSHROOM_FUR = registerBlockWithDefaultItem("mossy_glowshroom_fur", 
-			() -> new GlowingFurBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).
+			() -> new FurBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).
 					                                           zeroHardnessAndResistance().
 					                                           setLightLevel((value) -> {return 15;}).
 					                                           doesNotBlockMovement().
@@ -533,7 +534,7 @@ public class ModBlocks
 					                                               sound(SoundType.PLANT), 15, false));
 	
 	public static final RegistryObject<Block> TENANEA_OUTER_LEAVES = registerBlockWithDefaultItem("tenanea_outer_leaves", 
-			() -> new GlowingFurBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).
+			() -> new FurBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).
 					                                           zeroHardnessAndResistance().
 					                                           doesNotBlockMovement().
 					                                           sound(SoundType.WET_GRASS)));
