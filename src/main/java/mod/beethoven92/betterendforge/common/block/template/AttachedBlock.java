@@ -52,7 +52,8 @@ public class AttachedBlock extends Block
 		{
 			return Blocks.AIR.getDefaultState();
 		}
-		else {
+		else 
+		{
 			return stateIn;
 		}
 	}

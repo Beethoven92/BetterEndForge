@@ -19,6 +19,7 @@ public class ColorHandler
 	{
 		event.getBlockColors().register((state, reader, pos, color) -> 
 		                 {return AuroraCrystalBlock.getBlockColor(pos);}, ModBlocks.AURORA_CRYSTAL.get());
+		
 		event.getBlockColors().register((state, reader, pos, color) -> 
 		                 {return TenaneaFlowersBlock.getBlockColor(pos);}, ModBlocks.TENANEA_FLOWERS.get());
 	}

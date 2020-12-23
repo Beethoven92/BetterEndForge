@@ -22,6 +22,7 @@ public class BulbVineBlock extends EndVineBlock
 		return false;
 	}
 	
+	// NEED FIX
 	@Override
 	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{

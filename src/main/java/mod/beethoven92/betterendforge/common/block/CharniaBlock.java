@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.block.template.UnderwaterPlantBlock;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -17,6 +18,7 @@ public class CharniaBlock extends UnderwaterPlantBlock
 	@Override
 	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		return hasEnoughSolidSide(worldIn, pos.down(), Direction.UP) && worldIn.getFluidState(pos).getFluid() == Fluids.WATER;
+		return hasEnoughSolidSide(worldIn, pos.down(), Direction.UP) 
+				&& worldIn.getFluidState(pos).getFluid() == Fluids.WATER;
 	}
 }
