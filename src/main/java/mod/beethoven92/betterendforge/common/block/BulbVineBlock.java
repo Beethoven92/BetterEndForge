@@ -2,11 +2,9 @@ package mod.beethoven92.betterendforge.common.block;
 
 import java.util.Random;
 
-import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 public class BulbVineBlock extends EndVineBlock
