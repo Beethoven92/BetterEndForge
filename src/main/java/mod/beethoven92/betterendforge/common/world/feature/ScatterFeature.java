@@ -4,12 +4,12 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
+import mod.beethoven92.betterendforge.common.util.FeatureHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap.Type;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 
@@ -32,7 +32,7 @@ public abstract class ScatterFeature extends Feature<NoFeatureConfig>
 	
 	protected BlockPos getCenterGround(ISeedReader world, BlockPos pos) 
 	{
-		return world.getHeight(Type.WORLD_SURFACE_WG, pos);
+		return FeatureHelper.getPosOnSurfaceWG(world, pos);
 	}
 	
 	protected boolean canSpawn(ISeedReader world, BlockPos pos) 
