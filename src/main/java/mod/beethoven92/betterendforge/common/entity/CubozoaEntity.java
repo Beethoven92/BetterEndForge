@@ -108,14 +108,14 @@ public class CubozoaEntity extends AbstractGroupFishEntity {
 		return dimensions.height * 0.5F;
 	}
 	
-	@Override
+	/*@Override
 	protected void dropLoot(DamageSource source, boolean causedByPlayer) {
 		int count = rand.nextInt(3);
 		if (count > 0) {
 			ItemEntity drop = new ItemEntity(world, getPosX(), getPosY(), getPosZ(), new ItemStack(ModItems.GELATINE.get(), count));
 			this.world.addEntity(drop);
 		}
-	}
+	}*/
 
 	@Override
 	protected ItemStack getFishBucket() {
