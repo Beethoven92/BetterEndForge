@@ -6,15 +6,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "betterendforge:cave_grass"
+          "name": "betterendforge:menger_sponge"
         }
       ],
       "conditions": [
         {
-          "condition": "minecraft:match_tool",
-          "predicate": {
-            "item": "minecraft:shears"
-          }
+          "condition": "minecraft:survives_explosion"
         }
       ]
     }

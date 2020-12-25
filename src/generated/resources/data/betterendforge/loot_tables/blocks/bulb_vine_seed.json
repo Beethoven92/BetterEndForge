@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "betterendforge:cave_grass"
+          "name": "betterendforge:bulb_vine_seed"
         }
       ],
       "conditions": [
