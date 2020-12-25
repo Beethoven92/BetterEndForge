@@ -26,7 +26,8 @@ public class VineFeature extends InvertedScatterFeature
 	@Override
 	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) 
 	{
-		return world.isAirBlock(blockPos) && vineBlock.isValidPosition(Blocks.AIR.getDefaultState(), world, blockPos);
+		return world.isAirBlock(blockPos) && vineBlock.isValidPosition(Blocks.AIR.getDefaultState(), world, blockPos)
+				&& !world.getBlockState(blockPos.up()).isIn(vineBlock); // Attempt to fix vines generating below other vines
 	}
 
 	@Override
