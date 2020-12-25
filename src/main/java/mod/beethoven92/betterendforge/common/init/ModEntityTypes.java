@@ -1,6 +1,7 @@
 package mod.beethoven92.betterendforge.common.init;
 
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.entity.CubozoaEntity;
 import mod.beethoven92.betterendforge.common.entity.DragonflyEntity;
 import mod.beethoven92.betterendforge.common.entity.EndFishEntity;
 import mod.beethoven92.betterendforge.common.entity.EndSlimeEntity;
@@ -39,6 +40,11 @@ public class ModEntityTypes
 			() -> EntityType.Builder.<EndSlimeEntity>create(EndSlimeEntity::new, EntityClassification.MONSTER).
 			size(2, 2).
 			build(new ResourceLocation(BetterEnd.MOD_ID, "end_slime").toString()));
+	
+	public static final RegistryObject<EntityType<CubozoaEntity>> CUBOZOA = ENTITY_TYPES.register("cubozoa", 
+			() -> EntityType.Builder.<CubozoaEntity>create(CubozoaEntity::new, EntityClassification.WATER_AMBIENT).
+			size(0.6f, 1f).
+			build(new ResourceLocation(BetterEnd.MOD_ID, "cubozoa").toString()));
 
 	
 	
@@ -48,6 +54,7 @@ public class ModEntityTypes
 		GlobalEntityTypeAttributes.put(ModEntityTypes.DRAGONFLY.get(), DragonflyEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.SHADOW_WALKER.get(), ShadowWalkerEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.END_SLIME.get(), EndSlimeEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.CUBOZOA.get(), CubozoaEntity.registerAttributes().create());
 	}
 	
 	public static void registerEntitySpawns()
@@ -67,5 +74,9 @@ public class ModEntityTypes
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.END_SLIME.get(), 
 				EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, 
 				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, EndSlimeEntity::canSpawn);
+		
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.CUBOZOA.get(), 
+				EntitySpawnPlacementRegistry.PlacementType.IN_WATER, 
+				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CubozoaEntity::canSpawn);
 	}
 }

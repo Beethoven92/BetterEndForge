@@ -20,6 +20,8 @@ import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolItem;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -37,6 +39,7 @@ public class ModItems
 	public final static RegistryObject<Item> CRYSTAL_SHARDS = ITEMS.register("crystal_shards",() -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> ETERNAL_CRYSTAL = ITEMS.register("eternal_crystal",() -> new Item(new Item.Properties().maxStackSize(16).group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> ENDER_SHARD = ITEMS.register("ender_shard", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> GELATINE = ITEMS.register("gelatine", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	
 	// ARMOR ITEMS
 	public static final RegistryObject<Item> TERMINITE_HELMET = ITEMS.register("terminite_helmet", () -> new ArmorItem(ModArmorMaterial.TERMINITE, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
@@ -71,12 +74,16 @@ public class ModItems
 	public static final RegistryObject<ModSpawnEggItem> END_FISH_SPAWN_EGG = ITEMS.register("spawn_egg_end_fish", () -> new ModSpawnEggItem(() -> ModEntityTypes.END_FISH.get(), ModMathHelper.getColor(3, 50, 76), ModMathHelper.getColor(120, 206, 255), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<ModSpawnEggItem> SHADOW_WALKER_SPAWN_EGG = ITEMS.register("spawn_egg_shadow_walker", () -> new ModSpawnEggItem(() -> ModEntityTypes.SHADOW_WALKER.get(), ModMathHelper.getColor(30, 30, 30), ModMathHelper.getColor(5, 5, 5), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<ModSpawnEggItem> END_SLIME_SPAWN_EGG = ITEMS.register("spawn_egg_end_slime", () -> new ModSpawnEggItem(() -> ModEntityTypes.END_SLIME.get(), ModMathHelper.getColor(28, 28, 28), ModMathHelper.getColor(99, 11, 99), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public static final RegistryObject<ModSpawnEggItem> CUBOZOA_SPAWN_EGG = ITEMS.register("spawn_egg_cubozoa", () -> new ModSpawnEggItem(() -> ModEntityTypes.CUBOZOA.get(), ModMathHelper.getColor(151, 77, 181), ModMathHelper.getColor(93, 176, 238), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 
 	// FOOD ITEMS
     public final static RegistryObject<Item> SHADOW_BERRY_RAW = ITEMS.register("shadow_berry_raw", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(4).saturation(0.5F).build())));
 	public final static RegistryObject<Item> SHADOW_BERRY_COOKED = ITEMS.register("shadow_berry_cooked", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(6).saturation(0.7F).build())));
 	public final static RegistryObject<Item> END_FISH_RAW = ITEMS.register("end_fish_raw", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(Foods.SALMON)));
 	public final static RegistryObject<Item> END_FISH_COOKED = ITEMS.register("end_fish_cooked", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(Foods.COOKED_SALMON)));
+	public final static RegistryObject<Item> SWEET_BERRY_JELLY = ITEMS.register("sweet_berry_jelly", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(3).saturation(0.75f).build())));
+	public final static RegistryObject<Item> SHADOW_BERRY_JELLY = ITEMS.register("shadow_berry_jelly", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(4).saturation(0.75f).effect(() -> new EffectInstance(Effects.NIGHT_VISION, 400), 1).build())));
+	
 	
 	// MISC ITEMS
 	public final static RegistryObject<Item> BUCKET_END_FISH = ITEMS.register("bucket_end_fish", () -> new FishBucketItem(() -> ModEntityTypes.END_FISH.get(), () -> Fluids.WATER, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));

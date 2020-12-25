@@ -26,6 +26,13 @@
 	"entity.betterendforge.shadow_walker": "Shadow Walker",
 	"item.betterendforge.spawn_egg_shadow_walker": "Shadow Walker Spawn Egg",
 	
+	"entity.betterendforge.cubozoa": "Cubozoa",
+	"item.betterendforge.spawn_egg_cubozoa": "Cubozoa Spawn Egg",
+	
+	"item.betterendforge.gelatine": "Gelatine",
+	"item.betterendforge.sweet_berry_jelly": "Sweet Berry Jelly",
+	"item.betterendforge.shadow_berry_jelly": "Shadow Berry Jelly",
+	
 	"block.betterendforge.end_mycelium": "End Mycelium",
 	"block.betterendforge.end_moss": "End Moss",
 	"block.betterendforge.endstone_dust": "End Stone Dust",

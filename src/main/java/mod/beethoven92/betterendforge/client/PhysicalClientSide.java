@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.client;
 
 import mod.beethoven92.betterendforge.IPhysicalSide;
 import mod.beethoven92.betterendforge.client.gui.EndStoneSmelterScreen;
+import mod.beethoven92.betterendforge.client.renderer.CubozoaRenderer;
 import mod.beethoven92.betterendforge.client.renderer.DragonflyEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.EndFishEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.EndSlimeEntityRenderer;
@@ -47,6 +48,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DRAGONFLY.get(), DragonflyEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SHADOW_WALKER.get(), ShadowWalkerEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.END_SLIME.get(), EndSlimeEntityRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CUBOZOA.get(), CubozoaRenderer::new);
 	}
 	
 	private void registerGUIs()

@@ -36,6 +36,7 @@ public class MegalakeBiome extends BetterEndBiome
 				addStructure(ModConfiguredStructures.MEGALAKE_STRUCTURE).
 				setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 10, 1, 2).
 				setMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.DRAGONFLY.get(), 50, 1, 3).
+				setMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.CUBOZOA.get(), 50, 3, 8).
 				setMobSpawn(EntityClassification.WATER_AMBIENT, ModEntityTypes.END_FISH.get(), 50, 3, 8));
 	}
 }
