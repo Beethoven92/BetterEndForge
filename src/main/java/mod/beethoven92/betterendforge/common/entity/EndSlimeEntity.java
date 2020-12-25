@@ -123,7 +123,7 @@ public class EndSlimeEntity extends SlimeEntity {
 		this.remove(true);
 	}
 	
-	@Override
+	/*@Override
 	protected void dropLoot(DamageSource source, boolean causedByPlayer) {
 		int maxCount = this.getSlimeSize();
 		int minCount = maxCount >> 1;
@@ -137,7 +137,7 @@ public class EndSlimeEntity extends SlimeEntity {
 		int count = minCount < maxCount ? ModMathHelper.randRange(minCount, maxCount, rand) : maxCount;
 		ItemEntity drop = new ItemEntity(world, getPosX(), getPosY(), getPosZ(), new ItemStack(Items.SLIME_BALL, count));
 		this.world.addEntity(drop);
-	}
+	}*/
 	
 	protected void setMossy(boolean mossy) {
 		this.dataManager.set(MOSSY, mossy);
