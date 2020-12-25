@@ -23,7 +23,6 @@ import mod.beethoven92.betterendforge.common.block.EndPortalBlock;
 import mod.beethoven92.betterendforge.common.block.EndStoneSmelter;
 import mod.beethoven92.betterendforge.common.block.EndstoneDustBlock;
 import mod.beethoven92.betterendforge.common.block.EternalPedestal;
-import mod.beethoven92.betterendforge.common.block.GlowingFurBlock;
 import mod.beethoven92.betterendforge.common.block.GlowingMossBlock;
 import mod.beethoven92.betterendforge.common.block.InfusionPedestal;
 import mod.beethoven92.betterendforge.common.block.LacugroveSaplingBlock;
