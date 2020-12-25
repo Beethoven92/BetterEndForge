@@ -23,7 +23,6 @@ import mod.beethoven92.betterendforge.common.block.EndPortalBlock;
 import mod.beethoven92.betterendforge.common.block.EndStoneSmelter;
 import mod.beethoven92.betterendforge.common.block.EndstoneDustBlock;
 import mod.beethoven92.betterendforge.common.block.EternalPedestal;
-import mod.beethoven92.betterendforge.common.block.GlowingFurBlock;
 import mod.beethoven92.betterendforge.common.block.GlowingMossBlock;
 import mod.beethoven92.betterendforge.common.block.InfusionPedestal;
 import mod.beethoven92.betterendforge.common.block.LacugroveSaplingBlock;
@@ -144,6 +143,9 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> SHADOW_GRASS_PATH = registerBlockWithDefaultItem("shadow_grass_path", 
 			() -> new PathBlock(SHADOW_GRASS.get()));
+	
+	public static final RegistryObject<Block> PINK_MOSS_PATH = registerBlockWithDefaultItem("pink_moss_path", 
+			() -> new PathBlock(PINK_MOSS.get()));
 	
 	// MATERIALS
 	public static final RegistryObject<Block> AETERNIUM_BLOCK = registerBlockWithDefaultItem("aeternium_block",
@@ -329,6 +331,47 @@ public class ModBlocks
 					                                             doesNotBlockMovement().
 					                                             sound(SoundType.PLANT)));
 	
+	public static final RegistryObject<Block> MENGER_SPONGE = registerBlockWithDefaultItem("menger_sponge",
+			() -> new MengerSpongeBlock(AbstractBlock.Properties.from(Blocks.SPONGE).notSolid()));
+	
+	public static final RegistryObject<Block> MENGER_SPONGE_WET = registerBlockWithDefaultItem("menger_sponge_wet",
+			() -> new MengerSpongeWetBlock(AbstractBlock.Properties.from(Blocks.WET_SPONGE).notSolid()));
+	
+	public static final RegistryObject<Block> CHARNIA_RED = registerBlockWithDefaultItem("charnia_red",
+			() -> new CharniaBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
+					                                        zeroHardnessAndResistance().
+					                                        sound(SoundType.WET_GRASS).
+					                                        doesNotBlockMovement()));
+	
+	public static final RegistryObject<Block> CHARNIA_PURPLE = registerBlockWithDefaultItem("charnia_purple",
+			() -> new CharniaBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
+					                                        zeroHardnessAndResistance().
+					                                        sound(SoundType.WET_GRASS).
+					                                        doesNotBlockMovement()));
+	
+	public static final RegistryObject<Block> CHARNIA_ORANGE = registerBlockWithDefaultItem("charnia_orange",
+			() -> new CharniaBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
+					                                        zeroHardnessAndResistance().
+					                                        sound(SoundType.WET_GRASS).
+					                                        doesNotBlockMovement()));
+	
+	public static final RegistryObject<Block> CHARNIA_LIGHT_BLUE = registerBlockWithDefaultItem("charnia_light_blue",
+			() -> new CharniaBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
+					                                        zeroHardnessAndResistance().
+					                                        sound(SoundType.WET_GRASS).
+					                                        doesNotBlockMovement()));
+	
+	public static final RegistryObject<Block> CHARNIA_CYAN = registerBlockWithDefaultItem("charnia_cyan",
+			() -> new CharniaBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
+					                                        zeroHardnessAndResistance().
+					                                        sound(SoundType.WET_GRASS).
+					                                        doesNotBlockMovement()));
+	
+	public static final RegistryObject<Block> CHARNIA_GREEN = registerBlockWithDefaultItem("charnia_green",
+			() -> new CharniaBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
+					                                        zeroHardnessAndResistance().
+					                                        sound(SoundType.WET_GRASS).
+					                                        doesNotBlockMovement()));
 	// CROPS
 	public static final RegistryObject<Block> SHADOW_BERRY = registerBlockWithDefaultItem("shadow_berry", 
 			() -> new ShadowBerryBlock(AbstractBlock.Properties.create(Material.PLANTS).
@@ -388,48 +431,6 @@ public class ModBlocks
 					                                        doesNotBlockMovement().
 					                                        tickRandomly().
 					                                        sound(SoundType.PLANT)));
-	
-	public static final RegistryObject<Block> MENGER_SPONGE = registerBlockWithDefaultItem("menger_sponge",
-			() -> new MengerSpongeBlock(AbstractBlock.Properties.from(Blocks.SPONGE).notSolid()));
-	
-	public static final RegistryObject<Block> MENGER_SPONGE_WET = registerBlockWithDefaultItem("menger_sponge_wet",
-			() -> new MengerSpongeWetBlock(AbstractBlock.Properties.from(Blocks.WET_SPONGE).notSolid()));
-	
-	public static final RegistryObject<Block> CHARNIA_RED = registerBlockWithDefaultItem("charnia_red",
-			() -> new CharniaBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
-					                                        zeroHardnessAndResistance().
-					                                        sound(SoundType.WET_GRASS).
-					                                        doesNotBlockMovement()));
-	
-	public static final RegistryObject<Block> CHARNIA_PURPLE = registerBlockWithDefaultItem("charnia_purple",
-			() -> new CharniaBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
-					                                        zeroHardnessAndResistance().
-					                                        sound(SoundType.WET_GRASS).
-					                                        doesNotBlockMovement()));
-	
-	public static final RegistryObject<Block> CHARNIA_ORANGE = registerBlockWithDefaultItem("charnia_orange",
-			() -> new CharniaBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
-					                                        zeroHardnessAndResistance().
-					                                        sound(SoundType.WET_GRASS).
-					                                        doesNotBlockMovement()));
-	
-	public static final RegistryObject<Block> CHARNIA_LIGHT_BLUE = registerBlockWithDefaultItem("charnia_light_blue",
-			() -> new CharniaBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
-					                                        zeroHardnessAndResistance().
-					                                        sound(SoundType.WET_GRASS).
-					                                        doesNotBlockMovement()));
-	
-	public static final RegistryObject<Block> CHARNIA_CYAN = registerBlockWithDefaultItem("charnia_cyan",
-			() -> new CharniaBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
-					                                        zeroHardnessAndResistance().
-					                                        sound(SoundType.WET_GRASS).
-					                                        doesNotBlockMovement()));
-	
-	public static final RegistryObject<Block> CHARNIA_GREEN = registerBlockWithDefaultItem("charnia_green",
-			() -> new CharniaBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
-					                                        zeroHardnessAndResistance().
-					                                        sound(SoundType.WET_GRASS).
-					                                        doesNotBlockMovement()));
 	
 	// TREES
 	public static final RegistryObject<Block> MOSSY_GLOWSHROOM_SAPLING = registerBlockWithDefaultItem("mossy_glowshroom_sapling", 
