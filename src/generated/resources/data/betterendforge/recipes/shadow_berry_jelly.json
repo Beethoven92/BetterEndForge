@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "betterendforge:gelatine"
+    },
+    {
+      "item": "minecraft:potion"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "betterendforge:shadow_berry_cooked"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:shadow_berry_jelly"
+  }
+}

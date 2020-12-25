@@ -15,8 +15,11 @@ import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.potion.Potions;
 
 public class ModRecipes extends RecipeProvider
 {
@@ -60,6 +63,8 @@ public class ModRecipes extends RecipeProvider
 		ShapedRecipeBuilder.shapedRecipe(Items.PAPER, 3).key('#', ModItems.END_LILY_LEAF_DRIED.get()).patternLine("###").addCriterion("has_end_lily_leaf_dried", hasItem(ModItems.END_LILY_LEAF_DRIED.get())).build(consumer, "paper_from_end_lily_leaf_dried");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.STICK, 2).addIngredient(ModBlocks.NEEDLEGRASS.get()).addCriterion("has_needlegrass", hasItem(ModBlocks.NEEDLEGRASS.get())).build(consumer, "stick_from_needlegrass");
 		ShapelessRecipeBuilder.shapelessRecipe(ModBlocks.SHADOW_BERRY.get(), 4).addIngredient(ModItems.SHADOW_BERRY_RAW.get()).addCriterion("has_shadow_berry_raw", hasItem(ModItems.SHADOW_BERRY_RAW.get())).build(consumer, "shadow_berry_from_shadow_berry_raw");
+		ShapelessRecipeBuilder.shapelessRecipe(ModItems.SWEET_BERRY_JELLY.get()).addIngredient(ModItems.GELATINE.get()).addIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER).getItem()).addIngredient(Items.SUGAR).addIngredient(Items.SWEET_BERRIES).addCriterion("has_gelatine", hasItem(ModItems.GELATINE.get())).build(consumer);
+		ShapelessRecipeBuilder.shapelessRecipe(ModItems.SHADOW_BERRY_JELLY.get()).addIngredient(ModItems.GELATINE.get()).addIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER).getItem()).addIngredient(Items.SUGAR).addIngredient(ModItems.SHADOW_BERRY_COOKED.get()).addCriterion("has_gelatine", hasItem(ModItems.GELATINE.get())).build(consumer);
 		
 		// PEDESTALS
 		registerPedestal(ModBlocks.QUARTZ_PEDESTAL.get(), Blocks.QUARTZ_SLAB, Blocks.QUARTZ_PILLAR, consumer, "quartz");
