@@ -46,9 +46,20 @@ public class ModRecipes extends RecipeProvider
 		ShapelessRecipeBuilder.shapelessRecipe(Items.BLACK_DYE).addIngredient(ModBlocks.SHADOW_PLANT.get()).setGroup("black_dye").addCriterion("has_shadow_plant", hasItem(ModBlocks.SHADOW_PLANT.get())).build(consumer, "black_dye_from_shadow_plant");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE).addIngredient(ModBlocks.PURPLE_POLYPORE.get()).setGroup("purple_dye").addCriterion("has_purple_polypore", hasItem(ModBlocks.PURPLE_POLYPORE.get())).build(consumer, "purple_dye_from_purple_polypore");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.GRAY_DYE).addIngredient(ModBlocks.TAIL_MOSS.get()).setGroup("gray_dye").addCriterion("has_tail_moss", hasItem(ModBlocks.TAIL_MOSS.get())).build(consumer, "gray_dye_from_tail_moss");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.MAGENTA_DYE).addIngredient(ModBlocks.BUSHY_GRASS.get()).setGroup("magenta_dye").addCriterion("has_bushy_grass", hasItem(ModBlocks.BUSHY_GRASS.get())).build(consumer, "magenta_dye_from_bushy_grass");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.PINK_DYE).addIngredient(ModBlocks.TWISTED_MOSS.get()).setGroup("pink_dye").addCriterion("has_twisted_moss", hasItem(ModBlocks.TWISTED_MOSS.get())).build(consumer, "pink_dye_from_twisted_moss");
+		
+		ShapelessRecipeBuilder.shapelessRecipe(Items.RED_DYE).addIngredient(ModBlocks.CHARNIA_RED.get()).setGroup("red_dye").addCriterion("has_red_charnia", hasItem(ModBlocks.CHARNIA_RED.get())).build(consumer, "red_dye_from_red_charnia");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE).addIngredient(ModBlocks.CHARNIA_PURPLE.get()).setGroup("purple_dye").addCriterion("has_purple_charnia", hasItem(ModBlocks.CHARNIA_PURPLE.get())).build(consumer, "purple_dye_from_purple_charnia");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.ORANGE_DYE).addIngredient(ModBlocks.CHARNIA_ORANGE.get()).setGroup("orange_dye").addCriterion("has_orange_charnia", hasItem(ModBlocks.CHARNIA_ORANGE.get())).build(consumer, "orange_dye_from_orange_charnia");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.LIGHT_BLUE_DYE).addIngredient(ModBlocks.CHARNIA_LIGHT_BLUE.get()).setGroup("light_blue_dye").addCriterion("has_light_blue_charnia", hasItem(ModBlocks.CHARNIA_LIGHT_BLUE.get())).build(consumer, "light_blue_dye_from_light_blue_charnia");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.CYAN_DYE).addIngredient(ModBlocks.CHARNIA_CYAN.get()).setGroup("cyan_dye").addCriterion("has_cyan_charnia", hasItem(ModBlocks.CHARNIA_CYAN.get())).build(consumer, "cyan_dye_from_cyan_charnia");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.GREEN_DYE).addIngredient(ModBlocks.CHARNIA_GREEN.get()).setGroup("green_dye").addCriterion("has_green_charnia", hasItem(ModBlocks.CHARNIA_GREEN.get())).build(consumer, "green_dye_from_green_charnia");
 		
 		// MISC
 		ShapedRecipeBuilder.shapedRecipe(Items.PAPER, 3).key('#', ModItems.END_LILY_LEAF_DRIED.get()).patternLine("###").addCriterion("has_end_lily_leaf_dried", hasItem(ModItems.END_LILY_LEAF_DRIED.get())).build(consumer, "paper_from_end_lily_leaf_dried");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.STICK, 2).addIngredient(ModBlocks.NEEDLEGRASS.get()).addCriterion("has_needlegrass", hasItem(ModBlocks.NEEDLEGRASS.get())).build(consumer, "stick_from_needlegrass");
+		ShapelessRecipeBuilder.shapelessRecipe(ModBlocks.SHADOW_BERRY.get(), 4).addIngredient(ModItems.SHADOW_BERRY_RAW.get()).addCriterion("has_shadow_berry_raw", hasItem(ModItems.SHADOW_BERRY_RAW.get())).build(consumer, "shadow_berry_from_shadow_berry_raw");
 		
 		// PEDESTALS
 		registerPedestal(ModBlocks.QUARTZ_PEDESTAL.get(), Blocks.QUARTZ_SLAB, Blocks.QUARTZ_PILLAR, consumer, "quartz");

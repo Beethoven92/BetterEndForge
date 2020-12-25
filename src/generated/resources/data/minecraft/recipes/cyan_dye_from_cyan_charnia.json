@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "cyan_dye",
+  "ingredients": [
+    {
+      "item": "betterendforge:charnia_cyan"
+    }
+  ],
+  "result": {
+    "item": "minecraft:cyan_dye"
+  }
+}

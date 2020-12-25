@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "betterendforge:shadow_berry_raw"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:shadow_berry",
+    "count": 4
+  }
+}
