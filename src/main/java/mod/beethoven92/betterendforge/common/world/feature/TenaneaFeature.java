@@ -5,8 +5,6 @@ import java.util.Random;
 import java.util.function.Function;
 
 import com.google.common.collect.Lists;
-import com.mojang.serialization.Codec;
-
 import mod.beethoven92.betterendforge.common.block.BlockProperties;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.block.template.FurBlock;
