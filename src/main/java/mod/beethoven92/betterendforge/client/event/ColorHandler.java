@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.client.event;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.AuroraCrystalBlock;
+import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
@@ -22,6 +23,9 @@ public class ColorHandler
 		
 		event.getBlockColors().register((state, reader, pos, color) -> 
 		                 {return TenaneaFlowersBlock.getBlockColor(pos);}, ModBlocks.TENANEA_FLOWERS.get());
+		
+		event.getBlockColors().register((state, reader, pos, color) -> 
+        				 {return RespawnObeliskBlock.getBlockColor(pos);}, ModBlocks.RESPAWN_OBELISK.get());
 	}
 	
 	@SubscribeEvent
@@ -36,6 +40,7 @@ public class ColorHandler
 		event.getItemColors().register((stack, color) -> {
 			return ((SpawnEggItem) stack.getItem()).getColor(color);
 		}, ModItems.DRAGONFLY_SPAWN_EGG.get(), ModItems.END_FISH_SPAWN_EGG.get(),
-				ModItems.SHADOW_WALKER_SPAWN_EGG.get(), ModItems.END_SLIME_SPAWN_EGG.get());
+				ModItems.SHADOW_WALKER_SPAWN_EGG.get(), ModItems.END_SLIME_SPAWN_EGG.get(),
+				ModItems.CUBOZOA_SPAWN_EGG.get());
 	}
 }

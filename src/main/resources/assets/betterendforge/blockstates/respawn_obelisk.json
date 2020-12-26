@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"shape=top": { "model": "betterendforge:block/respawn_obelisk_top" },
+		"shape=middle": { "model": "betterendforge:block/respawn_obelisk_middle" },
+		"shape=bottom": { "model": "betterendforge:block/respawn_obelisk_bottom" }
+	}
+}

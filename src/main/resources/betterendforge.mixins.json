@@ -12,6 +12,7 @@
 	      "EndermanEntityMixin",
 	      "MonsterEntityMixin",
 	      "RepairContainerMixin",
+	      "PlayerEntityMixin",
 	      "WorldRendererMixin"
 	],
   "minVersion": "0.8"

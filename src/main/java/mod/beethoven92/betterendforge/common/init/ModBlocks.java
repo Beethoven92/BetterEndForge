@@ -4,6 +4,7 @@ import java.util.function.Supplier;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.AuroraCrystalBlock;
+import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.block.BlueVineBlock;
 import mod.beethoven92.betterendforge.common.block.BlueVineLanternBlock;
 import mod.beethoven92.betterendforge.common.block.BlueVineSeedBlock;
@@ -34,6 +35,7 @@ import mod.beethoven92.betterendforge.common.block.MurkweedBlock;
 import mod.beethoven92.betterendforge.common.block.NeedlegrassBlock;
 import mod.beethoven92.betterendforge.common.block.PathBlock;
 import mod.beethoven92.betterendforge.common.block.PythadendronSaplingBlock;
+import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.RunedFlavoliteBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowGrassBlock;
@@ -124,7 +126,6 @@ public class ModBlocks
 			() -> new EndstoneDustBlock(AbstractBlock.Properties.create(Material.SAND, Blocks.END_STONE.getMaterialColor()).
 					                                             hardnessAndResistance(0.5F).
 					                                             sound(SoundType.SAND)));
-	
 	//PATHS
 	public static final RegistryObject<Block> CRYSTAL_MOSS_PATH = registerBlockWithDefaultItem("crystal_moss_path", 
 			() -> new PathBlock(CRYSTAL_MOSS.get()));
@@ -182,6 +183,17 @@ public class ModBlocks
 					                                 hardnessAndResistance(3F, 9F).
 					                                 setRequiresTool().
 					                                 sound(SoundType.STONE)));
+	
+	
+	
+	public static final RegistryObject<Block> RESPAWN_OBELISK = registerBlockWithDefaultItem("respawn_obelisk",
+			() -> new RespawnObeliskBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.SAND).
+					setRequiresTool().
+					hardnessAndResistance(3.0F, 9.0F).
+					setLightLevel((state) -> {
+						return (state.get(RespawnObeliskBlock.SHAPE) == TripleShape.BOTTOM) ? 0 : 15;
+					})));
+
 	
 	// STONES
 	public static final RegistryObject<Block> FLAVOLITE_RUNED = registerBlockWithDefaultItem("flavolite_runed",

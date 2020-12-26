@@ -60,6 +60,7 @@ public class PhysicalClientSide implements IPhysicalSide
 	{
 		// BLOCKS
 		RenderTypeLookup.setRenderLayer(ModBlocks.AURORA_CRYSTAL.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ModBlocks.RESPAWN_OBELISK.get(), RenderType.getTranslucent());
 		
 		// TREES
 		RenderTypeLookup.setRenderLayer(ModBlocks.END_LOTUS_LEAF.get(), RenderType.getCutout());
