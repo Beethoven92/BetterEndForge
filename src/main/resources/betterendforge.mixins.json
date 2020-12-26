@@ -10,6 +10,7 @@
 	      "ChorusPlantFeatureMixin",
 	      "DimensionTypeMixin",
 	      "EndermanEntityMixin",
+	      "MonsterEntityMixin",
 	      "RepairContainerMixin",
 	      "WorldRendererMixin"
 	],
