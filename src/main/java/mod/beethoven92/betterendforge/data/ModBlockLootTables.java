@@ -6,6 +6,7 @@ import java.util.stream.StreamSupport;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.block.EndLilyBlock;
+import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
@@ -34,6 +35,11 @@ public class ModBlockLootTables extends BlockLootTables
 	@Override
 	protected void addTables() 
 	{
+		// BLOCKS		
+	    this.registerLootTable(ModBlocks.RESPAWN_OBELISK.get(), (block) -> {
+	    	return droppingWhen(block, RespawnObeliskBlock.SHAPE, TripleShape.BOTTOM);
+	    });
+		
 		// TERRAINS
 	    registerLootTable(ModBlocks.CRYSTAL_MOSS.get(), (terrain) -> {
 	    	return droppingWithSilkTouch(terrain, Blocks.END_STONE);

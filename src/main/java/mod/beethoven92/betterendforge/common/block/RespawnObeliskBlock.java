@@ -1,10 +1,6 @@
 package mod.beethoven92.betterendforge.common.block;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
-
-import com.google.common.collect.Lists;
 
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.init.ModItems;
@@ -18,7 +14,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.ActionResultType;
@@ -119,14 +114,14 @@ public class RespawnObeliskBlock extends Block {
 		super.onBlockHarvested(world, pos, state, player);
 	}
 
-	@Override
+	/*@Override
 	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 		if (state.get(SHAPE) == TripleShape.BOTTOM) {
 			return Lists.newArrayList(new ItemStack(this));
 		} else {
 			return Lists.newArrayList();
 		}
-	}
+	}*/
 
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player,
