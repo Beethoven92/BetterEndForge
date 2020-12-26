@@ -2,7 +2,6 @@ package mod.beethoven92.betterendforge.common.block;
 
 import java.util.Random;
 
-import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModTags;
@@ -12,12 +11,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.ILiquidContainer;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.Direction;
@@ -29,7 +25,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.IWorldWriter;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IForgeShearable;
@@ -245,10 +240,6 @@ public class EndLotusSeedBlock extends Block implements IGrowable, ILiquidContai
 			Direction d2 = BlockHelper.HORIZONTAL_DIRECTIONS[(i + 1) & 3];
 			worldIn.setBlockState(p.setPos(pos).move(d1).move(d2), leaf.with(EndLotusLeafBlock.HORIZONTAL_FACING, d1).with(EndLotusLeafBlock.SHAPE, TripleShape.TOP), 1 | 2 | 16);
 		}
-		//BlockHelper.setWithoutUpdate(worldIn, p.setPos(pos).move(Direction.NORTH).move(Direction.EAST), leaf.with(EndLotusLeafBlock.HORIZONTAL_FACING, Direction.NORTH).with(EndLotusLeafBlock.SHAPE, TripleShape.TOP));
-		//BlockHelper.setWithoutUpdate(worldIn, p.setPos(pos).move(Direction.EAST).move(Direction.SOUTH), leaf.with(EndLotusLeafBlock.HORIZONTAL_FACING, Direction.EAST).with(EndLotusLeafBlock.SHAPE, TripleShape.TOP));
-		//BlockHelper.setWithoutUpdate(worldIn, p.setPos(pos).move(Direction.SOUTH).move(Direction.WEST), leaf.with(EndLotusLeafBlock.HORIZONTAL_FACING, Direction.SOUTH).with(EndLotusLeafBlock.SHAPE, TripleShape.TOP));
-		//BlockHelper.setWithoutUpdate(worldIn, p.setPos(pos).move(Direction.WEST).move(Direction.NORTH), leaf.with(EndLotusLeafBlock.HORIZONTAL_FACING, Direction.WEST).with(EndLotusLeafBlock.SHAPE, TripleShape.TOP));
 	}
 
 	@Override

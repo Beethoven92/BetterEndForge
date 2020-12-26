@@ -18,7 +18,7 @@ public class EndLilyFeature extends UnderwaterPlantScatter
 	public void generate(ISeedReader world, Random random, BlockPos blockPos) 
 	{	
 		EndLilySeedBlock seed = (EndLilySeedBlock) ModBlocks.END_LILY_SEED.get();
-		seed.grow(world, random, blockPos);
+		seed.doGrow(world, random, blockPos);
 	}
 	@Override
 	protected int getChance()

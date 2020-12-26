@@ -11,7 +11,9 @@ import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.ISeedReader;
+import net.minecraft.world.World;
 
 public class BlueVineSeedBlock extends PlantBlockWithAge
 {
@@ -59,5 +61,17 @@ public class BlueVineSeedBlock extends PlantBlockWithAge
 	protected boolean isTerrain(BlockState state)
 	{
 		return state.getBlock() == ModBlocks.END_MOSS.get() || state.getBlock() == ModBlocks.END_MYCELIUM.get();
+	}
+	
+	@Override
+	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	{
+		return true;
+	}
+	
+	@Override
+	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	{
+		return true;
 	}
 }

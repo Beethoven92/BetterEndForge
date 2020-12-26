@@ -36,7 +36,19 @@ public abstract class BoneMealItemMixin
 	{
 		World world = context.getWorld();
 		BlockPos blockPos = context.getPos();
-		if (!world.isRemote()) 
+		
+		// FIX end lily and end lotus seeds not being able to grow when using bonemeal on them
+		if (BoneMealItem.applyBonemeal(context.getItem(), world, blockPos, context.getPlayer())) 
+		{
+	          if (!world.isRemote) 
+	          {
+	             world.playEvent(2005, blockPos, 0);
+	          }
+
+	          info.setReturnValue(ActionResultType.func_233537_a_(world.isRemote));
+	          info.cancel();
+		}
+		else if (!world.isRemote()) 
 		{
 			BlockPos offseted = blockPos.offset(context.getFace());
 			boolean endBiome = world.getBiome(offseted).getCategory() == Category.THEEND;
@@ -73,6 +85,7 @@ public abstract class BoneMealItemMixin
 					info.cancel();
 				}
 			}
+			// Prevents bonemeal generating sea grass underwater in end biomes
 			else if (!world.getFluidState(offseted).isEmpty() && endBiome) 
 			{
 				info.setReturnValue(ActionResultType.FAIL);

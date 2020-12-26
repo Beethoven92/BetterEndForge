@@ -94,13 +94,13 @@ public class DoublePlantBlock extends Block implements IGrowable
 	@Override
 	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state)
 	{
-		return true;
+		return false;
 	}
 
 	@Override
