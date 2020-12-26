@@ -11,6 +11,7 @@
 	      "DimensionTypeMixin",
 	      "EndermanEntityMixin",
 	      "RepairContainerMixin",
+	      "PlayerEntityMixin",
 	      "WorldRendererMixin"
 	],
   "minVersion": "0.8"

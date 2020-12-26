@@ -35,6 +35,7 @@ public class BlockHelper
 	public static final int FLAG_IGNORE_OBSERVERS = 16;
 
 	public static final int SET_SILENT = FLAG_UPDATE_BLOCK | FLAG_IGNORE_OBSERVERS | FLAG_SEND_CLIENT_CHANGES;
+	public static final int SET_OBSERV = FLAG_UPDATE_BLOCK | FLAG_SEND_CLIENT_CHANGES;
 	
 	public static final Direction[] HORIZONTAL_DIRECTIONS = makeHorizontal();
 	public static final Direction[] DIRECTIONS = Direction.values();
@@ -92,6 +93,14 @@ public class BlockHelper
 	public static void setWithoutUpdate(IWorldWriter world, BlockPos pos, BlockState state) 
 	{
 		world.setBlockState(pos, state, SET_SILENT);
+	}
+	
+	public static void setWithUpdate(IWorldWriter world, BlockPos pos, BlockState state) {
+		world.setBlockState(pos, state, SET_OBSERV);
+	}
+	
+	public static void setWithUpdate(IWorldWriter world, BlockPos pos, Block block) {
+		world.setBlockState(pos, block.getDefaultState(), SET_OBSERV);
 	}
 	
 	public static void setWithoutUpdate(IWorldWriter world, BlockPos pos, Block block) 
