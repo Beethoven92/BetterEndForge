@@ -41,6 +41,7 @@ public class ModBiomes
 	
 	private static final HashMap<ResourceLocation, BetterEndBiome> ID_MAP = Maps.newHashMap();
 	private static final HashMap<Biome, BetterEndBiome> CLIENT = Maps.newHashMap();
+	private static final Set<ResourceLocation> SUBBIOMES_UNMUTABLES = Sets.newHashSet();
 	
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
@@ -81,12 +82,13 @@ public class ModBiomes
 		VOID_BIOMES.clearMutables();
 		
 		Map<String, JsonObject> configs = Maps.newHashMap();
+		
 		biomeRegistry.forEach((biome) -> {
 			if (biome.getCategory() == Category.THEEND) 
 			{
 				ResourceLocation id = biomeRegistry.getKey(biome);
 				
-				if (!LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id)) 
+				if (!LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id) && !SUBBIOMES_UNMUTABLES.contains(id)) 
 				{
 					JsonObject config = configs.get(id.getNamespace());
 					if (config == null) {
@@ -185,6 +187,7 @@ public class ModBiomes
 		BetterEndBiome endBiome = new BetterEndBiome(WorldGenRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, hasCaves);
 		parent.addSubBiome(endBiome);
 		SUBBIOMES.add(endBiome);
+		SUBBIOMES_UNMUTABLES.add(endBiome.getID());
 		ID_MAP.put(endBiome.getID(), endBiome);
 		return endBiome;
 	}
@@ -198,10 +201,12 @@ public class ModBiomes
 		return biome;
 	}
 	
-	public static BetterEndBiome registerSubBiome(BetterEndBiome biome, BetterEndBiome parent) {
+	public static BetterEndBiome registerSubBiome(BetterEndBiome biome, BetterEndBiome parent) 
+	{
 		registerBiomeDirect(biome);
 		parent.addSubBiome(biome);
 		SUBBIOMES.add(biome);
+		SUBBIOMES_UNMUTABLES.add(biome.getID());
 		ID_MAP.put(biome.getID(), biome);
 		return biome;
 	}
@@ -248,10 +253,10 @@ public class ModBiomes
 			}
 			BetterEnd.LOGGER.info(message + possibleID);
 		}
-		// Can not mess with vanilla registries anymore
-		//Registry.register(WorldGenRegistries.BIOME, possibleID, biome.getID().toString(), biome.getBiome());
+
+		// WorldGenRegistries.BIOME is locked now
 		biome.getBiome().setRegistryName(biome.getID());
-		//BIOME_LIST.add(biome.getBiome());
+		//BIOME_LIST.add(biome.getBiome()); 
 	}
 	
 	public static BetterEndBiome getFromBiome(Biome biome) 
