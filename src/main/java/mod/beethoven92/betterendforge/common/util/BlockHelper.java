@@ -10,11 +10,13 @@ import mod.beethoven92.betterendforge.common.block.template.DoublePlantBlock;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import mod.beethoven92.betterendforge.common.block.template.FurBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
+import mod.beethoven92.betterendforge.common.init.ModTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -274,5 +276,15 @@ public class BlockHelper
 	private static BlockState getAirOrFluid(BlockState state) 
 	{
 		return state.getFluidState().isEmpty() ? AIR : state.getFluidState().getBlockState();
+	}
+	
+	public static boolean isEndNylium(Block block) 
+	{
+		return block.isIn(BlockTags.NYLIUM) && block.isIn(ModTags.END_GROUND);
+	}
+	
+	public static boolean isEndNylium(BlockState state) 
+	{
+		return isEndNylium(state.getBlock());
 	}
 }
