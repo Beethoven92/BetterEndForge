@@ -19,7 +19,7 @@ public abstract class UnderwaterPlantBlockWithAge extends UnderwaterPlantBlock
 		super(properties);
 	}
 	
-	public abstract void grow(ISeedReader world, Random random, BlockPos pos);
+	public abstract void doGrow(ISeedReader world, Random random, BlockPos pos);
 	
 	@Override
 	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
@@ -33,7 +33,7 @@ public abstract class UnderwaterPlantBlockWithAge extends UnderwaterPlantBlock
 			}
 			else 
 			{
-				grow(worldIn, rand, pos);
+				doGrow(worldIn, rand, pos);
 			}
 		}
 	}

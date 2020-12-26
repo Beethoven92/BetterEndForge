@@ -40,16 +40,4 @@ public class BubbleCoralBlock extends UnderwaterPlantBlock
 		double z = pos.getZ() + rand.nextDouble();
 		worldIn.addParticle(ParticleTypes.BUBBLE, x, y, z, 0.0D, 0.0D, 0.0D);
 	}
-	
-	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
-	{
-		return false;
-	}
-	
-	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
-	{
-		return false;
-	}
 }

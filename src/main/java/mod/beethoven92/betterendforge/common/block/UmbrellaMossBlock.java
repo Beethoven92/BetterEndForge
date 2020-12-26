@@ -42,7 +42,7 @@ public class UmbrellaMossBlock extends PlantBlock
 	{
 		return true;
 	}
-
+	
 	@Override
 	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
 	{

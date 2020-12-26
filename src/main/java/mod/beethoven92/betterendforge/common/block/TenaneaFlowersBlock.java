@@ -41,12 +41,6 @@ public class TenaneaFlowersBlock extends EndVineBlock
 			worldIn.addParticle(ModParticleTypes.TENANEA_PETAL.get(), x, y, z, 0, 0, 0);
 		}
 	}
-	
-	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
-	{
-		return false;
-	}
 
 	public static int getBlockColor(BlockPos pos) 
 	{

@@ -10,8 +10,10 @@ import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
 
 public class BulbVineSeedBlock extends PlantBlockWithAge
 {
@@ -40,5 +42,17 @@ public class BulbVineSeedBlock extends PlantBlockWithAge
 			}
 			BlockHelper.setWithoutUpdate(world, pos.down(h), ModBlocks.BULB_VINE.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 		}
+	}
+	
+	@Override
+	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	{
+		return true;
+	}
+	
+	@Override
+	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	{
+		return true;
 	}
 }

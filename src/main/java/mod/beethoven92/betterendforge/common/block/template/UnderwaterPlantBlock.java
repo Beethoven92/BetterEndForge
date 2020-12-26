@@ -93,13 +93,13 @@ public class UnderwaterPlantBlock extends Block implements IGrowable, ILiquidCon
 	@Override
 	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
-		return true;
+		return false;
 	}
 
 	@Override
