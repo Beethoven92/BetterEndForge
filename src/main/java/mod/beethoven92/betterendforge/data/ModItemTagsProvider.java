@@ -52,6 +52,7 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		
 		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.TERMINITE_BLOCK.get().asItem());
 		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get().asItem());
+		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AMBER_BLOCK.get().asItem());
 		
 		// HAMMERS
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.IRON_HAMMER.get());
