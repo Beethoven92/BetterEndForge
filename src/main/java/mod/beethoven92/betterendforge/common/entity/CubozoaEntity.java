@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
-import mod.beethoven92.betterendforge.common.init.ModItems;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -13,7 +12,6 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -47,10 +45,11 @@ public class CubozoaEntity extends AbstractGroupFishEntity {
 	@Override
 	public ILivingEntityData onInitialSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason spawnReason, ILivingEntityData entityData, CompoundNBT entityTag) {
 		ILivingEntityData data = super.onInitialSpawn(world, difficulty, spawnReason, entityData, entityTag);
-		// TODO: Enable this check when the sulphur springs biome is implemented
-//		if (ModBiomes.getFromBiome(world.getBiome(getPosition())) == ModBiomes.SULPHUR_SPRINGS) {
-//			this.dataManager.set(VARIANT, (byte) 1);
-//		}
+		
+		if (ModBiomes.getFromBiome(world.getBiome(getPosition())) == ModBiomes.SULPHUR_SPRINGS) 
+		{
+			this.dataManager.set(VARIANT, (byte) 1);
+		}
 		this.recalculateSize();
 		return data;
 	}
