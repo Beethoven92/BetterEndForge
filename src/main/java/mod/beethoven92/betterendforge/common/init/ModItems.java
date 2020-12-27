@@ -42,6 +42,7 @@ public class ModItems
 	public final static RegistryObject<Item> RAW_AMBER = ITEMS.register("raw_amber", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB))); // TODO: Add recipes for raw amber and amber gem
 	public final static RegistryObject<Item> AMBER_GEM = ITEMS.register("amber_gem", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> GELATINE = ITEMS.register("gelatine", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> CRYSTALLINE_SULPHUR = ITEMS.register("crystalline_sulphur", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	
 	// ARMOR ITEMS
 	public static final RegistryObject<Item> TERMINITE_HELMET = ITEMS.register("terminite_helmet", () -> new ArmorItem(ModArmorMaterial.TERMINITE, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
@@ -85,8 +86,7 @@ public class ModItems
 	public final static RegistryObject<Item> END_FISH_COOKED = ITEMS.register("end_fish_cooked", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(Foods.COOKED_SALMON)));
 	public final static RegistryObject<Item> SWEET_BERRY_JELLY = ITEMS.register("sweet_berry_jelly", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(3).saturation(0.75f).build())));
 	public final static RegistryObject<Item> SHADOW_BERRY_JELLY = ITEMS.register("shadow_berry_jelly", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(4).saturation(0.75f).effect(() -> new EffectInstance(Effects.NIGHT_VISION, 400), 1).build())));
-	
-	
+		
 	// MISC ITEMS
 	public final static RegistryObject<Item> BUCKET_END_FISH = ITEMS.register("bucket_end_fish", () -> new FishBucketItem(() -> ModEntityTypes.END_FISH.get(), () -> Fluids.WATER, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
 }

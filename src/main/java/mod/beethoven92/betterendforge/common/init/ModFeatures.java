@@ -12,6 +12,8 @@ import mod.beethoven92.betterendforge.common.world.feature.EndLilyFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLotusFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLotusLeafFeature;
 import mod.beethoven92.betterendforge.common.world.feature.FloatingSpireFeature;
+import mod.beethoven92.betterendforge.common.world.feature.GeyserFeature;
+import mod.beethoven92.betterendforge.common.world.feature.HydraluxFeature;
 import mod.beethoven92.betterendforge.common.world.feature.LacugroveFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MengerSpongeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MossyGlowshroomFeature;
@@ -20,6 +22,9 @@ import mod.beethoven92.betterendforge.common.world.feature.PythadendronFeature;
 import mod.beethoven92.betterendforge.common.world.feature.RoundCaveFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SinglePlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SpireFeature;
+import mod.beethoven92.betterendforge.common.world.feature.SulphuricCaveFeature;
+import mod.beethoven92.betterendforge.common.world.feature.SulphuricLakeFeature;
+import mod.beethoven92.betterendforge.common.world.feature.SurfaceVentFeature;
 import mod.beethoven92.betterendforge.common.world.feature.TenaneaBushFeature;
 import mod.beethoven92.betterendforge.common.world.feature.TenaneaFeature;
 import mod.beethoven92.betterendforge.common.world.feature.UnderwaterPlantFeature;
@@ -49,6 +54,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> CHARNIA_CYAN = new CharniaFeature(ModBlocks.CHARNIA_CYAN.get());
 	public static final Feature<NoFeatureConfig> CHARNIA_GREEN = new CharniaFeature(ModBlocks.CHARNIA_GREEN.get());
 	public static final Feature<NoFeatureConfig> CHARNIA_RED_RARE = new CharniaFeature(ModBlocks.CHARNIA_RED.get());
+	public static final Feature<NoFeatureConfig> HYDRALUX = new HydraluxFeature(5);
 	
 	// BUSHES
 	public static final Feature<NoFeatureConfig> PYTHADENDRON_BUSH = new BushFeature(ModBlocks.PYTHADENDRON_LEAVES.get(), ModBlocks.PYTHADENDRON.bark.get());
@@ -91,6 +97,10 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> END_LAKE_RARE = new EndLakeFeature();
 	public static final Feature<NoFeatureConfig> SPIRE = new SpireFeature();
 	public static final Feature<NoFeatureConfig> FLOATING_SPIRE = new FloatingSpireFeature();
+	public static final Feature<NoFeatureConfig> GEYSER = new GeyserFeature();
+	public static final Feature<NoFeatureConfig> SULPHURIC_LAKE = new SulphuricLakeFeature();
+	public static final Feature<NoFeatureConfig> SULPHURIC_CAVE = new SulphuricCaveFeature();
+	public static final Feature<NoFeatureConfig> SURFACE_VENT = new SurfaceVentFeature();
 	
 	// TREES
 	public static final Feature<NoFeatureConfig> MOSSY_GLOWSHROOM = new MossyGlowshroomFeature();
@@ -121,6 +131,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), CHARNIA_CYAN, "charnia_cyan");  
     	BetterEnd.register(event.getRegistry(), CHARNIA_GREEN, "charnia_green");
     	BetterEnd.register(event.getRegistry(), CHARNIA_RED_RARE, "charnia_red_rare");
+    	BetterEnd.register(event.getRegistry(), HYDRALUX, "hydralux");
     	//BUSHES
     	BetterEnd.register(event.getRegistry(), PYTHADENDRON_BUSH, "pythadendron_bush"); 
     	BetterEnd.register(event.getRegistry(), DRAGON_TREE_BUSH, "dragon_tree_bush"); 
@@ -158,6 +169,10 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), END_LAKE_RARE, "end_lake_rare"); 
     	BetterEnd.register(event.getRegistry(), SPIRE, "spire");   
     	BetterEnd.register(event.getRegistry(), FLOATING_SPIRE, "floating_spire");
+    	BetterEnd.register(event.getRegistry(), GEYSER, "geyser");
+    	BetterEnd.register(event.getRegistry(), SULPHURIC_LAKE, "sulphuric_lake");
+    	BetterEnd.register(event.getRegistry(), SULPHURIC_CAVE, "sulphuric_cave");
+    	BetterEnd.register(event.getRegistry(), SURFACE_VENT, "surface_vent");
     	// TREES
     	BetterEnd.register(event.getRegistry(), MOSSY_GLOWSHROOM, "mossy_glowshroom");
     	BetterEnd.register(event.getRegistry(), LACUGROVE, "lacugrove");   

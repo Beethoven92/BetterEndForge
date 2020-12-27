@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"":  [
+			{ "model": "betterendforge:block/hydrothermal_vent" },
+			{ "model": "betterendforge:block/hydrothermal_vent", "y": 90 },
+			{ "model": "betterendforge:block/hydrothermal_vent", "y": 180 },
+			{ "model": "betterendforge:block/hydrothermal_vent", "y": 270 }
+		]
+	}
+}

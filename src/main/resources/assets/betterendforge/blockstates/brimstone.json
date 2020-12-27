@@ -1,0 +1,6 @@
+{
+	"variants": {
+		"active=true":  { "model": "betterendforge:block/brimstone_active" },
+		"active=false": { "model": "betterendforge:block/brimstone_normal" }
+	}
+}

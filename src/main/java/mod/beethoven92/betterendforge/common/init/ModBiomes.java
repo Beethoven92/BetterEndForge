@@ -24,6 +24,7 @@ import mod.beethoven92.betterendforge.common.world.biome.MegalakeBiome;
 import mod.beethoven92.betterendforge.common.world.biome.MegalakeGroveBiome;
 import mod.beethoven92.betterendforge.common.world.biome.PaintedMountainsBiome;
 import mod.beethoven92.betterendforge.common.world.biome.ShadowForestBiome;
+import mod.beethoven92.betterendforge.common.world.biome.SulphurSpringsBiome;
 import mod.beethoven92.betterendforge.common.world.generator.BiomePicker;
 import mod.beethoven92.betterendforge.common.world.generator.EndBiomeType;
 import net.minecraft.server.MinecraftServer;
@@ -71,6 +72,7 @@ public class ModBiomes
 	public static final BetterEndBiome CHORUS_FOREST = registerBiome(new ChorusForestBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome SHADOW_FOREST = registerBiome(new ShadowForestBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome BLOSSOMING_SPIRES = registerBiome(new BlossomingSpiresBiome(), EndBiomeType.LAND);
+	public static final BetterEndBiome SULPHUR_SPRINGS = registerBiome(new SulphurSpringsBiome(), EndBiomeType.LAND);
 	
 	public static void register() {}
 	

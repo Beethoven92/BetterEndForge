@@ -8,6 +8,7 @@ import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.block.EndLilyBlock;
 import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
+import mod.beethoven92.betterendforge.common.block.SulphurCrystalBlock;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
@@ -15,9 +16,13 @@ import mod.beethoven92.betterendforge.common.init.ModItems;
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.StemBlock;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.loot.BinomialRange;
+import net.minecraft.loot.ConstantRange;
 import net.minecraft.loot.ItemLootEntry;
 import net.minecraft.loot.LootEntry;
 import net.minecraft.loot.LootPool;
@@ -39,8 +44,16 @@ public class ModBlockLootTables extends BlockLootTables
 	    this.registerLootTable(ModBlocks.RESPAWN_OBELISK.get(), (block) -> {
 	    	return droppingWhen(block, RespawnObeliskBlock.SHAPE, TripleShape.BOTTOM);
 	    });
-		
-		// TERRAINS
+	    
+	    registerDropSelfLootTable(ModBlocks.BRIMSTONE.get());
+	    
+	    registerDropSelfLootTable(ModBlocks.HYDROTHERMAL_VENT.get());
+	    
+	    registerLootTable(ModBlocks.SULPHUR_CRYSTAL.get(), (block) -> {
+	    	return sulphurCrystalDrop(block, ModItems.CRYSTALLINE_SULPHUR.get());
+	    });
+	    
+	    // TERRAINS
 	    registerLootTable(ModBlocks.CRYSTAL_MOSS.get(), (terrain) -> {
 	    	return droppingWithSilkTouch(terrain, Blocks.END_STONE);
 	    });
@@ -207,6 +220,8 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		registerLootTable(ModBlocks.TWISTED_MOSS.get(), BlockLootTables::onlyWithShears);
 		
+		registerLootTable(ModBlocks.TUBE_WORM.get(), BlockLootTables::onlyWithShears);
+		
 		// VINES
 		registerLootTable(ModBlocks.DENSE_VINE.get(), BlockLootTables::onlyWithShears);
 		/*registerLootTable(ModBlocks.DENSE_VINE.get(), (block) -> {
@@ -268,6 +283,7 @@ public class ModBlockLootTables extends BlockLootTables
 		// STONE MATERIALS
 		registerStoneMaterialLootTables(ModBlocks.FLAVOLITE);
 		registerStoneMaterialLootTables(ModBlocks.VIOLECITE);
+		registerStoneMaterialLootTables(ModBlocks.SULPHURIC_ROCK);
 	}
 	
 	@Override
@@ -318,5 +334,11 @@ public class ModBlockLootTables extends BlockLootTables
 		LootEntry.Builder<?> leaf_drop = ItemLootEntry.builder(ModItems.END_LILY_LEAF.get()).acceptCondition(RandomChance.builder(0.525F));
 		LootEntry.Builder<?> seed_drop = ItemLootEntry.builder(ModBlocks.END_LILY_SEED.get()).acceptCondition(RandomChance.builder(0.525F));
 		return LootTable.builder().addLootPool(LootPool.builder().addEntry(leaf_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.END_LILY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(EndLilyBlock.SHAPE, TripleShape.TOP)))).addLootPool(LootPool.builder().addEntry(seed_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.END_LILY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(EndLilyBlock.SHAPE, TripleShape.BOTTOM))));
+	}
+	
+	private static LootTable.Builder sulphurCrystalDrop(Block block, Item drop)
+	{
+		                                                                             //.rolls(ConstantRange.of(1)).
+		return LootTable.builder().addLootPool(withExplosionDecay(block, LootPool.builder().addEntry(ItemLootEntry.builder(drop).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 3.0F)).acceptCondition(BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(SulphurCrystalBlock.AGE, 3)))))));
 	}
 }

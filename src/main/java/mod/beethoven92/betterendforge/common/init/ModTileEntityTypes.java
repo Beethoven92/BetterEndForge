@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.init;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.tileentity.EndStoneSmelterTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.EternalPedestalTileEntity;
+import mod.beethoven92.betterendforge.common.tileentity.HydrothermalVentTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.InfusionPedestalTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.PedestalTileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -34,4 +35,9 @@ public class ModTileEntityTypes
 			TILE_ENTITY_TYPES.register("end_stone_smelter_tile_entity", 
 					() -> TileEntityType.Builder.create(EndStoneSmelterTileEntity::new, 
 							ModBlocks.END_STONE_SMELTER.get()).build(null));
+	
+	public static final RegistryObject<TileEntityType<HydrothermalVentTileEntity>> HYDROTHERMAL_VENT =
+			TILE_ENTITY_TYPES.register("hydrothermal_vent_tile_entity", 
+					() -> TileEntityType.Builder.create(HydrothermalVentTileEntity::new, 
+							ModBlocks.HYDROTHERMAL_VENT.get()).build(null));
 }

@@ -1,0 +1,24 @@
+{
+    "variants": {
+        "facing=north":  [
+			{ "model": "betterendforge:block/tube_worm_01", "y": 180 },
+			{ "model": "betterendforge:block/tube_worm_02", "y": 180 },
+			{ "model": "betterendforge:block/tube_worm_03", "y": 180 }
+		],
+        "facing=south":  [
+			{ "model": "betterendforge:block/tube_worm_01" },
+			{ "model": "betterendforge:block/tube_worm_02" },
+			{ "model": "betterendforge:block/tube_worm_03" }
+		],
+        "facing=east":  [
+			{ "model": "betterendforge:block/tube_worm_01", "y": 270 },
+			{ "model": "betterendforge:block/tube_worm_02", "y": 270 },
+			{ "model": "betterendforge:block/tube_worm_03", "y": 270 }
+		],
+        "facing=west":  [
+			{ "model": "betterendforge:block/tube_worm_01", "y": 90 },
+			{ "model": "betterendforge:block/tube_worm_02", "y": 90 },
+			{ "model": "betterendforge:block/tube_worm_03", "y": 90 }
+		]
+    }
+}

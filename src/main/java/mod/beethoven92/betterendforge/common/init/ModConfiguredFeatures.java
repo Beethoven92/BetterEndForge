@@ -73,6 +73,10 @@ public class ModConfiguredFeatures
 			ModFeatures.CHARNIA_RED_RARE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(2));
 	
+	public static final ConfiguredFeature<?, ?> HYDRALUX = 
+			ModFeatures.HYDRALUX.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(5));
+	
 	// BUSHES
 	public static final ConfiguredFeature<?, ?> PYTHADENDRON_BUSH = 
 			ModFeatures.PYTHADENDRON_BUSH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -206,6 +210,22 @@ public class ModConfiguredFeatures
 			ModFeatures.FLOATING_SPIRE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.CHANCE.configure(new ChanceConfig(8)));
 	
+	public static final ConfiguredFeature<?, ?> GEYSER = 
+			ModFeatures.GEYSER.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.CHANCE.configure(new ChanceConfig(8)));
+	
+	public static final ConfiguredFeature<?, ?> SULPHURIC_LAKE = 
+			ModFeatures.SULPHURIC_LAKE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.WATER_LAKE.configure(new ChanceConfig(8)));
+	
+	public static final ConfiguredFeature<?, ?> SULPHURIC_CAVE = 
+			ModFeatures.SULPHURIC_CAVE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.COUNT.configure(new FeatureSpreadConfig(2)));
+	
+	public static final ConfiguredFeature<?, ?> SURFACE_VENT = 
+			ModFeatures.SURFACE_VENT.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.CHANCE.configure(new ChanceConfig(4)));
+	
 	// TREES
 	public static final ConfiguredFeature<?, ?> MOSSY_GLOWSHROOM = 
 			ModFeatures.MOSSY_GLOWSHROOM.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -267,7 +287,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "charnia_cyan"), CHARNIA_CYAN);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "charnia_green"), CHARNIA_GREEN);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "charnia_red_rare"), CHARNIA_RED_RARE);
-        
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "hydralux"), HYDRALUX);
         // BUSHES
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "pythadendron_bush"), PYTHADENDRON_BUSH);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "dragon_tree_bush"), DRAGON_TREE_BUSH);
@@ -305,6 +325,10 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "end_lake_rare"), END_LAKE_RARE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "spire"), SPIRE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "floating_spire"), FLOATING_SPIRE);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "geyser"), GEYSER);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "sulphuric_lake"), SULPHURIC_LAKE);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "sulphuric_cave"), SULPHURIC_CAVE);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "surface_vent"), SURFACE_VENT);
         // TREES
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "mossy_glowshroom"), MOSSY_GLOWSHROOM);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "lacugrove"), LACUGROVE);

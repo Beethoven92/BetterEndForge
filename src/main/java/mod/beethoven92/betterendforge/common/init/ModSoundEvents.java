@@ -27,6 +27,8 @@ public class ModSoundEvents
 			registerSoundEvent("betterendforge.music.shadow_forest");
 	public static final RegistryObject<SoundEvent> MUSIC_BLOSSOMING_SPIRES = 
 			registerSoundEvent("betterendforge.music.blossoming_spires");
+	public static final RegistryObject<SoundEvent> MUSIC_SULPHUR_SPRINGS = 
+			registerSoundEvent("betterendforge.music.sulphur_springs");
 	
 	// AMBIENT SOUNDS
 	public static final RegistryObject<SoundEvent> AMBIENT_FOGGY_MUSHROOMLAND = 
@@ -41,8 +43,10 @@ public class ModSoundEvents
 			registerSoundEvent("betterendforge.ambient.megalake_grove");
 	public static final RegistryObject<SoundEvent> AMBIENT_BLOSSOMING_SPIRES = 
 			registerSoundEvent("betterendforge.ambient.blossoming_spires");
-	
-    // ENTITY SOUNDS
+	public static final RegistryObject<SoundEvent> AMBIENT_SULPHUR_SPRINGS = 
+			registerSoundEvent("betterendforge.ambient.sulphur_springs");
+   
+	// ENTITY SOUNDS
 	public static final RegistryObject<SoundEvent> ENTITY_DRAGONFLY = 
 			registerSoundEvent("betterendforge.entity.dragonfly");
 	public static final RegistryObject<SoundEvent> ENTITY_SHADOW_WALKER = 

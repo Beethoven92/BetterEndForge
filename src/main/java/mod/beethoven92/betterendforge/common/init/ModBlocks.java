@@ -8,6 +8,7 @@ import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.block.BlueVineBlock;
 import mod.beethoven92.betterendforge.common.block.BlueVineLanternBlock;
 import mod.beethoven92.betterendforge.common.block.BlueVineSeedBlock;
+import mod.beethoven92.betterendforge.common.block.BrimstoneBlock;
 import mod.beethoven92.betterendforge.common.block.BubbleCoralBlock;
 import mod.beethoven92.betterendforge.common.block.BulbVineBlock;
 import mod.beethoven92.betterendforge.common.block.BulbVineSeedBlock;
@@ -25,6 +26,10 @@ import mod.beethoven92.betterendforge.common.block.EndStoneSmelter;
 import mod.beethoven92.betterendforge.common.block.EndstoneDustBlock;
 import mod.beethoven92.betterendforge.common.block.EternalPedestal;
 import mod.beethoven92.betterendforge.common.block.GlowingMossBlock;
+import mod.beethoven92.betterendforge.common.block.HydraluxBlock;
+import mod.beethoven92.betterendforge.common.block.HydraluxPetalBlock;
+import mod.beethoven92.betterendforge.common.block.HydraluxSaplingBlock;
+import mod.beethoven92.betterendforge.common.block.HydrothermalVentBlock;
 import mod.beethoven92.betterendforge.common.block.InfusionPedestal;
 import mod.beethoven92.betterendforge.common.block.LacugroveSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeBlock;
@@ -39,17 +44,20 @@ import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.RunedFlavoliteBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowGrassBlock;
+import mod.beethoven92.betterendforge.common.block.SulphurCrystalBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.TerrainBlock;
 import mod.beethoven92.betterendforge.common.block.TerrainPlantBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaMossBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaMossTallBlock;
+import mod.beethoven92.betterendforge.common.block.VentBubbleColumnBlock;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import mod.beethoven92.betterendforge.common.block.template.FurBlock;
 import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
+import mod.beethoven92.betterendforge.common.block.template.UnderwaterWallPlantBlock;
 import mod.beethoven92.betterendforge.common.block.template.WallMushroomBlock;
 import mod.beethoven92.betterendforge.common.block.template.WallPlantBlock;
 import net.minecraft.block.AbstractBlock;
@@ -184,18 +192,25 @@ public class ModBlocks
 					                                 setRequiresTool().
 					                                 sound(SoundType.STONE)));
 	
+	// ROCKS
+	public static final RegistryObject<Block> BRIMSTONE = registerBlockWithDefaultItem("brimstone",
+			() -> new BrimstoneBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.BROWN).
+					                                          setRequiresTool().
+					                                          hardnessAndResistance(3.0F, 9.0F).
+					                                          tickRandomly()));
 	
+	public static final RegistryObject<Block> SULPHUR_CRYSTAL = registerBlockWithDefaultItem("sulphur_crystal",
+			() -> new SulphurCrystalBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.YELLOW).
+					                                          setRequiresTool().
+					                                          doesNotBlockMovement().
+					                                          sound(SoundType.GLASS)));
 	
-	public static final RegistryObject<Block> RESPAWN_OBELISK = registerBlockWithDefaultItem("respawn_obelisk",
-			() -> new RespawnObeliskBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.SAND).
-					setRequiresTool().
-					hardnessAndResistance(3.0F, 9.0F).
-					setLightLevel((state) -> {
-						return (state.get(RespawnObeliskBlock.SHAPE) == TripleShape.BOTTOM) ? 0 : 15;
-					})));
-
+	public static final RegistryObject<Block> HYDROTHERMAL_VENT = registerBlockWithDefaultItem("hydrothermal_vent",
+			() -> new HydrothermalVentBlock(AbstractBlock.Properties.create(Material.ROCK).
+                                                                     setRequiresTool().
+                                                                     doesNotBlockMovement().
+                                                                     sound(SoundType.STONE)));
 	
-	// STONES
 	public static final RegistryObject<Block> FLAVOLITE_RUNED = registerBlockWithDefaultItem("flavolite_runed",
 			() -> new RunedFlavoliteBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.SAND).
 					                                               setRequiresTool().
@@ -384,6 +399,28 @@ public class ModBlocks
 					                                        zeroHardnessAndResistance().
 					                                        sound(SoundType.WET_GRASS).
 					                                        doesNotBlockMovement()));
+	
+	public static final RegistryObject<Block> HYDRALUX_SAPLING = registerBlockWithDefaultItem("hydralux_sapling",
+			() -> new HydraluxSaplingBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
+					                                                zeroHardnessAndResistance().
+					                                                sound(SoundType.WET_GRASS).
+					                                                tickRandomly().
+					                                                doesNotBlockMovement()));
+	
+	public static final RegistryObject<Block> HYDRALUX = registerBlock("hydralux",
+			() -> new HydraluxBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
+					                                                zeroHardnessAndResistance().
+					                                                sound(SoundType.WET_GRASS).
+					                                                setLightLevel((state) -> {
+					                                                	return (state.get(HydraluxBlock.SHAPE).hasGlow()) ? 15 : 0;}).
+					                                                doesNotBlockMovement()));
+	
+	public static final RegistryObject<Block> HYDRALUX_PETAL_BLOCK = registerBlockWithDefaultItem("hydralux_petal_block",
+			() -> new HydraluxPetalBlock(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.FOLIAGE).
+					                                              sound(SoundType.WART).
+					                                              hardnessAndResistance(1F).
+					                                              harvestTool(ToolType.AXE)));
+	
 	// CROPS
 	public static final RegistryObject<Block> SHADOW_BERRY = registerBlockWithDefaultItem("shadow_berry", 
 			() -> new ShadowBerryBlock(AbstractBlock.Properties.create(Material.PLANTS).
@@ -418,6 +455,13 @@ public class ModBlocks
                                                               zeroHardnessAndResistance().
                                                               doesNotBlockMovement().
                                                               sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> TUBE_WORM = registerBlockWithDefaultItem("tube_worm", 
+			() -> new UnderwaterWallPlantBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
+                                                                        zeroHardnessAndResistance().
+                                                                        doesNotBlockMovement().
+                                                                        sound(SoundType.WET_GRASS)));
+	
 	// VINES
 	public static final RegistryObject<Block> DENSE_VINE = registerBlockWithDefaultItem("dense_vine",
 			() -> new EndVineBlock(AbstractBlock.Properties.create(Material.PLANTS).
@@ -578,6 +622,20 @@ public class ModBlocks
 					                                          setLightLevel((state) -> {return 12;}).
 					                                          noDrops()));
 	
+	public static final RegistryObject<Block> RESPAWN_OBELISK = registerBlockWithDefaultItem("respawn_obelisk",
+			() -> new RespawnObeliskBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.SAND).
+					setRequiresTool().
+					hardnessAndResistance(3.0F, 9.0F).
+					setLightLevel((state) -> {
+						return (state.get(RespawnObeliskBlock.SHAPE) == TripleShape.BOTTOM) ? 0 : 15;
+					})));
+	
+	public static final RegistryObject<Block> VENT_BUBBLE_COLUMN = registerBlock("vent_bubble_column",
+			() -> new VentBubbleColumnBlock(AbstractBlock.Properties.create(Material.BUBBLE_COLUMN).
+                                                                     doesNotBlockMovement().
+                                                                     setOpaque((state, world, pos) -> { return false; }).
+                                                                     noDrops()));
+	
 	// WOODEN MATERIALS
 	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.GRAY, MaterialColor.WOOD);
 	public static final WoodenMaterial LACUGROVE = new WoodenMaterial("lacugrove", MaterialColor.BROWN, MaterialColor.YELLOW);
@@ -589,6 +647,7 @@ public class ModBlocks
 	// STONE MATERIALS
     public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
     public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.PURPLE);
+    public static final StoneMaterial SULPHURIC_ROCK = new StoneMaterial("sulphuric_rock", MaterialColor.BROWN);
     
 	
 	//////////////////////////////////////////////////////
