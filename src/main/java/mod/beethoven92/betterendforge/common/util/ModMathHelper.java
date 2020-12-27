@@ -6,6 +6,8 @@ import net.minecraft.util.math.MathHelper;
 
 public class ModMathHelper 
 {
+	public static final Random RANDOM = new Random();
+	
 	public static final float PI2 = (float) (Math.PI * 2);
 	
 	private static final int ALPHA = 255 << 24;
