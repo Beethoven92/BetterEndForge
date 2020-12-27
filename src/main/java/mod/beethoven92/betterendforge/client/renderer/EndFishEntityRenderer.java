@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.client.model.EndFishEntityModel;
 import mod.beethoven92.betterendforge.client.renderer.layer.EyesLayer;
+import mod.beethoven92.betterendforge.common.entity.CubozoaEntity;
 import mod.beethoven92.betterendforge.common.entity.EndFishEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
@@ -47,6 +48,13 @@ public class EndFishEntityRenderer extends MobRenderer<EndFishEntity, EndFishEnt
 	    });
 	}
 
+	@Override
+	protected void preRenderCallback(EndFishEntity entity, MatrixStack matrixStack, float f) 
+	{
+		float scale = entity.getScale();
+		matrixStack.scale(scale, scale, scale);
+	}
+	
 	@Override
 	public ResourceLocation getEntityTexture(EndFishEntity entity) 
 	{

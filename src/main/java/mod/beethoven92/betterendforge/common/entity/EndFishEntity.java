@@ -3,9 +3,11 @@ package mod.beethoven92.betterendforge.common.entity;
 import java.util.List;
 import java.util.Random;
 
+import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -22,12 +24,15 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
 public class EndFishEntity extends AbstractGroupFishEntity
 {
-	public static final int VARIANTS = 5;
+	public static final int VARIANTS_NORMAL = 5;
+	public static final int VARIANTS_SULPHUR = 3;
+	public static final int VARIANTS = VARIANTS_NORMAL + VARIANTS_SULPHUR;
 	
 	private static final DataParameter<Byte> VARIANT = EntityDataManager.createKey(EndFishEntity.class, DataSerializers.BYTE);
 	private static final DataParameter<Byte> SCALE = EntityDataManager.createKey(EndFishEntity.class, DataSerializers.BYTE);
@@ -37,6 +42,19 @@ public class EndFishEntity extends AbstractGroupFishEntity
 		super(type, worldIn);
 	}
 
+	@Override
+	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+			ILivingEntityData spawnDataIn, CompoundNBT dataTag) 
+	{
+		ILivingEntityData data = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		if (ModBiomes.getFromBiome(world.getBiome(getPosition())) == ModBiomes.SULPHUR_SPRINGS) 
+		{
+			this.dataManager.set(VARIANT, (byte) (rand.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
+		}
+		this.recalculateSize();
+		return data;
+	}
+	
 	@Override
 	protected void registerData() 
 	{
