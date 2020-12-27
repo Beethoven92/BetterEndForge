@@ -2,9 +2,11 @@ package mod.beethoven92.betterendforge.client.event;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
+import mod.beethoven92.betterendforge.common.particles.GeyserParticle;
 import mod.beethoven92.betterendforge.common.particles.GlowingSphereParticle;
 import mod.beethoven92.betterendforge.common.particles.InfusionParticle;
 import mod.beethoven92.betterendforge.common.particles.PortalSphereParticle;
+import mod.beethoven92.betterendforge.common.particles.SulphurParticle;
 import mod.beethoven92.betterendforge.common.particles.TenaneaPetalParticle;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
@@ -26,5 +28,9 @@ public class ParticleFactoryRegistration
 				(sprite) -> new GlowingSphereParticle.Factory(sprite));
 		Minecraft.getInstance().particles.registerFactory(ModParticleTypes.TENANEA_PETAL.get(), 
 				(sprite) -> new TenaneaPetalParticle.Factory(sprite));
+		Minecraft.getInstance().particles.registerFactory(ModParticleTypes.GEYSER_PARTICLE.get(), 
+				(sprite) -> new GeyserParticle.Factory(sprite));
+		Minecraft.getInstance().particles.registerFactory(ModParticleTypes.SULPHUR_PARTICLE.get(), 
+				(sprite) -> new SulphurParticle.Factory(sprite));
 	}
 }

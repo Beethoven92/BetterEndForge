@@ -25,4 +25,10 @@ public class ModParticleTypes
 	
 	public static final RegistryObject<BasicParticleType> TENANEA_PETAL = PARTICLE_TYPES.register("tenanea_petal",
 			() -> new BasicParticleType(false));
+	
+	public static final RegistryObject<BasicParticleType> GEYSER_PARTICLE = PARTICLE_TYPES.register("geyser_particle",
+			() -> new BasicParticleType(true));
+	
+	public static final RegistryObject<BasicParticleType> SULPHUR_PARTICLE = PARTICLE_TYPES.register("sulphur_particle",
+			() -> new BasicParticleType(true));
 }

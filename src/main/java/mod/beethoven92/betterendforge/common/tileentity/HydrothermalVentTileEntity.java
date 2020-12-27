@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.common.tileentity;
 
 import mod.beethoven92.betterendforge.common.block.HydrothermalVentBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
+import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.texture.ITickable;
@@ -28,7 +29,7 @@ public class HydrothermalVentTileEntity extends TileEntity implements ITickable
 			{
 				if (state.get(HydrothermalVentBlock.WATERLOGGED)) 
 				{
-					//world.addParticle(ModParticleTypes.GEYSER_PARTICLE, x, y, z, 0, 0, 0);
+					world.addParticle(ModParticleTypes.GEYSER_PARTICLE.get(), x, y, z, 0, 0, 0);
 				}
 				else 
 				{

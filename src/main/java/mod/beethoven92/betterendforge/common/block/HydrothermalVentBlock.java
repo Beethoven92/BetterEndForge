@@ -4,6 +4,7 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
+import mod.beethoven92.betterendforge.common.tileentity.HydrothermalVentTileEntity;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,6 +19,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -50,6 +52,12 @@ public class HydrothermalVentBlock extends Block implements IWaterLoggable
 	public boolean hasTileEntity(BlockState state)
 	{
 		return true;
+	}
+	
+	@Override
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) 
+	{
+		return new HydrothermalVentTileEntity();
 	}
 	
 	@Override
@@ -102,7 +110,7 @@ public class HydrothermalVentBlock extends Block implements IWaterLoggable
 			double z = pos.getZ() + rand.nextDouble();
 			if (stateIn.get(WATERLOGGED)) 
 			{
-				//worldIn.addParticle(ModParticleTypes.GEYSER_PARTICLE, x, y, z, 0, 0, 0);
+				worldIn.addParticle(ModParticleTypes.GEYSER_PARTICLE.get(), x, y, z, 0, 0, 0);
 			}
 			else 
 			{

@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.common.world.biome;
 
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModEntityTypes;
+import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -20,6 +21,7 @@ public class SulphurSpringsBiome extends BetterEndBiome
 				//setSurface(ModBlocks.PINK_MOSS.get()).
 				setAmbientSound(ModSoundEvents.AMBIENT_SULPHUR_SPRINGS.get()).
 				setMusic(ModSoundEvents.MUSIC_SULPHUR_SPRINGS.get()).
+				setParticles(ModParticleTypes.SULPHUR_PARTICLE.get(), 0.001F).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.GEYSER).
 				addFeature(Decoration.LAKES, ModConfiguredFeatures.SULPHURIC_LAKE).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.SULPHURIC_CAVE).
