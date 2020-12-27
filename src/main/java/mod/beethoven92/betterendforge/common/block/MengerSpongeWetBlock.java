@@ -1,7 +1,9 @@
 package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
+import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.WetSpongeBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
@@ -27,6 +29,13 @@ public class MengerSpongeWetBlock extends WetSpongeBlock
 	        worldIn.playEvent(2009, pos, 0);
 	        worldIn.playSound((PlayerEntity)null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, (1.0F + worldIn.getRandom().nextFloat() * 0.2F) * 0.7F);
 	    }
+	}
+	
+	@Override
+	public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) 
+	{
+		worldIn.destroyBlock(pos, !player.isCreative());
+		BlockHelper.setWithUpdate(worldIn, pos, Blocks.AIR);
 	}
 	
 	@Override

@@ -30,6 +30,20 @@ public class ModMathHelper
 		return h ^ (h >> 16);
 	}
 	
+	public static int getSeed(int seed, int x, int y) 
+	{
+		int h = seed + x * 374761393 + y * 668265263;
+		h = (h ^ (h >> 13)) * 1274126177;
+		return h ^ (h >> 16);
+	}
+
+	public static int getSeed(int seed, int x, int y, int z) 
+	{
+		int h = seed + x * 374761393 + y * 668265263 + z;
+		h = (h ^ (h >> 13)) * 1274126177;
+		return h ^ (h >> 16);
+	}
+	
 	public static int fromHSBtoRGB(float hue, float saturation, float brightness) 
 	{
 		int red = 0;
