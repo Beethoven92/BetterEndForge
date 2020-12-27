@@ -2,6 +2,9 @@ package mod.beethoven92.betterendforge.common.init;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.world.surfacebuilder.DoubleBlockSurfaceBuilder;
+import mod.beethoven92.betterendforge.common.world.surfacebuilder.SulphuricSurfaceBuilder;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.world.gen.surfacebuilders.DefaultSurfaceBuilder;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
@@ -10,6 +13,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+// NEEDS RE-WRITE
 public class ModSurfaceBuilders 
 {
 	public static final DeferredRegister<SurfaceBuilder<?>> SURFACE_BUILDERS = 
@@ -24,15 +28,34 @@ public class ModSurfaceBuilders
 	public static final RegistryObject<SurfaceBuilder<SurfaceBuilderConfig>> MUSHROOMLAND_SURFACE = SURFACE_BUILDERS.register("mushroomland_surface",
 			() -> new DoubleBlockSurfaceBuilder(ModBlocks.END_MOSS.get(), ModBlocks.END_MYCELIUM.get()));
 	
+	public static final RegistryObject<SurfaceBuilder<SurfaceBuilderConfig>> SULPHURIC_SURFACE = SURFACE_BUILDERS.register("sulphuric_surface",
+			() -> new SulphuricSurfaceBuilder());
+	
 	// Built-in surface builder configurations
 	public static class Configs
 	{
 		public static final SurfaceBuilderConfig CRYSTAL_SURFACE = 
-				new SurfaceBuilderConfig(ModBlocks.CRYSTAL_MOSS.get().getDefaultState(), 
-						Blocks.END_STONE.getDefaultState(), Blocks.END_STONE.getDefaultState());
+				makeTernaryConfig(ModBlocks.CRYSTAL_MOSS.get(), Blocks.END_STONE, Blocks.END_STONE);
 		
-		public static final SurfaceBuilderConfig DUMMY = 
-				new SurfaceBuilderConfig(Blocks.END_STONE.getDefaultState(), 
-						Blocks.END_STONE.getDefaultState(), Blocks.END_STONE.getDefaultState());
+		public static final SurfaceBuilderConfig DUMMY = makeSimpleConfig(Blocks.END_STONE);
+		
+		public static final SurfaceBuilderConfig DEFAULT_END_CONFIG = makeSimpleConfig(Blocks.END_STONE);
+		public static final SurfaceBuilderConfig FLAVOLITE_CONFIG = makeSimpleConfig(ModBlocks.FLAVOLITE.stone.get());
+		public static final SurfaceBuilderConfig BRIMSTONE_CONFIG = makeSimpleConfig(ModBlocks.BRIMSTONE.get());
+		public static final SurfaceBuilderConfig SULFURIC_ROCK_CONFIG = makeSimpleConfig(ModBlocks.SULPHURIC_ROCK.stone.get());
+		
+		private static SurfaceBuilderConfig makeSimpleConfig(Block block) 
+		{
+			BlockState state = block.getDefaultState();
+			return new SurfaceBuilderConfig(state, state, state);
+		}
+		
+		private static SurfaceBuilderConfig makeTernaryConfig(Block block1, Block block2, Block block3) 
+		{
+			BlockState state1 = block1.getDefaultState();
+			BlockState state2 = block2.getDefaultState();
+			BlockState state3 = block3.getDefaultState();
+			return new SurfaceBuilderConfig(state1, state2, state3);
+		}
 	}
 }
