@@ -198,18 +198,18 @@ public class ModBlocks
 					                                 setRequiresTool().
 					                                 sound(SoundType.STONE)));
 	
-	// ROCKS
-	public static final RegistryObject<Block> BRIMSTONE = registerBlockWithDefaultItem("brimstone",
-			() -> new BrimstoneBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.BROWN).
-					                                          setRequiresTool().
-					                                          hardnessAndResistance(3.0F, 9.0F).
-					                                          tickRandomly()));
-
 	public static final RegistryObject<Block> AMBER_ORE = registerBlockWithDefaultItem("amber_ore",
 			() -> new Block(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.SAND).
 					                                 hardnessAndResistance(3F, 9F).
 					                                 setRequiresTool().
 					                                 sound(SoundType.STONE)));
+	
+	// ROCKS	
+	public static final RegistryObject<Block> BRIMSTONE = registerBlockWithDefaultItem("brimstone",
+			() -> new BrimstoneBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.BROWN).
+					                                          setRequiresTool().
+					                                          hardnessAndResistance(3.0F, 9.0F).
+					                                          tickRandomly()));
 	
 	public static final RegistryObject<Block> SULPHUR_CRYSTAL = registerBlockWithDefaultItem("sulphur_crystal",
 			() -> new SulphurCrystalBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.YELLOW).
