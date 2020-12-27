@@ -47,6 +47,7 @@ public class ModBlockStates extends BlockStateProvider
 		// STONE MATERIALS
 		registerStoneMaterialBlockStates(ModBlocks.FLAVOLITE);
 		//registerStoneMaterialBlockStates(ModBlocks.VIOLECITE);
+		registerStoneMaterialBlockStates(ModBlocks.SULPHURIC_ROCK);
 	}
 	
 	private void registerWoodenMaterialBlockStates(WoodenMaterial material)

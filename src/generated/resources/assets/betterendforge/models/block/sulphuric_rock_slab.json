@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "side": "betterendforge:block/sulphuric_rock",
+    "bottom": "betterendforge:block/sulphuric_rock",
+    "top": "betterendforge:block/sulphuric_rock"
+  }
+}

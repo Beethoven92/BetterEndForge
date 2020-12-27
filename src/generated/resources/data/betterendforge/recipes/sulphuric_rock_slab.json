@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_stone_slabs",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:sulphuric_rock"
+    }
+  },
+  "result": {
+    "item": "betterendforge:sulphuric_rock_slab",
+    "count": 6
+  }
+}

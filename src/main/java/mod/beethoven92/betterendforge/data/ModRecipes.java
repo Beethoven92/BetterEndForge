@@ -127,6 +127,7 @@ public class ModRecipes extends RecipeProvider
 		// STONE MATERIALS
 		makeStoneMaterialRecipes(ModBlocks.FLAVOLITE, consumer);
 		makeStoneMaterialRecipes(ModBlocks.VIOLECITE, consumer);
+		makeStoneMaterialRecipes(ModBlocks.SULPHURIC_ROCK, consumer);
 	}
 	
 	private void makeWoodenMaterialRecipes(WoodenMaterial material, Consumer<IFinishedRecipe> consumer)

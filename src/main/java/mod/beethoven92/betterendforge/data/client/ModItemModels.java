@@ -30,6 +30,8 @@ public class ModItemModels extends ItemModelProvider
 		
 		// STONE MATERIALS
 		registerStoneMaterialItemModels(ModBlocks.FLAVOLITE);
+		//registerStoneMaterialItemModels(ModBlocks.VIOLECITE);
+		registerStoneMaterialItemModels(ModBlocks.SULPHURIC_ROCK);
 	}
 	
 	private void registerWoodenMaterialItemModels(WoodenMaterial material)

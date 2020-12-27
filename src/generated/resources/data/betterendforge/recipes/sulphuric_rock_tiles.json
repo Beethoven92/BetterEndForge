@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_small_tile",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:sulphuric_rock_polished"
+    }
+  },
+  "result": {
+    "item": "betterendforge:sulphuric_rock_tiles",
+    "count": 4
+  }
+}

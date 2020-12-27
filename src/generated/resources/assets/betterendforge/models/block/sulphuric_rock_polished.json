@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "betterendforge:block/sulphuric_rock_polished"
+  }
+}

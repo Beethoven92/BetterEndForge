@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_pillar",
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:sulphuric_rock_slab"
+    }
+  },
+  "result": {
+    "item": "betterendforge:sulphuric_rock_pillar"
+  }
+}

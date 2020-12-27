@@ -64,6 +64,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		// STONE MATERIALS
 		registerStoneMaterialTags(ModBlocks.FLAVOLITE);
 		registerStoneMaterialTags(ModBlocks.VIOLECITE);
+		registerStoneMaterialTags(ModBlocks.SULPHURIC_ROCK);
 	}
 	
 	private void registerWoodenMaterialTags(WoodenMaterial material)
