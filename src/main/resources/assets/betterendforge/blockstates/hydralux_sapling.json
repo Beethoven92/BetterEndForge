@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "age=0":    { "model": "betterendforge:block/hydralux_sapling_1" },
+        "age=1":    { "model": "betterendforge:block/hydralux_sapling_2" },
+        "age=2":    { "model": "betterendforge:block/hydralux_sapling_3" },
+        "age=3":    { "model": "betterendforge:block/hydralux_sapling_4" }
+    }
+}

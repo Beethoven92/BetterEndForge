@@ -8,6 +8,7 @@ public class BlockProperties
 {
 	public static final EnumProperty<TripleShape> TRIPLE_SHAPE = EnumProperty.create("shape", TripleShape.class);
 	public static final EnumProperty<PedestalState> PEDESTAL_STATE = EnumProperty.create("state", PedestalState.class);
+	public static final EnumProperty<HydraluxShape> HYDRALUX_SHAPE = EnumProperty.create("shape", HydraluxShape.class);
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
 	public static final BooleanProperty HAS_LIGHT = BooleanProperty.create("has_light");
 	public static final BooleanProperty ACTIVATED = BooleanProperty.create("active");
@@ -64,6 +65,42 @@ public class BlockProperties
 		public String getString() 
 		{
 			return name;
+		}
+	}
+	
+	public static enum HydraluxShape implements IStringSerializable
+	{
+		FLOWER_BIG_BOTTOM("flower_big_bottom", true),
+		FLOWER_BIG_TOP("flower_big_top", true),
+		FLOWER_SMALL_BOTTOM("flower_small_bottom", true),
+		FLOWER_SMALL_TOP("flower_small_top", true),
+		VINE("vine", false),
+		ROOTS("roots", false);
+		
+		private final String name;
+		private final boolean glow;
+		
+		HydraluxShape(String name, boolean glow) 
+		{
+			this.name = name;
+			this.glow = glow;
+		}
+
+		@Override
+		public String getString() 
+		{
+			return name;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return name;
+		}
+		
+		public boolean hasGlow() 
+		{
+			return glow;
 		}
 	}
 }
