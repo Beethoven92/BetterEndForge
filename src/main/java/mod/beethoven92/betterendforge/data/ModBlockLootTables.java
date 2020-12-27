@@ -90,6 +90,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(ModBlocks.AETERNIUM_BLOCK.get());
 		registerDropSelfLootTable(ModBlocks.TERMINITE_BLOCK.get());
 		registerDropSelfLootTable(ModBlocks.ENDER_BLOCK.get());
+		registerDropSelfLootTable(ModBlocks.AMBER_BLOCK.get());
 	    registerLootTable(ModBlocks.AURORA_CRYSTAL.get(), (block) -> {
 	    	return droppingItemWithFortune(block, ModItems.CRYSTAL_SHARDS.get());
 	    });
@@ -97,6 +98,9 @@ public class ModBlockLootTables extends BlockLootTables
 		// ORES
 	    registerLootTable(ModBlocks.ENDER_ORE.get(), (ore) -> {
 	    	return droppingItemWithFortune(ore, ModItems.ENDER_SHARD.get());
+	    });
+	    registerLootTable(ModBlocks.AMBER_ORE.get(), (ore) -> {
+	    	return droppingItemWithFortune(ore, ModItems.RAW_AMBER.get());
 	    });
 	    
 		// STONES

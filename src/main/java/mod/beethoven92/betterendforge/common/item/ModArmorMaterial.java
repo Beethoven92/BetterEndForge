@@ -18,7 +18,12 @@ public enum ModArmorMaterial implements IArmorMaterial
 	
 	AETERNIUM(BetterEnd.MOD_ID + ":aeternium", 40, new int[] { 4, 7, 9, 4 }, 18, 
 			SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3.5F, () -> {
-				return Ingredient.fromItems(ModItems.AETERNIUM_INGOT.get());}, 0.2F);
+				return Ingredient.fromItems(ModItems.AETERNIUM_INGOT.get());}, 0.2F),
+	
+	CRYSTALITE(BetterEnd.MOD_ID + ":crystalite", 30, new int[] { 3, 6, 8, 3 }, 24, 
+			SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 1.2F, () -> {
+				return Ingredient.fromItems(ModItems.TERMINITE_INGOT.get());}, 0.1F);
+
 	
 	private static final int[] MAX_DAMAGE_ARRAY = { 11, 16, 15, 13 };
 	private final String name;

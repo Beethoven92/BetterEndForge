@@ -1,0 +1,23 @@
+{
+  "type": "betterendforge:infusion",
+  "input": 
+  {
+     "item": "betterendforge:terminite_boots"
+  },
+  "output": "betterendforge:crystalite_boots",
+  "time": 150,
+  "catalysts": [
+    {
+      "item": "betterendforge:amber_gem",
+      "index": 0
+    },
+    {
+      "item": "betterendforge:crystal_shards",
+      "index": 2
+    },
+    {
+      "item": "betterendforge:crystal_shards",
+      "index": 6
+    }
+  ]
+}

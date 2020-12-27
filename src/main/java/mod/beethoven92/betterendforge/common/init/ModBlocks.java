@@ -185,6 +185,12 @@ public class ModBlocks
 					                                              setOpaque((state, world, pos) -> { return false; }).
 					                                              notSolid()));
 	
+	public static final RegistryObject<Block> AMBER_BLOCK = registerBlockWithDefaultItem("amber_block", 
+			() -> new Block(AbstractBlock.Properties.create(Material.IRON, MaterialColor.YELLOW).
+					setRequiresTool().
+					hardnessAndResistance(5.0F, 6.0F).
+					sound(SoundType.METAL)));
+	
 	// ORES
 	public static final RegistryObject<Block> ENDER_ORE = registerBlockWithDefaultItem("ender_ore",
 			() -> new Block(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.SAND).
@@ -192,12 +198,21 @@ public class ModBlocks
 					                                 setRequiresTool().
 					                                 sound(SoundType.STONE)));
 	
+<<<<<<< HEAD
 	// ROCKS
 	public static final RegistryObject<Block> BRIMSTONE = registerBlockWithDefaultItem("brimstone",
 			() -> new BrimstoneBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.BROWN).
 					                                          setRequiresTool().
 					                                          hardnessAndResistance(3.0F, 9.0F).
 					                                          tickRandomly()));
+=======
+	public static final RegistryObject<Block> AMBER_ORE = registerBlockWithDefaultItem("amber_ore",
+			() -> new Block(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.SAND).
+					                                 hardnessAndResistance(3F, 9F).
+					                                 setRequiresTool().
+					                                 sound(SoundType.STONE)));
+	
+>>>>>>> 1f8e7958bb39e1b6caa2fdad8ea411e877c09a6d
 	
 	public static final RegistryObject<Block> SULPHUR_CRYSTAL = registerBlockWithDefaultItem("sulphur_crystal",
 			() -> new SulphurCrystalBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.YELLOW).

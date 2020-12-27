@@ -84,6 +84,10 @@
 	"item.betterendforge.golden_hammer": "Golden Smith Hammer",
 	"item.betterendforge.diamond_hammer": "Diamond Smith Hammer",
 	"item.betterendforge.netherite_hammer": "Netherite Smith Hammer",
+	"item.betterendforge.crystalite_boots": "Crystalite Boots",
+	"item.betterendforge.crystalite_chestplate": "Crystalite Chestplate",
+	"item.betterendforge.crystalite_helmet": "Crystalite Helmet",
+	"item.betterendforge.crystalite_leggings": "Crystalite Leggings",
 	
 	"effect.betterendforge.end_veil": "End Veil",
 	"enchantment.betterendforge.end_veil": "End Veil",

@@ -46,6 +46,7 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		getOrCreateBuilder(Tags.Items.INGOTS).add(ModItems.AETERNIUM_INGOT.get());
 		
 		getOrCreateBuilder(Tags.Items.ORES).add(ModBlocks.ENDER_ORE.get().asItem());
+		getOrCreateBuilder(Tags.Items.ORES).add(ModBlocks.AMBER_ORE.get().asItem());
 		// Forge Tags
 		getOrCreateBuilder(Tags.Items.DUSTS).add(ModItems.ENDER_DUST.get());
 		
