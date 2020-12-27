@@ -205,6 +205,10 @@ public abstract class BoneMealItemMixin
 		{
 			return ModBlocks.CHARNIA_PURPLE.get().getDefaultState();
 		}
+		else if (biome == ModBiomes.SULPHUR_SPRINGS) // TEMP FIX to sea grass generating in sulphur springs biome when using bone meal udnerwater
+		{
+			return world.rand.nextBoolean() ? ModBlocks.CHARNIA_ORANGE.get().getDefaultState() : ModBlocks.CHARNIA_GREEN.get().getDefaultState();
+		}
 		return null;
 	}
 
