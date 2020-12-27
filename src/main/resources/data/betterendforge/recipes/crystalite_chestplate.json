@@ -1,0 +1,31 @@
+{
+  "type": "betterendforge:infusion",
+  "input": 
+  {
+     "item": "betterendforge:terminite_chestplate"
+  },
+  "output": "betterendforge:crystalite_chestplate",
+  "time": 300,
+  "catalysts": [
+    {
+      "item": "betterendforge:amber_gem",
+      "index": 0
+    },
+    {
+      "item": "betterendforge:crystal_shards",
+      "index": 1
+    },
+    {
+      "item": "betterendforge:crystal_shards",
+      "index": 3
+    },
+    {
+      "item": "betterendforge:crystal_shards",
+      "index": 5
+    },
+    {
+      "item": "betterendforge:crystal_shards",
+      "index": 7
+    }
+  ]
+}

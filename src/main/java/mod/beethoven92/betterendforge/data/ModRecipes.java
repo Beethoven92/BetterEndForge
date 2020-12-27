@@ -33,6 +33,7 @@ public class ModRecipes extends RecipeProvider
 	{
 		// BLOCKS
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.ENDER_BLOCK.get()).key('#', Items.ENDER_PEARL).patternLine("##").patternLine("##").addCriterion("has_ender_pearl", hasItem(Items.ENDER_PEARL)).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.AMBER_BLOCK.get()).key('#', ModItems.AMBER_GEM.get()).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_amber_gem", hasItem(ModItems.AMBER_GEM.get())).build(consumer);
 	    ShapelessRecipeBuilder.shapelessRecipe(Items.ENDER_PEARL, 4).addIngredient(ModBlocks.ENDER_BLOCK.get()).addCriterion("has_ender_block", hasItem(ModBlocks.ENDER_BLOCK.get())).build(consumer, "ender_pearl_from_ender_block");
 	   
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.AURORA_CRYSTAL.get()).key('#', ModItems.CRYSTAL_SHARDS.get()).patternLine("##").patternLine("##").addCriterion("has_crystal_shard", hasItem(ModItems.CRYSTAL_SHARDS.get())).build(consumer);
@@ -65,6 +66,7 @@ public class ModRecipes extends RecipeProvider
 		ShapelessRecipeBuilder.shapelessRecipe(ModBlocks.SHADOW_BERRY.get(), 4).addIngredient(ModItems.SHADOW_BERRY_RAW.get()).addCriterion("has_shadow_berry_raw", hasItem(ModItems.SHADOW_BERRY_RAW.get())).build(consumer, "shadow_berry_from_shadow_berry_raw");
 		ShapelessRecipeBuilder.shapelessRecipe(ModItems.SWEET_BERRY_JELLY.get()).addIngredient(ModItems.GELATINE.get()).addIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER).getItem()).addIngredient(Items.SUGAR).addIngredient(Items.SWEET_BERRIES).addCriterion("has_gelatine", hasItem(ModItems.GELATINE.get())).build(consumer);
 		ShapelessRecipeBuilder.shapelessRecipe(ModItems.SHADOW_BERRY_JELLY.get()).addIngredient(ModItems.GELATINE.get()).addIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER).getItem()).addIngredient(Items.SUGAR).addIngredient(ModItems.SHADOW_BERRY_COOKED.get()).addCriterion("has_gelatine", hasItem(ModItems.GELATINE.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(ModItems.AMBER_GEM.get()).key('#', ModItems.RAW_AMBER.get()).patternLine("##").patternLine("##").addCriterion("has_raw_amber", hasItem(ModItems.RAW_AMBER.get())).build(consumer);
 		
 		// PEDESTALS
 		registerPedestal(ModBlocks.QUARTZ_PEDESTAL.get(), Blocks.QUARTZ_SLAB, Blocks.QUARTZ_PILLAR, consumer, "quartz");

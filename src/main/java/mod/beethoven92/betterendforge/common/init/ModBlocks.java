@@ -177,8 +177,20 @@ public class ModBlocks
 					                                              setOpaque((state, world, pos) -> { return false; }).
 					                                              notSolid()));
 	
+	public static final RegistryObject<Block> AMBER_BLOCK = registerBlockWithDefaultItem("amber_block", 
+			() -> new Block(AbstractBlock.Properties.create(Material.IRON, MaterialColor.YELLOW).
+					setRequiresTool().
+					hardnessAndResistance(5.0F, 6.0F).
+					sound(SoundType.METAL)));
+	
 	// ORES
 	public static final RegistryObject<Block> ENDER_ORE = registerBlockWithDefaultItem("ender_ore",
+			() -> new Block(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.SAND).
+					                                 hardnessAndResistance(3F, 9F).
+					                                 setRequiresTool().
+					                                 sound(SoundType.STONE)));
+	
+	public static final RegistryObject<Block> AMBER_ORE = registerBlockWithDefaultItem("amber_ore",
 			() -> new Block(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.SAND).
 					                                 hardnessAndResistance(3F, 9F).
 					                                 setRequiresTool().

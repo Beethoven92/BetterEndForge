@@ -1,0 +1,27 @@
+{
+  "type": "betterendforge:infusion",
+  "input": 
+  {
+     "item": "betterendforge:terminite_leggings"
+  },
+  "output": "betterendforge:crystalite_leggings",
+  "time": 225,
+  "catalysts": [
+    {
+      "item": "betterendforge:amber_gem",
+      "index": 0
+    },
+    {
+      "item": "betterendforge:crystal_shards",
+      "index": 2
+    },
+    {
+      "item": "betterendforge:crystal_shards",
+      "index": 4
+    },
+    {
+      "item": "betterendforge:crystal_shards",
+      "index": 6
+    }
+  ]
+}

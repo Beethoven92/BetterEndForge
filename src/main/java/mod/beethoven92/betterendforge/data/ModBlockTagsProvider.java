@@ -49,6 +49,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		getOrCreateBuilder(BlockTags.BEACON_BASE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get());
 		
 		getOrCreateBuilder(Tags.Blocks.ORES).add(ModBlocks.ENDER_ORE.get());
+		getOrCreateBuilder(Tags.Blocks.ORES).add(ModBlocks.AMBER_ORE.get());
 		
 		getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.TERMINITE_BLOCK.get());
 		getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get());
