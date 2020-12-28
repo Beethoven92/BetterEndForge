@@ -26,7 +26,9 @@ public class GeyserParticle extends SpriteTexturedParticle
 		this.selectSpriteWithAge(spriteWithAge);
 		
 		this.maxAge = ModMathHelper.randRange(400, 800, rand);
-		this.particleScale = ModMathHelper.randRange(0.5F, 1.05F, rand);
+		//this.maxAge = ModMathHelper.randRange(800, 1200, rand);
+		this.particleScale = ModMathHelper.randRange(0.5F, 1.0F, rand);
+		//this.particleScale = ModMathHelper.randRange(1.5F, 2.0F, rand);
 		
 		this.motionX = vx;
 		this.motionZ = vz;

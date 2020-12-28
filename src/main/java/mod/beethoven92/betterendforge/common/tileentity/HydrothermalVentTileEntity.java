@@ -1,15 +1,17 @@
 package mod.beethoven92.betterendforge.common.tileentity;
 
+import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.HydrothermalVentBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.renderer.texture.ITickable;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
-public class HydrothermalVentTileEntity extends TileEntity implements ITickable
+// Is this tile entity necessary?
+public class HydrothermalVentTileEntity extends TileEntity implements ITickableTileEntity
 {
 	public HydrothermalVentTileEntity() 
 	{
@@ -38,5 +40,4 @@ public class HydrothermalVentTileEntity extends TileEntity implements ITickable
 			}
 		}
 	}
-
 }

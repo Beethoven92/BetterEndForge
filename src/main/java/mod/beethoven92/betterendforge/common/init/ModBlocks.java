@@ -220,6 +220,7 @@ public class ModBlocks
 	public static final RegistryObject<Block> HYDROTHERMAL_VENT = registerBlockWithDefaultItem("hydrothermal_vent",
 			() -> new HydrothermalVentBlock(AbstractBlock.Properties.create(Material.ROCK).
                                                                      setRequiresTool().
+                                                                     tickRandomly().
                                                                      doesNotBlockMovement().
                                                                      sound(SoundType.STONE)));
 	
