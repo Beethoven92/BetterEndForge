@@ -4,6 +4,7 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "betterendforge.refmap.json",
 	"mixins": [
+	      "BiomeColorsMixin",
 	      "BoneMealItemMixin",
 	      "ChorusFlowerBlockMixin",
 	      "ChorusPlantBlockMixin",
