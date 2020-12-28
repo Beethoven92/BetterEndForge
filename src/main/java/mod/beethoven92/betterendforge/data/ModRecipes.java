@@ -20,6 +20,7 @@ import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
+import net.minecraft.tags.ItemTags;
 
 public class ModRecipes extends RecipeProvider
 {
@@ -35,7 +36,8 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.ENDER_BLOCK.get()).key('#', Items.ENDER_PEARL).patternLine("##").patternLine("##").addCriterion("has_ender_pearl", hasItem(Items.ENDER_PEARL)).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.AMBER_BLOCK.get()).key('#', ModItems.AMBER_GEM.get()).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_amber_gem", hasItem(ModItems.AMBER_GEM.get())).build(consumer);
 	    ShapelessRecipeBuilder.shapelessRecipe(Items.ENDER_PEARL, 4).addIngredient(ModBlocks.ENDER_BLOCK.get()).addCriterion("has_ender_block", hasItem(ModBlocks.ENDER_BLOCK.get())).build(consumer, "ender_pearl_from_ender_block");
-	   
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.HYDRALUX_PETAL_BLOCK.get()).key('#', ModItems.HYDRALUX_PETAL.get()).patternLine("##").patternLine("##").addCriterion("has_hydralux_petal", hasItem(ModItems.HYDRALUX_PETAL.get())).build(consumer);
+	    
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.AURORA_CRYSTAL.get()).key('#', ModItems.CRYSTAL_SHARDS.get()).patternLine("##").patternLine("##").addCriterion("has_crystal_shard", hasItem(ModItems.CRYSTAL_SHARDS.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.END_LOTUS.log.get()).key('#', ModBlocks.END_LOTUS_STEM.get()).patternLine("##").patternLine("##").addCriterion("has_end_lotus_stem", hasItem(ModBlocks.END_LOTUS_STEM.get())).build(consumer);
 
@@ -52,6 +54,7 @@ public class ModRecipes extends RecipeProvider
 		ShapelessRecipeBuilder.shapelessRecipe(Items.GRAY_DYE).addIngredient(ModBlocks.TAIL_MOSS.get()).setGroup("gray_dye").addCriterion("has_tail_moss", hasItem(ModBlocks.TAIL_MOSS.get())).build(consumer, "gray_dye_from_tail_moss");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.MAGENTA_DYE).addIngredient(ModBlocks.BUSHY_GRASS.get()).setGroup("magenta_dye").addCriterion("has_bushy_grass", hasItem(ModBlocks.BUSHY_GRASS.get())).build(consumer, "magenta_dye_from_bushy_grass");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.PINK_DYE).addIngredient(ModBlocks.TWISTED_MOSS.get()).setGroup("pink_dye").addCriterion("has_twisted_moss", hasItem(ModBlocks.TWISTED_MOSS.get())).build(consumer, "pink_dye_from_twisted_moss");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.WHITE_DYE).addIngredient(ModItems.HYDRALUX_PETAL.get()).setGroup("white_dye").addCriterion("has_hydralux_petal", hasItem(ModItems.HYDRALUX_PETAL.get())).build(consumer, "white_dye_from_hydralux_petal");
 		
 		ShapelessRecipeBuilder.shapelessRecipe(Items.RED_DYE).addIngredient(ModBlocks.CHARNIA_RED.get()).setGroup("red_dye").addCriterion("has_red_charnia", hasItem(ModBlocks.CHARNIA_RED.get())).build(consumer, "red_dye_from_red_charnia");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE).addIngredient(ModBlocks.CHARNIA_PURPLE.get()).setGroup("purple_dye").addCriterion("has_purple_charnia", hasItem(ModBlocks.CHARNIA_PURPLE.get())).build(consumer, "purple_dye_from_purple_charnia");
@@ -67,8 +70,9 @@ public class ModRecipes extends RecipeProvider
 		ShapelessRecipeBuilder.shapelessRecipe(ModItems.SWEET_BERRY_JELLY.get()).addIngredient(ModItems.GELATINE.get()).addIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER).getItem()).addIngredient(Items.SUGAR).addIngredient(Items.SWEET_BERRIES).addCriterion("has_gelatine", hasItem(ModItems.GELATINE.get())).build(consumer);
 		ShapelessRecipeBuilder.shapelessRecipe(ModItems.SHADOW_BERRY_JELLY.get()).addIngredient(ModItems.GELATINE.get()).addIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER).getItem()).addIngredient(Items.SUGAR).addIngredient(ModItems.SHADOW_BERRY_COOKED.get()).addCriterion("has_gelatine", hasItem(ModItems.GELATINE.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(ModItems.AMBER_GEM.get()).key('#', ModItems.RAW_AMBER.get()).patternLine("##").patternLine("##").addCriterion("has_raw_amber", hasItem(ModItems.RAW_AMBER.get())).build(consumer);
+	    ShapelessRecipeBuilder.shapelessRecipe(Items.GUNPOWDER).addIngredient(ModItems.CRYSTALLINE_SULPHUR.get()).addIngredient(ItemTags.COALS).addIngredient(Items.BONE_MEAL).addIngredient(ModItems.CRYSTALLINE_SULPHUR.get()).addCriterion("has_crystalline_sulphur", hasItem(ModItems.CRYSTALLINE_SULPHUR.get())).build(consumer, "gunpowder_from_sulphur");
 		
-		// PEDESTALS
+	    // PEDESTALS
 		registerPedestal(ModBlocks.QUARTZ_PEDESTAL.get(), Blocks.QUARTZ_SLAB, Blocks.QUARTZ_PILLAR, consumer, "quartz");
 		registerPedestal(ModBlocks.PURPUR_PEDESTAL.get(), Blocks.PURPUR_SLAB, Blocks.PURPUR_PILLAR, consumer, "purpur");
 		
