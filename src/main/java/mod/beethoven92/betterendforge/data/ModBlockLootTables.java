@@ -38,17 +38,11 @@ public class ModBlockLootTables extends BlockLootTables
 	protected void addTables() 
 	{
 		// BLOCKS		
-	    this.registerLootTable(ModBlocks.RESPAWN_OBELISK.get(), (block) -> {
+	    registerLootTable(ModBlocks.RESPAWN_OBELISK.get(), (block) -> {
 	    	return droppingWhen(block, RespawnObeliskBlock.SHAPE, TripleShape.BOTTOM);
 	    });
 	    
-	    registerDropSelfLootTable(ModBlocks.BRIMSTONE.get());
-	    
-	    registerDropSelfLootTable(ModBlocks.HYDROTHERMAL_VENT.get());
-	    
-	    registerLootTable(ModBlocks.SULPHUR_CRYSTAL.get(), (block) -> {
-	    	return sulphurCrystalDrop(block, ModItems.CRYSTALLINE_SULPHUR.get());
-	    });
+	    registerDropSelfLootTable(ModBlocks.HYDRALUX_PETAL_BLOCK.get());
 	    
 	    // TERRAINS
 	    registerLootTable(ModBlocks.CRYSTAL_MOSS.get(), (terrain) -> {
@@ -107,6 +101,14 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(ModBlocks.PURPUR_PEDESTAL.get());
 		registerDropSelfLootTable(ModBlocks.ETERNAL_PEDESTAL.get());
 		registerDropSelfLootTable(ModBlocks.INFUSION_PEDESTAL.get());
+		
+	    registerDropSelfLootTable(ModBlocks.BRIMSTONE.get());
+	    
+	    registerDropSelfLootTable(ModBlocks.HYDROTHERMAL_VENT.get());
+	    
+	    registerLootTable(ModBlocks.SULPHUR_CRYSTAL.get(), (block) -> {
+	    	return sulphurCrystalDrop(block, ModItems.CRYSTALLINE_SULPHUR.get());
+	    });
 		
 		registerLootTable(ModBlocks.END_STONE_SMELTER.get(), BlockLootTables::droppingWithName);
 		
