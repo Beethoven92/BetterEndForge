@@ -9,6 +9,7 @@ import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModStructurePieces;
 import mod.beethoven92.betterendforge.common.init.ModTags;
+import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -31,6 +32,7 @@ import net.minecraft.world.gen.feature.template.TemplateManager;
 
 public class LakePiece extends StructurePiece
 {
+	private static final BlockState AIR = Blocks.AIR.getDefaultState();
 	private static final BlockState WATER = Blocks.WATER.getDefaultState();
 	private Map<Integer, Integer> heightmap = Maps.newHashMap();
 	private OpenSimplexNoise noise1;
@@ -104,7 +106,6 @@ public class LakePiece extends StructurePiece
 		Mutable pos = new Mutable();
 		IChunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
 		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE_WG);
-		
 		for (int x = 0; x < 16; x++) 
 		{
 			int px = x + sx;
@@ -122,10 +123,10 @@ public class LakePiece extends StructurePiece
 					pos.setZ(z);
 					dist = 1 - dist / r2;
 					int maxY = map.getHeight(x, z);
-					if (maxY > 55) 
+					if (maxY > 55)
 					{
 						float minY = dist * depth * getHeightClamp(world, 8, px, pz);
-						if (minY > 0) 
+						if (minY > 0)
 						{
 							minY *= (float) noise1.eval(px * 0.05, pz * 0.05) * 0.3F + 0.7F;
 							minY *= (float) noise1.eval(px * 0.1, pz * 0.1) * 0.1F + 0.8F;
@@ -144,16 +145,16 @@ public class LakePiece extends StructurePiece
 							{
 								pos.setY(y);
 								BlockState state = chunk.getBlockState(pos);
-								if (state.getMaterial().isReplaceable() || state.isIn(ModTags.GEN_TERRAIN)) 
+								if (state.getMaterial().isReplaceable() || state.isIn(ModTags.GEN_TERRAIN))
 								{
-									chunk.setBlockState(pos, y > 56 ? Blocks.AIR.getDefaultState() : WATER, false);
+									chunk.setBlockState(pos, y > 56 ? AIR : WATER, false);
 								}
 								else 
 								{
 									break;
 								}
 							}
-							maxY = MathHelper.nextInt(random, 2, 3);
+							maxY = ModMathHelper.randRange(2, 3, random);
 							int last = maxY - 1;
 							for (int i = 0; i < maxY; i++) 
 							{
@@ -163,8 +164,9 @@ public class LakePiece extends StructurePiece
 								{
 									if (pos.getY() > 56) 
 									{
-										chunk.setBlockState(pos, Blocks.AIR.getDefaultState(), false);
-										if (pos.getY() == last) {
+										chunk.setBlockState(pos, AIR, false);
+										if (pos.getY() == last) 
+										{
 											state = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceBuilderConfig().getTop();
 											chunk.setBlockState(pos.down(), state, false);
 										}
@@ -180,19 +182,29 @@ public class LakePiece extends StructurePiece
 											state = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceBuilderConfig().getTop();
 										}
 										chunk.setBlockState(pos, state, false);
+										
+										state = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceBuilderConfig().getUnder();
+										int count = (int) (noise1.eval((pos.getX() + sx) * 0.1, (pos.getZ() + sz) * 0.1) + 2);//MHelper.randRange(1, 2, random);
+										for (int n = 0; n < count; n++) 
+										{
+											pos.setY(pos.getY() - 1);
+											chunk.setBlockState(pos, state, false);
+										}
+										break;
 									}
-									else
+									else 
 									{
 										chunk.setBlockState(pos, ModBlocks.ENDSTONE_DUST.get().getDefaultState(), false);
+										
+										state = world.getBiome(pos.add(sx, 0, sz)).getGenerationSettings().getSurfaceBuilderConfig().getUnder();
+										int count = (int) (noise1.eval((pos.getX() + sx) * 0.1, (pos.getZ() + sz) * 0.1) + 2);//int count = MHelper.randRange(1, 2, random);
+										for (int n = 0; n < count; n++)
+										{
+											pos.setY(pos.getY() - 1);
+											chunk.setBlockState(pos, state, false);
+										}
+										break;
 									}
-								}
-								else 
-								{
-									if (state.getMaterial().isReplaceable())
-									{
-										chunk.setBlockState(pos, Blocks.END_STONE.getDefaultState(), false);
-									}
-									break;
 								}
 							}
 						}
