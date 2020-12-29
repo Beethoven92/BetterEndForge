@@ -43,6 +43,7 @@ public class ModBlockStates extends BlockStateProvider
 		registerWoodenMaterialBlockStates(ModBlocks.PYTHADENDRON);
 		registerWoodenMaterialBlockStates(ModBlocks.DRAGON_TREE);
 		registerWoodenMaterialBlockStates(ModBlocks.TENANEA);
+		registerWoodenMaterialBlockStates(ModBlocks.HELIX_TREE);
 		
 		// STONE MATERIALS
 		registerStoneMaterialBlockStates(ModBlocks.FLAVOLITE);

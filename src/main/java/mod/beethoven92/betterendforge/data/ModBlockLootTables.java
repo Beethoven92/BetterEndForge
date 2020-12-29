@@ -43,6 +43,7 @@ public class ModBlockLootTables extends BlockLootTables
 	    });
 	    
 	    registerDropSelfLootTable(ModBlocks.HYDRALUX_PETAL_BLOCK.get());
+	    registerDropSelfLootTable(ModBlocks.HYDRALUX.get());
 	    
 	    // TERRAINS
 	    registerLootTable(ModBlocks.CRYSTAL_MOSS.get(), (terrain) -> {
@@ -240,6 +241,9 @@ public class ModBlockLootTables extends BlockLootTables
 		registerLootTable(ModBlocks.BULB_VINE_SEED.get(), BlockLootTables::onlyWithShears);
 		
 		// TREES
+		registerDropSelfLootTable(ModBlocks.HYDRALUX_SAPLING.get());
+
+		
 		registerDropSelfLootTable(ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get());
 		registerDropSelfLootTable(ModBlocks.MOSSY_GLOWSHROOM_CAP.get());
 		registerDropSelfLootTable(ModBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE.get());
@@ -275,6 +279,11 @@ public class ModBlockLootTables extends BlockLootTables
 			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.TENANEA_SAPLING.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
 		});
 		
+		registerDropSelfLootTable(ModBlocks.HELIX_TREE_SAPLING.get());
+		registerLootTable(ModBlocks.HELIX_TREE_LEAVES.get(), (block) -> {
+			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.HELIX_TREE_SAPLING.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
+		});		
+		
 		// WOODEN_MATERIALS
 		registerWoodenMaterialLootTables(ModBlocks.MOSSY_GLOWSHROOM);
 		registerWoodenMaterialLootTables(ModBlocks.LACUGROVE);
@@ -282,6 +291,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerWoodenMaterialLootTables(ModBlocks.PYTHADENDRON);
 		registerWoodenMaterialLootTables(ModBlocks.DRAGON_TREE);
 		registerWoodenMaterialLootTables(ModBlocks.TENANEA);
+		registerWoodenMaterialLootTables(ModBlocks.HELIX_TREE);
 		
 		// STONE MATERIALS
 		registerStoneMaterialLootTables(ModBlocks.FLAVOLITE);

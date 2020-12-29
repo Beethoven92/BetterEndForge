@@ -26,6 +26,8 @@ import mod.beethoven92.betterendforge.common.block.EndStoneSmelter;
 import mod.beethoven92.betterendforge.common.block.EndstoneDustBlock;
 import mod.beethoven92.betterendforge.common.block.EternalPedestal;
 import mod.beethoven92.betterendforge.common.block.GlowingMossBlock;
+import mod.beethoven92.betterendforge.common.block.HelixTreeLeavesBlock;
+import mod.beethoven92.betterendforge.common.block.HelixTreeSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.HydraluxBlock;
 import mod.beethoven92.betterendforge.common.block.HydraluxPetalBlock;
 import mod.beethoven92.betterendforge.common.block.HydraluxSaplingBlock;
@@ -609,6 +611,23 @@ public class ModBlocks
 					                                           doesNotBlockMovement().
 					                                           sound(SoundType.WET_GRASS)));
 	
+	public static final RegistryObject<Block> HELIX_TREE_SAPLING = registerBlockWithDefaultItem("helix_tree_sapling",
+			() -> new HelixTreeSaplingBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                                   zeroHardnessAndResistance().
+                                                                   doesNotBlockMovement().
+                                                                   sound(SoundType.PLANT).
+                                                                   tickRandomly()));
+	
+	public static final RegistryObject<Block> HELIX_TREE_LEAVES = registerBlockWithDefaultItem("helix_tree_leaves",
+			() -> new HelixTreeLeavesBlock(AbstractBlock.Properties.create(Material.LEAVES, MaterialColor.ADOBE).
+					                                       hardnessAndResistance(0.2F).
+					                                       tickRandomly().
+                                                           sound(SoundType.NETHER_WART).
+                                                           notSolid().
+                                                           setSuffocates((state, world, pos) -> { return false; }).
+                                                           setAllowsSpawn((state, reader, pos, entity) -> {return false;}).
+                                                           setBlocksVision((state, reader, pos) -> {return false;})));
+	
 	// BLOCKS WITH TILE ENTITY
 	public static final RegistryObject<Block> ETERNAL_PEDESTAL = registerBlockWithDefaultItem("eternal_pedestal", 
 			() -> new EternalPedestal(AbstractBlock.Properties.from(FLAVOLITE_RUNED_ETERNAL.get())));
@@ -656,6 +675,8 @@ public class ModBlocks
 	public static final WoodenMaterial PYTHADENDRON = new WoodenMaterial("pythadendron", MaterialColor.MAGENTA, MaterialColor.PURPLE);
 	public static final WoodenMaterial DRAGON_TREE = new WoodenMaterial("dragon_tree", MaterialColor.BLACK, MaterialColor.MAGENTA);
 	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.BROWN, MaterialColor.PINK);
+	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ADOBE);
+
 	
 	// STONE MATERIALS
     public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);

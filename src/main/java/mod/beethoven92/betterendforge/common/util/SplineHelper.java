@@ -98,6 +98,58 @@ public class SplineHelper
 		return true;
 	}
 	
+	public static void fillSplineForce(List<Vector3f> spline, IWorld world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
+		Vector3f startPos = spline.get(0);
+		for (int i = 1; i < spline.size(); i++) {
+			Vector3f endPos = spline.get(i);
+			fillLineForce(startPos, endPos, world, state, pos, replace);
+			startPos = endPos;
+		}
+	}
+	
+	public static void fillLineForce(Vector3f start, Vector3f end, IWorld world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace) {
+		float dx = end.getX() - start.getX();
+		float dy = end.getY() - start.getY();
+		float dz = end.getZ() - start.getZ();
+		float max = ModMathHelper.max(Math.abs(dx), Math.abs(dy), Math.abs(dz));
+		int count = ModMathHelper.floor(max + 1);
+		dx /= max;
+		dy /= max;
+		dz /= max;
+		float x = start.getX();
+		float y = start.getY();
+		float z = start.getZ();
+		boolean down = Math.abs(dy) > 0.2;
+		
+		BlockState bState;
+		Mutable bPos = new Mutable();
+		for (int i = 0; i < count; i++) {
+			bPos.setPos(x + pos.getX(), y + pos.getY(), z + pos.getZ());
+			bState = world.getBlockState(bPos);
+			if (replace.apply(bState)) {
+				BlockHelper.setWithoutUpdate(world, bPos, state);
+				bPos.setY(bPos.getY() - 1);
+				bState = world.getBlockState(bPos);
+				if (down && replace.apply(bState)) {
+					BlockHelper.setWithoutUpdate(world, bPos, state);
+				}
+			}
+			x += dx;
+			y += dy;
+			z += dz;
+		}
+		bPos.setPos(end.getX() + pos.getX(), end.getY() + pos.getY(), end.getZ() + pos.getZ());
+		bState = world.getBlockState(bPos);
+		if (replace.apply(bState)) {
+			BlockHelper.setWithoutUpdate(world, bPos, state);
+			bPos.setY(bPos.getY() - 1);
+			bState = world.getBlockState(bPos);
+			if (down && replace.apply(bState)) {
+				BlockHelper.setWithoutUpdate(world, bPos, state);
+			}
+		}
+	}
+	
 	private static boolean fillLine(Vector3f start, Vector3f end, IWorld world, BlockState state, BlockPos pos, Function<BlockState, Boolean> replace)
 	{
 		float dx = end.getX() - start.getX();

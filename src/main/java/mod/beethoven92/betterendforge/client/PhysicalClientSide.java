@@ -80,6 +80,8 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.TENANEA_LEAVES.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.TENANEA_FLOWERS.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.TENANEA_OUTER_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.HELIX_TREE_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.HELIX_TREE_SAPLING.get(), RenderType.getCutout());
 		// PLANTS
 		RenderTypeLookup.setRenderLayer(ModBlocks.UMBRELLA_MOSS.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.UMBRELLA_MOSS_TALL.get(), RenderType.getCutout());

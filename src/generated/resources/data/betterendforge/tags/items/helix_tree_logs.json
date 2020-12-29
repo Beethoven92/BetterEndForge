@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:helix_tree_log",
+    "betterendforge:helix_tree_bark",
+    "betterendforge:helix_tree_stripped_log",
+    "betterendforge:helix_tree_stripped_bark"
+  ]
+}
