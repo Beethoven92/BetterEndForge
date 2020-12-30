@@ -67,6 +67,9 @@ public class ModBlockLootTables extends BlockLootTables
 	    registerLootTable(ModBlocks.PINK_MOSS.get(), (terrain) -> {
 	    	return droppingWithSilkTouch(terrain, Blocks.END_STONE);
 	    });
+	    registerLootTable(ModBlocks.AMBER_MOSS.get(), (terrain) -> {
+	    	return droppingWithSilkTouch(terrain, Blocks.END_STONE);
+	    });
 		registerDropSelfLootTable(ModBlocks.ENDSTONE_DUST.get());
 		
 		// PATHS
@@ -208,6 +211,9 @@ public class ModBlockLootTables extends BlockLootTables
 	    registerLootTable(ModBlocks.CHARNIA_LIGHT_BLUE.get(), BlockLootTables::onlyWithShears);
 	    registerLootTable(ModBlocks.CHARNIA_CYAN.get(), BlockLootTables::onlyWithShears);
 	    registerLootTable(ModBlocks.CHARNIA_GREEN.get(), BlockLootTables::onlyWithShears);
+	    
+		registerLootTable(ModBlocks.LANCELEAF_SEED.get(), BlockLootTables::onlyWithShears);
+		registerLootTable(ModBlocks.LANCELEAF.get(), BlockLootTables::onlyWithShears);
 	    
 	    // WALL_PLANTS
 		registerDropSelfLootTable(ModBlocks.PURPLE_POLYPORE.get());

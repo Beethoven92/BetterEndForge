@@ -16,6 +16,7 @@ import mod.beethoven92.betterendforge.common.world.feature.GeyserFeature;
 import mod.beethoven92.betterendforge.common.world.feature.HelixTreeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.HydraluxFeature;
 import mod.beethoven92.betterendforge.common.world.feature.LacugroveFeature;
+import mod.beethoven92.betterendforge.common.world.feature.LanceleafFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MengerSpongeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MossyGlowshroomFeature;
 import mod.beethoven92.betterendforge.common.world.feature.OreLayerFeature;
@@ -75,6 +76,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> SHADOW_BERRY = new SinglePlantFeature(ModBlocks.SHADOW_BERRY.get(), 2);
 	public static final Feature<NoFeatureConfig> BUSHY_GRASS = new SinglePlantFeature(ModBlocks.BUSHY_GRASS.get(), 8, false);
 	public static final Feature<NoFeatureConfig> BUSHY_GRASS_WG = new SinglePlantFeature(ModBlocks.BUSHY_GRASS.get(), 5);
+	public static final Feature<NoFeatureConfig> LANCELEAF = new LanceleafFeature();
 	
 	// WALL PLANTS
 	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 3);

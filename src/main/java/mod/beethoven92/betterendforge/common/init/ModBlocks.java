@@ -34,6 +34,8 @@ import mod.beethoven92.betterendforge.common.block.HydraluxSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.HydrothermalVentBlock;
 import mod.beethoven92.betterendforge.common.block.InfusionPedestal;
 import mod.beethoven92.betterendforge.common.block.LacugroveSaplingBlock;
+import mod.beethoven92.betterendforge.common.block.LanceleafBlock;
+import mod.beethoven92.betterendforge.common.block.LanceleafSeedBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeWetBlock;
 import mod.beethoven92.betterendforge.common.block.MossyGlowshroomCapBlock;
@@ -131,6 +133,13 @@ public class ModBlocks
                                                             hardnessAndResistance(3.0F, 9.0F).
                                                             sound(SoundType.GROUND).
                                                             tickRandomly()));
+	
+	public static final RegistryObject<Block> AMBER_MOSS = registerBlockWithDefaultItem("amber_moss", 
+			() -> new TerrainBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.ADOBE).
+                                                            setRequiresTool().
+                                                            hardnessAndResistance(3.0F, 9.0F).
+                                                            sound(SoundType.GROUND).
+                                                            tickRandomly())); // TODO: Something bonemeal?
 
 	public static final RegistryObject<Block> ENDSTONE_DUST = registerBlockWithDefaultItem("endstone_dust", 
 			() -> new EndstoneDustBlock(AbstractBlock.Properties.create(Material.SAND, Blocks.END_STONE.getMaterialColor()).
@@ -476,6 +485,19 @@ public class ModBlocks
                                                                         zeroHardnessAndResistance().
                                                                         doesNotBlockMovement().
                                                                         sound(SoundType.WET_GRASS)));
+	
+	public static final RegistryObject<Block> LANCELEAF_SEED = registerBlockWithDefaultItem("lanceleaf_seed", 
+			() -> new LanceleafSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).
+					                                             zeroHardnessAndResistance().
+					                                             doesNotBlockMovement().
+					                                             tickRandomly().
+					                                             sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> LANCELEAF = registerBlock("lanceleaf", 
+			() -> new LanceleafBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                             zeroHardnessAndResistance().
+                                                             doesNotBlockMovement().
+                                                             sound(SoundType.PLANT)));
 	
 	// VINES
 	public static final RegistryObject<Block> DENSE_VINE = registerBlockWithDefaultItem("dense_vine",

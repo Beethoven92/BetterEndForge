@@ -55,6 +55,8 @@
 	"block.betterendforge.shadow_grass_path": "Shadow Grass Path",
 	"block.betterendforge.pink_moss_path": "Pink Moss Path",
 
+	"block.betterendforge.amber_moss": "Amber Moss",
+	"block.betterendforge.amber_moss_path": "Amber Moss Path",
 	"block.betterendforge.helix_tree_bark": "Helix Tree Bark",
 	"block.betterendforge.helix_tree_barrel": "Helix Tree Barrel",
 	"block.betterendforge.helix_tree_bookshelf": "Helix Tree Bookshelf",
@@ -76,6 +78,8 @@
 	"block.betterendforge.helix_tree_stripped_bark": "Stripped Helix Tree Bark",
 	"block.betterendforge.helix_tree_stripped_log": "Stripped Helix Tree Log",
 	"block.betterendforge.helix_tree_trapdoor": "Helix Tree Trapdoor",
+  "block.betterendforge.lanceleaf": "Lanceleaf",
+	"block.betterendforge.lanceleaf_seed": "Lanceleaf Seed",     
 	
 	"item.betterendforge.eternal_crystal": "Eternal Crystal",
 	"item.betterendforge.crystal_shards": "Crystal Shards",
