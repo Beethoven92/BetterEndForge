@@ -1,0 +1,7 @@
+{
+	"parent": "minecraft:block/cube_column",
+	"textures": {
+		"end": "betterendforge:block/helix_tree_stripped_log_top",
+		"side": "betterendforge:block/helix_tree_stripped_log_side"
+	}
+}

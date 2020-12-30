@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/cross",
+	"textures": {
+		"cross": "betterendforge:block/helix_tree_sapling"
+	}
+}

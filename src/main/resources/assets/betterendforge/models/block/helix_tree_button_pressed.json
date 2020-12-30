@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button_pressed",
+  "textures": {
+    "texture": "betterendforge:block/helix_tree_planks"
+  }
+}
