@@ -26,6 +26,9 @@ import mod.beethoven92.betterendforge.common.block.EndStoneSmelter;
 import mod.beethoven92.betterendforge.common.block.EndstoneDustBlock;
 import mod.beethoven92.betterendforge.common.block.EternalPedestal;
 import mod.beethoven92.betterendforge.common.block.GlowingMossBlock;
+import mod.beethoven92.betterendforge.common.block.GlowingPillarLuminophorBlock;
+import mod.beethoven92.betterendforge.common.block.GlowingPillarRootsBlock;
+import mod.beethoven92.betterendforge.common.block.GlowingPillarSeedBlock;
 import mod.beethoven92.betterendforge.common.block.HelixTreeLeavesBlock;
 import mod.beethoven92.betterendforge.common.block.HelixTreeSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.HydraluxBlock;
@@ -61,6 +64,7 @@ import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import mod.beethoven92.betterendforge.common.block.template.FurBlock;
 import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
+import mod.beethoven92.betterendforge.common.block.template.PlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.block.template.UnderwaterWallPlantBlock;
 import mod.beethoven92.betterendforge.common.block.template.WallMushroomBlock;
 import mod.beethoven92.betterendforge.common.block.template.WallPlantBlock;
@@ -139,7 +143,7 @@ public class ModBlocks
                                                             setRequiresTool().
                                                             hardnessAndResistance(3.0F, 9.0F).
                                                             sound(SoundType.GROUND).
-                                                            tickRandomly())); // TODO: Something bonemeal?
+                                                            tickRandomly())); // TODO: Something bonemeal? TODO: Amber moss path and grass
 
 	public static final RegistryObject<Block> ENDSTONE_DUST = registerBlockWithDefaultItem("endstone_dust", 
 			() -> new EndstoneDustBlock(AbstractBlock.Properties.create(Material.SAND, Blocks.END_STONE.getMaterialColor()).
@@ -445,6 +449,46 @@ public class ModBlocks
 					                                              hardnessAndResistance(1F).
 					                                              harvestTool(ToolType.AXE)));
 	
+	public static final RegistryObject<Block> LANCELEAF_SEED = registerBlockWithDefaultItem("lanceleaf_seed", 
+			() -> new LanceleafSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).
+					                                             zeroHardnessAndResistance().
+					                                             doesNotBlockMovement().
+					                                             tickRandomly().
+					                                             sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> LANCELEAF = registerBlock("lanceleaf", 
+			() -> new LanceleafBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                             zeroHardnessAndResistance().
+                                                             doesNotBlockMovement().
+                                                             sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> GLOWING_PILLAR_SEED = registerBlockWithDefaultItem("glowing_pillar_seed", 
+			() -> new GlowingPillarSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).
+					                                             zeroHardnessAndResistance().
+					                                             doesNotBlockMovement().
+					                                             tickRandomly().
+					                                             sound(SoundType.PLANT).
+					                                             setLightLevel((s) -> s.get(PlantBlockWithAge.AGE) * 3 + 3)));
+	
+	public static final RegistryObject<Block> GLOWING_PILLAR_ROOTS = registerBlock("glowing_pillar_roots", 
+			() -> new GlowingPillarRootsBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                             zeroHardnessAndResistance().
+                                                             doesNotBlockMovement().
+                                                             sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> GLOWING_PILLAR_LUMINOPHOR = registerBlockWithDefaultItem("glowing_pillar_luminophor", 
+			() -> new GlowingPillarLuminophorBlock(AbstractBlock.Properties.create(Material.LEAVES, MaterialColor.ADOBE).
+					                                             sound(SoundType.PLANT).
+					                                             hardnessAndResistance(0.2f).
+					                                             setLightLevel((s) -> 15)));
+	
+	public static final RegistryObject<Block> GLOWING_PILLAR_LEAVES = registerBlockWithDefaultItem("glowing_pillar_leaves", 
+			() -> new FurBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).
+					                                           zeroHardnessAndResistance().
+					                                           setLightLevel((value) -> 15).
+					                                           doesNotBlockMovement().
+					                                           sound(SoundType.WET_GRASS)));
+	
 	// CROPS
 	public static final RegistryObject<Block> SHADOW_BERRY = registerBlockWithDefaultItem("shadow_berry", 
 			() -> new ShadowBerryBlock(AbstractBlock.Properties.create(Material.PLANTS).
@@ -485,19 +529,6 @@ public class ModBlocks
                                                                         zeroHardnessAndResistance().
                                                                         doesNotBlockMovement().
                                                                         sound(SoundType.WET_GRASS)));
-	
-	public static final RegistryObject<Block> LANCELEAF_SEED = registerBlockWithDefaultItem("lanceleaf_seed", 
-			() -> new LanceleafSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).
-					                                             zeroHardnessAndResistance().
-					                                             doesNotBlockMovement().
-					                                             tickRandomly().
-					                                             sound(SoundType.PLANT)));
-	
-	public static final RegistryObject<Block> LANCELEAF = registerBlock("lanceleaf", 
-			() -> new LanceleafBlock(AbstractBlock.Properties.create(Material.PLANTS).
-                                                             zeroHardnessAndResistance().
-                                                             doesNotBlockMovement().
-                                                             sound(SoundType.PLANT)));
 	
 	// VINES
 	public static final RegistryObject<Block> DENSE_VINE = registerBlockWithDefaultItem("dense_vine",

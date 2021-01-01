@@ -13,6 +13,7 @@ import mod.beethoven92.betterendforge.common.world.feature.EndLotusFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLotusLeafFeature;
 import mod.beethoven92.betterendforge.common.world.feature.FloatingSpireFeature;
 import mod.beethoven92.betterendforge.common.world.feature.GeyserFeature;
+import mod.beethoven92.betterendforge.common.world.feature.GlowPillarFeature;
 import mod.beethoven92.betterendforge.common.world.feature.HelixTreeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.HydraluxFeature;
 import mod.beethoven92.betterendforge.common.world.feature.LacugroveFeature;
@@ -77,6 +78,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> BUSHY_GRASS = new SinglePlantFeature(ModBlocks.BUSHY_GRASS.get(), 8, false);
 	public static final Feature<NoFeatureConfig> BUSHY_GRASS_WG = new SinglePlantFeature(ModBlocks.BUSHY_GRASS.get(), 5);
 	public static final Feature<NoFeatureConfig> LANCELEAF = new LanceleafFeature();
+	public static final Feature<NoFeatureConfig> GLOW_PILLAR = new GlowPillarFeature();
 	
 	// WALL PLANTS
 	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 3);
@@ -153,6 +155,8 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), SHADOW_BERRY, "shadow_berry"); 
     	BetterEnd.register(event.getRegistry(), BUSHY_GRASS, "bushy_grass"); 
     	BetterEnd.register(event.getRegistry(), BUSHY_GRASS_WG, "bushy_grass_wg"); 
+    	BetterEnd.register(event.getRegistry(), LANCELEAF, "lanceleaf"); 
+    	BetterEnd.register(event.getRegistry(), GLOW_PILLAR, "glow_pillar"); 
     	// WALL_PLANTS
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE, "purple_polypore");
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE_DENSE, "purple_polypore_dense");

@@ -80,6 +80,10 @@
 	"block.betterendforge.helix_tree_trapdoor": "Helix Tree Trapdoor",
   "block.betterendforge.lanceleaf": "Lanceleaf",
 	"block.betterendforge.lanceleaf_seed": "Lanceleaf Seed",     
+	"block.betterendforge.glowing_pillar_leaves": "Glowing Pillar Leaves",
+	"block.betterendforge.glowing_pillar_luminophor": "Glowing Pillar Luminophor",
+	"block.betterendforge.glowing_pillar_roots": "Glowing Pillar Roots",
+	"block.betterendforge.glowing_pillar_seed": "Glowing Pillar Seed",     
 	
 	"item.betterendforge.eternal_crystal": "Eternal Crystal",
 	"item.betterendforge.crystal_shards": "Crystal Shards",

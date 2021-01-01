@@ -1,0 +1,6 @@
+{
+	"parent": "betterendforge:block/cross_no_distortion",
+	"textures": {
+		"texture": "betterendforge:block/glowing_pillar_seed_1"
+	}
+}

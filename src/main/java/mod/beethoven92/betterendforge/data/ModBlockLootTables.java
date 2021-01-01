@@ -214,6 +214,14 @@ public class ModBlockLootTables extends BlockLootTables
 	    
 		registerLootTable(ModBlocks.LANCELEAF_SEED.get(), BlockLootTables::onlyWithShears);
 		registerLootTable(ModBlocks.LANCELEAF.get(), BlockLootTables::onlyWithShears);
+		
+		registerLootTable(ModBlocks.GLOWING_PILLAR_SEED.get(), BlockLootTables::onlyWithShears);
+		registerLootTable(ModBlocks.GLOWING_PILLAR_ROOTS.get(), (a) -> BlockLootTables.blockNoDrop());
+	    registerDropSelfLootTable(ModBlocks.GLOWING_PILLAR_LUMINOPHOR.get());
+		registerLootTable(ModBlocks.GLOWING_PILLAR_LEAVES.get(), (block) -> {
+			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.GLOWING_PILLAR_SEED.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
+		});
+
 	    
 	    // WALL_PLANTS
 		registerDropSelfLootTable(ModBlocks.PURPLE_POLYPORE.get());
