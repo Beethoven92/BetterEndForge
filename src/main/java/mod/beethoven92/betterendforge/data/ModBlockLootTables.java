@@ -80,6 +80,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropping(ModBlocks.CAVE_MOSS_PATH.get(), Blocks.END_STONE);
 		registerDropping(ModBlocks.SHADOW_GRASS_PATH.get(), Blocks.END_STONE);
 		registerDropping(ModBlocks.PINK_MOSS_PATH.get(), Blocks.END_STONE);
+		registerDropping(ModBlocks.AMBER_MOSS_PATH.get(), Blocks.END_STONE);
 		
 		// MATERIALS
 		registerDropSelfLootTable(ModBlocks.AETERNIUM_BLOCK.get());
@@ -136,6 +137,7 @@ public class ModBlockLootTables extends BlockLootTables
 			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
 		});*/
 		registerLootTable(ModBlocks.CRYSTAL_GRASS.get(), BlockLootTables::onlyWithShears);
+		registerLootTable(ModBlocks.AMBER_GRASS.get(), BlockLootTables::onlyWithShears);
 		/*registerLootTable(ModBlocks.CRYSTAL_GRASS.get(), (block) -> {
 			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
 		});*/

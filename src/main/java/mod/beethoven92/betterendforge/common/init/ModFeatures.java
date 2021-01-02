@@ -70,6 +70,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> CHORUS_GRASS = new SinglePlantFeature(ModBlocks.CHORUS_GRASS.get(), 4);
 	public static final Feature<NoFeatureConfig> CAVE_GRASS = new CavePlantFeature(ModBlocks.CAVE_GRASS.get(), 7);
 	public static final Feature<NoFeatureConfig> CRYSTAL_GRASS = new SinglePlantFeature(ModBlocks.CRYSTAL_GRASS.get(), 8, false);
+	public static final Feature<NoFeatureConfig> AMBER_GRASS = new SinglePlantFeature(ModBlocks.AMBER_GRASS.get(), 6);
 	public static final Feature<NoFeatureConfig> SHADOW_PLANT = new SinglePlantFeature(ModBlocks.SHADOW_PLANT.get(), 6);
 	public static final Feature<NoFeatureConfig> BLUE_VINE = new BlueVineFeature(5);
 	public static final Feature<NoFeatureConfig> MURKWEED = new SinglePlantFeature(ModBlocks.MURKWEED.get(), 3);
@@ -148,6 +149,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), CHORUS_GRASS, "chorus_grass");
     	BetterEnd.register(event.getRegistry(), CAVE_GRASS, "cave_grass");
     	BetterEnd.register(event.getRegistry(), CRYSTAL_GRASS, "crystal_grass");
+    	BetterEnd.register(event.getRegistry(), AMBER_GRASS, "amber_grass");
     	BetterEnd.register(event.getRegistry(), SHADOW_PLANT, "shadow_plant");  	
     	BetterEnd.register(event.getRegistry(), BLUE_VINE, "blue_vine"); 
     	BetterEnd.register(event.getRegistry(), MURKWEED, "murkweed");  	

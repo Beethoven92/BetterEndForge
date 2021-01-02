@@ -143,7 +143,7 @@ public class ModBlocks
                                                             setRequiresTool().
                                                             hardnessAndResistance(3.0F, 9.0F).
                                                             sound(SoundType.GROUND).
-                                                            tickRandomly())); // TODO: Something bonemeal? TODO: Amber moss path and grass
+                                                            tickRandomly()));
 
 	public static final RegistryObject<Block> ENDSTONE_DUST = registerBlockWithDefaultItem("endstone_dust", 
 			() -> new EndstoneDustBlock(AbstractBlock.Properties.create(Material.SAND, Blocks.END_STONE.getMaterialColor()).
@@ -170,6 +170,9 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> PINK_MOSS_PATH = registerBlockWithDefaultItem("pink_moss_path", 
 			() -> new PathBlock(PINK_MOSS.get()));
+	
+	public static final RegistryObject<Block> AMBER_MOSS_PATH = registerBlockWithDefaultItem("amber_moss_path", 
+			() -> new PathBlock(AMBER_MOSS.get()));
 	
 	// MATERIALS
 	public static final RegistryObject<Block> AETERNIUM_BLOCK = registerBlockWithDefaultItem("aeternium_block",
@@ -290,6 +293,9 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> CRYSTAL_GRASS = registerBlockWithDefaultItem("crystal_grass", 
 			() -> new TerrainPlantBlock(CRYSTAL_MOSS.get()));
+	
+	public static final RegistryObject<Block> AMBER_GRASS = registerBlockWithDefaultItem("amber_grass", 
+			() -> new TerrainPlantBlock(AMBER_MOSS.get()));
 	
 	public static final RegistryObject<Block> SHADOW_PLANT = registerBlockWithDefaultItem("shadow_plant", 
 			() -> new TerrainPlantBlock(SHADOW_GRASS.get()));

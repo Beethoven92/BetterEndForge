@@ -174,6 +174,10 @@ public abstract class BoneMealItemMixin
 		{
 			return ModBlocks.CRYSTAL_GRASS.get().getDefaultState();
 		}
+		else if (block == ModBlocks.AMBER_MOSS.get())
+		{
+			return ModBlocks.AMBER_GRASS.get().getDefaultState();
+		}
 		else if (block == ModBlocks.SHADOW_GRASS.get()) 
 		{
 			return ModBlocks.SHADOW_PLANT.get().getDefaultState();
