@@ -52,7 +52,6 @@ public class ModBlockLootTables extends BlockLootTables
 	    });
 	    
 	    registerDropSelfLootTable(ModBlocks.HYDRALUX_PETAL_BLOCK.get());
-	    registerDropSelfLootTable(ModBlocks.HYDRALUX.get());
 	    
 	    // TERRAINS
 	    registerLootTable(ModBlocks.CRYSTAL_MOSS.get(), (terrain) -> {
