@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModTags;
@@ -201,7 +202,8 @@ public abstract class BoneMealItemMixin
 		{
 			return world.rand.nextBoolean() ? ModBlocks.CHARNIA_LIGHT_BLUE.get().getDefaultState() : ModBlocks.CHARNIA_LIGHT_BLUE.get().getDefaultState();
 		}
-		else if (biome == ModBiomes.AMBER_LAND) {
+		else if (biome == ModBiomes.AMBER_LAND) 
+		{
 			return world.rand.nextBoolean() ? ModBlocks.CHARNIA_ORANGE.get().getDefaultState() : ModBlocks.CHARNIA_RED.get().getDefaultState();
 		}
 		else if (biome == ModBiomes.CHORUS_FOREST || biome == ModBiomes.SHADOW_FOREST) 
