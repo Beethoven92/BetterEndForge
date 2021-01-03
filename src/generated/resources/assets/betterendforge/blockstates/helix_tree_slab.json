@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "betterendforge:block/helix_tree_slab_top"
+    },
+    "type=bottom": {
+      "model": "betterendforge:block/helix_tree_slab"
+    },
+    "type=double": {
+      "model": "betterendforge:block/helix_tree_planks"
+    }
+  }
+}

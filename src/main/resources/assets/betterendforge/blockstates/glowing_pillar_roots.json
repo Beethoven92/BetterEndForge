@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"shape=top": { "model": "betterendforge:block/glowing_pillar_roots_top" },
+		"shape=middle": { "model": "betterendforge:block/glowing_pillar_roots_both" },
+		"shape=bottom": { "model": "betterendforge:block/glowing_pillar_roots_bottom" }
+	}
+}

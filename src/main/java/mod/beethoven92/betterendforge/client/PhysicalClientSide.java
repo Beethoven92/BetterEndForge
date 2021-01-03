@@ -80,6 +80,8 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.TENANEA_LEAVES.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.TENANEA_FLOWERS.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.TENANEA_OUTER_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.HELIX_TREE_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.HELIX_TREE_SAPLING.get(), RenderType.getCutout());
 		// PLANTS
 		RenderTypeLookup.setRenderLayer(ModBlocks.UMBRELLA_MOSS.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.UMBRELLA_MOSS_TALL.get(), RenderType.getCutout());
@@ -87,6 +89,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.CHORUS_GRASS.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.CAVE_GRASS.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.CRYSTAL_GRASS.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.AMBER_GRASS.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.SHADOW_PLANT.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.CAVE_BUSH.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.BLUE_VINE_SEED.get(), RenderType.getCutout());
@@ -117,6 +120,12 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.TUBE_WORM.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.HYDRALUX_SAPLING.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.HYDRALUX.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.LANCELEAF.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.LANCELEAF_SEED.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.GLOWING_PILLAR_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.GLOWING_PILLAR_LUMINOPHOR.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.GLOWING_PILLAR_ROOTS.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.GLOWING_PILLAR_SEED.get(), RenderType.getCutout());
 		// MISC
 		RenderTypeLookup.setRenderLayer(ModBlocks.END_PORTAL_BLOCK.get(), RenderType.getTranslucent());
 		

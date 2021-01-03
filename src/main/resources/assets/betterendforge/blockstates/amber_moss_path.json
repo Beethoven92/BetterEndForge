@@ -1,0 +1,18 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/amber_moss_path_1" },
+			{ "model": "betterendforge:block/amber_moss_path_1", "y": 90 },
+			{ "model": "betterendforge:block/amber_moss_path_1", "y": 180 },
+			{ "model": "betterendforge:block/amber_moss_path_1", "y": 270 },
+			{ "model": "betterendforge:block/amber_moss_path_2" },
+			{ "model": "betterendforge:block/amber_moss_path_2", "y": 90 },
+			{ "model": "betterendforge:block/amber_moss_path_2", "y": 180 },
+			{ "model": "betterendforge:block/amber_moss_path_2", "y": 270 },
+			{ "model": "betterendforge:block/amber_moss_path_3" },
+			{ "model": "betterendforge:block/amber_moss_path_3", "y": 90 },
+			{ "model": "betterendforge:block/amber_moss_path_3", "y": 180 },
+			{ "model": "betterendforge:block/amber_moss_path_3", "y": 270 }
+		]
+	}
+}

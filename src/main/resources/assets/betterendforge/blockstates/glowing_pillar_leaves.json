@@ -1,0 +1,26 @@
+{
+    "variants": {
+        "facing=north":  [
+			{ "model": "betterendforge:block/glowing_pillar_leaves_01", "y": 180 },
+			{ "model": "betterendforge:block/glowing_pillar_leaves_02", "y": 180 },
+			{ "model": "betterendforge:block/glowing_pillar_leaves_03", "y": 180 }
+		],
+        "facing=south":  [
+			{ "model": "betterendforge:block/glowing_pillar_leaves_01" },
+			{ "model": "betterendforge:block/glowing_pillar_leaves_02" },
+			{ "model": "betterendforge:block/glowing_pillar_leaves_03" }
+		],
+        "facing=east":  [
+			{ "model": "betterendforge:block/glowing_pillar_leaves_01", "y": 270 },
+			{ "model": "betterendforge:block/glowing_pillar_leaves_02", "y": 270 },
+			{ "model": "betterendforge:block/glowing_pillar_leaves_03", "y": 270 }
+		],
+        "facing=west":  [
+			{ "model": "betterendforge:block/glowing_pillar_leaves_01", "y": 90 },
+			{ "model": "betterendforge:block/glowing_pillar_leaves_02", "y": 90 },
+			{ "model": "betterendforge:block/glowing_pillar_leaves_03", "y": 90 }
+		],
+		"facing=up":    { "model": "betterendforge:block/glowing_pillar_leaves_up" },
+        "facing=down":  { "model": "betterendforge:block/glowing_pillar_leaves_up", "x": 180 }
+    }
+}

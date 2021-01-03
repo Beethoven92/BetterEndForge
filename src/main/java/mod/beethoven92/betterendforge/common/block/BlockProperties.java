@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.common.block;
 
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.IStringSerializable;
 
 public class BlockProperties 
@@ -12,6 +13,10 @@ public class BlockProperties
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
 	public static final BooleanProperty HAS_LIGHT = BooleanProperty.create("has_light");
 	public static final BooleanProperty ACTIVATED = BooleanProperty.create("active");
+	public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 3);
+	public static final EnumProperty<PentaShape> PENTA_SHAPE = EnumProperty.create("shape", PentaShape.class);
+
+
 	
 	public static enum TripleShape implements IStringSerializable 
 	{
@@ -101,6 +106,30 @@ public class BlockProperties
 		public boolean hasGlow() 
 		{
 			return glow;
+		}
+	}
+	
+	public static enum PentaShape implements IStringSerializable {
+		BOTTOM("bottom"),
+		PRE_BOTTOM("pre_bottom"),
+		MIDDLE("middle"),
+		PRE_TOP("pre_top"),
+		TOP("top");
+		
+		private final String name;
+		
+		PentaShape(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String getString() {
+			return name;
+		}
+		
+		@Override
+		public String toString() {
+			return name;
 		}
 	}
 }

@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.client.event;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.AuroraCrystalBlock;
+import mod.beethoven92.betterendforge.common.block.HelixTreeLeavesBlock;
 import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
@@ -31,6 +32,10 @@ public class ColorHandler
 		event.getBlockColors().register((state, reader, pos, color) -> 
 		                 {return state.getBlock().getMaterialColor().colorValue;}, 
 		                 ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED.getBlocks());
+
+		event.getBlockColors().register((state, reader, pos, color) ->
+		 				 {return HelixTreeLeavesBlock.getBlockColor(state);}, 
+		 				 ModBlocks.HELIX_TREE_LEAVES.get());
 	}
 	
 	@SubscribeEvent
@@ -41,6 +46,9 @@ public class ColorHandler
 		
 		event.getItemColors().register((stack, tintIndex) -> 
                          {return TenaneaFlowersBlock.getItemColor();}, ModBlocks.TENANEA_FLOWERS.get());
+		
+		event.getItemColors().register((stack, tintIndex) -> 
+        {return HelixTreeLeavesBlock.getItemColor();}, ModBlocks.HELIX_TREE_LEAVES.get());
 		
 		event.getItemColors().register((stack, color) -> {
 			return ((SpawnEggItem) stack.getItem()).getColor(color);

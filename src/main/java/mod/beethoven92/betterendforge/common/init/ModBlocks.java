@@ -26,6 +26,11 @@ import mod.beethoven92.betterendforge.common.block.EndStoneSmelter;
 import mod.beethoven92.betterendforge.common.block.EndstoneDustBlock;
 import mod.beethoven92.betterendforge.common.block.EternalPedestal;
 import mod.beethoven92.betterendforge.common.block.GlowingMossBlock;
+import mod.beethoven92.betterendforge.common.block.GlowingPillarLuminophorBlock;
+import mod.beethoven92.betterendforge.common.block.GlowingPillarRootsBlock;
+import mod.beethoven92.betterendforge.common.block.GlowingPillarSeedBlock;
+import mod.beethoven92.betterendforge.common.block.HelixTreeLeavesBlock;
+import mod.beethoven92.betterendforge.common.block.HelixTreeSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.HydraluxBlock;
 import mod.beethoven92.betterendforge.common.block.HydraluxPetalBlock;
 import mod.beethoven92.betterendforge.common.block.HydraluxPetalBlockColored;
@@ -33,6 +38,8 @@ import mod.beethoven92.betterendforge.common.block.HydraluxSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.HydrothermalVentBlock;
 import mod.beethoven92.betterendforge.common.block.InfusionPedestal;
 import mod.beethoven92.betterendforge.common.block.LacugroveSaplingBlock;
+import mod.beethoven92.betterendforge.common.block.LanceleafBlock;
+import mod.beethoven92.betterendforge.common.block.LanceleafSeedBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeWetBlock;
 import mod.beethoven92.betterendforge.common.block.MossyGlowshroomCapBlock;
@@ -59,6 +66,7 @@ import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import mod.beethoven92.betterendforge.common.block.template.FurBlock;
 import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
+import mod.beethoven92.betterendforge.common.block.template.PlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.block.template.UnderwaterWallPlantBlock;
 import mod.beethoven92.betterendforge.common.block.template.WallMushroomBlock;
 import mod.beethoven92.betterendforge.common.block.template.WallPlantBlock;
@@ -131,6 +139,13 @@ public class ModBlocks
                                                             hardnessAndResistance(3.0F, 9.0F).
                                                             sound(SoundType.GROUND).
                                                             tickRandomly()));
+	
+	public static final RegistryObject<Block> AMBER_MOSS = registerBlockWithDefaultItem("amber_moss", 
+			() -> new TerrainBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.ADOBE).
+                                                            setRequiresTool().
+                                                            hardnessAndResistance(3.0F, 9.0F).
+                                                            sound(SoundType.GROUND).
+                                                            tickRandomly()));
 
 	public static final RegistryObject<Block> ENDSTONE_DUST = registerBlockWithDefaultItem("endstone_dust", 
 			() -> new EndstoneDustBlock(AbstractBlock.Properties.create(Material.SAND, Blocks.END_STONE.getMaterialColor()).
@@ -157,6 +172,9 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> PINK_MOSS_PATH = registerBlockWithDefaultItem("pink_moss_path", 
 			() -> new PathBlock(PINK_MOSS.get()));
+	
+	public static final RegistryObject<Block> AMBER_MOSS_PATH = registerBlockWithDefaultItem("amber_moss_path", 
+			() -> new PathBlock(AMBER_MOSS.get()));
 	
 	// MATERIALS
 	public static final RegistryObject<Block> AETERNIUM_BLOCK = registerBlockWithDefaultItem("aeternium_block",
@@ -277,6 +295,9 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> CRYSTAL_GRASS = registerBlockWithDefaultItem("crystal_grass", 
 			() -> new TerrainPlantBlock(CRYSTAL_MOSS.get()));
+	
+	public static final RegistryObject<Block> AMBER_GRASS = registerBlockWithDefaultItem("amber_grass", 
+			() -> new TerrainPlantBlock(AMBER_MOSS.get()));
 	
 	public static final RegistryObject<Block> SHADOW_PLANT = registerBlockWithDefaultItem("shadow_plant", 
 			() -> new TerrainPlantBlock(SHADOW_GRASS.get()));
@@ -435,6 +456,46 @@ public class ModBlocks
 					                                              sound(SoundType.WART).
 					                                              hardnessAndResistance(1F).
 					                                              harvestTool(ToolType.AXE)));
+	
+	public static final RegistryObject<Block> LANCELEAF_SEED = registerBlockWithDefaultItem("lanceleaf_seed", 
+			() -> new LanceleafSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).
+					                                             zeroHardnessAndResistance().
+					                                             doesNotBlockMovement().
+					                                             tickRandomly().
+					                                             sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> LANCELEAF = registerBlock("lanceleaf", 
+			() -> new LanceleafBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                             zeroHardnessAndResistance().
+                                                             doesNotBlockMovement().
+                                                             sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> GLOWING_PILLAR_SEED = registerBlockWithDefaultItem("glowing_pillar_seed", 
+			() -> new GlowingPillarSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).
+					                                             zeroHardnessAndResistance().
+					                                             doesNotBlockMovement().
+					                                             tickRandomly().
+					                                             sound(SoundType.PLANT).
+					                                             setLightLevel((s) -> s.get(PlantBlockWithAge.AGE) * 3 + 3)));
+	
+	public static final RegistryObject<Block> GLOWING_PILLAR_ROOTS = registerBlock("glowing_pillar_roots", 
+			() -> new GlowingPillarRootsBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                             zeroHardnessAndResistance().
+                                                             doesNotBlockMovement().
+                                                             sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> GLOWING_PILLAR_LUMINOPHOR = registerBlockWithDefaultItem("glowing_pillar_luminophor", 
+			() -> new GlowingPillarLuminophorBlock(AbstractBlock.Properties.create(Material.LEAVES, MaterialColor.ADOBE).
+					                                             sound(SoundType.PLANT).
+					                                             hardnessAndResistance(0.2f).
+					                                             setLightLevel((s) -> 15)));
+	
+	public static final RegistryObject<Block> GLOWING_PILLAR_LEAVES = registerBlockWithDefaultItem("glowing_pillar_leaves", 
+			() -> new FurBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).
+					                                           zeroHardnessAndResistance().
+					                                           setLightLevel((value) -> 15).
+					                                           doesNotBlockMovement().
+					                                           sound(SoundType.WET_GRASS)));
 	
 	// CROPS
 	public static final RegistryObject<Block> SHADOW_BERRY = registerBlockWithDefaultItem("shadow_berry", 
@@ -611,6 +672,23 @@ public class ModBlocks
 					                                           doesNotBlockMovement().
 					                                           sound(SoundType.WET_GRASS)));
 	
+	public static final RegistryObject<Block> HELIX_TREE_SAPLING = registerBlockWithDefaultItem("helix_tree_sapling",
+			() -> new HelixTreeSaplingBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                                   zeroHardnessAndResistance().
+                                                                   doesNotBlockMovement().
+                                                                   sound(SoundType.PLANT).
+                                                                   tickRandomly()));
+	
+	public static final RegistryObject<Block> HELIX_TREE_LEAVES = registerBlockWithDefaultItem("helix_tree_leaves",
+			() -> new HelixTreeLeavesBlock(AbstractBlock.Properties.create(Material.LEAVES, MaterialColor.ADOBE).
+					                                       hardnessAndResistance(0.2F).
+					                                       tickRandomly().
+                                                           sound(SoundType.NETHER_WART).
+                                                           notSolid().
+                                                           setSuffocates((state, world, pos) -> { return false; }).
+                                                           setAllowsSpawn((state, reader, pos, entity) -> {return false;}).
+                                                           setBlocksVision((state, reader, pos) -> {return false;})));
+	
 	// BLOCKS WITH TILE ENTITY
 	public static final RegistryObject<Block> ETERNAL_PEDESTAL = registerBlockWithDefaultItem("eternal_pedestal", 
 			() -> new EternalPedestal(AbstractBlock.Properties.from(FLAVOLITE_RUNED_ETERNAL.get())));
@@ -658,6 +736,8 @@ public class ModBlocks
 	public static final WoodenMaterial PYTHADENDRON = new WoodenMaterial("pythadendron", MaterialColor.MAGENTA, MaterialColor.PURPLE);
 	public static final WoodenMaterial DRAGON_TREE = new WoodenMaterial("dragon_tree", MaterialColor.BLACK, MaterialColor.MAGENTA);
 	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.BROWN, MaterialColor.PINK);
+	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ADOBE);
+
 	
 	// STONE MATERIALS
     public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);

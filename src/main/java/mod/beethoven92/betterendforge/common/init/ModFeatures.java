@@ -13,8 +13,11 @@ import mod.beethoven92.betterendforge.common.world.feature.EndLotusFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLotusLeafFeature;
 import mod.beethoven92.betterendforge.common.world.feature.FloatingSpireFeature;
 import mod.beethoven92.betterendforge.common.world.feature.GeyserFeature;
+import mod.beethoven92.betterendforge.common.world.feature.GlowPillarFeature;
+import mod.beethoven92.betterendforge.common.world.feature.HelixTreeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.HydraluxFeature;
 import mod.beethoven92.betterendforge.common.world.feature.LacugroveFeature;
+import mod.beethoven92.betterendforge.common.world.feature.LanceleafFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MengerSpongeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MossyGlowshroomFeature;
 import mod.beethoven92.betterendforge.common.world.feature.OreLayerFeature;
@@ -67,6 +70,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> CHORUS_GRASS = new SinglePlantFeature(ModBlocks.CHORUS_GRASS.get(), 4);
 	public static final Feature<NoFeatureConfig> CAVE_GRASS = new CavePlantFeature(ModBlocks.CAVE_GRASS.get(), 7);
 	public static final Feature<NoFeatureConfig> CRYSTAL_GRASS = new SinglePlantFeature(ModBlocks.CRYSTAL_GRASS.get(), 8, false);
+	public static final Feature<NoFeatureConfig> AMBER_GRASS = new SinglePlantFeature(ModBlocks.AMBER_GRASS.get(), 6);
 	public static final Feature<NoFeatureConfig> SHADOW_PLANT = new SinglePlantFeature(ModBlocks.SHADOW_PLANT.get(), 6);
 	public static final Feature<NoFeatureConfig> BLUE_VINE = new BlueVineFeature(5);
 	public static final Feature<NoFeatureConfig> MURKWEED = new SinglePlantFeature(ModBlocks.MURKWEED.get(), 3);
@@ -74,6 +78,8 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> SHADOW_BERRY = new SinglePlantFeature(ModBlocks.SHADOW_BERRY.get(), 2);
 	public static final Feature<NoFeatureConfig> BUSHY_GRASS = new SinglePlantFeature(ModBlocks.BUSHY_GRASS.get(), 8, false);
 	public static final Feature<NoFeatureConfig> BUSHY_GRASS_WG = new SinglePlantFeature(ModBlocks.BUSHY_GRASS.get(), 5);
+	public static final Feature<NoFeatureConfig> LANCELEAF = new LanceleafFeature();
+	public static final Feature<NoFeatureConfig> GLOW_PILLAR = new GlowPillarFeature();
 	
 	// WALL PLANTS
 	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 3);
@@ -108,6 +114,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> PYTHADENDRON = new PythadendronFeature();
 	public static final Feature<NoFeatureConfig> DRAGON_TREE = new DragonTreeFeature();
 	public static final Feature<NoFeatureConfig> TENANEA = new TenaneaFeature();
+	public static final Feature<NoFeatureConfig> HELIX_TREE = new HelixTreeFeature();
 	
 	// ORES
 	public static final Feature<OreFeatureConfig> ENDER_ORE = new OreFeature(OreFeatureConfig.CODEC);
@@ -142,6 +149,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), CHORUS_GRASS, "chorus_grass");
     	BetterEnd.register(event.getRegistry(), CAVE_GRASS, "cave_grass");
     	BetterEnd.register(event.getRegistry(), CRYSTAL_GRASS, "crystal_grass");
+    	BetterEnd.register(event.getRegistry(), AMBER_GRASS, "amber_grass");
     	BetterEnd.register(event.getRegistry(), SHADOW_PLANT, "shadow_plant");  	
     	BetterEnd.register(event.getRegistry(), BLUE_VINE, "blue_vine"); 
     	BetterEnd.register(event.getRegistry(), MURKWEED, "murkweed");  	
@@ -149,6 +157,8 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), SHADOW_BERRY, "shadow_berry"); 
     	BetterEnd.register(event.getRegistry(), BUSHY_GRASS, "bushy_grass"); 
     	BetterEnd.register(event.getRegistry(), BUSHY_GRASS_WG, "bushy_grass_wg"); 
+    	BetterEnd.register(event.getRegistry(), LANCELEAF, "lanceleaf"); 
+    	BetterEnd.register(event.getRegistry(), GLOW_PILLAR, "glow_pillar"); 
     	// WALL_PLANTS
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE, "purple_polypore");
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE_DENSE, "purple_polypore_dense");
@@ -179,6 +189,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), PYTHADENDRON, "pythadendron"); 
     	BetterEnd.register(event.getRegistry(), DRAGON_TREE, "dragon_tree");
     	BetterEnd.register(event.getRegistry(), TENANEA, "tenanea");
+    	BetterEnd.register(event.getRegistry(), HELIX_TREE, "helix_tree");
     	// ORES
     	BetterEnd.register(event.getRegistry(), ENDER_ORE, "ender_ore");
     	BetterEnd.register(event.getRegistry(), FLAVOLITE_LAYER, "flavolite_layer");
