@@ -4,6 +4,7 @@ import mod.beethoven92.betterendforge.BetterEnd;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.world.gen.FlatGenerationSettings;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
 
@@ -23,5 +24,11 @@ public class ModConfiguredStructures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "giant_mossy_glowshroom_structure"), GIANT_MOSSY_GLOWSHROOM);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "painted_mountain_structure"), PAINTED_MOUNTAIN);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "eternal_portal_structure"), ETERNAL_PORTAL);
+	
+        FlatGenerationSettings.STRUCTURES.put(ModStructures.MOUNTAIN, MOUNTAIN_STRUCTURE);
+        FlatGenerationSettings.STRUCTURES.put(ModStructures.MEGALAKE, MEGALAKE_STRUCTURE);
+        FlatGenerationSettings.STRUCTURES.put(ModStructures.GIANT_MOSSY_GLOWSHROOM, GIANT_MOSSY_GLOWSHROOM);
+        FlatGenerationSettings.STRUCTURES.put(ModStructures.PAINTED_MOUNTAIN, PAINTED_MOUNTAIN);
+        FlatGenerationSettings.STRUCTURES.put(ModStructures.ETERNAL_PORTAL, ETERNAL_PORTAL);
 	}   
 }

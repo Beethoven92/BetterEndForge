@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.data;
 
 import java.util.function.Consumer;
 
+import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
@@ -14,6 +15,8 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
+import net.minecraft.item.DyeColor;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -70,7 +73,7 @@ public class ModRecipes extends RecipeProvider
 		ShapelessRecipeBuilder.shapelessRecipe(ModItems.SWEET_BERRY_JELLY.get()).addIngredient(ModItems.GELATINE.get()).addIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER).getItem()).addIngredient(Items.SUGAR).addIngredient(Items.SWEET_BERRIES).addCriterion("has_gelatine", hasItem(ModItems.GELATINE.get())).build(consumer);
 		ShapelessRecipeBuilder.shapelessRecipe(ModItems.SHADOW_BERRY_JELLY.get()).addIngredient(ModItems.GELATINE.get()).addIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER).getItem()).addIngredient(Items.SUGAR).addIngredient(ModItems.SHADOW_BERRY_COOKED.get()).addCriterion("has_gelatine", hasItem(ModItems.GELATINE.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(ModItems.AMBER_GEM.get()).key('#', ModItems.RAW_AMBER.get()).patternLine("##").patternLine("##").addCriterion("has_raw_amber", hasItem(ModItems.RAW_AMBER.get())).build(consumer);
-	    ShapelessRecipeBuilder.shapelessRecipe(Items.GUNPOWDER).addIngredient(ModItems.CRYSTALLINE_SULPHUR.get()).addIngredient(ItemTags.COALS).addIngredient(Items.BONE_MEAL).addIngredient(ModItems.CRYSTALLINE_SULPHUR.get()).addCriterion("has_crystalline_sulphur", hasItem(ModItems.CRYSTALLINE_SULPHUR.get())).build(consumer, "gunpowder_from_sulphur");
+	    ShapelessRecipeBuilder.shapelessRecipe(Items.GUNPOWDER).addIngredient(ModItems.CRYSTALLINE_SULPHUR.get()).addIngredient(ItemTags.COALS).addIngredient(Items.BONE_MEAL).addCriterion("has_crystalline_sulphur", hasItem(ModItems.CRYSTALLINE_SULPHUR.get())).build(consumer, "gunpowder_from_sulphur");
 		
 	    // PEDESTALS
 		registerPedestal(ModBlocks.QUARTZ_PEDESTAL.get(), Blocks.QUARTZ_SLAB, Blocks.QUARTZ_PILLAR, consumer, "quartz");
@@ -135,6 +138,9 @@ public class ModRecipes extends RecipeProvider
 		makeStoneMaterialRecipes(ModBlocks.FLAVOLITE, consumer);
 		makeStoneMaterialRecipes(ModBlocks.VIOLECITE, consumer);
 		makeStoneMaterialRecipes(ModBlocks.SULPHURIC_ROCK, consumer);
+		
+		// COLORED MATERIALS
+		makeColoredMaterialRecipes(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED, consumer);
 	}
 	
 	private void makeWoodenMaterialRecipes(WoodenMaterial material, Consumer<IFinishedRecipe> consumer)
@@ -164,6 +170,25 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(material.brick_wall.get(), 6).key('#', material.bricks.get()).patternLine("###").patternLine("###").setGroup("end_wall").addCriterion("has_bricks", hasItem(material.bricks.get())).build(consumer);
 	    ShapelessRecipeBuilder.shapelessRecipe(material.button.get()).addIngredient(material.stone.get()).setGroup("end_stone_buttons").addCriterion("has_stone", hasItem(material.stone.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.pressure_plate.get()).key('#', material.stone.get()).patternLine("##").setGroup("end_stone_plates").addCriterion("has_stone", hasItem(material.stone.get())).build(consumer);
+	}
+	
+	private void makeColoredMaterialRecipes(ColoredMaterial material, Consumer<IFinishedRecipe> consumer)
+	{
+		if (material.craftEight)
+		{
+			for (DyeColor color : DyeColor.values())
+			{
+				ShapedRecipeBuilder.shapedRecipe(material.getByColor(color), 8).key('#', material.craftMaterial.get()).key('D', DyeItem.getItem(color)).patternLine("###").patternLine("#D#").patternLine("###").addCriterion("has_" + material.name, hasItem(material.craftMaterial.get())).build(consumer);
+			}
+		}
+		else
+		{
+			for (DyeColor color : DyeColor.values())
+			{
+				ShapelessRecipeBuilder.shapelessRecipe(material.getByColor(color)).addIngredient(material.craftMaterial.get()).addIngredient(DyeItem.getItem(color)).addCriterion("has_" + material.name, hasItem(material.craftMaterial.get())).build(consumer);
+			}
+		}
+			
 	}
 	
 	private void makeMaterialAndBlockRecipes(Block block, Item ingot, Consumer<IFinishedRecipe> consumer, String material)

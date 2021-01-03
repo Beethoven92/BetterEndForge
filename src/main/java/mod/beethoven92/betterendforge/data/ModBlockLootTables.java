@@ -9,6 +9,7 @@ import mod.beethoven92.betterendforge.common.block.EndLilyBlock;
 import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
 import mod.beethoven92.betterendforge.common.block.SulphurCrystalBlock;
+import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
@@ -34,6 +35,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModBlockLootTables extends BlockLootTables
 {
+	@Override
+	protected Iterable<Block> getKnownBlocks()
+	{
+		return StreamSupport.stream(ForgeRegistries.BLOCKS.spliterator(), false)
+				.filter(entry -> entry.getRegistryName() != null && entry.getRegistryName().getNamespace().equals(BetterEnd.MOD_ID))
+				.collect(Collectors.toSet());
+	}
+	
 	@Override
 	protected void addTables() 
 	{
@@ -214,6 +223,10 @@ public class ModBlockLootTables extends BlockLootTables
 	    registerLootTable(ModBlocks.CHARNIA_CYAN.get(), BlockLootTables::onlyWithShears);
 	    registerLootTable(ModBlocks.CHARNIA_GREEN.get(), BlockLootTables::onlyWithShears);
 	    
+	    registerLootTable(ModBlocks.HYDRALUX_SAPLING.get(), BlockLootTables::onlyWithShears);
+	    // TO DO!
+	    registerLootTable(ModBlocks.HYDRALUX.get(), BlockLootTables::onlyWithShears);
+
 		registerLootTable(ModBlocks.LANCELEAF_SEED.get(), BlockLootTables::onlyWithShears);
 		registerLootTable(ModBlocks.LANCELEAF.get(), BlockLootTables::onlyWithShears);
 		
@@ -223,7 +236,6 @@ public class ModBlockLootTables extends BlockLootTables
 		registerLootTable(ModBlocks.GLOWING_PILLAR_LEAVES.get(), (block) -> {
 			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.GLOWING_PILLAR_SEED.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
 		});
-
 	    
 	    // WALL_PLANTS
 		registerDropSelfLootTable(ModBlocks.PURPLE_POLYPORE.get());
@@ -315,16 +327,11 @@ public class ModBlockLootTables extends BlockLootTables
 		registerStoneMaterialLootTables(ModBlocks.FLAVOLITE);
 		registerStoneMaterialLootTables(ModBlocks.VIOLECITE);
 		registerStoneMaterialLootTables(ModBlocks.SULPHURIC_ROCK);
+		
+		// COLORED MATERIALS
+		registerColoredMaterialLootTables(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED);
 	}
-	
-	@Override
-	protected Iterable<Block> getKnownBlocks()
-	{
-		return StreamSupport.stream(ForgeRegistries.BLOCKS.spliterator(), false)
-				.filter(entry -> entry.getRegistryName() != null && entry.getRegistryName().getNamespace().equals(BetterEnd.MOD_ID))
-				.collect(Collectors.toSet());
-	}
-	
+		
 	private void registerWoodenMaterialLootTables(WoodenMaterial material)
 	{
 		registerDropSelfLootTable(material.log.get());
@@ -357,6 +364,14 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(material.brick_stairs.get());
 		registerLootTable(material.brick_slab.get(), BlockLootTables::droppingSlab);
 		registerDropSelfLootTable(material.brick_wall.get());
+	}
+	
+	private void registerColoredMaterialLootTables(ColoredMaterial material)
+	{
+		for (Block block : material.getBlocks())
+		{
+			registerDropSelfLootTable(block);
+		}
 	}
 	
 	// Need to improve

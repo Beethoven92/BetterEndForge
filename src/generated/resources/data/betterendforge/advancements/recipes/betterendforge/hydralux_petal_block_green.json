@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:hydralux_petal_block_green"
+    ]
+  },
+  "criteria": {
+    "has_hydralux_petal_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:hydralux_petal_block"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:hydralux_petal_block_green"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_hydralux_petal_block",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -7,6 +7,7 @@ import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -29,7 +30,12 @@ public class ColorHandler
         				 {return RespawnObeliskBlock.getBlockColor(pos);}, ModBlocks.RESPAWN_OBELISK.get());
 		
 		event.getBlockColors().register((state, reader, pos, color) -> 
-		 				 {return HelixTreeLeavesBlock.getBlockColor(state);}, ModBlocks.HELIX_TREE_LEAVES.get());
+		                 {return state.getBlock().getMaterialColor().colorValue;}, 
+		                 ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED.getBlocks());
+
+		event.getBlockColors().register((state, reader, pos, color) ->
+		 				 {return HelixTreeLeavesBlock.getBlockColor(state);}, 
+		 				 ModBlocks.HELIX_TREE_LEAVES.get());
 	}
 	
 	@SubscribeEvent
@@ -49,5 +55,9 @@ public class ColorHandler
 		}, ModItems.DRAGONFLY_SPAWN_EGG.get(), ModItems.END_FISH_SPAWN_EGG.get(),
 				ModItems.SHADOW_WALKER_SPAWN_EGG.get(), ModItems.END_SLIME_SPAWN_EGG.get(),
 				ModItems.CUBOZOA_SPAWN_EGG.get());
+		
+		event.getItemColors().register((stack, tintIndex) -> 
+                         {return ((BlockItem)stack.getItem()).getBlock().getMaterialColor().colorValue;}, 
+                         ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED.getBlocks());
 	}
 }

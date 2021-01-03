@@ -33,6 +33,7 @@ import mod.beethoven92.betterendforge.common.block.HelixTreeLeavesBlock;
 import mod.beethoven92.betterendforge.common.block.HelixTreeSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.HydraluxBlock;
 import mod.beethoven92.betterendforge.common.block.HydraluxPetalBlock;
+import mod.beethoven92.betterendforge.common.block.HydraluxPetalBlockColored;
 import mod.beethoven92.betterendforge.common.block.HydraluxSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.HydrothermalVentBlock;
 import mod.beethoven92.betterendforge.common.block.InfusionPedestal;
@@ -59,6 +60,7 @@ import mod.beethoven92.betterendforge.common.block.TerrainPlantBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaMossBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaMossTallBlock;
 import mod.beethoven92.betterendforge.common.block.VentBubbleColumnBlock;
+import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
@@ -748,6 +750,10 @@ public class ModBlocks
     public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
     public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.PURPLE);
     public static final StoneMaterial SULPHURIC_ROCK = new StoneMaterial("sulphuric_rock", MaterialColor.BROWN);
+    
+    // COLORED MATERIALS
+    public static final ColoredMaterial HYDRALUX_PETAL_BLOCK_COLORED = new ColoredMaterial("hydralux_petal_block", 
+    		() -> new HydraluxPetalBlockColored(), HYDRALUX_PETAL_BLOCK, true);
     
 	
 	//////////////////////////////////////////////////////
