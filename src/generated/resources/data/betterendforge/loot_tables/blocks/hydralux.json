@@ -15,7 +15,6 @@
           "predicate": {
             "item": "minecraft:shears"
           }
-          "condition": "minecraft:survives_explosion"
         }
       ]
     }
