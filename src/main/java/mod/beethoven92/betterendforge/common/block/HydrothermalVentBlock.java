@@ -104,7 +104,6 @@ public class HydrothermalVentBlock extends Block implements IWaterLoggable
 	{
 		if (!stateIn.get(ACTIVATED) && rand.nextBoolean()) 
 		{
-			super.animateTick(stateIn, worldIn, pos, rand); // Purpose?
 			double x = pos.getX() + rand.nextDouble();
 			double y = pos.getY() + 0.9 + rand.nextDouble() * 0.3;
 			double z = pos.getZ() + rand.nextDouble();
