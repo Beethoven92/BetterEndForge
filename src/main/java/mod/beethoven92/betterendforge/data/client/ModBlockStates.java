@@ -1,6 +1,7 @@
 package mod.beethoven92.betterendforge.data.client;
 
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.PillarBlockTemplate;
@@ -48,6 +49,9 @@ public class ModBlockStates extends BlockStateProvider
 		registerStoneMaterialBlockStates(ModBlocks.FLAVOLITE);
 		//registerStoneMaterialBlockStates(ModBlocks.VIOLECITE);
 		registerStoneMaterialBlockStates(ModBlocks.SULPHURIC_ROCK);
+		
+		// COLORED MATERIALS
+		registerColoredMaterialBlockStates(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED, "block_petal_colored");
 	}
 	
 	private void registerWoodenMaterialBlockStates(WoodenMaterial material)
@@ -125,6 +129,16 @@ public class ModBlockStates extends BlockStateProvider
 		pressurePlateBlock((PressurePlateBlock)material.pressure_plate.get(), material.name, stoneTexture);
 		makeBlockItemFromExistingModel(material.pressure_plate.get());
 	}	
+	
+	private void registerColoredMaterialBlockStates(ColoredMaterial material, String blockModel)
+	{
+		for (Block block : material.getBlocks())
+		{
+			ModelFile model = models().getExistingFile(modLoc("block/" + blockModel));
+			simpleBlock(block, model);
+			makeBlockItemFromExistingModel(block, "block/" + blockModel);
+		}
+	}
 	
 	private void makeBlockItemFromExistingModel(Block block)
 	{
