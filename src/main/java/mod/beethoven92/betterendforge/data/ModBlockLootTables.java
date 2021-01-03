@@ -240,6 +240,8 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		registerLootTable(ModBlocks.TWISTED_MOSS.get(), BlockLootTables::onlyWithShears);
 		
+		registerLootTable(ModBlocks.BULB_MOSS.get(), BlockLootTables::onlyWithShears);
+		
 		registerLootTable(ModBlocks.TUBE_WORM.get(), BlockLootTables::onlyWithShears);
 		
 		// VINES

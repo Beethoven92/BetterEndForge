@@ -530,6 +530,13 @@ public class ModBlocks
                                                               doesNotBlockMovement().
                                                               sound(SoundType.PLANT)));
 	
+	public static final RegistryObject<Block> BULB_MOSS = registerBlockWithDefaultItem("bulb_moss", 
+			() -> new WallPlantBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                              zeroHardnessAndResistance().
+                                                              doesNotBlockMovement().
+                                                              sound(SoundType.PLANT).
+                                                              setLightLevel((a) -> 15)));
+	
 	public static final RegistryObject<Block> TUBE_WORM = registerBlockWithDefaultItem("tube_worm", 
 			() -> new UnderwaterWallPlantBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
                                                                         zeroHardnessAndResistance().
