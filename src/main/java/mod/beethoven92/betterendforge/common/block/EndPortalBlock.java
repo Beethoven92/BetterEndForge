@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.block;
 import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
+import mod.beethoven92.betterendforge.common.interfaces.ITeleportingEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.NetherPortalBlock;
 import net.minecraft.entity.Entity;
@@ -15,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -67,8 +69,9 @@ public class EndPortalBlock extends NetherPortalBlock
 		if (worldIn instanceof ServerWorld && !entityIn.isPassenger() && !entityIn.isBeingRidden() 
 				&& entityIn.isNonBoss()) 
 		{
-			//TeleportingEntity teleEntity = TeleportingEntity.class.cast(entity);
-			//if (teleEntity.hasCooldown()) return;
+			ITeleportingEntity teleEntity = ITeleportingEntity.class.cast(entityIn);
+			if (teleEntity.hasCooldown()) return;
+			
 			boolean isOverworld = worldIn.getDimensionKey().equals(World.OVERWORLD);
 			ServerWorld destination = ((ServerWorld) worldIn).getServer().getWorld(isOverworld ? World.THE_END : World.OVERWORLD);
 			
@@ -92,13 +95,13 @@ public class EndPortalBlock extends NetherPortalBlock
 			{
 				ServerPlayerEntity player = (ServerPlayerEntity) entityIn;
 				player.teleport(destination, exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D, entityIn.rotationYaw, entityIn.rotationPitch);
-				//teleEntity.beSetCooldown(player.isCreative() ? 50 : 300);
+				teleEntity.beSetCooldown(player.isCreative() ? 50 : 300);
 			} 
 			else
 			{
-				//teleEntity.beSetExitPos(exitPos);
+				teleEntity.beSetExitPos(exitPos);
 				entityIn.changeDimension(destination);
-				//teleEntity.beSetCooldown(300);
+				teleEntity.beSetCooldown(300);
 			}
 		}
 	}
@@ -126,7 +129,10 @@ public class EndPortalBlock extends NetherPortalBlock
 			for (int i = 0; i < step; i++) 
 			{
 				checkPos.setY(5);
-				while(checkPos.getY() < world.getHeight()) 
+				int ceil = world.getChunk(basePos).getTopBlockY(Heightmap.Type.WORLD_SURFACE, checkPos.getX(), checkPos.getZ()) + 1;
+				if (ceil < 5) continue;
+				
+				while(checkPos.getY() < ceil) 
 				{
 					BlockState state = world.getBlockState(checkPos);
 					if(state.isIn(this)) 
@@ -137,13 +143,13 @@ public class EndPortalBlock extends NetherPortalBlock
 						{
 							if (entity.getHorizontalFacing().getAxis() == Direction.Axis.X)
 							{
-								offStep = entity.getHorizontalFacing() == Direction.EAST ? -1 : 1;
+								offStep = entity.getHorizontalFacing() == Direction.EAST ? 1 : -1;
 								float rotation = entity.getRotatedYaw(Rotation.CLOCKWISE_90);
 								entity.rotationYaw = rotation;
 							} 
 							else 
 							{
-								offStep = entity.getHorizontalFacing() == Direction.NORTH ? 1 : -1;
+								offStep = entity.getHorizontalFacing() == Direction.NORTH ? -1 : 1;
 							}
 							return checkPos.add(0, 0, offStep);
 						} 
@@ -173,6 +179,13 @@ public class EndPortalBlock extends NetherPortalBlock
 	
 	private BlockPos.Mutable findCenter(World world, BlockPos.Mutable pos, Direction.Axis axis) 
 	{
+		return this.findCenter(world, pos, axis, 1);
+	}
+	
+	private BlockPos.Mutable findCenter(World world, BlockPos.Mutable pos, Direction.Axis axis, int step) 
+	{
+		if (step > 21) return pos;
+		
 		BlockState right, left;
 		Direction rightDir, leftDir;
 		if (axis == Direction.Axis.X) 
@@ -192,7 +205,7 @@ public class EndPortalBlock extends NetherPortalBlock
 		BlockState down = world.getBlockState(pos.down());
 		if (down.isIn(this)) 
 		{
-			return findCenter(world, pos.move(Direction.DOWN), axis);
+			return findCenter(world, pos.move(Direction.DOWN), axis, ++step);
 		} 
 		else if (right.isIn(this) && left.isIn(this)) 
 		{
@@ -200,11 +213,11 @@ public class EndPortalBlock extends NetherPortalBlock
 		} 
 		else if (right.isIn(this)) 
 		{
-			return findCenter(world, pos.move(rightDir), axis);
+			return findCenter(world, pos.move(rightDir), axis, ++step);
 		} 
 		else if (left.isIn(this)) 
 		{
-			return findCenter(world, pos.move(leftDir), axis);
+			return findCenter(world, pos.move(leftDir), axis, ++step);
 		}
 		return pos;
 	}

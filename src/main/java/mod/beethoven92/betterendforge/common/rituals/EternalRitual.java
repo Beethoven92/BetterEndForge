@@ -291,7 +291,9 @@ public class EternalRitual
 				for (int i = 0; i < step; i++)
 				{
 					checkPos.setY(5);
-					while(checkPos.getY() < world.getHeight()) 
+					int ceil = targetWorld.getChunk(basePos).getTopBlockY(Heightmap.Type.WORLD_SURFACE, checkPos.getX(), checkPos.getZ()) + 1;
+					if (ceil < 5) continue;
+					while(checkPos.getY() < ceil) 
 					{
 						if(checkIsAreaValid(targetWorld, checkPos, portalAxis)) 
 						{
@@ -315,7 +317,6 @@ public class EternalRitual
 		if (targetWorld.getDimensionKey() == World.THE_END) 
 		{
 			Features.END_ISLAND.generate(targetWorld, targetWorld.getChunkProvider().getChunkGenerator(), new Random(basePos.toLong()), basePos.down());
-			//ConfiguredFeatures.END_ISLAND.generate(targetWorld, targetWorld.getChunkManager().getChunkGenerator(), new Random(basePos.toLong()), basePos.down());
 		} 
 		else 
 		{
