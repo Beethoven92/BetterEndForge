@@ -11,6 +11,7 @@
 	      "ChorusPlantFeatureMixin",
 	      "DimensionTypeMixin",
 	      "EndermanEntityMixin",
+	      "EntityMixin",
 	      "MonsterEntityMixin",
 	      "RepairContainerMixin",
 	      "PlayerEntityMixin",
