@@ -159,14 +159,6 @@ public class BetterEnd
     	{
     		if(event.getWorld() instanceof ServerWorld)
     		{  
-    			
-    			// Overworld
-    	    	/*DimensionSettings.field_242740_q.getStructures().field_236193_d_.put(ModStructures.MOUNTAIN.get(), 
-        		new StructureSeparationSettings(32, 8, 10387313));
-                // End
-                WorldGenRegistries.NOISE_SETTINGS.getOrThrow(DimensionSettings.field_242737_f).
-                getStructures().field_236193_d_.
-                put(ModStructures.MOUNTAIN.get(), new StructureSeparationSettings(4, 1, 123428353));*/ 
     			ServerWorld serverWorld = (ServerWorld)event.getWorld();
     			
     			// Initialize biome registry if it was not initialized during world generation
