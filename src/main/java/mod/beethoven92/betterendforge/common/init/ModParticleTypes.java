@@ -23,6 +23,9 @@ public class ModParticleTypes
 	public static final RegistryObject<BasicParticleType> GLOWING_SPHERE = PARTICLE_TYPES.register("glowing_sphere",
 			() -> new BasicParticleType(false));
 	
+	public static final RegistryObject<BasicParticleType> AMBER_SPHERE = PARTICLE_TYPES.register("amber_sphere",
+			() -> new BasicParticleType(false));
+	
 	public static final RegistryObject<BasicParticleType> TENANEA_PETAL = PARTICLE_TYPES.register("tenanea_petal",
 			() -> new BasicParticleType(false));
 	

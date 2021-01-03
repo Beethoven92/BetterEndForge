@@ -120,6 +120,7 @@ public class ModFeatures
 	
 	// ORES
 	public static final Feature<OreFeatureConfig> ENDER_ORE = new OreFeature(OreFeatureConfig.CODEC);
+	public static final Feature<OreFeatureConfig> AMBER_ORE = new OreFeature(OreFeatureConfig.CODEC);
 	public static final Feature<NoFeatureConfig> FLAVOLITE_LAYER = new OreLayerFeature(ModBlocks.FLAVOLITE.stone.get().getDefaultState(), 12, 4, 96);
 	public static final Feature<NoFeatureConfig> VIOLECITE_LAYER = new OreLayerFeature(ModBlocks.VIOLECITE.stone.get().getDefaultState(), 15, 4, 96);
 	
@@ -196,6 +197,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), HELIX_TREE, "helix_tree");
     	// ORES
     	BetterEnd.register(event.getRegistry(), ENDER_ORE, "ender_ore");
+    	BetterEnd.register(event.getRegistry(), AMBER_ORE, "amber_ore");
     	BetterEnd.register(event.getRegistry(), FLAVOLITE_LAYER, "flavolite_layer");
     	BetterEnd.register(event.getRegistry(), VIOLECITE_LAYER, "violecite_layer");
     }

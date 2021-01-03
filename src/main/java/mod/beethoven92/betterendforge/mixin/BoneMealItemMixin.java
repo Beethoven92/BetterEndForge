@@ -201,10 +201,9 @@ public abstract class BoneMealItemMixin
 		{
 			return world.rand.nextBoolean() ? ModBlocks.CHARNIA_LIGHT_BLUE.get().getDefaultState() : ModBlocks.CHARNIA_LIGHT_BLUE.get().getDefaultState();
 		}
-		// TODO: ENABLE THIS WHEN IMPLEMENTING AMBER LAND BIOME
-		/*else if (biome == ModBiomes.AMBER_LAND) {
+		else if (biome == ModBiomes.AMBER_LAND) {
 			return world.rand.nextBoolean() ? ModBlocks.CHARNIA_ORANGE.get().getDefaultState() : ModBlocks.CHARNIA_RED.get().getDefaultState();
-		}*/
+		}
 		else if (biome == ModBiomes.CHORUS_FOREST || biome == ModBiomes.SHADOW_FOREST) 
 		{
 			return ModBlocks.CHARNIA_PURPLE.get().getDefaultState();

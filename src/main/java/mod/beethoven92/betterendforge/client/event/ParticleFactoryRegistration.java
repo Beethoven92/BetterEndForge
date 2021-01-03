@@ -26,6 +26,8 @@ public class ParticleFactoryRegistration
 				(sprite) -> new PortalSphereParticle.Factory(sprite));
 		Minecraft.getInstance().particles.registerFactory(ModParticleTypes.GLOWING_SPHERE.get(), 
 				(sprite) -> new GlowingSphereParticle.Factory(sprite));
+		Minecraft.getInstance().particles.registerFactory(ModParticleTypes.AMBER_SPHERE.get(), 
+				(sprite) -> new GlowingSphereParticle.Factory(sprite));
 		Minecraft.getInstance().particles.registerFactory(ModParticleTypes.TENANEA_PETAL.get(), 
 				(sprite) -> new TenaneaPetalParticle.Factory(sprite));
 		Minecraft.getInstance().particles.registerFactory(ModParticleTypes.GEYSER_PARTICLE.get(), 

@@ -29,6 +29,8 @@ public class ModSoundEvents
 			registerSoundEvent("betterendforge.music.blossoming_spires");
 	public static final RegistryObject<SoundEvent> MUSIC_SULPHUR_SPRINGS = 
 			registerSoundEvent("betterendforge.music.sulphur_springs");
+	public static final RegistryObject<SoundEvent> MUSIC_AMBER_LAND = 
+			registerSoundEvent("betterendforge.music.amber_land");
 	
 	// AMBIENT SOUNDS
 	public static final RegistryObject<SoundEvent> AMBIENT_FOGGY_MUSHROOMLAND = 

@@ -284,6 +284,12 @@ public class ModConfiguredFeatures
 							new BlockMatchRuleTest(Blocks.END_STONE), ModBlocks.ENDER_ORE.get().getDefaultState(), 3)).
 			range(96).square().func_242731_b(20);
 	
+	public static final ConfiguredFeature<?, ?> AMBER_ORE =
+			ModFeatures.AMBER_ORE.withConfiguration(
+					new OreFeatureConfig(
+							new BlockMatchRuleTest(Blocks.END_STONE), ModBlocks.AMBER_ORE.get().getDefaultState(), 6)).
+			range(96).square().func_242731_b(20);
+	
 	public static final ConfiguredFeature<?, ?> FLAVOLITE_LAYER = 
 			ModFeatures.FLAVOLITE_LAYER.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			//withPlacement(Placement.field_242898_b.configure(new ChanceConfig(6)));
@@ -368,6 +374,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "helix_tree"), HELIX_TREE);
         // ORES
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "ender_ore"), ENDER_ORE);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "amber_ore"), AMBER_ORE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "flavolite_layer"), FLAVOLITE_LAYER);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "violecite_layer"), VIOLECITE_LAYER);
     }   

@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.util.JsonFactory;
+import mod.beethoven92.betterendforge.common.world.biome.AmberLandBiome;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
 import mod.beethoven92.betterendforge.common.world.biome.BlossomingSpiresBiome;
 import mod.beethoven92.betterendforge.common.world.biome.ChorusForestBiome;
@@ -73,6 +74,7 @@ public class ModBiomes
 	public static final BetterEndBiome SHADOW_FOREST = registerBiome(new ShadowForestBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome BLOSSOMING_SPIRES = registerBiome(new BlossomingSpiresBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome SULPHUR_SPRINGS = registerBiome(new SulphurSpringsBiome(), EndBiomeType.LAND);
+	public static final BetterEndBiome AMBER_LAND = registerBiome(new AmberLandBiome(), EndBiomeType.LAND);
 	
 	public static void register() {}
 	
