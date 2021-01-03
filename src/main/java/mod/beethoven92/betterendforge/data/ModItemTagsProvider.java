@@ -42,17 +42,21 @@ public class ModItemTagsProvider extends ItemTagsProvider
 			}
 		});
 		
+		// Misc Forge tags
 		getOrCreateBuilder(Tags.Items.INGOTS).add(ModItems.TERMINITE_INGOT.get());
 		getOrCreateBuilder(Tags.Items.INGOTS).add(ModItems.AETERNIUM_INGOT.get());
 		
 		getOrCreateBuilder(Tags.Items.ORES).add(ModBlocks.ENDER_ORE.get().asItem());
 		getOrCreateBuilder(Tags.Items.ORES).add(ModBlocks.AMBER_ORE.get().asItem());
-		// Forge Tags
+
 		getOrCreateBuilder(Tags.Items.DUSTS).add(ModItems.ENDER_DUST.get());
 		
 		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.TERMINITE_BLOCK.get().asItem());
 		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get().asItem());
 		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AMBER_BLOCK.get().asItem());
+		
+		// Misc Minecraft tags
+		getOrCreateBuilder(ItemTags.PIGLIN_LOVED).add(ModItems.GOLDEN_HAMMER.get());
 		
 		// HAMMERS
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.IRON_HAMMER.get());
