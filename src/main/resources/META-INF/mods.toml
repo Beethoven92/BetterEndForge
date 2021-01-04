@@ -27,7 +27,7 @@ modId="betterendforge" #mandatory
 version="1.16.4-1.2.0" #mandatory
 
 # A display name for the mod
-displayName="BetterEnd Forge Port" #mandatory
+displayName="BetterEnd Forge" #mandatory
 
 # A URL to query for updates for this mod. See the JSON update specification <here>
 #updateJSONURL="http://myurl.me/" #optional
