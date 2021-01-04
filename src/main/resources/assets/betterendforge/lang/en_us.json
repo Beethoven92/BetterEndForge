@@ -1,4 +1,7 @@
 {
+    "gui.jei.category.alloying.experience": "%s XP",
+	"gui.jei.category.alloying.time.seconds": "%ss",
+  
 	"itemGroup.betterendforge": "Better End",
 	
 	"container.betterendforge.end_stone_smelter": "End Stone Smelter",
