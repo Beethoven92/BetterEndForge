@@ -73,7 +73,7 @@ public class AlloyingRecipeCategory implements IRecipeCategory<AlloyingRecipe>
 	@Override
 	public String getTitle() 
 	{
-		return null;
+		return new TranslationTextComponent("gui.jei.category.alloying").getString();
 	}
 
 	@Override

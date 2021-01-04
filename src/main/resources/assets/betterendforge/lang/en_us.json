@@ -1,6 +1,8 @@
 {
+    "gui.jei.category.alloying": "Alloying",
     "gui.jei.category.alloying.experience": "%s XP",
 	"gui.jei.category.alloying.time.seconds": "%ss",
+	"gui.jei.category.infusion": "Infusion",
   
 	"itemGroup.betterendforge": "Better End",
 	
