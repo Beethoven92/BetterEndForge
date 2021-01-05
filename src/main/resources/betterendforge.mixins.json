@@ -4,7 +4,6 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "betterendforge.refmap.json",
 	"mixins": [
-	      "BiomeColorsMixin",
 	      "BoneMealItemMixin",
 	      "ChorusFlowerBlockMixin",
 	      "ChorusPlantBlockMixin",
@@ -15,8 +14,11 @@
 	      "FogRendererMixin",
 	      "MonsterEntityMixin",
 	      "RepairContainerMixin",
-	      "PlayerEntityMixin",
-	      "WorldRendererMixin"
+	      "PlayerEntityMixin"
 	],
+  "client": [
+	      "BiomeColorsMixin",
+	      "WorldRendererMixin"
+	], 
   "minVersion": "0.8"
 }
