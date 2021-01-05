@@ -53,6 +53,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		
 		getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.TERMINITE_BLOCK.get());
 		getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get());
+		getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.AMBER_BLOCK.get());
 		
 		// WOODEN MATERIALS
 		registerWoodenMaterialTags(ModBlocks.MOSSY_GLOWSHROOM);
