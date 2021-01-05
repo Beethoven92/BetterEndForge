@@ -51,7 +51,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	private static final int[] TOP_SLOTS = new int[] { 0, 1 };
 	private static final int[] BOTTOM_SLOTS = new int[] { 2, 3 };
 	private static final int[] SIDE_SLOTS = new int[] { 3 };
-	private static final Map<Item, Integer> availableFuels = Maps.newHashMap();
+	private static final Map<Item, Integer> AVAILABLE_FUELS = Maps.newHashMap();
 	
 	private final Object2IntOpenHashMap<ResourceLocation> recipesUsed;
 	protected NonNullList<ItemStack> items;
@@ -539,7 +539,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	
 	public static boolean isFuel(ItemStack stack) 
 	{
-		return availableFuels.containsKey(stack.getItem()) && net.minecraftforge.common.ForgeHooks.getBurnTime(stack) > 0;
+		return AVAILABLE_FUELS.containsKey(stack.getItem()) && net.minecraftforge.common.ForgeHooks.getBurnTime(stack) > 0;
 	}
 	
 	protected int getBurnTime(ItemStack fuel) 
@@ -551,19 +551,19 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 		else 
 		{
 			Item item = fuel.getItem();
-			return availableFuels.getOrDefault(item, 0);
+			return AVAILABLE_FUELS.getOrDefault(item, 0);
 		}
 	}
 	
 	public static void registerFuel(IItemProvider fuel, int time) 
 	{
-		if (availableFuels.containsKey(fuel))
+		if (AVAILABLE_FUELS.containsKey(fuel))
 		{
-			availableFuels.replace(fuel.asItem(), time);
+			AVAILABLE_FUELS.replace(fuel.asItem(), time);
 		} 
 		else 
 		{
-			availableFuels.put(fuel.asItem(), time);
+			AVAILABLE_FUELS.put(fuel.asItem(), time);
 		}
 	}
 	
@@ -575,6 +575,6 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	
 	public static Map<Item, Integer> getAvailableFuels() 
 	{
-		return availableFuels;
+		return AVAILABLE_FUELS;
 	}
 }

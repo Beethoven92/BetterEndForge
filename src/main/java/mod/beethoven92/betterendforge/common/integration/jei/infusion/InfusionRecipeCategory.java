@@ -1,15 +1,21 @@
 package mod.beethoven92.betterendforge.common.integration.jei.infusion;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableAnimated;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
+import mod.beethoven92.betterendforge.common.recipes.AlloyingRecipe;
 import mod.beethoven92.betterendforge.common.recipes.InfusionRecipe;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -95,5 +101,23 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe>
 		
 		guiItemStacks.set(ingredients);
 	}
-
+	
+	protected void drawInfusionTime(InfusionRecipe recipe, MatrixStack matrixStack, int y) 
+	{
+		int infusionTime = recipe.time;
+		if (infusionTime > 0) 
+		{
+			TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category.infusion.time", infusionTime);
+			Minecraft minecraft = Minecraft.getInstance();
+			FontRenderer fontRenderer = minecraft.fontRenderer;
+			int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
+			fontRenderer.func_243248_b(matrixStack, timeString, background.getWidth() - stringWidth, y, 0xFF808080);
+		}
+	}
+	
+	@Override
+	public void draw(InfusionRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) 
+	{
+		drawInfusionTime(recipe, matrixStack, 0);
+	}
 }

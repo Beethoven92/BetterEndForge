@@ -3,6 +3,9 @@
     "gui.jei.category.alloying.experience": "%s XP",
 	"gui.jei.category.alloying.time.seconds": "%ss",
 	"gui.jei.category.infusion": "Infusione",
+	"gui.jei.category.infusion.time": "Tempo: %s",
+	"gui.jei.category.anvil_smithing": "Incudine",
+	"gui.jei.category.anvil_smithing.damage": "Danno: %s",
   
 	"itemGroup.betterendforge": "Better End",
 	

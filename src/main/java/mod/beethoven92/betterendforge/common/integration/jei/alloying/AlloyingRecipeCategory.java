@@ -17,9 +17,13 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.recipes.AlloyingRecipe;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -91,7 +95,15 @@ public class AlloyingRecipeCategory implements IRecipeCategory<AlloyingRecipe>
 	@Override
 	public void setIngredients(AlloyingRecipe recipe, IIngredients ingredients) 
 	{
-		ingredients.setInputIngredients(recipe.getIngredients());
+		NonNullList<Ingredient> inputs = NonNullList.create();
+		
+		// Left and right ingredients
+		inputs.addAll(recipe.getIngredients());
+		
+		// Available fuels
+		inputs.add(Ingredient.fromItems(Blocks.COAL_BLOCK, Items.BLAZE_ROD, Items.LAVA_BUCKET));
+		
+		ingredients.setInputIngredients(inputs);
 		ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
 	}
 
@@ -102,6 +114,8 @@ public class AlloyingRecipeCategory implements IRecipeCategory<AlloyingRecipe>
 
 		guiItemStacks.init(FIRST_INPUT_SLOT, true, 0, 0);
 		guiItemStacks.init(SECOND_INPUT_SLOT, true, 22, 0);
+		guiItemStacks.init(FUEL_SLOT, true, 11, 36);
+		
 		guiItemStacks.init(OUTPUT_SLOT, false, 84, 18);
 		
 		guiItemStacks.set(ingredients);
@@ -109,12 +123,12 @@ public class AlloyingRecipeCategory implements IRecipeCategory<AlloyingRecipe>
 	
 	protected IDrawableAnimated getArrow(AlloyingRecipe recipe) 
 	{
-		int cookTime = recipe.getSmeltTime();
+		int smeltTime = recipe.getSmeltTime();
 
-		return this.cachedArrows.getUnchecked(cookTime);
+		return this.cachedArrows.getUnchecked(smeltTime);
 	}
 	
-	protected void drawCookTime(AlloyingRecipe recipe, MatrixStack matrixStack, int y) 
+	protected void drawSmeltTime(AlloyingRecipe recipe, MatrixStack matrixStack, int y) 
 	{
 		int smeltTime = recipe.getSmeltTime();
 		if (smeltTime > 0) 
@@ -150,6 +164,6 @@ public class AlloyingRecipeCategory implements IRecipeCategory<AlloyingRecipe>
 		arrow.draw(matrixStack, 47, 18);
 
 	    drawExperience(recipe, matrixStack, 0);
-		drawCookTime(recipe, matrixStack, 45);
+		drawSmeltTime(recipe, matrixStack, 45);
 	}
 }

@@ -109,6 +109,7 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 	{
 		return TYPE;
 	}
+	
 	@Override
 	public boolean isDynamic() 
 	{

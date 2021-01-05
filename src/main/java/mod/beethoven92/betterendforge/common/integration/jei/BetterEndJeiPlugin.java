@@ -7,16 +7,18 @@ import com.google.common.collect.ImmutableSet;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.integration.jei.alloying.AlloyingRecipeCategory;
+import mod.beethoven92.betterendforge.common.integration.jei.anvil.AnvilSmithingRecipeCategory;
 import mod.beethoven92.betterendforge.common.integration.jei.infusion.InfusionRecipeCategory;
 import mod.beethoven92.betterendforge.common.recipes.AlloyingRecipe;
+import mod.beethoven92.betterendforge.common.recipes.AnvilSmithingRecipe;
 import mod.beethoven92.betterendforge.common.recipes.InfusionRecipe;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.item.ItemStack;
@@ -35,21 +37,25 @@ public class BetterEndJeiPlugin implements IModPlugin
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration)
 	{
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.END_STONE_SMELTER.get()), AlloyingRecipeCategory.UID);
-		//registration.addRecipeCatalyst(new ItemStack(ModBlocks.END_STONE_SMELTER.get()), AlloyingRecipeCategory.UID, VanillaRecipeCategoryUid.FUEL);
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSION_PEDESTAL.get()), InfusionRecipeCategory.UID);
+		registration.addRecipeCatalyst(new ItemStack(Blocks.ANVIL), AnvilSmithingRecipeCategory.UID);
 	}
 	
 	@Override
 	public void registerRecipes(IRecipeRegistration registration) 
 	{
 		// TO DO: move the recipes lists in a separate utility class
-		ClientWorld world = Objects.requireNonNull(Minecraft.getInstance().world);
+		Minecraft mc = Minecraft.getInstance();
+		ClientWorld world = Objects.requireNonNull(mc.world);
 		
 		Set<AlloyingRecipe> alloyingRecipes = ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(AlloyingRecipe.TYPE));
 		registration.addRecipes(alloyingRecipes, AlloyingRecipeCategory.UID);
 		
 		Set<InfusionRecipe> infusionRecipes = ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(InfusionRecipe.TYPE));
 		registration.addRecipes(infusionRecipes, InfusionRecipeCategory.UID);
+		
+		Set<AnvilSmithingRecipe> anvilSmithingRecipes = ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(AnvilSmithingRecipe.TYPE));
+		registration.addRecipes(anvilSmithingRecipes, AnvilSmithingRecipeCategory.UID);
 	}
 
 	@Override
@@ -57,5 +63,6 @@ public class BetterEndJeiPlugin implements IModPlugin
 	{
 		registration.addRecipeCategories(new AlloyingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 		registration.addRecipeCategories(new InfusionRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+		registration.addRecipeCategories(new AnvilSmithingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 	}
 }
