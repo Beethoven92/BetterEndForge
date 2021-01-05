@@ -18,6 +18,7 @@ import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraftforge.common.Tags;
 
 public class EndLakeFeature extends Feature<NoFeatureConfig>
 {
@@ -234,6 +235,8 @@ public class EndLakeFeature extends Feature<NoFeatureConfig>
 	{
 		return state.getMaterial().isReplaceable()
 				|| state.isIn(ModTags.GEN_TERRAIN)
+				|| state.isIn(Tags.Blocks.ORES) // Handles floating ores
+				|| state.isIn(Tags.Blocks.END_STONES) // Handles other blocks that could be left floating
 				|| state.isIn(ModBlocks.ENDSTONE_DUST.get())
 				|| state.getMaterial().equals(Material.PLANTS)
 				|| state.getMaterial().equals(Material.OCEAN_PLANT);
