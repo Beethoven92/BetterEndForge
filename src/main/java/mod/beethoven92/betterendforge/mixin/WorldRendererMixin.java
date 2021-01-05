@@ -32,8 +32,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.ModList;
 
 @Mixin(WorldRenderer.class)
 public abstract class WorldRendererMixin 
@@ -57,6 +55,10 @@ public abstract class WorldRendererMixin
 	private static Vector3f axis3;
 	private static Vector3f axis4;
 	private static float time;
+	private static float time2;
+	private static float time3;
+	private static float blind02;
+	private static float blind06;
 	private static boolean directOpenGL = false;
 	
 	@Shadow
@@ -85,8 +87,9 @@ public abstract class WorldRendererMixin
 		axis1.normalize();
 		axis2.normalize();
 		axis3.normalize();
+		axis4.normalize();
 
-		directOpenGL = ModList.get().isLoaded("optifine") || ModList.get().isLoaded("immersive_portals");
+		//directOpenGL = ModList.get().isLoaded("optifine") || ModList.get().isLoaded("immersive_portals");
 	}
 	
 	@Inject(method = "renderSkyEnd", at = @At("HEAD"), cancellable = true)
@@ -94,57 +97,61 @@ public abstract class WorldRendererMixin
 	{
 		if (ClientConfig.shouldCustomSkyRender())
 		{
-			time = (ticks % 360000) * 0.001F;
+			time = (ticks % 360000) * 0.000017453292F;
+			time2 = time * 2;
+			time3 = time * 3;
 			
 			FogRenderer.resetFog();
 			RenderSystem.enableTexture();
 			
-			if (directOpenGL)
+			//if (directOpenGL)
 			{
 				GL11.glEnable(GL11.GL_ALPHA_TEST);
 				GL11.glAlphaFunc(516, 0.0F);
 				GL11.glEnable(GL11.GL_BLEND);
 				RenderSystem.depthMask(false);
 			}
-			else 
+			/*else 
 			{
 				RenderSystem.enableAlphaTest();
 				RenderSystem.alphaFunc(516, 0.0F);
 				RenderSystem.enableBlend();
-			}
+			}*/
 			
 			float blindA = 1F - BackgroundInfo.blindness;
+			blind02 = blindA * 0.2F;
+			blind06 = blindA * 0.6F;
 			
 			if (blindA > 0) 
 			{
 				matrices.push();
-				matrices.getLast().getMatrix().mul(new Quaternion(0, time, 0, true));
+				matrices.getLast().getMatrix().mul(new Quaternion(0, time, 0, false));
 				textureManager.bindTexture(HORIZON);
 				renderBuffer(matrices, horizon, DefaultVertexFormats.POSITION_TEX, 0.77F, 0.31F, 0.73F, 0.7F * blindA);
 				matrices.pop();
 				
 				matrices.push();
-				matrices.getLast().getMatrix().mul(new Quaternion(0, -time, 0, true));
+				matrices.getLast().getMatrix().mul(new Quaternion(0, -time, 0, false));
 				textureManager.bindTexture(NEBULA_1);
-				renderBuffer(matrices, nebulas1, DefaultVertexFormats.POSITION_TEX, 0.77F, 0.31F, 0.73F, 0.2F * blindA);
+				renderBuffer(matrices, nebulas1, DefaultVertexFormats.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind02);
 				matrices.pop();
 				
 				matrices.push();
-				matrices.getLast().getMatrix().mul(new Quaternion(0, time * 2, 0, true));
+				matrices.getLast().getMatrix().mul(new Quaternion(0, time2, 0, false));
 				textureManager.bindTexture(NEBULA_2);
-				renderBuffer(matrices, nebulas2, DefaultVertexFormats.POSITION_TEX, 0.77F, 0.31F, 0.73F, 0.2F * blindA);
+				renderBuffer(matrices, nebulas2, DefaultVertexFormats.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind02);
 				matrices.pop();
 				
 				textureManager.bindTexture(STARS);
 
 				matrices.push();
-				matrices.getLast().getMatrix().mul(axis3.rotationDegrees(time));
-				renderBuffer(matrices, stars3, DefaultVertexFormats.POSITION_TEX, 0.77F, 0.31F, 0.73F, 0.6F * blindA);
+				matrices.getLast().getMatrix().mul(axis3.rotation(time));
+				renderBuffer(matrices, stars3, DefaultVertexFormats.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind06);
 				matrices.pop();
 
 				matrices.push();
-				matrices.getLast().getMatrix().mul(axis4.rotationDegrees(time * 2));
-				renderBuffer(matrices, stars4, DefaultVertexFormats.POSITION_TEX, 1F, 1F, 1F, 0.6F * blindA);
+				matrices.getLast().getMatrix().mul(axis4.rotation(time2));
+				renderBuffer(matrices, stars4, DefaultVertexFormats.POSITION_TEX, 1F, 1F, 1F, blind06);
 				matrices.pop();
 			}
 			
@@ -161,19 +168,19 @@ public abstract class WorldRendererMixin
 			if (blindA > 0) 
 			{
 				matrices.push();
-				matrices.getLast().getMatrix().mul(new Quaternion(axis1, time * 3, true));
-				renderBuffer(matrices, stars1, DefaultVertexFormats.POSITION, 1, 1, 1, 0.6F * blindA);
+				matrices.getLast().getMatrix().mul(axis1.rotation(time3));
+				renderBuffer(matrices, stars1, DefaultVertexFormats.POSITION, 1, 1, 1, blind06);
 				matrices.pop();
 				
 				matrices.push();
-				matrices.getLast().getMatrix().mul(new Quaternion(axis2, time * 2, true));
-				renderBuffer(matrices, stars2, DefaultVertexFormats.POSITION, 0.95F, 0.64F, 0.93F, 0.6F * blindA);
+				matrices.getLast().getMatrix().mul(axis2.rotation(time2));
+				renderBuffer(matrices, stars2, DefaultVertexFormats.POSITION, 0.95F, 0.64F, 0.93F, blind06);
 				matrices.pop();
 			}
 			
 			RenderSystem.enableTexture();
 			RenderSystem.depthMask(true);
-			
+		    
 			info.cancel();
 		}
 	}
@@ -184,8 +191,8 @@ public abstract class WorldRendererMixin
 		buffer.bindBuffer();;
 		format.setupBufferState(0L);
         buffer.draw(matrixStackIn.getLast().getMatrix(), 7);
-        VertexBuffer.unbindBuffer();;
-        format.clearBufferState();;
+        VertexBuffer.unbindBuffer();
+        format.clearBufferState();
 	}
 	
 	private void initStars() 
