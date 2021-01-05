@@ -11,14 +11,14 @@
 	      "DimensionTypeMixin",
 	      "EndermanEntityMixin",
 	      "EntityMixin",
-	      "FogRendererMixin",
 	      "MonsterEntityMixin",
 	      "RepairContainerMixin",
 	      "PlayerEntityMixin"
 	],
   "client": [
 	      "BiomeColorsMixin",
-	      "WorldRendererMixin"
+	      "WorldRendererMixin",
+	      "FogRendererMixin"
 	], 
   "minVersion": "0.8"
 }
