@@ -28,6 +28,7 @@ import mod.beethoven92.betterendforge.common.world.biome.ShadowForestBiome;
 import mod.beethoven92.betterendforge.common.world.biome.SulphurSpringsBiome;
 import mod.beethoven92.betterendforge.common.world.generator.BiomePicker;
 import mod.beethoven92.betterendforge.common.world.generator.EndBiomeType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
@@ -36,6 +37,8 @@ import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.Biomes;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ModBiomes 
 {
@@ -278,7 +281,21 @@ public class ModBiomes
 	{
 		return ID_MAP.getOrDefault(biomeID, END);
 	}
-
+	
+	@OnlyIn(Dist.CLIENT)
+	public static BetterEndBiome getRenderBiome(Biome biome) 
+	{
+		BetterEndBiome endBiome = CLIENT.get(biome);
+		if (endBiome == null) 
+		{
+			Minecraft minecraft = Minecraft.getInstance();
+			ResourceLocation id = minecraft.world.func_241828_r().getRegistry(Registry.BIOME_KEY).getKey(biome);
+			endBiome = id == null ? END : ID_MAP.getOrDefault(id, END);
+			CLIENT.put(biome, endBiome);
+		}
+		return endBiome;
+	}
+	
 	public static List<BetterEndBiome> getModBiomes() 
 	{
 		List<BetterEndBiome> result = Lists.newArrayList();

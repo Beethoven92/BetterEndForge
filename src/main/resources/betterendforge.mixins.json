@@ -12,6 +12,7 @@
 	      "DimensionTypeMixin",
 	      "EndermanEntityMixin",
 	      "EntityMixin",
+	      "FogRendererMixin",
 	      "MonsterEntityMixin",
 	      "RepairContainerMixin",
 	      "PlayerEntityMixin",
