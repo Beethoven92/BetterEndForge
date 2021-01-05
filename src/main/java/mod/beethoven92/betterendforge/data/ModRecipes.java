@@ -45,6 +45,7 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.END_LOTUS.log.get()).key('#', ModBlocks.END_LOTUS_STEM.get()).patternLine("##").patternLine("##").addCriterion("has_end_lotus_stem", hasItem(ModBlocks.END_LOTUS_STEM.get())).build(consumer);
 
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.END_STONE_SMELTER.get()).key('#', Blocks.END_STONE_BRICKS).key('V', Items.BUCKET).patternLine("###").patternLine("V V").patternLine("###").addCriterion("has_end_stone_bricks", hasItem(Blocks.END_STONE_BRICKS)).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.RESPAWN_OBELISK.get()).key('C', ModBlocks.AURORA_CRYSTAL.get()).key('S', ModItems.ETERNAL_CRYSTAL.get()).key('A', ModBlocks.AMBER_BLOCK.get()).patternLine("CSC").patternLine("CSC").patternLine("AAA").addCriterion("has_amber_block", hasItem(ModBlocks.AMBER_BLOCK.get())).build(consumer);
 	    
 	    // DYES
 		ShapelessRecipeBuilder.shapelessRecipe(Items.BLUE_DYE).addIngredient(ModBlocks.BLUE_VINE_SEED.get()).setGroup("blue_dye").addCriterion("has_blue_vine_seed", hasItem(ModBlocks.BLUE_VINE_SEED.get())).build(consumer, "blue_dye_from_blue_vine_seed");

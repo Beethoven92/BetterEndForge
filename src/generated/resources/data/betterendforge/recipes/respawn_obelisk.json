@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CSC",
+    "CSC",
+    "AAA"
+  ],
+  "key": {
+    "C": {
+      "item": "betterendforge:aurora_crystal"
+    },
+    "S": {
+      "item": "betterendforge:eternal_crystal"
+    },
+    "A": {
+      "item": "betterendforge:amber_block"
+    }
+  },
+  "result": {
+    "item": "betterendforge:respawn_obelisk"
+  }
+}
