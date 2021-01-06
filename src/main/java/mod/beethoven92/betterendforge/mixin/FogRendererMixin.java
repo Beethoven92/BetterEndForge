@@ -75,7 +75,7 @@ public abstract class FogRendererMixin
 	}
 	
 
-	/*@Inject(at = @At("HEAD"), method = "setupFog(Lnet/minecraft/client/renderer/ActiveRenderInfo;Lnet/minecraft/client/renderer/FogRenderer$FogType;FZF)V", cancellable = true)
+	@Inject(at = @At("HEAD"), remap = false, method = "setupFog(Lnet/minecraft/client/renderer/ActiveRenderInfo;Lnet/minecraft/client/renderer/FogRenderer$FogType;FZF)V", cancellable = true)
 	private static void fogDensity(ActiveRenderInfo activeRenderInfoIn, FogRenderer.FogType fogTypeIn, 
 			float farPlaneDistance, boolean nearFog, float partialTicks, CallbackInfo info)
 	{
@@ -136,5 +136,5 @@ public abstract class FogRendererMixin
 			RenderSystem.setupNvFogDistance();
 			info.cancel();
 		}
-	}*/
+	}
 }
