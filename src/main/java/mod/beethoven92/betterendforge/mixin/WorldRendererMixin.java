@@ -59,7 +59,7 @@ public abstract class WorldRendererMixin
 	private static float time3;
 	private static float blind02;
 	private static float blind06;
-	private static boolean directOpenGL = false;
+	private static boolean directOpenGL = false; // Unused
 	
 	@Shadow
 	@Final
