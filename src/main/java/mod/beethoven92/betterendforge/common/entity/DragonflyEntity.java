@@ -1,6 +1,7 @@
 package mod.beethoven92.betterendforge.common.entity;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModEntityTypes;
@@ -29,11 +30,13 @@ import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.Heightmap.Type;
 import net.minecraft.world.server.ServerWorld;
 
 public class DragonflyEntity extends AnimalEntity implements IFlyingAnimal
@@ -133,10 +136,12 @@ public class DragonflyEntity extends AnimalEntity implements IFlyingAnimal
 	public static boolean canSpawn(EntityType<DragonflyEntity> type, IServerWorld world, SpawnReason spawnReason, 
 			BlockPos pos, Random random)
 	{
-		// Check if the entity would be spawned above the void
-		int h = BlockHelper.downRay(world, new BlockPos(pos), 128);
-		if (h > 100) return false; // Is above void (this should prevent entities spawning under the islands)
-		else return true;
+		AxisAlignedBB box = new AxisAlignedBB(pos).grow(16);
+		List<DragonflyEntity> list = world.getEntitiesWithinAABB(DragonflyEntity.class, box, (entity) -> { return true; });
+		int y = world.getChunk(pos).getTopBlockY(Type.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
+		
+		// FIX dragonfly spawning too much and preventing other entities to spawn
+		return y > 0 && pos.getY() >= y && list.size() < 9;
 	}
 	
 	public class DragonflyLookControl extends LookController 
