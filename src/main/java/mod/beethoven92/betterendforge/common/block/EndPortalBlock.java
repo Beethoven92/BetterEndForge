@@ -2,9 +2,9 @@ package mod.beethoven92.betterendforge.common.block;
 
 import java.util.Random;
 
-import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.interfaces.ITeleportingEntity;
+import mod.beethoven92.betterendforge.common.teleporter.BetterEndTeleporter;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.NetherPortalBlock;
 import net.minecraft.entity.Entity;
@@ -16,15 +16,12 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.server.TicketType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -97,9 +94,10 @@ public class EndPortalBlock extends NetherPortalBlock
 			if (entityIn instanceof ServerPlayerEntity) 
 			{
 				ServerPlayerEntity player = (ServerPlayerEntity) entityIn;
-			    player.teleport(destination, exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D, entityIn.rotationYaw, entityIn.rotationPitch);
-				teleEntity.beSetCooldown(player.isCreative() ? 50 : 300);
-		    } 
+				// FIX "player moved wrongly" errors
+				player.changeDimension(destination, new BetterEndTeleporter(exitPos));
+		        teleEntity.beSetCooldown(player.isCreative() ? 50 : 300);
+			} 
 			else 
 			{
 				teleEntity.beSetExitPos(exitPos);
@@ -147,15 +145,13 @@ public class EndPortalBlock extends NetherPortalBlock
 							BlockState state = world.getBlockState(checkPos);
 							if (state.isIn(this))
 							{
-								BetterEnd.LOGGER.debug("Out: " + checkPos);
-
 								Axis axis = state.get(AXIS);
 								checkPos = this.findCenter(world, checkPos, axis);
 
 								Direction frontDir = Direction.getFacingFromAxisDirection(axis, AxisDirection.POSITIVE).rotateY();
 								Direction entityDir = entity.getHorizontalFacing();
 								if (entityDir.getAxis().isVertical()) 
-								{
+								{				
 									entityDir = frontDir;
 								}
 
