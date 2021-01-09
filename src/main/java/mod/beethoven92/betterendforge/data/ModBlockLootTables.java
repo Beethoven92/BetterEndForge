@@ -346,6 +346,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(material.pressurePlate.get());
 		registerDropSelfLootTable(material.trapdoor.get());
 		registerLootTable(material.door.get(), BlockLootTables::registerDoor);
+		registerDropSelfLootTable(material.composter.get());
 	}
 	
 	private void registerStoneMaterialLootTables(StoneMaterial material)

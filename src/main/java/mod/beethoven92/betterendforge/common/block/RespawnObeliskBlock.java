@@ -32,7 +32,6 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-// TODO: Add recipe
 public class RespawnObeliskBlock extends Block {
 	private static final VoxelShape VOXEL_SHAPE_BOTTOM = Block.makeCuboidShape(1, 0, 1, 15, 16, 15);
 	private static final VoxelShape VOXEL_SHAPE_MIDDLE_TOP = Block.makeCuboidShape(2, 0, 2, 14, 16, 14);

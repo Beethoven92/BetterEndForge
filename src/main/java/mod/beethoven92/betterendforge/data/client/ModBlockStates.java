@@ -8,6 +8,7 @@ import mod.beethoven92.betterendforge.common.block.template.PillarBlockTemplate;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import net.minecraft.block.AbstractButtonBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
@@ -85,6 +86,9 @@ public class ModBlockStates extends BlockStateProvider
 
 		pressurePlateBlock((PressurePlateBlock)material.pressurePlate.get(), material.name, planksTexture);
 		makeBlockItemFromExistingModel(material.pressurePlate.get());
+		
+	    composterBlock((ComposterBlock)material.composter.get(), material.name);
+		makeBlockItemFromExistingModel(material.composter.get());
 	}
 	
 	private void registerStoneMaterialBlockStates(StoneMaterial material)
@@ -182,5 +186,27 @@ public class ModBlockStates extends BlockStateProvider
            .modelFile(powered == true ? plateDown : plate)
            .build();
         });
+    }
+    
+    private void composterBlock(ComposterBlock block, String material)
+    {
+    	ModelFile composter = models().withExistingParent(material + "_composter", mcLoc("composter"))
+    			.texture("particle", modLoc("block/" + material + "_composter_side"))
+    			.texture("top", modLoc("block/" + material + "_composter_top"))
+    			.texture("bottom", modLoc("block/" + material + "_composter_bottom"))
+    			.texture("side", modLoc("block/" + material + "_composter_side"))
+    			.texture("inside", modLoc("block/" + material + "_composter_bottom"));
+    	ModelFile composterReady = models().withExistingParent(material + "_composter_contents_ready", mcLoc("composter_contents_ready"))
+    			.texture("particle", mcLoc("block/composter_compost"))
+    			.texture("inside", mcLoc("block/composter_ready"));
+    	ModelFile[] contents = new ModelFile[7];
+    	for (int i = 0; i < contents.length; i++)
+    		contents[i] = models().withExistingParent(material + "_composter_contents" + (i + 1), mcLoc("composter_contents" + (i + 1)))
+	    			.texture("particle", mcLoc("block/composter_compost"))
+	    			.texture("inside", mcLoc("block/composter_compost"));
+    	getMultipartBuilder(block).part().modelFile(composter).addModel().end();
+    	for (int i = 0; i < contents.length; i++)
+    		getMultipartBuilder(block).part().modelFile(contents[i]).addModel().condition(ComposterBlock.LEVEL, i + 1).end();
+		getMultipartBuilder(block).part().modelFile(composterReady).addModel().condition(ComposterBlock.LEVEL, 8).end();
     }
 }

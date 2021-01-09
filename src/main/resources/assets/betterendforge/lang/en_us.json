@@ -45,6 +45,16 @@
 	"block.betterendforge.respawn_obelisk": "Respawn Obelisk",
 	"message.betterendforge.set_spawn": "\u00A7b\u00A7lYour spawn point is set here",
 	"message.betterendforge.fail_spawn": "\u00A7c\u00A7lYour need to hold 6 Amber Gems to set your spawn point",     
+
+	"block.betterendforge.dragon_tree_composter": "Dragon Tree Composter",
+	"block.betterendforge.end_lotus_composter": "End Lotus Composter",
+	"block.betterendforge.helix_tree_composter": "Helix Tree Composter",
+	"block.betterendforge.lacugrove_composter": "Lacugrove Composter",
+	"block.betterendforge.mossy_glowshroom_composter": "Mossy Glowshroom Composter",
+	"block.betterendforge.pythadendron_composter": "Pythadendron Composter",
+	"block.betterendforge.tenanea_composter": "Tenanea Composter",      
+	"block.betterendforge.umbrella_tree_composter": "Umbrella Tree Composter",
+	"block.betterendforge.jellyshroom_composter": "Jellyshroom Composter",
 	
 	"block.betterendforge.end_mycelium": "End Mycelium",
 	"block.betterendforge.end_moss": "End Moss",

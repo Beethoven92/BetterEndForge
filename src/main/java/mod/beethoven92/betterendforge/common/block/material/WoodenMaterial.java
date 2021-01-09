@@ -9,6 +9,7 @@ import mod.beethoven92.betterendforge.common.init.ModTags;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
@@ -54,6 +55,7 @@ public class WoodenMaterial
 	//public final RegistryObject<Block> chest;
 	//public final RegistryObject<Block> barrel;
 	//public final RegistryObject<Block> shelf;
+	public final RegistryObject<Block> composter;
 	
 	public final ITag.INamedTag<Block> logBlockTag;
 	public final ITag.INamedTag<Item> logItemTag;
@@ -101,6 +103,9 @@ public class WoodenMaterial
 				() -> new TrapDoorBlock(materialPlanksNotSolid));
 		door = ModBlocks.registerBlockWithDefaultItem(name + "_door", 
 				() -> new DoorBlock(materialPlanksNotSolid));
+		
+		composter = ModBlocks.registerBlockWithDefaultItem(name + "_composter", 
+				() -> new ComposterBlock(materialPlanksNotSolid));
 	}
 	
 	public boolean isTreeLog(Block block) 
