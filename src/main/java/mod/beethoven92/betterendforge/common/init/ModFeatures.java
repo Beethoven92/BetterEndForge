@@ -16,6 +16,7 @@ import mod.beethoven92.betterendforge.common.world.feature.GeyserFeature;
 import mod.beethoven92.betterendforge.common.world.feature.GlowPillarFeature;
 import mod.beethoven92.betterendforge.common.world.feature.HelixTreeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.HydraluxFeature;
+import mod.beethoven92.betterendforge.common.world.feature.IceStarFeature;
 import mod.beethoven92.betterendforge.common.world.feature.LacugroveFeature;
 import mod.beethoven92.betterendforge.common.world.feature.LanceleafFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MengerSpongeFeature;
@@ -109,6 +110,8 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> SULPHURIC_LAKE = new SulphuricLakeFeature();
 	public static final Feature<NoFeatureConfig> SULPHURIC_CAVE = new SulphuricCaveFeature();
 	public static final Feature<NoFeatureConfig> SURFACE_VENT = new SurfaceVentFeature();
+	public static final Feature<NoFeatureConfig> ICE_STAR = new IceStarFeature(5, 15, 10, 25);
+	public static final Feature<NoFeatureConfig> ICE_STAR_SMALL = new IceStarFeature(3, 5, 7, 12);
 	
 	// TREES
 	public static final Feature<NoFeatureConfig> MOSSY_GLOWSHROOM = new MossyGlowshroomFeature();
@@ -188,6 +191,8 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), SULPHURIC_LAKE, "sulphuric_lake");
     	BetterEnd.register(event.getRegistry(), SULPHURIC_CAVE, "sulphuric_cave");
     	BetterEnd.register(event.getRegistry(), SURFACE_VENT, "surface_vent");
+    	BetterEnd.register(event.getRegistry(), ICE_STAR, "ice_star");
+    	BetterEnd.register(event.getRegistry(), ICE_STAR_SMALL, "ice_star_small");
     	// TREES
     	BetterEnd.register(event.getRegistry(), MOSSY_GLOWSHROOM, "mossy_glowshroom");
     	BetterEnd.register(event.getRegistry(), LACUGROVE, "lacugrove");   

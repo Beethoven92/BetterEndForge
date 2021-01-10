@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.util;
 import java.util.Random;
 
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3f;
 
 public class ModMathHelper 
 {
@@ -11,7 +12,9 @@ public class ModMathHelper
 	public static final float PI2 = (float) (Math.PI * 2);
 	
 	private static final int ALPHA = 255 << 24;
-
+	
+	public static final float PHI = (float) (Math.PI * (3 - Math.sqrt(5)));
+	
 	public static int color(int r, int g, int b) 
 	{
 		return ALPHA | (r << 16) | (g << 8) | b;
@@ -252,5 +255,35 @@ public class ModMathHelper
 	public static float max(float a, float b, float c) 
 	{
 		return max(a, max(b, c));
+	}
+	
+	public static Vector3f cross(Vector3f vec1, Vector3f vec2)
+	{
+		float cx = vec1.getY() * vec2.getZ() - vec1.getZ() * vec2.getY();
+		float cy = vec1.getZ() * vec2.getX() - vec1.getX() * vec2.getZ();
+		float cz = vec1.getX() * vec2.getY() - vec1.getY() * vec2.getX();
+		return new Vector3f(cx, cy, cz);
+	}
+	
+	public static Vector3f normalize(Vector3f vec) 
+	{
+		float length = lengthSqr(vec.getX(), vec.getY(), vec.getZ());
+		if (length > 0) 
+		{
+			length = (float) Math.sqrt(length);
+			float x = vec.getX() / length;
+			float y = vec.getY() / length;
+			float z = vec.getZ() / length;
+			vec.set(x, y, z);
+		}
+		return vec;
+	}
+	
+	public static float angle(Vector3f vec1, Vector3f vec2)
+	{
+		float dot = vec1.getX() * vec2.getX() + vec1.getY() * vec2.getY() + vec1.getZ() * vec2.getZ();
+		float length1 = lengthSqr(vec1.getX(), vec1.getY(), vec1.getZ());
+		float length2 = lengthSqr(vec2.getX(), vec2.getY(), vec2.getZ());
+		return (float) Math.acos(dot / Math.sqrt(length1 * length2));
 	}
 }

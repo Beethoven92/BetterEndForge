@@ -21,6 +21,7 @@ import mod.beethoven92.betterendforge.common.world.biome.ChorusForestBiome;
 import mod.beethoven92.betterendforge.common.world.biome.CrystalMountainsBiome;
 import mod.beethoven92.betterendforge.common.world.biome.DustWastelandsBiome;
 import mod.beethoven92.betterendforge.common.world.biome.FoggyMushroomlandBiome;
+import mod.beethoven92.betterendforge.common.world.biome.IceStarfieldBiome;
 import mod.beethoven92.betterendforge.common.world.biome.MegalakeBiome;
 import mod.beethoven92.betterendforge.common.world.biome.MegalakeGroveBiome;
 import mod.beethoven92.betterendforge.common.world.biome.PaintedMountainsBiome;
@@ -66,7 +67,7 @@ public class ModBiomes
 	public static final BetterEndBiome END_BARRENS = registerBiome(Biomes.END_BARRENS, EndBiomeType.VOID, 1F);
 	public static final BetterEndBiome SMALL_END_ISLANDS = registerBiome(Biomes.SMALL_END_ISLANDS, EndBiomeType.VOID, 1);
 	
-	// Better End Land
+	// Better End Land biomes
 	public static final BetterEndBiome MEGALAKE = registerBiome(new MegalakeBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome CRYSTAL_MOUNTAINS = registerBiome(new CrystalMountainsBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome FOGGY_MUSHROOMLAND = registerBiome(new FoggyMushroomlandBiome(), EndBiomeType.LAND);
@@ -78,6 +79,9 @@ public class ModBiomes
 	public static final BetterEndBiome BLOSSOMING_SPIRES = registerBiome(new BlossomingSpiresBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome SULPHUR_SPRINGS = registerBiome(new SulphurSpringsBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome AMBER_LAND = registerBiome(new AmberLandBiome(), EndBiomeType.LAND);
+	
+	// Better End void biomes
+	public static final BetterEndBiome ICE_STARFIELD = registerBiome(new IceStarfieldBiome(), EndBiomeType.VOID);
 	
 	public static void register() {}
 	

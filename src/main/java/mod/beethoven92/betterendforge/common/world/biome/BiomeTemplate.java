@@ -202,6 +202,12 @@ public class BiomeTemplate
 		return this;
 	}
 	
+	public BiomeTemplate setGenChance(float genChance) 
+	{
+		this.genChance = genChance;
+		return this;
+	}
+	
 	public BiomeTemplate setMobSpawn(EntityClassification type, EntityType<?> entity, 
 			int weight, int minCount, int maxCount)
 	{

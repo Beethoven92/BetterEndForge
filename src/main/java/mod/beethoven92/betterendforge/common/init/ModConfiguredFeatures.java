@@ -246,6 +246,14 @@ public class ModConfiguredFeatures
 			ModFeatures.SURFACE_VENT.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.CHANCE.configure(new ChanceConfig(4)));
 	
+	public static final ConfiguredFeature<?, ?> ICE_STAR = 
+			ModFeatures.ICE_STAR.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.CHANCE.configure(new ChanceConfig(15)));
+	
+	public static final ConfiguredFeature<?, ?> ICE_STAR_SMALL = 
+			ModFeatures.ICE_STAR_SMALL.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.CHANCE.configure(new ChanceConfig(8)));
+	
 	// TREES
 	public static final ConfiguredFeature<?, ?> MOSSY_GLOWSHROOM = 
 			ModFeatures.MOSSY_GLOWSHROOM.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -365,6 +373,8 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "sulphuric_lake"), SULPHURIC_LAKE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "sulphuric_cave"), SULPHURIC_CAVE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "surface_vent"), SURFACE_VENT);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "ice_star"), ICE_STAR);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "ice_star_small"), ICE_STAR_SMALL);
         // TREES
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "mossy_glowshroom"), MOSSY_GLOWSHROOM);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "lacugrove"), LACUGROVE);
