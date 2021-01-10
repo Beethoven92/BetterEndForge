@@ -19,7 +19,7 @@ import vazkii.patchouli.api.PatchouliAPI;
 
 public class GuideBookItem extends Item
 {
-	public final static ResourceLocation BOOK_ID = new ResourceLocation(BetterEnd.MOD_ID, "guidebook");
+	private final static ResourceLocation BOOK_ID = new ResourceLocation(BetterEnd.MOD_ID, "guidebook");
 	
 	public GuideBookItem(Properties properties) 
 	{
