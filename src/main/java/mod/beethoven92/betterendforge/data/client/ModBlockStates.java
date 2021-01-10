@@ -9,6 +9,7 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import net.minecraft.block.AbstractButtonBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.ComposterBlock;
+import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
@@ -89,6 +90,8 @@ public class ModBlockStates extends BlockStateProvider
 		
 	    composterBlock((ComposterBlock)material.composter.get(), material.name);
 		makeBlockItemFromExistingModel(material.composter.get());
+	    craftingTableBlock((CraftingTableBlock)material.craftingTable.get(), material.name);
+		makeBlockItemFromExistingModel(material.craftingTable.get());
 	}
 	
 	private void registerStoneMaterialBlockStates(StoneMaterial material)
@@ -208,5 +211,18 @@ public class ModBlockStates extends BlockStateProvider
     	for (int i = 0; i < contents.length; i++)
     		getMultipartBuilder(block).part().modelFile(contents[i]).addModel().condition(ComposterBlock.LEVEL, i + 1).end();
 		getMultipartBuilder(block).part().modelFile(composterReady).addModel().condition(ComposterBlock.LEVEL, 8).end();
+    }
+    
+    private void craftingTableBlock(CraftingTableBlock block, String material)
+    {
+		ModelFile model = models()
+				.cube(material + "_crafting_table", modLoc("block/" + material + "_crafting_table_bottom"),
+						modLoc("block/" + material + "_crafting_table_top"),
+						modLoc("block/" + material + "_crafting_table_front"),
+						modLoc("block/" + material + "_crafting_table_side"),
+						modLoc("block/" + material + "_crafting_table_side"),
+						modLoc("block/" + material + "_crafting_table_front"))
+				.texture("particle", modLoc("block/" + material + "_crafting_table_top"));
+		simpleBlock(block, model);
     }
 }
