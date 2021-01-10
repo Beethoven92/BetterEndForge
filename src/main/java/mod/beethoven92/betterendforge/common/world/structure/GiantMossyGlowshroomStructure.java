@@ -23,7 +23,7 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSmoothUnion;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSubtraction;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFUnion;
-import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFCapedCone;
+import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFCappedCone;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFPrimitive;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
@@ -57,8 +57,8 @@ public class GiantMossyGlowshroomStructure extends SDFStructure
 	@Override
 	protected SDF getSDF(BlockPos center, Random random) 
 	{
-		SDFCapedCone cone1 = new SDFCapedCone().setHeight(2.5F).setRadius1(1.5F).setRadius2(2.5F);
-		SDFCapedCone cone2 = new SDFCapedCone().setHeight(3F).setRadius1(2.5F).setRadius2(13F);
+		SDFCappedCone cone1 = new SDFCappedCone().setHeight(2.5F).setRadius1(1.5F).setRadius2(2.5F);
+		SDFCappedCone cone2 = new SDFCappedCone().setHeight(3F).setRadius1(2.5F).setRadius2(13F);
 		SDF posedCone2 = new SDFTranslate().setTranslate(0, 5, 0).setSource(cone2);
 		SDF posedCone3 = new SDFTranslate().setTranslate(0, 12F, 0).setSource(new SDFScale().setScale(2).setSource(cone2));
 		SDF upCone = new SDFSubtraction().setSourceA(posedCone2).setSourceB(posedCone3);
@@ -69,7 +69,7 @@ public class GiantMossyGlowshroomStructure extends SDFStructure
 		innerCone = new SDFScale3D().setScale(1.2F, 1F, 1.2F).setSource(innerCone);
 		cones = new SDFUnion().setSourceA(cones).setSourceB(innerCone);
 		
-		SDF glowCone = new SDFCapedCone().setHeight(3F).setRadius1(2F).setRadius2(12.5F);
+		SDF glowCone = new SDFCappedCone().setHeight(3F).setRadius1(2F).setRadius2(12.5F);
 		SDFPrimitive priGlowCone = (SDFPrimitive) glowCone;
 		glowCone = new SDFTranslate().setTranslate(0, 4.25F, 0).setSource(glowCone);
 		glowCone = new SDFSubtraction().setSourceA(glowCone).setSourceB(posedCone3);

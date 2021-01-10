@@ -20,7 +20,7 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSmoothUnion;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSubtraction;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFUnion;
-import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFCapedCone;
+import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFCappedCone;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFFlatland;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFPrimitive;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
@@ -85,7 +85,7 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 			int halfHeight = ModMathHelper.randRange(10, 20, rand);
 			float radius1 = halfHeight * 0.5F;
 			float radius2 = halfHeight * 0.1F + 0.5F;
-			SDF sdf = new SDFCapedCone().setHeight(halfHeight).setRadius1(radius1).setRadius2(radius2).setBlock(ModBlocks.SULPHURIC_ROCK.stone.get());
+			SDF sdf = new SDFCappedCone().setHeight(halfHeight).setRadius1(radius1).setRadius2(radius2).setBlock(ModBlocks.SULPHURIC_ROCK.stone.get());
 			sdf = new SDFTranslate().setTranslate(0, halfHeight - 3, 0).setSource(sdf);
 			
 			int count = halfHeight;
@@ -95,14 +95,14 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 				float delta = (float) i / (float) (count - 1);
 				float radius = MathHelper.lerp(delta, radius1, radius2) * 1.3F;
 				
-				SDF bowl = new SDFCapedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(ModBlocks.SULPHURIC_ROCK.stone.get());
+				SDF bowl = new SDFCappedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(ModBlocks.SULPHURIC_ROCK.stone.get());
 				
-				SDF brimstone = new SDFCapedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(ModBlocks.BRIMSTONE.get());
+				SDF brimstone = new SDFCappedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(ModBlocks.BRIMSTONE.get());
 				brimstone = new SDFTranslate().setTranslate(0, 2F, 0).setSource(brimstone);
 				bowl = new SDFSubtraction().setSourceA(bowl).setSourceB(brimstone);
 				bowl = new SDFUnion().setSourceA(brimstone).setSourceB(bowl);
 				
-				SDF water = new SDFCapedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(Blocks.WATER);
+				SDF water = new SDFCappedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(Blocks.WATER);
 				water = new SDFTranslate().setTranslate(0, 4, 0).setSource(water);
 				bowl = new SDFSubtraction().setSourceA(bowl).setSourceB(water);
 				bowl = new SDFUnion().setSourceA(water).setSourceB(bowl);
@@ -137,7 +137,7 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 			SDFPrimitive obj1;
 			SDFPrimitive obj2;
 			
-			obj1 = new SDFCapedCone().setHeight(halfHeight + 5).setRadius1(radius1 * 0.5F).setRadius2(radius2);
+			obj1 = new SDFCappedCone().setHeight(halfHeight + 5).setRadius1(radius1 * 0.5F).setRadius2(radius2);
 			sdf = new SDFTranslate().setTranslate(0, halfHeight - 13, 0).setSource(obj1);
 			sdf = new SDFDisplacement().setFunction((vec) -> {
 				return (float) noise.eval(vec.getX() * 0.3F, vec.getY() * 0.3F, vec.getZ() * 0.3F) * 0.5F;

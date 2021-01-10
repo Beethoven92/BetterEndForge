@@ -3,25 +3,25 @@ package mod.beethoven92.betterendforge.common.util.sdf.primitive;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import net.minecraft.util.math.MathHelper;
 
-public class SDFCapedCone extends SDFPrimitive 
+public class SDFCappedCone extends SDFPrimitive 
 {
 	private float radius1;
 	private float radius2;
 	private float height;
 	
-	public SDFCapedCone setRadius1(float radius)
+	public SDFCappedCone setRadius1(float radius)
 	{
 		this.radius1 = radius;
 		return this;
 	}
 	
-	public SDFCapedCone setRadius2(float radius) 
+	public SDFCappedCone setRadius2(float radius) 
 	{
 		this.radius2 = radius;
 		return this;
 	}
 	
-	public SDFCapedCone setHeight(float height) 
+	public SDFCappedCone setHeight(float height) 
 	{
 		this.height = height;
 		return this;
