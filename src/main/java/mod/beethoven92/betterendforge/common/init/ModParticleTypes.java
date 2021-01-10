@@ -34,4 +34,7 @@ public class ModParticleTypes
 	
 	public static final RegistryObject<BasicParticleType> SULPHUR_PARTICLE = PARTICLE_TYPES.register("sulphur_particle",
 			() -> new BasicParticleType(false));
+	
+	public static final RegistryObject<BasicParticleType> SNOWFLAKE_PARTICLE = PARTICLE_TYPES.register("snowflake_particle",
+			() -> new BasicParticleType(false));
 }

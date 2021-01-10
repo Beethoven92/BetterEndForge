@@ -90,5 +90,4 @@ public class GeyserParticle extends SpriteTexturedParticle
 	    	return new GeyserParticle(worldIn, x, y, z, 0, 0.125, 0, sprite);
 	    }
 	}
-
 }

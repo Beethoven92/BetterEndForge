@@ -54,6 +54,6 @@ public class AncientEmeraldIceBlock extends Block
 	
 	private void makeParticles(ServerWorld world, BlockPos pos, Random random) 
 	{
-		//world.spawnParticles(ModParticleTypes.SNOWFLAKE, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, 0.5, 0.5, 0.5, 0);
+		world.spawnParticle(ModParticleTypes.SNOWFLAKE_PARTICLE.get(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, 0.5, 0.5, 0.5, 0);
 	}
 }

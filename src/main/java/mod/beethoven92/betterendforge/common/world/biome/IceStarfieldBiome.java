@@ -5,7 +5,6 @@ import mod.beethoven92.betterendforge.common.init.ModConfiguredStructures;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.gen.GenerationStage.Decoration;
 
 public class IceStarfieldBiome extends BetterEndBiome
@@ -17,7 +16,7 @@ public class IceStarfieldBiome extends BetterEndBiome
 				setFogDensity(2.2F).
 				setFoliageColor(193, 244, 244).
 				setGenChance(0.25f).
-				//setParticles(ModParticleTypes.SNOWFLAKE, 0.002F).
+				setParticles(ModParticleTypes.SNOWFLAKE_PARTICLE.get(), 0.002F).
 				addStructure(ModConfiguredStructures.GIANT_ICE_STAR).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.ICE_STAR).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.ICE_STAR_SMALL).
