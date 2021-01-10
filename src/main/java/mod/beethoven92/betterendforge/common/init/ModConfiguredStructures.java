@@ -15,20 +15,24 @@ public class ModConfiguredStructures
     public static final StructureFeature<?, ?> GIANT_MOSSY_GLOWSHROOM = ModStructures.GIANT_MOSSY_GLOWSHROOM.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
     public static final StructureFeature<?, ?> PAINTED_MOUNTAIN = ModStructures.PAINTED_MOUNTAIN.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
     public static final StructureFeature<?, ?> ETERNAL_PORTAL = ModStructures.ETERNAL_PORTAL.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+    public static final StructureFeature<?, ?> GIANT_ICE_STAR = ModStructures.GIANT_ICE_STAR.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
     
     public static void registerConfiguredStructures() 
 	{
         Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
+        
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "mountain_structure"), MOUNTAIN_STRUCTURE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "megalake_structure"), MEGALAKE_STRUCTURE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "giant_mossy_glowshroom_structure"), GIANT_MOSSY_GLOWSHROOM);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "painted_mountain_structure"), PAINTED_MOUNTAIN);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "eternal_portal_structure"), ETERNAL_PORTAL);
-	
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "giant_ice_star_structure"), GIANT_ICE_STAR);
+        
         FlatGenerationSettings.STRUCTURES.put(ModStructures.MOUNTAIN, MOUNTAIN_STRUCTURE);
         FlatGenerationSettings.STRUCTURES.put(ModStructures.MEGALAKE, MEGALAKE_STRUCTURE);
         FlatGenerationSettings.STRUCTURES.put(ModStructures.GIANT_MOSSY_GLOWSHROOM, GIANT_MOSSY_GLOWSHROOM);
         FlatGenerationSettings.STRUCTURES.put(ModStructures.PAINTED_MOUNTAIN, PAINTED_MOUNTAIN);
         FlatGenerationSettings.STRUCTURES.put(ModStructures.ETERNAL_PORTAL, ETERNAL_PORTAL);
+        FlatGenerationSettings.STRUCTURES.put(ModStructures.GIANT_ICE_STAR, GIANT_ICE_STAR);
 	}   
 }

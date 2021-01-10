@@ -18,7 +18,7 @@ public class IceStarfieldBiome extends BetterEndBiome
 				setFoliageColor(193, 244, 244).
 				setGenChance(0.25f).
 				//setParticles(ModParticleTypes.SNOWFLAKE, 0.002F).
-				//addStructure(ModConfiguredStructures.GIANT_ICE_STAR).
+				addStructure(ModConfiguredStructures.GIANT_ICE_STAR).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.ICE_STAR).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.ICE_STAR_SMALL).
 				setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 20, 1, 4));
