@@ -144,6 +144,7 @@ public class BetterEnd
     			
     			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES).add(() -> ModConfiguredFeatures.ENDER_ORE);
     			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES).add(() -> ModConfiguredFeatures.FLAVOLITE_LAYER);
+    			event.getGeneration().getFeatures(Decoration.SURFACE_STRUCTURES).add(() -> ModConfiguredFeatures.CRASHED_SHIP);
     			
     			if (ModBiomes.getBiome(event.getName()).hasCaves()) 
     			{

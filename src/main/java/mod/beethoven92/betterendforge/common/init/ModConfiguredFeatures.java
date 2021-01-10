@@ -307,7 +307,12 @@ public class ModConfiguredFeatures
 			ModFeatures.VIOLECITE_LAYER.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			//withPlacement(Placement.field_242898_b.configure(new ChanceConfig(8)));
 			withPlacement(Placement.COUNT.configure(new FeatureSpreadConfig(8)));
-    
+	
+	// BUILDINGS
+	public static final ConfiguredFeature<?, ?> CRASHED_SHIP = 
+			ModFeatures.CRASHED_SHIP.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.CHANCE.configure(new ChanceConfig(500)));
+	
 	public static void registerConfiguredFeatures() 
 	{
         Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
@@ -387,5 +392,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "amber_ore"), AMBER_ORE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "flavolite_layer"), FLAVOLITE_LAYER);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "violecite_layer"), VIOLECITE_LAYER);
+        // BUILDINGS
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "crashed_ship"), CRASHED_SHIP);
     }   
 }

@@ -96,6 +96,19 @@ public class StructureHelper
 		return new MutableBoundingBox(min.add(pos), max.add(pos));
 	}
 	
+	public static MutableBoundingBox intersectBoxes(MutableBoundingBox box1, MutableBoundingBox box2) 
+	{
+		int x1 = ModMathHelper.max(box1.minX, box2.minX);
+		int y1 = ModMathHelper.max(box1.minY, box2.minY);
+		int z1 = ModMathHelper.max(box1.minZ, box2.minZ);
+		
+		int x2 = ModMathHelper.min(box1.maxX, box2.maxX);
+		int y2 = ModMathHelper.min(box1.maxY, box2.maxY);
+		int z2 = ModMathHelper.min(box1.maxZ, box2.maxZ);
+		
+		return MutableBoundingBox.createProper(x1, y1, z1, x2, y2, z2);
+	}
+	
 	public static void erode(ISeedReader world, MutableBoundingBox bounds, int iterations, Random random) 
 	{
 		Mutable mut = new Mutable();

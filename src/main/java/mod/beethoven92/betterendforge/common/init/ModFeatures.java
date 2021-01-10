@@ -5,6 +5,7 @@ import mod.beethoven92.betterendforge.common.world.feature.BlueVineFeature;
 import mod.beethoven92.betterendforge.common.world.feature.BushFeature;
 import mod.beethoven92.betterendforge.common.world.feature.CavePlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.CharniaFeature;
+import mod.beethoven92.betterendforge.common.world.feature.CrashedShipFeature;
 import mod.beethoven92.betterendforge.common.world.feature.DoublePlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.DragonTreeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLakeFeature;
@@ -127,6 +128,9 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> FLAVOLITE_LAYER = new OreLayerFeature(ModBlocks.FLAVOLITE.stone.get().getDefaultState(), 12, 4, 96);
 	public static final Feature<NoFeatureConfig> VIOLECITE_LAYER = new OreLayerFeature(ModBlocks.VIOLECITE.stone.get().getDefaultState(), 15, 4, 96);
 	
+	// BUILDINGS
+	public static final Feature<NoFeatureConfig> CRASHED_SHIP = new CrashedShipFeature();
+	
 	public static void registerFeatures(Register<Feature<?>> event)
     {
 		// WATER PLANTS
@@ -205,5 +209,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), AMBER_ORE, "amber_ore");
     	BetterEnd.register(event.getRegistry(), FLAVOLITE_LAYER, "flavolite_layer");
     	BetterEnd.register(event.getRegistry(), VIOLECITE_LAYER, "violecite_layer");
+    	// BUILDINGS
+    	BetterEnd.register(event.getRegistry(), CRASHED_SHIP, "crashed_ship");
     }
 }
