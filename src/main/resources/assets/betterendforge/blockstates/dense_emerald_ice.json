@@ -1,7 +1,7 @@
 {
-  "variants": {
-    "": {
-      "model": "betterendforge:block/dense_emerald_ice"
-    }
-  }
+	"variants": {
+		"": {
+				"model": "betterendforge:block/dense_emerald_ice"
+		}
+	}
 }
