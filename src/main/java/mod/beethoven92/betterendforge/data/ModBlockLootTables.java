@@ -52,8 +52,13 @@ public class ModBlockLootTables extends BlockLootTables
 	    });
 	    
 	    registerDropSelfLootTable(ModBlocks.HYDRALUX_PETAL_BLOCK.get());
+		
+	    registerDropSelfLootTable(ModBlocks.DENSE_SNOW.get());		
+	    registerSilkTouch(ModBlocks.EMERALD_ICE.get());
+		registerDropSelfLootTable(ModBlocks.DENSE_EMERALD_ICE.get());
+		registerDropSelfLootTable(ModBlocks.ANCIENT_EMERALD_ICE.get());
 	    
-	    // TERRAINS
+		// TERRAINS
 	    registerLootTable(ModBlocks.CRYSTAL_MOSS.get(), (terrain) -> {
 	    	return droppingWithSilkTouch(terrain, Blocks.END_STONE);
 	    });

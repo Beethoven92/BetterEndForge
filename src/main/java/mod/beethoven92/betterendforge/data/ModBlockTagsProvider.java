@@ -44,16 +44,22 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 				getOrCreateBuilder(BlockTags.SAPLINGS).add(block);
 			}
 		});
-		
-		getOrCreateBuilder(BlockTags.BEACON_BASE_BLOCKS).add(ModBlocks.TERMINITE_BLOCK.get());
-		getOrCreateBuilder(BlockTags.BEACON_BASE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get());
-		
+				
+		// Misc Forge tags
 		getOrCreateBuilder(Tags.Blocks.ORES).add(ModBlocks.ENDER_ORE.get());
 		getOrCreateBuilder(Tags.Blocks.ORES).add(ModBlocks.AMBER_ORE.get());
 		
 		getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.TERMINITE_BLOCK.get());
 		getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get());
 		getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.AMBER_BLOCK.get());
+		
+		// Misc Minecraft tags
+		getOrCreateBuilder(BlockTags.BEACON_BASE_BLOCKS).add(ModBlocks.TERMINITE_BLOCK.get());
+		getOrCreateBuilder(BlockTags.BEACON_BASE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get());
+		
+		getOrCreateBuilder(BlockTags.ICE).add(ModBlocks.EMERALD_ICE.get());
+		getOrCreateBuilder(BlockTags.ICE).add(ModBlocks.DENSE_EMERALD_ICE.get());
+		getOrCreateBuilder(BlockTags.ICE).add(ModBlocks.ANCIENT_EMERALD_ICE.get());
 		
 		// WOODEN MATERIALS
 		registerWoodenMaterialTags(ModBlocks.MOSSY_GLOWSHROOM);

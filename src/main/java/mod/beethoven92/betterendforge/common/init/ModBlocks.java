@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.init;
 import java.util.function.Supplier;
 
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.block.AncientEmeraldIceBlock;
 import mod.beethoven92.betterendforge.common.block.AuroraCrystalBlock;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.block.BlueVineBlock;
@@ -15,6 +16,7 @@ import mod.beethoven92.betterendforge.common.block.BulbVineSeedBlock;
 import mod.beethoven92.betterendforge.common.block.CharniaBlock;
 import mod.beethoven92.betterendforge.common.block.ChorusGrassBlock;
 import mod.beethoven92.betterendforge.common.block.DragonTreeSaplingBlock;
+import mod.beethoven92.betterendforge.common.block.EmeraldIceBlock;
 import mod.beethoven92.betterendforge.common.block.EndLilyBlock;
 import mod.beethoven92.betterendforge.common.block.EndLilySeedBlock;
 import mod.beethoven92.betterendforge.common.block.EndLotusFlowerBlock;
@@ -713,6 +715,22 @@ public class ModBlocks
 					                                                  )));
 	
 	// MISC
+	
+	public static final RegistryObject<Block> DENSE_SNOW = registerBlockWithDefaultItem("dense_snow", 
+			() -> new Block(AbstractBlock.Properties.create(Material.SNOW_BLOCK).
+					                                 hardnessAndResistance(0.2F).
+					                                 sound(SoundType.SNOW)));
+	
+	public static final RegistryObject<Block> EMERALD_ICE = registerBlockWithDefaultItem("emerald_ice", 
+			() -> new EmeraldIceBlock(AbstractBlock.Properties.from(Blocks.ICE)));
+	
+	public static final RegistryObject<Block> DENSE_EMERALD_ICE = registerBlockWithDefaultItem("dense_emerald_ice", 
+			() -> new Block(AbstractBlock.Properties.from(Blocks.PACKED_ICE)));
+	
+	public static final RegistryObject<Block> ANCIENT_EMERALD_ICE = registerBlockWithDefaultItem("ancient_emerald_ice", 
+			() -> new AncientEmeraldIceBlock(AbstractBlock.Properties.from(Blocks.BLUE_ICE).
+					                                                  tickRandomly()));
+	
 	public static final RegistryObject<Block> END_PORTAL_BLOCK = registerBlock("end_portal_block", 
 			() -> new EndPortalBlock(AbstractBlock.Properties.create(Material.PORTAL).
 					                                          doesNotBlockMovement().
