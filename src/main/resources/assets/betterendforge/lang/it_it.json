@@ -7,6 +7,10 @@
 	"gui.jei.category.anvil_smithing": "Incudine",
 	"gui.jei.category.anvil_smithing.damage": "Danno: %s",
   
+    "item.betterendforge.guidebook": "L'End per tontoloni",
+	"book.betterendforge.landing": "Breve guida per sopravvivere alle condizioni estreme dell'End",
+	"book.betterendforge.subtitle": "Sopravvivi nell'End",
+	
 	"itemGroup.betterendforge": "Better End",
 	
 	"container.betterendforge.end_stone_smelter": "Fonderia di Endstone",

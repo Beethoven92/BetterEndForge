@@ -4,13 +4,18 @@ import java.util.List;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import vazkii.patchouli.api.PatchouliAPI;
 
 public class GuideBookItem extends Item
 {
@@ -22,9 +27,20 @@ public class GuideBookItem extends Item
 	}
 	
 	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) 
+	{
+    	if (!worldIn.isRemote && playerIn instanceof ServerPlayerEntity)
+    	{
+            PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
+            return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+        }
+        return ActionResult.resultConsume(playerIn.getHeldItem(handIn));
+	}
+	
+	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) 
 	{
-		tooltip.add(new TranslationTextComponent(String.format("%s.%s", "book.betterend", "subtitle")).
+		tooltip.add(new TranslationTextComponent(String.format("%s.%s", "book.betterendforge", "subtitle")).
 				mergeStyle(TextFormatting.DARK_PURPLE, TextFormatting.ITALIC));
 	}
 }

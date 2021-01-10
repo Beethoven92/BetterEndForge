@@ -7,6 +7,10 @@
 	"gui.jei.category.anvil_smithing": "Anvil Smithing",
     "gui.jei.category.anvil_smithing.damage": "Tool damage: %s",
     
+    "item.betterendforge.guidebook": "The End for Dummies",
+	"book.betterendforge.landing": "A short guide about surviving in the extreme conditions of The End.",
+	"book.betterendforge.subtitle": "Survive in The End",
+	
 	"itemGroup.betterendforge": "Better End",
 	
 	"container.betterendforge.end_stone_smelter": "End Stone Smelter",
