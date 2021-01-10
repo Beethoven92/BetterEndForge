@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.common.init;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.item.CrystaliteArmor;
+import mod.beethoven92.betterendforge.common.item.GuideBookItem;
 import mod.beethoven92.betterendforge.common.item.HammerItem;
 import mod.beethoven92.betterendforge.common.item.ModArmorMaterial;
 import mod.beethoven92.betterendforge.common.item.ModItemTier;
@@ -18,6 +19,7 @@ import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.Rarity;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolItem;
@@ -38,7 +40,7 @@ public class ModItems
 	public final static RegistryObject<Item> END_LILY_LEAF = ITEMS.register("end_lily_leaf",() -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> END_LILY_LEAF_DRIED = ITEMS.register("end_lily_leaf_dried",() -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> CRYSTAL_SHARDS = ITEMS.register("crystal_shards",() -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	public final static RegistryObject<Item> ETERNAL_CRYSTAL = ITEMS.register("eternal_crystal",() -> new Item(new Item.Properties().maxStackSize(16).group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> ETERNAL_CRYSTAL = ITEMS.register("eternal_crystal",() -> new Item(new Item.Properties().rarity(Rarity.EPIC).maxStackSize(16).group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> ENDER_SHARD = ITEMS.register("ender_shard", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> RAW_AMBER = ITEMS.register("raw_amber", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> AMBER_GEM = ITEMS.register("amber_gem", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
@@ -95,4 +97,5 @@ public class ModItems
 		
 	// MISC ITEMS
 	public final static RegistryObject<Item> BUCKET_END_FISH = ITEMS.register("bucket_end_fish", () -> new FishBucketItem(() -> ModEntityTypes.END_FISH.get(), () -> Fluids.WATER, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
+	public final static RegistryObject<Item> GUIDE_BOOK = ITEMS.register("guidebook", () -> new GuideBookItem(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
 }
