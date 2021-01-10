@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "betterendforge:block/dragon_tree_crafting_table_bottom",
+    "up": "betterendforge:block/dragon_tree_crafting_table_top",
+    "north": "betterendforge:block/dragon_tree_crafting_table_front",
+    "south": "betterendforge:block/dragon_tree_crafting_table_side",
+    "east": "betterendforge:block/dragon_tree_crafting_table_side",
+    "west": "betterendforge:block/dragon_tree_crafting_table_front",
+    "particle": "betterendforge:block/dragon_tree_crafting_table_top"
+  }
+}

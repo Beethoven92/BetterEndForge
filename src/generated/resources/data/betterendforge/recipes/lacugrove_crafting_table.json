@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_crafting_tables",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:lacugrove_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:lacugrove_crafting_table"
+  }
+}

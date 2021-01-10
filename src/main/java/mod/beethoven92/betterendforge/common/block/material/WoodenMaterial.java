@@ -1,5 +1,6 @@
 package mod.beethoven92.betterendforge.common.block.material;
 
+import mod.beethoven92.betterendforge.common.block.ModCraftingTableBlock;
 import mod.beethoven92.betterendforge.common.block.template.BarkBlockTemplate;
 import mod.beethoven92.betterendforge.common.block.template.PillarBlockTemplate;
 import mod.beethoven92.betterendforge.common.block.template.StripableBarkBlockTemplate;
@@ -10,6 +11,7 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ComposterBlock;
+import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
@@ -48,7 +50,7 @@ public class WoodenMaterial
 	public final RegistryObject<Block> trapdoor;
 	public final RegistryObject<Block> door;
 	
-	//public final RegistryObject<Block> craftingTable;
+	public final RegistryObject<Block> craftingTable;
 	//public final RegistryObject<Block> ladder;
 	//public final RegistryObject<Block> sign;
 	
@@ -106,6 +108,8 @@ public class WoodenMaterial
 		
 		composter = ModBlocks.registerBlockWithDefaultItem(name + "_composter", 
 				() -> new ComposterBlock(materialPlanksNotSolid));
+		craftingTable = ModBlocks.registerBlockWithDefaultItem(name + "_crafting_table", 
+				() -> new ModCraftingTableBlock(materialPlanksNotSolid));
 	}
 	
 	public boolean isTreeLog(Block block) 
