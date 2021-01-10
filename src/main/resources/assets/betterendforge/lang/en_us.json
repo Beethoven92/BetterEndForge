@@ -22,6 +22,7 @@
 	"biome.betterendforge.blossoming_spires": "Blossoming Spires",
 	"biome.betterendforge.amber_land": "Amber Land",
 	"biome.betterendforge.sulphur_springs": "Sulfur Springs",
+	"biome.betterendforge.ice_starfield": "Ice Starfield",
 	
 	"entity.betterendforge.dragonfly": "Dragonfly",
 	"item.betterendforge.spawn_egg_dragonfly": "Dragonfly Spawn Egg",
@@ -97,13 +98,13 @@
 	"block.betterendforge.helix_tree_stripped_bark": "Stripped Helix Tree Bark",
 	"block.betterendforge.helix_tree_stripped_log": "Stripped Helix Tree Log",
 	"block.betterendforge.helix_tree_trapdoor": "Helix Tree Trapdoor",
-  "block.betterendforge.lanceleaf": "Lanceleaf",
+    "block.betterendforge.lanceleaf": "Lanceleaf",
 	"block.betterendforge.lanceleaf_seed": "Lanceleaf Seed",     
 	"block.betterendforge.glowing_pillar_leaves": "Glowing Pillar Leaves",
 	"block.betterendforge.glowing_pillar_luminophor": "Glowing Pillar Luminophor",
 	"block.betterendforge.glowing_pillar_roots": "Glowing Pillar Roots",
 	"block.betterendforge.glowing_pillar_seed": "Glowing Pillar Seed",     
-  "block.betterendforge.bulb_moss": "Bulb Moss",
+    "block.betterendforge.bulb_moss": "Bulb Moss",
 	
 	"item.betterendforge.eternal_crystal": "Eternal Crystal",
 	"item.betterendforge.crystal_shards": "Crystal Shards",
@@ -216,7 +217,12 @@
 	"block.betterendforge.hydrothermal_vent": "Hydrothermal Vent",
 	"block.betterendforge.tube_worm": "Tube Worm",
 	"block.betterendforge.vent_bubble_column": "Vent Bubble Column",
-		
+	
+	"block.betterendforge.dense_snow": "Dense Snow",
+	"block.betterendforge.emerald_ice": "Emerald Ice",
+	"block.betterendforge.dense_emerald_ice": "Dense Emerald Ice",
+	"block.betterendforge.ancient_emerald_ice": "Ancient Emerald Ice",
+	
 	"block.betterendforge.hydralux_sapling": "Hydralux Sapling",
 	"block.betterendforge.hydralux_petal_block": "Hydralux Petal Block",
 	"block.betterendforge.hydralux_petal_block_black": "Black Petal Block",

@@ -22,6 +22,7 @@
 	"biome.betterendforge.blossoming_spires": "Spire fiorenti",
 	"biome.betterendforge.amber_land": "Terra d'ambra",
 	"biome.betterendforge.sulphur_springs": "Sorgenti solforose",
+	"biome.betterendforge.ice_starfield": "Campo stellare ghiacciato",
 	
 	"entity.betterendforge.dragonfly": "Libellula",
 	"item.betterendforge.spawn_egg_dragonfly": "Uovo generatore di libellula",
@@ -44,7 +45,17 @@
 
 	"block.betterendforge.respawn_obelisk": "Obelisco della rinascita",
 	"message.betterendforge.set_spawn": "\u00A7b\u00A7lIl tuo punto di spawn è stato impostato qui",
-	"message.betterendforge.fail_spawn": "\u00A7c\u00A7lDevi tenere in mano 6 Gemme d'ambra per impostare il tuo punto di spawn",     
+	"message.betterendforge.fail_spawn": "\u00A7c\u00A7lDevi tenere in mano 6 Gemme d'ambra per impostare il tuo punto di spawn",
+	
+	"block.betterendforge.dragon_tree_composter": "Compostiera di albero del drago",
+	"block.betterendforge.end_lotus_composter": "Compostiera di loto dell'End",
+	"block.betterendforge.helix_tree_composter": "Compostiera di albero elica",
+	"block.betterendforge.lacugrove_composter": "Compostiera di lacugrove",
+	"block.betterendforge.mossy_glowshroom_composter": "Compostiera di lumifungo muschioso",
+	"block.betterendforge.pythadendron_composter": "Compostiera di fitodendro",
+	"block.betterendforge.tenanea_composter": "Compostiera di tenanea",      
+	"block.betterendforge.umbrella_tree_composter": "Compostiera di albero ombrello",
+	"block.betterendforge.jellyshroom_composter": "Compostiera di fungo gelatinoso",     
 	
 	"block.betterendforge.end_mycelium": "Micelio dell'End",
 	"block.betterendforge.end_moss": "Muschio dell'End",
@@ -206,7 +217,12 @@
 	"block.betterendforge.hydrothermal_vent": "Sfiato idrotermale",
 	"block.betterendforge.tube_worm": "Verme tubo",
 	"block.betterendforge.vent_bubble_column": "Colonna di bolle dello sfiato",
-		
+	
+	"block.betterendforge.dense_snow": "Neve densa",
+	"block.betterendforge.emerald_ice": "Ghiaccio smeraldino",
+	"block.betterendforge.dense_emerald_ice": "Ghiaccio smeraldino denso",
+	"block.betterendforge.ancient_emerald_ice": "Ghiaccio smeraldino antico",
+	
 	"block.betterendforge.hydralux_sapling": "Arboscello di idroluce",
 	"block.betterendforge.hydralux_petal_block": "Blocco di petali di idroluce",
 	"block.betterendforge.hydralux_petal_block_black": "Blocco di petali nero",
