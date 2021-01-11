@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,waterlogged=false": {
+      "model": "betterendforge:block/mossy_glowshroom_ladder"
+    },
+    "facing=south,waterlogged=false": {
+      "model": "betterendforge:block/mossy_glowshroom_ladder",
+      "y": 180
+    },
+    "facing=west,waterlogged=false": {
+      "model": "betterendforge:block/mossy_glowshroom_ladder",
+      "y": 270
+    },
+    "facing=east,waterlogged=false": {
+      "model": "betterendforge:block/mossy_glowshroom_ladder",
+      "y": 90
+    },
+    "facing=north,waterlogged=true": {
+      "model": "betterendforge:block/mossy_glowshroom_ladder"
+    },
+    "facing=south,waterlogged=true": {
+      "model": "betterendforge:block/mossy_glowshroom_ladder",
+      "y": 180
+    },
+    "facing=west,waterlogged=true": {
+      "model": "betterendforge:block/mossy_glowshroom_ladder",
+      "y": 270
+    },
+    "facing=east,waterlogged=true": {
+      "model": "betterendforge:block/mossy_glowshroom_ladder",
+      "y": 90
+    }
+  }
+}

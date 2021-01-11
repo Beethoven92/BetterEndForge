@@ -165,6 +165,7 @@ public class ModRecipes extends RecipeProvider
 	    // TODO: Get this to override the vanilla recipes
 	    ShapedRecipeBuilder.shapedRecipe(material.composter.get(), 1).key('#', material.slab.get()).patternLine("# #").patternLine("# #").patternLine("###").setGroup("end_composters").addCriterion("has_slabs", hasItem(material.slab.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.craftingTable.get(), 1).key('#', material.planks.get()).patternLine("##").patternLine("##").setGroup("end_crafting_tables").addCriterion("has_planks", hasItem(material.planks.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.ladder.get(), 3).key('#', material.planks.get()).key('I', Items.STICK).patternLine("I I").patternLine("I#I").patternLine("I I").setGroup("end_ladders").addCriterion("has_planks", hasItem(material.planks.get())).build(consumer);
 	}
 	
 	private void makeStoneMaterialRecipes(StoneMaterial material, Consumer<IFinishedRecipe> consumer)

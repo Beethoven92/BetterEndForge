@@ -141,11 +141,13 @@ public class PhysicalClientSide implements IPhysicalSide
 		setWoodenMaterialRenderLayers(ModBlocks.PYTHADENDRON);
 		setWoodenMaterialRenderLayers(ModBlocks.DRAGON_TREE);
 		setWoodenMaterialRenderLayers(ModBlocks.TENANEA);
+		setWoodenMaterialRenderLayers(ModBlocks.HELIX_TREE);
 	}
 	
 	private void setWoodenMaterialRenderLayers(WoodenMaterial material)
 	{
 		RenderTypeLookup.setRenderLayer(material.door.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(material.trapdoor.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(material.ladder.get(), RenderType.getCutout());
 	}
 }

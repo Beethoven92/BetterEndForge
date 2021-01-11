@@ -11,10 +11,10 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ComposterBlock;
-import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.LadderBlock;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.block.PressurePlateBlock.Sensitivity;
 import net.minecraft.block.SlabBlock;
@@ -51,7 +51,7 @@ public class WoodenMaterial
 	public final RegistryObject<Block> door;
 	
 	public final RegistryObject<Block> craftingTable;
-	//public final RegistryObject<Block> ladder;
+	public final RegistryObject<Block> ladder;
 	//public final RegistryObject<Block> sign;
 	
 	//public final RegistryObject<Block> chest;
@@ -110,6 +110,8 @@ public class WoodenMaterial
 				() -> new ComposterBlock(materialPlanksNotSolid));
 		craftingTable = ModBlocks.registerBlockWithDefaultItem(name + "_crafting_table", 
 				() -> new ModCraftingTableBlock(materialPlanksNotSolid));
+		ladder = ModBlocks.registerBlockWithDefaultItem(name + "_ladder", 
+				() -> new LadderBlock(materialPlanksNotSolid));
 	}
 	
 	public boolean isTreeLog(Block block) 

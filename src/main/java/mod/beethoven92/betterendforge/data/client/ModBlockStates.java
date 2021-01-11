@@ -13,6 +13,7 @@ import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.LadderBlock;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
@@ -92,6 +93,8 @@ public class ModBlockStates extends BlockStateProvider
 		makeBlockItemFromExistingModel(material.composter.get());
 	    craftingTableBlock((CraftingTableBlock)material.craftingTable.get(), material.name);
 		makeBlockItemFromExistingModel(material.craftingTable.get());
+	    // BlockItem handled in item model provider
+	    ladderBlock((LadderBlock)material.ladder.get(), material.name);
 	}
 	
 	private void registerStoneMaterialBlockStates(StoneMaterial material)
@@ -224,5 +227,12 @@ public class ModBlockStates extends BlockStateProvider
 						modLoc("block/" + material + "_crafting_table_front"))
 				.texture("particle", modLoc("block/" + material + "_crafting_table_top"));
 		simpleBlock(block, model);
+    }
+    
+    private void ladderBlock(LadderBlock block, String material)
+    {
+    	ModelFile ladder = models().withExistingParent(material + "_ladder", modLoc("block/ladder"))
+    			.texture("texture", modLoc("block/" + material + "_ladder"));
+    	horizontalBlock(block, ladder);
     }
 }

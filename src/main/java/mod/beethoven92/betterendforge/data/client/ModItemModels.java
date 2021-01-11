@@ -43,6 +43,9 @@ public class ModItemModels extends ItemModelProvider
         fenceInventory(material.name + "_fence", modLoc("block/" + material.name + "_planks"));
         
         buttonInventory(material.name, modLoc("block/" + material.name + "_planks"));
+        
+        singleTexture(material.name + "_ladder", mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc("block/" + material.name + "_ladder"));
+
 	}
 	
 	private void registerStoneMaterialItemModels(StoneMaterial material)
