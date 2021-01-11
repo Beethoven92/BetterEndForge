@@ -1,10 +1,17 @@
 package mod.beethoven92.betterendforge.common.world.biome;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
+import mod.beethoven92.betterendforge.common.util.JsonFactory;
+import mod.beethoven92.betterendforge.common.util.StructureHelper;
+import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures.StructureInfo;
+import mod.beethoven92.betterendforge.common.world.feature.NBTFeature.TerrainMerge;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 
@@ -29,6 +36,8 @@ public class BetterEndBiome
 	
 	private Biome actualBiome;
 	
+	private List<StructureInfo> nbtStructures = Lists.newArrayList();
+	
 	public BetterEndBiome(BiomeTemplate template)
 	{
 		biome = template.build();
@@ -37,6 +46,7 @@ public class BetterEndBiome
 		fogDensity = template.getFogDensity();
 		genChanceUnmutable = template.getGenChance();
 		hasCaves = template.hasCaves();
+		this.readNBTStructureList();
 	}
 	
 	public BetterEndBiome(ResourceLocation id, Biome biome, float fogDensity, float genChance, boolean hasCaves) 
@@ -46,6 +56,7 @@ public class BetterEndBiome
 		this.fogDensity = fogDensity;
 		this.genChanceUnmutable = genChance;
 		this.hasCaves = hasCaves;
+		this.readNBTStructureList();
 	}
 	
 	public BetterEndBiome getEdge() 
@@ -150,6 +161,37 @@ public class BetterEndBiome
 	public boolean hasCaves() 
 	{
 		return hasCaves;
+	}
+	
+	protected void readNBTStructureList() 
+	{
+		nbtStructures.clear();
+		
+		String ns = id.getNamespace();
+		String nm = id.getPath();
+
+		String path = "/data/" + ns + "/structures/biome/" + nm + "/";
+		InputStream inputstream = StructureHelper.class.getResourceAsStream(path + "structures.json");
+		if (inputstream != null) 
+		{
+			JsonObject obj = JsonFactory.getJsonObject(inputstream);
+			JsonArray entries = obj.getAsJsonArray("structures");
+			if (entries != null) 
+			{
+				entries.forEach((entry) -> {
+					JsonObject e = entry.getAsJsonObject();
+					String structure = path + e.get("nbt").getAsString() + ".nbt";
+					TerrainMerge terrainMerge = TerrainMerge.getFromString(e.get("terrainMerge").getAsString());
+					int offsetY = e.get("offsetY").getAsInt();
+					nbtStructures.add(new StructureInfo(structure, offsetY, terrainMerge));
+				});
+			}
+		}
+	}
+	
+	public List<StructureInfo> getNBTStructures() 
+	{
+		return nbtStructures;
 	}
 }
 

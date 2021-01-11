@@ -51,6 +51,7 @@ import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import mod.beethoven92.betterendforge.common.init.ModStructures;
 import mod.beethoven92.betterendforge.common.init.ModSurfaceBuilders;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
+import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures;
 import mod.beethoven92.betterendforge.common.world.generator.BetterEndBiomeProvider;
 import mod.beethoven92.betterendforge.config.ClientConfig;
 import mod.beethoven92.betterendforge.server.PhysicalServerSide;
@@ -98,6 +99,7 @@ public class BetterEnd
     	event.enqueueWork(() -> {
     		ModEntityTypes.registerGlobalEntityAttributes();
     		ModEntityTypes.registerEntitySpawns();
+    	    BiomeNBTStructures.loadStructures();
     	});    
     }    
     
@@ -150,6 +152,11 @@ public class BetterEnd
     			{
     	  			event.getGeneration().getFeatures(Decoration.RAW_GENERATION).add(() -> ModConfiguredFeatures.ROUND_CAVE_RARE);
         			event.getGeneration().getFeatures(Decoration.RAW_GENERATION).add(() -> ModConfiguredFeatures.CAVE_GRASS);
+    			}
+    			
+    			if (!ModBiomes.getBiome(event.getName()).getNBTStructures().isEmpty())
+    			{
+    				event.getGeneration().getFeatures(Decoration.SURFACE_STRUCTURES).add(() -> ModConfiguredFeatures.NBT_STRUCTURES);
     			}
     		}
         }

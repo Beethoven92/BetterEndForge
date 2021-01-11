@@ -313,7 +313,11 @@ public class ModConfiguredFeatures
 			ModFeatures.CRASHED_SHIP.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.CHANCE.configure(new ChanceConfig(500)));
 	
-	public static void registerConfiguredFeatures() 
+	public static final ConfiguredFeature<?, ?> NBT_STRUCTURES = 
+			ModFeatures.NBT_STRUCTURES.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.CHANCE.configure(new ChanceConfig(10)));
+	
+	public static void registerConfiguredFeatures() 	
 	{
         Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
         // WATER PLANTS
@@ -394,5 +398,6 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "violecite_layer"), VIOLECITE_LAYER);
         // BUILDINGS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "crashed_ship"), CRASHED_SHIP);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "nbt_structures"), NBT_STRUCTURES);
     }   
 }

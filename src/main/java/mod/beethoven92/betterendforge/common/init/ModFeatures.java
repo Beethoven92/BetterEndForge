@@ -1,6 +1,7 @@
 package mod.beethoven92.betterendforge.common.init;
 
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures;
 import mod.beethoven92.betterendforge.common.world.feature.BlueVineFeature;
 import mod.beethoven92.betterendforge.common.world.feature.BushFeature;
 import mod.beethoven92.betterendforge.common.world.feature.CavePlantFeature;
@@ -130,6 +131,7 @@ public class ModFeatures
 	
 	// BUILDINGS
 	public static final Feature<NoFeatureConfig> CRASHED_SHIP = new CrashedShipFeature();
+	public static final Feature<NoFeatureConfig> NBT_STRUCTURES = new BiomeNBTStructures();
 	
 	public static void registerFeatures(Register<Feature<?>> event)
     {
@@ -211,5 +213,6 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), VIOLECITE_LAYER, "violecite_layer");
     	// BUILDINGS
     	BetterEnd.register(event.getRegistry(), CRASHED_SHIP, "crashed_ship");
+    	BetterEnd.register(event.getRegistry(), NBT_STRUCTURES, "nbt_structures");
     }
 }
