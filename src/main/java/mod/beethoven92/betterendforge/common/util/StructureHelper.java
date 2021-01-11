@@ -57,7 +57,7 @@ public class StructureHelper
 
 		Template template = new Template();
 		template.read(nbttagcompound);
-
+		
 		return template;
 	}
 	

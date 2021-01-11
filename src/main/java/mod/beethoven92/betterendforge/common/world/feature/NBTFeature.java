@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
+import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.FeatureHelper;
+import mod.beethoven92.betterendforge.common.util.NbtModIdReplacer;
+import mod.beethoven92.betterendforge.common.util.StructureHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.CompressedStreamTools;
@@ -198,6 +201,20 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 		return MutableBoundingBox.createProper(sx, 0, sz, ex, 255, ez);
 	}
 	
+	public static Template readStructure(String path, String replacePath) 
+	{
+		try 
+		{
+			InputStream inputstream = MinecraftServer.class.getResourceAsStream(path);
+			return readStructureFromStream(inputstream, replacePath);
+		}
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	protected static Template readStructure(ResourceLocation resource) 
 	{
 		String ns = resource.getNamespace();
@@ -206,7 +223,7 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 		try
 		{
 			InputStream inputstream = MinecraftServer.class.getResourceAsStream("/data/" + ns + "/structures/" + nm + ".nbt");
-			return readStructureFromStream(inputstream);
+			return readStructureFromStream(inputstream, null);
 		}
 		catch (IOException e) 
 		{
@@ -216,13 +233,15 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 		return null;
 	}
 	
-	private static Template readStructureFromStream(InputStream stream) throws IOException 
+	private static Template readStructureFromStream(InputStream stream, String replacePath) throws IOException 
 	{
 		CompoundNBT nbttagcompound = CompressedStreamTools.readCompressed(stream);
-
+		
+		NbtModIdReplacer.readAndReplace(nbttagcompound, replacePath);
+		
 		Template template = new Template();
 		template.read(nbttagcompound);
-
+		
 		return template;
 	}
 	

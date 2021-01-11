@@ -92,20 +92,27 @@ public class BiomeNBTStructures extends NBTFeature
 	{
 		public final TerrainMerge terrainMerge;
 		public final String structurePath;
+		public final String replacePath;
 		public final int offsetY;
 		
 		private Template structure;
 		
-		public StructureInfo(String structurePath, int offsetY, TerrainMerge terrainMerge) 
+		public StructureInfo(String structurePath, String replacePath, int offsetY, TerrainMerge terrainMerge) 
 		{
 			this.terrainMerge = terrainMerge;
 			this.structurePath = structurePath;
+			this.replacePath = replacePath;
 			this.offsetY = offsetY;
 		}
 		
-		public Template getStructure() {
-			if (structure == null) {
+		public Template getStructure() 
+		{
+			if (structure == null) 
+			{	
 				structure = StructureHelper.readStructure(structurePath);
+				
+				// Use this to replace the mod id of the blocks in the structure and save the updated file
+				//structure = NBTFeature.readStructure(structurePath, replacePath);
 			}
 			return structure;
 		}

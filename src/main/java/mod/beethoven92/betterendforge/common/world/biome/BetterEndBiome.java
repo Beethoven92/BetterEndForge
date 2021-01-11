@@ -180,10 +180,11 @@ public class BetterEndBiome
 			{
 				entries.forEach((entry) -> {
 					JsonObject e = entry.getAsJsonObject();
-					String structure = path + e.get("nbt").getAsString() + ".nbt";
+					String structurePath = path + e.get("nbt").getAsString() + ".nbt";
+					String replacePath = nm + "\\" + e.get("nbt").getAsString();
 					TerrainMerge terrainMerge = TerrainMerge.getFromString(e.get("terrainMerge").getAsString());
 					int offsetY = e.get("offsetY").getAsInt();
-					nbtStructures.add(new StructureInfo(structure, offsetY, terrainMerge));
+					nbtStructures.add(new StructureInfo(structurePath, replacePath, offsetY, terrainMerge));
 				});
 			}
 		}
