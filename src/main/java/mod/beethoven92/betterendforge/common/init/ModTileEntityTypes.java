@@ -1,11 +1,19 @@
 package mod.beethoven92.betterendforge.common.init;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.tileentity.EChestTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.EndStoneSmelterTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.EternalPedestalTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.HydrothermalVentTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.InfusionPedestalTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.PedestalTileEntity;
+import net.minecraft.block.Block;
+import net.minecraft.block.ChestBlock;
+import net.minecraft.item.BlockItem;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -40,4 +48,22 @@ public class ModTileEntityTypes
 			TILE_ENTITY_TYPES.register("hydrothermal_vent_tile_entity", 
 					() -> TileEntityType.Builder.create(HydrothermalVentTileEntity::new, 
 							ModBlocks.HYDROTHERMAL_VENT.get()).build(null));
+	
+	public static final RegistryObject<TileEntityType<EChestTileEntity>> CHEST =
+			TILE_ENTITY_TYPES.register("chest", 
+					() -> TileEntityType.Builder.create(EChestTileEntity::new, 
+							getChests()).build(null));
+	
+	static Block[] getChests() {
+		List<Block> result = Lists.newArrayList();
+		ModItems.ITEMS.getEntries().forEach((item) -> {
+			if (item.get() instanceof BlockItem) {
+				Block block = ((BlockItem) item.get()).getBlock();
+				if (block instanceof ChestBlock) {
+					result.add(block);
+				}
+			}
+		});
+		return result.toArray(new Block[] {});
+	}
 }

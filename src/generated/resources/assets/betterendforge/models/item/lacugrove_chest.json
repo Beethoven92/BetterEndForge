@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/chest",
+  "textures": {
+    "particle": "betterendforge:block/lacugrove_planks"
+  }
+}

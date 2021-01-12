@@ -4,6 +4,7 @@ import mod.beethoven92.betterendforge.IPhysicalSide;
 import mod.beethoven92.betterendforge.client.gui.EndStoneSmelterScreen;
 import mod.beethoven92.betterendforge.client.renderer.CubozoaRenderer;
 import mod.beethoven92.betterendforge.client.renderer.DragonflyEntityRenderer;
+import mod.beethoven92.betterendforge.client.renderer.EndChestTileEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.EndFishEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.EndSlimeEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.PedestalRenderer;
@@ -42,6 +43,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.ETERNAL_PEDESTAL.get(), PedestalRenderer::new);
 		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.INFUSION_PEDESTAL.get(), PedestalRenderer::new);
 		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.PEDESTAL.get(), PedestalRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.CHEST.get(), EndChestTileEntityRenderer::new);
 		
 		// Entity renderers
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.END_FISH.get(), EndFishEntityRenderer::new);

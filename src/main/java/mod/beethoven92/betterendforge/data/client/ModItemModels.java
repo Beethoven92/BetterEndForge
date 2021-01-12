@@ -45,6 +45,9 @@ public class ModItemModels extends ItemModelProvider
         buttonInventory(material.name, modLoc("block/" + material.name + "_planks"));
         
         singleTexture(material.name + "_ladder", mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc("block/" + material.name + "_ladder"));
+        
+		getBuilder(material.name + "_chest").parent(new ModelFile.UncheckedModelFile(ITEM_FOLDER + "/chest")).texture("particle",
+				modLoc("block/" + material.name + "_planks"));
 
 	}
 	
