@@ -1,15 +1,20 @@
 package mod.beethoven92.betterendforge.common.block.material;
 
+import mod.beethoven92.betterendforge.client.renderer.ChestItemTileEntityRenderer;
 import mod.beethoven92.betterendforge.common.block.ModCraftingTableBlock;
 import mod.beethoven92.betterendforge.common.block.template.BarkBlockTemplate;
 import mod.beethoven92.betterendforge.common.block.template.PillarBlockTemplate;
 import mod.beethoven92.betterendforge.common.block.template.StripableBarkBlockTemplate;
 import mod.beethoven92.betterendforge.common.block.template.StripableLogBlockTemplate;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
+import mod.beethoven92.betterendforge.common.init.ModCreativeTabs;
+import mod.beethoven92.betterendforge.common.init.ModItems;
 import mod.beethoven92.betterendforge.common.init.ModTags;
+import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.ChestBlock;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.FenceBlock;
@@ -24,6 +29,7 @@ import net.minecraft.block.TrapDoorBlock;
 import net.minecraft.block.WoodButtonBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
 import net.minecraftforge.fml.RegistryObject;
@@ -54,7 +60,7 @@ public class WoodenMaterial
 	public final RegistryObject<Block> ladder;
 	//public final RegistryObject<Block> sign;
 	
-	//public final RegistryObject<Block> chest;
+	public final RegistryObject<Block> chest;
 	//public final RegistryObject<Block> barrel;
 	//public final RegistryObject<Block> shelf;
 	public final RegistryObject<Block> composter;
@@ -109,9 +115,19 @@ public class WoodenMaterial
 		composter = ModBlocks.registerBlockWithDefaultItem(name + "_composter", 
 				() -> new ComposterBlock(materialPlanksNotSolid));
 		craftingTable = ModBlocks.registerBlockWithDefaultItem(name + "_crafting_table", 
-				() -> new ModCraftingTableBlock(materialPlanksNotSolid));
+				() -> new ModCraftingTableBlock(materialPlanks));
 		ladder = ModBlocks.registerBlockWithDefaultItem(name + "_ladder", 
 				() -> new LadderBlock(materialPlanksNotSolid));
+		chest = ModBlocks.registerBlock(name + "_chest",
+				() -> new ChestBlock(materialPlanksNotSolid, () -> ModTileEntityTypes.CHEST.get()) {
+					public net.minecraft.tileentity.TileEntity createTileEntity(BlockState state,
+							net.minecraft.world.IBlockReader world) {
+						return ModTileEntityTypes.CHEST.get().create();
+					};
+				});
+		ModItems.ITEMS.register(name + "_chest", () -> new BlockItem(chest.get(), new Item.Properties()
+				.group(ModCreativeTabs.CREATIVE_TAB).setISTER(() -> ChestItemTileEntityRenderer::new)));
+
 	}
 	
 	public boolean isTreeLog(Block block) 

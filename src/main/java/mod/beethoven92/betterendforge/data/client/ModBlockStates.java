@@ -95,6 +95,8 @@ public class ModBlockStates extends BlockStateProvider
 		makeBlockItemFromExistingModel(material.craftingTable.get());
 	    // BlockItem handled in item model provider
 	    ladderBlock((LadderBlock)material.ladder.get(), material.name);
+	    // BlockItem handled in item model provider
+	    chestBlock(material.chest.get(), material.name);
 	}
 	
 	private void registerStoneMaterialBlockStates(StoneMaterial material)
@@ -234,5 +236,11 @@ public class ModBlockStates extends BlockStateProvider
     	ModelFile ladder = models().withExistingParent(material + "_ladder", modLoc("block/ladder"))
     			.texture("texture", modLoc("block/" + material + "_ladder"));
     	horizontalBlock(block, ladder);
+    }
+    
+    private void chestBlock(Block block, String material)
+    {
+    	ModelFile texture = models().getBuilder(material + "_chest").texture("particle", modLoc("block/" + material + "_planks"));
+    	simpleBlock(block, texture);
     }
 }

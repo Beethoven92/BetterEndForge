@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_chests",
+  "pattern": [
+    "###",
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:end_lotus_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:end_lotus_chest"
+  }
+}

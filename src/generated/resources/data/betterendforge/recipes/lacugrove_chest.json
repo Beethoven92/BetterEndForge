@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_chests",
+  "pattern": [
+    "###",
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:lacugrove_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:lacugrove_chest"
+  }
+}
