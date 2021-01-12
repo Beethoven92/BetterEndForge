@@ -14,7 +14,7 @@
 	      "MonsterEntityMixin",
 	      "RepairContainerMixin",
 	      "PlayerEntityMixin",
-	      "ServerPlayerEntityMixin"
+	      "ServerPlayerEntityMixin",
 	],
   "client": [
 	      "BiomeColorsMixin",
