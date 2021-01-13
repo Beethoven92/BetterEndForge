@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.client.renderer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import mod.beethoven92.betterendforge.common.tileentity.EChestTileEntity;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.tileentity.ItemStackTileEntityRenderer;
@@ -18,6 +19,7 @@ public class ChestItemTileEntityRenderer extends ItemStackTileEntityRenderer {
 			IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
 		if (chest == null)
 			chest = new EChestTileEntity();
+		chest.setChest(Block.getBlockFromItem(stack.getItem()));
 		TileEntityRendererDispatcher.instance.renderItem(chest, matrixStack, buffer, combinedLight, combinedOverlay);
 	}
 
