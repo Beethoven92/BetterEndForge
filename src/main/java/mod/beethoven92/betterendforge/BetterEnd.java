@@ -12,6 +12,7 @@ import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.world.ForgeWorldType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -51,6 +52,7 @@ import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import mod.beethoven92.betterendforge.common.init.ModStructures;
 import mod.beethoven92.betterendforge.common.init.ModSurfaceBuilders;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
+import mod.beethoven92.betterendforge.common.world.TerraforgedIntegrationWorldType;
 import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures;
 import mod.beethoven92.betterendforge.common.world.generator.BetterEndBiomeProvider;
 import mod.beethoven92.betterendforge.config.ClientConfig;
@@ -93,10 +95,9 @@ public class BetterEnd
     }
 
     private void setupCommon(final FMLCommonSetupEvent event)
-    {
-    	BetterEndBiomeProvider.register();
-    	
+    {   	
     	event.enqueueWork(() -> {
+        	BetterEndBiomeProvider.register();
     		ModEntityTypes.registerGlobalEntityAttributes();
     		ModEntityTypes.registerEntitySpawns();
     	    BiomeNBTStructures.loadStructures();
@@ -126,6 +127,13 @@ public class BetterEnd
     		ModFeatures.registerFeatures(event);
     		ModConfiguredFeatures.registerConfiguredFeatures();
     	}
+        
+    	//Terraforge integration
+        @SubscribeEvent
+        public static void registerWorldtype(RegistryEvent.Register<ForgeWorldType> event)
+        {
+            event.getRegistry().register(new TerraforgedIntegrationWorldType().setRegistryName(new ResourceLocation(MOD_ID, "world")));
+        }
     }
     
     @Mod.EventBusSubscriber(modid = BetterEnd.MOD_ID)
