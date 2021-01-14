@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_signs",
+  "pattern": [
+    "###",
+    "###",
+    " I "
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:tenanea_planks"
+    },
+    "I": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "betterendforge:tenanea_sign",
+    "count": 3
+  }
+}

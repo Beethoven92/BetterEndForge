@@ -1,6 +1,7 @@
 package mod.beethoven92.betterendforge.common.block.material;
 
 import mod.beethoven92.betterendforge.client.renderer.ChestItemTileEntityRenderer;
+import mod.beethoven92.betterendforge.common.block.EndSignBlock;
 import mod.beethoven92.betterendforge.common.block.ModCraftingTableBlock;
 import mod.beethoven92.betterendforge.common.block.template.BarkBlockTemplate;
 import mod.beethoven92.betterendforge.common.block.template.PillarBlockTemplate;
@@ -58,7 +59,7 @@ public class WoodenMaterial
 	
 	public final RegistryObject<Block> craftingTable;
 	public final RegistryObject<Block> ladder;
-	//public final RegistryObject<Block> sign;
+	public final RegistryObject<Block> sign;
 	
 	public final RegistryObject<Block> chest;
 	//public final RegistryObject<Block> barrel;
@@ -128,6 +129,11 @@ public class WoodenMaterial
 		ModItems.ITEMS.register(name + "_chest", () -> new BlockItem(chest.get(), new Item.Properties()
 				.group(ModCreativeTabs.CREATIVE_TAB).setISTER(() -> ChestItemTileEntityRenderer::new)));
 
+		sign = ModBlocks.registerBlockWithDefaultItem(name + "_sign", 
+				() -> new EndSignBlock(AbstractBlock.Properties.create(Material.WOOD, planksColor).
+		                hardnessAndResistance(2.0F, 3.0F).
+		                sound(SoundType.WOOD).
+		                notSolid().doesNotBlockMovement()));
 	}
 	
 	public boolean isTreeLog(Block block) 
