@@ -5,7 +5,9 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.block.EndSignBlock;
 import mod.beethoven92.betterendforge.common.tileentity.EChestTileEntity;
+import mod.beethoven92.betterendforge.common.tileentity.ESignTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.EndStoneSmelterTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.EternalPedestalTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.HydrothermalVentTileEntity;
@@ -54,12 +56,30 @@ public class ModTileEntityTypes
 					() -> TileEntityType.Builder.create(EChestTileEntity::new, 
 							getChests()).build(null));
 	
+	public static final RegistryObject<TileEntityType<ESignTileEntity>> SIGN =
+			TILE_ENTITY_TYPES.register("sign", 
+					() -> TileEntityType.Builder.create(ESignTileEntity::new, 
+							getSigns()).build(null));
+	
 	static Block[] getChests() {
 		List<Block> result = Lists.newArrayList();
 		ModItems.ITEMS.getEntries().forEach((item) -> {
 			if (item.get() instanceof BlockItem) {
 				Block block = ((BlockItem) item.get()).getBlock();
 				if (block instanceof ChestBlock) {
+					result.add(block);
+				}
+			}
+		});
+		return result.toArray(new Block[] {});
+	}
+	
+	static Block[] getSigns() {
+		List<Block> result = Lists.newArrayList();
+		ModItems.ITEMS.getEntries().forEach((item) -> {
+			if (item.get() instanceof BlockItem) {
+				Block block = ((BlockItem) item.get()).getBlock();
+				if (block instanceof EndSignBlock) {
 					result.add(block);
 				}
 			}

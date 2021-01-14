@@ -15,11 +15,13 @@
 	      "RepairContainerMixin",
 	      "PlayerEntityMixin",
 	      "ServerPlayerEntityMixin",
+	      "ServerPlayNetHandlerMixin"
 	],
   "client": [
 	      "BiomeColorsMixin",
 	      "WorldRendererMixin",
-	      "FogRendererMixin"
+	      "FogRendererMixin",
+	      "ClientPlayNetHandlerMixin"
 	], 
   "minVersion": "0.8"
 }
