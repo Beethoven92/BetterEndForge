@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all", 
+    "textures": {
+        "all": "betterendforge:block/umbrella_tree_log_side"
+    }
+}
