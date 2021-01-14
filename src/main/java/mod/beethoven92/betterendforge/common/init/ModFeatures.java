@@ -33,6 +33,7 @@ import mod.beethoven92.betterendforge.common.world.feature.SulphuricLakeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SurfaceVentFeature;
 import mod.beethoven92.betterendforge.common.world.feature.TenaneaBushFeature;
 import mod.beethoven92.betterendforge.common.world.feature.TenaneaFeature;
+import mod.beethoven92.betterendforge.common.world.feature.UmbrellaTreeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.UnderwaterPlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.VineFeature;
 import mod.beethoven92.betterendforge.common.world.feature.WallPlantFeature;
@@ -122,6 +123,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> DRAGON_TREE = new DragonTreeFeature();
 	public static final Feature<NoFeatureConfig> TENANEA = new TenaneaFeature();
 	public static final Feature<NoFeatureConfig> HELIX_TREE = new HelixTreeFeature();
+	public static final Feature<NoFeatureConfig> UMBRELLA_TREE = new UmbrellaTreeFeature();
 	
 	// ORES
 	public static final Feature<OreFeatureConfig> ENDER_ORE = new OreFeature(OreFeatureConfig.CODEC);
@@ -206,6 +208,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), DRAGON_TREE, "dragon_tree");
     	BetterEnd.register(event.getRegistry(), TENANEA, "tenanea");
     	BetterEnd.register(event.getRegistry(), HELIX_TREE, "helix_tree");
+    	BetterEnd.register(event.getRegistry(), UMBRELLA_TREE, "umbrella_tree");
     	// ORES
     	BetterEnd.register(event.getRegistry(), ENDER_ORE, "ender_ore");
     	BetterEnd.register(event.getRegistry(), AMBER_ORE, "amber_ore");

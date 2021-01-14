@@ -83,6 +83,9 @@ public class ModBlockLootTables extends BlockLootTables
 	    registerLootTable(ModBlocks.AMBER_MOSS.get(), (terrain) -> {
 	    	return droppingWithSilkTouch(terrain, Blocks.END_STONE);
 	    });
+	    registerLootTable(ModBlocks.JUNGLE_MOSS.get(), (terrain) -> {
+	    	return droppingWithSilkTouch(terrain, Blocks.END_STONE);
+	    });
 		registerDropSelfLootTable(ModBlocks.ENDSTONE_DUST.get());
 		
 		// PATHS
@@ -94,6 +97,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropping(ModBlocks.SHADOW_GRASS_PATH.get(), Blocks.END_STONE);
 		registerDropping(ModBlocks.PINK_MOSS_PATH.get(), Blocks.END_STONE);
 		registerDropping(ModBlocks.AMBER_MOSS_PATH.get(), Blocks.END_STONE);
+		registerDropping(ModBlocks.JUNGLE_MOSS_PATH.get(), Blocks.END_STONE);
 		
 		// MATERIALS
 		registerDropSelfLootTable(ModBlocks.AETERNIUM_BLOCK.get());
@@ -318,6 +322,11 @@ public class ModBlockLootTables extends BlockLootTables
 			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.HELIX_TREE_SAPLING.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
 		});		
 		
+		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_SAPLING.get());
+		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_CLUSTER.get());
+		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_CLUSTER_EMPTY.get());
+		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_MEMBRANE.get());
+		
 		// WOODEN_MATERIALS
 		registerWoodenMaterialLootTables(ModBlocks.MOSSY_GLOWSHROOM);
 		registerWoodenMaterialLootTables(ModBlocks.LACUGROVE);
@@ -326,6 +335,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerWoodenMaterialLootTables(ModBlocks.DRAGON_TREE);
 		registerWoodenMaterialLootTables(ModBlocks.TENANEA);
 		registerWoodenMaterialLootTables(ModBlocks.HELIX_TREE);
+		registerWoodenMaterialLootTables(ModBlocks.UMBRELLA_TREE);
 		
 		// STONE MATERIALS
 		registerStoneMaterialLootTables(ModBlocks.FLAVOLITE);

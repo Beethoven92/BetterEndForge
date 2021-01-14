@@ -69,6 +69,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		registerWoodenMaterialTags(ModBlocks.DRAGON_TREE);
 		registerWoodenMaterialTags(ModBlocks.TENANEA);
 		registerWoodenMaterialTags(ModBlocks.HELIX_TREE);
+		registerWoodenMaterialTags(ModBlocks.UMBRELLA_TREE);
 		
 		// STONE MATERIALS
 		registerStoneMaterialTags(ModBlocks.FLAVOLITE);

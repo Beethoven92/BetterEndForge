@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
@@ -20,6 +21,8 @@ import net.minecraft.world.IWorld;
 
 public abstract class SDF 
 {
+	private List<Function<PosInfo, BlockState>> postProcesses = Lists.newArrayList();
+	
 	private Function<PosInfo, BlockState> postProcess = (info) -> {
 		return info.getState();
 	};
@@ -34,6 +37,12 @@ public abstract class SDF
 	public SDF setPostProcess(Function<PosInfo, BlockState> postProcess) 
 	{
 		this.postProcess = postProcess;
+		return this;
+	}
+	
+	public SDF addPostProcess(Function<PosInfo, BlockState> postProcess) 
+	{
+		this.postProcesses.add(postProcess);
 		return this;
 	}
 	

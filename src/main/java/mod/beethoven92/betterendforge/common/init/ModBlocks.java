@@ -61,6 +61,9 @@ import mod.beethoven92.betterendforge.common.block.TerrainBlock;
 import mod.beethoven92.betterendforge.common.block.TerrainPlantBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaMossBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaMossTallBlock;
+import mod.beethoven92.betterendforge.common.block.UmbrellaTreeClusterBlock;
+import mod.beethoven92.betterendforge.common.block.UmbrellaTreeMembraneBlock;
+import mod.beethoven92.betterendforge.common.block.UmbrellaTreeSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.VentBubbleColumnBlock;
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
@@ -148,7 +151,14 @@ public class ModBlocks
                                                             hardnessAndResistance(3.0F, 9.0F).
                                                             sound(SoundType.GROUND).
                                                             tickRandomly()));
-
+	
+	public static final RegistryObject<Block> JUNGLE_MOSS = registerBlockWithDefaultItem("jungle_moss", 
+			() -> new TerrainBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.ADOBE).
+                                                            setRequiresTool().
+                                                            hardnessAndResistance(3.0F, 9.0F).
+                                                            sound(SoundType.GROUND).
+                                                            tickRandomly()));
+	
 	public static final RegistryObject<Block> ENDSTONE_DUST = registerBlockWithDefaultItem("endstone_dust", 
 			() -> new EndstoneDustBlock(AbstractBlock.Properties.create(Material.SAND, Blocks.END_STONE.getMaterialColor()).
 					                                             hardnessAndResistance(0.5F).
@@ -177,6 +187,9 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> AMBER_MOSS_PATH = registerBlockWithDefaultItem("amber_moss_path", 
 			() -> new PathBlock(AMBER_MOSS.get()));
+	
+	public static final RegistryObject<Block> JUNGLE_MOSS_PATH = registerBlockWithDefaultItem("jungle_moss_path", 
+			() -> new PathBlock(JUNGLE_MOSS.get()));
 	
 	// MATERIALS
 	public static final RegistryObject<Block> AETERNIUM_BLOCK = registerBlockWithDefaultItem("aeternium_block",
@@ -698,6 +711,28 @@ public class ModBlocks
                                                            setAllowsSpawn((state, reader, pos, entity) -> {return false;}).
                                                            setBlocksVision((state, reader, pos) -> {return false;})));
 	
+	public static final RegistryObject<Block> UMBRELLA_TREE_SAPLING = registerBlockWithDefaultItem("umbrella_tree_sapling",
+			() -> new UmbrellaTreeSaplingBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                                   zeroHardnessAndResistance().
+                                                                   doesNotBlockMovement().
+                                                                   sound(SoundType.PLANT).
+                                                                   tickRandomly()));
+	
+	public static final RegistryObject<Block> UMBRELLA_TREE_MEMBRANE = registerBlockWithDefaultItem("umbrella_tree_membrane",
+			() -> new UmbrellaTreeMembraneBlock(AbstractBlock.Properties.from(Blocks.SLIME_BLOCK)));
+	
+	public static final RegistryObject<Block> UMBRELLA_TREE_CLUSTER = registerBlockWithDefaultItem("umbrella_tree_cluster",
+			() -> new UmbrellaTreeClusterBlock(AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.PURPLE).
+					                                                    hardnessAndResistance(1.0F).
+					                                                    setLightLevel((value) -> {return 15;}).
+					                                                    sound(SoundType.WART)));
+	
+	public static final RegistryObject<Block> UMBRELLA_TREE_CLUSTER_EMPTY = registerBlockWithDefaultItem("umbrella_tree_cluster_empty",
+			() -> new UmbrellaTreeClusterBlock(AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.PURPLE).
+					                                                    hardnessAndResistance(1.0F).
+					                                                    tickRandomly().
+					                                                    sound(SoundType.WART)));
+	
 	// BLOCKS WITH TILE ENTITY
 	public static final RegistryObject<Block> ETERNAL_PEDESTAL = registerBlockWithDefaultItem("eternal_pedestal", 
 			() -> new EternalPedestal(AbstractBlock.Properties.from(FLAVOLITE_RUNED_ETERNAL.get())));
@@ -762,7 +797,7 @@ public class ModBlocks
 	public static final WoodenMaterial DRAGON_TREE = new WoodenMaterial("dragon_tree", MaterialColor.BLACK, MaterialColor.MAGENTA);
 	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.BROWN, MaterialColor.PINK);
 	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ADOBE);
-
+	public static final WoodenMaterial UMBRELLA_TREE = new WoodenMaterial("umbrella_tree", MaterialColor.BLUE, MaterialColor.GREEN);
 	
 	// STONE MATERIALS
     public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);

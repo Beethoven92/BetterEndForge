@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_planks_gates",
+  "pattern": [
+    "#W#",
+    "#W#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "W": {
+      "item": "betterendforge:umbrella_tree_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:umbrella_tree_gate"
+  }
+}

@@ -318,6 +318,14 @@ public class SplineHelper
 		}
 	}
 	
+	public static void scale(List<Vector3f> spline, float x, float y, float z) 
+	{
+		for (Vector3f v: spline) 
+		{
+			v.set(v.getX() * x, v.getY() * y, v.getZ() * z);
+		}
+	}
+	
 	public static void offset(List<Vector3f> spline, Vector3f offset)
 	{
 		for (Vector3f v: spline) 
