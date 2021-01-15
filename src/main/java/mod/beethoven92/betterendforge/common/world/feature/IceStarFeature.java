@@ -78,7 +78,7 @@ public class IceStarFeature extends Feature<NoFeatureConfig>
 		final BlockState ancient = ModBlocks.ANCIENT_EMERALD_ICE.get().getDefaultState();
 		final SDF sdfCopy = sdf;
 		
-		sdf.setPostProcess((info) -> {
+		sdf.addPostProcess((info) -> {
 			BlockPos bpos = info.getPos();
 			float px = bpos.getX() - center.getX();
 			float py = bpos.getY() - center.getY();

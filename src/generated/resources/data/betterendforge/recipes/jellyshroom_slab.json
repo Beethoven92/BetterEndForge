@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_planks_slabs",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:jellyshroom_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:jellyshroom_slab",
+    "count": 6
+  }
+}

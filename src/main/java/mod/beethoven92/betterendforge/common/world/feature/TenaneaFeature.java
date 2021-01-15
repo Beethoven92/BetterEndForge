@@ -132,7 +132,7 @@ public class TenaneaFeature extends Feature<NoFeatureConfig>
 		BlockState outer = ModBlocks.TENANEA_OUTER_LEAVES.get().getDefaultState();
 		
 		List<BlockPos> support = Lists.newArrayList();
-		sphere.setPostProcess((info) -> {
+		sphere.addPostProcess((info) -> {
 			if (random.nextInt(6) == 0 && info.getStateDown().isAir()) 
 			{
 				BlockPos d = info.getPos().down();

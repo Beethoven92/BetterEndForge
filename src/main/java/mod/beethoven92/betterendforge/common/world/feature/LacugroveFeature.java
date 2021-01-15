@@ -103,7 +103,7 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 		});
 		
 		function.setReplaceFunction(REPLACE);
-		function.setPostProcess(POST);
+		function.addPostProcess(POST);
 		function.fillRecursive(world, blockPos);
 		
 		spline = spline.subList(4, 6);
@@ -164,7 +164,7 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius - 2, 0).setSource(sphere));
 		Mutable mut = new Mutable();
-		sphere.setPostProcess((info) -> {
+		sphere.addPostProcess((info) -> {
 			if (random.nextInt(5) == 0) 
 			{
 				for (Direction dir: Direction.values()) 

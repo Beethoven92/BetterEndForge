@@ -90,6 +90,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.HELIX_TREE_SAPLING.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.UMBRELLA_TREE_SAPLING.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(ModBlocks.UMBRELLA_TREE_MEMBRANE.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ModBlocks.JELLYSHROOM_CAP_PURPLE.get(), RenderType.getTranslucent());
 		
 		// PLANTS
 		RenderTypeLookup.setRenderLayer(ModBlocks.UMBRELLA_MOSS.get(), RenderType.getCutout());
@@ -148,6 +149,8 @@ public class PhysicalClientSide implements IPhysicalSide
 		setWoodenMaterialRenderLayers(ModBlocks.DRAGON_TREE);
 		setWoodenMaterialRenderLayers(ModBlocks.TENANEA);
 		setWoodenMaterialRenderLayers(ModBlocks.HELIX_TREE);
+		setWoodenMaterialRenderLayers(ModBlocks.UMBRELLA_TREE);
+		setWoodenMaterialRenderLayers(ModBlocks.JELLYSHROOM);
 	}
 	
 	private void setWoodenMaterialRenderLayers(WoodenMaterial material)

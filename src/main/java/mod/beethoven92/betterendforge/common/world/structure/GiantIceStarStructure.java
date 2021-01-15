@@ -89,7 +89,7 @@ public class GiantIceStarStructure extends SDFStructure
 		final BlockState ancient = ModBlocks.ANCIENT_EMERALD_ICE.get().getDefaultState();
 		final SDF sdfCopy = sdf;
 		
-		return sdf.setPostProcess((info) -> {
+		return sdf.addPostProcess((info) -> {
 			BlockPos bpos = info.getPos();
 			float px = bpos.getX() - center.getX();
 			float py = bpos.getY() - center.getY();

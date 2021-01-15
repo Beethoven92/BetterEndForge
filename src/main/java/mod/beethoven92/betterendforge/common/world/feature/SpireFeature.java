@@ -74,7 +74,7 @@ public class SpireFeature extends Feature<NoFeatureConfig>
 			}).setSource(sdf);
 			final BlockPos center = pos;
 			List<BlockPos> support = Lists.newArrayList();
-			sdf.setReplaceFunction(REPLACE).setPostProcess((info) -> {
+			sdf.setReplaceFunction(REPLACE).addPostProcess((info) -> {
 				if (info.getStateUp().isAir())
 				{
 					if (rand.nextInt(16) == 0) 

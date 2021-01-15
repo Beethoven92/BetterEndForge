@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "betterendforge:block/jellyshroom_slab_top"
+    },
+    "type=bottom": {
+      "model": "betterendforge:block/jellyshroom_slab"
+    },
+    "type=double": {
+      "model": "betterendforge:block/jellyshroom_planks"
+    }
+  }
+}

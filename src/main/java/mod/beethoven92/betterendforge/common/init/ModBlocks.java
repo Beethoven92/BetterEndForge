@@ -39,6 +39,7 @@ import mod.beethoven92.betterendforge.common.block.HydraluxPetalBlockColored;
 import mod.beethoven92.betterendforge.common.block.HydraluxSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.HydrothermalVentBlock;
 import mod.beethoven92.betterendforge.common.block.InfusionPedestal;
+import mod.beethoven92.betterendforge.common.block.JellyshroomCapBlock;
 import mod.beethoven92.betterendforge.common.block.LacugroveSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.LanceleafBlock;
 import mod.beethoven92.betterendforge.common.block.LanceleafSeedBlock;
@@ -733,6 +734,9 @@ public class ModBlocks
 					                                                    tickRandomly().
 					                                                    sound(SoundType.WART)));
 	
+	public static final RegistryObject<Block> JELLYSHROOM_CAP_PURPLE = registerBlockWithDefaultItem("jellyshroom_cap_purple", 
+			() -> new JellyshroomCapBlock(217, 142, 255, 164, 0, 255));
+	
 	// BLOCKS WITH TILE ENTITY
 	public static final RegistryObject<Block> ETERNAL_PEDESTAL = registerBlockWithDefaultItem("eternal_pedestal", 
 			() -> new EternalPedestal(AbstractBlock.Properties.from(FLAVOLITE_RUNED_ETERNAL.get())));
@@ -798,6 +802,7 @@ public class ModBlocks
 	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.BROWN, MaterialColor.PINK);
 	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ADOBE);
 	public static final WoodenMaterial UMBRELLA_TREE = new WoodenMaterial("umbrella_tree", MaterialColor.BLUE, MaterialColor.GREEN);
+	public static final WoodenMaterial JELLYSHROOM = new WoodenMaterial("jellyshroom", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
 	
 	// STONE MATERIALS
     public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);

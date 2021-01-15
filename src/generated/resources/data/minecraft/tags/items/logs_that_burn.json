@@ -32,6 +32,10 @@
     "betterendforge:umbrella_tree_log",
     "betterendforge:umbrella_tree_bark",
     "betterendforge:umbrella_tree_stripped_log",
-    "betterendforge:umbrella_tree_stripped_bark"
+    "betterendforge:umbrella_tree_stripped_bark",
+    "betterendforge:jellyshroom_log",
+    "betterendforge:jellyshroom_bark",
+    "betterendforge:jellyshroom_stripped_log",
+    "betterendforge:jellyshroom_stripped_bark"
   ]
 }

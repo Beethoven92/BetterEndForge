@@ -327,6 +327,8 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_CLUSTER_EMPTY.get());
 		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_MEMBRANE.get());
 		
+		registerDropSelfLootTable(ModBlocks.JELLYSHROOM_CAP_PURPLE.get());
+		
 		// WOODEN_MATERIALS
 		registerWoodenMaterialLootTables(ModBlocks.MOSSY_GLOWSHROOM);
 		registerWoodenMaterialLootTables(ModBlocks.LACUGROVE);
@@ -336,6 +338,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerWoodenMaterialLootTables(ModBlocks.TENANEA);
 		registerWoodenMaterialLootTables(ModBlocks.HELIX_TREE);
 		registerWoodenMaterialLootTables(ModBlocks.UMBRELLA_TREE);
+		registerWoodenMaterialLootTables(ModBlocks.JELLYSHROOM);
 		
 		// STONE MATERIALS
 		registerStoneMaterialLootTables(ModBlocks.FLAVOLITE);

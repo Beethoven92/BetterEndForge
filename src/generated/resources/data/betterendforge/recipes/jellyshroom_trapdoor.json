@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_trapdoors",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:jellyshroom_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:jellyshroom_trapdoor",
+    "count": 2
+  }
+}

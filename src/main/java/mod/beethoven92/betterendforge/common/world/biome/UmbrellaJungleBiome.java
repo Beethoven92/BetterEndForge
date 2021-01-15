@@ -21,6 +21,7 @@ public class UmbrellaJungleBiome extends BetterEndBiome
 				//setMusic(ModSoundEvents.MUSIC_SULPHUR_SPRINGS.get()).
 				//setParticles(ModParticleTypes.SULPHUR_PARTICLE.get(), 0.001F).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.UMBRELLA_TREE).
+				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.JELLYSHROOM).
 				addFeature(Decoration.LAKES, ModConfiguredFeatures.END_LAKE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CYAN_MOSS).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CYAN_MOSS_WOOD).

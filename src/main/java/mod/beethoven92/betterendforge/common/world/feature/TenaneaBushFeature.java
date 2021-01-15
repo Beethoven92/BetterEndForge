@@ -68,7 +68,7 @@ public class TenaneaBushFeature extends Feature<NoFeatureConfig>
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
 		sphere.setReplaceFunction(REPLACE);
 		List<BlockPos> support = Lists.newArrayList();
-		sphere.setPostProcess((info) -> {
+		sphere.addPostProcess((info) -> {
 			if (info.getState().getBlock() instanceof LeavesBlock) 
 			{
 				int distance = info.getPos().manhattanDistance(pos);

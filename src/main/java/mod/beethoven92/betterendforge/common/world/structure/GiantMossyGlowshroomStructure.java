@@ -114,7 +114,7 @@ public class GiantMossyGlowshroomStructure extends SDFStructure
 		return new SDFRound().setRadius(1.5F).setSource(new SDFScale()
 				.setScale(scale)
 				.setSource(function))
-				.setPostProcess((info) -> {
+				.addPostProcess((info) -> {
 					if (ModBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getState()))
 					{
 						if (random.nextBoolean() && info.getStateUp().getBlock() == ModBlocks.MOSSY_GLOWSHROOM_CAP.get()) 

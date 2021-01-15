@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "end_planks",
+  "ingredients": [
+    {
+      "tag": "betterendforge:jellyshroom_logs"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:jellyshroom_planks",
+    "count": 4
+  }
+}

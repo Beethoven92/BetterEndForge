@@ -11,6 +11,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
+import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.world.structure.StructureWorld;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.Direction;
@@ -23,9 +24,6 @@ public abstract class SDF
 {
 	private List<Function<PosInfo, BlockState>> postProcesses = Lists.newArrayList();
 	
-	private Function<PosInfo, BlockState> postProcess = (info) -> {
-		return info.getState();
-	};
 	private Function<BlockState, Boolean> canReplace = (state) -> {
 		return state.getMaterial().isReplaceable();
 	};
@@ -33,12 +31,6 @@ public abstract class SDF
 	public abstract float getDistance(float x, float y, float z);
 	
 	public abstract BlockState getBlockState(BlockPos pos);
-	
-	public SDF setPostProcess(Function<PosInfo, BlockState> postProcess) 
-	{
-		this.postProcess = postProcess;
-		return this;
-	}
 	
 	public SDF addPostProcess(Function<PosInfo, BlockState> postProcess) 
 	{
@@ -51,76 +43,7 @@ public abstract class SDF
 		this.canReplace = canReplace;
 		return this;
 	}
-	
-	@Deprecated
-	public void fillRecursive(IWorld world, BlockPos start, int dx, int dy, int dz) 
-	{
-		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
-		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
-		Set<BlockPos> blocks = Sets.newHashSet();
-		Set<BlockPos> ends = Sets.newHashSet();
-		Set<BlockPos> add = Sets.newHashSet();
-		ends.add(new BlockPos(0, 0, 0));
-		boolean run = true;
-		
-		while (run) 
-		{
-			for (BlockPos center: ends) 
-			{
-				for (Direction dir: Direction.values()) 
-				{
-					BlockPos pos = center.offset(dir);
-					BlockPos wpos = pos.add(start);
-					
-					run &= Math.abs(pos.getX()) < dx;
-					run &= Math.abs(pos.getY()) < dy;
-					run &= Math.abs(pos.getZ()) < dz;
-					
-					if (!blocks.contains(pos) && canReplace.apply(world.getBlockState(wpos))) 
-					{
-						if (this.getDistance(pos.getX(), pos.getY(), pos.getZ()) < 0) 
-						{
-							BlockState state = getBlockState(wpos);
-							PosInfo.create(mapWorld, addInfo, wpos).setState(state);
-							if (Math.abs(pos.getX()) < dx && Math.abs(pos.getY()) < dy && Math.abs(pos.getZ()) < dz) 
-							{
-								add.add(pos);
-							}
-						}
-					}
-				}
-			}
-			
-			blocks.addAll(ends);
-			ends.clear();
-			ends.addAll(add);
-			add.clear();
-			
-			run &= !ends.isEmpty();
-		}
-		
-		List<PosInfo> infos = new ArrayList<PosInfo>(mapWorld.values());
-		if (infos.size() > 0)
-		{
-			Collections.sort(infos);
-			infos.forEach((info) -> {
-				BlockState state = postProcess.apply(info);
-				world.setBlockState(info.getPos(), state, 1 |2 | 16);
-			});
-		
-			infos.clear();
-			infos.addAll(addInfo.values());
-			Collections.sort(infos);
-			infos.forEach((info) -> {
-				if (canReplace.apply(world.getBlockState(info.getPos()))) 
-				{
-					BlockState state = postProcess.apply(info);
-					world.setBlockState(info.getPos(), state, 1 | 2 | 16);
-				}
-			});
-		}
-	}
-	
+
 	public void fillRecursive(IWorld world, BlockPos start) 
 	{
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
@@ -166,19 +89,26 @@ public abstract class SDF
 		if (infos.size() > 0) 
 		{
 			Collections.sort(infos);
+			postProcesses.forEach((postProcess) -> {
+				infos.forEach((info) -> {
+					info.setState(postProcess.apply(info));
+				});
+			});
 			infos.forEach((info) -> {
-				BlockState state = postProcess.apply(info);
-				world.setBlockState(info.getPos(), state, 1 | 2 | 16);
+				BlockHelper.setWithoutUpdate(world, info.getPos(), info.getState());
 			});
 
 			infos.clear();
 			infos.addAll(addInfo.values());
 			Collections.sort(infos);
+			postProcesses.forEach((postProcess) -> {
+				infos.forEach((info) -> {
+					info.setState(postProcess.apply(info));
+				});
+			});
 			infos.forEach((info) -> {
-				if (canReplace.apply(world.getBlockState(info.getPos()))) 
-				{
-					BlockState state = postProcess.apply(info);
-					world.setBlockState(info.getPos(), state, 1 | 2 | 16);
+				if (canReplace.apply(world.getBlockState(info.getPos()))) {
+					BlockHelper.setWithoutUpdate(world, info.getPos(), info.getState());
 				}
 			});
 		}
@@ -210,24 +140,31 @@ public abstract class SDF
 				}
 			}
 		}
-		
+
 		List<PosInfo> infos = new ArrayList<PosInfo>(mapWorld.values());
-		if (infos.size() > 0)
+		if (infos.size() > 0) 
 		{
 			Collections.sort(infos);
+			postProcesses.forEach((postProcess) -> {
+				infos.forEach((info) -> {
+					info.setState(postProcess.apply(info));
+				});
+			});
 			infos.forEach((info) -> {
-				BlockState state = postProcess.apply(info);
-				world.setBlockState(info.getPos(), state, 1 | 2 | 16);
+				BlockHelper.setWithoutUpdate(world, info.getPos(), info.getState());
 			});
 
 			infos.clear();
 			infos.addAll(addInfo.values());
 			Collections.sort(infos);
+			postProcesses.forEach((postProcess) -> {
+				infos.forEach((info) -> {
+					info.setState(postProcess.apply(info));
+				});
+			});
 			infos.forEach((info) -> {
-				if (canReplace.apply(world.getBlockState(info.getPos()))) 
-				{
-					BlockState state = postProcess.apply(info);
-					world.setBlockState(info.getPos(), state, 1 | 2 | 16);
+				if (canReplace.apply(world.getBlockState(info.getPos()))) {
+					BlockHelper.setWithoutUpdate(world, info.getPos(), info.getState());
 				}
 			});
 		}
@@ -278,21 +215,26 @@ public abstract class SDF
 		if (infos.size() > 0) 
 		{
 			Collections.sort(infos);
-			infos.forEach((info) -> {
-				info.setState(postProcess.apply(info));
+			postProcesses.forEach((postProcess) -> {
+				infos.forEach((info) -> {
+					info.setState(postProcess.apply(info));
+				});
 			});
 			infos.forEach((info) -> {
-				world.setBlockState(info.getPos(), info.getState(), 1 | 2 | 16);
+				BlockHelper.setWithoutUpdate(world, info.getPos(), info.getState());
 			});
 
 			infos.clear();
 			infos.addAll(addInfo.values());
 			Collections.sort(infos);
+			postProcesses.forEach((postProcess) -> {
+				infos.forEach((info) -> {
+					info.setState(postProcess.apply(info));
+				});
+			});
 			infos.forEach((info) -> {
-				if (canReplace.apply(world.getBlockState(info.getPos()))) 
-				{
-					BlockState state = postProcess.apply(info);
-					world.setBlockState(info.getPos(), state, 1 | 2 | 16);
+				if (canReplace.apply(world.getBlockState(info.getPos()))) {
+					BlockHelper.setWithoutUpdate(world, info.getPos(), info.getState());
 				}
 			});
 		}
@@ -340,17 +282,25 @@ public abstract class SDF
 		
 		List<PosInfo> infos = new ArrayList<PosInfo>(mapWorld.values());
 		Collections.sort(infos);
+		postProcesses.forEach((postProcess) -> {
+			infos.forEach((info) -> {
+				info.setState(postProcess.apply(info));
+			});
+		});
 		infos.forEach((info) -> {
-			BlockState state = postProcess.apply(info);
-			world.setBlock(info.getPos(), state);
+			world.setBlock(info.getPos(), info.getState());
 		});
 		
 		infos.clear();
 		infos.addAll(addInfo.values());
 		Collections.sort(infos);
+		postProcesses.forEach((postProcess) -> {
+			infos.forEach((info) -> {
+				info.setState(postProcess.apply(info));
+			});
+		});
 		infos.forEach((info) -> {
-			BlockState state = postProcess.apply(info);
-			world.setBlock(info.getPos(), state);
+			world.setBlock(info.getPos(), info.getState());
 		});
 	}
 }

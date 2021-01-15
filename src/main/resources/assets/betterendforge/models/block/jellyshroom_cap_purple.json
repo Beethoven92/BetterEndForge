@@ -1,0 +1,6 @@
+{
+	"parent": "betterendforge:block/tint_cube",
+	"textures": {
+		"texture": "betterendforge:block/jellyshroom_cap"
+	}
+}

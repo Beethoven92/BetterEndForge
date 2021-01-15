@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_planks_fences",
+  "pattern": [
+    "W#W",
+    "W#W"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "W": {
+      "item": "betterendforge:jellyshroom_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:jellyshroom_fence",
+    "count": 3
+  }
+}

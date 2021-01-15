@@ -29,6 +29,7 @@ public class ModItemModels extends ItemModelProvider
 		registerWoodenMaterialItemModels(ModBlocks.TENANEA);
 		registerWoodenMaterialItemModels(ModBlocks.HELIX_TREE);
 		registerWoodenMaterialItemModels(ModBlocks.UMBRELLA_TREE);
+		registerWoodenMaterialItemModels(ModBlocks.JELLYSHROOM);
 		
 		// STONE MATERIALS
 		registerStoneMaterialItemModels(ModBlocks.FLAVOLITE);
