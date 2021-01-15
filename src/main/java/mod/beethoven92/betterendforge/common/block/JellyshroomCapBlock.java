@@ -37,6 +37,7 @@ public class JellyshroomCapBlock extends SlimeBlock
 		double px = context.getPos().getX() * 0.1;
 		double py = context.getPos().getY() * 0.1;
 		double pz = context.getPos().getZ() * 0.1;
+		
 		return this.getDefaultState().with(COLOR, ModMathHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
 	}
 	
@@ -46,12 +47,13 @@ public class JellyshroomCapBlock extends SlimeBlock
 		builder.add(COLOR);
 	}
 	
+	// Not working
 	public static int getBlockColor(BlockState state) 
 	{
 		if (state.getBlock() instanceof JellyshroomCapBlock)
 		{
 			JellyshroomCapBlock block = (JellyshroomCapBlock)state.getBlock();
-			float delta = (float) block.getDefaultState().get(COLOR) / 7F;
+			float delta = (float) block.stateContainer.getBaseState().get(COLOR) / 7F;
 			int r = MathHelper.floor(MathHelper.lerp(delta, block.colorStart.getX() / 255F, block.colorEnd.getX() / 255F) * 255F);
 	        int g = MathHelper.floor(MathHelper.lerp(delta, block.colorStart.getY() / 255F, block.colorEnd.getY() / 255F) * 255F);
 		    int b = MathHelper.floor(MathHelper.lerp(delta, block.colorStart.getZ() / 255F, block.colorEnd.getZ() / 255F) * 255F);
@@ -60,6 +62,7 @@ public class JellyshroomCapBlock extends SlimeBlock
 		return 0;
 	}
 	
+	// Not Working
 	public static int getItemColor(ItemStack stack) 
 	{
 		if (stack.getItem() instanceof BlockItem)

@@ -136,83 +136,38 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		// PLANTS
 		registerLootTable(ModBlocks.UMBRELLA_MOSS.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.UMBRELLA_MOSS.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
 		registerLootTable(ModBlocks.UMBRELLA_MOSS_TALL.get(), BlockLootTables::onlyWithShears);
-		//registerDropSelfLootTable(ModBlocks.UMBRELLA_MOSS_TALL.get());
 		registerLootTable(ModBlocks.CREEPING_MOSS.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.CREEPING_MOSS.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
 		registerLootTable(ModBlocks.CHORUS_GRASS.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.CHORUS_GRASS.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
 		registerLootTable(ModBlocks.CAVE_GRASS.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.CAVE_GRASS.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
-		registerLootTable(ModBlocks.CRYSTAL_GRASS.get(), BlockLootTables::onlyWithShears);
+		registerLootTable(ModBlocks.CRYSTAL_GRASS.get(), BlockLootTables::onlyWithShears);	
 		registerLootTable(ModBlocks.AMBER_GRASS.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.CRYSTAL_GRASS.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
 		registerLootTable(ModBlocks.SHADOW_PLANT.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.SHADOW_PLANT.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
 		registerLootTable(ModBlocks.BUSHY_GRASS.get(), BlockLootTables::onlyWithShears);
 		
 		registerLootTable(ModBlocks.BLUE_VINE_SEED.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.BLUE_VINE_SEED.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
 		registerLootTable(ModBlocks.BLUE_VINE.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.BLUE_VINE.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
-		registerDropSelfLootTable(ModBlocks.BLUE_VINE_LANTERN.get());
-		
+		registerDropSelfLootTable(ModBlocks.BLUE_VINE_LANTERN.get());		
 		registerLootTable(ModBlocks.BLUE_VINE_FUR.get(), (block) -> {
 			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.BLUE_VINE_SEED.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
 		});
 		
 		registerLootTable(ModBlocks.CAVE_BUSH.get(), BlockLootTables::onlyWithShears);
-		//registerDropSelfLootTable(ModBlocks.CAVE_BUSH.get());
 		
 		registerLootTable(ModBlocks.END_LILY_SEED.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.END_LILY_SEED.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
-	    
+
 		this.registerLootTable(ModBlocks.END_LILY.get(), (block) -> {
 			return endLilyDrop();
 	    });
 		
-		registerLootTable(ModBlocks.END_LOTUS_SEED.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.END_LOTUS_SEED.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
-		
+		registerLootTable(ModBlocks.END_LOTUS_SEED.get(), BlockLootTables::onlyWithShears);		
 		registerLootTable(ModBlocks.END_LOTUS_LEAF.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.END_LOTUS_LEAF.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
-		
-		registerDropSelfLootTable(ModBlocks.END_LOTUS_STEM.get());
-		
+		registerDropSelfLootTable(ModBlocks.END_LOTUS_STEM.get());	
 		registerLootTable(ModBlocks.END_LOTUS_FLOWER.get(), droppingRandomly(ModBlocks.END_LOTUS_SEED.get(), RandomValueRange.of(1.0F, 2.0F)));
 		
 		registerLootTable(ModBlocks.BUBBLE_CORAL.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.BUBBLE_CORAL.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/	
-		
+
 		registerLootTable(ModBlocks.MURKWEED.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.MURKWEED.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
 	    
 		registerLootTable(ModBlocks.NEEDLEGRASS.get(), (block) -> {
 	    	return droppingWithShears(block, withExplosionDecay(block, ItemLootEntry.builder(Items.STICK).acceptFunction(SetCount.builder(RandomValueRange.of(0.0F, 2.0F)))));
@@ -249,15 +204,9 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(ModBlocks.PURPLE_POLYPORE.get());
 		
 		registerLootTable(ModBlocks.TAIL_MOSS.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.TAIL_MOSS.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
-		
+
 		registerLootTable(ModBlocks.CYAN_MOSS.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.CYAN_MOSS.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
-		
+
 		registerLootTable(ModBlocks.TWISTED_MOSS.get(), BlockLootTables::onlyWithShears);
 		
 		registerLootTable(ModBlocks.BULB_MOSS.get(), BlockLootTables::onlyWithShears);
@@ -266,22 +215,13 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		// VINES
 		registerLootTable(ModBlocks.DENSE_VINE.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.DENSE_VINE.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
-		
+
 		registerLootTable(ModBlocks.TWISTED_VINE.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.TWISTED_VINE.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
-		
+
 		registerLootTable(ModBlocks.BULB_VINE.get(), BlockLootTables::onlyWithShears);
 		registerLootTable(ModBlocks.BULB_VINE_SEED.get(), BlockLootTables::onlyWithShears);
 		
-		// TREES
-		registerDropSelfLootTable(ModBlocks.HYDRALUX_SAPLING.get());
-
-		
+		// TREES		
 		registerDropSelfLootTable(ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get());
 		registerDropSelfLootTable(ModBlocks.MOSSY_GLOWSHROOM_CAP.get());
 		registerDropSelfLootTable(ModBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE.get());
@@ -310,9 +250,6 @@ public class ModBlockLootTables extends BlockLootTables
 		});		
 		
 		registerLootTable(ModBlocks.TENANEA_FLOWERS.get(), BlockLootTables::onlyWithShears);
-		/*registerLootTable(ModBlocks.TENANEA_FLOWERS.get(), (block) -> {
-			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(block).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.33F, 0.55F, 0.77F, 1.0F)));
-		});*/
 		registerLootTable(ModBlocks.TENANEA_OUTER_LEAVES.get(), (block) -> {
 			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.TENANEA_SAPLING.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
 		});
@@ -325,6 +262,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_SAPLING.get());
 		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_CLUSTER.get());
 		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_CLUSTER_EMPTY.get());
+		// TO DO
 		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_MEMBRANE.get());
 		
 		registerDropSelfLootTable(ModBlocks.JELLYSHROOM_CAP_PURPLE.get());
