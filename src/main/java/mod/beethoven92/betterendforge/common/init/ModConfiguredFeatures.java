@@ -162,6 +162,10 @@ public class ModConfiguredFeatures
 			ModFeatures.JUNGLE_GRASS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(8));
 	
+	public static final ConfiguredFeature<?, ?> SMALL_JELLYSHROOM_FLOOR = 
+			ModFeatures.SMALL_JELLYSHROOM_FLOOR.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(4));
+	
 	// WALL PLANTS
 	public static final ConfiguredFeature<?, ?> PURPLE_POLYPORE = 
 			ModFeatures.PURPLE_POLYPORE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -203,6 +207,14 @@ public class ModConfiguredFeatures
 			ModFeatures.BULB_MOSS_WOOD.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(15));
 	
+	public static final ConfiguredFeature<?, ?> SMALL_JELLYSHROOM_WALL = 
+			ModFeatures.SMALL_JELLYSHROOM_WALL.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(4));
+	
+	public static final ConfiguredFeature<?, ?> SMALL_JELLYSHROOM_WOOD = 
+			ModFeatures.SMALL_JELLYSHROOM_WOOD.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(8));
+	
 	// VINES
 	public static final ConfiguredFeature<?, ?> DENSE_VINE = 
 			ModFeatures.DENSE_VINE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -215,6 +227,11 @@ public class ModConfiguredFeatures
 	public static final ConfiguredFeature<?, ?> BULB_VINE = 
 			ModFeatures.BULB_VINE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(5));
+	
+	// CEIL PLANTS
+	public static final ConfiguredFeature<?, ?> SMALL_JELLYSHROOM_CEIL = 
+			ModFeatures.SMALL_JELLYSHROOM_CEIL.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(8));
 	
 	// TERRAIN
 	public static final ConfiguredFeature<?, ?> ROUND_CAVE = 
@@ -376,6 +393,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "glow_pillar"), GLOW_PILLAR); 
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "twisted_umbrella_moss"), TWISTED_UMBRELLA_MOSS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "jungle_grass"), JUNGLE_GRASS);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "small_jellyshroom_floor"), SMALL_JELLYSHROOM_FLOOR);
         // WALL PLANTS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "purple_polypore"), PURPLE_POLYPORE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "purple_polypore_dense"), PURPLE_POLYPORE_DENSE);
@@ -386,11 +404,15 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "twisted_moss"), TWISTED_MOSS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "twisted_moss_wood"), TWISTED_MOSS_WOOD);      
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "bulb_moss"), BULB_MOSS);      
-        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "bulb_moss_wood"), BULB_MOSS_WOOD);      
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "bulb_moss_wood"), BULB_MOSS_WOOD);  
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "small_jellyshroom_wall"), SMALL_JELLYSHROOM_WALL);      
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "small_jellyshroom_wood"), SMALL_JELLYSHROOM_WOOD); 
         // VINES
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "dense_vine"), DENSE_VINE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "twisted_vine"), TWISTED_VINE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "bulb_vine"), BULB_VINE);
+        // CEIL PLANTS
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "small_jellyshroom_ceil"), SMALL_JELLYSHROOM_CEIL);
         // TERRAIN
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "round_cave"), ROUND_CAVE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "round_cave_rare"), ROUND_CAVE_RARE);

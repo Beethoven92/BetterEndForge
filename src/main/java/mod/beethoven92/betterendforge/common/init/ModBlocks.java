@@ -55,6 +55,7 @@ import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.RunedFlavoliteBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowGrassBlock;
+import mod.beethoven92.betterendforge.common.block.SmallJellyshroomBlock;
 import mod.beethoven92.betterendforge.common.block.SulphurCrystalBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaSaplingBlock;
@@ -532,6 +533,12 @@ public class ModBlocks
                                                                      setLightLevel((value) -> {return 12;}).
                                                                      doesNotBlockMovement().
                                                                      sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> SMALL_JELLYSHROOM = registerBlockWithDefaultItem("small_jellyshroom", 
+			() -> new SmallJellyshroomBlock(AbstractBlock.Properties.create(Material.PLANTS).
+					                                                 zeroHardnessAndResistance().
+                                                                     doesNotBlockMovement().
+                                                                     sound(SoundType.NETHER_WART)));
 	
 	// CROPS
 	public static final RegistryObject<Block> SHADOW_BERRY = registerBlockWithDefaultItem("shadow_berry", 

@@ -22,6 +22,7 @@ public class AttachedBlock extends Block
 	public AttachedBlock(Properties properties) 
 	{
 		super(properties);
+		this.setDefaultState(this.getDefaultState().with(FACING, Direction.UP));
 	}
 
 	@Override

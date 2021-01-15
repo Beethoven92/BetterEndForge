@@ -27,6 +27,7 @@ import mod.beethoven92.betterendforge.common.world.feature.MossyGlowshroomFeatur
 import mod.beethoven92.betterendforge.common.world.feature.OreLayerFeature;
 import mod.beethoven92.betterendforge.common.world.feature.PythadendronFeature;
 import mod.beethoven92.betterendforge.common.world.feature.RoundCaveFeature;
+import mod.beethoven92.betterendforge.common.world.feature.SingleInvertedScatterFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SinglePlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SpireFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SulphuricCaveFeature;
@@ -87,6 +88,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> GLOW_PILLAR = new GlowPillarFeature();
 	public static final Feature<NoFeatureConfig> TWISTED_UMBRELLA_MOSS = new DoublePlantFeature(ModBlocks.TWISTED_UMBRELLA_MOSS.get(), ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get(), 6);
 	public static final Feature<NoFeatureConfig> JUNGLE_GRASS = new SinglePlantFeature(ModBlocks.JUNGLE_GRASS.get(), 7, 3);
+	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_FLOOR = new SinglePlantFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 5, 5);
 	
 	// WALL PLANTS
 	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 3);
@@ -99,12 +101,17 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> TWISTED_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.TWISTED_MOSS.get(), 6);
 	public static final Feature<NoFeatureConfig> BULB_MOSS = new WallPlantFeature(ModBlocks.BULB_MOSS.get(), 6);
 	public static final Feature<NoFeatureConfig> BULB_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.BULB_MOSS.get(), 6);
+	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_WALL = new WallPlantFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 4);
+	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_WOOD = new WallPlantOnLogFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 4);
 	
 	// VINES
 	public static final Feature<NoFeatureConfig> DENSE_VINE = new VineFeature(ModBlocks.DENSE_VINE.get(), 24);
 	public static final Feature<NoFeatureConfig> TWISTED_VINE = new VineFeature(ModBlocks.TWISTED_VINE.get(), 24);
 	public static final Feature<NoFeatureConfig> BULB_VINE = new VineFeature(ModBlocks.BULB_VINE.get(), 24);
 	
+	// CEIL PLANTS
+	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_CEIL = new SingleInvertedScatterFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 8);
+		
 	// TERRAIN
 	public static final Feature<NoFeatureConfig> ROUND_CAVE = new RoundCaveFeature();
 	public static final Feature<NoFeatureConfig> ROUND_CAVE_RARE = new RoundCaveFeature();
@@ -179,6 +186,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), GLOW_PILLAR, "glow_pillar"); 
     	BetterEnd.register(event.getRegistry(), TWISTED_UMBRELLA_MOSS, "twisted_umbrella_moss");
     	BetterEnd.register(event.getRegistry(), JUNGLE_GRASS, "jungle_grass");
+    	BetterEnd.register(event.getRegistry(), SMALL_JELLYSHROOM_FLOOR, "small_jellyshroom_floor");
     	// WALL_PLANTS
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE, "purple_polypore");
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE_DENSE, "purple_polypore_dense");
@@ -189,11 +197,15 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), TWISTED_MOSS, "twisted_moss"); 
     	BetterEnd.register(event.getRegistry(), TWISTED_MOSS_WOOD, "twisted_moss_wood"); 
     	BetterEnd.register(event.getRegistry(), BULB_MOSS, "bulb_moss"); 
-    	BetterEnd.register(event.getRegistry(), BULB_MOSS_WOOD, "bulb_moss_wood"); 
+    	BetterEnd.register(event.getRegistry(), BULB_MOSS_WOOD, "bulb_moss_wood");
+       	BetterEnd.register(event.getRegistry(), SMALL_JELLYSHROOM_WALL, "small_jellyshroom_wall"); 
+    	BetterEnd.register(event.getRegistry(), SMALL_JELLYSHROOM_WOOD, "small_jellyshroom_wood");
     	// VINES
     	BetterEnd.register(event.getRegistry(), DENSE_VINE, "dense_vine"); 
     	BetterEnd.register(event.getRegistry(), TWISTED_VINE, "twisted_vine"); 
     	BetterEnd.register(event.getRegistry(), BULB_VINE, "bulb_vine"); 
+    	// CEIL PLANTS
+    	BetterEnd.register(event.getRegistry(), SMALL_JELLYSHROOM_CEIL, "small_jellyshroom_ceil"); 
     	// TERRAIN
     	BetterEnd.register(event.getRegistry(), ROUND_CAVE, "round_cave");
     	BetterEnd.register(event.getRegistry(), ROUND_CAVE_RARE, "round_cave_rare");
