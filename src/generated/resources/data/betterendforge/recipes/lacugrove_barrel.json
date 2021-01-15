@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_barrels",
+  "pattern": [
+    "#S#",
+    "# #",
+    "#S#"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:lacugrove_planks"
+    },
+    "S": {
+      "item": "betterendforge:lacugrove_slab"
+    }
+  },
+  "result": {
+    "item": "betterendforge:lacugrove_barrel"
+  }
+}
