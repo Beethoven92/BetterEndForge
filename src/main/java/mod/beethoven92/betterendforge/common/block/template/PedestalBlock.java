@@ -65,14 +65,9 @@ public class PedestalBlock extends Block
 	
 	public PedestalBlock(Properties properties) 
 	{
-		super(properties);
+		super(properties.setLightLevel((state) -> {return state.get(HAS_LIGHT) ? 12 : 0;}));
+		
 		this.setDefaultState(this.stateContainer.getBaseState().with(STATE, PedestalState.DEFAULT).with(HAS_ITEM, false).with(HAS_LIGHT, false));
-	}
-	
-	@Override
-	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) 
-	{
-		return state.get(HAS_LIGHT) ? 12 : 0;
 	}
 	
 	public float getHeight(BlockState state) 
