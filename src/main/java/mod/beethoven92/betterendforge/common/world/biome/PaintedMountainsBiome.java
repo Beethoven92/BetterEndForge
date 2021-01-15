@@ -17,7 +17,7 @@ public class PaintedMountainsBiome extends BetterEndBiome
 				setWaterColor(192, 180, 131).
 				setWaterFogColor(192, 180, 131).
 				setCaves(false).
-				setMusic(ModSoundEvents.MUSIC_DUST_WASTELANDS.get()).
+				setMusic(ModSoundEvents.MUSIC_OPENSPACE.get()).
 				setAmbientSound(ModSoundEvents.AMBIENT_DUST_WASTELANDS.get()).
 				setSurface(ModBlocks.ENDSTONE_DUST.get()).
 				addStructure(ModConfiguredStructures.PAINTED_MOUNTAIN).

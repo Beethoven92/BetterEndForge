@@ -20,7 +20,7 @@ public class MegalakeBiome extends BetterEndBiome
 				setWaterColor(96, 163, 255).
 				setWaterFogColor(96, 163, 255).
 				setFogDensity(1.75F).
-				setMusic(ModSoundEvents.MUSIC_MEGALAKE.get()).
+				setMusic(ModSoundEvents.MUSIC_WATER.get()).
 				setAmbientSound(ModSoundEvents.AMBIENT_MEGALAKE.get()).
 				setSurface(ModConfiguredSurfaceBuilders.get(ModConfiguredSurfaceBuilders.MEGALAKE_SURFACE)).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BUBBLE_CORAL_RARE).

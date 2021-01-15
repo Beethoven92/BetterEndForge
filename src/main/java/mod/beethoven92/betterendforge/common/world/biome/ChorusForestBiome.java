@@ -26,7 +26,7 @@ public class ChorusForestBiome extends BetterEndBiome
 				setSurface(ModBlocks.CHORUS_NYLIUM.get()).
 				setParticles(ParticleTypes.PORTAL, 0.01F).
 				setAmbientSound(ModSoundEvents.AMBIENT_CHORUS_FOREST.get()).
-				setMusic(ModSoundEvents.MUSIC_CHORUS_FOREST.get()).
+				setMusic(ModSoundEvents.MUSIC_DARK.get()).
 				addFeature(Decoration.UNDERGROUND_ORES, ModConfiguredFeatures.VIOLECITE_LAYER).
 				addFeature(Decoration.LAKES, ModConfiguredFeatures.END_LAKE_RARE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.PYTHADENDRON).
@@ -38,7 +38,7 @@ public class ChorusForestBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TAIL_MOSS_WOOD).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_PURPLE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_RED_RARE).
-				addStructure(StructureFeatures.END_CITY). // END CITY
+				addStructure(StructureFeatures.END_CITY).
 				setMobSpawn(EntityClassification.MONSTER, ModEntityTypes.END_SLIME.get(), 10, 1, 2).
 				setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 4));
 	}

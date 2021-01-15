@@ -13,24 +13,14 @@ public class ModSoundEvents
 			DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, BetterEnd.MOD_ID);
 	
 	// MUSIC TRACKS
-	public static final RegistryObject<SoundEvent> MUSIC_FOGGY_MUSHROOMLAND = 
-			registerSoundEvent("betterendforge.music.foggy_mushroomland");
-	public static final RegistryObject<SoundEvent> MUSIC_CHORUS_FOREST = 
-			registerSoundEvent("betterendforge.music.chorus_forest");
-	public static final RegistryObject<SoundEvent> MUSIC_CRYSTAL_MOUNTAINS = 
-			registerSoundEvent("betterendforge.music.crystal_mountains");
-	public static final RegistryObject<SoundEvent> MUSIC_MEGALAKE = 
-			registerSoundEvent("betterendforge.music.megalake");
-	public static final RegistryObject<SoundEvent> MUSIC_DUST_WASTELANDS = 
-			registerSoundEvent("betterendforge.music.dust_wastelands");
-	public static final RegistryObject<SoundEvent> MUSIC_SHADOW_FOREST = 
-			registerSoundEvent("betterendforge.music.shadow_forest");
-	public static final RegistryObject<SoundEvent> MUSIC_BLOSSOMING_SPIRES = 
-			registerSoundEvent("betterendforge.music.blossoming_spires");
-	public static final RegistryObject<SoundEvent> MUSIC_SULPHUR_SPRINGS = 
-			registerSoundEvent("betterendforge.music.sulphur_springs");
-	public static final RegistryObject<SoundEvent> MUSIC_AMBER_LAND = 
-			registerSoundEvent("betterendforge.music.amber_land");
+	public static final RegistryObject<SoundEvent> MUSIC_FOREST = 
+			registerSoundEvent("betterendforge.music.forest");
+	public static final RegistryObject<SoundEvent> MUSIC_WATER = 
+			registerSoundEvent("betterendforge.music.water");
+	public static final RegistryObject<SoundEvent> MUSIC_DARK = 
+			registerSoundEvent("betterendforge.music.dark");
+	public static final RegistryObject<SoundEvent> MUSIC_OPENSPACE = 
+			registerSoundEvent("betterendforge.music.openspace");
 	
 	// AMBIENT SOUNDS
 	public static final RegistryObject<SoundEvent> AMBIENT_FOGGY_MUSHROOMLAND = 
@@ -47,6 +37,8 @@ public class ModSoundEvents
 			registerSoundEvent("betterendforge.ambient.blossoming_spires");
 	public static final RegistryObject<SoundEvent> AMBIENT_SULPHUR_SPRINGS = 
 			registerSoundEvent("betterendforge.ambient.sulphur_springs");
+	public static final RegistryObject<SoundEvent> AMBIENT_UMBRELLA_JUNGLE = 
+			registerSoundEvent("betterendforge.ambient.umbrella_jungle");
    
 	// ENTITY SOUNDS
 	public static final RegistryObject<SoundEvent> ENTITY_DRAGONFLY = 

@@ -24,7 +24,7 @@ public class ShadowForestBiome extends BetterEndBiome
 				setSurface(ModBlocks.SHADOW_GRASS.get()).
 				setParticles(ParticleTypes.MYCELIUM, 0.01F).
 				setAmbientSound(ModSoundEvents.AMBIENT_CHORUS_FOREST.get()).
-				setMusic(ModSoundEvents.MUSIC_SHADOW_FOREST.get()).
+				setMusic(ModSoundEvents.MUSIC_DARK.get()).
 				addFeature(Decoration.UNDERGROUND_ORES, ModConfiguredFeatures.VIOLECITE_LAYER).
 				addFeature(Decoration.LAKES, ModConfiguredFeatures.END_LAKE_RARE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.DRAGON_TREE).

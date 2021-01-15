@@ -19,7 +19,7 @@ public class BlossomingSpiresBiome extends BetterEndBiome
 				setCaves(false).
 				setSurface(ModBlocks.PINK_MOSS.get()).
 				setAmbientSound(ModSoundEvents.AMBIENT_BLOSSOMING_SPIRES.get()).
-				setMusic(ModSoundEvents.MUSIC_BLOSSOMING_SPIRES.get()).
+				setMusic(ModSoundEvents.MUSIC_FOREST.get()).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.SPIRE).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.FLOATING_SPIRE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TENANEA).

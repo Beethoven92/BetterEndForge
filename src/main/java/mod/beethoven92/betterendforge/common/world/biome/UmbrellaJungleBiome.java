@@ -2,6 +2,8 @@ package mod.beethoven92.betterendforge.common.world.biome;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
+import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
+import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.world.gen.GenerationStage.Decoration;
@@ -17,9 +19,9 @@ public class UmbrellaJungleBiome extends BetterEndBiome
 				setWaterFogColor(119, 198, 253).
 				setFoliageColor(27, 183, 194).
 				setSurface(ModBlocks.JUNGLE_MOSS.get()).
-				//setAmbientSound(ModSoundEvents.AMBIENT_SULPHUR_SPRINGS.get()).
-				//setMusic(ModSoundEvents.MUSIC_SULPHUR_SPRINGS.get()).
-				//setParticles(ModParticleTypes.SULPHUR_PARTICLE.get(), 0.001F).
+				setAmbientSound(ModSoundEvents.AMBIENT_UMBRELLA_JUNGLE.get()).
+				setMusic(ModSoundEvents.MUSIC_FOREST.get()).
+				setParticles(ModParticleTypes.JUNGLE_SPORE.get(), 0.001F).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.UMBRELLA_TREE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.JELLYSHROOM).
 				addFeature(Decoration.LAKES, ModConfiguredFeatures.END_LAKE).

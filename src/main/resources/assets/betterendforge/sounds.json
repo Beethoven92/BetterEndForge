@@ -1,6 +1,6 @@
 {
-	"betterendforge.music.foggy_mushroomland": {
-		"category": "music",
+    "betterendforge.music.forest": {
+	    "category": "music",
 		"sounds": [
 			{
 				"name": "betterendforge:music/dan_henig-eternal_garden",
@@ -11,103 +11,7 @@
 				"name": "betterendforge:music/dan_henig-nebular_focus",
 				"volume": 0.2,
 				"stream": false
-			}
-		]
-	},
-	"betterendforge.music.chorus_forest": {
-		"category": "music",
-		"sounds": [
-			{
-				"name": "betterendforge:music/emmit_fenn-creep",
-				"volume": 0.2,
-				"stream": false
 			},
-			{
-				"name": "betterendforge:music/jesse_gallagher-the_anunnaki_return",
-				"volume": 0.2,
-				"stream": false
-			}
-		]
-	},
-	"betterendforge.music.crystal_mountains": {
-		"category": "music",
-		"sounds": [
-			{
-				"name": "betterendforge:music/jesse_gallagher-spenta_mainyu",
-				"volume": 0.2,
-				"stream": false
-			},
-			{
-				"name": "betterendforge:music/jesse_gallagher-obelisks",
-				"volume": 0.2,
-				"stream": false
-			}
-		]
-	},
-	"betterendforge.music.megalake": {
-		"category": "music",
-		"sounds": [
-			{
-				"name": "betterendforge:music/jesse_gallagher-the_blue_pearl",
-				"volume": 0.2,
-				"stream": false
-			},
-			{
-				"name": "betterendforge:music/jesse_gallagher-venkatesananda",
-				"volume": 0.2,
-				"stream": false
-			}
-		]
-	},
-	"betterendforge.music.dust_wastelands": {
-		"category": "music",
-		"sounds": [
-			{
-				"name": "betterendforge:music/the-tides-ammil",
-				"volume": 0.2,
-				"stream": false
-			},
-			{
-				"name": "betterendforge:music/vyen-amber",
-				"volume": 0.2,
-				"stream": false
-			}
-		]
-	},
-	"betterendforge.music.shadow_forest": {
-		"category": "music",
-		"sounds": [
-			{
-				"name": "betterendforge:music/i_think_i_can_help_you-the_six_realms",
-				"volume": 0.2,
-				"stream": false
-			},
-			{
-				"name": "betterendforge:music/jesse_gallagher-maestro_tlakaelel",
-				"volume": 0.2,
-				"stream": false
-			}
-		]
-	},
-    "betterendforge.music.blossoming_spires": {
-		"category": "music",
-		"sounds": [
-			{
-				"name": "betterendforge:music/benjamin_martins-verve",
-				"volume": 0.2,
-				"stream": false
-			},
-			{
-				"name": "betterendforge:music/the_tides-somnolent",
-				"volume": 0.2,
-				"stream": false
-			}
-		]
-	},
-	
-	"betterendforge.music.amber_land": {
-		"category": "music",
-		"sounds": [
 			{
 				"name": "betterendforge:music/bobby_richards-two_moons",
 				"volume": 0.2,
@@ -120,8 +24,57 @@
 			}
 		]
 	},
-	
-	"betterendforge.music.sulphur_springs": {
+	"betterendforge.music.water": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterendforge:music/jesse_gallagher-the_blue_pearl",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/jesse_gallagher-venkatesananda",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/the_tides-somnolent",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/benjamin_martins-verve",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.music.dark": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterendforge:music/emmit_fenn-creep",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/jesse_gallagher-the_anunnaki_return",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/i_think_i_can_help_you-the_six_realms",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/jesse_gallagher-maestro_tlakaelel",
+				"volume": 0.2,
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.music.openspace": {
 		"category": "music",
 		"sounds": [
 			{
@@ -131,6 +84,16 @@
 			},
 			{
 				"name": "betterendforge:music/asher_fulero-elegy",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/the-tides-ammil",
+				"volume": 0.2,
+				"stream": false
+			},
+			{
+				"name": "betterendforge:music/vyen-amber",
 				"volume": 0.2,
 				"stream": false
 			}
@@ -197,6 +160,16 @@
 			{
 				"name": "betterendforge:ambient/sulphur_springs",
 				"volume": 0.3,
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.ambient.umbrella_jungle": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterendforge:ambient/umbrella_jungle",
+				"volume": 1.0,
 				"stream": false
 			}
 		]

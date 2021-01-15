@@ -25,7 +25,7 @@ public class FoggyMushroomlandBiome extends BetterEndBiome
 				setSurface(ModConfiguredSurfaceBuilders.get(ModConfiguredSurfaceBuilders.MUSHROOMLAND_SURFACE)).
 				setParticles(ModParticleTypes.GLOWING_SPHERE.get(), 0.001F).
 				setAmbientSound(ModSoundEvents.AMBIENT_FOGGY_MUSHROOMLAND.get()).
-				setMusic(ModSoundEvents.MUSIC_FOGGY_MUSHROOMLAND.get()).
+				setMusic(ModSoundEvents.MUSIC_FOREST.get()).
 				addFeature(Decoration.LAKES, ModConfiguredFeatures.END_LAKE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.MOSSY_GLOWSHROOM).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BLUE_VINE).
@@ -40,7 +40,7 @@ public class FoggyMushroomlandBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_LIGHT_BLUE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_RED_RARE).
 				addStructure(ModConfiguredStructures.GIANT_MOSSY_GLOWSHROOM).
-				addStructure(StructureFeatures.END_CITY). // END CITY
+				addStructure(StructureFeatures.END_CITY).
 				setMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.DRAGONFLY.get(), 80, 2, 5).
 				setMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.END_FISH.get(), 20, 2, 5).
 				setMobSpawn(EntityClassification.MONSTER, ModEntityTypes.END_SLIME.get(), 10, 1, 2).

@@ -21,7 +21,7 @@ public class SulphurSpringsBiome extends BetterEndBiome
 				setCaves(false).
 				setSurface(ModConfiguredSurfaceBuilders.get(ModConfiguredSurfaceBuilders.SULPHURIC_SURFACE)).
 				setAmbientSound(ModSoundEvents.AMBIENT_SULPHUR_SPRINGS.get()).
-				setMusic(ModSoundEvents.MUSIC_SULPHUR_SPRINGS.get()).
+				setMusic(ModSoundEvents.MUSIC_OPENSPACE.get()).
 				setParticles(ModParticleTypes.SULPHUR_PARTICLE.get(), 0.001F).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.GEYSER).
 				addFeature(Decoration.LAKES, ModConfiguredFeatures.SULPHURIC_LAKE).
