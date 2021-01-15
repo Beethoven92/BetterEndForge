@@ -218,6 +218,8 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		registerLootTable(ModBlocks.TUBE_WORM.get(), BlockLootTables::onlyWithShears);
 		
+		registerLootTable(ModBlocks.JUNGLE_FERN.get(), BlockLootTables::onlyWithShears);
+		
 		// VINES
 		registerLootTable(ModBlocks.DENSE_VINE.get(), BlockLootTables::onlyWithShears);
 
@@ -225,6 +227,8 @@ public class ModBlockLootTables extends BlockLootTables
 
 		registerLootTable(ModBlocks.BULB_VINE.get(), BlockLootTables::onlyWithShears);
 		registerLootTable(ModBlocks.BULB_VINE_SEED.get(), BlockLootTables::onlyWithShears);
+		
+		registerLootTable(ModBlocks.JUNGLE_VINE.get(), BlockLootTables::onlyWithShears);
 		
 		// TREES		
 		registerDropSelfLootTable(ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get());

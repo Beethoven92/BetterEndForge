@@ -103,11 +103,13 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> BULB_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.BULB_MOSS.get(), 6);
 	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_WALL = new WallPlantFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 4);
 	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_WOOD = new WallPlantOnLogFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 4);
+	public static final Feature<NoFeatureConfig> JUNGLE_FERN_WOOD = new WallPlantOnLogFeature(ModBlocks.JUNGLE_FERN.get(), 3);
 	
 	// VINES
 	public static final Feature<NoFeatureConfig> DENSE_VINE = new VineFeature(ModBlocks.DENSE_VINE.get(), 24);
 	public static final Feature<NoFeatureConfig> TWISTED_VINE = new VineFeature(ModBlocks.TWISTED_VINE.get(), 24);
 	public static final Feature<NoFeatureConfig> BULB_VINE = new VineFeature(ModBlocks.BULB_VINE.get(), 24);
+	public static final Feature<NoFeatureConfig> JUNGLE_VINE = new VineFeature(ModBlocks.JUNGLE_VINE.get(), 24);
 	
 	// CEIL PLANTS
 	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_CEIL = new SingleInvertedScatterFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 8);
@@ -200,10 +202,12 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), BULB_MOSS_WOOD, "bulb_moss_wood");
        	BetterEnd.register(event.getRegistry(), SMALL_JELLYSHROOM_WALL, "small_jellyshroom_wall"); 
     	BetterEnd.register(event.getRegistry(), SMALL_JELLYSHROOM_WOOD, "small_jellyshroom_wood");
+    	BetterEnd.register(event.getRegistry(), JUNGLE_FERN_WOOD, "jungle_fern_wood");
     	// VINES
     	BetterEnd.register(event.getRegistry(), DENSE_VINE, "dense_vine"); 
     	BetterEnd.register(event.getRegistry(), TWISTED_VINE, "twisted_vine"); 
     	BetterEnd.register(event.getRegistry(), BULB_VINE, "bulb_vine"); 
+    	BetterEnd.register(event.getRegistry(), JUNGLE_VINE, "jungle_vine"); 
     	// CEIL PLANTS
     	BetterEnd.register(event.getRegistry(), SMALL_JELLYSHROOM_CEIL, "small_jellyshroom_ceil"); 
     	// TERRAIN

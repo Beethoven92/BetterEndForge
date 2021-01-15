@@ -580,13 +580,19 @@ public class ModBlocks
                                                               zeroHardnessAndResistance().
                                                               doesNotBlockMovement().
                                                               sound(SoundType.PLANT).
-                                                              setLightLevel((a) -> 15)));
+                                                              setLightLevel((a) -> 12)));
 	
 	public static final RegistryObject<Block> TUBE_WORM = registerBlockWithDefaultItem("tube_worm", 
 			() -> new UnderwaterWallPlantBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
                                                                         zeroHardnessAndResistance().
                                                                         doesNotBlockMovement().
                                                                         sound(SoundType.WET_GRASS)));
+	
+	public static final RegistryObject<Block> JUNGLE_FERN = registerBlockWithDefaultItem("jungle_fern", 
+			() -> new WallPlantBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                              zeroHardnessAndResistance().
+                                                              doesNotBlockMovement().
+                                                              sound(SoundType.PLANT)));
 	
 	// VINES
 	public static final RegistryObject<Block> DENSE_VINE = registerBlockWithDefaultItem("dense_vine",
@@ -614,6 +620,12 @@ public class ModBlocks
 					                                        zeroHardnessAndResistance().
 					                                        doesNotBlockMovement().
 					                                        tickRandomly().
+					                                        sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> JUNGLE_VINE = registerBlockWithDefaultItem("jungle_vine",
+			() -> new EndVineBlock(AbstractBlock.Properties.create(Material.PLANTS).
+					                                        zeroHardnessAndResistance().
+					                                        doesNotBlockMovement().
 					                                        sound(SoundType.PLANT)));
 	
 	// TREES

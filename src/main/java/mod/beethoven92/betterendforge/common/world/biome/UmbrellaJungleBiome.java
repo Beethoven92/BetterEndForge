@@ -28,9 +28,11 @@ public class UmbrellaJungleBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.SMALL_JELLYSHROOM_FLOOR).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.SMALL_JELLYSHROOM_CEIL).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.SMALL_JELLYSHROOM_WALL).
-				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.SMALL_JELLYSHROOM_WOOD).
+				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.SMALL_JELLYSHROOM_WOOD).			
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CYAN_MOSS).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CYAN_MOSS_WOOD).
+				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.JUNGLE_FERN_WOOD).
+				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.JUNGLE_VINE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_CYAN).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_GREEN).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_LIGHT_BLUE).

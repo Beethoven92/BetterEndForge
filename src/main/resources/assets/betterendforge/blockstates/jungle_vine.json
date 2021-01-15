@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"shape=top": { "model": "betterendforge:block/jungle_vine_middle" },
+		"shape=middle": { "model": "betterendforge:block/jungle_vine_middle" },
+		"shape=bottom": { "model": "betterendforge:block/jungle_vine_bottom" }
+	}
+}
