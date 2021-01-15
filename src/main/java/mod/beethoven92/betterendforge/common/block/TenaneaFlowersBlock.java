@@ -25,9 +25,9 @@ public class TenaneaFlowersBlock extends EndVineBlock
 		};
 	}
 	
-	public TenaneaFlowersBlock(Properties properties, int light, boolean bottomOnly) 
+	public TenaneaFlowersBlock(Properties properties) 
 	{
-		super(properties, light, bottomOnly);
+		super(properties);
 	}
 
 	@Override

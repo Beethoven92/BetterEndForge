@@ -29,22 +29,11 @@ public class EndVineBlock extends Block implements IGrowable, IForgeShearable
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	private static final VoxelShape VOXEL_SHAPE = Block.makeCuboidShape(2, 0, 2, 14, 16, 14);
 	
-	private final int lightLevel;
-	private final boolean bottomEmitsLight;
-	
-	public EndVineBlock(Properties properties, int light, boolean bottomOnly) 
+	public EndVineBlock(Properties properties) 
 	{
 		super(properties);
-		lightLevel = light;
-		bottomEmitsLight = bottomOnly;
 		
 		this.setDefaultState(this.getDefaultState().with(SHAPE, TripleShape.BOTTOM));
-	}
-
-	@Override
-	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos)
-	{
-		return bottomEmitsLight ? state.get(SHAPE) == TripleShape.BOTTOM ? lightLevel : 0 : lightLevel;
 	}
 	
 	@Override

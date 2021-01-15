@@ -28,12 +28,6 @@ public class EndLilyBlock extends UnderwaterPlantBlock
 	{
 		super(properties);
 	}
-
-	@Override
-	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) 
-	{
-		return state.get(SHAPE) == TripleShape.TOP ? 13 : 0; 
-	}
 	
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 

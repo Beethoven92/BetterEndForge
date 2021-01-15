@@ -375,6 +375,7 @@ public class ModBlocks
 			() -> new EndLilyBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
 					                                        sound(SoundType.WET_GRASS).
 					                                        doesNotBlockMovement().
+					                                        setLightLevel((state) -> {return state.get(EndLilyBlock.SHAPE) == TripleShape.TOP ? 13 : 0;}).
 					                                        zeroHardnessAndResistance()));
 	
 	public static final RegistryObject<Block> END_LOTUS_SEED = registerBlockWithDefaultItem("end_lotus_seed",
@@ -469,8 +470,7 @@ public class ModBlocks
 			() -> new HydraluxBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).
 					                                                zeroHardnessAndResistance().
 					                                                sound(SoundType.WET_GRASS).
-					                                                setLightLevel((state) -> {
-					                                                	return (state.get(HydraluxBlock.SHAPE).hasGlow()) ? 15 : 0;}).
+					                                                setLightLevel((state) -> {return (state.get(HydraluxBlock.SHAPE).hasGlow()) ? 15 : 0;}).
 					                                                doesNotBlockMovement()));
 	
 	public static final RegistryObject<Block> HYDRALUX_PETAL_BLOCK = registerBlockWithDefaultItem("hydralux_petal_block",
@@ -593,18 +593,20 @@ public class ModBlocks
 			() -> new EndVineBlock(AbstractBlock.Properties.create(Material.PLANTS).
 					                                        zeroHardnessAndResistance().
 					                                        doesNotBlockMovement().
-					                                        sound(SoundType.PLANT), 15, true));
+					                                        setLightLevel((state) -> {return state.get(EndVineBlock.SHAPE) == TripleShape.BOTTOM ? 15 : 0;}).
+					                                        sound(SoundType.PLANT)));
 	
 	public static final RegistryObject<Block> TWISTED_VINE = registerBlockWithDefaultItem("twisted_vine",
 			() -> new EndVineBlock(AbstractBlock.Properties.create(Material.PLANTS).
 					                                        zeroHardnessAndResistance().
 					                                        doesNotBlockMovement().
-					                                        sound(SoundType.PLANT), 0, false));
+					                                        sound(SoundType.PLANT)));
 	
 	public static final RegistryObject<Block> BULB_VINE = registerBlockWithDefaultItem("bulb_vine",
 			() -> new BulbVineBlock(AbstractBlock.Properties.create(Material.PLANTS).
 					                                        zeroHardnessAndResistance().
 					                                        doesNotBlockMovement().
+					                                        setLightLevel((state) -> {return state.get(EndVineBlock.SHAPE) == TripleShape.BOTTOM ? 15 : 0;}).
 					                                        sound(SoundType.PLANT)));
 	
 	public static final RegistryObject<Block> BULB_VINE_SEED = registerBlockWithDefaultItem("bulb_vine_seed",
@@ -714,7 +716,8 @@ public class ModBlocks
 			() -> new TenaneaFlowersBlock(AbstractBlock.Properties.create(Material.PLANTS).
 					                                               zeroHardnessAndResistance().
 					                                               doesNotBlockMovement().
-					                                               sound(SoundType.PLANT), 15, false));
+					                                               setLightLevel((state) -> {return 15;}).
+					                                               sound(SoundType.PLANT)));
 	
 	public static final RegistryObject<Block> TENANEA_OUTER_LEAVES = registerBlockWithDefaultItem("tenanea_outer_leaves", 
 			() -> new FurBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).
