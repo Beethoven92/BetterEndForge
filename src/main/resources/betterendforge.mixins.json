@@ -21,7 +21,10 @@
 	      "BiomeColorsMixin",
 	      "WorldRendererMixin",
 	      "FogRendererMixin",
-	      "ClientPlayNetHandlerMixin"
+	      "ClientPlayNetHandlerMixin",
+	      "SoundVolumeAccessor",
+	      "MusicTickerMixin",
+	      "MinecraftMixin"
 	], 
   "minVersion": "0.8"
 }
