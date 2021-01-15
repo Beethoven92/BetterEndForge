@@ -1,0 +1,6 @@
+{
+	"parent": "item/generated",
+	"textures": {
+		"layer0": "betterendforge:item/twisted_umbrella_moss_small"
+	}
+}

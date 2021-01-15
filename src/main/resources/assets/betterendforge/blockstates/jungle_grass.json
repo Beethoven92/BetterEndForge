@@ -1,0 +1,18 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/jungle_grass_01" },
+			{ "model": "betterendforge:block/jungle_grass_02" },
+			{ "model": "betterendforge:block/jungle_grass_03" },
+			{ "model": "betterendforge:block/jungle_grass_04" },
+			{ "model": "betterendforge:block/jungle_grass_05" },
+			{ "model": "betterendforge:block/jungle_grass_06" },
+			{ "model": "betterendforge:block/jungle_grass_07" },
+			{ "model": "betterendforge:block/jungle_grass_08" },
+			{ "model": "betterendforge:block/jungle_grass_09" },
+			{ "model": "betterendforge:block/jungle_grass_10" },
+			{ "model": "betterendforge:block/jungle_grass_11" },
+			{ "model": "betterendforge:block/jungle_grass_12" }
+		]
+	}
+}

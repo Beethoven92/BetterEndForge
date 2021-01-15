@@ -39,11 +39,7 @@ public class ColorHandler
 		 				 ModBlocks.HELIX_TREE_LEAVES.get());
 		
 		event.getBlockColors().register((state, reader, pos, color) ->
-		                 {return HelixTreeLeavesBlock.getBlockColor(state);}, 
-		                 ModBlocks.HELIX_TREE_LEAVES.get());
-		
-		event.getBlockColors().register((state, reader, pos, color) ->
-                         {return JellyshroomCapBlock.getBlockColor(state);}, 
+                         {return ((JellyshroomCapBlock)(state.getBlock())).getBlockColor(state);}, 
                          ModBlocks.JELLYSHROOM_CAP_PURPLE.get());
 	}
 	

@@ -1,0 +1,13 @@
+{
+	"variants": {
+		"axis=x": [
+			{ "model": "betterendforge:block/jellyshroom_log", "x": 90, "y": 90 }
+		],
+		"axis=y": [
+			{ "model": "betterendforge:block/jellyshroom_log" }
+		],
+		"axis=z": [
+			{ "model": "betterendforge:block/jellyshroom_log", "x": 90 }
+		]
+	}
+}

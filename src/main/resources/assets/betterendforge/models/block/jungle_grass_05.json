@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "betterendforge:block/jungle_grass_2"
+    }
+}

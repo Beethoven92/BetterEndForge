@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "betterendforge:block/jellyshroom_log_top",
+		"east": "betterendforge:block/jellyshroom_log_side",
+		"north": "betterendforge:block/jellyshroom_log_side",
+		"particle": "betterendforge:block/jellyshroom_log_side",
+		"south": "betterendforge:block/jellyshroom_log_side",
+		"up": "betterendforge:block/jellyshroom_log_top",
+		"west": "betterendforge:block/jellyshroom_log_side"
+	}
+}

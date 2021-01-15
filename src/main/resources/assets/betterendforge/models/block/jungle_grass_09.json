@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "betterendforge:block/twisted_umbrella_moss_small"
+    }
+}

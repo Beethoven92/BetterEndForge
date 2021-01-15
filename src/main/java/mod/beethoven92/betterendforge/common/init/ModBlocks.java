@@ -60,6 +60,8 @@ import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.TerrainBlock;
 import mod.beethoven92.betterendforge.common.block.TerrainPlantBlock;
+import mod.beethoven92.betterendforge.common.block.TwistedUmbrellaMossBlock;
+import mod.beethoven92.betterendforge.common.block.TwistedUmbrellaMossTallBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaMossBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaMossTallBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaTreeClusterBlock;
@@ -321,6 +323,9 @@ public class ModBlocks
 	public static final RegistryObject<Block> BUSHY_GRASS = registerBlockWithDefaultItem("bushy_grass", 
 			() -> new TerrainPlantBlock(PINK_MOSS.get()));
 	
+	public static final RegistryObject<Block> JUNGLE_GRASS = registerBlockWithDefaultItem("jungle_grass", 
+			() -> new TerrainPlantBlock(JUNGLE_MOSS.get()));
+	
 	public static final RegistryObject<Block> BLUE_VINE_SEED = registerBlockWithDefaultItem("blue_vine_seed", 
 			() -> new BlueVineSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).
 					                                             zeroHardnessAndResistance().
@@ -512,6 +517,21 @@ public class ModBlocks
 					                                           setLightLevel((value) -> 15).
 					                                           doesNotBlockMovement().
 					                                           sound(SoundType.WET_GRASS)));
+	
+	public static final RegistryObject<Block> TWISTED_UMBRELLA_MOSS = registerBlockWithDefaultItem("twisted_umbrella_moss", 
+			() -> new TwistedUmbrellaMossBlock(AbstractBlock.Properties.create(Material.PLANTS).
+					                                             zeroHardnessAndResistance().
+					                                             setLightLevel((value) -> {return 11;}).
+					                                             doesNotBlockMovement().
+					                                             sound(SoundType.PLANT).
+					                                             setEmmisiveRendering((state, reader, pos) -> {return true;})));
+	
+	public static final RegistryObject<Block> TWISTED_UMBRELLA_MOSS_TALL = registerBlockWithDefaultItem("twisted_umbrella_moss_tall", 
+			() -> new TwistedUmbrellaMossTallBlock(AbstractBlock.Properties.create(Material.PLANTS).
+					                                                 zeroHardnessAndResistance().
+                                                                     setLightLevel((value) -> {return 12;}).
+                                                                     doesNotBlockMovement().
+                                                                     sound(SoundType.PLANT)));
 	
 	// CROPS
 	public static final RegistryObject<Block> SHADOW_BERRY = registerBlockWithDefaultItem("shadow_berry", 

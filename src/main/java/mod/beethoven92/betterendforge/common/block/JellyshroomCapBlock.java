@@ -46,23 +46,16 @@ public class JellyshroomCapBlock extends SlimeBlock
 	{
 		builder.add(COLOR);
 	}
-	
-	// Not working
-	public static int getBlockColor(BlockState state) 
+
+	public int getBlockColor(BlockState state) 
 	{
-		if (state.getBlock() instanceof JellyshroomCapBlock)
-		{
-			JellyshroomCapBlock block = (JellyshroomCapBlock)state.getBlock();
-			float delta = (float) block.stateContainer.getBaseState().get(COLOR) / 7F;
-			int r = MathHelper.floor(MathHelper.lerp(delta, block.colorStart.getX() / 255F, block.colorEnd.getX() / 255F) * 255F);
-	        int g = MathHelper.floor(MathHelper.lerp(delta, block.colorStart.getY() / 255F, block.colorEnd.getY() / 255F) * 255F);
-		    int b = MathHelper.floor(MathHelper.lerp(delta, block.colorStart.getZ() / 255F, block.colorEnd.getZ() / 255F) * 255F);
-		    return ModMathHelper.color(r, g, b);
-		}
-		return 0;
+		float delta = (float) state.get(COLOR) / 7F;
+	    int r = MathHelper.floor(MathHelper.lerp(delta, colorStart.getX() / 255F, colorEnd.getX() / 255F) * 255F);
+	    int g = MathHelper.floor(MathHelper.lerp(delta, colorStart.getY() / 255F, colorEnd.getY() / 255F) * 255F);
+		int b = MathHelper.floor(MathHelper.lerp(delta, colorStart.getZ() / 255F, colorEnd.getZ() / 255F) * 255F);
+		return ModMathHelper.color(r, g, b);
 	}
 	
-	// Not Working
 	public static int getItemColor(ItemStack stack) 
 	{
 		if (stack.getItem() instanceof BlockItem)

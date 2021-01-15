@@ -137,6 +137,9 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.GLOWING_PILLAR_LUMINOPHOR.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.GLOWING_PILLAR_ROOTS.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.GLOWING_PILLAR_SEED.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.TWISTED_UMBRELLA_MOSS.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.JUNGLE_GRASS.get(), RenderType.getCutout());
 		
 		// MISC
 		RenderTypeLookup.setRenderLayer(ModBlocks.END_PORTAL_BLOCK.get(), RenderType.getTranslucent());
