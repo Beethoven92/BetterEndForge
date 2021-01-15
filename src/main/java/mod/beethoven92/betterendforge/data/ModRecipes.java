@@ -170,6 +170,7 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(material.ladder.get(), 3).key('#', material.planks.get()).key('I', Items.STICK).patternLine("I I").patternLine("I#I").patternLine("I I").setGroup("end_ladders").addCriterion("has_planks", hasItem(material.planks.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.chest.get(), 1).key('#', material.planks.get()).patternLine("###").patternLine("# #").patternLine("###").setGroup("end_chests").addCriterion("has_planks", hasItem(material.planks.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.sign.get(), 3).key('#', material.planks.get()).key('I', Items.STICK).patternLine("###").patternLine("###").patternLine(" I ").setGroup("end_signs").addCriterion("has_planks", hasItem(material.planks.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.barrel.get(), 1).key('#', material.planks.get()).key('S', material.slab.get()).patternLine("#S#").patternLine("# #").patternLine("#S#").setGroup("end_barrels").addCriterion("has_planks", hasItem(material.planks.get())).build(consumer);
 	}
 	
 	private void makeStoneMaterialRecipes(StoneMaterial material, Consumer<IFinishedRecipe> consumer)

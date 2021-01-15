@@ -8,11 +8,13 @@ import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.EndSignBlock;
 import mod.beethoven92.betterendforge.common.tileentity.EChestTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.ESignTileEntity;
+import mod.beethoven92.betterendforge.common.tileentity.EndBarrelTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.EndStoneSmelterTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.EternalPedestalTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.HydrothermalVentTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.InfusionPedestalTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.PedestalTileEntity;
+import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.ChestBlock;
 import net.minecraft.item.BlockItem;
@@ -61,6 +63,11 @@ public class ModTileEntityTypes
 					() -> TileEntityType.Builder.create(ESignTileEntity::new, 
 							getSigns()).build(null));
 	
+	public static final RegistryObject<TileEntityType<EndBarrelTileEntity>> BARREL =
+			TILE_ENTITY_TYPES.register("barrel", 
+					() -> TileEntityType.Builder.create(EndBarrelTileEntity::new, 
+							getBarrels()).build(null));
+	
 	static Block[] getChests() {
 		List<Block> result = Lists.newArrayList();
 		ModItems.ITEMS.getEntries().forEach((item) -> {
@@ -80,6 +87,19 @@ public class ModTileEntityTypes
 			if (item.get() instanceof BlockItem) {
 				Block block = ((BlockItem) item.get()).getBlock();
 				if (block instanceof EndSignBlock) {
+					result.add(block);
+				}
+			}
+		});
+		return result.toArray(new Block[] {});
+	}
+	
+	static Block[] getBarrels() {
+		List<Block> result = Lists.newArrayList();
+		ModItems.ITEMS.getEntries().forEach((item) -> {
+			if (item.get() instanceof BlockItem) {
+				Block block = ((BlockItem) item.get()).getBlock();
+				if (block instanceof BarrelBlock) {
 					result.add(block);
 				}
 			}

@@ -1,6 +1,7 @@
 package mod.beethoven92.betterendforge.common.block.material;
 
 import mod.beethoven92.betterendforge.client.renderer.ChestItemTileEntityRenderer;
+import mod.beethoven92.betterendforge.common.block.EndBarrelBlock;
 import mod.beethoven92.betterendforge.common.block.EndSignBlock;
 import mod.beethoven92.betterendforge.common.block.ModCraftingTableBlock;
 import mod.beethoven92.betterendforge.common.block.template.BarkBlockTemplate;
@@ -13,6 +14,7 @@ import mod.beethoven92.betterendforge.common.init.ModItems;
 import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.ChestBlock;
@@ -36,10 +38,9 @@ import net.minecraft.tags.ITag;
 import net.minecraftforge.fml.RegistryObject;
 
 // TO DO? Make all wooden blocks flammable so they can take and spread fire
-public class WoodenMaterial 
-{
+public class WoodenMaterial {
 	public final String name;
-	
+
 	public final RegistryObject<Block> log;
 	public final RegistryObject<Block> bark;
 
@@ -56,19 +57,19 @@ public class WoodenMaterial
 	public final RegistryObject<Block> pressurePlate;
 	public final RegistryObject<Block> trapdoor;
 	public final RegistryObject<Block> door;
-	
+
 	public final RegistryObject<Block> craftingTable;
 	public final RegistryObject<Block> ladder;
 	public final RegistryObject<Block> sign;
-	
+
 	public final RegistryObject<Block> chest;
-	//public final RegistryObject<Block> barrel;
-	//public final RegistryObject<Block> shelf;
+	public final RegistryObject<Block> barrel;
+	// public final RegistryObject<Block> shelf;
 	public final RegistryObject<Block> composter;
-	
+
 	public final ITag.INamedTag<Block> logBlockTag;
 	public final ITag.INamedTag<Item> logItemTag;
-	
+
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) 
 	{
 		this.name = name;
@@ -134,15 +135,16 @@ public class WoodenMaterial
 		                hardnessAndResistance(2.0F, 3.0F).
 		                sound(SoundType.WOOD).
 		                notSolid().doesNotBlockMovement()));
+		barrel = ModBlocks.registerBlockWithDefaultItem(name + "_barrel",
+				() -> new EndBarrelBlock(materialPlanksNotSolid));
+
 	}
-	
-	public boolean isTreeLog(Block block) 
-	{
+
+	public boolean isTreeLog(Block block) {
 		return block == log.get() || block == bark.get();
 	}
-	
-	public boolean isTreeLog(BlockState state) 
-	{
+
+	public boolean isTreeLog(BlockState state) {
 		return isTreeLog(state.getBlock());
 	}
 }

@@ -7,6 +7,7 @@ import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.PillarBlockTemplate;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import net.minecraft.block.AbstractButtonBlock;
+import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.CraftingTableBlock;
@@ -24,6 +25,7 @@ import net.minecraft.block.WoodButtonBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.AttachFace;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -101,6 +103,8 @@ public class ModBlockStates extends BlockStateProvider
 	    chestBlock(material.chest.get(), material.name);
 	    // BlockItem handled in item model provider
 	    signBlock(material.sign.get(), material.name);
+	    barrelBlock(material.barrel.get(), material.name);
+		makeBlockItemFromExistingModel(material.barrel.get());
 	}
 	
 	private void registerStoneMaterialBlockStates(StoneMaterial material)
@@ -252,5 +256,52 @@ public class ModBlockStates extends BlockStateProvider
     {
     	ModelFile texture = models().getBuilder(material + "_sign").texture("particle", modLoc("block/" + material + "_planks"));
     	simpleBlock(block, texture);
+    }
+    
+    private void barrelBlock(Block block, String material)
+    {
+    	ModelFile open = models().withExistingParent(material + "_barrel_open", mcLoc("block/cube_bottom_top"))
+    			.texture("top", modLoc("block/" + material + "_barrel_top_open"))
+    			.texture("bottom", modLoc("block/" + material + "_barrel_bottom"))
+    			.texture("side", modLoc("block/" + material + "_barrel_side"));
+    	ModelFile closed = models().withExistingParent(material + "_barrel", mcLoc("block/cube_bottom_top"))
+    			.texture("top", modLoc("block/" + material + "_barrel_top"))
+    			.texture("bottom", modLoc("block/" + material + "_barrel_bottom"))
+    			.texture("side", modLoc("block/" + material + "_barrel_side"));
+        getVariantBuilder(block)
+        .forAllStates(state -> {
+           boolean opened = state.get(BarrelBlock.PROPERTY_OPEN);
+           Direction dir = state.get(BarrelBlock.PROPERTY_FACING);
+           int x = 0;
+           int y = 0;
+           switch (dir) {
+           case DOWN:
+        	   x = 180;
+        	   break;
+           case EAST:
+        	   x = 90;
+        	   y = 90;
+        	   break;
+           case NORTH:
+        	   x = 90;
+        	   break;
+           case SOUTH:
+        	   x = 90;
+        	   y = 180;
+        	   break;
+           case UP:
+        	   break;
+           case WEST:
+        	   x = 90;
+        	   y = 270;
+        	   break;
+           }
+           
+           return ConfiguredModel.builder()
+           .modelFile(opened ? open : closed)
+           .rotationX(x)
+           .rotationY(y)
+           .build();
+        });
     }
 }

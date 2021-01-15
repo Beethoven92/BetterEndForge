@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_barrels",
+  "pattern": [
+    "#S#",
+    "# #",
+    "#S#"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:mossy_glowshroom_planks"
+    },
+    "S": {
+      "item": "betterendforge:mossy_glowshroom_slab"
+    }
+  },
+  "result": {
+    "item": "betterendforge:mossy_glowshroom_barrel"
+  }
+}

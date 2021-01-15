@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "betterendforge:block/lacugrove_barrel_top",
+    "bottom": "betterendforge:block/lacugrove_barrel_bottom",
+    "side": "betterendforge:block/lacugrove_barrel_side"
+  }
+}
