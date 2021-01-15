@@ -5,6 +5,7 @@ import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.particles.GeyserParticle;
 import mod.beethoven92.betterendforge.common.particles.GlowingSphereParticle;
 import mod.beethoven92.betterendforge.common.particles.InfusionParticle;
+import mod.beethoven92.betterendforge.common.particles.JungleSporeParticle;
 import mod.beethoven92.betterendforge.common.particles.PortalSphereParticle;
 import mod.beethoven92.betterendforge.common.particles.SnowflakeParticle;
 import mod.beethoven92.betterendforge.common.particles.SulphurParticle;
@@ -31,5 +32,6 @@ public class ParticleFactoryRegistration
 		mc.particles.registerFactory(ModParticleTypes.GEYSER_PARTICLE.get(), (sprite) -> new GeyserParticle.Factory(sprite));
 		mc.particles.registerFactory(ModParticleTypes.SULPHUR_PARTICLE.get(), (sprite) -> new SulphurParticle.Factory(sprite));
 		mc.particles.registerFactory(ModParticleTypes.SNOWFLAKE_PARTICLE.get(), (sprite) -> new SnowflakeParticle.Factory(sprite));
+		mc.particles.registerFactory(ModParticleTypes.JUNGLE_SPORE.get(), (sprite) -> new JungleSporeParticle.Factory(sprite));
 	}
 }
