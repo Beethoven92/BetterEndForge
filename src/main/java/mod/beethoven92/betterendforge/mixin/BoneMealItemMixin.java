@@ -37,7 +37,7 @@ public abstract class BoneMealItemMixin
 		World world = context.getWorld();
 		BlockPos blockPos = context.getPos();
 		
-		// FIX end lily and end lotus seeds not being able to grow when using bonemeal on them
+		// FIX underwater seeds not being able to grow when using bonemeal on them
 		if (BoneMealItem.applyBonemeal(context.getItem(), world, blockPos, context.getPlayer())) 
 		{
 	          if (!world.isRemote) 
@@ -63,6 +63,12 @@ public abstract class BoneMealItemMixin
 					{
 						BlockHelper.setWithoutUpdate(world, blockPos, nylium);
 						consume = true;
+					}
+					// Cannot grow underwater plants on end stone
+					if (!world.getFluidState(offseted).isEmpty() && endBiome) 
+					{
+						info.setReturnValue(ActionResultType.FAIL);
+						info.cancel();
 					}
 				}
 				else 
@@ -186,6 +192,11 @@ public abstract class BoneMealItemMixin
 		{
 			return ModBlocks.BUSHY_GRASS.get().getDefaultState();
 		}
+		else if (block == ModBlocks.JUNGLE_MOSS.get())
+		{
+			return getRandomGrassState(world.rand, ModBlocks.TWISTED_UMBRELLA_MOSS.get().getDefaultState(),
+					ModBlocks.SMALL_JELLYSHROOM.get().getDefaultState(), ModBlocks.JUNGLE_GRASS.get().getDefaultState());
+		}
 		return null;
 	}
 	
@@ -199,7 +210,7 @@ public abstract class BoneMealItemMixin
 		}
 		else if (biome == ModBiomes.FOGGY_MUSHROOMLAND || biome == ModBiomes.MEGALAKE || biome == ModBiomes.MEGALAKE_GROVE) 
 		{
-			return world.rand.nextBoolean() ? ModBlocks.CHARNIA_LIGHT_BLUE.get().getDefaultState() : ModBlocks.CHARNIA_LIGHT_BLUE.get().getDefaultState();
+			return world.rand.nextBoolean() ? ModBlocks.CHARNIA_CYAN.get().getDefaultState() : ModBlocks.CHARNIA_LIGHT_BLUE.get().getDefaultState();
 		}
 		else if (biome == ModBiomes.AMBER_LAND) 
 		{
@@ -209,13 +220,25 @@ public abstract class BoneMealItemMixin
 		{
 			return ModBlocks.CHARNIA_PURPLE.get().getDefaultState();
 		}
-		else if (biome == ModBiomes.SULPHUR_SPRINGS) // TEMP FIX to sea grass generating in sulphur springs biome when using bone meal udnerwater
+		else if (biome == ModBiomes.SULPHUR_SPRINGS)
 		{
 			return world.rand.nextBoolean() ? ModBlocks.CHARNIA_ORANGE.get().getDefaultState() : ModBlocks.CHARNIA_GREEN.get().getDefaultState();
 		}
-		return null;
+		else if (biome == ModBiomes.UMBRELLA_JUNGLE)
+		{
+			return getRandomGrassState(world.rand, ModBlocks.CHARNIA_CYAN.get().getDefaultState(), 
+					ModBlocks.CHARNIA_GREEN.get().getDefaultState(), ModBlocks.CHARNIA_LIGHT_BLUE.get().getDefaultState());
+		}
+		return ModBlocks.CHARNIA_RED.get().getDefaultState();
+		//return null;
 	}
 
+	private BlockState getRandomGrassState(Random rand, BlockState...states)
+	{
+		int index = rand.nextInt(states.length);
+		return states[index];
+	}
+	
 	private void shuffle(Random random) 
 	{
 		for (int i = 0; i < 4; i++) {
