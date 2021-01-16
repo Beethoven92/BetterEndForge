@@ -291,7 +291,7 @@ public class ModBlocks
 	public static final RegistryObject<Block> UMBRELLA_MOSS_TALL = registerBlockWithDefaultItem("umbrella_moss_tall", 
 			() -> new UmbrellaMossTallBlock(AbstractBlock.Properties.create(Material.PLANTS).
 					                                                 zeroHardnessAndResistance().
-                                                                     setLightLevel((value) -> {return 12;}).
+                                                                     setLightLevel((state) -> { return state.get(UmbrellaMossTallBlock.TOP) ? 12 : 0; }).
                                                                      doesNotBlockMovement().
                                                                      sound(SoundType.PLANT)));
 	
@@ -530,7 +530,7 @@ public class ModBlocks
 	public static final RegistryObject<Block> TWISTED_UMBRELLA_MOSS_TALL = registerBlockWithDefaultItem("twisted_umbrella_moss_tall", 
 			() -> new TwistedUmbrellaMossTallBlock(AbstractBlock.Properties.create(Material.PLANTS).
 					                                                 zeroHardnessAndResistance().
-                                                                     setLightLevel((value) -> {return 12;}).
+                                                                     setLightLevel((state) -> { return state.get(TwistedUmbrellaMossTallBlock.TOP) ? 12 : 0; }).
                                                                      doesNotBlockMovement().
                                                                      sound(SoundType.PLANT)));
 	
