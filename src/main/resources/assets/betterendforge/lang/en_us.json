@@ -296,6 +296,7 @@
 	"block.betterendforge.mossy_glowshroom_stripped_bark": "Mossy Glowshroom Stripped Bark",
 	"block.betterendforge.mossy_glowshroom_stripped_log": "Mossy Glowshroom Stripped Log",
 	"block.betterendforge.mossy_glowshroom_trapdoor": "Mossy Glowshroom Trapdoor",
+	"block.betterendforge.mossy_glowshroom_bookshelf": "Mossy Glowshroom Bookshelf",
 	
     "block.betterendforge.end_lotus_bark": "End Lotus Bark",
 	"block.betterendforge.end_lotus_barrel": "End Lotus Barrel",
@@ -315,6 +316,7 @@
 	"block.betterendforge.end_lotus_stripped_bark": "End Lotus Stripped Bark",
 	"block.betterendforge.end_lotus_stripped_log": "End Lotus Stripped Log",
 	"block.betterendforge.end_lotus_trapdoor": "End Lotus Trapdoor",
+	"block.betterendforge.end_lotus_bookshelf": "End Lotus Bookshelf",
     
 	"block.betterendforge.lacugrove_leaves": "Lacugrove Leaves",
 	"block.betterendforge.lacugrove_sapling": "Lacugrove Sapling",
@@ -336,6 +338,7 @@
 	"block.betterendforge.lacugrove_stripped_bark": "Lacugrove Stripped Bark",
 	"block.betterendforge.lacugrove_stripped_log": "Lacugrove Stripped Log",
 	"block.betterendforge.lacugrove_trapdoor": "Lacugrove Trapdoor",
+	"block.betterendforge.lacugrove_bookshelf": "Lacugrove Bookshelf",
 	
 	"block.betterendforge.pythadendron_leaves": "Pythadendron Leaves",
 	"block.betterendforge.pythadendron_sapling": "Pythadendron Sapling",
@@ -357,6 +360,7 @@
 	"block.betterendforge.pythadendron_stripped_bark": "Pythadendron Stripped Bark",
 	"block.betterendforge.pythadendron_stripped_log": "Pythadendron Stripped Log",
 	"block.betterendforge.pythadendron_trapdoor": "Pythadendron Trapdoor",
+	"block.betterendforge.pythadendron_bookshelf": "Pythadendron Bookshelf",
 	
 	"block.betterendforge.dragon_tree_leaves": "Dragon Tree Leaves",
 	"block.betterendforge.dragon_tree_sapling": "Dragon Tree Sapling",
@@ -378,6 +382,7 @@
 	"block.betterendforge.dragon_tree_stripped_bark": "Dragon Tree Stripped Bark",
 	"block.betterendforge.dragon_tree_stripped_log": "Dragon Tree Stripped Log",
 	"block.betterendforge.dragon_tree_trapdoor": "Dragon Tree Trapdoor",
+	"block.betterendforge.dragon_tree_bookshelf": "Dragon Tree Bookshelf",
 	
 	"block.betterendforge.tenanea_flowers": "Tenanea Flowers",
 	"block.betterendforge.tenanea_outer_leaves": "Tenanea Outer Leaves",
