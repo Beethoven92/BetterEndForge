@@ -44,8 +44,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ModBiomes 
 {
-	//public static List<Biome> BIOME_LIST = Lists.newArrayList();
-	
 	private static final HashMap<ResourceLocation, BetterEndBiome> ID_MAP = Maps.newHashMap();
 	private static final HashMap<Biome, BetterEndBiome> CLIENT = Maps.newHashMap();
 	private static final Set<ResourceLocation> SUBBIOMES_UNMUTABLES = Sets.newHashSet();
@@ -267,9 +265,7 @@ public class ModBiomes
 			BetterEnd.LOGGER.info(message + possibleID);
 		}
 
-		// WorldGenRegistries.BIOME is locked now
-		biome.getBiome().setRegistryName(biome.getID());
-		//BIOME_LIST.add(biome.getBiome()); 
+		biome.getBiome().setRegistryName(biome.getID()); 
 	}
 	
 	public static BetterEndBiome getFromBiome(Biome biome) 

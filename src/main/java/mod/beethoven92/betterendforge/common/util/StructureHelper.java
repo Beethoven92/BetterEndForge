@@ -255,7 +255,7 @@ public class StructureHelper
 								{
 									mut2.setY(mut2.getY() - 1);
 								}
-								if (y > 50 && state.isValidPosition(world, mut2))
+								if (!world.getBlockState(mut2).isAir() && state.isValidPosition(world, mut2))
 								{
 									mut2.setY(mut2.getY() + 1);
 									BlockHelper.setWithoutUpdate(world, mut2, state);

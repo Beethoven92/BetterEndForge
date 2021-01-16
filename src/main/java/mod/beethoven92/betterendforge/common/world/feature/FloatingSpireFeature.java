@@ -13,6 +13,7 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFDisplacement;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
 import net.minecraft.block.Blocks;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -55,6 +56,10 @@ public class FloatingSpireFeature extends SpireFeature
 					support.add(info.getPos().up());
 				}
 				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTop();
+			}
+			else if (info.getState(Direction.UP, 3).isAir())
+			{
+				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getUnder();
 			}
 			return info.getState();
 		});
