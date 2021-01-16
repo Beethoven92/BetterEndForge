@@ -63,7 +63,7 @@ public class WoodenMaterial {
 
 	public final RegistryObject<Block> chest;
 	public final RegistryObject<Block> barrel;
-	// public final RegistryObject<Block> shelf;
+	public final RegistryObject<Block> shelf;
 	public final RegistryObject<Block> composter;
 
 	public final ITag.INamedTag<Block> logBlockTag;
@@ -136,6 +136,8 @@ public class WoodenMaterial {
 		                notSolid().doesNotBlockMovement()));
 		barrel = ModBlocks.registerBlockWithDefaultItem(name + "_barrel",
 				() -> new EndBarrelBlock(materialPlanksNotSolid));
+		shelf = ModBlocks.registerBlockWithDefaultItem(name + "_bookshelf",
+				() -> new Block(materialPlanks));
 
 	}
 

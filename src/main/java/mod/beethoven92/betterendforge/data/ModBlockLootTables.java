@@ -317,6 +317,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(material.chest.get());
 		registerDropSelfLootTable(material.sign.get());
 		registerDropSelfLootTable(material.barrel.get());
+		registerDropSelfLootTable(material.shelf.get()); // TODO: Change this to drop books or paper?
 	}
 	
 	private void registerStoneMaterialLootTables(StoneMaterial material)

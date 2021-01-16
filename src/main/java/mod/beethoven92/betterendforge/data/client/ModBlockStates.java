@@ -105,6 +105,8 @@ public class ModBlockStates extends BlockStateProvider
 	    signBlock(material.sign.get(), material.name);
 	    barrelBlock(material.barrel.get(), material.name);
 		makeBlockItemFromExistingModel(material.barrel.get());
+	    shelfBlock(material.shelf.get(), material.name);
+		makeBlockItemFromExistingModel(material.shelf.get());
 	}
 	
 	private void registerStoneMaterialBlockStates(StoneMaterial material)
@@ -303,5 +305,12 @@ public class ModBlockStates extends BlockStateProvider
            .rotationY(y)
            .build();
         });
+    }
+    
+    private void shelfBlock(Block block, String material)
+    {
+		ModelFile texture = models().cubeColumn(material + "_bookshelf", modLoc("block/" + material + "_bookshelf"),
+				modLoc("block/" + material + "_planks"));
+		simpleBlock(block, texture);
     }
 }

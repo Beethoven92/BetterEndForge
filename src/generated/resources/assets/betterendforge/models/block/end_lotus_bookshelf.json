@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "betterendforge:block/end_lotus_bookshelf",
+    "end": "betterendforge:block/end_lotus_planks"
+  }
+}

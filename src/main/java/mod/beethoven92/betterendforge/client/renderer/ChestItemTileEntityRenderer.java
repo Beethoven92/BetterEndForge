@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 public class ChestItemTileEntityRenderer extends ItemStackTileEntityRenderer {
 	private EChestTileEntity chest;
 
-	// TODO: Use correct texture for mod chest items
 	@Override
 	public void func_239207_a_(ItemStack stack, TransformType p_239207_2_, MatrixStack matrixStack,
 			IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
