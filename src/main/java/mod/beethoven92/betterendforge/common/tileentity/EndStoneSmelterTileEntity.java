@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -50,7 +52,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 {
 	private static final int[] TOP_SLOTS = new int[] { 0, 1 };
 	private static final int[] BOTTOM_SLOTS = new int[] { 2, 3 };
-	private static final int[] SIDE_SLOTS = new int[] { 3 };
+	private static final int[] SIDE_SLOTS = new int[] { 2 };
 	private static final Map<Item, Integer> AVAILABLE_FUELS = Maps.newHashMap();
 	
 	private final Object2IntOpenHashMap<ResourceLocation> recipesUsed;
@@ -526,7 +528,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 		{
 			return false;
 		}
-		else if (index != 0 || index != 1) 
+		else if (index != 2) 
 		{
 			return true;
 		} 
@@ -576,5 +578,27 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	public static Map<Item, Integer> getAvailableFuels() 
 	{
 		return AVAILABLE_FUELS;
+	}
+	
+	net.minecraftforge.common.util.LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =
+			net.minecraftforge.items.wrapper.SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
+
+	@Override
+    public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction facing)
+	{
+		if (!this.removed && facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		{
+			if (facing == Direction.UP) return handlers[0].cast();
+			else if (facing == Direction.DOWN) return handlers[1].cast();
+			else return handlers[2].cast();
+	    }
+		return super.getCapability(capability, facing);
+	}
+
+	@Override
+    protected void invalidateCaps() 
+	{
+		super.invalidateCaps();
+	    for (int x = 0; x < handlers.length; x++) handlers[x].invalidate();
 	}
 }
