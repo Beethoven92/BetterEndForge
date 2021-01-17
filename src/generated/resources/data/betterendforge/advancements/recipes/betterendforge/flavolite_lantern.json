@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:flavolite_lantern"
+    ]
+  },
+  "criteria": {
+    "has_crystal_shards": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:crystal_shards"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:flavolite_lantern"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_crystal_shards",
+      "has_the_recipe"
+    ]
+  ]
+}

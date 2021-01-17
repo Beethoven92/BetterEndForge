@@ -1,8 +1,0 @@
-{
-    "parent": "block/outer_stairs", 
-    "textures": {
-        "bottom": "betterendforge:block/violecite_bricks", 
-        "side": "betterendforge:block/violecite_bricks", 
-        "top": "betterendforge:block/violecite_bricks"
-    }
-}

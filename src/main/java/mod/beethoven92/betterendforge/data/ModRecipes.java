@@ -188,6 +188,7 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(material.brick_wall.get(), 6).key('#', material.bricks.get()).patternLine("###").patternLine("###").setGroup("end_wall").addCriterion("has_bricks", hasItem(material.bricks.get())).build(consumer);
 	    ShapelessRecipeBuilder.shapelessRecipe(material.button.get()).addIngredient(material.stone.get()).setGroup("end_stone_buttons").addCriterion("has_stone", hasItem(material.stone.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.pressure_plate.get()).key('#', material.stone.get()).patternLine("##").setGroup("end_stone_plates").addCriterion("has_stone", hasItem(material.stone.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.lantern.get()).key('#', ModItems.CRYSTAL_SHARDS.get()).key('S', Ingredient.fromItems(material.slab.get(), material.brick_slab.get())).patternLine("S").patternLine("#").patternLine("S").setGroup("end_stone_lanterns").addCriterion("has_crystal_shards", hasItem(ModItems.CRYSTAL_SHARDS.get())).build(consumer);
 	}
 	
 	private void makeColoredMaterialRecipes(ColoredMaterial material, Consumer<IFinishedRecipe> consumer)

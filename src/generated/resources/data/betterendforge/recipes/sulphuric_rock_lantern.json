@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_stone_lanterns",
+  "pattern": [
+    "S",
+    "#",
+    "S"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:crystal_shards"
+    },
+    "S": [
+      {
+        "item": "betterendforge:sulphuric_rock_slab"
+      },
+      {
+        "item": "betterendforge:sulphuric_rock_bricks_slab"
+      }
+    ]
+  },
+  "result": {
+    "item": "betterendforge:sulphuric_rock_lantern"
+  }
+}

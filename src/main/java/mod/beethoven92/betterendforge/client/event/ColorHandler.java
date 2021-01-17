@@ -4,6 +4,7 @@ import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.AuroraCrystalBlock;
 import mod.beethoven92.betterendforge.common.block.HelixTreeLeavesBlock;
 import mod.beethoven92.betterendforge.common.block.JellyshroomCapBlock;
+import mod.beethoven92.betterendforge.common.block.ModLanternBlock;
 import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
@@ -41,6 +42,10 @@ public class ColorHandler
 		event.getBlockColors().register((state, reader, pos, color) ->
                          {return ((JellyshroomCapBlock)(state.getBlock())).getBlockColor(state);}, 
                          ModBlocks.JELLYSHROOM_CAP_PURPLE.get());
+		
+		event.getBlockColors().register((state, reader, pos, color) ->
+						 {return ModLanternBlock.getBlockColor(state, reader, pos, color);}, 
+						 ModBlocks.FLAVOLITE.lantern.get(), ModBlocks.SULPHURIC_ROCK.lantern.get(), ModBlocks.VIOLECITE.lantern.get());
 	}
 	
 	@SubscribeEvent
@@ -67,5 +72,10 @@ public class ColorHandler
 		
 		event.getItemColors().register((stack, tintIndex) -> 
                          {return JellyshroomCapBlock.getItemColor(stack);}, ModBlocks.JELLYSHROOM_CAP_PURPLE.get());
+		
+		event.getItemColors().register((stack, tintIndex) ->
+						 {return ModLanternBlock.getItemColor(stack, tintIndex);}, 
+						 ModBlocks.FLAVOLITE.lantern.get(), ModBlocks.SULPHURIC_ROCK.lantern.get(), ModBlocks.VIOLECITE.lantern.get());
+
 	}
 }

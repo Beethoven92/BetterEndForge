@@ -1,7 +1,0 @@
-{
-    "variants": {
-        "axis=x": { "model": "betterendforge:block/violecite_pillar", "x": 90, "y": 270 }, 
-        "axis=y": { "model": "betterendforge:block/violecite_pillar" }, 
-        "axis=z": { "model": "betterendforge:block/violecite_pillar", "x": 90 }
-    }
-}
