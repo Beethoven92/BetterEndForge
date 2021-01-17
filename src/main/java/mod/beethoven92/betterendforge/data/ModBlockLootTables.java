@@ -335,6 +335,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(material.brick_stairs.get());
 		registerLootTable(material.brick_slab.get(), BlockLootTables::droppingSlab);
 		registerDropSelfLootTable(material.brick_wall.get());
+		registerDropSelfLootTable(material.lantern.get());
 	}
 	
 	private void registerColoredMaterialLootTables(ColoredMaterial material)

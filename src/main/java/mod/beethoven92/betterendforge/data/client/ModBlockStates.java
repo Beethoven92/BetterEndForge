@@ -15,6 +15,7 @@ import net.minecraft.block.DoorBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.LadderBlock;
+import net.minecraft.block.LanternBlock;
 import net.minecraft.block.PressurePlateBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
@@ -55,7 +56,7 @@ public class ModBlockStates extends BlockStateProvider
 		
 		// STONE MATERIALS
 		registerStoneMaterialBlockStates(ModBlocks.FLAVOLITE);
-		//registerStoneMaterialBlockStates(ModBlocks.VIOLECITE);
+		registerStoneMaterialBlockStates(ModBlocks.VIOLECITE);
 		registerStoneMaterialBlockStates(ModBlocks.SULPHURIC_ROCK);
 		
 		// COLORED MATERIALS
@@ -151,6 +152,10 @@ public class ModBlockStates extends BlockStateProvider
 		
 		pressurePlateBlock((PressurePlateBlock)material.pressure_plate.get(), material.name, stoneTexture);
 		makeBlockItemFromExistingModel(material.pressure_plate.get());
+		
+		lanternBlock(material.lantern.get(), material.name);
+		makeBlockItemFromExistingModel(material.lantern.get(), material.name + "_lantern_ceil");
+
 	}	
 	
 	private void registerColoredMaterialBlockStates(ColoredMaterial material, String blockModel)
@@ -312,5 +317,29 @@ public class ModBlockStates extends BlockStateProvider
 		ModelFile texture = models().cubeColumn(material + "_bookshelf", modLoc("block/" + material + "_bookshelf"),
 				modLoc("block/" + material + "_planks"));
 		simpleBlock(block, texture);
+    }
+    
+    private void lanternBlock(Block block, String material)
+    {
+    	ModelFile ceil = models().withExistingParent(material + "_lantern_ceil", modLoc("block/stone_lantern_ceil"))
+    			.texture("particle", modLoc("block/" + material + "_lantern_side"))
+    			.texture("texture", modLoc("block/" + material + "_lantern_side"))
+    			.texture("top", modLoc("block/" + material + "_lantern_top"))
+    			.texture("crystal", modLoc("block/aurora_crystal"))
+    			.texture("bottom", modLoc("block/" + material + "_lantern_bottom"));
+    	ModelFile floor = models().withExistingParent(material + "_lantern_floor", modLoc("block/stone_lantern_floor"))
+    			.texture("particle", modLoc("block/" + material + "_lantern_side"))
+    			.texture("texture", modLoc("block/" + material + "_lantern_side"))
+    			.texture("top", modLoc("block/" + material + "_lantern_top"))
+    			.texture("crystal", modLoc("block/aurora_crystal"))
+    			.texture("bottom", modLoc("block/" + material + "_lantern_bottom"));
+        getVariantBuilder(block)
+        .forAllStates(state -> {
+           boolean isFloor = !state.get(LanternBlock.HANGING);
+           return ConfiguredModel.builder()
+           .modelFile(isFloor ? floor : ceil)
+           .build();
+        });
+
     }
 }

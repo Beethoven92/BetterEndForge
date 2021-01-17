@@ -1,5 +1,6 @@
 package mod.beethoven92.betterendforge.common.block.material;
 
+import mod.beethoven92.betterendforge.common.block.ModLanternBlock;
 import mod.beethoven92.betterendforge.common.block.template.PillarBlockTemplate;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import net.minecraft.block.AbstractBlock;
@@ -29,7 +30,7 @@ public class StoneMaterial
 	public final RegistryObject<Block> button;
 	public final RegistryObject<Block> pressure_plate;
 	//public final RegistryObject<Block> pedestal;
-	//public final RegistryObject<Block> lantern;
+	public final RegistryObject<Block> lantern;
 	
 	public final RegistryObject<Block> bricks;
 	public final RegistryObject<Block> brick_stairs;
@@ -64,8 +65,11 @@ public class StoneMaterial
 				() -> new PressurePlateBlock(Sensitivity.MOBS, material));
 		//pedestal = ModBlocks.registerBlockWithDefaultItem(name + "_pedestal", 
 		//		() -> new PedestalBlock(material));
-		/*lantern = ModBlocks.registerBlockWithDefaultItem(name + "_lantern", 
-				() -> new BlockStoneLantern(stone));*/
+		lantern = ModBlocks.registerBlockWithDefaultItem(name + "_lantern", 
+				() -> new ModLanternBlock(AbstractBlock.Properties.create(Material.ROCK, color).
+                        setRequiresTool().
+                        hardnessAndResistance(3.0F, 9.0F).
+                        setLightLevel(s -> 16)));
 		
 		bricks = ModBlocks.registerBlockWithDefaultItem(name + "_bricks", 
 				() -> new Block(material));
