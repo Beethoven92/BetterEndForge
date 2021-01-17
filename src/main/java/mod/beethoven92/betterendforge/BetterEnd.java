@@ -56,6 +56,7 @@ import mod.beethoven92.betterendforge.common.world.TerraforgedIntegrationWorldTy
 import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures;
 import mod.beethoven92.betterendforge.common.world.generator.BetterEndBiomeProvider;
 import mod.beethoven92.betterendforge.config.ClientConfig;
+import mod.beethoven92.betterendforge.config.CommonConfig;
 import mod.beethoven92.betterendforge.server.PhysicalServerSide;
 
 
@@ -92,6 +93,7 @@ public class BetterEnd
     	ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
     	
     	ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.getConfig());
+    	ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.getConfig());
     }
 
     private void setupCommon(final FMLCommonSetupEvent event)

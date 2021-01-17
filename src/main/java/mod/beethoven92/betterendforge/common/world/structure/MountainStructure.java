@@ -58,7 +58,7 @@ public class MountainStructure extends Structure<NoFeatureConfig>
 			int x = (chunkX << 4) | MathHelper.nextInt(this.rand, 4, 12);
 			int z = (chunkZ << 4) | MathHelper.nextInt(this.rand, 4, 12);
 			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
-			if (y > 50) 
+			if (y > 5) 
 			{
 				float radius = MathHelper.nextInt(this.rand, 50, 100);
 				float height = radius * MathHelper.nextFloat(this.rand, 0.8F, 1.2F);

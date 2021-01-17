@@ -239,6 +239,7 @@ public class EndLakeFeature extends Feature<NoFeatureConfig>
 				|| state.isIn(Tags.Blocks.END_STONES) // Handles other blocks that could be left floating
 				|| state.isIn(ModBlocks.ENDSTONE_DUST.get())
 				|| state.getMaterial().equals(Material.PLANTS)
-				|| state.getMaterial().equals(Material.OCEAN_PLANT);
+				|| state.getMaterial().equals(Material.OCEAN_PLANT)
+		        || state.getMaterial().equals(Material.SEA_GRASS);
 	}
 }

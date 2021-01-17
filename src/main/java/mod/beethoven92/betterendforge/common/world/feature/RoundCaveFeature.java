@@ -18,6 +18,7 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFHexPrism;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
+import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
@@ -41,58 +42,63 @@ public class RoundCaveFeature extends Feature<NoFeatureConfig>
 		super(NoFeatureConfig.field_236558_a_);
 	}
 	
-	// TO DO: MOVE TO UTILITY CLASS
-	private int getSeed(int seed, int x, int y) 
-	{
-		int h = seed + x * 374761393 + y * 668265263;
-		h = (h ^ (h >> 13)) * 1274126177;
-		return h ^ (h >> 16);
-	}
-	
 	@Override
 	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
 			BlockPos pos, NoFeatureConfig config) 
 	{
-		if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500) 
+		if (!(CommonConfig.newGenerator() && CommonConfig.noRingVoid()) || pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500)
 		{
 			return false;
 		}
 		
-		int radius = MathHelper.nextInt(random, 10, 30);
-		int bottom = BlockHelper.upRay(world, new BlockPos(pos.getX(), 0, pos.getZ()), 32) + radius + 5;
-		int top = world.getHeight(Heightmap.Type.WORLD_SURFACE, pos.getX(), pos.getZ());
+		int radius = ModMathHelper.randRange(10, 30, random);
 		
+		int top = world.getHeight(Heightmap.Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		Mutable bpos = new Mutable();
 		bpos.setX(pos.getX());
 		bpos.setZ(pos.getZ());
-		bpos.setY(top);
-		while (top > bottom && !world.getBlockState(bpos).isIn(ModTags.GEN_TERRAIN)) 
-		{
-			bpos.setY(--top);
-		}
-		top -= radius * 1.3F + 5;
+		bpos.setY(top - 1);
 		
-		if (top <= bottom) {
+		BlockState state = world.getBlockState(bpos);
+		while (!state.isIn(ModTags.GEN_TERRAIN) && bpos.getY() > 5) 
+		{
+			bpos.setY(bpos.getY() - 1);
+			state = world.getBlockState(bpos);
+		}
+		if (bpos.getY() < 10) 
+		{
+			return false;
+		}
+		top = (int) (bpos.getY() - (radius * 1.3F + 5));
+		
+		while (state.isIn(ModTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) 
+		{
+			bpos.setY(bpos.getY() - 1);
+			state = world.getBlockState(bpos);
+		}
+		int bottom = (int) (bpos.getY() + radius * 1.3F + 5);
+		
+		if (top <= bottom)
+		{
 			return false;
 		}
 		
-		pos = new BlockPos(pos.getX(), MathHelper.nextInt(random, bottom, top), pos.getZ());
+		pos = new BlockPos(pos.getX(), ModMathHelper.randRange(bottom, top, random), pos.getZ());
 		
-		OpenSimplexNoise noise = new OpenSimplexNoise(getSeed(534, pos.getX(), pos.getZ()));
+		OpenSimplexNoise noise = new OpenSimplexNoise(ModMathHelper.getSeed(534, pos.getX(), pos.getZ()));
 		
 		int x1 = pos.getX() - radius - 5;
 		int z1 = pos.getZ() - radius - 5;
 		int x2 = pos.getX() + radius + 5;
 		int z2 = pos.getZ() + radius + 5;
-		int y1 = MathHelper.floor(pos.getY() - (radius + 5) / 1.6);
-		int y2 = MathHelper.floor(pos.getY() + (radius + 5) / 1.6);
+		int y1 = ModMathHelper.floor(pos.getY() - (radius + 5) / 1.6);
+		int y2 = ModMathHelper.floor(pos.getY() + (radius + 5) / 1.6);
 		
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
 		
 		Set<BlockPos> bushes = Sets.newHashSet();
 		BlockState terrain = ModBlocks.CAVE_MOSS.get().getDefaultState();
-		
 		for (int x = x1; x <= x2; x++) 
 		{
 			int xsq = x - pos.getX();
@@ -103,7 +109,7 @@ public class RoundCaveFeature extends Feature<NoFeatureConfig>
 				int zsq = z - pos.getZ();
 				zsq *= zsq;
 				bpos.setZ(z);
-				for (int y = y1; y <= y2; y++) 
+				for (int y = y1; y <= y2; y++)
 				{
 					int ysq = y - pos.getY();
 					ysq *= 1.6;
@@ -114,14 +120,14 @@ public class RoundCaveFeature extends Feature<NoFeatureConfig>
 					double dist = xsq + ysq + zsq;
 					if (dist < r * r) 
 					{
-						BlockState state = world.getBlockState(bpos);
+						state = world.getBlockState(bpos);
 						if (isReplaceable(state)) 
 						{
-							world.setBlockState(bpos, CAVE_AIR, 1 | 2 | 16);
+							BlockHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
 							
 							while (state.getMaterial().equals(Material.LEAVES)) 
 							{
-								world.setBlockState(bpos, CAVE_AIR, 1 | 2 | 16);
+								BlockHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
 								bpos.setY(bpos.getY() + 1);
 								state = world.getBlockState(bpos);
 							}
@@ -129,7 +135,7 @@ public class RoundCaveFeature extends Feature<NoFeatureConfig>
 							bpos.setY(y - 1);
 							while (state.getMaterial().equals(Material.LEAVES)) 
 							{
-								world.setBlockState(bpos, CAVE_AIR, 1 | 2 | 16);
+								BlockHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
 								bpos.setY(bpos.getY() - 1);
 								state = world.getBlockState(bpos);
 							}
@@ -137,15 +143,15 @@ public class RoundCaveFeature extends Feature<NoFeatureConfig>
 						bpos.setY(y - 1);
 						if (world.getBlockState(bpos).isIn(ModTags.GEN_TERRAIN)) 
 						{
-							world.setBlockState(bpos, terrain, 1 | 2 | 16);
+							BlockHelper.setWithoutUpdate(world, bpos, terrain);
 						}
 					}
 					else if (dist < r2 * r2) 
 					{
-						BlockState state = world.getBlockState(bpos);
+						state = world.getBlockState(bpos);
 						if (!state.getFluidState().isEmpty()) 
 						{
-							world.setBlockState(bpos, Blocks.END_STONE.getDefaultState(), 1 | 2 | 16);
+							BlockHelper.setWithoutUpdate(world, bpos, Blocks.END_STONE.getDefaultState());
 						}
 						else if (world.getBlockState(bpos).isIn(ModTags.GEN_TERRAIN)) 
 						{
@@ -157,44 +163,46 @@ public class RoundCaveFeature extends Feature<NoFeatureConfig>
 									bushes.add(bpos.down());
 								}
 							}
-							else if (world.isAirBlock(bpos.up())) {
+							else if (world.isAirBlock(bpos.up())) 
+							{
 								int h = BlockHelper.upRay(world, bpos.up(), 64);
-								if (h > 6 && h < 32 && world.getBlockState(bpos.up(h + 3)).isIn(ModTags.GEN_TERRAIN)) 
+								if (h > 6 && h < 32 && world.getBlockState(bpos.up(h + 3)).isIn(ModTags.GEN_TERRAIN))
 								{
 									bushes.add(bpos.up());
 								}
-							}
+						    }
 						}
 					}
 				}
 			}
 		}
+		
 		bushes.forEach((cpos) -> {
-			if (random.nextInt(32) == 0) {
+			if (random.nextInt(32) == 0) 
+			{
 				generateBush(world, random, cpos);
 			}
 		});
 		
-		// GENERATE CRYSTALS
 		if (random.nextBoolean() && world.getBiome(pos).getGenerationSettings().hasStructure(ModStructures.MOUNTAIN)) 
 		{
 			pos = pos.add(random.nextGaussian() * 5, random.nextGaussian() * 5, random.nextGaussian() * 5);
 			BlockPos down = pos.down(BlockHelper.downRay(world, pos, 64) + 2);
 			if (isReplaceable(world.getBlockState(down))) 
 			{
-				SDF prism = new SDFHexPrism().setHeight(radius * MathHelper.nextFloat(random, 0.6F, 0.75F)).setRadius(MathHelper.nextFloat(random, 1.7F, 3F)).setBlock(ModBlocks.AURORA_CRYSTAL.get());
-				float angleY = MathHelper.nextFloat(random, 0, (float)Math.PI * 2);
+				SDF prism = new SDFHexPrism().setHeight(radius * ModMathHelper.randRange(0.6F, 0.75F, random)).setRadius(ModMathHelper.randRange(1.7F, 3F, random)).setBlock(ModBlocks.AURORA_CRYSTAL.get());
+				float angleY = ModMathHelper.randRange(0, ModMathHelper.PI2, random);
 				float vx = (float) Math.sin(angleY);
 				float vz = (float) Math.sin(angleY);
 				prism = new SDFRotation().setRotation(new Vector3f(vx, 0, vz), random.nextFloat()).setSource(prism);
-				prism.setReplaceFunction((state) -> {
-					return state.getMaterial().isReplaceable()
-							|| state.isIn(ModTags.GEN_TERRAIN)
-							|| state.getMaterial().equals(Material.PLANTS)
-							|| state.getMaterial().equals(Material.LEAVES);
+				prism.setReplaceFunction((bState) -> {
+					return bState.getMaterial().isReplaceable()
+							|| bState.isIn(ModTags.GEN_TERRAIN)
+							|| bState.getMaterial().equals(Material.PLANTS)
+							|| bState.getMaterial().equals(Material.LEAVES);
 				});
 				prism.fillRecursive(world, pos);
-				world.setBlockState(pos, ModBlocks.AURORA_CRYSTAL.get().getDefaultState(), 1 | 2 | 16);
+				BlockHelper.setWithoutUpdate(world, pos, ModBlocks.AURORA_CRYSTAL.get());
 			}
 		}
 		
