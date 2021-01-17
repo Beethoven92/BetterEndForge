@@ -74,7 +74,10 @@ public class EndPortalBlock extends NetherPortalBlock
 				&& entityIn.isNonBoss()) 
 		{
 			ITeleportingEntity teleEntity = ITeleportingEntity.class.cast(entityIn);
-			if (teleEntity.hasCooldown()) return;
+			
+			//if (teleEntity.hasCooldown()) return;
+			// Checks if entity has nether portal cooldown
+			if (entityIn.func_242280_ah()) return;
 			
 			boolean isOverworld = worldIn.getDimensionKey().equals(World.OVERWORLD);
 			ServerWorld destination = ((ServerWorld) worldIn).getServer().getWorld(isOverworld ? World.THE_END : World.OVERWORLD);
@@ -96,13 +99,20 @@ public class EndPortalBlock extends NetherPortalBlock
 				ServerPlayerEntity player = (ServerPlayerEntity) entityIn;
 				// FIX "player moved wrongly" errors
 				player.changeDimension(destination, new BetterEndTeleporter(exitPos));
-		        teleEntity.beSetCooldown(player.isCreative() ? 50 : 300);
+		        //teleEntity.beSetCooldown(player.isCreative() ? 50 : 300);
+				// Resets nether portal cooldown
+		        player.func_242279_ag();
 			} 
 			else 
 			{
 				teleEntity.beSetExitPos(exitPos);
 				entityIn.changeDimension(destination);
-				teleEntity.beSetCooldown(300);
+				if (entityIn != null) 
+				{
+					// Resets nether portal cooldown
+					entityIn.func_242279_ag();
+				}
+				//teleEntity.beSetCooldown(300);
 			}
 		}
 	}

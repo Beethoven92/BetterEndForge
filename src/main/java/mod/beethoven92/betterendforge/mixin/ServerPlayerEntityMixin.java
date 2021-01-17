@@ -10,12 +10,11 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 
 @Mixin(ServerPlayerEntity.class)
-public class ServerPlayerEntityMixin implements ITeleportingEntity 
-{
-	
+public class ServerPlayerEntityMixin //implements ITeleportingEntity 
+{	
 	private long beCooldown;
 
-	@Inject(method = "tick", at = @At("TAIL"))
+	/*@Inject(method = "tick", at = @At("TAIL"))
 	public void baseTick(CallbackInfo info) 
 	{
 		if (hasCooldown()) 
@@ -43,6 +42,5 @@ public class ServerPlayerEntityMixin implements ITeleportingEntity
 	public BlockPos beGetExitPos() 
 	{
 		return null;
-	}
-
+	}*/
 }

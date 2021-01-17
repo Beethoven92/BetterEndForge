@@ -10,11 +10,11 @@ import mod.beethoven92.betterendforge.common.block.BlockProperties;
 import mod.beethoven92.betterendforge.common.block.EndPortalBlock;
 import mod.beethoven92.betterendforge.common.block.RunedFlavoliteBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import mod.beethoven92.betterendforge.common.init.ModTags;
+import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.tileentity.EternalPedestalTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.particles.BlockParticleData;
@@ -28,6 +28,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.server.ServerWorld;
@@ -152,7 +153,14 @@ public class EternalRitual
 		else 
 		{
 			World targetWorld = this.getTargetWorld();
-			this.activatePortal(targetWorld, exit);
+			if (targetWorld.getBlockState(exit.up()).isIn(ModBlocks.END_PORTAL_BLOCK.get())) 
+			{
+				this.exit = this.findPortalPos();
+			}
+			else 
+			{
+				this.activatePortal(targetWorld, exit);
+			}
 		}
 		this.active = true;
 	}
@@ -164,7 +172,9 @@ public class EternalRitual
 		{
 			moveX = Direction.EAST;
 			moveY = Direction.NORTH;
-		} else {
+		} 
+		else 
+		{
 			moveX = Direction.SOUTH;
 			moveY = Direction.EAST;
 		}
@@ -286,34 +296,33 @@ public class EternalRitual
 		{
 			Direction direction = Direction.EAST;
 			BlockPos.Mutable checkPos = basePos.toMutable();
-			for (int step = 1; step < 64; step++) 
+
+			for (int step = 1; step < 128; step++) 
 			{
-				for (int i = 0; i < step; i++)
+				for (int i = 0; i < (step >> 1); i++)
 				{
-					checkPos.setY(5);
-					int ceil = targetWorld.getChunk(basePos).getTopBlockY(Heightmap.Type.WORLD_SURFACE, checkPos.getX(), checkPos.getZ()) + 1;
-					if (ceil < 5) continue;
-					while(checkPos.getY() < ceil) 
+					IChunk chunk = world.getChunk(checkPos);
+					if (chunk != null)
 					{
-						if(checkIsAreaValid(targetWorld, checkPos, portalAxis)) 
+						int ceil = chunk.getTopBlockY(Heightmap.Type.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15) + 1;
+						if (ceil < 2) continue;
+						checkPos.setY(ceil);
+						while (checkPos.getY() > 2) 
 						{
-							EternalRitual.generatePortal(targetWorld, checkPos, portalAxis);
-							if (portalAxis.equals(Direction.Axis.X)) 
+							if(checkIsAreaValid(targetWorld, checkPos, portalAxis)) 
 							{
-								return checkPos.toImmutable();
-							} 
-							else 
-							{
+								EternalRitual.generatePortal(targetWorld, checkPos, portalAxis);
 								return checkPos.toImmutable();
 							}
+							checkPos.move(Direction.DOWN);
 						}
-						checkPos.move(Direction.UP);
 					}
 					checkPos.move(direction);
 				}
 				direction = direction.rotateY();
 			}
 		}
+		
 		if (targetWorld.getDimensionKey() == World.THE_END) 
 		{
 			Features.END_ISLAND.generate(targetWorld, targetWorld.getChunkProvider().getChunkGenerator(), new Random(basePos.toLong()), basePos.down());
@@ -321,16 +330,12 @@ public class EternalRitual
 		else 
 		{
 			basePos.setY(targetWorld.getChunk(basePos).getTopBlockY(Heightmap.Type.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
+			ModConfiguredFeatures.OVERWORLD_ISLAND.generate(targetWorld, targetWorld.getChunkProvider().getChunkGenerator(), new Random(basePos.toLong()), basePos.down());
 		}
+		
 		EternalRitual.generatePortal(targetWorld, basePos, portalAxis);
-		if (portalAxis.equals(Direction.Axis.X)) 
-		{
-			return basePos.toImmutable();
-		} 
-		else 
-		{
-			return basePos.toImmutable();
-		}
+		
+		return basePos.toImmutable();
 	}
 	
 	private World getTargetWorld() 
@@ -373,13 +378,14 @@ public class EternalRitual
 	
 	private boolean validBlock(World world, BlockPos pos, BlockState state) 
 	{
-		BlockState surfaceBlock = world.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig().getTop();
+		/*BlockState surfaceBlock = world.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig().getTop();
 		return state.isOpaqueCube(world, pos) &&
 			   (ModTags.validGenBlock(state) ||
 			   state.isIn(surfaceBlock.getBlock()) ||
 			   state.isIn(Blocks.STONE) ||
 			   state.isIn(Blocks.SAND) ||
-			   state.isIn(Blocks.GRAVEL));
+			   state.isIn(Blocks.GRAVEL));*/
+		return state.isNormalCube(world, pos) && state.isOpaqueCube(world, pos);
 	}
 	
 	public static void generatePortal(World world, BlockPos center, Direction.Axis axis) 
@@ -427,9 +433,12 @@ public class EternalRitual
 			for (Point point : PORTAL_MAP) 
 			{
 				BlockPos pos = checkPos.toMutable().move(moveDir, point.x).move(Direction.UP, point.y);
-				if (!world.getBlockState(pos).isAir()) return false;
+				BlockState state = world.getBlockState(pos);
+				if (state.getFluidState().isEmpty() || (!state.getMaterial().isReplaceable() && !state.getMaterial().equals(Material.PLANTS))) return false;
+				
 				pos = checkPos.toMutable().move(moveDir, -point.x).move(Direction.UP, point.y);
-				if (!world.getBlockState(pos).isAir()) return false;
+				state = world.getBlockState(pos);
+				if (state.getFluidState().isEmpty() || (!state.getMaterial().isReplaceable() && !state.getMaterial().equals(Material.PLANTS))) return false;
 			}
 		}
 		return true;

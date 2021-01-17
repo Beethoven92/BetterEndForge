@@ -48,7 +48,7 @@ public abstract class EntityMixin implements ITeleportingEntity
 	@Inject(method = "changeDimension", at = @At("HEAD"), cancellable = true)
 	public void changeDimension(ServerWorld destination, CallbackInfoReturnable<Entity> info) 
 	{
-		if (!removed && exitPos != null && world instanceof ServerWorld)
+		if (!removed && beCanTeleport() && world instanceof ServerWorld)
 		{
 			this.detach();
 			this.world.getProfiler().startSection("changeDimension");
@@ -70,7 +70,7 @@ public abstract class EntityMixin implements ITeleportingEntity
 				((ServerWorld) world).resetUpdateEntityTick();
 				destination.resetUpdateEntityTick();
 				this.world.getProfiler().endSection();
-				this.exitPos = null;
+				beResetTeleport();
 				info.setReturnValue(entity);
 				info.cancel();
 			}
@@ -80,9 +80,10 @@ public abstract class EntityMixin implements ITeleportingEntity
 	@Inject(method = "func_241829_a", at = @At("HEAD"), cancellable = true)
 	protected void getTeleportTarget(ServerWorld destination, CallbackInfoReturnable<PortalInfo> info) 
 	{
-		if (exitPos != null) 
+		if (beCanTeleport()) 
 		{
 			info.setReturnValue(new PortalInfo(new Vector3d(exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D), getMotion(), rotationYaw, rotationPitch));
+			beResetTeleport();
 			info.cancel();
 		}
 	}
@@ -118,5 +119,16 @@ public abstract class EntityMixin implements ITeleportingEntity
 	public BlockPos beGetExitPos() 
 	{
 		return this.exitPos;
+	}
+	
+	public void beResetTeleport() 
+	{
+		exitPos = null;
+	}
+	
+	@Override
+	public boolean beCanTeleport() 
+	{
+		return exitPos != null;
 	}
 }
