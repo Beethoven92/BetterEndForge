@@ -65,7 +65,7 @@ public class EternalPortalStructure extends Structure<NoFeatureConfig>
 		{
 			return false;
 		}
-		return getGenerationHeight(chunkX, chunkZ, chunkGenerator) >= 50;
+		return getGenerationHeight(chunkX, chunkZ, chunkGenerator) >= 20;
 	}
 
 	private static int getGenerationHeight(int chunkX, int chunkZ, ChunkGenerator chunkGenerator) 

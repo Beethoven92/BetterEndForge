@@ -200,6 +200,8 @@ public class BetterEnd
     					DimensionStructuresSettings.field_236191_b_.get(ModStructures.MOUNTAIN));
     			tempMap.put(ModStructures.MEGALAKE,
     					DimensionStructuresSettings.field_236191_b_.get(ModStructures.MEGALAKE));
+    			tempMap.put(ModStructures.MEGALAKE_SMALL,
+    					DimensionStructuresSettings.field_236191_b_.get(ModStructures.MEGALAKE_SMALL));
     			tempMap.put(ModStructures.GIANT_MOSSY_GLOWSHROOM,
     					DimensionStructuresSettings.field_236191_b_.get(ModStructures.GIANT_MOSSY_GLOWSHROOM));
     			tempMap.put(ModStructures.PAINTED_MOUNTAIN, 

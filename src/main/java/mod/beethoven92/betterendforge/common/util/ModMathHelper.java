@@ -161,6 +161,16 @@ public class ModMathHelper
 	{
 		return i * i;
 	}
+
+	public static float pow2(float f) 
+	{
+		return f * f;
+	}
+	
+	public static double pow2(double d) 
+	{
+		return d * d;
+	}
 	
 	public static int randRange(int min, int max, Random random) 
 	{

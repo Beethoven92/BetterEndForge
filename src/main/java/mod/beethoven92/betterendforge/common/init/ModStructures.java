@@ -20,7 +20,9 @@ public class ModStructures
 	public static final Structure<NoFeatureConfig> MOUNTAIN = new MountainStructure(NoFeatureConfig.field_236558_a_);
 	
 	public static final Structure<NoFeatureConfig> MEGALAKE = new MegaLakeStructure(NoFeatureConfig.field_236558_a_);
-    
+	
+	public static final Structure<NoFeatureConfig> MEGALAKE_SMALL = new MegaLakeStructure(NoFeatureConfig.field_236558_a_);
+	
 	public static final Structure<NoFeatureConfig> GIANT_MOSSY_GLOWSHROOM = new GiantMossyGlowshroomStructure(NoFeatureConfig.field_236558_a_);
 	
 	public static final Structure<NoFeatureConfig> PAINTED_MOUNTAIN = new PaintedMountainStructure(NoFeatureConfig.field_236558_a_);
@@ -33,13 +35,15 @@ public class ModStructures
     {
     	BetterEnd.register(event.getRegistry(), MOUNTAIN, "mountain_structure");
     	BetterEnd.register(event.getRegistry(), MEGALAKE, "megalake_structure");
+    	BetterEnd.register(event.getRegistry(), MEGALAKE_SMALL, "megalake_small_structure");
     	BetterEnd.register(event.getRegistry(), GIANT_MOSSY_GLOWSHROOM, "giant_mossy_glowshroom_structure");
     	BetterEnd.register(event.getRegistry(), PAINTED_MOUNTAIN, "painted_mountain_structure");
     	BetterEnd.register(event.getRegistry(), ETERNAL_PORTAL, "eternal_portal_structure");
     	BetterEnd.register(event.getRegistry(), GIANT_ICE_STAR, "giant_ice_star_structure");
         
-    	setupStructure(MOUNTAIN, new StructureSeparationSettings(3,2, 1234567890));
-    	setupStructure(MEGALAKE, new StructureSeparationSettings(4,1, 1237890));
+    	setupStructure(MOUNTAIN, new StructureSeparationSettings(3, 2, 1234567890));
+    	setupStructure(MEGALAKE, new StructureSeparationSettings(4, 1, 1237890));
+    	setupStructure(MEGALAKE_SMALL, new StructureSeparationSettings(4, 1, 1223462190));
     	setupStructure(GIANT_MOSSY_GLOWSHROOM, new StructureSeparationSettings(16, 8, 1234560));
     	setupStructure(PAINTED_MOUNTAIN, new StructureSeparationSettings(3, 2, 12890));
     	setupStructure(ETERNAL_PORTAL, new StructureSeparationSettings(16, 6, 1289052454));

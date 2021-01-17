@@ -17,10 +17,10 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
-public class MegaLakeStructure extends Structure<NoFeatureConfig>
+public class MegaLakeSmallStructure extends Structure<NoFeatureConfig>
 {
 
-	public MegaLakeStructure(Codec<NoFeatureConfig> p_i231997_1_) 
+	public MegaLakeSmallStructure(Codec<NoFeatureConfig> p_i231997_1_) 
 	{
 		super(p_i231997_1_);
 	}
@@ -34,7 +34,7 @@ public class MegaLakeStructure extends Structure<NoFeatureConfig>
 	@Override
 	public String getStructureName() 
 	{
-		return BetterEnd.MOD_ID + ":megalake_structure";
+		return BetterEnd.MOD_ID + ":megalake_small_structure";
 	}
 	
 	@Override
@@ -61,15 +61,12 @@ public class MegaLakeStructure extends Structure<NoFeatureConfig>
 			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
 			if (y > 5) 
 			{
-				//float radius = ModMathHelper.randRange(50, 100, rand);
-				//float depth = ModMathHelper.randRange(10, 16, rand);
-				float radius = ModMathHelper.randRange(50, 150, rand);
-				float depth = ModMathHelper.randRange(6, 10, rand);
+				float radius = ModMathHelper.randRange(20, 40, rand);
+				float depth = ModMathHelper.randRange(5, 10, rand);
 				LakePiece piece = new LakePiece(new BlockPos(x, y, z), radius, depth, rand, biome);
 				this.components.add(piece);
 			}
 			this.recalculateStructureSize();
 		}
-
 	}
 }
