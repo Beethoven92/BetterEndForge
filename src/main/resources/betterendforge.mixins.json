@@ -15,7 +15,8 @@
 	      "RepairContainerMixin",
 	      "PlayerEntityMixin",
 	      "ServerPlayerEntityMixin",
-	      "ServerPlayNetHandlerMixin"
+	      "ServerPlayNetHandlerMixin",
+	      "NoiseChunkGeneratorMixin"
 	],
   "client": [
 	      "BiomeColorsMixin",

@@ -9,6 +9,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
+import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.registry.Registry;
@@ -72,11 +73,42 @@ public class BetterEndBiomeProvider extends BiomeProvider
 	@Override
 	public Biome getNoiseBiome(int x, int y, int z) 
 	{
+		boolean hasVoid = !CommonConfig.newGenerator() || !CommonConfig.noRingVoid();
+		
 		long i = (long) x * (long) x;
 		long j = (long) z * (long) z;
-		if (i + j <= 65536L) return this.centerBiome;
+		if (hasVoid && i + j <= 65536L) return this.centerBiome;
 		
-		float height = EndBiomeProvider.getRandomNoise(generator, (x >> 1) + 1, (z >> 1) + 1) + (float) SMALL_NOISE.eval(x, z) * 5;
+		if (x == 0 && z == 0) 
+		{
+			mapLand.clearCache();
+			mapVoid.clearCache();
+		}
+		
+		if (CommonConfig.newGenerator()) 
+		{
+			if (TerrainGenerator.isLand(x, z)) 
+			{
+				return mapLand.getBiome(x << 2, z << 2).getActualBiome();
+			}
+			else 
+			{
+				return mapVoid.getBiome(x << 2, z << 2).getActualBiome();
+			}
+		}
+		else 
+		{
+			float height = EndBiomeProvider.getRandomNoise(generator, (x >> 1) + 1, (z >> 1) + 1) + (float) SMALL_NOISE.eval(x, z) * 5;
+	
+			if (height > -20F && height < -5F) 
+			{
+				return barrens;
+			}
+			
+			BetterEndBiome endBiome = height < -10F ? mapVoid.getBiome(x << 2, z << 2) : mapLand.getBiome(x << 2, z << 2);
+			return endBiome.getActualBiome();
+		}
+		/*float height = EndBiomeProvider.getRandomNoise(generator, (x >> 1) + 1, (z >> 1) + 1) + (float) SMALL_NOISE.eval(x, z) * 5;
 
 		if (height > -20F && height < -5F) {
 			return barrens;
@@ -88,7 +120,7 @@ public class BetterEndBiomeProvider extends BiomeProvider
 			mapLand.clearCache();
 			mapVoid.clearCache();
 		}
-		return endBiome.getActualBiome();
+		return endBiome.getActualBiome();*/
 	}
 
 	@Override
