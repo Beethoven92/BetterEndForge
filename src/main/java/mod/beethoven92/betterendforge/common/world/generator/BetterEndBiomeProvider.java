@@ -126,7 +126,7 @@ public class BetterEndBiomeProvider extends BiomeProvider
 	{
 		Registry.register(Registry.BIOME_PROVIDER_CODEC, 
 				new ResourceLocation(BetterEnd.MOD_ID, "betterend_biome_provider"), BETTER_END_CODEC);
-		// Thought this could solve BOP compatibility issue but...nope
+		// Thought replacing vanilla end biome source could solve BOP compatibility issue but...nope
 		//Registry.register(Registry.BIOME_PROVIDER_CODEC, "the_end", BETTER_END_CODEC);
 	}
 }
