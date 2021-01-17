@@ -20,17 +20,17 @@ public class EternalCrystalRenderer
 {
 	private static final ResourceLocation CRYSTAL_TEXTURE = new ResourceLocation(BetterEnd.MOD_ID, "textures/entity/eternal_crystal.png");
 	private static final RenderType RENDER_LAYER;
-	private static final ModelRenderer SHARDS;
+	private static final ModelRenderer[] SHARDS;
 	private static final ModelRenderer CORE;
 	
 	static 
 	{
 		RENDER_LAYER = RenderType.getBeaconBeam(CRYSTAL_TEXTURE, true);
-		SHARDS = new ModelRenderer(16, 16, 2, 4);
-		SHARDS.addBox(-5.0F, 1.0F, -3.0F, 2.0F, 8.0F, 2.0F);
-		SHARDS.addBox(3.0F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F);
-		SHARDS.addBox(-1.0F, 0.0F, -5.0F, 2.0F, 4.0F, 2.0F);
-		SHARDS.addBox(0.0F, 3.0F, 4.0F, 2.0F, 6.0F, 2.0F);
+		SHARDS = new ModelRenderer[4];
+		SHARDS[0] = new ModelRenderer(16, 16, 2, 4).addBox(-5.0F, 1.0F, -3.0F, 2.0F, 8.0F, 2.0F);
+		SHARDS[1] = new ModelRenderer(16, 16, 2, 4).addBox(3.0F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F);
+		SHARDS[2] = new ModelRenderer(16, 16, 2, 4).addBox(-1.0F, 0.0F, -5.0F, 2.0F, 4.0F, 2.0F);
+		SHARDS[3] = new ModelRenderer(16, 16, 2, 4).addBox(0.0F, 3.0F, 4.0F, 2.0F, 6.0F, 2.0F);
 		CORE = new ModelRenderer(16, 16, 0, 0);
 		CORE.addBox(-2.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F);
 	}
@@ -44,7 +44,16 @@ public class EternalCrystalRenderer
 		matrices.scale(0.6F, 0.6F, 0.6F);
 		matrices.rotate(Vector3f.YP.rotation(rotation));
 		CORE.render(matrices, iVertexBuilder, light, OverlayTexture.NO_OVERLAY, colors[0], colors[1], colors[2], colors[3]);
-		SHARDS.render(matrices, iVertexBuilder, light, OverlayTexture.NO_OVERLAY, colors[0], colors[1], colors[2], colors[3]);
+
+		for (int i = 0; i < 4; i++) 
+		{
+			matrices.push();
+			float offset = MathHelper.sin(rotation * 2 + i) * 0.15F;
+			matrices.translate(0, offset, 0);
+			SHARDS[i].render(matrices, iVertexBuilder, light, OverlayTexture.NO_OVERLAY, colors[0], colors[1], colors[2], colors[3]);
+			matrices.pop();
+		}
+		
 		matrices.pop();
 	}
 	
