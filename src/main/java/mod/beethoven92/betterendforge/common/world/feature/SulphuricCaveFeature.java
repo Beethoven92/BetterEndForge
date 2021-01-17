@@ -40,8 +40,31 @@ public class SulphuricCaveFeature extends Feature<NoFeatureConfig>
 			NoFeatureConfig config) 
 	{
 		int radius = ModMathHelper.randRange(10, 30, rand);
-		int bottom = BlockHelper.upRay(world, new BlockPos(pos.getX(), 0, pos.getZ()), 32) + radius + 5;
-		int top = world.getHeight(Heightmap.Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ()) - radius - 5;
+		
+		int top = world.getHeight(Heightmap.Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		Mutable bpos = new Mutable();
+		bpos.setX(pos.getX());
+		bpos.setZ(pos.getZ());
+		bpos.setY(top - 1);
+		
+		BlockState state = world.getBlockState(bpos);
+		while (!state.isIn(ModTags.GEN_TERRAIN) && bpos.getY() > 5) 
+		{
+			bpos.setY(bpos.getY() - 1);
+			state = world.getBlockState(bpos);
+		}
+		if (bpos.getY() < 10)
+		{
+			return false;
+		}
+		top = (int) (bpos.getY() - (radius * 1.3F + 5));
+		
+		while (state.isIn(ModTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) 
+		{
+			bpos.setY(bpos.getY() - 1);
+			state = world.getBlockState(bpos);
+		}
+		int bottom = (int) (bpos.getY() + radius * 1.3F + 5);
 		
 		if (top <= bottom) 
 		{
@@ -63,11 +86,10 @@ public class SulphuricCaveFeature extends Feature<NoFeatureConfig>
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
 		
-		BlockState state;
 		Set<BlockPos> brimstone = Sets.newHashSet();
 		BlockState rock = ModBlocks.SULPHURIC_ROCK.stone.get().getDefaultState();
 		int waterLevel = pos.getY() + ModMathHelper.randRange(ModMathHelper.floor(radius * 0.8), radius, rand);
-		for (int x = x1; x <= x2; x++) 
+		for (int x = x1; x <= x2; x++)
 		{
 			int xsq = x - pos.getX();
 			xsq *= xsq;
@@ -77,7 +99,7 @@ public class SulphuricCaveFeature extends Feature<NoFeatureConfig>
 				int zsq = z - pos.getZ();
 				zsq *= zsq;
 				mut.setZ(z);
-				for (int y = y1; y <= y2; y++) 
+				for (int y = y1; y <= y2; y++)
 				{
 					int ysq = y - pos.getY();
 					ysq *= 1.6;
@@ -97,7 +119,7 @@ public class SulphuricCaveFeature extends Feature<NoFeatureConfig>
 					else if (dist < r2 * r2) 
 					{
 						state = world.getBlockState(mut);
-						if (state.isIn(ModTags.GEN_TERRAIN) || state.isIn(Blocks.AIR))
+						if (state.isIn(ModTags.GEN_TERRAIN) || state.isIn(Blocks.AIR)) 
 						{
 							double v = noise.eval(x * 0.1, y * 0.1, z * 0.1) + noise.eval(x * 0.03, y * 0.03, z * 0.03) * 0.5;
 							if (v > 0.4) 
@@ -134,7 +156,7 @@ public class SulphuricCaveFeature extends Feature<NoFeatureConfig>
 					}
 					if (state.isIn(ModTags.GEN_TERRAIN) && !world.getBlockState(mut.up()).isIn(ModBlocks.HYDROTHERMAL_VENT.get())) 
 					{
-						for (int j = 0; j <= dist; j++)
+						for (int j = 0; j <= dist; j++) 
 						{
 							BlockHelper.setWithoutUpdate(world, mut, ModBlocks.SULPHURIC_ROCK.stone.get());
 							ModMathHelper.shuffle(HORIZONTAL, rand);
