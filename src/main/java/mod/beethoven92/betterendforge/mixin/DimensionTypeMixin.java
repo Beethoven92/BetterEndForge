@@ -28,7 +28,7 @@ public abstract class DimensionTypeMixin
     @Inject(method = "doesHasDragonFight", at = @At("HEAD"), cancellable = true)
 	private void be_hasEnderDragonFight(CallbackInfoReturnable<Boolean> info)
     {
-		if (!CommonConfig.hasDragonFight()) 
+		if (!CommonConfig.isDragonFightEnabled()) 
 		{
 			info.setReturnValue(false);
 			info.cancel();

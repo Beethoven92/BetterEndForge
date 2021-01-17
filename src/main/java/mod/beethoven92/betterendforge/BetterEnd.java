@@ -26,9 +26,12 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.logging.log4j.LogManager;
@@ -70,7 +73,9 @@ public class BetterEnd
 	public static final IPhysicalSide SIDE = 
 			DistExecutor.safeRunForDist(() -> PhysicalClientSide::new, () -> PhysicalServerSide::new);
 
-    public BetterEnd() 
+	public static final Path CONFIG_PATH = new File(String.valueOf(FMLPaths.CONFIGDIR.get().resolve(MOD_ID))).toPath();
+    
+	public BetterEnd() 
     {
     	IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
     	IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
@@ -91,9 +96,12 @@ public class BetterEnd
     	ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
     	ModSoundEvents.SOUND_EVENTS.register(modEventBus);
     	ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
+        
+    	File configDirectory = new File(CONFIG_PATH.toString());
+        if (!configDirectory.exists()) configDirectory.mkdir();
     	
-    	ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.getConfig());
-    	ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.getConfig());
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.getConfig(), CONFIG_PATH.resolve("client-config.toml").toString());
+    	ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.getConfig(), CONFIG_PATH.resolve("world-generator-config.toml").toString());
     }
 
     private void setupCommon(final FMLCommonSetupEvent event)

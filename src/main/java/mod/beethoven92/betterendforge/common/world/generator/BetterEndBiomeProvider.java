@@ -73,7 +73,7 @@ public class BetterEndBiomeProvider extends BiomeProvider
 	@Override
 	public Biome getNoiseBiome(int x, int y, int z) 
 	{
-		boolean hasVoid = !CommonConfig.newGenerator() || !CommonConfig.noRingVoid();
+		boolean hasVoid = !CommonConfig.isNewGeneratorEnabled() || !CommonConfig.noRingVoid();
 		
 		long i = (long) x * (long) x;
 		long j = (long) z * (long) z;
@@ -85,7 +85,7 @@ public class BetterEndBiomeProvider extends BiomeProvider
 			mapVoid.clearCache();
 		}
 		
-		if (CommonConfig.newGenerator()) 
+		if (CommonConfig.isNewGeneratorEnabled()) 
 		{
 			if (TerrainGenerator.isLand(x, z)) 
 			{
@@ -126,5 +126,7 @@ public class BetterEndBiomeProvider extends BiomeProvider
 	{
 		Registry.register(Registry.BIOME_PROVIDER_CODEC, 
 				new ResourceLocation(BetterEnd.MOD_ID, "betterend_biome_provider"), BETTER_END_CODEC);
+		// Thought this could solve BOP compatibility issue but...nope
+		//Registry.register(Registry.BIOME_PROVIDER_CODEC, "the_end", BETTER_END_CODEC);
 	}
 }

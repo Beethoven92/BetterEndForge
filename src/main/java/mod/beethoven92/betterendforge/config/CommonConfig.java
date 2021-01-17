@@ -8,35 +8,39 @@ public class CommonConfig
 
     public static ForgeConfigSpec COMMON_CONFIG;
    
-    public static final ForgeConfigSpec.BooleanValue HAS_DRAGON_FIGHT;
+    public static final ForgeConfigSpec.BooleanValue DRAGON_FIGHT_ENABLED;
     public static final ForgeConfigSpec.BooleanValue GENERATE_VANILLA_PORTAL;
     public static final ForgeConfigSpec.BooleanValue GENERATE_OBSIDIAN_PILLARS;
     
-    public static final ForgeConfigSpec.BooleanValue NEW_GENERATOR;
+    public static final ForgeConfigSpec.BooleanValue NEW_GENERATOR_ENABLED;
     public static final ForgeConfigSpec.BooleanValue NO_RING_VOID;
     public static final ForgeConfigSpec.BooleanValue GENERATE_CENTRAL_ISLAND;
+    public static final ForgeConfigSpec.ConfigValue<Integer> END_CITY_FAIL_CHANCE;
     
     static 
     {
         BUILDER.push("Common settings");
        
-        BUILDER.comment("enable/disable dragon fight [default: true]");
-        HAS_DRAGON_FIGHT = BUILDER.define("hasDragonFight", true);
+        BUILDER.comment("\nEnable/disable dragon fight.\nDefault value: true");
+        DRAGON_FIGHT_ENABLED = BUILDER.define("dragonFightEnabled", true);
 
-        BUILDER.comment("enable/disable vanilla portal generation [default: true]");
+        BUILDER.comment("\nEnable/disable vanilla portal generation.\nDefault value: true");
         GENERATE_VANILLA_PORTAL = BUILDER.define("generateVanillaPortal", true);
         
-        BUILDER.comment("enable/disable obsidian pillars generation [default: true]");
+        BUILDER.comment("\nEnable/disable obsidian pillars generation.\nDefault value: true");
         GENERATE_OBSIDIAN_PILLARS = BUILDER.define("generateObsidianPillars", true);
         
-        BUILDER.comment("enable/disable new terrain generation [default: false]");
-        NEW_GENERATOR = BUILDER.define("newGenerator", false);
+        BUILDER.comment("\nEnable/disable new terrain generation.\nDefault value: false");
+        NEW_GENERATOR_ENABLED = BUILDER.define("enableNewGenerator", false);
 
-        BUILDER.comment("Enable/disable the void ring around central island [default: false]");
+        BUILDER.comment("\nEnable/disable the void ring around central island.\nDefault value: false");
         NO_RING_VOID = BUILDER.define("noRingVoid", false);
         
-        BUILDER.comment("Enable/disable generation of the main island [default: false]");
+        BUILDER.comment("\nEnable/disable generation of the central island.\nDefault value: false]");
         GENERATE_CENTRAL_ISLAND = BUILDER.define("generateCentralIsland", false);
+        
+        BUILDER.comment("\nSet the chance for end city generation to fail. Higher values means lower chance of spawning\nDefault value: 5");
+        END_CITY_FAIL_CHANCE = BUILDER.define("endCityGenerationFailChance", 5);
         
         BUILDER.pop();
         
@@ -48,24 +52,24 @@ public class CommonConfig
         return COMMON_CONFIG;
     }
     
-    public static boolean hasDragonFight()
+    public static boolean isDragonFightEnabled()
     {
-    	return HAS_DRAGON_FIGHT.get();
+    	return DRAGON_FIGHT_ENABLED.get();
     }
     
-    public static boolean generateVanillaPortal()
+    public static boolean shouldGenerateVanillaPortal()
     {
     	return GENERATE_VANILLA_PORTAL.get();
     }
     
-    public static boolean generateObsidianPillars()
+    public static boolean shouldGenerateObsidianPillars()
     {
     	return GENERATE_OBSIDIAN_PILLARS.get();
     }
     
-    public static boolean newGenerator() 
+    public static boolean isNewGeneratorEnabled() 
     {
-        return NEW_GENERATOR.get();
+        return NEW_GENERATOR_ENABLED.get();
     }
     
     public static boolean noRingVoid() 
@@ -73,8 +77,13 @@ public class CommonConfig
         return NO_RING_VOID.get();
     }
     
-    public static boolean generateCentralIsland() 
+    public static boolean shouldGenerateCentralIsland() 
     {
         return GENERATE_CENTRAL_ISLAND.get();
+    }
+    
+    public static int endCityFailChance() 
+    {
+        return END_CITY_FAIL_CHANCE.get();
     }
 }

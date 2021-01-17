@@ -21,7 +21,7 @@ public abstract class EndSpikeFeatureMixin
 	private void beGenerateSpike(ISeedReader world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, 
 			EndSpikeFeatureConfig endSpikeFeatureConfig, CallbackInfoReturnable<Boolean> info) 
 	{
-		if (!CommonConfig.generateObsidianPillars()) 
+		if (!CommonConfig.shouldGenerateObsidianPillars()) 
         {
 			info.setReturnValue(false);
 		}

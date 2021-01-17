@@ -93,7 +93,7 @@ public class IslandLayer
 					}
 				}
 			}
-			if (hasCentralIsland && CommonConfig.generateCentralIsland() && ix < 2 && iz < 2 && ix > -2 && iz > -2) 
+			if (hasCentralIsland && CommonConfig.shouldGenerateCentralIsland() && ix < 2 && iz < 2 && ix > -2 && iz > -2) 
 			{
 				positions.add(new BlockPos(0, 64, 0));
 			}

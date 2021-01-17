@@ -16,13 +16,13 @@ public class ClientConfig
     {
         BUILDER.push("Client settings");
        
-        BUILDER.comment("Enable/disable better end sky, set this to false if you are experiencing graphical issues with shaders.");
+        BUILDER.comment("\nEnable/disable BetterEnd custom sky, set this to false if you are experiencing graphical issues with shaders.\nDefault value: true");
         SKY_ENABLED = BUILDER.define("customSkyEnabled", true);
 
-        BUILDER.comment("Enable/disable biome fog density, set this to false if you don't want thick fog in certain biomes");
+        BUILDER.comment("\nEnable/disable biome fog density, set this to false if you don't want thick fog in certain biomes.\nDefault value: true");
         FOG_DENSITY_ENABLED = BUILDER.define("fogDensityEnabled", true);
         
-        BUILDER.comment("Enable/disable background music blending between biomes");
+        BUILDER.comment("\nEnable/disable background music blending between biomes.\nDefault value: true");
         BIOME_MUSIC_BLEND_ENABLED = BUILDER.define("biomeMusicBlendEnabled", true);
         
         BUILDER.pop();

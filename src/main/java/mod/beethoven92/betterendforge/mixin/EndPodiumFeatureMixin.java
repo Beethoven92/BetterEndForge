@@ -21,7 +21,7 @@ public abstract class EndPodiumFeatureMixin
 	private void beGeneratePortal(ISeedReader world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos, 
 			NoFeatureConfig config, CallbackInfoReturnable<Boolean> info) 
 	{
-		if (!CommonConfig.generateVanillaPortal()) 
+		if (!CommonConfig.shouldGenerateVanillaPortal()) 
 		{
 			info.setReturnValue(false);
 		}

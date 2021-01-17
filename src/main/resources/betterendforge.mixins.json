@@ -18,7 +18,8 @@
 	      "ServerPlayNetHandlerMixin",
 	      "NoiseChunkGeneratorMixin",
 	      "EndPodiumFeatureMixin",
-	      "EndSpikeFeatureMixin"
+	      "EndSpikeFeatureMixin",
+	      "EndCityStructureMixin"
 	],
   "client": [
 	      "BiomeColorsMixin",

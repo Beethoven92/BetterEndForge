@@ -31,7 +31,7 @@ public abstract class NoiseChunkGeneratorMixin
 	@Inject(method = "fillNoiseColumn([DII)V", at = @At("HEAD"), cancellable = true, allow = 2)
 	private void beFillNoiseColumn(double[] buffer, int x, int z, CallbackInfo info) 
 	{
-		if (CommonConfig.newGenerator() && field_236080_h_.get().func_242744_a(DimensionSettings.field_242737_f)) // End settings
+		if (CommonConfig.isNewGeneratorEnabled() && field_236080_h_.get().func_242744_a(DimensionSettings.field_242737_f)) // End settings
 		{
 			if (TerrainGenerator.canGenerate(x, z)) 
 			{
