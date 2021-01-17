@@ -78,6 +78,7 @@ public class EndPortalBlock extends NetherPortalBlock
 			//if (teleEntity.hasCooldown()) return;
 			// Checks if entity has nether portal cooldown
 			if (entityIn.func_242280_ah()) return;
+
 			
 			boolean isOverworld = worldIn.getDimensionKey().equals(World.OVERWORLD);
 			ServerWorld destination = ((ServerWorld) worldIn).getServer().getWorld(isOverworld ? World.THE_END : World.OVERWORLD);

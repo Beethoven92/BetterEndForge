@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
@@ -71,11 +72,11 @@ public class PedestalRenderer<T extends PedestalTileEntity> extends TileEntityRe
 			float altitude = MathHelper.sin((tileEntityIn.getAge() + partialTicks) / 10.0F) * 0.1F + 0.1F;
 			matrixStackIn.translate(0.0D, altitude, 0.0D);
 		}
-		/*if (activeItem.getItem() == Items.END_CRYSTAL) 
+		if (activeItem.getItem() == Items.END_CRYSTAL) 
 		{
 			EndCrystalRenderer.render(age, tileEntityIn.getMaxAge(), partialTicks, matrixStackIn, bufferIn, combinedLightIn);
-		}*/
-		/*else*/ if (activeItem.getItem() == ModItems.ETERNAL_CRYSTAL.get()) 
+		}
+		else if (activeItem.getItem() == ModItems.ETERNAL_CRYSTAL.get()) 
 		{
 			EternalCrystalRenderer.render(age, partialTicks, matrixStackIn, bufferIn, combinedLightIn);
 		} 
