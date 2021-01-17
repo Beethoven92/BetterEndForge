@@ -108,19 +108,6 @@ public class BetterEndBiomeProvider extends BiomeProvider
 			BetterEndBiome endBiome = height < -10F ? mapVoid.getBiome(x << 2, z << 2) : mapLand.getBiome(x << 2, z << 2);
 			return endBiome.getActualBiome();
 		}
-		/*float height = EndBiomeProvider.getRandomNoise(generator, (x >> 1) + 1, (z >> 1) + 1) + (float) SMALL_NOISE.eval(x, z) * 5;
-
-		if (height > -20F && height < -5F) {
-			return barrens;
-		}
-		
-		BetterEndBiome endBiome = height < -10F ? mapVoid.getBiome(x << 2, z << 2) : mapLand.getBiome(x << 2, z << 2);
-		if (x == 0 && z == 0) 
-		{
-			mapLand.clearCache();
-			mapVoid.clearCache();
-		}
-		return endBiome.getActualBiome();*/
 	}
 
 	@Override

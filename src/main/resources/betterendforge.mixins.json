@@ -16,7 +16,9 @@
 	      "PlayerEntityMixin",
 	      "ServerPlayerEntityMixin",
 	      "ServerPlayNetHandlerMixin",
-	      "NoiseChunkGeneratorMixin"
+	      "NoiseChunkGeneratorMixin",
+	      "EndPodiumFeatureMixin",
+	      "EndSpikeFeatureMixin"
 	],
   "client": [
 	      "BiomeColorsMixin",
