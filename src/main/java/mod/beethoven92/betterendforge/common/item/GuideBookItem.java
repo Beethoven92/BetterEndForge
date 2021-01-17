@@ -15,6 +15,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.ModList;
 import vazkii.patchouli.api.PatchouliAPI;
 
 public class GuideBookItem extends Item
@@ -31,8 +32,16 @@ public class GuideBookItem extends Item
 	{
     	if (!worldIn.isRemote && playerIn instanceof ServerPlayerEntity)
     	{
-            PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
-            return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+    		if (ModList.get().isLoaded("patchouli"))
+    		{
+    			PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
+    			return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+    		}
+    		else
+    		{
+    			playerIn.sendStatusMessage(new TranslationTextComponent("message.betterendforge.patchouli_missing"), true);
+    			return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+    		}
         }
         return ActionResult.resultConsume(playerIn.getHeldItem(handIn));
 	}

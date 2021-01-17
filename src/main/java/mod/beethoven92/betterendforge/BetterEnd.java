@@ -142,7 +142,7 @@ public class BetterEnd
         @SubscribeEvent
         public static void registerWorldtype(RegistryEvent.Register<ForgeWorldType> event)
         {
-            event.getRegistry().register(new TerraforgedIntegrationWorldType().setRegistryName(new ResourceLocation(MOD_ID, "world")));
+            event.getRegistry().register(new TerraforgedIntegrationWorldType().setRegistryName(new ResourceLocation(MOD_ID, "world_type")));
         }
     }
     
