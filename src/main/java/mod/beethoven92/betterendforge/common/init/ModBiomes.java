@@ -30,6 +30,7 @@ import mod.beethoven92.betterendforge.common.world.biome.SulphurSpringsBiome;
 import mod.beethoven92.betterendforge.common.world.biome.UmbrellaJungleBiome;
 import mod.beethoven92.betterendforge.common.world.generator.BiomePicker;
 import mod.beethoven92.betterendforge.common.world.generator.EndBiomeType;
+import mod.beethoven92.betterendforge.config.jsons.JsonConfigs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.RegistryKey;
@@ -54,8 +55,6 @@ public class ModBiomes
 	private static final JsonObject EMPTY_JSON = new JsonObject();
 	
 	private static Registry<Biome> biomeRegistry;
-	private static Set<Integer> occupiedIDs = Sets.newHashSet();
-	private static int incID = 8196;
 	
 	// Vanilla Land
 	public static final BetterEndBiome END = registerBiome(Biomes.THE_END, EndBiomeType.LAND, 1F);
@@ -99,38 +98,45 @@ public class ModBiomes
 			{
 				ResourceLocation id = biomeRegistry.getKey(biome);
 				
-				if (!LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id) && !SUBBIOMES_UNMUTABLES.contains(id)) 
+				if (JsonConfigs.BIOME_CONFIG.getBoolean(id, "enabled", true))
 				{
-					JsonObject config = configs.get(id.getNamespace());
-					if (config == null) {
-						config = loadJsonConfig(id.getNamespace());
-						configs.put(id.getNamespace(), config);
-					}
-					float fog = 1F;
-					float chance = 1F;
-					boolean isVoid = false;
-					boolean hasCaves = true;
-					JsonElement element = config.get(id.getPath());
-					if (element != null && element.isJsonObject()) 
+					if (!LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id) && !SUBBIOMES_UNMUTABLES.contains(id)) 
 					{
-						fog = JsonFactory.getFloat(element.getAsJsonObject(), "fogDensity", 1);
-						chance = JsonFactory.getFloat(element.getAsJsonObject(), "genChance", 1);
-						isVoid = JsonFactory.getString(element.getAsJsonObject(), "type", "land").equals("void");
-						hasCaves = JsonFactory.getBoolean(element.getAsJsonObject(), "has_caves", true);
-					}
-					BetterEndBiome endBiome = new BetterEndBiome(id, biome, fog, chance, hasCaves);
-					if (isVoid) 
-					{
-						VOID_BIOMES.addBiomeMutable(endBiome);
-					}
-					else 
-					{
-						LAND_BIOMES.addBiomeMutable(endBiome);
-					}
-					ID_MAP.put(id, endBiome);
+						JsonObject config = configs.get(id.getNamespace());
+						if (config == null) 
+						{
+							config = loadJsonConfig(id.getNamespace());
+							configs.put(id.getNamespace(), config);
+						}
+						float fog = 1F;
+						float chance = 1F;
+					    boolean isVoid = false;
+					    boolean hasCaves = true;
+					    JsonElement element = config.get(id.getPath());
+					    if (element != null && element.isJsonObject()) 
+					    {
+					    	fog = JsonFactory.getFloat(element.getAsJsonObject(), "fog_density", 1);
+						    chance = JsonFactory.getFloat(element.getAsJsonObject(), "generation_chance", 1);
+						    isVoid = JsonFactory.getString(element.getAsJsonObject(), "type", "land").equals("void");
+						    hasCaves = JsonFactory.getBoolean(element.getAsJsonObject(), "has_caves", true);
+					     }
+					    
+					    BetterEndBiome endBiome = new BetterEndBiome(id, biome, fog, chance, hasCaves);
+					    if (isVoid) 
+					    {
+					    	VOID_BIOMES.addBiomeMutable(endBiome);
+					    }
+					    else 
+					    {
+					     	LAND_BIOMES.addBiomeMutable(endBiome);
+					    }
+					    ID_MAP.put(id, endBiome);
+				    }
 				}
 			}
 		});
+		
+		JsonConfigs.BIOME_CONFIG.saveChanges();
 		
 		LAND_BIOMES.rebuild();
 		VOID_BIOMES.rebuild();
@@ -183,7 +189,10 @@ public class ModBiomes
 	public static BetterEndBiome registerBiome(Biome biome, EndBiomeType type, float fogDensity, float genChance) 
 	{
 		BetterEndBiome endBiome = new BetterEndBiome(WorldGenRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, true);
-		addToPicker(endBiome, type);
+		if (JsonConfigs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true))
+		{
+			addToPicker(endBiome, type);
+		}
 		return endBiome;
 	}
 	
@@ -196,10 +205,13 @@ public class ModBiomes
 	public static BetterEndBiome registerSubBiome(Biome biome, BetterEndBiome parent, float fogDensity, float genChance, boolean hasCaves) 
 	{
 		BetterEndBiome endBiome = new BetterEndBiome(WorldGenRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, hasCaves);
-		parent.addSubBiome(endBiome);
-		SUBBIOMES.add(endBiome);
-		SUBBIOMES_UNMUTABLES.add(endBiome.getID());
-		ID_MAP.put(endBiome.getID(), endBiome);
+		if (JsonConfigs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true))
+		{
+			parent.addSubBiome(endBiome);
+		    SUBBIOMES.add(endBiome);
+		    SUBBIOMES_UNMUTABLES.add(endBiome.getID());
+		    ID_MAP.put(endBiome.getID(), endBiome);
+		}
 		return endBiome;
 	}
 	
@@ -207,18 +219,24 @@ public class ModBiomes
 	public static BetterEndBiome registerBiome(BetterEndBiome biome, EndBiomeType type) 
 	{
 		registerBiomeDirect(biome);
-		addToPicker(biome, type);
-		ID_MAP.put(biome.getID(), biome);
+		if (JsonConfigs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true))
+		{
+			addToPicker(biome, type);
+			ID_MAP.put(biome.getID(), biome);
+		}
 		return biome;
 	}
 	
 	public static BetterEndBiome registerSubBiome(BetterEndBiome biome, BetterEndBiome parent) 
 	{
 		registerBiomeDirect(biome);
-		parent.addSubBiome(biome);
-		SUBBIOMES.add(biome);
-		SUBBIOMES_UNMUTABLES.add(biome.getID());
-		ID_MAP.put(biome.getID(), biome);
+		if (JsonConfigs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true))
+		{
+			parent.addSubBiome(biome);
+			SUBBIOMES.add(biome);
+			SUBBIOMES_UNMUTABLES.add(biome.getID());
+			ID_MAP.put(biome.getID(), biome);
+		}
 		return biome;
 	}
 	
@@ -240,32 +258,12 @@ public class ModBiomes
 			VOID_BIOMES.addBiome(biome);
 	}
 	
-	private static void fillSet() 
-	{
-		if (occupiedIDs.isEmpty())
-		{
-			WorldGenRegistries.BIOME.getEntries().forEach((entry) -> {
-				int id = WorldGenRegistries.BIOME.getId(entry.getValue());
-				occupiedIDs.add(id);
-			});
-		}
-	}
-	
 	private static void registerBiomeDirect(BetterEndBiome biome) 
 	{
-		fillSet();
-		int possibleID = incID++;
-		if (occupiedIDs.contains(possibleID)) 
+		if (JsonConfigs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true))
 		{
-			String message = "ID for biome " + biome.getID() + " is already occupied, changing biome ID from " + possibleID + " to ";
-			while (occupiedIDs.contains(possibleID)) 
-			{
-				possibleID ++;
-			}
-			BetterEnd.LOGGER.info(message + possibleID);
+			biome.getBiome().setRegistryName(biome.getID()); 
 		}
-
-		biome.getBiome().setRegistryName(biome.getID()); 
 	}
 	
 	public static BetterEndBiome getFromBiome(Biome biome) 
@@ -280,7 +278,7 @@ public class ModBiomes
 	}
 
 	public static BetterEndBiome getBiome(ResourceLocation biomeID) 
-	{
+	{		
 		return ID_MAP.getOrDefault(biomeID, END);
 	}
 	

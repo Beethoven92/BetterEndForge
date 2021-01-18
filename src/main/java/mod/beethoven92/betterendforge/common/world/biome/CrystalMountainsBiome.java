@@ -20,6 +20,6 @@ public class CrystalMountainsBiome extends BetterEndBiome
 				                  addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CRYSTAL_GRASS).
 				                  addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CAVE_GRASS).
 				                  addStructure(ModConfiguredStructures.MOUNTAIN_STRUCTURE).
-				                  setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
+				                  addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

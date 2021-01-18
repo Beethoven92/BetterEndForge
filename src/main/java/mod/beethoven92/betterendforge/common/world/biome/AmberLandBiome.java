@@ -30,6 +30,6 @@ public class AmberLandBiome extends BetterEndBiome {
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_ORANGE)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_RED)
 				.addStructure(StructureFeatures.END_CITY)
-				.setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 4));
+				.addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 4));
 	}
 }

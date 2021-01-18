@@ -20,6 +20,6 @@ public class IceStarfieldBiome extends BetterEndBiome
 				addStructure(ModConfiguredStructures.GIANT_ICE_STAR).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.ICE_STAR).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.ICE_STAR_SMALL).
-				setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 20, 1, 4));
+				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 20, 1, 4));
 	}
 }

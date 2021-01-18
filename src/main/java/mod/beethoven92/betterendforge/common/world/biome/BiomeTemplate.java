@@ -46,6 +46,7 @@ public class BiomeTemplate
 	private final List<FeatureInfo> features = Lists.newArrayList();
 	private final List<CarverInfo> carvers = Lists.newArrayList();
 	private final List<SpawnInfo> mobs = Lists.newArrayList();
+	private final List<MobSpawnInfo.Spawners> spawns = Lists.newArrayList();
 	private Supplier<ConfiguredSurfaceBuilder<?>> surface;
 	
 	private float depth = 0.1F;
@@ -208,7 +209,13 @@ public class BiomeTemplate
 		return this;
 	}
 	
-	public BiomeTemplate setMobSpawn(EntityClassification type, EntityType<?> entity, 
+	public BiomeTemplate addMobSpawn(MobSpawnInfo.Spawners entry)
+	{
+		spawns.add(entry);
+		return this;
+	}
+	
+	public BiomeTemplate addMobSpawn(EntityClassification type, EntityType<?> entity, 
 			int weight, int minCount, int maxCount)
 	{
 		SpawnInfo info = new SpawnInfo();
@@ -264,37 +271,41 @@ public class BiomeTemplate
 	public Biome build()
 	{
 		BiomeAmbience.Builder effects = new BiomeAmbience.Builder();
-		BiomeGenerationSettings.Builder settings = new BiomeGenerationSettings.Builder();
-		MobSpawnInfo.Builder mobSpawn = new MobSpawnInfo.Builder();
+		BiomeGenerationSettings.Builder generationSettings = new BiomeGenerationSettings.Builder();
+		MobSpawnInfo.Builder spawnSettings = new MobSpawnInfo.Builder();
 		
 		// Set mob spawns
 		for (SpawnInfo info : mobs)
 		{
-			mobSpawn.withSpawner(info.type, 
+			spawnSettings.withSpawner(info.type, 
 					new MobSpawnInfo.Spawners(info.entity, info.weight, info.minGroupSize, info.maxGroupSize));
 		}
+		
+		spawns.forEach((entry) -> {
+			spawnSettings.withSpawner(entry.type.getClassification(), entry);
+		});
 		
 		// Set biome general features
 		if (surface != null)
 		{
-			settings.withSurfaceBuilder(surface);
+			generationSettings.withSurfaceBuilder(surface);
 		}
 		else
 		{
-			settings.withSurfaceBuilder(ConfiguredSurfaceBuilders.field_244173_e);
+			generationSettings.withSurfaceBuilder(ConfiguredSurfaceBuilders.field_244173_e);
 		}
 		
 		for (CarverInfo info : carvers)
 		{
-			settings.withCarver(info.carverStep, info.carver);
+			generationSettings.withCarver(info.carverStep, info.carver);
 		}
 		for(FeatureInfo info : features)
 		{
-			settings.withFeature(info.stage, info.feature);
+			generationSettings.withFeature(info.stage, info.feature);
 		}
 		for(StructureFeature<?,?> structure : structures)
 		{
-			settings.withStructure(structure);
+			generationSettings.withStructure(structure);
 		}
 		
 		// Set effects
@@ -330,8 +341,8 @@ public class BiomeTemplate
 				         withTemperatureModifier(TemperatureModifier.NONE).
 				         downfall(this.downfall).
 				         setEffects(effects.build()).
-				         withGenerationSettings(settings.build()).
-				         withMobSpawnSettings(mobSpawn.copy()).
+				         withGenerationSettings(generationSettings.build()).
+				         withMobSpawnSettings(spawnSettings.copy()).
 				         build();
 	}
 	

@@ -41,10 +41,10 @@ public class FoggyMushroomlandBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_RED_RARE).
 				addStructure(ModConfiguredStructures.GIANT_MOSSY_GLOWSHROOM).
 				addStructure(StructureFeatures.END_CITY).
-				setMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.DRAGONFLY.get(), 80, 2, 5).
-				setMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.END_FISH.get(), 20, 2, 5).
-				setMobSpawn(EntityClassification.MONSTER, ModEntityTypes.END_SLIME.get(), 10, 1, 2).
-				setMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.CUBOZOA.get(), 10, 3, 8).
-				setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 10, 1, 2));
+				addMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.DRAGONFLY.get(), 80, 2, 5).
+				addMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.END_FISH.get(), 20, 2, 5).
+				addMobSpawn(EntityClassification.MONSTER, ModEntityTypes.END_SLIME.get(), 10, 1, 2).
+				addMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.CUBOZOA.get(), 10, 3, 8).
+				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 10, 1, 2));
 	}
 }

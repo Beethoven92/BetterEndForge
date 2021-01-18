@@ -40,7 +40,7 @@ public class GuideBookItem extends Item
     		else
     		{
     			playerIn.sendStatusMessage(new TranslationTextComponent("message.betterendforge.patchouli_missing"), true);
-    			return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+    			return ActionResult.resultFail(playerIn.getHeldItem(handIn));
     		}
         }
         return ActionResult.resultConsume(playerIn.getHeldItem(handIn));

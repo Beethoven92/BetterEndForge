@@ -22,6 +22,6 @@ public class PaintedMountainsBiome extends BetterEndBiome
 				setSurface(ModBlocks.ENDSTONE_DUST.get()).
 				addStructure(ModConfiguredStructures.PAINTED_MOUNTAIN).
 				setParticles(ParticleTypes.WHITE_ASH, 0.01F).
-				setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
+				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

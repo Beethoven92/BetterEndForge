@@ -60,6 +60,7 @@ import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures;
 import mod.beethoven92.betterendforge.common.world.generator.BetterEndBiomeProvider;
 import mod.beethoven92.betterendforge.config.ClientConfig;
 import mod.beethoven92.betterendforge.config.CommonConfig;
+import mod.beethoven92.betterendforge.config.jsons.JsonConfigs;
 import mod.beethoven92.betterendforge.server.PhysicalServerSide;
 
 
@@ -100,6 +101,7 @@ public class BetterEnd
     	File configDirectory = new File(CONFIG_PATH.toString());
         if (!configDirectory.exists()) configDirectory.mkdir();
     	
+        JsonConfigs.saveConfigs();
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.getConfig(), CONFIG_PATH.resolve("client-config.toml").toString());
     	ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.getConfig(), CONFIG_PATH.resolve("world-generator-config.toml").toString());
     }

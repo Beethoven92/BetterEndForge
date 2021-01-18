@@ -23,6 +23,6 @@ public class DustWastelandsBiome extends BetterEndBiome
 				setSurface(ModBlocks.ENDSTONE_DUST.get()).
 				setParticles(ParticleTypes.WHITE_ASH, 0.01F).
                 addStructure(StructureFeatures.END_CITY).
-                setMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
+                addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
 	}
 }
