@@ -274,10 +274,10 @@ public class ModBlocks
 					                                               noDrops()));
 	
 	public static final RegistryObject<Block> QUARTZ_PEDESTAL = registerBlockWithDefaultItem("quartz_pedestal",
-			() -> new PedestalBlock(AbstractBlock.Properties.from(Blocks.QUARTZ_BLOCK)));
+			() -> new PedestalBlock(AbstractBlock.Properties.from(Blocks.QUARTZ_BLOCK).setLightLevel(PedestalBlock.light())));
 	
 	public static final RegistryObject<Block> PURPUR_PEDESTAL = registerBlockWithDefaultItem("purpur_pedestal",
-			() -> new PedestalBlock(AbstractBlock.Properties.from(Blocks.PURPUR_BLOCK)));
+			() -> new PedestalBlock(AbstractBlock.Properties.from(Blocks.PURPUR_BLOCK).setLightLevel(PedestalBlock.light())));
 			
 	// PLANTS
 	public static final RegistryObject<Block> UMBRELLA_MOSS = registerBlockWithDefaultItem("umbrella_moss", 
@@ -781,10 +781,10 @@ public class ModBlocks
 	
 	// BLOCKS WITH TILE ENTITY
 	public static final RegistryObject<Block> ETERNAL_PEDESTAL = registerBlockWithDefaultItem("eternal_pedestal", 
-			() -> new EternalPedestal(AbstractBlock.Properties.from(FLAVOLITE_RUNED_ETERNAL.get())));
+			() -> new EternalPedestal(AbstractBlock.Properties.from(FLAVOLITE_RUNED_ETERNAL.get()).setLightLevel(PedestalBlock.light())));
 	
 	public static final RegistryObject<Block> INFUSION_PEDESTAL = registerBlockWithDefaultItem("infusion_pedestal", 
-			() -> new InfusionPedestal(AbstractBlock.Properties.from(Blocks.OBSIDIAN)));
+			() -> new InfusionPedestal(AbstractBlock.Properties.from(Blocks.OBSIDIAN).setLightLevel(PedestalBlock.light())));
 	
 	public static final RegistryObject<Block> END_STONE_SMELTER = registerBlockWithDefaultItem("end_stone_smelter", 
 			() -> new EndStoneSmelter(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.GRAY).

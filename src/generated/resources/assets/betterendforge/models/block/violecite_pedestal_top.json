@@ -1,0 +1,8 @@
+{
+  "parent": "betterendforge:block/pedestal_top",
+  "textures": {
+    "top": "betterendforge:block/violecite_polished",
+    "base": "betterendforge:block/violecite_polished",
+    "pillar": "betterendforge:block/violecite_pillar_side"
+  }
+}

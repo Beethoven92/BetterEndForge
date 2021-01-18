@@ -1,11 +1,13 @@
 package mod.beethoven92.betterendforge.common.init;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.collect.Lists;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.EndSignBlock;
+import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.tileentity.EChestTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.ESignTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.EndBarrelTileEntity;
@@ -31,7 +33,7 @@ public class ModTileEntityTypes
 	public static final RegistryObject<TileEntityType<PedestalTileEntity>> PEDESTAL =
 			TILE_ENTITY_TYPES.register("pedestal_tile_entity", 
 					() -> TileEntityType.Builder.create(PedestalTileEntity::new, 
-							ModBlocks.PURPUR_PEDESTAL.get(), ModBlocks.QUARTZ_PEDESTAL.get()).build(null));
+							getPedestals()).build(null));
 	
 	public static final RegistryObject<TileEntityType<EternalPedestalTileEntity>> ETERNAL_PEDESTAL =
 			TILE_ENTITY_TYPES.register("eternal_pedestal_tile_entity", 
@@ -67,6 +69,15 @@ public class ModTileEntityTypes
 			TILE_ENTITY_TYPES.register("barrel", 
 					() -> TileEntityType.Builder.create(EndBarrelTileEntity::new, 
 							getBarrels()).build(null));
+	
+	static Block[] getPedestals() {
+		List<Block> result = new ArrayList<>();
+		for (StoneMaterial m : StoneMaterial.getMaterials())
+			result.add(m.pedestal.get());
+		result.add(ModBlocks.PURPUR_PEDESTAL.get());
+		result.add(ModBlocks.QUARTZ_PEDESTAL.get());
+		return result.toArray(new Block[] {});
+	}
 	
 	static Block[] getChests() {
 		List<Block> result = Lists.newArrayList();

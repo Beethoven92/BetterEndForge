@@ -1,6 +1,12 @@
 package mod.beethoven92.betterendforge.common.block.material;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.google.common.collect.Iterables;
+
 import mod.beethoven92.betterendforge.common.block.ModLanternBlock;
+import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
 import mod.beethoven92.betterendforge.common.block.template.PillarBlockTemplate;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import net.minecraft.block.AbstractBlock;
@@ -17,6 +23,8 @@ import net.minecraftforge.fml.RegistryObject;
 
 public class StoneMaterial 
 {
+	private static final List<StoneMaterial> MATERIALS = new ArrayList<>();
+	
 	public final String name;
 	
 	public final RegistryObject<Block> stone;
@@ -29,8 +37,8 @@ public class StoneMaterial
 	public final RegistryObject<Block> wall;
 	public final RegistryObject<Block> button;
 	public final RegistryObject<Block> pressure_plate;
-	//public final RegistryObject<Block> pedestal;
-	public final RegistryObject<Block> lantern;
+	public final RegistryObject<Block> pedestal;
+	public final RegistryObject<Block> lantern; // TODO: Add pedestals and lanterns for vanilla stone blocks
 	
 	public final RegistryObject<Block> bricks;
 	public final RegistryObject<Block> brick_stairs;
@@ -63,8 +71,11 @@ public class StoneMaterial
 				() -> new StoneButtonBlock(material));
 		pressure_plate = ModBlocks.registerBlockWithDefaultItem(name + "_pressure_plate", 
 				() -> new PressurePlateBlock(Sensitivity.MOBS, material));
-		//pedestal = ModBlocks.registerBlockWithDefaultItem(name + "_pedestal", 
-		//		() -> new PedestalBlock(material));
+		pedestal = ModBlocks.registerBlockWithDefaultItem(name + "_pedestal", 
+				() -> new PedestalBlock(AbstractBlock.Properties.create(Material.ROCK, color).
+                        setRequiresTool().
+                        hardnessAndResistance(3.0F, 9.0F).
+                        setLightLevel(PedestalBlock.light())));
 		lantern = ModBlocks.registerBlockWithDefaultItem(name + "_lantern", 
 				() -> new ModLanternBlock(AbstractBlock.Properties.create(Material.ROCK, color).
                         setRequiresTool().
@@ -79,5 +90,11 @@ public class StoneMaterial
 				() -> new SlabBlock(material));
 		brick_wall = ModBlocks.registerBlockWithDefaultItem(name + "_bricks_wall", 
 				() -> new WallBlock(material));
+		
+		MATERIALS.add(this);
+	}
+	
+	public static Iterable<StoneMaterial> getMaterials() {
+		return Iterables.unmodifiableIterable(MATERIALS);
 	}
 }
