@@ -30,7 +30,7 @@ public class ServerPlayNetHandlerMixin {
 
 	@Inject(method = "processUpdateSign", at = @At(value = "HEAD"), cancellable = true)
 	private void be_signUpdate(CUpdateSignPacket packet, CallbackInfo info) {
-		PacketThreadUtil.checkThreadAndEnqueue(packet, (ServerPlayNetHandler) (Object) this, (ServerWorld) this.player.getServerWorld());
+		PacketThreadUtil.checkThreadAndEnqueue(packet, ServerPlayNetHandler.class.cast(this), this.player.getServerWorld());
 		this.player.markPlayerActive();
 		ServerWorld serverWorld = this.player.getServerWorld();
 		BlockPos blockPos = packet.getPosition();

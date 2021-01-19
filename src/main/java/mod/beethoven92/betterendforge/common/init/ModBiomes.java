@@ -108,6 +108,7 @@ public class ModBiomes
 							config = loadJsonConfig(id.getNamespace());
 							configs.put(id.getNamespace(), config);
 						}
+						
 						float fog = 1F;
 						float chance = 1F;
 					    boolean isVoid = false;
@@ -119,7 +120,7 @@ public class ModBiomes
 						    chance = JsonFactory.getFloat(element.getAsJsonObject(), "generation_chance", 1);
 						    isVoid = JsonFactory.getString(element.getAsJsonObject(), "type", "land").equals("void");
 						    hasCaves = JsonFactory.getBoolean(element.getAsJsonObject(), "has_caves", true);
-					     }
+					    }
 					    
 					    BetterEndBiome endBiome = new BetterEndBiome(id, biome, fog, chance, hasCaves);
 					    if (isVoid) 

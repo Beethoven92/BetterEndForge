@@ -5,10 +5,13 @@ import net.minecraft.util.math.BlockPos;
 public interface ITeleportingEntity 
 {
 	boolean beCanTeleport();
+
+	public abstract void beSetExitPos(BlockPos pos);	
+	public abstract BlockPos beGetExitPos();
+	void beResetExitPos();
+	
 	public abstract long beGetCooldown();
 	public abstract void beSetCooldown(long time);
-	public abstract void beSetExitPos(BlockPos pos);
-	public abstract BlockPos beGetExitPos();
 	
 	default boolean hasCooldown() 
 	{

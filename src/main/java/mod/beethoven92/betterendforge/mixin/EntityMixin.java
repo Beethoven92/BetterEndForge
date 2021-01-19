@@ -70,9 +70,9 @@ public abstract class EntityMixin implements ITeleportingEntity
 				((ServerWorld) world).resetUpdateEntityTick();
 				destination.resetUpdateEntityTick();
 				this.world.getProfiler().endSection();
-				beResetTeleport();
+				beResetExitPos();
 				info.setReturnValue(entity);
-				info.cancel();
+				//info.cancel();
 			}
 		}
 	}
@@ -83,8 +83,8 @@ public abstract class EntityMixin implements ITeleportingEntity
 		if (beCanTeleport()) 
 		{
 			info.setReturnValue(new PortalInfo(new Vector3d(exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D), getMotion(), rotationYaw, rotationPitch));
-			beResetTeleport();
-			info.cancel();
+			//beResetExitPos();
+			//info.cancel();
 		}
 	}
 	
@@ -112,7 +112,7 @@ public abstract class EntityMixin implements ITeleportingEntity
 	@Override
 	public void beSetExitPos(BlockPos pos) 
 	{
-		this.exitPos = pos;
+		this.exitPos = pos.toImmutable();
 	}
 
 	@Override
@@ -121,14 +121,15 @@ public abstract class EntityMixin implements ITeleportingEntity
 		return this.exitPos;
 	}
 	
-	public void beResetTeleport() 
+	@Override
+	public void beResetExitPos() 
 	{
-		exitPos = null;
+		this.exitPos = null;
 	}
 	
 	@Override
 	public boolean beCanTeleport() 
 	{
-		return exitPos != null;
+		return this.exitPos != null;
 	}
 }

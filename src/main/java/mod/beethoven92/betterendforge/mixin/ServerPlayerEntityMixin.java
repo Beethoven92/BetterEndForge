@@ -8,12 +8,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import mod.beethoven92.betterendforge.common.interfaces.ITeleportingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.server.ServerWorld;
 
 @Mixin(ServerPlayerEntity.class)
 public class ServerPlayerEntityMixin //implements ITeleportingEntity 
 {	
-	private long beCooldown;
-
+	//private long beCooldown;
+	
+	/*@Inject(method = "func_242110_a", at = @At("HEAD"), cancellable = true)
+	private void be_createEndSpawnPlatform(ServerWorld world, BlockPos centerPos, CallbackInfo info) 
+	{
+		if (!centerPos.equals(world.getSpawnPoint()))// || beCanTeleport()) 
+		{
+			info.cancel();
+		}
+	}*/
+	
 	/*@Inject(method = "tick", at = @At("TAIL"))
 	public void baseTick(CallbackInfo info) 
 	{
