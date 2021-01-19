@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:andesite_pedestal"
+    ]
+  },
+  "criteria": {
+    "has_andesite_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:polished_andesite_slab"
+          }
+        ]
+      }
+    },
+    "has_andesite_pillar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:polished_andesite"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:andesite_pedestal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_andesite_slab",
+      "has_andesite_pillar",
+      "has_the_recipe"
+    ]
+  ]
+}

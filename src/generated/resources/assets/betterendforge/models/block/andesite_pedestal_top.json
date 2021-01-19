@@ -1,0 +1,8 @@
+{
+  "parent": "betterendforge:block/pedestal_top",
+  "textures": {
+    "top": "minecraft:block/polished_andesite",
+    "base": "minecraft:block/polished_andesite",
+    "pillar": "minecraft:block/andesite_pillar"
+  }
+}

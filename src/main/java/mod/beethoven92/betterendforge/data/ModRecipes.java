@@ -85,6 +85,9 @@ public class ModRecipes extends RecipeProvider
 	    // PEDESTALS
 		registerPedestal(ModBlocks.QUARTZ_PEDESTAL.get(), Blocks.QUARTZ_SLAB, Blocks.QUARTZ_PILLAR, consumer, "quartz");
 		registerPedestal(ModBlocks.PURPUR_PEDESTAL.get(), Blocks.PURPUR_SLAB, Blocks.PURPUR_PILLAR, consumer, "purpur");
+		registerPedestal(ModBlocks.ANDESITE_PEDESTAL.get(), Blocks.POLISHED_ANDESITE_SLAB, Blocks.POLISHED_ANDESITE, consumer, "andesite");
+		registerPedestal(ModBlocks.DIORITE_PEDESTAL.get(), Blocks.POLISHED_DIORITE_SLAB, Blocks.POLISHED_DIORITE, consumer, "diorite");
+		registerPedestal(ModBlocks.GRANITE_PEDESTAL.get(), Blocks.POLISHED_GRANITE_SLAB, Blocks.POLISHED_GRANITE, consumer, "granite");
 		
 		ShapedRecipeBuilder.shapedRecipe(ModBlocks.INFUSION_PEDESTAL.get()).key('O', Items.ENDER_PEARL).key('Y', Items.ENDER_EYE).key('#', Blocks.OBSIDIAN).patternLine(" Y ").patternLine("O#O").patternLine(" # ").addCriterion("has_ender_pearl", hasItem(Items.ENDER_PEARL)).addCriterion("has_ender_eye", hasItem(Items.ENDER_EYE)).addCriterion("has_obsidian", hasItem(Blocks.OBSIDIAN)).build(consumer);
 		

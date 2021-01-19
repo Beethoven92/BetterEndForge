@@ -278,6 +278,16 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> PURPUR_PEDESTAL = registerBlockWithDefaultItem("purpur_pedestal",
 			() -> new PedestalBlock(AbstractBlock.Properties.from(Blocks.PURPUR_BLOCK).setLightLevel(PedestalBlock.light())));
+	
+	public static final RegistryObject<Block> ANDESITE_PEDESTAL = registerBlockWithDefaultItem("andesite_pedestal",
+			() -> new PedestalBlock(AbstractBlock.Properties.from(Blocks.ANDESITE).setLightLevel(PedestalBlock.light())));
+
+	public static final RegistryObject<Block> DIORITE_PEDESTAL = registerBlockWithDefaultItem("diorite_pedestal",
+			() -> new PedestalBlock(AbstractBlock.Properties.from(Blocks.DIORITE).setLightLevel(PedestalBlock.light())));
+
+	public static final RegistryObject<Block> GRANITE_PEDESTAL = registerBlockWithDefaultItem("granite_pedestal",
+			() -> new PedestalBlock(AbstractBlock.Properties.from(Blocks.GRANITE).setLightLevel(PedestalBlock.light())));
+
 			
 	// PLANTS
 	public static final RegistryObject<Block> UMBRELLA_MOSS = registerBlockWithDefaultItem("umbrella_moss", 

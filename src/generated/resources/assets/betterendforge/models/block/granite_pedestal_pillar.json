@@ -1,0 +1,6 @@
+{
+  "parent": "betterendforge:block/pedestal_pillar",
+  "textures": {
+    "pillar": "minecraft:block/granite_pillar"
+  }
+}

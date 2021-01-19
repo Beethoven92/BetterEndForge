@@ -1,0 +1,76 @@
+{
+  "variants": {
+    "has_item=false,has_light=false,state=pedestal_top": {
+      "model": "betterendforge:block/granite_pedestal_top"
+    },
+    "has_item=true,has_light=false,state=pedestal_top": {
+      "model": "betterendforge:block/granite_pedestal_top"
+    },
+    "has_item=false,has_light=true,state=pedestal_top": {
+      "model": "betterendforge:block/granite_pedestal_top"
+    },
+    "has_item=true,has_light=true,state=pedestal_top": {
+      "model": "betterendforge:block/granite_pedestal_top"
+    },
+    "has_item=false,has_light=false,state=column_top": {
+      "model": "betterendforge:block/granite_pedestal_column_top"
+    },
+    "has_item=true,has_light=false,state=column_top": {
+      "model": "betterendforge:block/granite_pedestal_column_top"
+    },
+    "has_item=false,has_light=true,state=column_top": {
+      "model": "betterendforge:block/granite_pedestal_column_top"
+    },
+    "has_item=true,has_light=true,state=column_top": {
+      "model": "betterendforge:block/granite_pedestal_column_top"
+    },
+    "has_item=false,has_light=false,state=bottom": {
+      "model": "betterendforge:block/granite_pedestal_bottom"
+    },
+    "has_item=true,has_light=false,state=bottom": {
+      "model": "betterendforge:block/granite_pedestal_bottom"
+    },
+    "has_item=false,has_light=true,state=bottom": {
+      "model": "betterendforge:block/granite_pedestal_bottom"
+    },
+    "has_item=true,has_light=true,state=bottom": {
+      "model": "betterendforge:block/granite_pedestal_bottom"
+    },
+    "has_item=false,has_light=false,state=pillar": {
+      "model": "betterendforge:block/granite_pedestal_pillar"
+    },
+    "has_item=true,has_light=false,state=pillar": {
+      "model": "betterendforge:block/granite_pedestal_pillar"
+    },
+    "has_item=false,has_light=true,state=pillar": {
+      "model": "betterendforge:block/granite_pedestal_pillar"
+    },
+    "has_item=true,has_light=true,state=pillar": {
+      "model": "betterendforge:block/granite_pedestal_pillar"
+    },
+    "has_item=false,has_light=false,state=column": {
+      "model": "betterendforge:block/granite_pedestal_column"
+    },
+    "has_item=true,has_light=false,state=column": {
+      "model": "betterendforge:block/granite_pedestal_column"
+    },
+    "has_item=false,has_light=true,state=column": {
+      "model": "betterendforge:block/granite_pedestal_column"
+    },
+    "has_item=true,has_light=true,state=column": {
+      "model": "betterendforge:block/granite_pedestal_column"
+    },
+    "has_item=false,has_light=false,state=default": {
+      "model": "betterendforge:block/granite_pedestal_default"
+    },
+    "has_item=true,has_light=false,state=default": {
+      "model": "betterendforge:block/granite_pedestal_default"
+    },
+    "has_item=false,has_light=true,state=default": {
+      "model": "betterendforge:block/granite_pedestal_default"
+    },
+    "has_item=true,has_light=true,state=default": {
+      "model": "betterendforge:block/granite_pedestal_default"
+    }
+  }
+}
