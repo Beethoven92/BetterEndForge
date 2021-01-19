@@ -8,10 +8,13 @@ public class CommonConfig
 
     public static ForgeConfigSpec COMMON_CONFIG;
    
+    public static final ForgeConfigSpec.ConfigValue<Integer> BIOME_SIZE_LAND;
+    public static final ForgeConfigSpec.ConfigValue<Integer> BIOME_SIZE_VOID;
     public static final ForgeConfigSpec.BooleanValue DRAGON_FIGHT_ENABLED;
     public static final ForgeConfigSpec.BooleanValue GENERATE_VANILLA_PORTAL;
     public static final ForgeConfigSpec.BooleanValue GENERATE_OBSIDIAN_PILLARS;
-    
+	public static final ForgeConfigSpec.BooleanValue CUSTOM_CHORUS_PLANT_ENABLED;
+	public static final ForgeConfigSpec.BooleanValue CHORUS_IN_VANILLA_BIOMES_ENABLED;
     public static final ForgeConfigSpec.BooleanValue NEW_GENERATOR_ENABLED;
     public static final ForgeConfigSpec.BooleanValue NO_RING_VOID;
     public static final ForgeConfigSpec.BooleanValue GENERATE_CENTRAL_ISLAND;
@@ -20,7 +23,13 @@ public class CommonConfig
     static 
     {
         BUILDER.push("Common settings");
+        
+        BUILDER.comment("\nLand biome map size.\nDefault value: 256");
+        BIOME_SIZE_LAND = BUILDER.define("biomeSizeLand", 256);
        
+        BUILDER.comment("\nVoid biome map size.\nDefault value: 256");
+        BIOME_SIZE_VOID = BUILDER.define("biomeSizeVoid", 256);
+        
         BUILDER.comment("\nEnable/disable dragon fight.\nDefault value: true");
         DRAGON_FIGHT_ENABLED = BUILDER.define("dragonFightEnabled", true);
 
@@ -29,6 +38,12 @@ public class CommonConfig
         
         BUILDER.comment("\nEnable/disable obsidian pillars generation.\nDefault value: true");
         GENERATE_OBSIDIAN_PILLARS = BUILDER.define("generateObsidianPillars", true);
+       
+        BUILDER.comment("\nEnable/disable custom chorus plant.\nDefault value: true");
+        CUSTOM_CHORUS_PLANT_ENABLED = BUILDER.define("customChorusPlantEnabled", true);
+        
+        BUILDER.comment("\nEnable/disable chorus generation in vanilla biomes.\nDefault value: true");
+        CHORUS_IN_VANILLA_BIOMES_ENABLED = BUILDER.define("chorusInVanillaBiomesEnabled", true);
         
         BUILDER.comment("\nEnable/disable new terrain generation.\nDefault value: false");
         NEW_GENERATOR_ENABLED = BUILDER.define("enableNewGenerator", false);
@@ -52,6 +67,16 @@ public class CommonConfig
         return COMMON_CONFIG;
     }
     
+    public static int biomeSizeLand()
+    {
+    	return BIOME_SIZE_LAND.get();
+    }
+    
+    public static int biomeSizeVoid()
+    {
+    	return BIOME_SIZE_VOID.get();
+    }
+    
     public static boolean isDragonFightEnabled()
     {
     	return DRAGON_FIGHT_ENABLED.get();
@@ -65,6 +90,16 @@ public class CommonConfig
     public static boolean shouldGenerateObsidianPillars()
     {
     	return GENERATE_OBSIDIAN_PILLARS.get();
+    }
+    
+    public static boolean isCustomChorusPlantEnabled()
+    {
+    	return CUSTOM_CHORUS_PLANT_ENABLED.get();
+    }
+    
+    public static boolean isChorusInVanillaBiomesEnabled()
+    {
+    	return CHORUS_IN_VANILLA_BIOMES_ENABLED.get();
     }
     
     public static boolean isNewGeneratorEnabled() 

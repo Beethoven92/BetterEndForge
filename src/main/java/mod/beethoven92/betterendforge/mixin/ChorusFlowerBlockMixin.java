@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
+import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -67,7 +68,14 @@ public abstract class ChorusFlowerBlockMixin extends Block
 				if (i < 5) 
 				{
 					placeGrownFlower(world, up, i + 1);
-					BlockHelper.setWithoutUpdate(world, pos, plantBlock.getDefaultState().with(ChorusPlantBlock.UP, true).with(ChorusPlantBlock.DOWN, true).with(BlockHelper.ROOTS, true));
+					if (CommonConfig.isCustomChorusPlantEnabled()) 
+					{
+						BlockHelper.setWithoutUpdate(world, pos, plantBlock.getDefaultState().with(ChorusPlantBlock.UP, true).with(ChorusPlantBlock.DOWN, true).with(BlockHelper.ROOTS, true));
+					}
+					else 
+					{
+						BlockHelper.setWithoutUpdate(world, pos, plantBlock.getDefaultState().with(ChorusPlantBlock.UP, true).with(ChorusPlantBlock.DOWN, true));
+					}
 					info.cancel();
 				}
 			}
@@ -78,7 +86,7 @@ public abstract class ChorusFlowerBlockMixin extends Block
 	private static void generatePlant(IWorld world, BlockPos pos, Random random, int size, CallbackInfo info) 
 	{
 		BlockState state = world.getBlockState(pos);
-		if (state.isIn(Blocks.CHORUS_PLANT)) 
+		if (CommonConfig.isCustomChorusPlantEnabled() && state.isIn(Blocks.CHORUS_PLANT)) 
 		{
 			BlockHelper.setWithoutUpdate(world, pos, state.with(BlockHelper.ROOTS, true));
 		}
@@ -95,4 +103,16 @@ public abstract class ChorusFlowerBlockMixin extends Block
 	
 	@Shadow
 	private void placeGrownFlower(World world, BlockPos pos, int age) {}
+	
+	@Inject(method = "placeDeadFlower", at = @At("HEAD"), cancellable = true)
+	private void beOnDie(World world, BlockPos pos, CallbackInfo info) 
+	{
+		BlockState down = world.getBlockState(pos.down());
+		if (down.isIn(Blocks.CHORUS_PLANT) || down.isIn(ModTags.GEN_TERRAIN)) 
+		{
+			world.setBlockState(pos, this.getDefaultState().with(ChorusFlowerBlock.AGE, Integer.valueOf(5)), 2);
+			world.playEvent(1034, pos, 0);
+		}
+		info.cancel();
+	}
 }

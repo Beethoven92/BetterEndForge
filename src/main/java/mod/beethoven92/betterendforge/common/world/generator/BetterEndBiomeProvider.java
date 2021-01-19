@@ -44,8 +44,8 @@ public class BetterEndBiomeProvider extends BiomeProvider
 	{
 		super(getBiomes(lookupRegistry));
 		
-		this.mapLand = new BiomeMap(seed, 256, ModBiomes.LAND_BIOMES);
-		this.mapVoid = new BiomeMap(seed, 256, ModBiomes.VOID_BIOMES);
+		this.mapLand = new BiomeMap(seed, CommonConfig.biomeSizeLand(), ModBiomes.LAND_BIOMES);
+		this.mapVoid = new BiomeMap(seed, CommonConfig.biomeSizeVoid(), ModBiomes.VOID_BIOMES);
 		this.centerBiome = lookupRegistry.getOrThrow(Biomes.THE_END);
 		this.barrens = lookupRegistry.getOrThrow(Biomes.END_BARRENS);
 		this.lookupRegistry = lookupRegistry;

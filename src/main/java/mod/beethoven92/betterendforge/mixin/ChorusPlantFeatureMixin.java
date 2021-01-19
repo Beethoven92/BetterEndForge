@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
+import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ChorusFlowerBlock;
@@ -34,9 +35,16 @@ public abstract class ChorusPlantFeatureMixin
 			if (bottom.isIn(Blocks.CHORUS_PLANT)) 
 			{
 				BlockHelper.setWithoutUpdate(worldIn, blockPos, bottom.with(BlockHelper.ROOTS, true).with(ChorusPlantBlock.DOWN, true));
+				if ((CommonConfig.isCustomChorusPlantEnabled())) 
+				{
+					BlockHelper.setWithoutUpdate(worldIn, blockPos, bottom.with(BlockHelper.ROOTS, true).with(ChorusPlantBlock.DOWN, true));
+				}
+				else 
+				{
+					BlockHelper.setWithoutUpdate(worldIn, blockPos, bottom.with(ChorusPlantBlock.DOWN, true));
+				}
 			}
 			info.setReturnValue(true);
-			info.cancel();
 		}
 	}
 }
