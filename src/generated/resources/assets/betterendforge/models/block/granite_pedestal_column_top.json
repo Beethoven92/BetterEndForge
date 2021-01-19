@@ -1,0 +1,7 @@
+{
+  "parent": "betterendforge:block/pedestal_column_top",
+  "textures": {
+    "base": "minecraft:block/polished_granite",
+    "pillar": "minecraft:block/granite_pillar"
+  }
+}

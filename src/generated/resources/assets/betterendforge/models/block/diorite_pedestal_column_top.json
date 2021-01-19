@@ -1,0 +1,7 @@
+{
+  "parent": "betterendforge:block/pedestal_column_top",
+  "textures": {
+    "base": "minecraft:block/polished_diorite",
+    "pillar": "minecraft:block/diorite_pillar"
+  }
+}

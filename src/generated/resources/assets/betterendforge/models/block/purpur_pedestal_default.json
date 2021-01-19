@@ -1,0 +1,9 @@
+{
+  "parent": "betterendforge:block/pedestal_default",
+  "textures": {
+    "top": "minecraft:block/purpur_block",
+    "base": "minecraft:block/purpur_block",
+    "pillar": "minecraft:block/purpur_pillar",
+    "bottom": "minecraft:block/purpur_block"
+  }
+}

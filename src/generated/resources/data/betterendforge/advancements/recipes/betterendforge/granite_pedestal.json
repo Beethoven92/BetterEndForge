@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:granite_pedestal"
+    ]
+  },
+  "criteria": {
+    "has_granite_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:polished_granite_slab"
+          }
+        ]
+      }
+    },
+    "has_granite_pillar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:polished_granite"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:granite_pedestal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_granite_slab",
+      "has_granite_pillar",
+      "has_the_recipe"
+    ]
+  ]
+}

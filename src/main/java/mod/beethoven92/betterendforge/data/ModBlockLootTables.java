@@ -121,6 +121,9 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		registerDropSelfLootTable(ModBlocks.QUARTZ_PEDESTAL.get());
 		registerDropSelfLootTable(ModBlocks.PURPUR_PEDESTAL.get());
+		registerDropSelfLootTable(ModBlocks.ANDESITE_PEDESTAL.get());
+		registerDropSelfLootTable(ModBlocks.DIORITE_PEDESTAL.get());
+		registerDropSelfLootTable(ModBlocks.GRANITE_PEDESTAL.get());
 		registerDropSelfLootTable(ModBlocks.ETERNAL_PEDESTAL.get());
 		registerDropSelfLootTable(ModBlocks.INFUSION_PEDESTAL.get());
 		

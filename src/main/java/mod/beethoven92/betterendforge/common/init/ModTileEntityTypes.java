@@ -76,6 +76,9 @@ public class ModTileEntityTypes
 			result.add(m.pedestal.get());
 		result.add(ModBlocks.PURPUR_PEDESTAL.get());
 		result.add(ModBlocks.QUARTZ_PEDESTAL.get());
+		result.add(ModBlocks.ANDESITE_PEDESTAL.get());
+		result.add(ModBlocks.DIORITE_PEDESTAL.get());
+		result.add(ModBlocks.GRANITE_PEDESTAL.get());
 		return result.toArray(new Block[] {});
 	}
 	
