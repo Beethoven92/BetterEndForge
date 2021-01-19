@@ -1,0 +1,7 @@
+{
+  "parent": "betterendforge:block/pedestal_column_top",
+  "textures": {
+    "base": "betterendforge:block/flavolite_polished",
+    "pillar": "betterendforge:block/flavolite_pillar_side"
+  }
+}

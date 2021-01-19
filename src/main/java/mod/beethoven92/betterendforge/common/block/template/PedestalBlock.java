@@ -1,5 +1,7 @@
 package mod.beethoven92.betterendforge.common.block.template;
 
+import java.util.function.ToIntFunction;
+
 import mod.beethoven92.betterendforge.common.block.BlockProperties;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.PedestalState;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
@@ -65,9 +67,13 @@ public class PedestalBlock extends Block
 	
 	public PedestalBlock(Properties properties) 
 	{
-		super(properties.setLightLevel((state) -> {return state.get(HAS_LIGHT) ? 12 : 0;}));
+		super(properties);
 		
 		this.setDefaultState(this.stateContainer.getBaseState().with(STATE, PedestalState.DEFAULT).with(HAS_ITEM, false).with(HAS_LIGHT, false));
+	}
+	
+	public static ToIntFunction<BlockState> light() {
+		return (state) -> {return state.get(HAS_LIGHT) ? 12 : 0;};
 	}
 	
 	public float getHeight(BlockState state) 

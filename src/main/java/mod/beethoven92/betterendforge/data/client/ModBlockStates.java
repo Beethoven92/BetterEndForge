@@ -1,9 +1,14 @@
 package mod.beethoven92.betterendforge.data.client;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.block.BlockProperties.PedestalState;
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
+import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
 import mod.beethoven92.betterendforge.common.block.template.PillarBlockTemplate;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import net.minecraft.block.AbstractButtonBlock;
@@ -156,6 +161,8 @@ public class ModBlockStates extends BlockStateProvider
 		lanternBlock(material.lantern.get(), material.name);
 		makeBlockItemFromExistingModel(material.lantern.get(), material.name + "_lantern_ceil");
 
+		pedestalBlock(material.pedestal.get(), material.name);
+		makeBlockItemFromExistingModel(material.pedestal.get(), material.name + "_pedestal_default");
 	}	
 	
 	private void registerColoredMaterialBlockStates(ColoredMaterial material, String blockModel)
@@ -340,6 +347,38 @@ public class ModBlockStates extends BlockStateProvider
            .modelFile(isFloor ? floor : ceil)
            .build();
         });
+
+    }
+    
+    private void pedestalBlock(Block block, String material)
+    {
+    	Map<PedestalState, ModelFile> models = new HashMap<>();
+    	models.put(PedestalState.COLUMN_TOP, models().withExistingParent(material + "_pedestal_column_top", modLoc("block/pedestal_column_top"))
+    			.texture("base", modLoc("block/" + material + "_polished"))
+    			.texture("pillar", modLoc("block/" + material + "_pillar_side")));
+    	models.put(PedestalState.COLUMN, models().withExistingParent(material + "_pedestal_column", modLoc("block/pedestal_column"))
+    			.texture("base", modLoc("block/" + material + "_polished"))
+    			.texture("pillar", modLoc("block/" + material + "_pillar_side"))
+    			.texture("bottom", modLoc("block/" + material + "_polished")));
+    	models.put(PedestalState.PEDESTAL_TOP, models().withExistingParent(material + "_pedestal_top", modLoc("block/pedestal_top"))
+    			.texture("top", modLoc("block/" + material + "_polished"))
+    			.texture("base", modLoc("block/" + material + "_polished"))
+    			.texture("pillar", modLoc("block/" + material + "_pillar_side")));
+    	models.put(PedestalState.BOTTOM, models().withExistingParent(material + "_pedestal_bottom", modLoc("block/pedestal_bottom"))
+    			.texture("base", modLoc("block/" + material + "_polished"))
+    			.texture("pillar", modLoc("block/" + material + "_pillar_side"))
+    			.texture("bottom", modLoc("block/" + material + "_polished")));
+    	models.put(PedestalState.PILLAR, models().withExistingParent(material + "_pedestal_pillar", modLoc("block/pedestal_pillar"))
+    			.texture("pillar", modLoc("block/" + material + "_pillar_side")));
+    	models.put(PedestalState.DEFAULT, models().withExistingParent(material + "_pedestal_default", modLoc("block/pedestal_default"))
+    			.texture("top", modLoc("block/" + material + "_polished"))
+    			.texture("base", modLoc("block/" + material + "_polished"))
+    			.texture("pillar", modLoc("block/" + material + "_pillar_side"))
+    			.texture("bottom", modLoc("block/" + material + "_polished")));
+		getVariantBuilder(block).forAllStates(state -> {
+			PedestalState pedestalState = state.get(PedestalBlock.STATE);
+			return ConfiguredModel.builder().modelFile(models.get(pedestalState)).build();
+		});
 
     }
 }

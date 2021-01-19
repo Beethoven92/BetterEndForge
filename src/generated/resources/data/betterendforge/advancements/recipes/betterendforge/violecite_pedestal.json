@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:violecite_pedestal"
+    ]
+  },
+  "criteria": {
+    "has_violecite_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:violecite_slab"
+          }
+        ]
+      }
+    },
+    "has_violecite_pillar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:violecite_pillar"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:violecite_pedestal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_violecite_slab",
+      "has_violecite_pillar",
+      "has_the_recipe"
+    ]
+  ]
+}
