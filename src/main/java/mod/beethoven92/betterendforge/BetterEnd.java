@@ -7,6 +7,7 @@ import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.gen.FlatChunkGenerator;
 import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.Features;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
@@ -179,6 +180,22 @@ public class BetterEnd
     				event.getGeneration().getFeatures(Decoration.SURFACE_STRUCTURES).add(() -> ModConfiguredFeatures.NBT_STRUCTURES);
     			}
     		}
+        }
+    	
+    	@SubscribeEvent(priority = EventPriority.NORMAL)
+        public static void removeChorusFromVanillaBiomes(final BiomeLoadingEvent event) 
+        {		
+			if (!CommonConfig.isChorusInVanillaBiomesEnabled())
+			{
+				if (event.getName().getNamespace().equals("minecraft")) 
+				{
+					String path = event.getName().getPath();
+					if (path.equals("end_highlands") || path.equals("end_midlands") || path.equals("small_end_islands"))
+					{   						
+						event.getGeneration().getFeatures(Decoration.VEGETAL_DECORATION).removeIf((supplier) -> {return supplier.get().equals(Features.CHORUS_PLANT);});
+					}
+				}
+			}
         }
     	
     	// Thanks to TelepathicGrunt (https://github.com/TelepathicGrunt) for this code

@@ -1,9 +1,13 @@
 package mod.beethoven92.betterendforge.common.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Enumeration;
 import java.util.Random;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import com.google.common.collect.Sets;
 
@@ -35,6 +39,39 @@ public class StructureHelper
 		String ns = resource.getNamespace();
 		String nm = resource.getPath();
 		return readStructure("/data/" + ns + "/structures/" + nm + ".nbt");
+	}
+	
+	public static Template readStructure(File datapack, String path) 
+	{
+		if (datapack.isDirectory()) 
+		{
+			return readStructure(datapack.toString() + "/" + path);
+		}
+		else if (datapack.isFile() && datapack.getName().endsWith(".zip")) 
+		{
+			try 
+			{
+				ZipFile zipFile = new ZipFile(datapack);
+				Enumeration<? extends ZipEntry> entries = zipFile.entries();
+				while (entries.hasMoreElements()) 
+				{
+					ZipEntry entry = entries.nextElement();
+					String name = entry.getName();
+					long compressedSize = entry.getCompressedSize();
+					long normalSize = entry.getSize();
+					String type = entry.isDirectory() ? "DIR" : "FILE";
+
+					System.out.println(name);
+					System.out.format("\t %s - %d - %d\n", type, compressedSize, normalSize);
+				}
+				zipFile.close();
+			}
+			catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 	
 	public static Template readStructure(String path) 
@@ -382,7 +419,8 @@ public class StructureHelper
 				|| state.isIn(ModBlocks.FLAVOLITE_RUNED_ETERNAL.get())
 				|| state.isIn(BlockTags.LOGS)
 				|| state.isIn(BlockTags.LEAVES)
-				|| state.getMaterial().equals(Material.PLANTS);
+				|| state.getMaterial().equals(Material.PLANTS)
+		        || state.getMaterial().equals(Material.LEAVES);
 	}
 	
 	private static void shuffle(Random random) 

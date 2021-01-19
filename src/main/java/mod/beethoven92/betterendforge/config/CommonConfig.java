@@ -51,7 +51,7 @@ public class CommonConfig
         BUILDER.comment("\nEnable/disable the void ring around central island.\nDefault value: false");
         NO_RING_VOID = BUILDER.define("noRingVoid", false);
         
-        BUILDER.comment("\nEnable/disable generation of the central island.\nDefault value: false]");
+        BUILDER.comment("\nEnable/disable generation of the central island.\nDefault value: false");
         GENERATE_CENTRAL_ISLAND = BUILDER.define("generateCentralIsland", false);
         
         BUILDER.comment("\nSet the chance for end city generation to fail. Higher values means lower chance of spawning\nDefault value: 5");

@@ -6,25 +6,67 @@ import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.util.StructureHelper;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.material.Material;
 import net.minecraft.util.Mirror;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.ISeedReader;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.template.BlockIgnoreStructureProcessor;
+import net.minecraft.world.gen.feature.template.IStructureProcessorType;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
+import net.minecraft.world.gen.feature.template.StructureProcessor;
 import net.minecraft.world.gen.feature.template.Template;
 
 public class CrashedShipFeature extends NBTFeature
 {
+	private static final StructureProcessor REPLACER;
 	private static final String STRUCTURE_PATH = "/data/minecraft/structures/end_city/ship.nbt";
+	private Template structure;
+	
+	static 
+	{
+		REPLACER = new StructureProcessor() 
+		{
+			@Override
+			public Template.BlockInfo process(IWorldReader worldView, BlockPos pos, BlockPos blockPos, 
+					Template.BlockInfo structureBlockInfo, Template.BlockInfo structureBlockInfo2, 
+					PlacementSettings structurePlacementData, Template template) 
+			{
+				BlockState state = structureBlockInfo2.state;
+				if (state.isIn(Blocks.SPAWNER) || state.getMaterial().equals(Material.WOOL)) 
+				{
+					return new Template.BlockInfo(structureBlockInfo2.pos, Blocks.AIR.getDefaultState(), null);
+				}
+				return structureBlockInfo2;
+			}
+
+			@Override
+			protected IStructureProcessorType<?> getType() 
+			{
+				return IStructureProcessorType.NOP;
+			}
+		};
+	}
 	
 	@Override
 	protected Template getStructure(ISeedReader world, BlockPos pos, Random random) 
 	{
-		return StructureHelper.readStructure(STRUCTURE_PATH);
+		if (structure == null) 
+		{
+			structure = world.getWorld().getStructureTemplateManager().getTemplate(new ResourceLocation("end_city/ship"));
+			if (structure == null) 
+			{
+				structure = StructureHelper.readStructure(STRUCTURE_PATH);
+			}
+		}
+		return structure;
 	}
 
 	@Override
@@ -62,7 +104,7 @@ public class CrashedShipFeature extends NBTFeature
 	@Override
 	protected void addStructureData(PlacementSettings data) 
 	{
-		data.addProcessor(BlockIgnoreStructureProcessor.AIR_AND_STRUCTURE_BLOCK).setIgnoreEntities(true);
+		data.addProcessor(BlockIgnoreStructureProcessor.AIR_AND_STRUCTURE_BLOCK).addProcessor(REPLACER).setIgnoreEntities(true);
 	}
 	
 	@Override
@@ -71,6 +113,7 @@ public class CrashedShipFeature extends NBTFeature
 	{
 		center = new BlockPos(((center.getX() >> 4) << 4) | 8, 128, ((center.getZ() >> 4) << 4) | 8);
 		center = getGround(world, center);
+		MutableBoundingBox bounds = makeBox(center);
 		
 		if (!canSpawn(world, center, rand)) 
 		{
@@ -85,7 +128,6 @@ public class CrashedShipFeature extends NBTFeature
 		PlacementSettings placementData = new PlacementSettings().setRotation(rotation).setMirror(mirror);
 		center = center.add(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
 		
-		MutableBoundingBox bounds = makeBox(center);
 		MutableBoundingBox structB = structure.getMutableBoundingBox(placementData, center);
 		bounds = StructureHelper.intersectBoxes(bounds, structB);
 		
@@ -97,4 +139,5 @@ public class CrashedShipFeature extends NBTFeature
 		
 		return true;
 	}
+	
 }
