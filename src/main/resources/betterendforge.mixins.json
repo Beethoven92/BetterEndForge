@@ -28,7 +28,8 @@
 	      "ClientPlayNetHandlerMixin",
 	      "SoundVolumeAccessor",
 	      "MusicTickerMixin",
-	      "MinecraftMixin"
+	      "MinecraftMixin",
+	      "ModelBakeryMixin"
 	], 
   "minVersion": "0.8"
 }
