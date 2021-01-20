@@ -38,7 +38,7 @@ public class StoneMaterial
 	public final RegistryObject<Block> button;
 	public final RegistryObject<Block> pressure_plate;
 	public final RegistryObject<Block> pedestal;
-	public final RegistryObject<Block> lantern; // TODO: Add pedestals and lanterns for vanilla stone blocks
+	public final RegistryObject<Block> lantern;
 	
 	public final RegistryObject<Block> bricks;
 	public final RegistryObject<Block> brick_stairs;

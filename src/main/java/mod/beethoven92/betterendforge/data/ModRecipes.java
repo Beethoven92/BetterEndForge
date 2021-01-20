@@ -82,6 +82,16 @@ public class ModRecipes extends RecipeProvider
 	    ShapelessRecipeBuilder.shapelessRecipe(Items.GUNPOWDER).addIngredient(ModItems.CRYSTALLINE_SULPHUR.get()).addIngredient(ItemTags.COALS).addIngredient(Items.BONE_MEAL).addCriterion("has_crystalline_sulphur", hasItem(ModItems.CRYSTALLINE_SULPHUR.get())).build(consumer, "gunpowder_from_sulphur");
 	    ShapedRecipeBuilder.shapedRecipe(ModItems.GUIDE_BOOK.get()).key('D', ModItems.ENDER_DUST.get()).key('B', Items.BOOK).key('C', ModItems.CRYSTAL_SHARDS.get()).patternLine("D").patternLine("B").patternLine("C").addCriterion("has_crystal_shards", hasItem(ModItems.CRYSTAL_SHARDS.get())).build(consumer);
 	    
+	    // LANTERNS
+	    registerLantern(ModBlocks.ANDESITE_LANTERN.get(), Blocks.ANDESITE_SLAB, consumer, "andesite");
+	    registerLantern(ModBlocks.DIORITE_LANTERN.get(), Blocks.DIORITE_SLAB, consumer, "diorite");
+	    registerLantern(ModBlocks.GRANITE_LANTERN.get(), Blocks.GRANITE_SLAB, consumer, "granite");
+	    registerLantern(ModBlocks.QUARTZ_LANTERN.get(), Blocks.QUARTZ_SLAB, consumer, "quartz");
+	    registerLantern(ModBlocks.PURPUR_LANTERN.get(), Blocks.PURPUR_SLAB, consumer, "purpur");
+	    registerLantern(ModBlocks.END_STONE_LANTERN.get(), Blocks.END_STONE_BRICK_SLAB, consumer, "end_stone");
+	    registerLantern(ModBlocks.BLACKSTONE_LANTERN.get(), Blocks.BLACKSTONE_SLAB, consumer, "blackstone");
+
+	    
 	    // PEDESTALS
 		registerPedestal(ModBlocks.QUARTZ_PEDESTAL.get(), Blocks.QUARTZ_SLAB, Blocks.QUARTZ_PILLAR, consumer, "quartz");
 		registerPedestal(ModBlocks.PURPUR_PEDESTAL.get(), Blocks.PURPUR_SLAB, Blocks.PURPUR_PILLAR, consumer, "purpur");
@@ -191,7 +201,7 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(material.brick_wall.get(), 6).key('#', material.bricks.get()).patternLine("###").patternLine("###").setGroup("end_wall").addCriterion("has_bricks", hasItem(material.bricks.get())).build(consumer);
 	    ShapelessRecipeBuilder.shapelessRecipe(material.button.get()).addIngredient(material.stone.get()).setGroup("end_stone_buttons").addCriterion("has_stone", hasItem(material.stone.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.pressure_plate.get()).key('#', material.stone.get()).patternLine("##").setGroup("end_stone_plates").addCriterion("has_stone", hasItem(material.stone.get())).build(consumer);
-	    ShapedRecipeBuilder.shapedRecipe(material.lantern.get()).key('#', ModItems.CRYSTAL_SHARDS.get()).key('S', Ingredient.fromItems(material.slab.get(), material.brick_slab.get())).patternLine("S").patternLine("#").patternLine("S").setGroup("end_stone_lanterns").addCriterion("has_crystal_shards", hasItem(ModItems.CRYSTAL_SHARDS.get())).build(consumer);
+	    registerLantern(material.lantern.get(), material.slab.get(), consumer, material.name);
 	    registerPedestal(material.pedestal.get(), material.slab.get(), material.pillar.get(), consumer, material.name);
 	}
 	
@@ -273,5 +283,10 @@ public class ModRecipes extends RecipeProvider
 	private void registerPedestal(Block pedestal, Block slab, Block pillar, Consumer<IFinishedRecipe> consumer, String material) 
 	{
 		ShapedRecipeBuilder.shapedRecipe(pedestal, 2).key('S', slab).key('#', pillar).patternLine("S").patternLine("#").patternLine("S").addCriterion("has_" + material + "_slab", hasItem(slab)).addCriterion("has_" + material + "_pillar", hasItem(pillar)).build(consumer);
+	}
+	
+	private void registerLantern(Block lantern, Block slab, Consumer<IFinishedRecipe> consumer, String material) 
+	{
+		ShapedRecipeBuilder.shapedRecipe(lantern).key('S', slab).key('#', ModItems.CRYSTAL_SHARDS.get()).patternLine("S").patternLine("#").patternLine("S").addCriterion("has_" + material + "_slab", hasItem(slab)).addCriterion("has_crystal_shard", hasItem(ModItems.CRYSTAL_SHARDS.get())).build(consumer);
 	}
 }

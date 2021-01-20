@@ -45,6 +45,7 @@ import mod.beethoven92.betterendforge.common.block.LanceleafBlock;
 import mod.beethoven92.betterendforge.common.block.LanceleafSeedBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeWetBlock;
+import mod.beethoven92.betterendforge.common.block.ModLanternBlock;
 import mod.beethoven92.betterendforge.common.block.MossyGlowshroomCapBlock;
 import mod.beethoven92.betterendforge.common.block.MossyGlowshroomSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.MurkweedBlock;
@@ -229,6 +230,30 @@ public class ModBlocks
 					setRequiresTool().
 					hardnessAndResistance(5.0F, 6.0F).
 					sound(SoundType.METAL)));
+	
+	
+	// LANTERNS
+	public static final RegistryObject<Block> ANDESITE_LANTERN = registerBlockWithDefaultItem("andesite_lantern", 
+			() -> new ModLanternBlock(AbstractBlock.Properties.from(Blocks.ANDESITE).
+                    setLightLevel(s -> 15)));
+	public static final RegistryObject<Block> DIORITE_LANTERN = registerBlockWithDefaultItem("diorite_lantern", 
+			() -> new ModLanternBlock(AbstractBlock.Properties.from(Blocks.DIORITE).
+                    setLightLevel(s -> 15)));
+	public static final RegistryObject<Block> GRANITE_LANTERN = registerBlockWithDefaultItem("granite_lantern", 
+			() -> new ModLanternBlock(AbstractBlock.Properties.from(Blocks.GRANITE).
+                    setLightLevel(s -> 15)));
+	public static final RegistryObject<Block> QUARTZ_LANTERN = registerBlockWithDefaultItem("quartz_lantern", 
+			() -> new ModLanternBlock(AbstractBlock.Properties.from(Blocks.QUARTZ_BLOCK).
+                    setLightLevel(s -> 15)));
+	public static final RegistryObject<Block> PURPUR_LANTERN = registerBlockWithDefaultItem("purpur_lantern", 
+			() -> new ModLanternBlock(AbstractBlock.Properties.from(Blocks.PURPUR_BLOCK).
+                    setLightLevel(s -> 15)));
+	public static final RegistryObject<Block> END_STONE_LANTERN = registerBlockWithDefaultItem("end_stone_lantern", 
+			() -> new ModLanternBlock(AbstractBlock.Properties.from(Blocks.END_STONE).
+                    setLightLevel(s -> 15)));
+	public static final RegistryObject<Block> BLACKSTONE_LANTERN = registerBlockWithDefaultItem("blackstone_lantern", 
+			() -> new ModLanternBlock(AbstractBlock.Properties.from(Blocks.BLACKSTONE).
+                    setLightLevel(s -> 15)));
 	
 	// ORES
 	public static final RegistryObject<Block> ENDER_ORE = registerBlockWithDefaultItem("ender_ore",

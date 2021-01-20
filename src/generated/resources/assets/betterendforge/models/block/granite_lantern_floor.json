@@ -1,0 +1,10 @@
+{
+  "parent": "betterendforge:block/stone_lantern_floor",
+  "textures": {
+    "particle": "betterendforge:block/granite_lantern_side",
+    "texture": "betterendforge:block/granite_lantern_side",
+    "top": "betterendforge:block/granite_lantern_top",
+    "crystal": "betterendforge:block/aurora_crystal",
+    "bottom": "betterendforge:block/granite_lantern_bottom"
+  }
+}

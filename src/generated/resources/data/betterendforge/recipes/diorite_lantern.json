@@ -7,13 +7,13 @@
   ],
   "key": {
     "S": {
-      "item": "betterendforge:sulphuric_rock_slab"
+      "item": "minecraft:diorite_slab"
     },
     "#": {
       "item": "betterendforge:crystal_shards"
     }
   },
   "result": {
-    "item": "betterendforge:sulphuric_rock_lantern"
+    "item": "betterendforge:diorite_lantern"
   }
 }
