@@ -162,22 +162,27 @@ public class BetterEnd
     		{
     			if (event.getName() == null) return;
     			
+    			// Add surface structures to biomes
     			if (!event.getName().getPath().contains("mountain") && 
     					!event.getName().getPath().contains("lake"))
     			{
     			    event.getGeneration().getStructures().add(() -> ModConfiguredStructures.ETERNAL_PORTAL);
     			}
-    			
-    			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES).add(() -> ModConfiguredFeatures.ENDER_ORE);
-    			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES).add(() -> ModConfiguredFeatures.FLAVOLITE_LAYER);
     			event.getGeneration().getFeatures(Decoration.SURFACE_STRUCTURES).add(() -> ModConfiguredFeatures.CRASHED_SHIP);
     			
+    			// Add ores to biomes
+    			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES).add(() -> ModConfiguredFeatures.ENDER_ORE);
+    			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES).add(() -> ModConfiguredFeatures.FLAVOLITE_LAYER);
+    			
+    			
+    			// Add end caves to biomes
     			if (ModBiomes.getBiome(event.getName()).hasCaves()) 
     			{
     	  			event.getGeneration().getFeatures(Decoration.RAW_GENERATION).add(() -> ModConfiguredFeatures.ROUND_CAVE_RARE);
         			event.getGeneration().getFeatures(Decoration.RAW_GENERATION).add(() -> ModConfiguredFeatures.CAVE_GRASS);
     			}
     			
+    			// Add scattered nbt structures to biomes
     			if (!ModBiomes.getBiome(event.getName()).getNBTStructures().isEmpty())
     			{
     				event.getGeneration().getFeatures(Decoration.SURFACE_STRUCTURES).add(() -> ModConfiguredFeatures.NBT_STRUCTURES);

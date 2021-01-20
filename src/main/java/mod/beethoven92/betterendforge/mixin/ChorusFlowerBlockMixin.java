@@ -21,6 +21,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ChorusFlowerBlock;
 import net.minecraft.block.ChorusPlantBlock;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -70,11 +71,11 @@ public abstract class ChorusFlowerBlockMixin extends Block
 					placeGrownFlower(world, up, i + 1);
 					if (CommonConfig.isCustomChorusPlantEnabled()) 
 					{
-						BlockHelper.setWithoutUpdate(world, pos, plantBlock.getDefaultState().with(ChorusPlantBlock.UP, true).with(ChorusPlantBlock.DOWN, true).with(BlockHelper.ROOTS, true));
+						BlockHelper.setWithoutUpdate(world, pos, plantBlock.getDefaultState().with(BlockStateProperties.UP, true).with(BlockStateProperties.DOWN, true).with(BlockHelper.ROOTS, true));
 					}
 					else 
 					{
-						BlockHelper.setWithoutUpdate(world, pos, plantBlock.getDefaultState().with(ChorusPlantBlock.UP, true).with(ChorusPlantBlock.DOWN, true));
+						BlockHelper.setWithoutUpdate(world, pos, plantBlock.getDefaultState().with(BlockStateProperties.UP, true).with(BlockStateProperties.DOWN, true));
 					}
 					info.cancel();
 				}

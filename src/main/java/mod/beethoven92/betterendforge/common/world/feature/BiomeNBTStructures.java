@@ -24,6 +24,7 @@ public class BiomeNBTStructures extends NBTFeature
 	
 	private static final HashMap<BetterEndBiome, List<StructureInfo>> nbtStructures = Maps.newHashMap();
 	
+	// Called in setupCommon
 	public static void loadStructures()
 	{ 
 		for (BetterEndBiome endBiome : ModBiomes.getModBiomes())

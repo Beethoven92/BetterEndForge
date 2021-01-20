@@ -14,7 +14,7 @@ import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ChorusFlowerBlock;
-import net.minecraft.block.ChorusPlantBlock;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
@@ -24,8 +24,8 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 @Mixin(ChorusPlantFeature.class)
 public abstract class ChorusPlantFeatureMixin 
 {
-	@Inject(method = "func_241855_a", at = @At("HEAD"), cancellable = true)
-	private void func_241855_a(ISeedReader worldIn, ChunkGenerator chunkGenerator, Random random, 
+	@Inject(method = "generate", at = @At("HEAD"), cancellable = true)
+	private void be_generate(ISeedReader worldIn, ChunkGenerator chunkGenerator, Random random, 
 			BlockPos blockPos, NoFeatureConfig config, CallbackInfoReturnable<Boolean> info) 
 	{
 		if (worldIn.isAirBlock(blockPos) && worldIn.getBlockState(blockPos.down()).isIn(ModBlocks.CHORUS_NYLIUM.get())) 
@@ -34,14 +34,13 @@ public abstract class ChorusPlantFeatureMixin
 			BlockState bottom = worldIn.getBlockState(blockPos);
 			if (bottom.isIn(Blocks.CHORUS_PLANT)) 
 			{
-				BlockHelper.setWithoutUpdate(worldIn, blockPos, bottom.with(BlockHelper.ROOTS, true).with(ChorusPlantBlock.DOWN, true));
 				if ((CommonConfig.isCustomChorusPlantEnabled())) 
 				{
-					BlockHelper.setWithoutUpdate(worldIn, blockPos, bottom.with(BlockHelper.ROOTS, true).with(ChorusPlantBlock.DOWN, true));
+					BlockHelper.setWithoutUpdate(worldIn, blockPos, bottom.with(BlockHelper.ROOTS, true).with(BlockStateProperties.DOWN, true));
 				}
 				else 
 				{
-					BlockHelper.setWithoutUpdate(worldIn, blockPos, bottom.with(ChorusPlantBlock.DOWN, true));
+					BlockHelper.setWithoutUpdate(worldIn, blockPos, bottom.with(BlockStateProperties.DOWN, true));
 				}
 			}
 			info.setReturnValue(true);
