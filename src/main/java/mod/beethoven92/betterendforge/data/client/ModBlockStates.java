@@ -70,8 +70,29 @@ public class ModBlockStates extends BlockStateProvider
 		
 		// PEDESTALS
 		registerPedestals();
+		
+		// LANTERNS
+		registerLanterns();
 	}
 	
+	private void registerLanterns() {
+		lanternBlock(ModBlocks.ANDESITE_LANTERN.get(), "andesite");
+		makeBlockItemFromExistingModel(ModBlocks.ANDESITE_LANTERN.get(), "andesite_lantern_ceil");
+		lanternBlock(ModBlocks.DIORITE_LANTERN.get(), "diorite");
+		makeBlockItemFromExistingModel(ModBlocks.DIORITE_LANTERN.get(), "diorite_lantern_ceil");
+		lanternBlock(ModBlocks.GRANITE_LANTERN.get(), "granite");
+		makeBlockItemFromExistingModel(ModBlocks.GRANITE_LANTERN.get(), "granite_lantern_ceil");
+		lanternBlock(ModBlocks.QUARTZ_LANTERN.get(), "quartz");
+		makeBlockItemFromExistingModel(ModBlocks.QUARTZ_LANTERN.get(), "quartz_lantern_ceil");
+		lanternBlock(ModBlocks.PURPUR_LANTERN.get(), "purpur");
+		makeBlockItemFromExistingModel(ModBlocks.PURPUR_LANTERN.get(), "purpur_lantern_ceil");
+		lanternBlock(ModBlocks.END_STONE_LANTERN.get(), "end_stone");
+		makeBlockItemFromExistingModel(ModBlocks.END_STONE_LANTERN.get(), "end_stone_lantern_ceil");
+		lanternBlock(ModBlocks.BLACKSTONE_LANTERN.get(), "blackstone");
+		makeBlockItemFromExistingModel(ModBlocks.BLACKSTONE_LANTERN.get(), "blackstone_lantern_ceil");
+
+	}
+
 	private void registerPedestals() {
 		pedestalBlock(ModBlocks.ANDESITE_PEDESTAL.get(), "andesite", mcLoc("block/polished_andesite"), mcLoc("block/andesite_pillar"));
 		makeBlockItemFromExistingModel(ModBlocks.ANDESITE_PEDESTAL.get(), "andesite_pedestal_default");

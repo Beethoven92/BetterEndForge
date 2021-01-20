@@ -62,6 +62,14 @@
 	"block.betterendforge.tenanea_composter": "Tenanea Composter",      
 	"block.betterendforge.umbrella_tree_composter": "Umbrella Tree Composter",
 	"block.betterendforge.jellyshroom_composter": "Jellyshroom Composter",
+
+	"block.betterendforge.andesite_lantern": "Andesite Lantern",
+	"block.betterendforge.blackstone_lantern": "Blackstone Lantern",
+	"block.betterendforge.diorite_lantern": "Diorite Lantern",
+	"block.betterendforge.granite_lantern": "Granite Lantern",
+	"block.betterendforge.purpur_lantern": "Purpur Lantern",
+	"block.betterendforge.quartz_lantern": "Quartz Lantern",   
+	"block.betterendforge.end_stone_lantern": "End Stone Lantern",   
 	
 	"block.betterendforge.end_mycelium": "End Mycelium",
 	"block.betterendforge.end_moss": "End Moss",

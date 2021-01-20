@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "betterendforge:sulphuric_rock_lantern"
+      "betterendforge:andesite_lantern"
     ]
   },
   "criteria": {
-    "has_sulphuric_rock_slab": {
+    "has_andesite_slab": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "betterendforge:sulphuric_rock_slab"
+            "item": "minecraft:andesite_slab"
           }
         ]
       }
@@ -29,13 +29,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "betterendforge:sulphuric_rock_lantern"
+        "recipe": "betterendforge:andesite_lantern"
       }
     }
   },
   "requirements": [
     [
-      "has_sulphuric_rock_slab",
+      "has_andesite_slab",
       "has_crystal_shard",
       "has_the_recipe"
     ]

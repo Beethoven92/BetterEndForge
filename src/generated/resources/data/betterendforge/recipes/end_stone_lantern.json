@@ -7,13 +7,13 @@
   ],
   "key": {
     "S": {
-      "item": "betterendforge:sulphuric_rock_slab"
+      "item": "minecraft:end_stone_brick_slab"
     },
     "#": {
       "item": "betterendforge:crystal_shards"
     }
   },
   "result": {
-    "item": "betterendforge:sulphuric_rock_lantern"
+    "item": "betterendforge:end_stone_lantern"
   }
 }

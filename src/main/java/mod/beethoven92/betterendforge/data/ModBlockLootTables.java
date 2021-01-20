@@ -127,6 +127,14 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(ModBlocks.ETERNAL_PEDESTAL.get());
 		registerDropSelfLootTable(ModBlocks.INFUSION_PEDESTAL.get());
 		
+		registerDropSelfLootTable(ModBlocks.ANDESITE_LANTERN.get());
+		registerDropSelfLootTable(ModBlocks.DIORITE_LANTERN.get());
+		registerDropSelfLootTable(ModBlocks.GRANITE_LANTERN.get());
+		registerDropSelfLootTable(ModBlocks.QUARTZ_LANTERN.get());
+		registerDropSelfLootTable(ModBlocks.PURPUR_LANTERN.get());
+		registerDropSelfLootTable(ModBlocks.END_STONE_LANTERN.get());
+		registerDropSelfLootTable(ModBlocks.BLACKSTONE_LANTERN.get());
+		
 	    registerDropSelfLootTable(ModBlocks.BRIMSTONE.get());
 	    
 	    registerDropSelfLootTable(ModBlocks.HYDROTHERMAL_VENT.get());

@@ -1,5 +1,8 @@
 package mod.beethoven92.betterendforge.client.event;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.AuroraCrystalBlock;
 import mod.beethoven92.betterendforge.common.block.HelixTreeLeavesBlock;
@@ -7,8 +10,10 @@ import mod.beethoven92.betterendforge.common.block.JellyshroomCapBlock;
 import mod.beethoven92.betterendforge.common.block.ModLanternBlock;
 import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
+import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
+import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
@@ -45,7 +50,7 @@ public class ColorHandler
 		
 		event.getBlockColors().register((state, reader, pos, color) ->
 						 {return ModLanternBlock.getBlockColor(state, reader, pos, color);}, 
-						 ModBlocks.FLAVOLITE.lantern.get(), ModBlocks.SULPHURIC_ROCK.lantern.get(), ModBlocks.VIOLECITE.lantern.get());
+						 getLanterns());
 	}
 	
 	@SubscribeEvent
@@ -75,7 +80,21 @@ public class ColorHandler
 		
 		event.getItemColors().register((stack, tintIndex) ->
 						 {return ModLanternBlock.getItemColor(stack, tintIndex);}, 
-						 ModBlocks.FLAVOLITE.lantern.get(), ModBlocks.SULPHURIC_ROCK.lantern.get(), ModBlocks.VIOLECITE.lantern.get());
+						 getLanterns());
 
+	}
+	
+	private static Block[] getLanterns() {
+		List<Block> result = new ArrayList<>();
+		for (StoneMaterial m : StoneMaterial.getMaterials())
+			result.add(m.lantern.get());
+		result.add(ModBlocks.ANDESITE_LANTERN.get());
+		result.add(ModBlocks.BLACKSTONE_LANTERN.get());
+		result.add(ModBlocks.DIORITE_LANTERN.get());
+		result.add(ModBlocks.END_STONE_LANTERN.get());
+		result.add(ModBlocks.GRANITE_LANTERN.get());
+		result.add(ModBlocks.PURPUR_LANTERN.get());
+		result.add(ModBlocks.QUARTZ_LANTERN.get());
+		return result.toArray(new Block[] {});
 	}
 }
