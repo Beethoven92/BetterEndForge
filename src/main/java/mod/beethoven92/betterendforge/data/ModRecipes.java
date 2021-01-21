@@ -7,6 +7,7 @@ import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
+import mod.beethoven92.betterendforge.common.recipes.InfusionRecipeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.CookingRecipeBuilder;
@@ -15,8 +16,12 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.DyeItem;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -144,6 +149,16 @@ public class ModRecipes extends RecipeProvider
 		makeHammerRecipe(ModItems.IRON_HAMMER.get(), Items.IRON_INGOT, consumer, "iron");
 		makeHammerRecipe(ModItems.DIAMOND_HAMMER.get(), Items.DIAMOND, consumer, "diamond");
 		makeHammerRecipe(ModItems.NETHERITE_HAMMER.get(), Items.NETHERITE_INGOT, consumer, "netherite");
+		
+		// INFUSION RECIPES
+		InfusionRecipeBuilder.infusionRecipe(createEnchantedBook(Enchantments.PROTECTION, 1).getItem(), Items.BOOK, 300).
+		                                     addCatalyst(0, ModItems.ENCHANTED_PETAL.get()).
+		                                     addCatalyst(4, Items.TURTLE_HELMET).
+		                                     addCatalyst(1, Items.LAPIS_LAZULI).
+		                                     addCatalyst(3, Items.LAPIS_LAZULI).
+		                                     addCatalyst(5, Items.LAPIS_LAZULI).
+		                                     addCatalyst(7, Items.LAPIS_LAZULI).
+		                                     build(consumer, "protection_book");
 		
 		// WOODEN MATERIALS
 		makeWoodenMaterialRecipes(ModBlocks.MOSSY_GLOWSHROOM, consumer);
@@ -288,5 +303,12 @@ public class ModRecipes extends RecipeProvider
 	private void registerLantern(Block lantern, Block slab, Consumer<IFinishedRecipe> consumer, String material) 
 	{
 		ShapedRecipeBuilder.shapedRecipe(lantern).key('S', slab).key('#', ModItems.CRYSTAL_SHARDS.get()).patternLine("S").patternLine("#").patternLine("S").addCriterion("has_" + material + "_slab", hasItem(slab)).addCriterion("has_crystal_shard", hasItem(ModItems.CRYSTAL_SHARDS.get())).build(consumer);
+	}
+	
+	private static ItemStack createEnchantedBook(Enchantment enchantment, int level) 
+	{
+		ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
+		EnchantedBookItem.addEnchantment(book, new EnchantmentData(enchantment, level));
+		return book;
 	}
 }

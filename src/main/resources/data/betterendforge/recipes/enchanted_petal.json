@@ -1,0 +1,27 @@
+{
+  "type": "betterendforge:infusion",
+  "input": 
+  {
+     "item": "betterendforge:hydralux_petal"
+  },
+  "output": "betterendforge:enchanted_petal",
+  "time": 75,
+  "catalysts": [
+    {
+      "item": "betterendforge:crystal_shards",
+      "index": 0
+    },
+    {
+      "item": "betterendforge:crystal_shards",
+      "index": 2
+    },
+    {
+      "item": "betterendforge:crystal_shards",
+      "index": 4
+    },
+    {
+      "item": "betterendforge:crystal_shards",
+      "index": 6
+    }
+  ]
+}

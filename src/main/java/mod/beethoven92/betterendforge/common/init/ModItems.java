@@ -48,6 +48,7 @@ public class ModItems
 	public final static RegistryObject<Item> GELATINE = ITEMS.register("gelatine", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> CRYSTALLINE_SULPHUR = ITEMS.register("crystalline_sulphur", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> HYDRALUX_PETAL = ITEMS.register("hydralux_petal", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> ENCHANTED_PETAL = ITEMS.register("enchanted_petal", () -> new Item(new Item.Properties().rarity(Rarity.RARE).maxStackSize(16).group(ModCreativeTabs.CREATIVE_TAB)));
 	
 	// ARMOR ITEMS
 	public static final RegistryObject<Item> TERMINITE_HELMET = ITEMS.register("terminite_helmet", () -> new ArmorItem(ModArmorMaterial.TERMINITE, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
@@ -58,10 +59,10 @@ public class ModItems
 	public static final RegistryObject<Item> AETERNIUM_CHESTPLATE = ITEMS.register("aeternium_chestplate", () -> new ArmorItem(ModArmorMaterial.AETERNIUM, EquipmentSlotType.CHEST, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<Item> AETERNIUM_LEGGINGS = ITEMS.register("aeternium_leggings", () -> new ArmorItem(ModArmorMaterial.AETERNIUM, EquipmentSlotType.LEGS, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<Item> AETERNIUM_BOOTS = ITEMS.register("aeternium_boots", () -> new ArmorItem(ModArmorMaterial.AETERNIUM, EquipmentSlotType.FEET, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	public static final RegistryObject<Item> CRYSTALITE_HELMET = ITEMS.register("crystalite_helmet", () -> new CrystaliteArmor(ModArmorMaterial.CRYSTALITE, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	public static final RegistryObject<Item> CRYSTALITE_CHESTPLATE = ITEMS.register("crystalite_chestplate", () -> new CrystaliteArmor(ModArmorMaterial.CRYSTALITE, EquipmentSlotType.CHEST, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	public static final RegistryObject<Item> CRYSTALITE_LEGGINGS = ITEMS.register("crystalite_leggings", () -> new CrystaliteArmor(ModArmorMaterial.CRYSTALITE, EquipmentSlotType.LEGS, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	public static final RegistryObject<Item> CRYSTALITE_BOOTS = ITEMS.register("crystalite_boots", () -> new CrystaliteArmor(ModArmorMaterial.CRYSTALITE, EquipmentSlotType.FEET, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public static final RegistryObject<Item> CRYSTALITE_HELMET = ITEMS.register("crystalite_helmet", () -> new CrystaliteArmor(ModArmorMaterial.CRYSTALITE, EquipmentSlotType.HEAD, new Item.Properties().rarity(Rarity.UNCOMMON).group(ModCreativeTabs.CREATIVE_TAB)));
+	public static final RegistryObject<Item> CRYSTALITE_CHESTPLATE = ITEMS.register("crystalite_chestplate", () -> new CrystaliteArmor(ModArmorMaterial.CRYSTALITE, EquipmentSlotType.CHEST, new Item.Properties().rarity(Rarity.UNCOMMON).group(ModCreativeTabs.CREATIVE_TAB)));
+	public static final RegistryObject<Item> CRYSTALITE_LEGGINGS = ITEMS.register("crystalite_leggings", () -> new CrystaliteArmor(ModArmorMaterial.CRYSTALITE, EquipmentSlotType.LEGS, new Item.Properties().rarity(Rarity.UNCOMMON).group(ModCreativeTabs.CREATIVE_TAB)));
+	public static final RegistryObject<Item> CRYSTALITE_BOOTS = ITEMS.register("crystalite_boots", () -> new CrystaliteArmor(ModArmorMaterial.CRYSTALITE, EquipmentSlotType.FEET, new Item.Properties().rarity(Rarity.UNCOMMON).group(ModCreativeTabs.CREATIVE_TAB)));
 
 	// TOOL ITEMS
 	public static final RegistryObject<SwordItem> TERMINITE_SWORD = ITEMS.register("terminite_sword", () -> new SwordItem(ModItemTier.TERMINITE, 3, -2.0F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));

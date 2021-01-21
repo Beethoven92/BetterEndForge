@@ -1,0 +1,34 @@
+{
+  "type": "betterendforge:infusion",
+  "input": {
+    "item": "minecraft:book"
+  },
+  "output": "minecraft:enchanted_book",
+  "time": 300,
+  "catalysts": [
+    {
+      "item": "betterendforge:enchanted_petal",
+      "index": 0
+    },
+    {
+      "item": "minecraft:lapis_lazuli",
+      "index": 1
+    },
+    {
+      "item": "minecraft:lapis_lazuli",
+      "index": 3
+    },
+    {
+      "item": "minecraft:turtle_helmet",
+      "index": 4
+    },
+    {
+      "item": "minecraft:lapis_lazuli",
+      "index": 5
+    },
+    {
+      "item": "minecraft:lapis_lazuli",
+      "index": 7
+    }
+  ]
+}
