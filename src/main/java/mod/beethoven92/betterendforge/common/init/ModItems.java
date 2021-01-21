@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.common.init;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.item.CrystaliteArmor;
+import mod.beethoven92.betterendforge.common.item.EnchantedPetalItem;
 import mod.beethoven92.betterendforge.common.item.GuideBookItem;
 import mod.beethoven92.betterendforge.common.item.HammerItem;
 import mod.beethoven92.betterendforge.common.item.ModArmorMaterial;
@@ -48,7 +49,7 @@ public class ModItems
 	public final static RegistryObject<Item> GELATINE = ITEMS.register("gelatine", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> CRYSTALLINE_SULPHUR = ITEMS.register("crystalline_sulphur", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> HYDRALUX_PETAL = ITEMS.register("hydralux_petal", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	public final static RegistryObject<Item> ENCHANTED_PETAL = ITEMS.register("enchanted_petal", () -> new Item(new Item.Properties().rarity(Rarity.RARE).maxStackSize(16).group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> ENCHANTED_PETAL = ITEMS.register("enchanted_petal", () -> new EnchantedPetalItem(new Item.Properties().rarity(Rarity.RARE).maxStackSize(16).group(ModCreativeTabs.CREATIVE_TAB)));
 	
 	// ARMOR ITEMS
 	public static final RegistryObject<Item> TERMINITE_HELMET = ITEMS.register("terminite_helmet", () -> new ArmorItem(ModArmorMaterial.TERMINITE, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));

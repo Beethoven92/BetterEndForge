@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import mod.beethoven92.betterendforge.common.init.ModRecipeSerializers;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.IItemProvider;
@@ -19,18 +20,18 @@ import net.minecraft.util.registry.Registry;
 public class InfusionRecipeBuilder 
 {
     private final Ingredient input;
-    private final Item output;
+    private final ItemStack output;
     private final int time;
     private final Map<Integer, Item> catalysts = Maps.newHashMap();
     
-	public InfusionRecipeBuilder(IItemProvider output, IItemProvider input, int time)
+	public InfusionRecipeBuilder(ItemStack output, IItemProvider input, int time)
 	{
-		this.output = output.asItem();
+		this.output = output;
 		this.input = Ingredient.fromItems(input);
 		this.time = time;
 	}
 	
-	public static InfusionRecipeBuilder infusionRecipe(IItemProvider output, IItemProvider input, int time) 
+	public static InfusionRecipeBuilder infusionRecipe(ItemStack output, IItemProvider input, int time) 
 	{
 		return new InfusionRecipeBuilder(output, input, time);
 	}
@@ -43,12 +44,12 @@ public class InfusionRecipeBuilder
 	
 	public void build(Consumer<IFinishedRecipe> consumerIn) 
 	{
-		this.build(consumerIn, Registry.ITEM.getKey(this.output));
+		this.build(consumerIn, Registry.ITEM.getKey(this.output.getItem()));
 	}
 
 	public void build(Consumer<IFinishedRecipe> consumerIn, String save) 
 	{
-		ResourceLocation resourcelocation = Registry.ITEM.getKey(this.output);
+		ResourceLocation resourcelocation = Registry.ITEM.getKey(this.output.getItem());
 		if ((new ResourceLocation(save)).equals(resourcelocation))
 		{
 			throw new IllegalStateException("Infusion Recipe " + save + " should remove its 'save' argument");
@@ -70,11 +71,11 @@ public class InfusionRecipeBuilder
 	{
 	    private final ResourceLocation id;
 	    private final Ingredient input;
-	    private final Item output;
+	    private final ItemStack output;
 	    private final int time;
 	    private final Map<Integer, Item> catalysts;
 	    
-	    public Result(ResourceLocation id, Ingredient input, Item output, int time, Map<Integer, Item> catalysts) 
+	    public Result(ResourceLocation id, Ingredient input, ItemStack output, int time, Map<Integer, Item> catalysts) 
 	    {
 	    	this.id = id;
 	    	this.input = input;
@@ -87,8 +88,8 @@ public class InfusionRecipeBuilder
 		public void serialize(JsonObject json) 
 		{       
 			json.add("input", input.serialize());
-	        
-	        json.addProperty("output", Registry.ITEM.getKey(this.output).toString());
+
+	        json.addProperty("output", Registry.ITEM.getKey(this.output.getItem()).toString());
 	        
 	        json.addProperty("time", time);
 	        

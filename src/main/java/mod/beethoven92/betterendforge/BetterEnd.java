@@ -59,6 +59,7 @@ import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import mod.beethoven92.betterendforge.common.init.ModStructures;
 import mod.beethoven92.betterendforge.common.init.ModSurfaceBuilders;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
+import mod.beethoven92.betterendforge.common.recipes.ModRecipeManager;
 import mod.beethoven92.betterendforge.common.world.TerraforgedIntegrationWorldType;
 import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures;
 import mod.beethoven92.betterendforge.common.world.generator.BetterEndBiomeProvider;
@@ -117,6 +118,8 @@ public class BetterEnd
     		ModEntityTypes.registerGlobalEntityAttributes();
     		ModEntityTypes.registerEntitySpawns();
     	    BiomeNBTStructures.loadStructures();
+    	    ModRecipeManager.registerSpecialRecipes();
+    		
     	});    
     }    
     

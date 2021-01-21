@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 
+import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModRecipeSerializers;
 import mod.beethoven92.betterendforge.common.rituals.InfusionRitual;
 import net.minecraft.item.ItemStack;
@@ -12,6 +13,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -106,4 +108,109 @@ public class InfusionRecipe implements IRecipe<InfusionRitual>
 		return TYPE;
 	}
 
+	// Used to create recipes that cannot be defined by a json.
+	// Eg. create a recipe which has input/ouput ingredients containing NBT data (enchanted books, potions etc..)
+	public static class Builder 
+	{
+		private final static Builder INSTANCE = new Builder();
+		//private static boolean exist;
+		
+		public static Builder create(String id) 
+		{
+			return create(new ResourceLocation(BetterEnd.MOD_ID, id));
+		}
+		
+		public static Builder create(ResourceLocation id) 
+		{
+			INSTANCE.id = id;
+			INSTANCE.input = null;
+			INSTANCE.output = null;
+			INSTANCE.time = 1;
+			
+			Arrays.fill(INSTANCE.catalysts, Ingredient.EMPTY);
+			
+			return INSTANCE;
+		}
+		
+		private ResourceLocation id;
+		private Ingredient input;
+		private ItemStack output;
+		//private String group;
+		private int time = 1;
+		private Ingredient[] catalysts = new Ingredient[8];
+		
+		private Builder() 
+		{
+			Arrays.fill(catalysts, Ingredient.EMPTY);
+		}
+		
+		public Builder setGroup(String group) 
+		{
+			//this.group = group;
+			return this;
+		}
+		
+		public Builder setInput(IItemProvider input) 
+		{
+			this.input = Ingredient.fromItems(input);
+			return this;
+		}
+		
+		public Builder setOutput(IItemProvider output) 
+		{
+			this.output = new ItemStack(output);
+			this.output.setCount(1);
+			return this;
+		}
+		
+		public Builder setOutput(ItemStack output) 
+		{
+			this.output = output;
+			this.output.setCount(1);
+			return this;
+		}
+		
+		public Builder setTime(int time) 
+		{
+			this.time = time;
+			return this;
+		}
+		
+		public Builder addCatalyst(int slot, IItemProvider... items) 
+		{
+			if (slot > 7) return this;
+			this.catalysts[slot] = Ingredient.fromItems(items);
+			return this;
+		}
+		
+		public void build() 
+		{
+			if (input == null)
+			{
+				BetterEnd.LOGGER.warn("BETTER_END_FORGE: Input for Infusion recipe can't be 'null', recipe {} will be ignored!", id);
+				return;
+			}
+			if (output == null) 
+			{
+				BetterEnd.LOGGER.warn("BETTER_END_FORGE: Output for Infusion recipe can't be 'null', recipe {} will be ignored!", id);
+				return;
+			}
+			InfusionRecipe recipe = new InfusionRecipe(id, input, output);
+			//recipe.group = group != null ? group : GROUP;
+			recipe.time = time;
+			int empty = 0;
+			for (int i = 0; i < catalysts.length; i++) 
+			{
+				if (catalysts[i].hasNoMatchingItems()) empty++;
+				else recipe.catalysts[i] = catalysts[i];
+			}
+			if (empty == catalysts.length) 
+			{
+				BetterEnd.LOGGER.warn("BETTER_END_FORGE: At least one catalyst must be non empty, recipe {} will be ignored!", id);
+				return;
+			}
+
+			ModRecipeManager.addRecipe(TYPE, recipe);
+		}
+	}
 }

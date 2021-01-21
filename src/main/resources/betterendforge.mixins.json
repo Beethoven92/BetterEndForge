@@ -19,7 +19,8 @@
 	      "NoiseChunkGeneratorMixin",
 	      "EndPodiumFeatureMixin",
 	      "EndSpikeFeatureMixin",
-	      "EndCityStructureMixin"
+	      "EndCityStructureMixin",
+	      "RecipeManagerMixin"
 	],
   "client": [
 	      "BiomeColorsMixin",
