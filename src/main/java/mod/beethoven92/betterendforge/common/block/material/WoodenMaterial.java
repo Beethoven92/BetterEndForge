@@ -1,5 +1,7 @@
 package mod.beethoven92.betterendforge.common.block.material;
 
+import java.util.function.Supplier;
+
 import mod.beethoven92.betterendforge.client.renderer.ChestItemTileEntityRenderer;
 import mod.beethoven92.betterendforge.common.block.EndBarrelBlock;
 import mod.beethoven92.betterendforge.common.block.EndSignBlock;
@@ -113,12 +115,12 @@ public class WoodenMaterial {
 		door = ModBlocks.registerBlockWithDefaultItem(name + "_door", 
 				() -> new DoorBlock(materialPlanksNotSolid));
 		
-		composter = ModBlocks.registerBlockWithDefaultItem(name + "_composter", 
-				() -> new ComposterBlock(materialPlanksNotSolid));
-		craftingTable = ModBlocks.registerBlockWithDefaultItem(name + "_crafting_table", 
-				() -> new ModCraftingTableBlock(materialPlanks));
-		ladder = ModBlocks.registerBlockWithDefaultItem(name + "_ladder", 
-				() -> new LadderBlock(materialPlanksNotSolid));
+		composter = registerBlockWithBurnItem(name + "_composter", 
+				() -> new ComposterBlock(materialPlanksNotSolid), 300);
+		craftingTable = registerBlockWithBurnItem(name + "_crafting_table", 
+				() -> new ModCraftingTableBlock(materialPlanks), 300);
+		ladder = registerBlockWithBurnItem(name + "_ladder", 
+				() -> new LadderBlock(materialPlanksNotSolid), 300);
 		chest = ModBlocks.registerBlock(name + "_chest",
 				() -> new ChestBlock(materialPlanksNotSolid, () -> ModTileEntityTypes.CHEST.get()) {
 					public net.minecraft.tileentity.TileEntity createTileEntity(BlockState state,
@@ -127,17 +129,21 @@ public class WoodenMaterial {
 					};
 				});
 		ModItems.ITEMS.register(name + "_chest", () -> new BlockItem(chest.get(), new Item.Properties()
-				.group(ModCreativeTabs.CREATIVE_TAB).setISTER(() -> ChestItemTileEntityRenderer::new)));
+				.group(ModCreativeTabs.CREATIVE_TAB).setISTER(() -> ChestItemTileEntityRenderer::new)) {
+			public int getBurnTime(net.minecraft.item.ItemStack itemStack) {
+				return 300;
+			};
+		});
 
-		sign = ModBlocks.registerBlockWithDefaultItem(name + "_sign", 
+		sign = registerBlockWithBurnItem(name + "_sign", 
 				() -> new EndSignBlock(AbstractBlock.Properties.create(Material.WOOD, planksColor).
 		                hardnessAndResistance(2.0F, 3.0F).
 		                sound(SoundType.WOOD).
-		                notSolid().doesNotBlockMovement()));
-		barrel = ModBlocks.registerBlockWithDefaultItem(name + "_barrel",
-				() -> new EndBarrelBlock(materialPlanksNotSolid));
-		shelf = ModBlocks.registerBlockWithDefaultItem(name + "_bookshelf",
-				() -> new Block(materialPlanks));
+		                notSolid().doesNotBlockMovement()), 200);
+		barrel = registerBlockWithBurnItem(name + "_barrel",
+				() -> new EndBarrelBlock(materialPlanksNotSolid), 300);
+		shelf = registerBlockWithBurnItem(name + "_bookshelf",
+				() -> new Block(materialPlanks), 300);
 
 	}
 
@@ -147,5 +153,17 @@ public class WoodenMaterial {
 
 	public boolean isTreeLog(BlockState state) {
 		return isTreeLog(state.getBlock());
+	}
+	
+	private static <T extends Block> RegistryObject<T> registerBlockWithBurnItem(String name,
+			Supplier<? extends T> blockSupplier, int burnTime) {
+		RegistryObject<T> block = ModBlocks.BLOCKS.register(name, blockSupplier);
+		ModItems.ITEMS.register(name,
+				() -> new BlockItem(block.get(), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)) {
+					public int getBurnTime(net.minecraft.item.ItemStack itemStack) {
+						return burnTime;
+					};
+				});
+		return block;
 	}
 }
