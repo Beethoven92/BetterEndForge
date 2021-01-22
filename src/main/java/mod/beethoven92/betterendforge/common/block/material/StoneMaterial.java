@@ -80,7 +80,7 @@ public class StoneMaterial
 				() -> new ModLanternBlock(AbstractBlock.Properties.create(Material.ROCK, color).
                         setRequiresTool().
                         hardnessAndResistance(3.0F, 9.0F).
-                        setLightLevel(s -> 16)));
+                        setLightLevel(s -> 15)));
 		
 		bricks = ModBlocks.registerBlockWithDefaultItem(name + "_bricks", 
 				() -> new Block(material));
