@@ -12,6 +12,7 @@ import mod.beethoven92.betterendforge.common.block.BlueVineSeedBlock;
 import mod.beethoven92.betterendforge.common.block.BrimstoneBlock;
 import mod.beethoven92.betterendforge.common.block.BubbleCoralBlock;
 import mod.beethoven92.betterendforge.common.block.BulbVineBlock;
+import mod.beethoven92.betterendforge.common.block.BulbVineLanternBlock;
 import mod.beethoven92.betterendforge.common.block.BulbVineSeedBlock;
 import mod.beethoven92.betterendforge.common.block.CharniaBlock;
 import mod.beethoven92.betterendforge.common.block.ChorusGrassBlock;
@@ -254,6 +255,8 @@ public class ModBlocks
 	public static final RegistryObject<Block> BLACKSTONE_LANTERN = registerBlockWithDefaultItem("blackstone_lantern", 
 			() -> new ModLanternBlock(AbstractBlock.Properties.from(Blocks.BLACKSTONE).
                     setLightLevel(s -> 15)));
+	
+	
 	
 	// ORES
 	public static final RegistryObject<Block> ENDER_ORE = registerBlockWithDefaultItem("ender_ore",
@@ -889,6 +892,12 @@ public class ModBlocks
     // COLORED MATERIALS
     public static final ColoredMaterial HYDRALUX_PETAL_BLOCK_COLORED = new ColoredMaterial("hydralux_petal_block", 
     		() -> new HydraluxPetalBlockColored(), HYDRALUX_PETAL_BLOCK, true);
+    
+  
+    public static final RegistryObject<Block> BULB_LANTERN = registerBlockWithDefaultItem("bulb_lantern", () -> new BulbVineLanternBlock());
+    
+    public static final ColoredMaterial BULB_LANTERN_COLORED = new ColoredMaterial("bulb_lantern", 
+    		() -> new BulbVineLanternBlock(), BULB_LANTERN, false);
     
 	
 	//////////////////////////////////////////////////////

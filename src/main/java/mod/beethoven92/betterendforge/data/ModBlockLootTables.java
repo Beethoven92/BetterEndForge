@@ -305,6 +305,8 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		// COLORED MATERIALS
 		registerColoredMaterialLootTables(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED);
+		registerColoredMaterialLootTables(ModBlocks.BULB_LANTERN_COLORED);
+		registerDropSelfLootTable(ModBlocks.BULB_LANTERN.get());
 	}
 		
 	private void registerWoodenMaterialLootTables(WoodenMaterial material)

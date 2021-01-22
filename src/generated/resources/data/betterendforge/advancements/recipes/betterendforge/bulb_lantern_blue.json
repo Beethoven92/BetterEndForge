@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:bulb_lantern_blue"
+    ]
+  },
+  "criteria": {
+    "has_bulb_lantern": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:bulb_lantern"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:bulb_lantern_blue"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_bulb_lantern",
+      "has_the_recipe"
+    ]
+  ]
+}

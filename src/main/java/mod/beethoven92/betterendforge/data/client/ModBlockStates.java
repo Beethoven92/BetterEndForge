@@ -1,6 +1,9 @@
 package mod.beethoven92.betterendforge.data.client;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import mod.beethoven92.betterendforge.BetterEnd;
@@ -14,7 +17,6 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import net.minecraft.block.AbstractButtonBlock;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.block.DoorBlock;
@@ -67,6 +69,7 @@ public class ModBlockStates extends BlockStateProvider
 		
 		// COLORED MATERIALS
 		registerColoredMaterialBlockStates(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED, "block_petal_colored");
+		bulbLanterns();
 		
 		// PEDESTALS
 		registerPedestals();
@@ -417,6 +420,27 @@ public class ModBlockStates extends BlockStateProvider
 			PedestalState pedestalState = state.get(PedestalBlock.STATE);
 			return ConfiguredModel.builder().modelFile(models.get(pedestalState)).build();
 		});
+
+    }
+    
+    private void bulbLanterns()
+    {
+		ModelFile ceil = models().getExistingFile(modLoc("bulb_lantern_colored_ceil"));
+		ModelFile floor = models().getExistingFile(modLoc("bulb_lantern_colored_floor"));
+		
+		List<Block> lanterns = new ArrayList<>();
+		lanterns.add(ModBlocks.BULB_LANTERN.get());
+        Collections.addAll(lanterns, ModBlocks.BULB_LANTERN_COLORED.getBlocks());
+        for (Block lantern : lanterns) {
+	        getVariantBuilder(lantern)
+	        .forAllStates(state -> {
+	           boolean isFloor = !state.get(LanternBlock.HANGING);
+	           return ConfiguredModel.builder()
+	           .modelFile(isFloor ? floor : ceil)
+	           .build();
+	        });
+			makeBlockItemFromExistingModel(lantern, "bulb_lantern_colored_ceil");
+        }
 
     }
 }

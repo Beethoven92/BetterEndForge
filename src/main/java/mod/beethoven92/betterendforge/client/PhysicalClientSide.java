@@ -15,6 +15,7 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModContainerTypes;
 import mod.beethoven92.betterendforge.common.init.ModEntityTypes;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -144,6 +145,11 @@ public class PhysicalClientSide implements IPhysicalSide
 		
 		// MISC
 		RenderTypeLookup.setRenderLayer(ModBlocks.END_PORTAL_BLOCK.get(), RenderType.getTranslucent());
+		
+		RenderTypeLookup.setRenderLayer(ModBlocks.BULB_LANTERN.get(), RenderType.getCutout());
+		for (Block bulbLantern : ModBlocks.BULB_LANTERN_COLORED.getBlocks())
+			RenderTypeLookup.setRenderLayer(bulbLantern, RenderType.getCutout());
+
 		
 		// WOODEN MATERIALS
 		setWoodenMaterialRenderLayers(ModBlocks.MOSSY_GLOWSHROOM);
