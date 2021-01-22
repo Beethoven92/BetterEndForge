@@ -163,6 +163,7 @@ public class ModRecipes extends RecipeProvider
 		
 		// COLORED MATERIALS
 		makeColoredMaterialRecipes(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED, consumer);
+		makeColoredMaterialRecipes(ModBlocks.BULB_LANTERN_COLORED, consumer);
 	}
 	
 	private void makeWoodenMaterialRecipes(WoodenMaterial material, Consumer<IFinishedRecipe> consumer)

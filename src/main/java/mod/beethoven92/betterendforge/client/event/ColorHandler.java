@@ -39,6 +39,10 @@ public class ColorHandler
 		event.getBlockColors().register((state, reader, pos, color) -> 
 		                 {return state.getBlock().getMaterialColor().colorValue;}, 
 		                 ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED.getBlocks());
+		
+		event.getBlockColors().register((state, reader, pos, color) -> 
+				        {return state.getBlock().getMaterialColor().colorValue;}, 
+				        ModBlocks.BULB_LANTERN_COLORED.getBlocks());
 
 		event.getBlockColors().register((state, reader, pos, color) ->
 		 				 {return HelixTreeLeavesBlock.getBlockColor(state);}, 
@@ -74,6 +78,10 @@ public class ColorHandler
 		event.getItemColors().register((stack, tintIndex) -> 
                          {return ((BlockItem)stack.getItem()).getBlock().getMaterialColor().colorValue;}, 
                          ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED.getBlocks());
+		
+		event.getItemColors().register((stack, tintIndex) -> 
+				        {return ((BlockItem)stack.getItem()).getBlock().getMaterialColor().colorValue;}, 
+				        ModBlocks.BULB_LANTERN_COLORED.getBlocks());
 		
 		event.getItemColors().register((stack, tintIndex) -> 
                          {return JellyshroomCapBlock.getItemColor(stack);}, ModBlocks.JELLYSHROOM_CAP_PURPLE.get());
