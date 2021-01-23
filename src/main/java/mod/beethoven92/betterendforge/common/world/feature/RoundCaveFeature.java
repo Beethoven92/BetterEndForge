@@ -46,9 +46,12 @@ public class RoundCaveFeature extends Feature<NoFeatureConfig>
 	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
 			BlockPos pos, NoFeatureConfig config) 
 	{
-		if (!(CommonConfig.isNewGeneratorEnabled() && CommonConfig.noRingVoid()) || pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500)
+		if (!(CommonConfig.isNewGeneratorEnabled() && CommonConfig.noRingVoid()))
 		{
-			return false;
+			if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500)
+			{
+				return false;
+			}
 		}
 		
 		int radius = ModMathHelper.randRange(10, 30, random);
