@@ -13,7 +13,6 @@ public interface ExtendedRepairContainer
 	default void be_nextRecipe() 
 	{
 		List<AnvilSmithingRecipe> recipes = this.be_getRecipes();
-		if (recipes.isEmpty()) return;
 		AnvilSmithingRecipe current = this.be_getCurrentRecipe();
 		int i = recipes.indexOf(current) + 1;
 		if (i >= recipes.size()) 
@@ -26,7 +25,6 @@ public interface ExtendedRepairContainer
 	default void be_previousRecipe() 
 	{
 		List<AnvilSmithingRecipe> recipes = this.be_getRecipes();
-		if (recipes.isEmpty()) return;
 		AnvilSmithingRecipe current = this.be_getCurrentRecipe();
 		int i = recipes.indexOf(current) - 1;
 		if (i <= 0) 

@@ -31,7 +31,7 @@ public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 	@Shadow
 	private TextFieldWidget nameField;
 	
-	private List<AbstractButton> be_buttons = Lists.newArrayList();
+	private final List<AbstractButton> be_buttons = Lists.newArrayList();
 	private ExtendedRepairContainer anvilHandler;
 	
 	public AnvilScreenMixin(RepairContainer container, PlayerInventory playerInventory, ITextComponent title,
@@ -46,7 +46,7 @@ public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 		this.be_buttons.clear();
 		int x = (width - xSize) / 2;
 	    int y = (height - ySize) / 2;
-	    this.anvilHandler = ExtendedRepairContainer.class.cast(this.container);
+	    this.anvilHandler = (ExtendedRepairContainer) this.container;
 	    this.be_buttons.add(new Button(x + 8, y + 45, 15, 20, new StringTextComponent("<"), (b) -> be_previousRecipe()));
 		this.be_buttons.add(new Button(x + 154, y + 45, 15, 20, new StringTextComponent(">"), (b) -> be_nextRecipe()));
 	}
@@ -55,20 +55,32 @@ public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) 
 	{
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
-		if (anvilHandler.be_getRecipes().size() > 1) 
-		{
-			this.be_buttons.forEach(button -> button.render(matrixStack, mouseX, mouseY, partialTicks));
-		}
+
+		this.be_buttons.forEach(button -> {
+			button.render(matrixStack, mouseX, mouseY, partialTicks);
+		});
 	}
 	
 	@Inject(method = "sendSlotContents", at = @At("HEAD"), cancellable = true)
 	public void be_onSlotUpdate(Container handler, int slotId, ItemStack stack, CallbackInfo info)
 	{
-		ExtendedRepairContainer anvilHandler = ExtendedRepairContainer.class.cast(handler);
+		ExtendedRepairContainer anvilHandler = (ExtendedRepairContainer) handler;
 		if (anvilHandler.be_getCurrentRecipe() != null) 
 		{
+			if (anvilHandler.be_getRecipes().size() > 1) 
+			{
+				this.be_buttons.forEach(button -> button.visible = true);
+			}
+			else 
+			{
+				this.be_buttons.forEach(button -> button.visible = false);
+			}
 			this.nameField.setText("");
 			info.cancel();
+		} 
+		else
+		{
+			this.be_buttons.forEach(button -> button.visible = false);
 		}
 	}
 	
@@ -85,13 +97,19 @@ public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) 
 	{
-		for (AbstractButton elem : be_buttons)
+		if (minecraft != null) 
 		{
-			if (elem.mouseClicked(mouseX, mouseY, button)) 
+			for (AbstractButton elem : be_buttons) 
 			{
-				int i = be_buttons.indexOf(elem);
-				this.minecraft.playerController.sendEnchantPacket(container.windowId, i);
-				return true;
+				if (elem.visible && elem.mouseClicked(mouseX, mouseY, button))
+				{
+					if (minecraft.playerController != null) 
+					{
+						int i = be_buttons.indexOf(elem);
+						this.minecraft.playerController.sendEnchantPacket(container.windowId, i);
+						return true;
+					}
+				}
 			}
 		}
 		return super.mouseClicked(mouseX, mouseY, button);
