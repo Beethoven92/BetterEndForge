@@ -30,7 +30,8 @@
 	      "SoundVolumeAccessor",
 	      "MusicTickerMixin",
 	      "MinecraftMixin",
-	      "ModelBakeryMixin"
+	      "ModelBakeryMixin",
+	      "AnvilScreenMixin"
 	], 
   "minVersion": "0.8"
 }

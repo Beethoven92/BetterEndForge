@@ -15,6 +15,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
+import net.minecraft.data.SmithingRecipeBuilder;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
@@ -24,6 +25,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.registry.Registry;
 
 public class ModRecipes extends RecipeProvider
 {
@@ -57,7 +59,7 @@ public class ModRecipes extends RecipeProvider
 		ShapelessRecipeBuilder.shapelessRecipe(Items.CYAN_DYE).addIngredient(ModBlocks.CREEPING_MOSS.get()).setGroup("cyan_dye").addCriterion("has_creeping_moss", hasItem(ModBlocks.CREEPING_MOSS.get())).build(consumer, "cyan_dye_from_creeping_moss");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.CYAN_DYE).addIngredient(ModBlocks.CYAN_MOSS.get()).setGroup("cyan_dye").addCriterion("has_cyan_moss", hasItem(ModBlocks.CYAN_MOSS.get())).build(consumer, "cyan_dye_from_cyan_moss");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.YELLOW_DYE).addIngredient(ModBlocks.UMBRELLA_MOSS.get()).setGroup("yellow_dye").addCriterion("has_umbrella_moss", hasItem(ModBlocks.UMBRELLA_MOSS.get())).build(consumer, "yellow_dye_from_umbrella_moss");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.YELLOW_DYE).addIngredient(ModBlocks.UMBRELLA_MOSS_TALL.get()).setGroup("yellow_dye").addCriterion("has_umbrella_moss_tall", hasItem(ModBlocks.UMBRELLA_MOSS_TALL.get())).build(consumer, "yellow_dye_from_umbrella_moss_tall");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.YELLOW_DYE, 2).addIngredient(ModBlocks.UMBRELLA_MOSS_TALL.get()).setGroup("yellow_dye").addCriterion("has_umbrella_moss_tall", hasItem(ModBlocks.UMBRELLA_MOSS_TALL.get())).build(consumer, "yellow_dye_from_umbrella_moss_tall");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.BLACK_DYE).addIngredient(ModBlocks.SHADOW_PLANT.get()).setGroup("black_dye").addCriterion("has_shadow_plant", hasItem(ModBlocks.SHADOW_PLANT.get())).build(consumer, "black_dye_from_shadow_plant");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE).addIngredient(ModBlocks.PURPLE_POLYPORE.get()).setGroup("purple_dye").addCriterion("has_purple_polypore", hasItem(ModBlocks.PURPLE_POLYPORE.get())).build(consumer, "purple_dye_from_purple_polypore");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.GRAY_DYE).addIngredient(ModBlocks.TAIL_MOSS.get()).setGroup("gray_dye").addCriterion("has_tail_moss", hasItem(ModBlocks.TAIL_MOSS.get())).build(consumer, "gray_dye_from_tail_moss");
@@ -72,7 +74,7 @@ public class ModRecipes extends RecipeProvider
 		ShapelessRecipeBuilder.shapelessRecipe(Items.CYAN_DYE).addIngredient(ModBlocks.CHARNIA_CYAN.get()).setGroup("cyan_dye").addCriterion("has_cyan_charnia", hasItem(ModBlocks.CHARNIA_CYAN.get())).build(consumer, "cyan_dye_from_cyan_charnia");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.GREEN_DYE).addIngredient(ModBlocks.CHARNIA_GREEN.get()).setGroup("green_dye").addCriterion("has_green_charnia", hasItem(ModBlocks.CHARNIA_GREEN.get())).build(consumer, "green_dye_from_green_charnia");
 		
-		// MISC
+		// ITEMS
 		ShapedRecipeBuilder.shapedRecipe(Items.PAPER, 3).key('#', ModItems.END_LILY_LEAF_DRIED.get()).patternLine("###").addCriterion("has_end_lily_leaf_dried", hasItem(ModItems.END_LILY_LEAF_DRIED.get())).build(consumer, "paper_from_end_lily_leaf_dried");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.STICK, 2).addIngredient(ModBlocks.NEEDLEGRASS.get()).addCriterion("has_needlegrass", hasItem(ModBlocks.NEEDLEGRASS.get())).build(consumer, "stick_from_needlegrass");
 		ShapelessRecipeBuilder.shapelessRecipe(ModBlocks.SHADOW_BERRY.get(), 4).addIngredient(ModItems.SHADOW_BERRY_RAW.get()).addCriterion("has_shadow_berry_raw", hasItem(ModItems.SHADOW_BERRY_RAW.get())).build(consumer, "shadow_berry_from_shadow_berry_raw");
@@ -81,6 +83,10 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(ModItems.AMBER_GEM.get()).key('#', ModItems.RAW_AMBER.get()).patternLine("##").patternLine("##").addCriterion("has_raw_amber", hasItem(ModItems.RAW_AMBER.get())).build(consumer);
 	    ShapelessRecipeBuilder.shapelessRecipe(Items.GUNPOWDER).addIngredient(ModItems.CRYSTALLINE_SULPHUR.get()).addIngredient(ItemTags.COALS).addIngredient(Items.BONE_MEAL).addCriterion("has_crystalline_sulphur", hasItem(ModItems.CRYSTALLINE_SULPHUR.get())).build(consumer, "gunpowder_from_sulphur");
 	    ShapedRecipeBuilder.shapedRecipe(ModItems.GUIDE_BOOK.get()).key('D', ModItems.ENDER_DUST.get()).key('B', Items.BOOK).key('C', ModItems.CRYSTAL_SHARDS.get()).patternLine("D").patternLine("B").patternLine("C").addCriterion("has_crystal_shards", hasItem(ModItems.CRYSTAL_SHARDS.get())).build(consumer);
+	    ShapelessRecipeBuilder.shapelessRecipe(ModItems.LEATHER_STRIPE.get(), 3).addIngredient(Items.LEATHER).addCriterion("has_leather", hasItem(Items.LEATHER)).build(consumer, "leather_to_stripes");
+	    ShapelessRecipeBuilder.shapelessRecipe(Items.LEATHER).addIngredient(ModItems.LEATHER_STRIPE.get()).addIngredient(ModItems.LEATHER_STRIPE.get()).addIngredient(ModItems.LEATHER_STRIPE.get()).addCriterion("has_leather_stripe", hasItem(ModItems.LEATHER_STRIPE.get())).build(consumer, "stripes_to_leather");
+	    ShapelessRecipeBuilder.shapelessRecipe(ModItems.LEATHER_WRAPPED_STICK.get()).addIngredient(Items.STICK).addIngredient(ModItems.LEATHER_STRIPE.get()).addCriterion("has_leather_stripe", hasItem(ModItems.LEATHER_STRIPE.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(Items.ENDER_EYE).key('S', ModItems.CRYSTAL_SHARDS.get()).key('A', ModItems.AMBER_GEM.get()).key('P', Items.ENDER_PEARL).patternLine("SAS").patternLine("APA").patternLine("SAS").addCriterion("has_amber_gem", hasItem(ModItems.AMBER_GEM.get())).build(consumer, "ender_eye_from_amber_gem");
 	    
 	    // LANTERNS
 	    registerLantern(ModBlocks.ANDESITE_LANTERN.get(), Blocks.ANDESITE_SLAB, consumer, "andesite");
@@ -90,7 +96,6 @@ public class ModRecipes extends RecipeProvider
 	    registerLantern(ModBlocks.PURPUR_LANTERN.get(), Blocks.PURPUR_SLAB, consumer, "purpur");
 	    registerLantern(ModBlocks.END_STONE_LANTERN.get(), Blocks.END_STONE_BRICK_SLAB, consumer, "end_stone");
 	    registerLantern(ModBlocks.BLACKSTONE_LANTERN.get(), Blocks.BLACKSTONE_SLAB, consumer, "blackstone");
-
 	    
 	    // PEDESTALS
 		registerPedestal(ModBlocks.QUARTZ_PEDESTAL.get(), Blocks.QUARTZ_SLAB, Blocks.QUARTZ_PILLAR, consumer, "quartz");
@@ -128,22 +133,23 @@ public class ModRecipes extends RecipeProvider
 		
 		makeMaterialAndBlockRecipes(ModBlocks.AETERNIUM_BLOCK.get(), ModItems.AETERNIUM_INGOT.get(), consumer, material);
 		
-		makeHelmetRecipe(ModItems.AETERNIUM_HELMET.get(), ModItems.AETERNIUM_INGOT.get(), consumer, material);
-		makeChestplateRecipe(ModItems.AETERNIUM_CHESTPLATE.get(), ModItems.AETERNIUM_INGOT.get(), consumer, material);
-		makeLeggingsRecipe(ModItems.AETERNIUM_LEGGINGS.get(), ModItems.AETERNIUM_INGOT.get(), consumer, material);
-		makeBootsRecipe(ModItems.AETERNIUM_BOOTS.get(), ModItems.AETERNIUM_INGOT.get(), consumer, material);
-		
-		makeSwordRecipe(ModItems.AETERNIUM_SWORD.get(), ModItems.AETERNIUM_INGOT.get(), consumer, material);
-		makeAxeRecipe(ModItems.AETERNIUM_AXE.get(), ModItems.AETERNIUM_INGOT.get(), consumer, material);
-		makePickaxeRecipe(ModItems.AETERNIUM_PICKAXE.get(), ModItems.AETERNIUM_INGOT.get(), consumer, material);
-		makeShovelRecipe(ModItems.AETERNIUM_SHOVEL.get(), ModItems.AETERNIUM_INGOT.get(), consumer, material);
-		makeHoeRecipe(ModItems.AETERNIUM_HOE.get(), ModItems.AETERNIUM_INGOT.get(), consumer, material);
-		makeHammerRecipe(ModItems.AETERNIUM_HAMMER.get(), ModItems.AETERNIUM_INGOT.get(), consumer, material);
-		
 		makeHammerRecipe(ModItems.GOLDEN_HAMMER.get(), Items.GOLD_INGOT, consumer, "gold");
 		makeHammerRecipe(ModItems.IRON_HAMMER.get(), Items.IRON_INGOT, consumer, "iron");
 		makeHammerRecipe(ModItems.DIAMOND_HAMMER.get(), Items.DIAMOND, consumer, "diamond");
 		makeHammerRecipe(ModItems.NETHERITE_HAMMER.get(), Items.NETHERITE_INGOT, consumer, "netherite");
+		
+		// SMITHING TABLE
+		makeSmithingRecipe(ModItems.TERMINITE_INGOT.get(), ModItems.LEATHER_WRAPPED_STICK.get(), ModItems.AETERNIUM_SWORD_HANDLE.get(), consumer);
+		makeSmithingRecipe(ModItems.AETERNIUM_SWORD_BLADE.get(), ModItems.AETERNIUM_SWORD_HANDLE.get(), ModItems.AETERNIUM_SWORD.get(), consumer);
+		makeSmithingRecipe(ModItems.AETERNIUM_PICKAXE_HEAD.get(), ModItems.LEATHER_WRAPPED_STICK.get(), ModItems.AETERNIUM_PICKAXE.get(), consumer);
+		makeSmithingRecipe(ModItems.AETERNIUM_AXE_HEAD.get(), ModItems.LEATHER_WRAPPED_STICK.get(), ModItems.AETERNIUM_AXE.get(), consumer);
+		makeSmithingRecipe(ModItems.AETERNIUM_SHOVEL_HEAD.get(), ModItems.LEATHER_WRAPPED_STICK.get(), ModItems.AETERNIUM_SHOVEL.get(), consumer);
+		makeSmithingRecipe(ModItems.AETERNIUM_HOE_HEAD.get(), ModItems.LEATHER_WRAPPED_STICK.get(), ModItems.AETERNIUM_HOE.get(), consumer);
+		makeSmithingRecipe(ModItems.AETERNIUM_HAMMER_HEAD.get(), ModItems.LEATHER_WRAPPED_STICK.get(), ModItems.AETERNIUM_HAMMER.get(), consumer);
+		makeSmithingRecipe(ModItems.TERMINITE_HELMET.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_HELMET.get(), consumer);
+		makeSmithingRecipe(ModItems.TERMINITE_CHESTPLATE.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_CHESTPLATE.get(), consumer);
+		makeSmithingRecipe(ModItems.TERMINITE_LEGGINGS.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_LEGGINGS.get(), consumer);
+		makeSmithingRecipe(ModItems.TERMINITE_BOOTS.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_BOOTS.get(), consumer);
 		
 		// WOODEN MATERIALS
 		makeWoodenMaterialRecipes(ModBlocks.MOSSY_GLOWSHROOM, consumer);
@@ -222,6 +228,11 @@ public class ModRecipes extends RecipeProvider
 			}
 		}
 			
+	}
+	
+	private void makeSmithingRecipe(Item base, Item addition, Item output, Consumer<IFinishedRecipe> consumer)
+	{
+		SmithingRecipeBuilder.smithingRecipe(Ingredient.fromItems(base), Ingredient.fromItems(addition), output).addCriterion("has_" + addition.getRegistryName().getPath(), hasItem(addition)).build(consumer, output.getRegistryName().getPath() + "_smithing");
 	}
 	
 	private void makeMaterialAndBlockRecipes(Block block, Item ingot, Consumer<IFinishedRecipe> consumer, String material)

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "betterendforge:aeternium_hoe_head"
+  },
+  "addition": {
+    "item": "betterendforge:leather_wrapped_stick"
+  },
+  "result": {
+    "item": "betterendforge:aeternium_hoe"
+  }
+}

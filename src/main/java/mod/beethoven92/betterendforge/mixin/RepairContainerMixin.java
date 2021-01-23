@@ -1,5 +1,8 @@
 package mod.beethoven92.betterendforge.mixin;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -7,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import mod.beethoven92.betterendforge.common.interfaces.ExtendedRepairContainer;
 import mod.beethoven92.betterendforge.common.recipes.AnvilSmithingRecipe;
 import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.BlockState;
@@ -22,11 +26,13 @@ import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.world.World;
 
 @Mixin(RepairContainer.class)
-public abstract class RepairContainerMixin extends AbstractRepairContainer
+public abstract class RepairContainerMixin extends AbstractRepairContainer implements ExtendedRepairContainer
 {
 	private final World world = this.field_234645_f_.world;
 	private final RecipeManager recipeManager = this.world.getRecipeManager();
-	private AnvilSmithingRecipe currentRecipe;
+	
+	private List<AnvilSmithingRecipe> be_recipes = Collections.emptyList();
+	private AnvilSmithingRecipe be_currentRecipe;
 	
 	public RepairContainerMixin(ContainerType<?> p_i231587_1_, int p_i231587_2_, PlayerInventory p_i231587_3_,
 			IWorldPosCallable p_i231587_4_) {
@@ -37,26 +43,26 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer
 	public abstract void updateRepairOutput();
 	
 	@Inject(method = "func_230303_b_", at = @At("HEAD"), cancellable = true)
-	protected void func_230303_b_(PlayerEntity player, boolean present, CallbackInfoReturnable<Boolean> info) 
+	protected void be_canTakeOutput(PlayerEntity player, boolean present, CallbackInfoReturnable<Boolean> info) 
 	{
-		if (currentRecipe != null) 
+		if (be_currentRecipe != null) 
 		{
-			ItemStack output = this.currentRecipe.craft(this.field_234643_d_, player);
+			ItemStack output = this.be_currentRecipe.craft(this.field_234643_d_, player);
 			if (!output.isEmpty()) 
 			{
 				info.setReturnValue(true);
-				info.cancel();
 			}
 		}
 	}
 	
 	@Inject(method = "func_230301_a_", at = @At("HEAD"), cancellable = true)
-	protected void func_230301_a_(PlayerEntity player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) 
+	protected void be_onTakeOutput(PlayerEntity player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) 
 	{
-		if (currentRecipe != null)
+		if (be_currentRecipe != null)
 		{
 			this.field_234643_d_.getStackInSlot(1).shrink(1);
-			this.updateRepairOutput();
+			this.onCraftMatrixChanged(field_234643_d_);
+
 			this.field_234644_e_.consume((world, blockPos) -> {
 				BlockState anvilState = world.getBlockState(blockPos);
 				if (!player.abilities.isCreativeMode && anvilState.isIn(BlockTags.ANVIL) && player.getRNG().nextFloat() < 0.12F)
@@ -80,18 +86,17 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer
 
 			});
 			info.setReturnValue(stack);
-			info.cancel();
 		}
 	}
 	
 	@Inject(method = "updateRepairOutput", at = @At("HEAD"), cancellable = true)
 	public void updateRepairOutput(CallbackInfo info) 
 	{
-		this.currentRecipe = this.recipeManager.getRecipe(AnvilSmithingRecipe.TYPE, this.field_234643_d_, world).orElse(null);
-		if (currentRecipe != null) 
+		be_recipes = this.recipeManager.getRecipes(AnvilSmithingRecipe.TYPE, this.field_234643_d_, world);
+		if (be_recipes.size() > 0) 
 		{
-			this.field_234642_c_.setInventorySlotContents(0, currentRecipe.getCraftingResult(this.field_234643_d_));
-			this.detectAndSendChanges();
+			this.be_currentRecipe = recipeManager.getRecipe(AnvilSmithingRecipe.TYPE, this.field_234643_d_, world).get();
+			this.be_updateResult();
 			info.cancel();
 		}
 	}
@@ -99,9 +104,51 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer
 	@Inject(method = "updateItemName", at = @At("HEAD"), cancellable = true)
 	public void updateItemName(String string, CallbackInfo info)
 	{
-		if (currentRecipe != null) 
+		if (be_currentRecipe != null) 
 		{
 			info.cancel();
 		}
+	}
+	
+	@Override
+	public boolean enchantItem(PlayerEntity playerIn, int id) 
+	{
+		if (id == 0) 
+		{
+			this.be_previousRecipe();
+			return true;
+		} 
+		else if (id == 1) 
+		{
+			this.be_nextRecipe();
+			return true;
+		}
+		return super.enchantItem(playerIn, id);
+	}
+	
+	private void be_updateResult() 
+	{
+		if (be_currentRecipe == null) return;
+		this.field_234642_c_.setInventorySlotContents(0, be_currentRecipe.getCraftingResult(this.field_234643_d_));
+		this.detectAndSendChanges();
+	}
+	
+	@Override
+	public void be_updateCurrentRecipe(AnvilSmithingRecipe recipe) 
+	{
+		this.be_currentRecipe = recipe;
+		this.be_updateResult();
+	}
+	
+	@Override
+	public AnvilSmithingRecipe be_getCurrentRecipe() 
+	{
+		return this.be_currentRecipe;
+	}
+	
+	@Override
+	public List<AnvilSmithingRecipe> be_getRecipes() 
+	{
+		return this.be_recipes;
 	}
 }

@@ -50,6 +50,8 @@ public class ModItems
 	public final static RegistryObject<Item> CRYSTALLINE_SULPHUR = ITEMS.register("crystalline_sulphur", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> HYDRALUX_PETAL = ITEMS.register("hydralux_petal", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> ENCHANTED_PETAL = ITEMS.register("enchanted_petal", () -> new EnchantedPetalItem(new Item.Properties().rarity(Rarity.RARE).maxStackSize(16).group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> LEATHER_STRIPE = ITEMS.register("leather_stripe", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> LEATHER_WRAPPED_STICK = ITEMS.register("leather_wrapped_stick", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	
 	// ARMOR ITEMS
 	public static final RegistryObject<Item> TERMINITE_HELMET = ITEMS.register("terminite_helmet", () -> new ArmorItem(ModArmorMaterial.TERMINITE, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
@@ -82,6 +84,15 @@ public class ModItems
 	public static final RegistryObject<HammerItem> GOLDEN_HAMMER = ITEMS.register("golden_hammer", () -> new HammerItem(ItemTier.GOLD, 4.5F, -3.4F, 0.3D, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<HammerItem> DIAMOND_HAMMER = ITEMS.register("diamond_hammer", () -> new HammerItem(ItemTier.DIAMOND, 5.5F, -3.1F, 0.2D, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<HammerItem> NETHERITE_HAMMER = ITEMS.register("netherite_hammer", () -> new HammerItem(ItemTier.NETHERITE, 5.0F, -3.0F, 0.2D, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	
+	// TOOLPARTS
+	public final static RegistryObject<Item> AETERNIUM_SHOVEL_HEAD = ITEMS.register("aeternium_shovel_head", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> AETERNIUM_PICKAXE_HEAD = ITEMS.register("aeternium_pickaxe_head", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> AETERNIUM_AXE_HEAD = ITEMS.register("aeternium_axe_head", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> AETERNIUM_HOE_HEAD = ITEMS.register("aeternium_hoe_head", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> AETERNIUM_HAMMER_HEAD = ITEMS.register("aeternium_hammer_head", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> AETERNIUM_SWORD_BLADE = ITEMS.register("aeternium_sword_blade", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> AETERNIUM_SWORD_HANDLE = ITEMS.register("aeternium_sword_handle", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	
 	// SPAWN EGGS
 	public static final RegistryObject<ModSpawnEggItem> DRAGONFLY_SPAWN_EGG = ITEMS.register("spawn_egg_dragonfly", () -> new ModSpawnEggItem(() -> ModEntityTypes.DRAGONFLY.get(), ModMathHelper.getColor(32, 42, 176), ModMathHelper.getColor(115, 225, 249), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));

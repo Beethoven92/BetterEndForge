@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "betterendforge:terminite_chestplate"
+  },
+  "addition": {
+    "item": "betterendforge:aeternium_ingot"
+  },
+  "result": {
+    "item": "betterendforge:aeternium_chestplate"
+  }
+}

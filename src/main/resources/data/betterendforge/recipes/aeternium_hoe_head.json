@@ -1,0 +1,10 @@
+{
+  "type": "betterendforge:anvil_smithing",
+  "input":
+  {
+      "item": "betterendforge:aeternium_ingot"
+  },
+  "result": "betterendforge:aeternium_hoe_head",
+  "level": 4,
+  "damage": 6
+}

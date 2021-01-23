@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "betterendforge:terminite_ingot"
+  },
+  "addition": {
+    "item": "betterendforge:leather_wrapped_stick"
+  },
+  "result": {
+    "item": "betterendforge:aeternium_sword_handle"
+  }
+}

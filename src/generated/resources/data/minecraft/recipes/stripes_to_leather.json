@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "betterendforge:leather_stripe"
+    },
+    {
+      "item": "betterendforge:leather_stripe"
+    },
+    {
+      "item": "betterendforge:leather_stripe"
+    }
+  ],
+  "result": {
+    "item": "minecraft:leather"
+  }
+}
