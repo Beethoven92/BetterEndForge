@@ -108,6 +108,7 @@ public class ModItems
 	public final static RegistryObject<Item> END_FISH_COOKED = ITEMS.register("end_fish_cooked", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(Foods.COOKED_SALMON)));
 	public final static RegistryObject<Item> SWEET_BERRY_JELLY = ITEMS.register("sweet_berry_jelly", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(3).saturation(0.75f).build())));
 	public final static RegistryObject<Item> SHADOW_BERRY_JELLY = ITEMS.register("shadow_berry_jelly", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(4).saturation(0.75f).effect(() -> new EffectInstance(Effects.NIGHT_VISION, 400), 1).build())));
+	public final static RegistryObject<Item> BLOSSOM_BERRY = ITEMS.register("blossom_berry", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(Foods.APPLE)));
 	
 	// DRINK ITEMS
 	public final static RegistryObject<Item> UMBRELLA_CLUSTER_JUICE = ITEMS.register("umbrella_cluster_juice", () -> new UmbrellaClusterJuiceItem(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));

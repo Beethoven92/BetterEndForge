@@ -90,6 +90,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> TWISTED_UMBRELLA_MOSS = new DoublePlantFeature(ModBlocks.TWISTED_UMBRELLA_MOSS.get(), ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get(), 6);
 	public static final Feature<NoFeatureConfig> JUNGLE_GRASS = new SinglePlantFeature(ModBlocks.JUNGLE_GRASS.get(), 7, 3);
 	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_FLOOR = new SinglePlantFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 5, 5);
+	public static final Feature<NoFeatureConfig> BLOSSOM_BERRY = new SinglePlantFeature(ModBlocks.BLOSSOM_BERRY.get(), 3, 3);
 	
 	// WALL PLANTS
 	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 3);
@@ -191,6 +192,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), TWISTED_UMBRELLA_MOSS, "twisted_umbrella_moss");
     	BetterEnd.register(event.getRegistry(), JUNGLE_GRASS, "jungle_grass");
     	BetterEnd.register(event.getRegistry(), SMALL_JELLYSHROOM_FLOOR, "small_jellyshroom_floor");
+    	BetterEnd.register(event.getRegistry(), BLOSSOM_BERRY, "blossom_berry");
     	// WALL_PLANTS
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE, "purple_polypore");
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE_DENSE, "purple_polypore_dense");

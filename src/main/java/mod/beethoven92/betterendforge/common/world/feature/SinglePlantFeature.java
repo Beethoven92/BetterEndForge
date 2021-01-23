@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.world.feature;
 import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.block.template.DoublePlantBlock;
+import mod.beethoven92.betterendforge.common.block.template.EndCropBlock;
 import mod.beethoven92.betterendforge.common.block.template.PlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.FeatureHelper;
@@ -66,6 +67,11 @@ public class SinglePlantFeature extends ScatterFeature
 			BlockState state = plant.getDefaultState().with(DoublePlantBlock.ROTATION, rot);
 			BlockHelper.setWithoutUpdate(world, blockPos, state);
 			BlockHelper.setWithoutUpdate(world, blockPos.up(), state.with(DoublePlantBlock.TOP, true));
+		}
+		else if (plant instanceof EndCropBlock) 
+		{
+			BlockState state = plant.getDefaultState().with(EndCropBlock.AGE, 3);
+			BlockHelper.setWithoutUpdate(world, blockPos, state);
 		}
 		else if (plant instanceof PlantBlockWithAge) 
 		{

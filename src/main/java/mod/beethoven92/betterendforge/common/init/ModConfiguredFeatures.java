@@ -166,6 +166,10 @@ public class ModConfiguredFeatures
 			ModFeatures.SMALL_JELLYSHROOM_FLOOR.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(4));
 	
+	public static final ConfiguredFeature<?, ?> BLOSSOM_BERRY = 
+			ModFeatures.BLOSSOM_BERRY.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(2));
+	
 	// WALL PLANTS
 	public static final ConfiguredFeature<?, ?> PURPLE_POLYPORE = 
 			ModFeatures.PURPLE_POLYPORE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -405,6 +409,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "twisted_umbrella_moss"), TWISTED_UMBRELLA_MOSS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "jungle_grass"), JUNGLE_GRASS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "small_jellyshroom_floor"), SMALL_JELLYSHROOM_FLOOR);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "blossom_berry"), BLOSSOM_BERRY);
         // WALL PLANTS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "purple_polypore"), PURPLE_POLYPORE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "purple_polypore_dense"), PURPLE_POLYPORE_DENSE);

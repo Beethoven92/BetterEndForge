@@ -74,6 +74,7 @@ import mod.beethoven92.betterendforge.common.block.VentBubbleColumnBlock;
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
+import mod.beethoven92.betterendforge.common.block.template.EndCropBlock;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import mod.beethoven92.betterendforge.common.block.template.FurBlock;
 import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
@@ -585,6 +586,14 @@ public class ModBlocks
 					                                             doesNotBlockMovement().
 					                                             tickRandomly().
 					                                             sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> BLOSSOM_BERRY = registerBlockWithDefaultItem("blossom_berry_seed", 
+			() -> new EndCropBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                            zeroHardnessAndResistance().
+                                                            doesNotBlockMovement().
+                                                            tickRandomly().
+                                                            sound(SoundType.PLANT),
+                                                            PINK_MOSS.get()));
 	
 	// WALL PLANTS
 	public static final RegistryObject<Block> PURPLE_POLYPORE = registerBlockWithDefaultItem("purple_polypore", 
