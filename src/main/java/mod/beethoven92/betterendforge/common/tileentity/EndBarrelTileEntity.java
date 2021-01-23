@@ -4,7 +4,6 @@ import mod.beethoven92.betterendforge.common.block.EndBarrelBlock;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;

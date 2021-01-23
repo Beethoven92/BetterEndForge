@@ -1,6 +1,5 @@
 package mod.beethoven92.betterendforge.common.tileentity;
 
-import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.HydrothermalVentBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;

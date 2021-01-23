@@ -1,13 +1,10 @@
 package mod.beethoven92.betterendforge.common.block.template;
 
-import java.awt.Point;
 import java.util.function.ToIntFunction;
 
 import mod.beethoven92.betterendforge.common.block.BlockProperties;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.PedestalState;
-import mod.beethoven92.betterendforge.common.block.InfusionPedestal;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
-import mod.beethoven92.betterendforge.common.rituals.InfusionRitual;
 import mod.beethoven92.betterendforge.common.tileentity.PedestalTileEntity;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import net.minecraft.block.Block;
@@ -25,7 +22,6 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;

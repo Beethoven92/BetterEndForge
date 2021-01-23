@@ -3,7 +3,6 @@ package mod.beethoven92.betterendforge.common.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import mod.beethoven92.betterendforge.BetterEnd;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
@@ -63,7 +62,6 @@ public class InfusionRecipeSerializer extends net.minecraftforge.registries.Forg
 		for (int i = 0; i < 8; i++)
 		{
 			index_array[i] = buffer.readVarInt();
-			BetterEnd.LOGGER.debug("INDEX: " + index_array[i]);
 		}
 		for (int i = 0; i < 8; i++)
 		{

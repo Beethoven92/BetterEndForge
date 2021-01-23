@@ -12,7 +12,6 @@ import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.util.JsonFactory;
 import mod.beethoven92.betterendforge.common.world.biome.AmberLandBiome;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
