@@ -16,8 +16,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FallingBlock;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.DirectionProperty;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.world.IWorld;
@@ -83,6 +86,14 @@ public class BlockHelper
 	public static Direction randomDirection(Random random) 
 	{
 		return DIRECTIONS[random.nextInt(6)];
+	}
+	
+	public static BlockState rotateHorizontal(BlockState state, Rotation rotation, DirectionProperty facing) {
+		return (BlockState) state.with(facing, rotation.rotate((Direction) state.get(facing)));
+	}
+
+	public static BlockState mirrorHorizontal(BlockState state, Mirror mirror, DirectionProperty facing) {
+		return state.rotate(mirror.toRotation((Direction) state.get(facing)));
 	}
 	
 	public static Direction getRandomHorizontalDirection(Random rand)

@@ -6,6 +6,7 @@ import mod.beethoven92.betterendforge.common.entity.DragonflyEntity;
 import mod.beethoven92.betterendforge.common.entity.EndFishEntity;
 import mod.beethoven92.betterendforge.common.entity.EndSlimeEntity;
 import mod.beethoven92.betterendforge.common.entity.ShadowWalkerEntity;
+import mod.beethoven92.betterendforge.common.entity.SilkMothEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
@@ -45,6 +46,11 @@ public class ModEntityTypes
 			() -> EntityType.Builder.<CubozoaEntity>create(CubozoaEntity::new, EntityClassification.WATER_AMBIENT).
 			size(0.6f, 1f).
 			build(new ResourceLocation(BetterEnd.MOD_ID, "cubozoa").toString()));
+	
+	public static final RegistryObject<EntityType<SilkMothEntity>> SILK_MOTH = ENTITY_TYPES.register("silk_moth", 
+			() -> EntityType.Builder.<SilkMothEntity>create(SilkMothEntity::new, EntityClassification.AMBIENT).
+			size(0.6F, 0.6F).
+			build(new ResourceLocation(BetterEnd.MOD_ID, "silk_moth").toString()));
 
 	
 	
@@ -55,6 +61,7 @@ public class ModEntityTypes
 		GlobalEntityTypeAttributes.put(ModEntityTypes.SHADOW_WALKER.get(), ShadowWalkerEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.END_SLIME.get(), EndSlimeEntity.registerAttributes().create());
 		GlobalEntityTypeAttributes.put(ModEntityTypes.CUBOZOA.get(), CubozoaEntity.registerAttributes().create());
+		GlobalEntityTypeAttributes.put(ModEntityTypes.SILK_MOTH.get(), SilkMothEntity.registerAttributes().create());
 	}
 	
 	public static void registerEntitySpawns()
@@ -78,5 +85,9 @@ public class ModEntityTypes
 		EntitySpawnPlacementRegistry.register(ModEntityTypes.CUBOZOA.get(), 
 				EntitySpawnPlacementRegistry.PlacementType.IN_WATER, 
 				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, CubozoaEntity::canSpawn);
+		
+		EntitySpawnPlacementRegistry.register(ModEntityTypes.SILK_MOTH.get(), 
+				EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, 
+				Heightmap.Type.MOTION_BLOCKING, SilkMothEntity::canSpawn);
 	}
 }

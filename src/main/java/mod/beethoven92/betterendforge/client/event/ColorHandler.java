@@ -73,7 +73,7 @@ public class ColorHandler
 			return ((SpawnEggItem) stack.getItem()).getColor(color);
 		}, ModItems.DRAGONFLY_SPAWN_EGG.get(), ModItems.END_FISH_SPAWN_EGG.get(),
 				ModItems.SHADOW_WALKER_SPAWN_EGG.get(), ModItems.END_SLIME_SPAWN_EGG.get(),
-				ModItems.CUBOZOA_SPAWN_EGG.get());
+				ModItems.CUBOZOA_SPAWN_EGG.get(), ModItems.SILK_MOTH_SPAWN_EGG.get());
 		
 		event.getItemColors().register((stack, tintIndex) -> 
                          {return ((BlockItem)stack.getItem()).getBlock().getMaterialColor().colorValue;}, 
