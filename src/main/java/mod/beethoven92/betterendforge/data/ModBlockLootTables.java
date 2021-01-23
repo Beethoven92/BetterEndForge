@@ -367,12 +367,14 @@ public class ModBlockLootTables extends BlockLootTables
 		}
 	}
 	
-	// Need to improve
 	private static LootTable.Builder endLilyDrop() 
 	{
-		LootEntry.Builder<?> leaf_drop = ItemLootEntry.builder(ModItems.END_LILY_LEAF.get()).acceptCondition(RandomChance.builder(0.525F));
-		LootEntry.Builder<?> seed_drop = ItemLootEntry.builder(ModBlocks.END_LILY_SEED.get()).acceptCondition(RandomChance.builder(0.525F));
-		return LootTable.builder().addLootPool(LootPool.builder().addEntry(leaf_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.END_LILY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(EndLilyBlock.SHAPE, TripleShape.TOP)))).addLootPool(LootPool.builder().addEntry(seed_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.END_LILY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(EndLilyBlock.SHAPE, TripleShape.BOTTOM))));
+		LootEntry.Builder<?> leaf_drop = ItemLootEntry.builder(ModItems.END_LILY_LEAF.get()).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F)));
+		LootEntry.Builder<?> seed_drop = ItemLootEntry.builder(ModBlocks.END_LILY_SEED.get()).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F)));
+		LootPool.Builder leaf_loot = LootPool.builder().addEntry(leaf_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.END_LILY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(EndLilyBlock.SHAPE, TripleShape.TOP)));
+		LootPool.Builder seeds_loot = LootPool.builder().addEntry(seed_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.END_LILY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(EndLilyBlock.SHAPE, TripleShape.TOP)));
+		
+		return LootTable.builder().addLootPool(leaf_loot).addLootPool(seeds_loot);
 	}
 	
 	private static LootTable.Builder hydraluxDrop() 
