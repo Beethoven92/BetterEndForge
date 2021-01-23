@@ -8,14 +8,14 @@
 modLoader="javafml" #mandatory
 
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion="[34,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+loaderVersion="[35,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 
 # The license for you mod. This is mandatory metadata and allows for easier comprehension of your redistributive properties.
 # Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
 license="MIT License"
 
 # A URL to refer people to when problems occur with this mod
-issueTrackerURL="http://my.issue.tracker/" #optional
+issueTrackerURL="https://github.com/Beethoven92/BetterEndForge/issues" #optional
 
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
@@ -24,7 +24,7 @@ issueTrackerURL="http://my.issue.tracker/" #optional
 modId="betterendforge" #mandatory
 
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="1.16.4-1.3.0" #mandatory
+version="1.16.4-1.4.0" #mandatory
 
 # A display name for the mod
 displayName="BetterEnd Forge" #mandatory
@@ -46,8 +46,7 @@ authors="Authors of the port: Beethoven92, Vemerion" #optional
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-This mod adds new content to the end dimension that vastly improve and expand your end game content.
-NOTE: This port is a work in progress, some of the original content is still missing. More to be added soon!
+This mod adds new content to the end dimension that vastly improves and expands your end game content.
 '''
 
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
@@ -57,7 +56,7 @@ NOTE: This port is a work in progress, some of the original content is still mis
     # Does this dependency have to exist - if not, ordering below must be specified
     mandatory=true #mandatory
     # The version range of the dependency
-    versionRange="[34,)" #mandatory
+    versionRange="[35,)" #mandatory
     # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
     ordering="NONE"
     # Side this dependency is applied on - BOTH, CLIENT or SERVER
@@ -66,6 +65,6 @@ NOTE: This port is a work in progress, some of the original content is still mis
 [[dependencies.betterendforge]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.3]"
+    versionRange="[1.16.4,1.17)"
     ordering="NONE"
     side="BOTH"

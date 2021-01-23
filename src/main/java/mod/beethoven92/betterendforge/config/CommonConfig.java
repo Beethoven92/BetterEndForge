@@ -22,7 +22,7 @@ public class CommonConfig
     
     static 
     {
-        BUILDER.push("Common settings");
+        BUILDER.push("Generation settings");
         
         BUILDER.comment("\nLand biome map size.\nDefault value: 256");
         BIOME_SIZE_LAND = BUILDER.define("biomeSizeLand", 256);
@@ -39,13 +39,13 @@ public class CommonConfig
         BUILDER.comment("\nEnable/disable obsidian pillars generation.\nDefault value: true");
         GENERATE_OBSIDIAN_PILLARS = BUILDER.define("generateObsidianPillars", true);
        
-        BUILDER.comment("\nEnable/disable custom chorus plant.\nDefault value: true");
+        BUILDER.comment("\nEnable/disable custom chorus plant (set this to false if you experience block shifting issues)\nDefault value: true");
         CUSTOM_CHORUS_PLANT_ENABLED = BUILDER.define("customChorusPlantEnabled", true);
         
         BUILDER.comment("\nEnable/disable chorus generation in vanilla biomes.\nDefault value: true");
         CHORUS_IN_VANILLA_BIOMES_ENABLED = BUILDER.define("chorusInVanillaBiomesEnabled", true);
         
-        BUILDER.comment("\nEnable/disable new terrain generation.\nDefault value: false");
+        BUILDER.comment("\nEnable/disable new End terrain generation.\nDefault value: false");
         NEW_GENERATOR_ENABLED = BUILDER.define("enableNewGenerator", false);
 
         BUILDER.comment("\nEnable/disable the void ring around central island.\nDefault value: false");
