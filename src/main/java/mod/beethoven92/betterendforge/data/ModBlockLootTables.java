@@ -4,14 +4,17 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.block.BlockProperties.HydraluxShape;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.block.EndLilyBlock;
+import mod.beethoven92.betterendforge.common.block.HydraluxBlock;
 import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
 import mod.beethoven92.betterendforge.common.block.SulphurCrystalBlock;
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
+import mod.beethoven92.betterendforge.common.block.template.EndCropBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
@@ -187,8 +190,8 @@ public class ModBlockLootTables extends BlockLootTables
 	    	return droppingWithShears(block, withExplosionDecay(block, ItemLootEntry.builder(Items.STICK).acceptFunction(SetCount.builder(RandomValueRange.of(0.0F, 2.0F)))));
 	    });
 		
-	    ILootCondition.IBuilder ilootcondition$ibuilder1 = BlockStateProperty.builder(ModBlocks.SHADOW_BERRY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(ShadowBerryBlock.AGE, 3));
-	    registerLootTable(ModBlocks.SHADOW_BERRY.get(), droppingAndBonusWhen(ModBlocks.SHADOW_BERRY.get(), ModItems.SHADOW_BERRY_RAW.get(), ModBlocks.SHADOW_BERRY.get().asItem(), ilootcondition$ibuilder1)); 
+	    ILootCondition.IBuilder ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.SHADOW_BERRY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(ShadowBerryBlock.AGE, 3));
+	    registerLootTable(ModBlocks.SHADOW_BERRY.get(), droppingAndBonusWhen(ModBlocks.SHADOW_BERRY.get(), ModItems.SHADOW_BERRY_RAW.get(), ModBlocks.SHADOW_BERRY.get().asItem(), ilootcondition$ibuilder)); 
 	    
 	    registerDropSelfLootTable(ModBlocks.MENGER_SPONGE.get());
 	    registerDropSelfLootTable(ModBlocks.MENGER_SPONGE_WET.get());
@@ -201,9 +204,10 @@ public class ModBlockLootTables extends BlockLootTables
 	    registerLootTable(ModBlocks.CHARNIA_GREEN.get(), BlockLootTables::onlyWithShears);
 	    
 	    registerLootTable(ModBlocks.HYDRALUX_SAPLING.get(), BlockLootTables::onlyWithShears);
-	    // TO DO!
-	    registerLootTable(ModBlocks.HYDRALUX.get(), BlockLootTables::onlyWithShears);
-
+		this.registerLootTable(ModBlocks.HYDRALUX.get(), (block) -> {
+			return hydraluxDrop();
+	    });
+		
 		registerLootTable(ModBlocks.LANCELEAF_SEED.get(), BlockLootTables::onlyWithShears);
 		registerLootTable(ModBlocks.LANCELEAF.get(), BlockLootTables::onlyWithShears);
 		
@@ -215,6 +219,9 @@ public class ModBlockLootTables extends BlockLootTables
 		});
 		
 		registerLootTable(ModBlocks.SMALL_JELLYSHROOM.get(), BlockLootTables::onlyWithShears);
+	    
+		ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.BLOSSOM_BERRY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EndCropBlock.AGE, 3));
+	    registerLootTable(ModBlocks.BLOSSOM_BERRY.get(), droppingAndBonusWhen(ModBlocks.BLOSSOM_BERRY.get(), ModItems.BLOSSOM_BERRY.get(), ModBlocks.BLOSSOM_BERRY.get().asItem(), ilootcondition$ibuilder)); 
 	    
 		// WALL_PLANTS
 		registerDropSelfLootTable(ModBlocks.PURPLE_POLYPORE.get());
@@ -366,6 +373,17 @@ public class ModBlockLootTables extends BlockLootTables
 		LootEntry.Builder<?> leaf_drop = ItemLootEntry.builder(ModItems.END_LILY_LEAF.get()).acceptCondition(RandomChance.builder(0.525F));
 		LootEntry.Builder<?> seed_drop = ItemLootEntry.builder(ModBlocks.END_LILY_SEED.get()).acceptCondition(RandomChance.builder(0.525F));
 		return LootTable.builder().addLootPool(LootPool.builder().addEntry(leaf_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.END_LILY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(EndLilyBlock.SHAPE, TripleShape.TOP)))).addLootPool(LootPool.builder().addEntry(seed_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.END_LILY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(EndLilyBlock.SHAPE, TripleShape.BOTTOM))));
+	}
+	
+	private static LootTable.Builder hydraluxDrop() 
+	{
+		LootEntry.Builder<?> petal_drop = ItemLootEntry.builder(ModItems.HYDRALUX_PETAL.get()).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 4.0F)));
+		LootEntry.Builder<?> roots_drop = ItemLootEntry.builder(ModBlocks.HYDRALUX_SAPLING.get()).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F)));
+		LootPool.Builder small_flower_loot = LootPool.builder().addEntry(petal_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.HYDRALUX.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(HydraluxBlock.SHAPE, HydraluxShape.FLOWER_SMALL_BOTTOM)));
+		LootPool.Builder big_flower_loot = LootPool.builder().addEntry(petal_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.HYDRALUX.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(HydraluxBlock.SHAPE, HydraluxShape.FLOWER_BIG_BOTTOM)));
+		LootPool.Builder roots_loot = LootPool.builder().addEntry(roots_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.HYDRALUX.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(HydraluxBlock.SHAPE, HydraluxShape.ROOTS)));
+		
+		return LootTable.builder().addLootPool(small_flower_loot).addLootPool(big_flower_loot).addLootPool(roots_loot);
 	}
 	
 	private static LootTable.Builder sulphurCrystalDrop(Block block, Item drop)
