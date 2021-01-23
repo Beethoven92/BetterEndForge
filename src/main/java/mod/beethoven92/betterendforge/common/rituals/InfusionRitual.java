@@ -19,7 +19,7 @@ import net.minecraft.world.server.ServerWorld;
 
 public class InfusionRitual implements IInventory
 {
-	private static Point[] pedestalsMap = new Point[] {
+	private static final Point[] PEDESTALS_MAP = new Point[] {
 			new Point(0, 3), new Point(2, 2), new Point(3, 0), new Point(2, -2),
 			new Point(0, -3), new Point(-2, -2), new Point(-3, 0), new Point(-2, 2)
 		};
@@ -42,6 +42,11 @@ public class InfusionRitual implements IInventory
 		this.configure();
 	}
 	
+	public static Point[] getMap() 
+	{
+		return PEDESTALS_MAP;
+	}
+	
 	public void configure() 
 	{
 		if (world == null || world.isRemote || worldPos == null) return;
@@ -51,7 +56,7 @@ public class InfusionRitual implements IInventory
 			this.input = (InfusionPedestalTileEntity) inputEntity;
 		}
 		int i = 0;
-		for(Point point : pedestalsMap) 
+		for(Point point : PEDESTALS_MAP) 
 		{
 			BlockPos.Mutable checkPos = worldPos.toMutable().move(Direction.EAST, point.x).move(Direction.NORTH, point.y);
 			TileEntity catalystEntity = world.getTileEntity(checkPos);

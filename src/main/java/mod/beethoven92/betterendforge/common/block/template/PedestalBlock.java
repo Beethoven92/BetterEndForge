@@ -1,10 +1,13 @@
 package mod.beethoven92.betterendforge.common.block.template;
 
+import java.awt.Point;
 import java.util.function.ToIntFunction;
 
 import mod.beethoven92.betterendforge.common.block.BlockProperties;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.PedestalState;
+import mod.beethoven92.betterendforge.common.block.InfusionPedestal;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
+import mod.beethoven92.betterendforge.common.rituals.InfusionRitual;
 import mod.beethoven92.betterendforge.common.tileentity.PedestalTileEntity;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import net.minecraft.block.Block;
@@ -22,6 +25,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -151,6 +155,7 @@ public class PedestalBlock extends Block
 				ItemStack itemStack = player.getHeldItem(handIn);
 				if (itemStack.isEmpty()) return ActionResultType.CONSUME;
 				pedestal.setStack(player.abilities.isCreativeMode ? itemStack.copy().split(1) : itemStack.split(1));
+				//this.checkRitual(worldIn, pos);
 				return ActionResultType.SUCCESS;
 			} 
 			else 
@@ -166,7 +171,23 @@ public class PedestalBlock extends Block
 		}
 		return ActionResultType.PASS;
 	}
-
+	
+	/*public void checkRitual(World world, BlockPos pos) 
+	{
+		Mutable mut = new Mutable();
+		Point[] points = InfusionRitual.getMap();
+		for (Point p: points) 
+		{
+			mut.setPos(pos).move(p.x, 0, p.y);
+			BlockState state = world.getBlockState(mut);
+			if (state.getBlock() instanceof InfusionPedestal) 
+			{
+				((InfusionPedestal) state.getBlock()).checkRitual(world, mut);
+				break;
+			}
+		}
+	}*/
+	
 	@Override
 	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{

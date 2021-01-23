@@ -262,6 +262,7 @@
 	"block.betterendforge.umbrella_tree_cluster_empty": "Empty Umbrella Tree Cluster",
 	"block.betterendforge.jungle_vine": "Jungle Vine",
 	"block.betterendforge.jungle_fern": "Jungle Fern",
+	"block.betterendforge.blossom_berry_seed": "Blossom Berry Seed",
 	
 	"block.betterendforge.brimstone": "Brimstone",
 	"block.betterendforge.sulphur_crystal": "Sulfur Crystal",
@@ -301,6 +302,7 @@
 	"item.betterendforge.shadow_berry_cooked": "Shadow Berry Cooked",
 	"item.betterendforge.shadow_berry_raw": "Shadow Berry",
 	"item.betterendforge.umbrella_cluster_juice": "Umbrella Cluster Juice",
+	"item.betterend.blossom_berry": "Blossom Berry",
 
 	"item.betterendforge.bucket_end_fish": "End Fish Bucket",
 	"item.betterendforge.end_fish_cooked": "Cooked End Fish",
