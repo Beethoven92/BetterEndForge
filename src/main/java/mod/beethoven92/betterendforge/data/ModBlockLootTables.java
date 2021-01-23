@@ -11,6 +11,7 @@ import mod.beethoven92.betterendforge.common.block.HydraluxBlock;
 import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
 import mod.beethoven92.betterendforge.common.block.SulphurCrystalBlock;
+import mod.beethoven92.betterendforge.common.block.UmbrellaTreeMembraneBlock;
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
@@ -289,8 +290,9 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_SAPLING.get());
 		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_CLUSTER.get());
 		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_CLUSTER_EMPTY.get());
-		// TO DO
-		registerDropSelfLootTable(ModBlocks.UMBRELLA_TREE_MEMBRANE.get());
+		registerLootTable(ModBlocks.UMBRELLA_TREE_MEMBRANE.get(), (block) -> {
+			return umbrellaTreeMembraneDrop();
+		});
 		
 		registerDropSelfLootTable(ModBlocks.JELLYSHROOM_CAP_PURPLE.get());
 		
@@ -386,6 +388,22 @@ public class ModBlockLootTables extends BlockLootTables
 		LootPool.Builder roots_loot = LootPool.builder().addEntry(roots_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.HYDRALUX.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(HydraluxBlock.SHAPE, HydraluxShape.ROOTS)));
 		
 		return LootTable.builder().addLootPool(small_flower_loot).addLootPool(big_flower_loot).addLootPool(roots_loot);
+	}
+	
+	private static LootTable.Builder umbrellaTreeMembraneDrop()
+	{
+		LootEntry.Builder<?> block_drop = ItemLootEntry.builder(ModBlocks.UMBRELLA_TREE_MEMBRANE.get());
+		LootEntry.Builder<?> sapling_drop = ItemLootEntry.builder(ModBlocks.UMBRELLA_TREE_SAPLING.get()).acceptCondition(RandomChance.builder(0.25F));
+		
+		LootPool.Builder color_0_loot = LootPool.builder().addEntry(sapling_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(UmbrellaTreeMembraneBlock.COLOR, 0)));
+		LootPool.Builder color_1_loot = LootPool.builder().addEntry(block_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(UmbrellaTreeMembraneBlock.COLOR, 1)));
+		LootPool.Builder color_2_loot = LootPool.builder().addEntry(block_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(UmbrellaTreeMembraneBlock.COLOR, 2)));
+		LootPool.Builder color_3_loot = LootPool.builder().addEntry(block_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(UmbrellaTreeMembraneBlock.COLOR, 3)));
+		LootPool.Builder color_4_loot = LootPool.builder().addEntry(block_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(UmbrellaTreeMembraneBlock.COLOR, 4)));
+		LootPool.Builder color_5_loot = LootPool.builder().addEntry(block_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(UmbrellaTreeMembraneBlock.COLOR, 5)));
+		LootPool.Builder color_6_loot = LootPool.builder().addEntry(block_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(UmbrellaTreeMembraneBlock.COLOR, 6)));
+		
+		return LootTable.builder().addLootPool(color_0_loot).addLootPool(color_1_loot).addLootPool(color_2_loot).addLootPool(color_3_loot).addLootPool(color_4_loot).addLootPool(color_4_loot).addLootPool(color_5_loot).addLootPool(color_6_loot);
 	}
 	
 	private static LootTable.Builder sulphurCrystalDrop(Block block, Item drop)
