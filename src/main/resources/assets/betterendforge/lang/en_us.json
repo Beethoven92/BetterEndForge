@@ -188,6 +188,7 @@
 	"item.betterendforge.aeternium_sword_handle": "Aeternium Sword Handle",
 	"item.betterendforge.leather_stripe": "Leather Stripe",
 	"item.betterendforge.leather_wrapped_stick": "Leather Wrapped Stick",
+	"item.betterendforge.glowing_bulb": "Glowing Bulb",
 	
 	"effect.betterendforge.end_veil": "End Veil",
 	"enchantment.betterendforge.end_veil": "End Veil",
@@ -307,7 +308,7 @@
 	"item.betterendforge.shadow_berry_cooked": "Shadow Berry Cooked",
 	"item.betterendforge.shadow_berry_raw": "Shadow Berry",
 	"item.betterendforge.umbrella_cluster_juice": "Umbrella Cluster Juice",
-	"item.betterend.blossom_berry": "Blossom Berry",
+	"item.betterendforge.blossom_berry": "Blossom Berry",
 
 	"item.betterendforge.bucket_end_fish": "End Fish Bucket",
 	"item.betterendforge.end_fish_cooked": "Cooked End Fish",

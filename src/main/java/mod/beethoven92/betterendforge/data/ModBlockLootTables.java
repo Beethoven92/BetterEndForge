@@ -6,6 +6,7 @@ import java.util.stream.StreamSupport;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.HydraluxShape;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
+import mod.beethoven92.betterendforge.common.block.BulbVineBlock;
 import mod.beethoven92.betterendforge.common.block.EndLilyBlock;
 import mod.beethoven92.betterendforge.common.block.HydraluxBlock;
 import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
@@ -250,7 +251,10 @@ public class ModBlockLootTables extends BlockLootTables
 
 		registerLootTable(ModBlocks.TWISTED_VINE.get(), BlockLootTables::onlyWithShears);
 
-		registerLootTable(ModBlocks.BULB_VINE.get(), BlockLootTables::onlyWithShears);
+		registerLootTable(ModBlocks.BULB_VINE.get(), (block) -> 
+		{
+			return bulbVineDrop();
+		});
 		registerLootTable(ModBlocks.BULB_VINE_SEED.get(), BlockLootTables::onlyWithShears);
 		
 		registerLootTable(ModBlocks.JUNGLE_VINE.get(), BlockLootTables::onlyWithShears);
@@ -379,16 +383,29 @@ public class ModBlockLootTables extends BlockLootTables
 	{
 		LootEntry.Builder<?> leaf_drop = ItemLootEntry.builder(ModItems.END_LILY_LEAF.get()).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F)));
 		LootEntry.Builder<?> seed_drop = ItemLootEntry.builder(ModBlocks.END_LILY_SEED.get()).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F)));
-		LootPool.Builder leaf_loot = LootPool.builder().addEntry(leaf_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.END_LILY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(EndLilyBlock.SHAPE, TripleShape.TOP)));
-		LootPool.Builder seeds_loot = LootPool.builder().addEntry(seed_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.END_LILY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(EndLilyBlock.SHAPE, TripleShape.TOP)));
+		LootPool.Builder top_loot_leaf = LootPool.builder().addEntry(leaf_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.END_LILY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(EndLilyBlock.SHAPE, TripleShape.TOP)));
+		LootPool.Builder top_loot_seed = LootPool.builder().addEntry(seed_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.END_LILY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(EndLilyBlock.SHAPE, TripleShape.TOP)));
 		
-		return LootTable.builder().addLootPool(leaf_loot).addLootPool(seeds_loot);
+		return LootTable.builder().addLootPool(top_loot_leaf).addLootPool(top_loot_seed);
+	}
+	
+	private static LootTable.Builder bulbVineDrop()
+	{
+		LootEntry.Builder<?> bulb_drop = ItemLootEntry.builder(ModItems.GLOWING_BULB.get());
+		LootEntry.Builder<?> seed_drop = ItemLootEntry.builder(ModBlocks.BULB_VINE_SEED.get()).acceptCondition(RandomChance.builder(0.125F));
+		
+		LootPool.Builder bottom_loot = LootPool.builder().addEntry(bulb_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.BULB_VINE.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(BulbVineBlock.SHAPE, TripleShape.BOTTOM)));
+		LootPool.Builder middle_loot = LootPool.builder().addEntry(seed_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.BULB_VINE.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(BulbVineBlock.SHAPE, TripleShape.MIDDLE)));
+		LootPool.Builder top_loot = LootPool.builder().addEntry(bulb_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.BULB_VINE.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(BulbVineBlock.SHAPE, TripleShape.TOP)));
+		
+		return LootTable.builder().addLootPool(bottom_loot).addLootPool(middle_loot).addLootPool(top_loot);
 	}
 	
 	private static LootTable.Builder hydraluxDrop() 
 	{
 		LootEntry.Builder<?> petal_drop = ItemLootEntry.builder(ModItems.HYDRALUX_PETAL.get()).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 4.0F)));
 		LootEntry.Builder<?> roots_drop = ItemLootEntry.builder(ModBlocks.HYDRALUX_SAPLING.get()).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F)));
+		
 		LootPool.Builder small_flower_loot = LootPool.builder().addEntry(petal_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.HYDRALUX.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(HydraluxBlock.SHAPE, HydraluxShape.FLOWER_SMALL_BOTTOM)));
 		LootPool.Builder big_flower_loot = LootPool.builder().addEntry(petal_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.HYDRALUX.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(HydraluxBlock.SHAPE, HydraluxShape.FLOWER_BIG_BOTTOM)));
 		LootPool.Builder roots_loot = LootPool.builder().addEntry(roots_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.HYDRALUX.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(HydraluxBlock.SHAPE, HydraluxShape.ROOTS)));
@@ -412,6 +429,7 @@ public class ModBlockLootTables extends BlockLootTables
 		return LootTable.builder().addLootPool(color_0_loot).addLootPool(color_1_loot).addLootPool(color_2_loot).addLootPool(color_3_loot).addLootPool(color_4_loot).addLootPool(color_4_loot).addLootPool(color_5_loot).addLootPool(color_6_loot);
 	}
 	
+	// Need to improve
 	private static LootTable.Builder sulphurCrystalDrop(Block block, Item drop)
 	{
 		                                                                             //.rolls(ConstantRange.of(1)).

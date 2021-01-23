@@ -25,7 +25,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.registry.Registry;
 
 public class ModRecipes extends RecipeProvider
 {
@@ -53,6 +52,8 @@ public class ModRecipes extends RecipeProvider
 	    
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.DENSE_EMERALD_ICE.get()).key('#', ModBlocks.EMERALD_ICE.get()).patternLine("##").patternLine("##").addCriterion("has_emerald_ice", hasItem(ModBlocks.EMERALD_ICE.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.ANCIENT_EMERALD_ICE.get()).key('#', ModBlocks.DENSE_EMERALD_ICE.get()).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_dense_emerald_ice", hasItem(ModBlocks.DENSE_EMERALD_ICE.get())).build(consumer);
+	    
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.BULB_LANTERN.get()).key('C', Blocks.CHAIN).key('I', Items.IRON_INGOT).key('#', ModItems.GLOWING_BULB.get()).patternLine("C").patternLine("I").patternLine("#").addCriterion("has_glowing_bulb", hasItem(ModItems.GLOWING_BULB.get())).build(consumer);
 	    
 	    // DYES
 		ShapelessRecipeBuilder.shapelessRecipe(Items.BLUE_DYE).addIngredient(ModBlocks.BLUE_VINE_SEED.get()).setGroup("blue_dye").addCriterion("has_blue_vine_seed", hasItem(ModBlocks.BLUE_VINE_SEED.get())).build(consumer, "blue_dye_from_blue_vine_seed");
