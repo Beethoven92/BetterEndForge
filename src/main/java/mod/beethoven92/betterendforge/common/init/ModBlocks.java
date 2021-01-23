@@ -57,6 +57,7 @@ import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.RunedFlavoliteBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowGrassBlock;
+import mod.beethoven92.betterendforge.common.block.SilkMothNestBlock;
 import mod.beethoven92.betterendforge.common.block.SmallJellyshroomBlock;
 import mod.beethoven92.betterendforge.common.block.SulphurCrystalBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
@@ -170,6 +171,9 @@ public class ModBlocks
 			() -> new EndstoneDustBlock(AbstractBlock.Properties.create(Material.SAND, Blocks.END_STONE.getMaterialColor()).
 					                                             hardnessAndResistance(0.5F).
 					                                             sound(SoundType.SAND)));
+	
+	public static final RegistryObject<Block> SILK_MOTH_NEST = registerBlockWithDefaultItem("silk_moth_nest", 
+			() -> new SilkMothNestBlock(AbstractBlock.Properties.create(Material.WOOL).hardnessAndResistance(0.5f, 0.1f).sound(SoundType.CLOTH).notSolid().tickRandomly()));
 	//PATHS
 	public static final RegistryObject<Block> CRYSTAL_MOSS_PATH = registerBlockWithDefaultItem("crystal_moss_path", 
 			() -> new PathBlock(CRYSTAL_MOSS.get()));

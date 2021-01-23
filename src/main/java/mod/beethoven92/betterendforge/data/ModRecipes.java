@@ -87,6 +87,7 @@ public class ModRecipes extends RecipeProvider
 	    ShapelessRecipeBuilder.shapelessRecipe(Items.LEATHER).addIngredient(ModItems.LEATHER_STRIPE.get()).addIngredient(ModItems.LEATHER_STRIPE.get()).addIngredient(ModItems.LEATHER_STRIPE.get()).addCriterion("has_leather_stripe", hasItem(ModItems.LEATHER_STRIPE.get())).build(consumer, "stripes_to_leather");
 	    ShapelessRecipeBuilder.shapelessRecipe(ModItems.LEATHER_WRAPPED_STICK.get()).addIngredient(Items.STICK).addIngredient(ModItems.LEATHER_STRIPE.get()).addCriterion("has_leather_stripe", hasItem(ModItems.LEATHER_STRIPE.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(Items.ENDER_EYE).key('S', ModItems.CRYSTAL_SHARDS.get()).key('A', ModItems.AMBER_GEM.get()).key('P', Items.ENDER_PEARL).patternLine("SAS").patternLine("APA").patternLine("SAS").addCriterion("has_amber_gem", hasItem(ModItems.AMBER_GEM.get())).build(consumer, "ender_eye_from_amber_gem");
+	    ShapedRecipeBuilder.shapedRecipe(Items.STRING, 6).key('#', ModItems.SILK_FIBER.get()).patternLine("#").patternLine("#").patternLine("#").addCriterion("has_silk_fiber", hasItem(ModItems.SILK_FIBER.get())).build(consumer, "fiber_string");
 	    
 	    // LANTERNS
 	    registerLantern(ModBlocks.ANDESITE_LANTERN.get(), Blocks.ANDESITE_SLAB, consumer, "andesite");

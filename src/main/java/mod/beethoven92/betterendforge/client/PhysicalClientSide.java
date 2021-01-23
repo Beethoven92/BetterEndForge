@@ -10,6 +10,7 @@ import mod.beethoven92.betterendforge.client.renderer.EndSignTileEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.EndSlimeEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.PedestalRenderer;
 import mod.beethoven92.betterendforge.client.renderer.ShadowWalkerEntityRenderer;
+import mod.beethoven92.betterendforge.client.renderer.SilkMothEntityRenderer;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModContainerTypes;
@@ -54,6 +55,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SHADOW_WALKER.get(), ShadowWalkerEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.END_SLIME.get(), EndSlimeEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CUBOZOA.get(), CubozoaRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SILK_MOTH.get(), SilkMothEntityRenderer::new);
 	}
 	
 	private void registerGUIs()
@@ -145,6 +147,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		
 		// MISC
 		RenderTypeLookup.setRenderLayer(ModBlocks.END_PORTAL_BLOCK.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ModBlocks.SILK_MOTH_NEST.get(), RenderType.getCutout());
 		
 		RenderTypeLookup.setRenderLayer(ModBlocks.BULB_LANTERN.get(), RenderType.getCutout());
 		for (Block bulbLantern : ModBlocks.BULB_LANTERN_COLORED.getBlocks())

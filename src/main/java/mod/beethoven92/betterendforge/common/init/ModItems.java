@@ -52,6 +52,7 @@ public class ModItems
 	public final static RegistryObject<Item> ENCHANTED_PETAL = ITEMS.register("enchanted_petal", () -> new EnchantedPetalItem(new Item.Properties().rarity(Rarity.RARE).maxStackSize(16).group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> LEATHER_STRIPE = ITEMS.register("leather_stripe", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> LEATHER_WRAPPED_STICK = ITEMS.register("leather_wrapped_stick", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public final static RegistryObject<Item> SILK_FIBER = ITEMS.register("silk_fiber", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	
 	// ARMOR ITEMS
 	public static final RegistryObject<Item> TERMINITE_HELMET = ITEMS.register("terminite_helmet", () -> new ArmorItem(ModArmorMaterial.TERMINITE, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
@@ -100,6 +101,7 @@ public class ModItems
 	public static final RegistryObject<ModSpawnEggItem> SHADOW_WALKER_SPAWN_EGG = ITEMS.register("spawn_egg_shadow_walker", () -> new ModSpawnEggItem(() -> ModEntityTypes.SHADOW_WALKER.get(), ModMathHelper.getColor(30, 30, 30), ModMathHelper.getColor(5, 5, 5), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<ModSpawnEggItem> END_SLIME_SPAWN_EGG = ITEMS.register("spawn_egg_end_slime", () -> new ModSpawnEggItem(() -> ModEntityTypes.END_SLIME.get(), ModMathHelper.getColor(28, 28, 28), ModMathHelper.getColor(99, 11, 99), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<ModSpawnEggItem> CUBOZOA_SPAWN_EGG = ITEMS.register("spawn_egg_cubozoa", () -> new ModSpawnEggItem(() -> ModEntityTypes.CUBOZOA.get(), ModMathHelper.getColor(151, 77, 181), ModMathHelper.getColor(93, 176, 238), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	public static final RegistryObject<ModSpawnEggItem> SILK_MOTH_SPAWN_EGG = ITEMS.register("spawn_egg_silk_moth", () -> new ModSpawnEggItem(() -> ModEntityTypes.SILK_MOTH.get(), ModMathHelper.getColor(0, 0, 0), ModMathHelper.getColor(225, 225, 225), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 
 	// FOOD ITEMS
     public final static RegistryObject<Item> SHADOW_BERRY_RAW = ITEMS.register("shadow_berry_raw", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(4).saturation(0.5F).build())));

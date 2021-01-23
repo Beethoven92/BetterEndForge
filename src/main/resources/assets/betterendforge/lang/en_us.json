@@ -30,6 +30,11 @@
 	"biome.betterendforge.ice_starfield": "Ice Starfield",
 	"biome.betterendforge.umbrella_jungle": "Umbrella Jungle",
 
+	"block.betterendforge.silk_moth_nest": "Silk Moth Nest",
+	"entity.betterendforge.silk_moth": "Silk Moth",
+	"item.betterendforge.spawn_egg_silk_moth": "Silk Moth Spawn Egg",
+	"item.betterendforge.silk_fiber": "Silk Fiber",
+
 	"block.betterendforge.bulb_lantern": "Bulb Lantern",   
 	"block.betterendforge.bulb_lantern_black": "Black Bulb Lantern",
 	"block.betterendforge.bulb_lantern_blue": "Blue Bulb Lantern",

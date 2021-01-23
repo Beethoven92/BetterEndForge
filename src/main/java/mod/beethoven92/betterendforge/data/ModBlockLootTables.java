@@ -10,6 +10,7 @@ import mod.beethoven92.betterendforge.common.block.EndLilyBlock;
 import mod.beethoven92.betterendforge.common.block.HydraluxBlock;
 import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
+import mod.beethoven92.betterendforge.common.block.SilkMothNestBlock;
 import mod.beethoven92.betterendforge.common.block.SulphurCrystalBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaTreeMembraneBlock;
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
@@ -25,6 +26,7 @@ import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.loot.ConstantRange;
 import net.minecraft.loot.ItemLootEntry;
 import net.minecraft.loot.LootEntry;
 import net.minecraft.loot.LootPool;
@@ -223,6 +225,10 @@ public class ModBlockLootTables extends BlockLootTables
 	    
 		ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.BLOSSOM_BERRY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EndCropBlock.AGE, 3));
 	    registerLootTable(ModBlocks.BLOSSOM_BERRY.get(), droppingAndBonusWhen(ModBlocks.BLOSSOM_BERRY.get(), ModItems.BLOSSOM_BERRY.get(), ModBlocks.BLOSSOM_BERRY.get().asItem(), ilootcondition$ibuilder)); 
+	    
+	    registerLootTable(ModBlocks.SILK_MOTH_NEST.get(), (block) -> {
+	        return LootTable.builder().addLootPool(withSurvivesExplosion(block, LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block).acceptCondition(BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withBoolProp(SilkMothNestBlock.ACTIVE, true))))));
+	    });
 	    
 		// WALL_PLANTS
 		registerDropSelfLootTable(ModBlocks.PURPLE_POLYPORE.get());

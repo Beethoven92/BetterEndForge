@@ -16,6 +16,8 @@ public class BlockProperties
 	public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 3);
 	public static final EnumProperty<PentaShape> PENTA_SHAPE = EnumProperty.create("shape", PentaShape.class);
 	public static final BooleanProperty NATURAL = BooleanProperty.create("natural");
+	public static final IntegerProperty FULLNESS = IntegerProperty.create("fullness", 0, 3);
+
 	
 	public static enum TripleShape implements IStringSerializable 
 	{
