@@ -28,6 +28,7 @@ import mod.beethoven92.betterendforge.common.world.feature.OreLayerFeature;
 import mod.beethoven92.betterendforge.common.world.feature.OverworldIslandFeature;
 import mod.beethoven92.betterendforge.common.world.feature.PythadendronFeature;
 import mod.beethoven92.betterendforge.common.world.feature.RoundCaveFeature;
+import mod.beethoven92.betterendforge.common.world.feature.SilkMothNestFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SingleInvertedScatterFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SinglePlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SpireFeature;
@@ -151,6 +152,9 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> CRASHED_SHIP = new CrashedShipFeature();
 	public static final Feature<NoFeatureConfig> NBT_STRUCTURES = new BiomeNBTStructures();
 	
+	// Mobs
+	public static final Feature<NoFeatureConfig> SILK_MOTH_NEST = new SilkMothNestFeature();
+	
 	public static void registerFeatures(Register<Feature<?>> event)
     {
 		// WATER PLANTS
@@ -245,5 +249,8 @@ public class ModFeatures
     	// BUILDINGS
     	BetterEnd.register(event.getRegistry(), CRASHED_SHIP, "crashed_ship");
     	BetterEnd.register(event.getRegistry(), NBT_STRUCTURES, "nbt_structures");
+    	
+    	// MOBS
+    	BetterEnd.register(event.getRegistry(), SILK_MOTH_NEST, "silk_moth_nest");
     }
 }

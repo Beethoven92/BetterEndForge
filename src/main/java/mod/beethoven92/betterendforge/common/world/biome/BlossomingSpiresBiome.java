@@ -30,6 +30,7 @@ public class BlossomingSpiresBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TWISTED_MOSS).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TWISTED_MOSS_WOOD).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BLOSSOM_BERRY).
+				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.SILK_MOTH_NEST).
 				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 4));
 	}
 }

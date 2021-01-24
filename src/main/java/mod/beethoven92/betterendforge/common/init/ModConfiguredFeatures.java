@@ -367,6 +367,12 @@ public class ModConfiguredFeatures
 			ModFeatures.NBT_STRUCTURES.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.CHANCE.configure(new ChanceConfig(10)));
 	
+	// MOBS
+	public static final ConfiguredFeature<?, ?> SILK_MOTH_NEST = 
+			ModFeatures.SILK_MOTH_NEST.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.CHANCE.configure(new ChanceConfig(2)));
+
+	
 	public static void registerConfiguredFeatures() 	
 	{
         Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
@@ -462,5 +468,8 @@ public class ModConfiguredFeatures
         // BUILDINGS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "crashed_ship"), CRASHED_SHIP);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "nbt_structures"), NBT_STRUCTURES);
+        // MOBS
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "silk_moth_nest"), SILK_MOTH_NEST);
+
     }   
 }
