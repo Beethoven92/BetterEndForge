@@ -32,7 +32,7 @@ public class InfusionRecipeSerializer extends net.minecraftforge.registries.Forg
 			int index = JSONUtils.getInt(indexedIngredient, "index");
 			if (index < 0 || index > 7) 
 			{
-				throw new IllegalStateException("Infusion recipe ingredient index out of bounds, must be between 0 and 8 (excluded)");
+				throw new IllegalStateException("BETTER_END_FORGE: Infusion recipe ingredient index out of bounds, must be between 0 and 8 (excluded)");
 			}
 			Ingredient item = Ingredient.deserialize(indexedIngredient);
 			recipe.ingredientPositions.put(index, item);			
