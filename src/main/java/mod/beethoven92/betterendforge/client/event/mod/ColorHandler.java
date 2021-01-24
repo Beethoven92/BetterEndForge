@@ -1,4 +1,4 @@
-package mod.beethoven92.betterendforge.client.event;
+package mod.beethoven92.betterendforge.client.event.mod;
 
 import java.util.ArrayList;
 import java.util.List;

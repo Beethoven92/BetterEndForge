@@ -1,4 +1,4 @@
-package mod.beethoven92.betterendforge.client.event;
+package mod.beethoven92.betterendforge.client.event.mod;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;

@@ -1,26 +1,12 @@
 package mod.beethoven92.betterendforge;
 
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
-import net.minecraft.world.gen.FlatChunkGenerator;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.ChorusPlantFeature;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.DecoratedFeature;
-import net.minecraft.world.gen.feature.DecoratedFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.settings.DimensionStructuresSettings;
-import net.minecraft.world.gen.settings.StructureSeparationSettings;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.ForgeWorldType;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -36,8 +22,6 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -118,8 +102,7 @@ public class BetterEnd
     		ModEntityTypes.registerGlobalEntityAttributes();
     		ModEntityTypes.registerEntitySpawns();
     	    BiomeNBTStructures.loadStructures();
-    	    ModRecipeManager.registerSpecialRecipes();
-    		
+    	    ModRecipeManager.registerSpecialRecipes();   		
     	});    
     }    
     
@@ -153,121 +136,6 @@ public class BetterEnd
         {
             event.getRegistry().register(new TerraforgedIntegrationWorldType().setRegistryName(new ResourceLocation(MOD_ID, "world_type")));
         }
-    }
-    
-    @Mod.EventBusSubscriber(modid = BetterEnd.MOD_ID)
-    public static class ForgeEvents
-    {      	
-    	@SubscribeEvent(priority = EventPriority.HIGH)
-        public static void biomeModification(final BiomeLoadingEvent event) 
-    	{
-    		if (event.getCategory() == Category.THEEND)
-    		{
-    			if (event.getName() == null) return;
-    			
-    			// Add surface structures to biomes
-    			if (!event.getName().getPath().contains("mountain") && 
-    					!event.getName().getPath().contains("lake"))
-    			{
-    			    event.getGeneration().getStructures().add(() -> ModConfiguredStructures.ETERNAL_PORTAL);
-    			}
-    			event.getGeneration().getFeatures(Decoration.SURFACE_STRUCTURES).add(() -> ModConfiguredFeatures.CRASHED_SHIP);
-    			
-    			// Add ores to biomes
-    			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES).add(() -> ModConfiguredFeatures.ENDER_ORE);
-    			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES).add(() -> ModConfiguredFeatures.FLAVOLITE_LAYER);
-    			
-    			
-    			// Add end caves to biomes
-    			if (ModBiomes.getBiome(event.getName()).hasCaves()) 
-    			{
-    	  			event.getGeneration().getFeatures(Decoration.RAW_GENERATION).add(() -> ModConfiguredFeatures.ROUND_CAVE_RARE);
-        			event.getGeneration().getFeatures(Decoration.RAW_GENERATION).add(() -> ModConfiguredFeatures.CAVE_GRASS);
-    			}
-    			
-    			// Add scattered nbt structures to biomes
-    			if (!ModBiomes.getBiome(event.getName()).getNBTStructures().isEmpty())
-    			{
-    				event.getGeneration().getFeatures(Decoration.SURFACE_STRUCTURES).add(() -> ModConfiguredFeatures.NBT_STRUCTURES);
-    			}
-    		}
-        }
-	    
-    	@SubscribeEvent(priority = EventPriority.NORMAL)
-        public static void removeChorusFromVanillaBiomes(final BiomeLoadingEvent event) 
-        {	   	    
-			if (!CommonConfig.isChorusInVanillaBiomesEnabled())
-			{
-				if (event.getCategory() == Category.THEEND) 
-				{
-					if (event.getName() == null || !event.getName().getNamespace().equals("minecraft")) return;
-					
-					String path = event.getName().getPath();
-					if (path.equals("end_highlands") || path.equals("end_midlands") || path.equals("small_end_islands"))
-					{   
-						event.getGeneration().getFeatures(Decoration.VEGETAL_DECORATION).removeIf((supplier) -> 
-						{
-							ConfiguredFeature<?, ?> feature = supplier.get();
-							
-							// Retrieve the original feature
-							while(feature.getFeature() instanceof DecoratedFeature)
-							{
-								feature = ((DecoratedFeatureConfig)feature.getConfig()).feature.get();
-							}
-							
-				            if (feature.feature instanceof ChorusPlantFeature) 
-				            {
-				            	return true;
-				            }
-				            return false;
-				        });
-					}
-				}
-			}
-        }
-    	
-    	// Thanks to TelepathicGrunt (https://github.com/TelepathicGrunt) for this code
-    	@SubscribeEvent
-    	public static void addDimensionalSpacing(final WorldEvent.Load event) 
-    	{
-    		if(event.getWorld() instanceof ServerWorld)
-    		{  
-    			ServerWorld serverWorld = (ServerWorld)event.getWorld();
-    			
-    			// Initialize biome registry if it was not initialized during world generation
-    			// (example, when using mods/datapacks, that overrides the End generation)
-    			ModBiomes.initRegistry(serverWorld.getServer());
-    			
-    			LOGGER.debug("BETTER_END_FORGE: registering structure separation settings for dimension " +
-    					serverWorld.getDimensionKey().getLocation());
-    			
-    			// Prevent spawning of structures in Vanilla's superflat world
-    			if(serverWorld.getChunkProvider().getChunkGenerator() instanceof FlatChunkGenerator &&
-    					serverWorld.getDimensionKey().equals(World.OVERWORLD))
-    			{
-    				return;
-    			}
-
-    			// Need temp map as some mods use custom chunk generators with immutable maps in themselves.
-    			Map<Structure<?>, StructureSeparationSettings> tempMap = 
-    					new HashMap<>(serverWorld.getChunkProvider().getChunkGenerator().func_235957_b_().func_236195_a_());
-    			tempMap.put(ModStructures.MOUNTAIN, 
-    					DimensionStructuresSettings.field_236191_b_.get(ModStructures.MOUNTAIN));
-    			tempMap.put(ModStructures.MEGALAKE,
-    					DimensionStructuresSettings.field_236191_b_.get(ModStructures.MEGALAKE));
-    			tempMap.put(ModStructures.MEGALAKE_SMALL,
-    					DimensionStructuresSettings.field_236191_b_.get(ModStructures.MEGALAKE_SMALL));
-    			tempMap.put(ModStructures.GIANT_MOSSY_GLOWSHROOM,
-    					DimensionStructuresSettings.field_236191_b_.get(ModStructures.GIANT_MOSSY_GLOWSHROOM));
-    			tempMap.put(ModStructures.PAINTED_MOUNTAIN, 
-    					DimensionStructuresSettings.field_236191_b_.get(ModStructures.PAINTED_MOUNTAIN));
-    			tempMap.put(ModStructures.ETERNAL_PORTAL, 
-    					DimensionStructuresSettings.field_236191_b_.get(ModStructures.ETERNAL_PORTAL));
-    			tempMap.put(ModStructures.GIANT_ICE_STAR, 
-    					DimensionStructuresSettings.field_236191_b_.get(ModStructures.GIANT_ICE_STAR));
-    			serverWorld.getChunkProvider().getChunkGenerator().func_235957_b_().field_236193_d_ = tempMap;
-    		}
-    	}
     }
 
     // Registration helper
