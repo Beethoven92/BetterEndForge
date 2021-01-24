@@ -17,10 +17,12 @@ import mod.beethoven92.betterendforge.common.init.ModContainerTypes;
 import mod.beethoven92.betterendforge.common.init.ModEntityTypes;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import net.minecraft.block.Block;
+import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -153,6 +155,8 @@ public class PhysicalClientSide implements IPhysicalSide
 		for (Block bulbLantern : ModBlocks.BULB_LANTERN_COLORED.getBlocks())
 			RenderTypeLookup.setRenderLayer(bulbLantern, RenderType.getCutout());
 
+		// FLOWER POTS
+		setFlowerPotRenderLayers();
 		
 		// WOODEN MATERIALS
 		setWoodenMaterialRenderLayers(ModBlocks.MOSSY_GLOWSHROOM);
@@ -171,5 +175,15 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(material.door.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(material.trapdoor.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(material.ladder.get(), RenderType.getCutout());
+	}
+	
+	private void setFlowerPotRenderLayers()
+	{
+		ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach((block) -> {
+			if (block instanceof FlowerPotBlock)
+			{
+				RenderTypeLookup.setRenderLayer(block, RenderType.getCutout());;
+			}
+		});
 	}
 }

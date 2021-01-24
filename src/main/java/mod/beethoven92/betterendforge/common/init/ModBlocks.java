@@ -86,6 +86,7 @@ import mod.beethoven92.betterendforge.common.block.template.WallPlantBlock;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -260,9 +261,7 @@ public class ModBlocks
 	public static final RegistryObject<Block> BLACKSTONE_LANTERN = registerBlockWithDefaultItem("blackstone_lantern", 
 			() -> new ModLanternBlock(AbstractBlock.Properties.from(Blocks.BLACKSTONE).
                     setLightLevel(s -> 15)));
-	
-	
-	
+		
 	// ORES
 	public static final RegistryObject<Block> ENDER_ORE = registerBlockWithDefaultItem("ender_ore",
 			() -> new Block(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.SAND).
@@ -832,19 +831,21 @@ public class ModBlocks
 	
 	// BLOCKS WITH TILE ENTITY
 	public static final RegistryObject<Block> ETERNAL_PEDESTAL = registerBlockWithDefaultItem("eternal_pedestal", 
-			() -> new EternalPedestal(AbstractBlock.Properties.from(FLAVOLITE_RUNED_ETERNAL.get()).setLightLevel(PedestalBlock.light())));
+			() -> new EternalPedestal(AbstractBlock.Properties.from(FLAVOLITE_RUNED_ETERNAL.get()).
+					                                           setLightLevel(PedestalBlock.light())));
 	
 	public static final RegistryObject<Block> INFUSION_PEDESTAL = registerBlockWithDefaultItem("infusion_pedestal", 
-			() -> new InfusionPedestal(AbstractBlock.Properties.from(Blocks.OBSIDIAN).setLightLevel(PedestalBlock.light())));
+			() -> new InfusionPedestal(AbstractBlock.Properties.from(Blocks.OBSIDIAN).
+					                                            setLightLevel(PedestalBlock.light())));
 	
 	public static final RegistryObject<Block> END_STONE_SMELTER = registerBlockWithDefaultItem("end_stone_smelter", 
 			() -> new EndStoneSmelter(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.GRAY).
-					                                                  hardnessAndResistance(4F, 100F).
-					                                                  setRequiresTool().
-					                                                  sound(SoundType.STONE).
-					                                                  setLightLevel((state) -> {
-					                                                      return state.get(BlockStateProperties.LIT) ? 13 : 0;}
-					                                                  )));
+					                                           hardnessAndResistance(4F, 100F).
+					                                           setRequiresTool().
+					                                           sound(SoundType.STONE).
+					                                           setLightLevel((state) -> {
+					                                        	   return state.get(BlockStateProperties.LIT) ? 13 : 0;}
+					                                           )));
 	
 	// MISC
 	
@@ -886,6 +887,15 @@ public class ModBlocks
                                                                      setOpaque((state, world, pos) -> { return false; }).
                                                                      noDrops()));
 	
+	// FLOWER POT BLOCKS
+	public static final RegistryObject<Block> POTTED_MOSSY_GLOWSHROOM_SAPLING = registerFlowerPotBlock("potted_mossy_glowshroom_sapling", MOSSY_GLOWSHROOM_SAPLING);
+	public static final RegistryObject<Block> POTTED_LACUGROVE_SAPLING = registerFlowerPotBlock("potted_lacugrove_sapling", LACUGROVE_SAPLING);
+	public static final RegistryObject<Block> POTTED_PYTHADENDRON_SAPLING = registerFlowerPotBlock("potted_pythadendron_sapling", PYTHADENDRON_SAPLING);
+	public static final RegistryObject<Block> POTTED_DRAGON_TREE_SAPLING = registerFlowerPotBlock("potted_dragon_tree_sapling", DRAGON_TREE_SAPLING);
+	public static final RegistryObject<Block> POTTED_TENANEA_SAPLING = registerFlowerPotBlock("potted_tenanea_sapling", TENANEA_SAPLING);
+	public static final RegistryObject<Block> POTTED_HELIX_TREE_SAPLING = registerFlowerPotBlock("potted_helix_tree_sapling", HELIX_TREE_SAPLING);
+	public static final RegistryObject<Block> POTTED_UMBRELLA_TREE_SAPLING = registerFlowerPotBlock("potted_umbrella_tree_sapling", UMBRELLA_TREE_SAPLING);
+
 	// WOODEN MATERIALS
 	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.GRAY, MaterialColor.WOOD);
 	public static final WoodenMaterial LACUGROVE = new WoodenMaterial("lacugrove", MaterialColor.BROWN, MaterialColor.YELLOW);
@@ -919,9 +929,9 @@ public class ModBlocks
 	//
 	/////////////////////////////////////////////////////
 	
-	public static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<? extends T> itemSupplier)
+	public static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<? extends T> blockSupplier)
 	{
-		return BLOCKS.register(name, itemSupplier);
+		return BLOCKS.register(name, blockSupplier);
 	}
 	
 	public static <T extends Block> RegistryObject<T> registerBlockWithDefaultItem(String name, Supplier<? extends T> blockSupplier)
@@ -937,5 +947,11 @@ public class ModBlocks
 		RegistryObject<T> block = BLOCKS.register(name, blockSupplier);
 		ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().group(group)));
 		return block;
+	}
+	
+	public static RegistryObject<Block> registerFlowerPotBlock(String name, Supplier<? extends Block> plant)
+	{
+		RegistryObject<Block> flowerPot = BLOCKS.register(name, () -> new FlowerPotBlock(plant.get(), AbstractBlock.Properties.create(Material.MISCELLANEOUS).zeroHardnessAndResistance().notSolid()));
+		return flowerPot;
 	}
 }

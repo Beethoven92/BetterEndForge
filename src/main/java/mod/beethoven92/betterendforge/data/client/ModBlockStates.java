@@ -22,6 +22,7 @@ import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
+import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.LadderBlock;
 import net.minecraft.block.LanternBlock;
 import net.minecraft.block.PressurePlateBlock;
@@ -40,6 +41,7 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.fml.RegistryObject;
 
 public class ModBlockStates extends BlockStateProvider
 {
@@ -76,9 +78,13 @@ public class ModBlockStates extends BlockStateProvider
 		
 		// LANTERNS
 		registerLanterns();
+		
+		// FLOWER POTS
+		registerFlowerPots();
 	}
 	
-	private void registerLanterns() {
+	private void registerLanterns() 
+	{
 		lanternBlock(ModBlocks.ANDESITE_LANTERN.get(), "andesite");
 		makeBlockItemFromExistingModel(ModBlocks.ANDESITE_LANTERN.get(), "andesite_lantern_ceil");
 		lanternBlock(ModBlocks.DIORITE_LANTERN.get(), "diorite");
@@ -93,10 +99,10 @@ public class ModBlockStates extends BlockStateProvider
 		makeBlockItemFromExistingModel(ModBlocks.END_STONE_LANTERN.get(), "end_stone_lantern_ceil");
 		lanternBlock(ModBlocks.BLACKSTONE_LANTERN.get(), "blackstone");
 		makeBlockItemFromExistingModel(ModBlocks.BLACKSTONE_LANTERN.get(), "blackstone_lantern_ceil");
-
 	}
 
-	private void registerPedestals() {
+	private void registerPedestals() 
+	{
 		pedestalBlock(ModBlocks.ANDESITE_PEDESTAL.get(), "andesite", mcLoc("block/polished_andesite"), mcLoc("block/andesite_pillar"));
 		makeBlockItemFromExistingModel(ModBlocks.ANDESITE_PEDESTAL.get(), "andesite_pedestal_default");
 		pedestalBlock(ModBlocks.DIORITE_PEDESTAL.get(), "diorite", mcLoc("block/polished_diorite"), mcLoc("block/diorite_pillar"));
@@ -107,6 +113,16 @@ public class ModBlockStates extends BlockStateProvider
 		makeBlockItemFromExistingModel(ModBlocks.PURPUR_PEDESTAL.get(), "purpur_pedestal_default");
 		pedestalBlock(ModBlocks.QUARTZ_PEDESTAL.get(), "quartz", mcLoc("block/quartz_block_side"), mcLoc("block/quartz_pillar"));
 		makeBlockItemFromExistingModel(ModBlocks.QUARTZ_PEDESTAL.get(), "quartz_pedestal_default");
+	}
+	
+	private void registerFlowerPots()
+	{
+		ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach((block) -> {
+			if (block instanceof FlowerPotBlock)
+			{
+				flowerPotBlock(block, ((FlowerPotBlock) block).getFlower());
+			}
+		});
 	}
 
 	private void registerWoodenMaterialBlockStates(WoodenMaterial material)
@@ -388,7 +404,6 @@ public class ModBlockStates extends BlockStateProvider
            .modelFile(isFloor ? floor : ceil)
            .build();
         });
-
     }
     
     private void pedestalBlock(Block block, String material, ResourceLocation polished, ResourceLocation pillar)
@@ -420,7 +435,6 @@ public class ModBlockStates extends BlockStateProvider
 			PedestalState pedestalState = state.get(PedestalBlock.STATE);
 			return ConfiguredModel.builder().modelFile(models.get(pedestalState)).build();
 		});
-
     }
     
     private void bulbLanterns()
@@ -441,6 +455,12 @@ public class ModBlockStates extends BlockStateProvider
 	        });
 			makeBlockItemFromExistingModel(lantern, "bulb_lantern_colored_ceil");
         }
-
+    }
+    
+    private void flowerPotBlock(Block pot_block, Block plant)
+    {
+    	ModelFile pot = models().withExistingParent("potted_" + plant.getRegistryName().getPath(), mcLoc("block/flower_pot_cross"))
+    			.texture("plant", modLoc("block/" + plant.getRegistryName().getPath()));
+    	simpleBlock(pot_block, pot);
     }
 }

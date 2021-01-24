@@ -7,6 +7,7 @@ import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.EndSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
+import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
@@ -42,6 +43,10 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 			if (block instanceof EndSaplingBlock)
 			{
 				getOrCreateBuilder(BlockTags.SAPLINGS).add(block);
+			}
+			if (block instanceof FlowerPotBlock)
+			{
+				getOrCreateBuilder(BlockTags.FLOWER_POTS).add(block);
 			}
 		});
 				

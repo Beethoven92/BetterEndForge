@@ -23,6 +23,7 @@ import mod.beethoven92.betterendforge.common.init.ModItems;
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Item;
@@ -38,6 +39,7 @@ import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.loot.conditions.RandomChance;
 import net.minecraft.loot.conditions.TableBonus;
 import net.minecraft.loot.functions.SetCount;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModBlockLootTables extends BlockLootTables
@@ -306,6 +308,9 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		registerDropSelfLootTable(ModBlocks.JELLYSHROOM_CAP_PURPLE.get());
 		
+		// FLOWER POT BLOCKS
+		registerFlowerPotLootTables();
+		
 		// WOODEN_MATERIALS
 		registerWoodenMaterialLootTables(ModBlocks.MOSSY_GLOWSHROOM);
 		registerWoodenMaterialLootTables(ModBlocks.LACUGROVE);
@@ -379,6 +384,16 @@ public class ModBlockLootTables extends BlockLootTables
 		}
 	}
 	
+	private void registerFlowerPotLootTables()
+	{
+		ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach((block) -> {
+			if (block instanceof FlowerPotBlock)
+			{
+				registerFlowerPot(block);
+			}
+		});
+	}
+	
 	private static LootTable.Builder endLilyDrop() 
 	{
 		LootEntry.Builder<?> leaf_drop = ItemLootEntry.builder(ModItems.END_LILY_LEAF.get()).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2.0F)));
@@ -431,8 +446,7 @@ public class ModBlockLootTables extends BlockLootTables
 	
 	// Need to improve
 	private static LootTable.Builder sulphurCrystalDrop(Block block, Item drop)
-	{
-		                                                                             //.rolls(ConstantRange.of(1)).
+	{		                                                                             //.rolls(ConstantRange.of(1)).
 		return LootTable.builder().addLootPool(withExplosionDecay(block, LootPool.builder().addEntry(ItemLootEntry.builder(drop).acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 3.0F)).acceptCondition(BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(SulphurCrystalBlock.AGE, 3)))))));
 	}
 }
