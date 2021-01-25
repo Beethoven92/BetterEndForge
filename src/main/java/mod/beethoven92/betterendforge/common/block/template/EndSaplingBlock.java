@@ -48,7 +48,7 @@ public abstract class EndSaplingBlock extends Block implements IGrowable
 	@Override
 	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) 
 	{
-			grow(worldIn, random, pos, state);
+		grow(worldIn, random, pos, state);
 	}
 	
 	@Override

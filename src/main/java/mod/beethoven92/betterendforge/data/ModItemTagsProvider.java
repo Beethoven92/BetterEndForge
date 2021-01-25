@@ -119,6 +119,9 @@ public class ModItemTagsProvider extends ItemTagsProvider
 
 		getOrCreateBuilder(Tags.Items.FENCE_GATES).add(material.gate.get().asItem());
 		getOrCreateBuilder(Tags.Items.FENCE_GATES_WOODEN).add(material.gate.get().asItem());
+		
+		getOrCreateBuilder(Tags.Items.CHESTS).add(material.chest.get().asItem());
+		getOrCreateBuilder(Tags.Items.CHESTS_WOODEN).add(material.chest.get().asItem());
 	}
 	
 	private void registerStoneMaterialTags(StoneMaterial material)

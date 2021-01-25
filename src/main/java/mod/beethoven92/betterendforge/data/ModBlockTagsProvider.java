@@ -115,7 +115,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		getOrCreateBuilder(BlockTags.WOODEN_TRAPDOORS).add(material.trapdoor.get());
 		
 		getOrCreateBuilder(BlockTags.CLIMBABLE).add(material.ladder.get());
-
 		
 		// Forge Tags
 		getOrCreateBuilder(Tags.Blocks.FENCES).add(material.fence.get());
@@ -123,6 +122,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 
 		getOrCreateBuilder(Tags.Blocks.FENCE_GATES).add(material.gate.get());
 		getOrCreateBuilder(Tags.Blocks.FENCE_GATES_WOODEN).add(material.gate.get());
+		
+		getOrCreateBuilder(Tags.Blocks.CHESTS).add(material.chest.get());
+		getOrCreateBuilder(Tags.Blocks.CHESTS_WOODEN).add(material.chest.get());
 	}
 	
 	private void registerStoneMaterialTags(StoneMaterial material)
