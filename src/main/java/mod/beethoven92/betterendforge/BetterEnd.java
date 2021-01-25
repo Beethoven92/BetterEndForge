@@ -130,7 +130,7 @@ public class BetterEnd
     		ModConfiguredFeatures.registerConfiguredFeatures();
     	}
         
-    	//Terraforge integration
+    	//Terraforged integration
         @SubscribeEvent
         public static void registerWorldtype(RegistryEvent.Register<ForgeWorldType> event)
         {

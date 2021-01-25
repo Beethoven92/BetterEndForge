@@ -190,6 +190,7 @@
 	"item.betterendforge.leather_wrapped_stick": "Leather Wrapped Stick",
 	"item.betterendforge.glowing_bulb": "Glowing Bulb",
 	
+	"enchantment.betterendforge.end_veil.desc": "Wearing an helmet enchanted with this prevents endermen from aggroing when you look at them",
 	"effect.betterendforge.end_veil": "End Veil",
 	"enchantment.betterendforge.end_veil": "End Veil",
 	"item.minecraft.potion.effect.end_veil": "Potion of End Veil",
