@@ -116,6 +116,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		
 		getOrCreateBuilder(BlockTags.CLIMBABLE).add(material.ladder.get());
 		
+		getOrCreateBuilder(BlockTags.GUARDED_BY_PIGLINS).add(material.chest.get());	
+		getOrCreateBuilder(BlockTags.GUARDED_BY_PIGLINS).add(material.barrel.get());
+		
 		// Forge Tags
 		getOrCreateBuilder(Tags.Blocks.FENCES).add(material.fence.get());
 		getOrCreateBuilder(Tags.Blocks.FENCES_WOODEN).add(material.fence.get());
