@@ -20,7 +20,8 @@
 	      "EndPodiumFeatureMixin",
 	      "EndSpikeFeatureMixin",
 	      "EndCityStructureMixin",
-	      "RecipeManagerMixin"
+	      "RecipeManagerMixin",
+	      "BeEndBiomeProviderMixin"
 	],
   "client": [
 	      "BiomeColorsMixin",

@@ -13,6 +13,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.DimensionSettings;
 import net.minecraft.world.gen.NoiseChunkGenerator;
+import net.minecraftforge.fml.ModList;
 
 @Mixin(DimensionType.class)
 public abstract class DimensionTypeMixin 
@@ -20,9 +21,18 @@ public abstract class DimensionTypeMixin
     @Inject(at = @At("HEAD"), method = "getEndChunkGenerator(Lnet/minecraft/util/registry/Registry;Lnet/minecraft/util/registry/Registry;J)Lnet/minecraft/world/gen/ChunkGenerator;", cancellable = true)
     private static void betterEndGenerator(Registry<Biome> registry, Registry<DimensionSettings> settings, long seed, CallbackInfoReturnable<ChunkGenerator> info) 
     {
-    	info.setReturnValue(new NoiseChunkGenerator(
-    			new BetterEndBiomeProvider(registry, seed), seed, 
-    			() -> settings.getOrThrow(DimensionSettings.field_242737_f)));
+    	// TEMPORARY WORKAROUND to BOP partial incompatibility:
+    	// Need this check to always ensure BetterEnd is in control of the end biome source,
+    	// otherwise custom terrain generator won't work correctly.
+    	// BOP is a special case, as they use a custom world type which uses the vanilla end biome source, 
+    	// so if BOP is loaded BetterEnd will inject its biome generation into the default end biome source
+    	// instead of trying to use its custom custom one
+    	/*if (!ModList.get().isLoaded("biomesoplenty"))
+    	{
+    		info.setReturnValue(new NoiseChunkGenerator(
+    				new BetterEndBiomeProvider(registry, seed), seed, 
+    				() -> settings.getOrThrow(DimensionSettings.field_242737_f)));
+    	}*/
     }
 	
     @Inject(method = "doesHasDragonFight", at = @At("HEAD"), cancellable = true)
