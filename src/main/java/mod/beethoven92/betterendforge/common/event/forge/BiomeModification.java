@@ -5,7 +5,10 @@ import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredStructures;
 import mod.beethoven92.betterendforge.config.CommonConfig;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.world.biome.Biome.Category;
+import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.feature.ChorusPlantFeature;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -50,6 +53,14 @@ public class BiomeModification
 			if (!ModBiomes.getBiome(event.getName()).getNBTStructures().isEmpty())
 			{
 				event.getGeneration().getFeatures(Decoration.SURFACE_STRUCTURES).add(() -> ModConfiguredFeatures.NBT_STRUCTURES);
+			}
+			
+			// If the Deadly End Phantoms mod is installed, their specter will spawn in shadow forest
+			// instead of vanilla phantoms
+			if (event.getName().equals(ModBiomes.SHADOW_FOREST.getID()))
+			{
+				MobSpawnInfo.Spawners phantom = new MobSpawnInfo.Spawners(EntityType.byKey("deadlyendphantoms:specter").orElse(EntityType.PHANTOM), 10, 1, 2);
+				event.getSpawns().getSpawner(EntityClassification.MONSTER).add(phantom);
 			}
 		}
     }
