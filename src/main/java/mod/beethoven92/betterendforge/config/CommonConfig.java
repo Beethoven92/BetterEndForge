@@ -25,10 +25,10 @@ public class CommonConfig
     {
         BUILDER.push("Generation settings");
         
-        BUILDER.comment("\nEnable/disable integration with vanilla End biome provider."
-        		+ "\nLeave this on 'true' if you are creating a world with Biomes O' Plenty."
-        		+ "\nIf Biomes O' Plenty is not installed the BetterEnd biome provider will be used by default so you don't need to touch this option."
-        		+ "\nIn any other case it is suggested to set this to 'false'.\nDefault value: true");
+        BUILDER.comment("\nEnable/disable BetterEnd integration with vanilla End biome provider."
+        		+ "This allows BetterEnd to inject its own biome generation infos into the vanilla EndBiomeProvider,"
+        		+ "making BetterEnd biomes integrating with Biomes O' Plenty worlds and already generated worlds."
+        		+ "If, for some reason you don't want this feature, here is the option to change it\nDefault value: true");
         VANILLA_END_INTEGRATION_ENABLED = BUILDER.define("vanillaEndIntegrationEnabled", true);
         
         BUILDER.comment("\nLand biome map size.\nDefault value: 256");

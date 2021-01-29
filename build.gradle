@@ -20,7 +20,7 @@ mixin {
     add sourceSets.main, "betterendforge.refmap.json"
 }
 
-version = '1.16.4-1.4.0'
+version = '1.16.4-1.4.1'
 group = 'mod.beethoven92.betterendforge' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'betterendforge'
 
@@ -166,7 +166,7 @@ dependencies {
 jar {
     manifest {
         attributes([
-            "Specification-Title": "BetterEnd Forge Port",
+            "Specification-Title": "BetterEnd Forge",
             "Specification-Vendor": "Beethoven92",
             "Specification-Version": "1", // We are version 1 of ourselves
             "Implementation-Title": project.name,

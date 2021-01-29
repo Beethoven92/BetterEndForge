@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -63,17 +62,20 @@ public abstract class EndBiomeProviderMixin extends BiomeProvider
 	@Inject(at = @At("RETURN"), method = "<init>")
 	private void be_init(Registry<Biome> lookupRegistry, long seed, CallbackInfo info)
 	{
-		// The "biomes" list is filled when the EndBiomeProvider constructor is called
-		// and by default is hardcoded to contain only vanilla End biomes.
-		// We need to reset this list to include all End biomes (vanilla and modded) that are found in the registry.
-		this.biomes = be_getBiomes(lookupRegistry);
+		if (CommonConfig.isVanillaEndIntegrationEnabled())
+		{
+			// The "biomes" list is filled when the EndBiomeProvider constructor is called
+			// and by default is hardcoded to contain only vanilla End biomes.
+			// We need to reset this list to include all End biomes (vanilla and modded) that are found in the registry.
+		    this.biomes = be_getBiomes(lookupRegistry);
 		
-		this.mapLand = new BiomeMap(seed, CommonConfig.biomeSizeLand(), ModBiomes.LAND_BIOMES);
-		this.mapVoid = new BiomeMap(seed, CommonConfig.biomeSizeVoid(), ModBiomes.VOID_BIOMES);
-		this.centerBiome = lookupRegistry.getOrThrow(Biomes.THE_END);
-		this.barrens = lookupRegistry.getOrThrow(Biomes.END_BARRENS);
+		    this.mapLand = new BiomeMap(seed, CommonConfig.biomeSizeLand(), ModBiomes.LAND_BIOMES);
+		    this.mapVoid = new BiomeMap(seed, CommonConfig.biomeSizeVoid(), ModBiomes.VOID_BIOMES);
+		    this.centerBiome = lookupRegistry.getOrThrow(Biomes.THE_END);
+		    this.barrens = lookupRegistry.getOrThrow(Biomes.END_BARRENS);
 	    
-	    ModBiomes.mutateRegistry(lookupRegistry);
+		    ModBiomes.mutateRegistry(lookupRegistry);
+		}
 	}
 	
 	// Gathers all available End biomes in the registry
@@ -88,106 +90,73 @@ public abstract class EndBiomeProviderMixin extends BiomeProvider
 		});
 		return list;
 	}
-	
-	/*@Overwrite
-	public Biome getNoiseBiome(int x, int y, int z) 
-	{
-		boolean hasVoid = !CommonConfig.isNewGeneratorEnabled() || !CommonConfig.noRingVoid();
 		
-		long i = (long) x * (long) x;
-		long j = (long) z * (long) z;
-		if (hasVoid && i + j <= 65536L) return this.centerBiome;
-		
-		if (x == 0 && z == 0) 
-		{
-			mapLand.clearCache();
-			mapVoid.clearCache();
-		}
-		
-		if (CommonConfig.isNewGeneratorEnabled()) 
-		{
-			if (TerrainGenerator.isLand(x, z)) 
-			{
-				return mapLand.getBiome(x << 2, z << 2).getActualBiome();
-			}
-			else 
-			{
-				return mapVoid.getBiome(x << 2, z << 2).getActualBiome();
-			}
-		}
-		else 
-		{
-			float height = EndBiomeProvider.getRandomNoise(generator, (x >> 1) + 1, (z >> 1) + 1) + (float) SMALL_NOISE.eval(x, z) * 5;
-	
-			if (height > -20F && height < -5F) 
-			{
-				return barrens;
-			}
-			
-			BetterEndBiome endBiome = height < -10F ? mapVoid.getBiome(x << 2, z << 2) : mapLand.getBiome(x << 2, z << 2);
-			return endBiome.getActualBiome();
-		}
-	}*/
-	
 	// Since @Overwrite of the getNoiseBiome appears to not work when another mod injects its own code
 	// into the same method before us, we are forced to make an @Inject, 
 	// that also acts as an overwrite of the original method.
 	@Inject(at = @At("HEAD"), method = "getNoiseBiome(III)Lnet/minecraft/world/biome/Biome;", cancellable = true)
 	private void be_getNoiseBiome(int x, int y, int z, CallbackInfoReturnable<Biome> info) 
 	{
-		boolean hasVoid = !CommonConfig.isNewGeneratorEnabled() || !CommonConfig.noRingVoid();
-		
-		long i = (long) x * (long) x;
-		long j = (long) z * (long) z;
-		if (hasVoid && i + j <= 65536L)
+		if (CommonConfig.isVanillaEndIntegrationEnabled())
 		{
-			info.setReturnValue(this.centerBiome);
-			info.cancel();
-			return;
-		}
+			boolean hasVoid = !CommonConfig.isNewGeneratorEnabled() || !CommonConfig.noRingVoid();
 		
-		if (x == 0 && z == 0) 
-		{
-			mapLand.clearCache();
-			mapVoid.clearCache();
-		}
-		
-		if (CommonConfig.isNewGeneratorEnabled()) 
-		{
-			if (TerrainGenerator.isLand(x, z)) 
-			{
-				info.setReturnValue(mapLand.getBiome(x << 2, z << 2).getActualBiome());
-				info.cancel();
-				return;
+			long i = (long) x * (long) x;
+		    long j = (long) z * (long) z;
+		    if (hasVoid && i + j <= 65536L)
+		    {
+		    	info.setReturnValue(this.centerBiome);
+			    info.cancel();
+			    return;
 			}
-			else 
-			{
-				info.setReturnValue(mapVoid.getBiome(x << 2, z << 2).getActualBiome());
-				info.cancel();
-				return;
+		
+		    if (x == 0 && z == 0) 
+		    {
+		    	mapLand.clearCache();
+			    mapVoid.clearCache();
 			}
-		}
-		else 
-		{
-			float height = EndBiomeProvider.getRandomNoise(generator, (x >> 1) + 1, (z >> 1) + 1) + (float) SMALL_NOISE.eval(x, z) * 5;
+		
+		    if (CommonConfig.isNewGeneratorEnabled()) 
+		    {
+		    	if (TerrainGenerator.isLand(x, z)) 
+		    	{
+		    		info.setReturnValue(mapLand.getBiome(x << 2, z << 2).getActualBiome());
+				    info.cancel();
+				    return;
+				}
+		    	else 
+		    	{
+		    		info.setReturnValue(mapVoid.getBiome(x << 2, z << 2).getActualBiome());
+		    		info.cancel();
+		    		return;
+		    	}
+		    }
+		    else 
+		    {
+		    	float height = EndBiomeProvider.getRandomNoise(generator, (x >> 1) + 1, (z >> 1) + 1) + (float) SMALL_NOISE.eval(x, z) * 5;
 	
-			if (height > -20F && height < -5F) 
-			{
-				info.setReturnValue(barrens);
-				info.cancel();
-				return;
-			}
+		    	if (height > -20F && height < -5F) 
+			    {
+		    		info.setReturnValue(barrens);
+				    info.cancel();
+				    return;
+				}
 			
-			BetterEndBiome endBiome = height < -10F ? mapVoid.getBiome(x << 2, z << 2) : mapLand.getBiome(x << 2, z << 2);
-			info.setReturnValue(endBiome.getActualBiome());
-			info.cancel();
-			return;
+		    	BetterEndBiome endBiome = height < -10F ? mapVoid.getBiome(x << 2, z << 2) : mapLand.getBiome(x << 2, z << 2);
+		    	info.setReturnValue(endBiome.getActualBiome());
+		    	info.cancel();
+		    	return;
+		    }
 		}
 	}
 	
-	@Overwrite
-	public BiomeProvider getBiomeProvider(long seed) 
+	@Inject(method = "getBiomeProvider", at = @At("HEAD"))
+	private void be_getBiomeProvider(long seed, CallbackInfoReturnable<BiomeProvider> info) 
 	{
-		return new EndBiomeProvider(this.lookupRegistry, seed);
+		if (CommonConfig.isVanillaEndIntegrationEnabled())
+		{
+			info.setReturnValue(new EndBiomeProvider(this.lookupRegistry, seed));
+			info.cancel();
+		}
 	}
 }
