@@ -8,7 +8,7 @@ public class CommonConfig
 
     public static ForgeConfigSpec COMMON_CONFIG;
    
-    public static final ForgeConfigSpec.BooleanValue BOP_COMPATIBILITY_ENABLED;
+    public static final ForgeConfigSpec.BooleanValue VANILLA_END_INTEGRATION_ENABLED;
     public static final ForgeConfigSpec.ConfigValue<Integer> BIOME_SIZE_LAND;
     public static final ForgeConfigSpec.ConfigValue<Integer> BIOME_SIZE_VOID;
     public static final ForgeConfigSpec.BooleanValue DRAGON_FIGHT_ENABLED;
@@ -25,10 +25,11 @@ public class CommonConfig
     {
         BUILDER.push("Generation settings");
         
-        BUILDER.comment("\nEnable/disable compatibility with Biomes O' Plenty.\nLeave this on 'true' if you are using Biomes O' Plenty world type."
+        BUILDER.comment("\nEnable/disable integration with vanilla End biome provider."
+        		+ "\nLeave this on 'true' if you are creating a world with Biomes O' Plenty."
         		+ "\nIf Biomes O' Plenty is not installed the BetterEnd biome provider will be used by default so you don't need to touch this option."
-        		+ "\nIn any other case, for example when BOP is installed but you are not creating a world with it, it is suggested to set this to 'false'.\nDefault value: true");
-        BOP_COMPATIBILITY_ENABLED = BUILDER.define("BOPCompatibilityEnabled", true);
+        		+ "\nIn any other case it is suggested to set this to 'false'.\nDefault value: true");
+        VANILLA_END_INTEGRATION_ENABLED = BUILDER.define("vanillaEndIntegrationEnabled", true);
         
         BUILDER.comment("\nLand biome map size.\nDefault value: 256");
         BIOME_SIZE_LAND = BUILDER.define("biomeSizeLand", 256);
@@ -73,9 +74,9 @@ public class CommonConfig
         return COMMON_CONFIG;
     }
     
-    public static boolean isBOPCompatibilityEnabled()
+    public static boolean isVanillaEndIntegrationEnabled()
     {
-    	return BOP_COMPATIBILITY_ENABLED.get();
+    	return VANILLA_END_INTEGRATION_ENABLED.get();
     }
     
     public static int biomeSizeLand()

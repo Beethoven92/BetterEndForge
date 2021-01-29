@@ -30,6 +30,7 @@ import net.minecraft.world.gen.SimplexNoiseGenerator;
 // By injecting our custom biome generation info into the vanilla EndBiomeProvider
 // we avoid incompatibilities when other mods (see BOP for example) use their own world type,
 // and that world type uses vanilla EndBiomeProvider by default.
+// We also allow for compatibility with already generated worlds, where the end biome provider is set to the vanilla one.
 // We need to change our mixin priority to ensure our injection into the getNoiseBiome method
 // has precedence over other mixins injecting into the same method, for example AbnormalsCore's EndBiomeProviderMixin.
 // This allows compatibility with mods like Endergetic Expansion and Outer End,

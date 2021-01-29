@@ -27,7 +27,7 @@ public abstract class DimensionTypeMixin
     	// BOP is a special case, as they use a custom world type which uses the vanilla end biome source, 
     	// so, if our custom end biome provider is not enabled, BetterEnd will inject its biome generation into 
     	// the default end biome source instead of trying to use its custom custom one.
-    	if (!ModList.get().isLoaded("biomesoplenty") || !CommonConfig.isBOPCompatibilityEnabled())
+    	if (!ModList.get().isLoaded("biomesoplenty") || !CommonConfig.isVanillaEndIntegrationEnabled())
     	{
     		info.setReturnValue(new NoiseChunkGenerator(
     				new BetterEndBiomeProvider(registry, seed), seed, 

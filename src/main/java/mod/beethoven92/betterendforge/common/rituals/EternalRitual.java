@@ -76,22 +76,10 @@ public class EternalRitual
 		this.configure(initial);
 	}
 	
-	/*public boolean hasWorld() 
-	{
-		return this.world != null;
-	}*/
-	
 	public void setWorld(World world) 
 	{
 		this.world = world;
 	}
-	
-	/*private boolean isValid() 
-	{
-		return world != null && !world.isRemote() &&
-			   center != null && axis != null &&
-			   world.getDimensionKey()!= World.THE_NETHER;
-	}*/
 	
 	private boolean isInvalid() 
 	{
@@ -279,10 +267,8 @@ public class EternalRitual
 	
 	private BlockPos findPortalPos() 
 	{
-		//MinecraftServer server = world.getServer();
 		ServerWorld targetWorld = (ServerWorld) this.getTargetWorld();
-		//Registry<DimensionType> registry = server.getRegistryManager().getDimensionTypes();
-		//double mult = registry.get(DimensionType.THE_END_ID).getCoordinateScale();
+
 		DimensionType type = Objects.requireNonNull(targetWorld.getDimensionType());
 		double mult = type.getCoordinateScale();
 		
@@ -291,14 +277,6 @@ public class EternalRitual
 		if (checkIsAreaValid(targetWorld, basePos, portalAxis)) 
 		{
 			EternalRitual.generatePortal(targetWorld, basePos, portalAxis);
-			/*if (portalAxis.equals(Direction.Axis.X)) 
-			{
-				return basePos.toImmutable();
-			} 
-			else 
-			{
-				return basePos.toImmutable();
-			}*/
 			return basePos.toImmutable();
 		} 
 		else 
@@ -387,13 +365,6 @@ public class EternalRitual
 	
 	private boolean validBlock(World world, BlockPos pos, BlockState state) 
 	{
-		/*BlockState surfaceBlock = world.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig().getTop();
-		return state.isOpaqueCube(world, pos) &&
-			   (ModTags.validGenBlock(state) ||
-			   state.isIn(surfaceBlock.getBlock()) ||
-			   state.isIn(Blocks.STONE) ||
-			   state.isIn(Blocks.SAND) ||
-			   state.isIn(Blocks.GRAVEL));*/
 		return state.isNormalCube(world, pos) && state.isOpaqueCube(world, pos);
 	}
 	
@@ -443,12 +414,12 @@ public class EternalRitual
 			{
 				BlockPos pos = checkPos.toMutable().move(moveDir, point.x).move(Direction.UP, point.y);
 				BlockState state = world.getBlockState(pos);
-				//if (state.getFluidState().isEmpty() || (!state.getMaterial().isReplaceable() && !state.getMaterial().equals(Material.PLANTS))) return false;
+
 				if (isStateInvalid(state)) return false;
 				
 				pos = checkPos.toMutable().move(moveDir, -point.x).move(Direction.UP, point.y);
 				state = world.getBlockState(pos);
-				//if (state.getFluidState().isEmpty() || (!state.getMaterial().isReplaceable() && !state.getMaterial().equals(Material.PLANTS))) return false;
+				
 				if (isStateInvalid(state)) return false;
 			}
 		}
@@ -500,12 +471,10 @@ public class EternalRitual
 			if (this.hasPedestal(checkPos)) 
 			{
 				this.center = initial.north(5).east(4);
-				//return;
 			} 
 			else 
 			{
 				this.center = initial.north(5).west(4);
-				//return;
 			}
 			return;
 		}
@@ -517,12 +486,10 @@ public class EternalRitual
 			if (this.hasPedestal(checkPos)) 
 			{
 				this.center = initial.south(5).east(4);
-				//return;
 			} 
 			else
 			{
 				this.center = initial.south(5).west(4);
-				//return;
 			}
 			return;
 		}
@@ -534,12 +501,10 @@ public class EternalRitual
 			if (this.hasPedestal(checkPos)) 
 			{
 				this.center = initial.east(5).south(4);
-				//return;
 			} 
 			else
 			{
 				this.center = initial.east(5).north(4);
-				//return;
 			}
 			return;
 		}
@@ -551,12 +516,10 @@ public class EternalRitual
 			if (this.hasPedestal(checkPos)) 
 			{
 				this.center = initial.west(5).south(4);
-				//return;
 			} 
 			else
 			{
 				this.center = initial.west(5).north(4);
-				//return;
 			}
 			return;
 		}
