@@ -150,7 +150,7 @@ public abstract class EndBiomeProviderMixin extends BiomeProvider
 		}
 	}
 	
-	@Inject(method = "getBiomeProvider", at = @At("HEAD"))
+	@Inject(method = "getBiomeProvider", at = @At("HEAD"), cancellable = true)
 	private void be_getBiomeProvider(long seed, CallbackInfoReturnable<BiomeProvider> info) 
 	{
 		if (CommonConfig.isVanillaEndIntegrationEnabled())
