@@ -15,6 +15,8 @@ public class ModMathHelper
 	
 	public static final float PHI = (float) (Math.PI * (3 - Math.sqrt(5)));
 	
+	private static final float RAD_TO_DEG = 57.295779513082320876798154814105F;
+	
 	public static int color(int r, int g, int b) 
 	{
 		return ALPHA | (r << 16) | (g << 8) | b;
@@ -265,6 +267,14 @@ public class ModMathHelper
 	public static float max(float a, float b, float c) 
 	{
 		return max(a, max(b, c));
+	}
+	
+	public static final float radiansToDegrees(float value) {
+		return value * RAD_TO_DEG;
+	}
+	
+	public static final float degreesToRadians(float value) {
+		return value / RAD_TO_DEG;
 	}
 	
 	public static Vector3f cross(Vector3f vec1, Vector3f vec2)
