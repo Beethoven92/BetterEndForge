@@ -107,11 +107,13 @@ public class SilkMothEntity extends AnimalEntity implements IFlyingAnimal {
 	@Override
 	protected PathNavigator createNavigator(World world) {
 		FlyingPathNavigator birdNavigation = new FlyingPathNavigator(this, world) {
-			public boolean isValidPosition(BlockPos pos) {
+			@Override
+			public boolean canEntityStandOnPos(BlockPos pos) {
 				BlockState state = this.world.getBlockState(pos);
 				return state.isAir() || !state.getMaterial().blocksMovement();
 			}
 
+			@Override
 			public void tick() {
 				super.tick();
 			}
