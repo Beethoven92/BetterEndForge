@@ -6,9 +6,11 @@ import java.util.stream.StreamSupport;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.HydraluxShape;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
+import mod.beethoven92.betterendforge.common.block.BlockProperties;
 import mod.beethoven92.betterendforge.common.block.BulbVineBlock;
 import mod.beethoven92.betterendforge.common.block.EndLilyBlock;
 import mod.beethoven92.betterendforge.common.block.HydraluxBlock;
+import mod.beethoven92.betterendforge.common.block.LumecornBlock;
 import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
 import mod.beethoven92.betterendforge.common.block.SilkMothNestBlock;
@@ -217,6 +219,8 @@ public class ModBlockLootTables extends BlockLootTables
 		registerLootTable(ModBlocks.LANCELEAF_SEED.get(), BlockLootTables::onlyWithShears);
 		registerLootTable(ModBlocks.LANCELEAF.get(), BlockLootTables::onlyWithShears);
 		
+		lumecorn();
+				
 		registerLootTable(ModBlocks.GLOWING_PILLAR_SEED.get(), BlockLootTables::onlyWithShears);
 		registerLootTable(ModBlocks.GLOWING_PILLAR_ROOTS.get(), (a) -> BlockLootTables.blockNoDrop());
 	    registerDropSelfLootTable(ModBlocks.GLOWING_PILLAR_LUMINOPHOR.get());
@@ -333,6 +337,44 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(ModBlocks.BULB_LANTERN.get());
 	}
 		
+	private void lumecorn() {
+		registerLootTable(ModBlocks.LUMECORN_SEED.get(), BlockLootTables::onlyWithShears);
+		ILootCondition.IBuilder lumecornSeedCond1 = BlockStateProperty.builder(ModBlocks.LUMECORN.get())
+				.fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(LumecornBlock.SHAPE,
+						BlockProperties.LumecornShape.BOTTOM_BIG));
+		ILootCondition.IBuilder lumecornSeedCond2 = BlockStateProperty.builder(ModBlocks.LUMECORN.get())
+				.fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(LumecornBlock.SHAPE,
+						BlockProperties.LumecornShape.BOTTOM_SMALL));
+		ILootCondition.IBuilder lumecornSeedCond3 = BlockStateProperty.builder(ModBlocks.LUMECORN.get())
+				.fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(LumecornBlock.SHAPE,
+						BlockProperties.LumecornShape.MIDDLE));
+		ILootCondition.IBuilder lumecornRodCond1 = BlockStateProperty.builder(ModBlocks.LUMECORN.get())
+				.fromProperties(StatePropertiesPredicate.Builder.newBuilder()
+						.withProp(LumecornBlock.SHAPE, BlockProperties.LumecornShape.LIGHT_TOP));
+		ILootCondition.IBuilder lumecornRodCond2 = BlockStateProperty.builder(ModBlocks.LUMECORN.get())
+				.fromProperties(StatePropertiesPredicate.Builder.newBuilder()
+						.withProp(LumecornBlock.SHAPE, BlockProperties.LumecornShape.LIGHT_TOP_MIDDLE));
+		ILootCondition.IBuilder lumecornRodCond3 = BlockStateProperty.builder(ModBlocks.LUMECORN.get())
+				.fromProperties(StatePropertiesPredicate.Builder.newBuilder()
+						.withProp(LumecornBlock.SHAPE, BlockProperties.LumecornShape.LIGHT_MIDDLE));
+		ILootCondition.IBuilder lumecornRodCond4 = BlockStateProperty.builder(ModBlocks.LUMECORN.get())
+				.fromProperties(StatePropertiesPredicate.Builder.newBuilder()
+						.withProp(LumecornBlock.SHAPE, BlockProperties.LumecornShape.LIGHT_BOTTOM));
+		LootEntry.Builder<?> lumecornSeedDrop = ItemLootEntry.builder(ModBlocks.LUMECORN_SEED.get())
+				.acceptCondition(RandomChance.builder(0.5F));
+		LootEntry.Builder<?> lumecornRodDrop = ItemLootEntry.builder(ModItems.LUMECORN_ROD.get())
+				.acceptCondition(RandomChance.builder(0.5F));
+		registerLootTable(ModBlocks.LUMECORN.get(),
+				LootTable.builder()
+						.addLootPool(LootPool.builder().addEntry(lumecornSeedDrop).acceptCondition(lumecornSeedCond1))
+						.addLootPool(LootPool.builder().addEntry(lumecornSeedDrop).acceptCondition(lumecornSeedCond2))
+						.addLootPool(LootPool.builder().addEntry(lumecornSeedDrop).acceptCondition(lumecornSeedCond3))
+						.addLootPool(LootPool.builder().addEntry(lumecornRodDrop).acceptCondition(lumecornRodCond1))
+						.addLootPool(LootPool.builder().addEntry(lumecornRodDrop).acceptCondition(lumecornRodCond2))
+						.addLootPool(LootPool.builder().addEntry(lumecornRodDrop).acceptCondition(lumecornRodCond3))
+						.addLootPool(LootPool.builder().addEntry(lumecornRodDrop).acceptCondition(lumecornRodCond4)));
+	}
+
 	private void registerWoodenMaterialLootTables(WoodenMaterial material)
 	{
 		registerDropSelfLootTable(material.log.get());

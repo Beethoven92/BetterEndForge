@@ -15,6 +15,10 @@
 	"itemGroup.betterendforge": "Better End",
 	
 	"container.betterendforge.end_stone_smelter": "End Stone Smelter",
+
+	"block.betterendforge.lumecorn": "Lumecorn",
+	"block.betterendforge.lumecorn_seed": "Lumecorn Seed",
+	"item.betterendforge.lumecorn_rod": "Lumecorn Rod",  
 	
 	"biome.betterendforge.crystal_mountains": "Crystal Mountains",
     "biome.betterendforge.foggy_mushroomland": "Foggy Mushroomland",

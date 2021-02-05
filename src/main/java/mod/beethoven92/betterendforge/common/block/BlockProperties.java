@@ -133,4 +133,36 @@ public class BlockProperties
 			return name;
 		}
 	}
+	
+	public static enum LumecornShape implements IStringSerializable {
+		LIGHT_TOP("light_top", 15),
+		LIGHT_TOP_MIDDLE("light_top_middle", 15),
+		LIGHT_MIDDLE("light_middle", 15),
+		LIGHT_BOTTOM("light_bottom", 15),
+		MIDDLE("middle", 0),
+		BOTTOM_BIG("bottom_big", 0),
+		BOTTOM_SMALL("bottom_small", 0);
+		
+		private final String name;
+		private final int light;
+		
+		LumecornShape(String name, int light) {
+			this.name = name;
+			this.light = light;
+		}
+
+		@Override
+		public String getString() {
+			return name;
+		}
+		
+		@Override
+		public String toString() {
+			return name;
+		}
+		
+		public int getLight() {
+			return light;
+		}
+	}
 }

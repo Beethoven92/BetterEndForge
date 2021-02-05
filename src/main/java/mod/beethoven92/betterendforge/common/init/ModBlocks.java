@@ -44,6 +44,8 @@ import mod.beethoven92.betterendforge.common.block.JellyshroomCapBlock;
 import mod.beethoven92.betterendforge.common.block.LacugroveSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.LanceleafBlock;
 import mod.beethoven92.betterendforge.common.block.LanceleafSeedBlock;
+import mod.beethoven92.betterendforge.common.block.LumecornBlock;
+import mod.beethoven92.betterendforge.common.block.LumecornSeedBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeWetBlock;
 import mod.beethoven92.betterendforge.common.block.ModLanternBlock;
@@ -533,6 +535,20 @@ public class ModBlocks
                                                              zeroHardnessAndResistance().
                                                              doesNotBlockMovement().
                                                              sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> LUMECORN_SEED = registerBlockWithDefaultItem("lumecorn_seed", 
+			() -> new LumecornSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).
+					                                             zeroHardnessAndResistance().
+					                                             doesNotBlockMovement().
+					                                             tickRandomly().
+					                                             sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> LUMECORN = registerBlock("lumecorn", 
+			() -> new LumecornBlock(AbstractBlock.Properties.create(Material.WOOD).
+												                 harvestTool(ToolType.AXE).
+												                 hardnessAndResistance(0.5f).
+												                 setLightLevel(s -> s.get(LumecornBlock.SHAPE).getLight()).
+                                                                 sound(SoundType.PLANT)));
 	
 	public static final RegistryObject<Block> GLOWING_PILLAR_SEED = registerBlockWithDefaultItem("glowing_pillar_seed", 
 			() -> new GlowingPillarSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).

@@ -22,6 +22,7 @@ import mod.beethoven92.betterendforge.common.world.feature.IceStarFeature;
 import mod.beethoven92.betterendforge.common.world.feature.JellyshroomFeature;
 import mod.beethoven92.betterendforge.common.world.feature.LacugroveFeature;
 import mod.beethoven92.betterendforge.common.world.feature.LanceleafFeature;
+import mod.beethoven92.betterendforge.common.world.feature.Lumecorn;
 import mod.beethoven92.betterendforge.common.world.feature.MengerSpongeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MossyGlowshroomFeature;
 import mod.beethoven92.betterendforge.common.world.feature.OreLayerFeature;
@@ -92,6 +93,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> JUNGLE_GRASS = new SinglePlantFeature(ModBlocks.JUNGLE_GRASS.get(), 7, 3);
 	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_FLOOR = new SinglePlantFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 5, 5);
 	public static final Feature<NoFeatureConfig> BLOSSOM_BERRY = new SinglePlantFeature(ModBlocks.BLOSSOM_BERRY.get(), 3, 3);
+	public static final Feature<NoFeatureConfig> LUMECORN = new Lumecorn();
 	
 	// WALL PLANTS
 	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 3);
@@ -197,6 +199,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), JUNGLE_GRASS, "jungle_grass");
     	BetterEnd.register(event.getRegistry(), SMALL_JELLYSHROOM_FLOOR, "small_jellyshroom_floor");
     	BetterEnd.register(event.getRegistry(), BLOSSOM_BERRY, "blossom_berry");
+    	BetterEnd.register(event.getRegistry(), LUMECORN, "lumecorn");
     	// WALL_PLANTS
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE, "purple_polypore");
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE_DENSE, "purple_polypore_dense");
