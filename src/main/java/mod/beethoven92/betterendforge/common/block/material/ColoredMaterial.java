@@ -28,7 +28,7 @@ public class ColoredMaterial
 		this.craftMaterial = craftMaterial;
 		
 		this.name = name;
-		
+
 		for (DyeColor color: DyeColor.values()) 
 		{
 			String coloredName = name + "_" + color.getString();

@@ -2,12 +2,16 @@ package mod.beethoven92.betterendforge.common.item;
 
 import java.util.function.Supplier;
 
+import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;
 
 public enum ModItemTier implements IItemTier
 {
+	THALLASIUM(2, 320, 7.0F, 1.5F, 12, () -> {
+		return Ingredient.fromItems(ModBlocks.THALLASIUM.ingot.get());
+	}),
 	TERMINITE(3, 1230, 8.5F, 3.0F, 14, () -> {
 		return Ingredient.fromItems(ModItems.TERMINITE_INGOT.get());
 	}),

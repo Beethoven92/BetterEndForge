@@ -75,6 +75,7 @@ import mod.beethoven92.betterendforge.common.block.UmbrellaTreeMembraneBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaTreeSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.VentBubbleColumnBlock;
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
+import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.EndCropBlock;
@@ -85,6 +86,8 @@ import mod.beethoven92.betterendforge.common.block.template.PlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.block.template.UnderwaterWallPlantBlock;
 import mod.beethoven92.betterendforge.common.block.template.WallMushroomBlock;
 import mod.beethoven92.betterendforge.common.block.template.WallPlantBlock;
+import mod.beethoven92.betterendforge.common.item.ModArmorMaterial;
+import mod.beethoven92.betterendforge.common.item.ModItemTier;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -927,6 +930,9 @@ public class ModBlocks
     public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
     public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.PURPLE);
     public static final StoneMaterial SULPHURIC_ROCK = new StoneMaterial("sulphuric_rock", MaterialColor.BROWN);
+    
+    // METAL MATERIALS
+    public static final MetalMaterial THALLASIUM = MetalMaterial.makeNormal("thallasium", MaterialColor.BLUE, ModItemTier.THALLASIUM, ModArmorMaterial.THALLASIUM);
     
     // COLORED MATERIALS
     public static final ColoredMaterial HYDRALUX_PETAL_BLOCK_COLORED = new ColoredMaterial("hydralux_petal_block", 

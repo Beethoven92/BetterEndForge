@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.item;
 import java.util.function.Supplier;
 
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
@@ -12,6 +13,10 @@ import net.minecraft.util.SoundEvents;
 
 public enum ModArmorMaterial implements IArmorMaterial
 {
+	THALLASIUM(BetterEnd.MOD_ID + ":thallasium", 26, new int[] { 3, 6, 7, 3 }, 14, 
+			SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, () -> {
+				return Ingredient.fromItems(ModBlocks.THALLASIUM.ingot.get());}, 0.05F),
+	
 	TERMINITE(BetterEnd.MOD_ID + ":terminite", 26, new int[] {3, 6, 7, 3}, 14, 
 			SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, () -> {
 				return Ingredient.fromItems(ModItems.TERMINITE_INGOT.get());}, 0.05F),
@@ -24,7 +29,7 @@ public enum ModArmorMaterial implements IArmorMaterial
 			SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 1.2F, () -> {
 				return Ingredient.fromItems(ModItems.TERMINITE_INGOT.get());}, 0.1F);
 
-	
+
 	private static final int[] MAX_DAMAGE_ARRAY = { 11, 16, 15, 13 };
 	private final String name;
 	private final int maxDamageFactor;

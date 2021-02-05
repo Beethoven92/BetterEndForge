@@ -1,5 +1,7 @@
 package mod.beethoven92.betterendforge.common.init;
 
+import java.util.function.Supplier;
+
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.item.CrystaliteArmor;
 import mod.beethoven92.betterendforge.common.item.EnchantedPetalItem;
@@ -120,4 +122,16 @@ public class ModItems
 	// MISC ITEMS
 	public final static RegistryObject<Item> BUCKET_END_FISH = ITEMS.register("bucket_end_fish", () -> new FishBucketItem(() -> ModEntityTypes.END_FISH.get(), () -> Fluids.WATER, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
 	public final static RegistryObject<Item> GUIDE_BOOK = ITEMS.register("guidebook", () -> new GuideBookItem(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
+
+	
+	//////////////////////////////////////////////////////
+	//
+	// Item registration helpers
+	//
+	/////////////////////////////////////////////////////
+	
+	public static <T extends Item> RegistryObject<T> registerItem(String name, Supplier<? extends T> itemSupplier)
+	{
+		return ITEMS.register(name, itemSupplier);
+	}
 }

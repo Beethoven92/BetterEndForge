@@ -19,7 +19,11 @@ public class BulbVineLanternBlock extends LanternBlock implements IDyedBlock {
 	private static final VoxelShape SHAPE_CEIL = Block.makeCuboidShape(4, 4, 4, 12, 16, 12);
 	private static final VoxelShape SHAPE_FLOOR = Block.makeCuboidShape(4, 0, 4, 12, 12, 12);
 
-
+	public BulbVineLanternBlock(AbstractBlock.Properties properties) 
+	{
+		super(properties);
+	}
+	
 	public BulbVineLanternBlock() {
 		super(AbstractBlock.Properties.create(Material.IRON, MaterialColor.LIGHT_GRAY).sound(SoundType.LANTERN)
 				.hardnessAndResistance(1).harvestTool(ToolType.PICKAXE).setRequiresTool().setLightLevel(s -> 15));

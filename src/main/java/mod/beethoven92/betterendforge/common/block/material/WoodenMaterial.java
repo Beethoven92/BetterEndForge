@@ -39,7 +39,8 @@ import net.minecraft.tags.ITag;
 import net.minecraftforge.fml.RegistryObject;
 
 // TO DO? Make all wooden blocks flammable so they can take and spread fire
-public class WoodenMaterial {
+public class WoodenMaterial 
+{
 	public final String name;
 
 	public final RegistryObject<Block> log;
