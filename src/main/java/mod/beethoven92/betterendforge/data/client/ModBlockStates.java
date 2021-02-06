@@ -9,6 +9,7 @@ import java.util.Map;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.PedestalState;
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
+import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
@@ -68,6 +69,9 @@ public class ModBlockStates extends BlockStateProvider
 		registerStoneMaterialBlockStates(ModBlocks.FLAVOLITE);
 		registerStoneMaterialBlockStates(ModBlocks.VIOLECITE);
 		registerStoneMaterialBlockStates(ModBlocks.SULPHURIC_ROCK);
+		
+		// METAL MATERIALS
+		registerMetalMaterialBlockStates(ModBlocks.THALLASIUM);
 		
 		// COLORED MATERIALS
 		registerColoredMaterialBlockStates(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED, "block_petal_colored");
@@ -221,6 +225,40 @@ public class ModBlockStates extends BlockStateProvider
 		pedestalBlock(material.pedestal.get(), material.name, modLoc("block/" + material.name + "_polished"), modLoc("block/" + material.name + "_pillar_side"));
 		makeBlockItemFromExistingModel(material.pedestal.get(), material.name + "_pedestal_default");
 	}	
+	
+	private void registerMetalMaterialBlockStates(MetalMaterial material)
+	{
+		if (material.hasOre)
+		{		
+			simpleBlock(material.ore.get());
+			makeBlockItemFromExistingModel(material.ore.get());
+		}
+		
+		simpleBlock(material.block.get());
+		makeBlockItemFromExistingModel(material.block.get());
+		
+		simpleBlock(material.tile.get());
+		makeBlockItemFromExistingModel(material.tile.get());
+		
+		stairsBlock((StairsBlock) material.stairs.get(), modLoc("block/" + material.name + "_tile"));
+		makeBlockItemFromExistingModel(material.stairs.get());
+		
+		slabBlock((SlabBlock) material.slab.get(), material.tile.get().getRegistryName(), modLoc("block/" + material.name + "_tile"));
+		makeBlockItemFromExistingModel(material.slab.get());
+		
+		// BlockItem handled in item model provider
+		doorBlock((DoorBlock) material.door.get(), modLoc("block/" + material.name + "_door_bottom"), modLoc("block/" + material.name + "_door_top"));
+        
+		trapdoorBlock((TrapDoorBlock) material.trapdoor.get(), modLoc("block/" + material.name + "_trapdoor"), true);		
+	    makeBlockItemFromExistingModel(material.trapdoor.get(), "block/" + material.name + "_trapdoor_bottom");
+	    
+		pressurePlateBlock((PressurePlateBlock)material.pressure_plate.get(), material.name, modLoc("block/" + material.name + "_block"));
+		makeBlockItemFromExistingModel(material.pressure_plate.get());
+		
+		// BlockItem handled in item model provider
+		chainBlock(material.chain.get());
+		//makeBlockItemFromExistingModel(material.chain.get());
+	}
 	
 	private void registerColoredMaterialBlockStates(ColoredMaterial material, String blockModel)
 	{
@@ -462,5 +500,12 @@ public class ModBlockStates extends BlockStateProvider
     	ModelFile pot = models().withExistingParent("potted_" + plant.getRegistryName().getPath(), mcLoc("block/flower_pot_cross"))
     			.texture("plant", modLoc("block/" + plant.getRegistryName().getPath()));
     	simpleBlock(pot_block, pot);
+    }
+    
+    private void chainBlock(Block chain_block)
+    {
+    	ModelFile pot = models().withExistingParent(chain_block.getRegistryName().getPath(), mcLoc("block/chain"))
+    			.texture("all", modLoc("block/" + chain_block.getRegistryName().getPath()));
+    	simpleBlock(chain_block, pot);
     }
 }

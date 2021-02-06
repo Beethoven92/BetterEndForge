@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "side": "betterendforge:block/thallasium_tile",
+    "bottom": "betterendforge:block/thallasium_tile",
+    "top": "betterendforge:block/thallasium_tile"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/chain",
+  "textures": {
+    "all": "betterendforge:block/thallasium_chain"
+  }
+}

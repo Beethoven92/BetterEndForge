@@ -11,6 +11,7 @@ import mod.beethoven92.betterendforge.client.renderer.EndSlimeEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.PedestalRenderer;
 import mod.beethoven92.betterendforge.client.renderer.ShadowWalkerEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.SilkMothEntityRenderer;
+import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModContainerTypes;
@@ -173,6 +174,9 @@ public class PhysicalClientSide implements IPhysicalSide
 		setWoodenMaterialRenderLayers(ModBlocks.HELIX_TREE);
 		setWoodenMaterialRenderLayers(ModBlocks.UMBRELLA_TREE);
 		setWoodenMaterialRenderLayers(ModBlocks.JELLYSHROOM);
+		
+		// METAL MATERIALS
+		setMetalMaterialRenderLayers(ModBlocks.THALLASIUM);
 	}
 	
 	private void setWoodenMaterialRenderLayers(WoodenMaterial material)
@@ -182,12 +186,19 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(material.ladder.get(), RenderType.getCutout());
 	}
 	
+	private void setMetalMaterialRenderLayers(MetalMaterial material)
+	{
+		RenderTypeLookup.setRenderLayer(material.door.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(material.trapdoor.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(material.chain.get(), RenderType.getCutout());
+	}
+	
 	private void setFlowerPotRenderLayers()
 	{
 		ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach((block) -> {
 			if (block instanceof FlowerPotBlock)
 			{
-				RenderTypeLookup.setRenderLayer(block, RenderType.getCutout());;
+				RenderTypeLookup.setRenderLayer(block, RenderType.getCutout());
 			}
 		});
 	}

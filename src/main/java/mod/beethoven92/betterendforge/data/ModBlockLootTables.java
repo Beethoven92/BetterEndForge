@@ -17,6 +17,7 @@ import mod.beethoven92.betterendforge.common.block.SilkMothNestBlock;
 import mod.beethoven92.betterendforge.common.block.SulphurCrystalBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaTreeMembraneBlock;
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
+import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.EndCropBlock;
@@ -331,6 +332,9 @@ public class ModBlockLootTables extends BlockLootTables
 		registerStoneMaterialLootTables(ModBlocks.VIOLECITE);
 		registerStoneMaterialLootTables(ModBlocks.SULPHURIC_ROCK);
 		
+		// METAL MATERIALS
+		registerMetalMaterialLootTables(ModBlocks.THALLASIUM);
+		
 		// COLORED MATERIALS
 		registerColoredMaterialLootTables(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED);
 		registerColoredMaterialLootTables(ModBlocks.BULB_LANTERN_COLORED);
@@ -416,6 +420,22 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(material.brick_wall.get());
 		registerDropSelfLootTable(material.lantern.get());
 		registerDropSelfLootTable(material.pedestal.get());
+	}
+	
+	private void registerMetalMaterialLootTables(MetalMaterial material)
+	{
+		if (material.hasOre)
+		{
+			registerDropSelfLootTable(material.ore.get());
+		}
+		registerDropSelfLootTable(material.block.get());
+		registerDropSelfLootTable(material.tile.get());
+		registerDropSelfLootTable(material.stairs.get());
+		registerLootTable(material.slab.get(), BlockLootTables::droppingSlab);
+		registerLootTable(material.door.get(), BlockLootTables::registerDoor);
+		registerDropSelfLootTable(material.trapdoor.get());
+		registerDropSelfLootTable(material.chain.get());
+		registerDropSelfLootTable(material.pressure_plate.get());
 	}
 	
 	private void registerColoredMaterialLootTables(ColoredMaterial material)

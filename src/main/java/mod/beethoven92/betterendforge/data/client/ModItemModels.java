@@ -1,6 +1,7 @@
 package mod.beethoven92.betterendforge.data.client;
 
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
@@ -35,6 +36,9 @@ public class ModItemModels extends ItemModelProvider
 		registerStoneMaterialItemModels(ModBlocks.FLAVOLITE);
 		registerStoneMaterialItemModels(ModBlocks.VIOLECITE);
 		registerStoneMaterialItemModels(ModBlocks.SULPHURIC_ROCK);
+		
+		// METAL MATERIALS
+		registerMetalMaterialItemModels(ModBlocks.THALLASIUM);
 	}
 	
 	private void registerWoodenMaterialItemModels(WoodenMaterial material)
@@ -52,8 +56,6 @@ public class ModItemModels extends ItemModelProvider
 				modLoc("block/" + material.name + "_planks"));
 		
         singleTexture(material.name + "_sign", mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc("item/" + material.name + "_sign"));
-
-
 	}
 	
 	private void registerStoneMaterialItemModels(StoneMaterial material)
@@ -63,6 +65,15 @@ public class ModItemModels extends ItemModelProvider
 		wallInventory(material.name + "_bricks_wall", modLoc("block/" + material.name + "_bricks"));
 		
 		buttonInventory(material.name, modLoc("block/" + material.name));
+	}
+	
+	private void registerMetalMaterialItemModels(MetalMaterial material)
+	{
+        getBuilder(material.name + "_door").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_door"));
+        
+        getBuilder(material.name + "_chain").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_chain"));
 	}
 	
 	private void buttonInventory(String material, ResourceLocation texture)

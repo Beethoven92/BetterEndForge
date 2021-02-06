@@ -1,11 +1,9 @@
 package mod.beethoven92.betterendforge.common.block.material;
 
-import mod.beethoven92.betterendforge.common.block.BulbVineLanternBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModCreativeTabs;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ChainBlock;
@@ -29,7 +27,7 @@ public class MetalMaterial
 	public final RegistryObject<Block> block;
 	public final RegistryObject<Block> tile;
 	//public final RegistryObject<Block> bars;
-	public final RegistryObject<Block> plate;
+	public final RegistryObject<Block> pressure_plate;
 	public final RegistryObject<Block> door;
 	public final RegistryObject<Block> trapdoor;
 	//public final RegistryObject<Block> anvil;
@@ -38,7 +36,7 @@ public class MetalMaterial
 	public final RegistryObject<Block> slab;
 	
 	//public final RegistryObject<Block> chandelier;
-	public final RegistryObject<Block> bulb_lantern;
+	//public final RegistryObject<Block> bulb_lantern;
 	//public final ColoredMaterial bulb_lantern_colored;
 	
 	public final RegistryObject<Item> nugget;
@@ -54,6 +52,10 @@ public class MetalMaterial
 	public final RegistryObject<Item> chestplate;
 	public final RegistryObject<Item> leggings;
 	public final RegistryObject<Item> boots;*/
+	
+	public final boolean hasOre;
+	
+	public final String name;
 	
 	public static MetalMaterial makeNormal(String name, MaterialColor color, IItemTier material, IArmorMaterial armor) 
 	{
@@ -78,6 +80,10 @@ public class MetalMaterial
 	{
 		AbstractBlock.Properties lantern = blockSettings.sound(SoundType.LANTERN).hardnessAndResistance(1).setLightLevel((state) -> 15);
 		
+		this.hasOre = hasOre;
+		
+		this.name = name;
+		
 		ore = hasOre ? ModBlocks.registerBlockWithDefaultItem(name + "_ore", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE))) : null;
 		block = ModBlocks.registerBlockWithDefaultItem(name + "_block", () -> new Block(blockSettings));
 		tile = ModBlocks.registerBlockWithDefaultItem(name + "_tile", () -> new Block(blockSettings));
@@ -88,10 +94,10 @@ public class MetalMaterial
 		//anvil = ModBlocks.registerBlockWithDefaultItem(name + "_anvil", new AnvilBlock(block.getDefaultMaterialColor()));
 		//bars = ModBlocks.registerBlock(name + "_bars", new EndMetalPaneBlock(block));
 		chain = ModBlocks.registerBlockWithDefaultItem(name + "_chain", () -> new ChainBlock(AbstractBlock.Properties.create(Material.IRON, block.get().getMaterialColor()).setRequiresTool().hardnessAndResistance(5.0F, 6.0F).sound(SoundType.CHAIN).notSolid()));
-		plate = ModBlocks.registerBlockWithDefaultItem(name + "_pressure_plate", () -> new PressurePlateBlock(Sensitivity.EVERYTHING, blockSettings));
+		pressure_plate = ModBlocks.registerBlockWithDefaultItem(name + "_pressure_plate", () -> new PressurePlateBlock(Sensitivity.EVERYTHING, blockSettings));
 		
 		//chandelier = ModBlocks.registerBlock(name + "_chandelier", new ChandelierBlock(block));
-		bulb_lantern = ModBlocks.registerBlockWithDefaultItem(name + "_bulb_lantern", () -> new BulbVineLanternBlock(lantern));
+		//bulb_lantern = ModBlocks.registerBlockWithDefaultItem(name + "_bulb_lantern", () -> new BulbVineLanternBlock(lantern));
 		//bulb_lantern_colored = new ColoredMaterial(BulbVineLanternColoredBlock::new, bulb_lantern, false);
 		
 		nugget = ModItems.registerItem(name + "_nugget", () -> new Item(itemSettings));
