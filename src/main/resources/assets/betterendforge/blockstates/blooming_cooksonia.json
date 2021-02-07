@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/blooming_cooksonia_01" },
+			{ "model": "betterendforge:block/blooming_cooksonia_02" },
+			{ "model": "betterendforge:block/blooming_cooksonia_03" },
+			{ "model": "betterendforge:block/blooming_cooksonia_04" }
+		]
+	}
+}
