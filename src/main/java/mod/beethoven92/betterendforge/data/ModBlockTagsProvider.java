@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.data;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.TerrainBlock;
+import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.EndSaplingBlock;
@@ -81,6 +82,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		registerStoneMaterialTags(ModBlocks.FLAVOLITE);
 		registerStoneMaterialTags(ModBlocks.VIOLECITE);
 		registerStoneMaterialTags(ModBlocks.SULPHURIC_ROCK);
+		
+		// METAL MATERIALS
+		registerMetalMaterialTags(ModBlocks.THALLASIUM);
 	}
 	
 	private void registerWoodenMaterialTags(WoodenMaterial material)
@@ -145,5 +149,28 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		
 		// Forge Tags
 		getOrCreateBuilder(Tags.Blocks.STONE).add(material.stone.get());
+	}
+	
+	private void registerMetalMaterialTags(MetalMaterial material)
+	{	
+		getOrCreateBuilder(BlockTags.BEACON_BASE_BLOCKS).add(material.block.get());
+		
+		getOrCreateBuilder(BlockTags.DOORS).add(material.door.get());
+		
+		getOrCreateBuilder(BlockTags.STAIRS).add(material.stairs.get());
+
+		getOrCreateBuilder(BlockTags.TRAPDOORS).add(material.trapdoor.get());
+		
+		getOrCreateBuilder(BlockTags.SLABS).add(material.slab.get());
+		
+		getOrCreateBuilder(BlockTags.PRESSURE_PLATES).add(material.pressure_plate.get());
+		
+		// Forge Tags
+		if (material.hasOre)
+		{
+			getOrCreateBuilder(Tags.Blocks.ORES).add(material.ore.get());
+		}
+		
+		getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).add(material.block.get());
 	}
 }

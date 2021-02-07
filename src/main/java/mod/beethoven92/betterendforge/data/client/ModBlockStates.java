@@ -257,7 +257,6 @@ public class ModBlockStates extends BlockStateProvider
 		
 		// BlockItem handled in item model provider
 		chainBlock(material.chain.get());
-		//makeBlockItemFromExistingModel(material.chain.get());
 	}
 	
 	private void registerColoredMaterialBlockStates(ColoredMaterial material, String blockModel)
@@ -505,6 +504,7 @@ public class ModBlockStates extends BlockStateProvider
     private void chainBlock(Block chain_block)
     {
     	ModelFile pot = models().withExistingParent(chain_block.getRegistryName().getPath(), mcLoc("block/chain"))
+    			.texture("particle", modLoc("block/" + chain_block.getRegistryName().getPath()))
     			.texture("all", modLoc("block/" + chain_block.getRegistryName().getPath()));
     	simpleBlock(chain_block, pot);
     }

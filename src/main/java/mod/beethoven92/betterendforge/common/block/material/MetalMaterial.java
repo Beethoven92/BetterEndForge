@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.block.material;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModCreativeTabs;
 import mod.beethoven92.betterendforge.common.init.ModItems;
+import mod.beethoven92.betterendforge.common.item.HammerItem;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -16,9 +17,16 @@ import net.minecraft.block.TrapDoorBlock;
 import net.minecraft.block.PressurePlateBlock.Sensitivity;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.AxeItem;
+import net.minecraft.item.HoeItem;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
+import net.minecraft.item.PickaxeItem;
+import net.minecraft.item.ShovelItem;
+import net.minecraft.item.SwordItem;
 import net.minecraftforge.fml.RegistryObject;
 
 public class MetalMaterial 
@@ -41,7 +49,7 @@ public class MetalMaterial
 	
 	public final RegistryObject<Item> nugget;
 	public final RegistryObject<Item> ingot;
-	/*public final RegistryObject<Item> shovel;
+	public final RegistryObject<Item> shovel;
 	public final RegistryObject<Item> sword;
 	public final RegistryObject<Item> pickaxe;
 	public final RegistryObject<Item> axe;
@@ -51,7 +59,7 @@ public class MetalMaterial
 	public final RegistryObject<Item> helmet;
 	public final RegistryObject<Item> chestplate;
 	public final RegistryObject<Item> leggings;
-	public final RegistryObject<Item> boots;*/
+	public final RegistryObject<Item> boots;
 	
 	public final boolean hasOre;
 	
@@ -102,17 +110,17 @@ public class MetalMaterial
 		
 		nugget = ModItems.registerItem(name + "_nugget", () -> new Item(itemSettings));
 		ingot = ModItems.registerItem(name + "_ingot", () -> new Item(itemSettings));
-		/*shovel = ModItems.registerTool(name + "_shovel", new EndShovelItem(material, 1.5F, -3.0F, itemSettings));
-		sword = ModItems.registerTool(name + "_sword", new EndSwordItem(material, 3, -2.4F, itemSettings));
-		pickaxe = ModItems.registerTool(name + "_pickaxe", new EndPickaxeItem(material, 1, -2.8F, itemSettings));
-		axe = ModItems.registerTool(name + "_axe", new EndAxeItem(material, 6.0F, -3.0F, itemSettings));
-		hoe = ModItems.registerTool(name + "_hoe", new EndHoeItem(material, -3, 0.0F, itemSettings));
-		hammer = ModItems.registerTool(name + "_hammer", new EndHammerItem(material, 5.0F, -3.2F, 0.3D, itemSettings));
+		shovel = ModItems.registerItem(name + "_shovel", () -> new ShovelItem(material, 1.5F, -3.0F, itemSettings));
+		sword = ModItems.registerItem(name + "_sword", () -> new SwordItem(material, 3, -2.4F, itemSettings));
+		pickaxe = ModItems.registerItem(name + "_pickaxe", () -> new PickaxeItem(material, 1, -2.8F, itemSettings));
+		axe = ModItems.registerItem(name + "_axe", () -> new AxeItem(material, 6.0F, -3.0F, itemSettings));
+		hoe = ModItems.registerItem(name + "_hoe", () -> new HoeItem(material, -3, 0.0F, itemSettings));
+		hammer = ModItems.registerItem(name + "_hammer", () -> new HammerItem(material, 5.0F, -3.2F, 0.3D, itemSettings));
 		
-		helmet = ModItems.registerItem(name + "_helmet", new EndArmorItem(armor, EquipmentSlot.HEAD, itemSettings));
-		chestplate = ModItems.registerItem(name + "_chestplate", new EndArmorItem(armor, EquipmentSlot.CHEST, itemSettings));
-		leggings = ModItems.registerItem(name + "_leggings", new EndArmorItem(armor, EquipmentSlot.LEGS, itemSettings));
-		boots = ModItems.registerItem(name + "_boots", new EndArmorItem(armor, EquipmentSlot.FEET, itemSettings));*/
+		helmet = ModItems.registerItem(name + "_helmet", () -> new ArmorItem(armor, EquipmentSlotType.HEAD, itemSettings));
+		chestplate = ModItems.registerItem(name + "_chestplate", () -> new ArmorItem(armor, EquipmentSlotType.CHEST, itemSettings));
+		leggings = ModItems.registerItem(name + "_leggings", () -> new ArmorItem(armor, EquipmentSlotType.LEGS, itemSettings));
+		boots = ModItems.registerItem(name + "_boots", () -> new ArmorItem(armor, EquipmentSlotType.FEET, itemSettings));
 		
 		/*if (hasOre) {
 			FurnaceRecipe.make(name + "_ingot_furnace", ore, ingot).setGroup("end_ingot").build(true);
