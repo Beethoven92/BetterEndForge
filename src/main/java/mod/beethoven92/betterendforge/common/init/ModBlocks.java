@@ -377,6 +377,9 @@ public class ModBlocks
 	public static final RegistryObject<Block> BLOOMING_COOKSONIA = registerBlockWithDefaultItem("blooming_cooksonia", 
 			() -> new TerrainPlantBlock(END_MOSS.get())); // TODO: Bonemeal
 	
+	public static final RegistryObject<Block> SALTEAGO = registerBlockWithDefaultItem("salteago", 
+			() -> new TerrainPlantBlock(END_MOSS.get()));
+	
 	public static final RegistryObject<Block> BLUE_VINE_SEED = registerBlockWithDefaultItem("blue_vine_seed", 
 			() -> new BlueVineSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).
 					                                             zeroHardnessAndResistance().

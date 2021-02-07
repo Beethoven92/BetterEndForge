@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/salteago_01" },
+			{ "model": "betterendforge:block/salteago_02" },
+			{ "model": "betterendforge:block/salteago_03" },
+			{ "model": "betterendforge:block/salteago_04" }
+		]
+	}
+}
