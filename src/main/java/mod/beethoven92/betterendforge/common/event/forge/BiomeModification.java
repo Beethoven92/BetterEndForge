@@ -37,12 +37,13 @@ public class BiomeModification
 			}
 			event.getGeneration().getFeatures(Decoration.SURFACE_STRUCTURES).add(() -> ModConfiguredFeatures.CRASHED_SHIP);
 			
-			// Add ores to biomes
+			// Add ores to all biomes
+			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES).add(() -> ModConfiguredFeatures.THALLASIUM_ORE);
 			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES).add(() -> ModConfiguredFeatures.ENDER_ORE);
 			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES).add(() -> ModConfiguredFeatures.FLAVOLITE_LAYER);
 			
 			
-			// Add end caves to biomes
+			// Add end caves to biomes that have caves enabled
 			if (ModBiomes.getBiome(event.getName()).hasCaves()) 
 			{
 	  			event.getGeneration().getFeatures(Decoration.RAW_GENERATION).add(() -> ModConfiguredFeatures.ROUND_CAVE_RARE);

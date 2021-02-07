@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "betterendforge:terminite_ingot",
-    "betterendforge:aeternium_ingot"
+    "betterendforge:aeternium_ingot",
+    "betterendforge:thallasium_ingot"
   ]
 }

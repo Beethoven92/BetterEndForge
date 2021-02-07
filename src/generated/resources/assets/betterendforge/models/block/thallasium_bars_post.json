@@ -1,0 +1,6 @@
+{
+  "parent": "betterendforge:block/metal_bars_post",
+  "textures": {
+    "top": "betterendforge:block/thallasium_bars_top"
+  }
+}

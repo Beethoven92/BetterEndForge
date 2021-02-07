@@ -1,5 +1,7 @@
 package mod.beethoven92.betterendforge.common.block.material;
 
+import mod.beethoven92.betterendforge.common.block.template.ChandelierBlock;
+import mod.beethoven92.betterendforge.common.block.template.MetalPaneBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModCreativeTabs;
 import mod.beethoven92.betterendforge.common.init.ModItems;
@@ -34,7 +36,7 @@ public class MetalMaterial
 	public final RegistryObject<Block> ore;
 	public final RegistryObject<Block> block;
 	public final RegistryObject<Block> tile;
-	//public final RegistryObject<Block> bars;
+	public final RegistryObject<Block> bars;
 	public final RegistryObject<Block> pressure_plate;
 	public final RegistryObject<Block> door;
 	public final RegistryObject<Block> trapdoor;
@@ -43,7 +45,7 @@ public class MetalMaterial
 	public final RegistryObject<Block> stairs;
 	public final RegistryObject<Block> slab;
 	
-	//public final RegistryObject<Block> chandelier;
+	public final RegistryObject<Block> chandelier;
 	//public final RegistryObject<Block> bulb_lantern;
 	//public final ColoredMaterial bulb_lantern_colored;
 	
@@ -86,25 +88,27 @@ public class MetalMaterial
 	
 	private MetalMaterial(String name, boolean hasOre, AbstractBlock.Properties blockSettings, Item.Properties itemSettings, IItemTier material, IArmorMaterial armor) 
 	{
-		AbstractBlock.Properties lantern = blockSettings.sound(SoundType.LANTERN).hardnessAndResistance(1).setLightLevel((state) -> 15);
 		
 		this.hasOre = hasOre;
 		
 		this.name = name;
+		
+		AbstractBlock.Properties lantern = blockSettings.sound(SoundType.LANTERN).hardnessAndResistance(1).setLightLevel((state) -> 15);
+		AbstractBlock.Properties blockSettingsNotSolid = blockSettings.notSolid();
 		
 		ore = hasOre ? ModBlocks.registerBlockWithDefaultItem(name + "_ore", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE))) : null;
 		block = ModBlocks.registerBlockWithDefaultItem(name + "_block", () -> new Block(blockSettings));
 		tile = ModBlocks.registerBlockWithDefaultItem(name + "_tile", () -> new Block(blockSettings));
 		stairs = ModBlocks.registerBlockWithDefaultItem(name + "_stairs", () -> new StairsBlock(() -> tile.get().getDefaultState(), blockSettings));
 		slab = ModBlocks.registerBlockWithDefaultItem(name + "_slab", () -> new SlabBlock(blockSettings));
-		door = ModBlocks.registerBlockWithDefaultItem(name + "_door", () -> new DoorBlock(blockSettings));
-		trapdoor = ModBlocks.registerBlockWithDefaultItem(name + "_trapdoor", () -> new TrapDoorBlock(blockSettings));
+		door = ModBlocks.registerBlockWithDefaultItem(name + "_door", () -> new DoorBlock(blockSettingsNotSolid));
+		trapdoor = ModBlocks.registerBlockWithDefaultItem(name + "_trapdoor", () -> new TrapDoorBlock(blockSettingsNotSolid));
 		//anvil = ModBlocks.registerBlockWithDefaultItem(name + "_anvil", new AnvilBlock(block.getDefaultMaterialColor()));
-		//bars = ModBlocks.registerBlock(name + "_bars", new EndMetalPaneBlock(block));
+		bars = ModBlocks.registerBlockWithDefaultItem(name + "_bars", () -> new MetalPaneBlock(blockSettings.hardnessAndResistance(5.0F, 6.0F).notSolid()));
 		chain = ModBlocks.registerBlockWithDefaultItem(name + "_chain", () -> new ChainBlock(AbstractBlock.Properties.create(Material.IRON, block.get().getMaterialColor()).setRequiresTool().hardnessAndResistance(5.0F, 6.0F).sound(SoundType.CHAIN).notSolid()));
 		pressure_plate = ModBlocks.registerBlockWithDefaultItem(name + "_pressure_plate", () -> new PressurePlateBlock(Sensitivity.EVERYTHING, blockSettings));
 		
-		//chandelier = ModBlocks.registerBlock(name + "_chandelier", new ChandelierBlock(block));
+		chandelier = ModBlocks.registerBlockWithDefaultItem(name + "_chandelier", () -> new ChandelierBlock(blockSettingsNotSolid.doesNotBlockMovement().setRequiresTool().setLightLevel((state) -> 15)));
 		//bulb_lantern = ModBlocks.registerBlockWithDefaultItem(name + "_bulb_lantern", () -> new BulbVineLanternBlock(lantern));
 		//bulb_lantern_colored = new ColoredMaterial(BulbVineLanternColoredBlock::new, bulb_lantern, false);
 		

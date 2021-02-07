@@ -118,6 +118,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		getOrCreateBuilder(BlockTags.TRAPDOORS).add(material.trapdoor.get());
 		getOrCreateBuilder(BlockTags.WOODEN_TRAPDOORS).add(material.trapdoor.get());
 		
+		getOrCreateBuilder(BlockTags.SIGNS).add(material.sign.get());
+		
 		getOrCreateBuilder(BlockTags.CLIMBABLE).add(material.ladder.get());
 		
 		getOrCreateBuilder(BlockTags.GUARDED_BY_PIGLINS).add(material.chest.get());	

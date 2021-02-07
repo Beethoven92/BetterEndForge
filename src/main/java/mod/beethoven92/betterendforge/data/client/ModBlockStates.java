@@ -41,6 +41,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -257,6 +258,9 @@ public class ModBlockStates extends BlockStateProvider
 		
 		// BlockItem handled in item model provider
 		chainBlock(material.chain.get());
+		
+		// BlockItem handled in item model provider
+		barsBlock(material.bars.get());
 	}
 	
 	private void registerColoredMaterialBlockStates(ColoredMaterial material, String blockModel)
@@ -507,5 +511,28 @@ public class ModBlockStates extends BlockStateProvider
     			.texture("particle", modLoc("block/" + chain_block.getRegistryName().getPath()))
     			.texture("all", modLoc("block/" + chain_block.getRegistryName().getPath()));
     	simpleBlock(chain_block, pot);
+    }
+    
+    private void barsBlock(Block barsBlock) 
+    {
+        ModelFile post = models().withExistingParent(barsBlock.getRegistryName().
+        		getPath() + "_post", modLoc("metal_bars_post")).
+        		texture("top", modLoc("block/" + barsBlock.getRegistryName().getPath() + "_top"));
+        ModelFile side = models().withExistingParent(barsBlock.getRegistryName().
+        		getPath() + "_side", modLoc("metal_bars_side")).
+        		texture("top", modLoc("block/" + barsBlock.getRegistryName().getPath() + "_top")).
+        		texture("side", modLoc("block/" + barsBlock.getRegistryName().getPath()));
+       
+        MultiPartBlockStateBuilder builder = getMultipartBuilder(barsBlock)
+                .part().modelFile(post).addModel().end();
+        
+        /*SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().forEach(e -> {
+            Direction dir = e.getKey();
+            if (dir.getAxis().isHorizontal()) {
+                builder.part().modelFile(post).uvLock(true).addModel()
+                    .condition(e.getValue(), false);
+            }
+        });*/
+        fourWayMultipart(builder, side);
     }
 }

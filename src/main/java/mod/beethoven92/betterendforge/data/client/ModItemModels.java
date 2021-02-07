@@ -74,6 +74,45 @@ public class ModItemModels extends ItemModelProvider
         
         getBuilder(material.name + "_chain").parent(new ModelFile.UncheckedModelFile("item/generated")).
                 texture("layer0", modLoc("item/" + material.name + "_chain"));
+       
+       /*(material.name + "_bars").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_bars"));*/
+        
+        getBuilder(material.name + "_nugget").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_nugget"));
+        
+        getBuilder(material.name + "_ingot").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_ingot"));
+       
+        getBuilder(material.name + "_shovel").parent(new ModelFile.UncheckedModelFile("item/handheld")).
+                texture("layer0", modLoc("item/" + material.name + "_shovel"));
+        
+        getBuilder(material.name + "_sword").parent(new ModelFile.UncheckedModelFile("item/handheld")).
+                texture("layer0", modLoc("item/" + material.name + "_sword"));
+        
+        getBuilder(material.name + "_pickaxe").parent(new ModelFile.UncheckedModelFile("item/handheld")).
+                texture("layer0", modLoc("item/" + material.name + "_pickaxe"));
+        
+        getBuilder(material.name + "_axe").parent(new ModelFile.UncheckedModelFile("item/handheld")).
+                texture("layer0", modLoc("item/" + material.name + "_axe"));
+        
+        getBuilder(material.name + "_hoe").parent(new ModelFile.UncheckedModelFile("item/handheld")).
+                texture("layer0", modLoc("item/" + material.name + "_hoe"));
+       
+        getBuilder(material.name + "_hammer").parent(new ModelFile.UncheckedModelFile("item/handheld")).
+                texture("layer0", modLoc("item/" + material.name + "_hammer"));
+       
+        getBuilder(material.name + "_helmet").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_helmet"));
+        
+        getBuilder(material.name + "_chestplate").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_chestplate"));
+        
+        getBuilder(material.name + "_leggings").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_leggings"));
+       
+        getBuilder(material.name + "_boots").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_boots"));
 	}
 	
 	private void buttonInventory(String material, ResourceLocation texture)

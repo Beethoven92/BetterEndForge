@@ -349,6 +349,12 @@ public class ModConfiguredFeatures
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG)));
 	
 	// ORES
+	public static final ConfiguredFeature<?, ?> THALLASIUM_ORE =
+			ModFeatures.THALLASIUM_ORE.withConfiguration(
+					new OreFeatureConfig(
+							new BlockMatchRuleTest(Blocks.END_STONE), ModBlocks.THALLASIUM.ore.get().getDefaultState(), 6)).
+			range(96).square().func_242731_b(20);
+	
 	public static final ConfiguredFeature<?, ?> ENDER_ORE =
 			ModFeatures.ENDER_ORE.withConfiguration(
 					new OreFeatureConfig(
@@ -477,6 +483,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "umbrella_tree"), UMBRELLA_TREE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "jellyshroom"), JELLYSHROOM);
         // ORES
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "thallasium_ore"), THALLASIUM_ORE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "ender_ore"), ENDER_ORE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "amber_ore"), AMBER_ORE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "flavolite_layer"), FLAVOLITE_LAYER);

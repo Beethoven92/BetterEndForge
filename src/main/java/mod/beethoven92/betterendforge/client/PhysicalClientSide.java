@@ -193,6 +193,8 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(material.door.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(material.trapdoor.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(material.chain.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(material.bars.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(material.chandelier.get(), RenderType.getCutout());
 	}
 	
 	private void setFlowerPotRenderLayers()

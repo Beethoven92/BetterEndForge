@@ -438,6 +438,8 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(material.trapdoor.get());
 		registerDropSelfLootTable(material.chain.get());
 		registerDropSelfLootTable(material.pressure_plate.get());
+		registerDropSelfLootTable(material.bars.get());
+		registerDropSelfLootTable(material.chandelier.get());
 	}
 	
 	private void registerColoredMaterialLootTables(ColoredMaterial material)
