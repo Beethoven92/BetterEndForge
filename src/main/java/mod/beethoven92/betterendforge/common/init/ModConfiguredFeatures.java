@@ -183,6 +183,10 @@ public class ModConfiguredFeatures
 			ModFeatures.SALTEAGO.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(5);
 	
+	public static final ConfiguredFeature<?, ?> VAIOLUSH_FERN = 
+			ModFeatures.VAIOLUSH_FERN.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(5);
+	
 	// WALL PLANTS
 	public static final ConfiguredFeature<?, ?> PURPLE_POLYPORE = 
 			ModFeatures.PURPLE_POLYPORE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -438,6 +442,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "lumecorn"), LUMECORN);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "blooming_cooksonia"), BLOOMING_COOKSONIA);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "salteago"), SALTEAGO);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "vaiolush_fern"), VAIOLUSH_FERN);
         // WALL PLANTS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "purple_polypore"), PURPLE_POLYPORE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "purple_polypore_dense"), PURPLE_POLYPORE_DENSE);
