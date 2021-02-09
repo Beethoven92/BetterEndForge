@@ -383,6 +383,9 @@ public class ModBlocks
 	public static final RegistryObject<Block> VAIOLUSH_FERN = registerBlockWithDefaultItem("vaiolush_fern", 
 			() -> new TerrainPlantBlock(END_MOSS.get()));
 	
+	public static final RegistryObject<Block> FRACTURN = registerBlockWithDefaultItem("fracturn", 
+			() -> new TerrainPlantBlock(END_MOSS.get()));
+	
 	public static final RegistryObject<Block> BLUE_VINE_SEED = registerBlockWithDefaultItem("blue_vine_seed", 
 			() -> new BlueVineSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).
 					                                             zeroHardnessAndResistance().

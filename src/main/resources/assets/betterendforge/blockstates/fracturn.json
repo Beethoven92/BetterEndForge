@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/fracturn_01" },
+			{ "model": "betterendforge:block/fracturn_02" },
+			{ "model": "betterendforge:block/fracturn_03" },
+			{ "model": "betterendforge:block/fracturn_04" }
+		]
+	}
+}
