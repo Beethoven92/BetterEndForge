@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "C",
+    "I",
+    "#"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:chain"
+    },
+    "I": {
+      "item": "betterendforge:thallasium_ingot"
+    },
+    "#": {
+      "item": "betterendforge:glowing_bulb"
+    }
+  },
+  "result": {
+    "item": "betterendforge:thallasium_bulb_lantern"
+  }
+}

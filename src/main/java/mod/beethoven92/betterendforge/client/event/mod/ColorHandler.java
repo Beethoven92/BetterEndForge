@@ -10,6 +10,7 @@ import mod.beethoven92.betterendforge.common.block.JellyshroomCapBlock;
 import mod.beethoven92.betterendforge.common.block.ModLanternBlock;
 import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
+import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
@@ -35,15 +36,11 @@ public class ColorHandler
 		
 		event.getBlockColors().register((state, reader, pos, color) -> 
         				 {return RespawnObeliskBlock.getBlockColor(pos);}, ModBlocks.RESPAWN_OBELISK.get());
-		
-		event.getBlockColors().register((state, reader, pos, color) -> 
-		                 {return state.getBlock().getMaterialColor().colorValue;}, 
-		                 ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED.getBlocks());
-		
-		event.getBlockColors().register((state, reader, pos, color) -> 
-				        {return state.getBlock().getMaterialColor().colorValue;}, 
-				        ModBlocks.BULB_LANTERN_COLORED.getBlocks());
 
+		registerColoredMaterialBlocks(event, ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED);
+		registerColoredMaterialBlocks(event, ModBlocks.IRON_BULB_LANTERN_COLORED);
+		registerColoredMaterialBlocks(event, ModBlocks.THALLASIUM.bulb_lantern_colored);
+		
 		event.getBlockColors().register((state, reader, pos, color) ->
 		 				 {return HelixTreeLeavesBlock.getBlockColor(state);}, 
 		 				 ModBlocks.HELIX_TREE_LEAVES.get());
@@ -75,13 +72,9 @@ public class ColorHandler
 				ModItems.SHADOW_WALKER_SPAWN_EGG.get(), ModItems.END_SLIME_SPAWN_EGG.get(),
 				ModItems.CUBOZOA_SPAWN_EGG.get(), ModItems.SILK_MOTH_SPAWN_EGG.get());
 		
-		event.getItemColors().register((stack, tintIndex) -> 
-                         {return ((BlockItem)stack.getItem()).getBlock().getMaterialColor().colorValue;}, 
-                         ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED.getBlocks());
-		
-		event.getItemColors().register((stack, tintIndex) -> 
-				        {return ((BlockItem)stack.getItem()).getBlock().getMaterialColor().colorValue;}, 
-				        ModBlocks.BULB_LANTERN_COLORED.getBlocks());
+		registerColoredMaterialItems(event, ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED);
+		registerColoredMaterialItems(event, ModBlocks.IRON_BULB_LANTERN_COLORED);
+		registerColoredMaterialItems(event, ModBlocks.THALLASIUM.bulb_lantern_colored);
 		
 		event.getItemColors().register((stack, tintIndex) -> 
                          {return JellyshroomCapBlock.getItemColor(stack);}, ModBlocks.JELLYSHROOM_CAP_PURPLE.get());
@@ -90,6 +83,20 @@ public class ColorHandler
 						 {return ModLanternBlock.getItemColor(stack, tintIndex);}, 
 						 getLanterns());
 
+	}
+	
+	private static void registerColoredMaterialBlocks(ColorHandlerEvent.Block event, ColoredMaterial material)
+	{
+		event.getBlockColors().register((state, reader, pos, color) -> 
+		                  {return state.getBlock().getMaterialColor().colorValue;}, 
+                          material.getBlocks());
+	}
+	
+	private static void registerColoredMaterialItems(ColorHandlerEvent.Item event, ColoredMaterial material)
+	{
+		event.getItemColors().register((stack, tintIndex) -> 
+                         {return ((BlockItem)stack.getItem()).getBlock().getMaterialColor().colorValue;}, 
+                         material.getBlocks());
 	}
 	
 	private static Block[] getLanterns() {

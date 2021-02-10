@@ -21,7 +21,8 @@ public class BulbVineLanternBlock extends LanternBlock implements IDyedBlock {
 
 	public BulbVineLanternBlock(AbstractBlock.Properties properties) 
 	{
-		super(properties);
+		super(properties.sound(SoundType.LANTERN)
+				.hardnessAndResistance(1).harvestTool(ToolType.PICKAXE).setRequiresTool().setLightLevel(s -> 15));
 	}
 	
 	public BulbVineLanternBlock() {
@@ -38,9 +39,10 @@ public class BulbVineLanternBlock extends LanternBlock implements IDyedBlock {
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		return state.get(LanternBlock.HANGING) ? SHAPE_CEIL : SHAPE_FLOOR;
 	}
-
+	
 	@Override
-	public Block createFromColor(DyeColor color) {
+	public Block createFromColor(DyeColor color) 
+	{
 		return new BulbVineLanternBlock(color);
 	}
 

@@ -161,8 +161,8 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.END_PORTAL_BLOCK.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(ModBlocks.SILK_MOTH_NEST.get(), RenderType.getCutout());
 		
-		RenderTypeLookup.setRenderLayer(ModBlocks.BULB_LANTERN.get(), RenderType.getCutout());
-		for (Block bulbLantern : ModBlocks.BULB_LANTERN_COLORED.getBlocks())
+		RenderTypeLookup.setRenderLayer(ModBlocks.IRON_BULB_LANTERN.get(), RenderType.getCutout());
+		for (Block bulbLantern : ModBlocks.IRON_BULB_LANTERN_COLORED.getBlocks())
 			RenderTypeLookup.setRenderLayer(bulbLantern, RenderType.getCutout());
 
 		// FLOWER POTS
@@ -197,6 +197,9 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(material.chain.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(material.bars.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(material.chandelier.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(material.bulb_lantern.get(), RenderType.getCutout());
+		for (Block bulbLantern : material.bulb_lantern_colored.getBlocks())
+			RenderTypeLookup.setRenderLayer(bulbLantern, RenderType.getCutout());
 	}
 	
 	private void setFlowerPotRenderLayers()

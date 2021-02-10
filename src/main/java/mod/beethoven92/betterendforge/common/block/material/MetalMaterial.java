@@ -1,5 +1,6 @@
 package mod.beethoven92.betterendforge.common.block.material;
 
+import mod.beethoven92.betterendforge.common.block.BulbVineLanternBlock;
 import mod.beethoven92.betterendforge.common.block.template.ChandelierBlock;
 import mod.beethoven92.betterendforge.common.block.template.EndAnvilBlock;
 import mod.beethoven92.betterendforge.common.block.template.MetalPaneBlock;
@@ -47,8 +48,8 @@ public class MetalMaterial
 	public final RegistryObject<Block> slab;
 	
 	public final RegistryObject<Block> chandelier;
-	//public final RegistryObject<Block> bulb_lantern;
-	//public final ColoredMaterial bulb_lantern_colored;
+	public final RegistryObject<Block> bulb_lantern;
+	public final ColoredMaterial bulb_lantern_colored;
 	
 	public final RegistryObject<Item> nugget;
 	public final RegistryObject<Item> ingot;
@@ -96,13 +97,11 @@ public class MetalMaterial
 	}
 	
 	private MetalMaterial(String name, boolean hasOre, AbstractBlock.Properties blockSettings, Item.Properties itemSettings, IItemTier material, IArmorMaterial armor) 
-	{
-		
+	{		
 		this.hasOre = hasOre;
 		
 		this.name = name;
 		
-		//AbstractBlock.Properties lantern = blockSettings.sound(SoundType.LANTERN).hardnessAndResistance(1).setLightLevel((state) -> 15);
 		AbstractBlock.Properties blockSettingsNotSolid = blockSettings.notSolid();
 		
 		ore = hasOre ? ModBlocks.registerBlockWithDefaultItem(name + "_ore", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE))) : null;
@@ -118,8 +117,8 @@ public class MetalMaterial
 		pressure_plate = ModBlocks.registerBlockWithDefaultItem(name + "_pressure_plate", () -> new PressurePlateBlock(Sensitivity.EVERYTHING, blockSettings));
 		
 		chandelier = ModBlocks.registerBlockWithDefaultItem(name + "_chandelier", () -> new ChandelierBlock(blockSettingsNotSolid.doesNotBlockMovement().setRequiresTool().setLightLevel((state) -> 15)));
-		//bulb_lantern = ModBlocks.registerBlockWithDefaultItem(name + "_bulb_lantern", () -> new BulbVineLanternBlock(lantern));
-		//bulb_lantern_colored = new ColoredMaterial(BulbVineLanternColoredBlock::new, bulb_lantern, false);
+		bulb_lantern = ModBlocks.registerBlockWithDefaultItem(name + "_bulb_lantern", () -> new BulbVineLanternBlock(blockSettings));
+		bulb_lantern_colored = new ColoredMaterial(name + "_bulb_lantern", () -> new BulbVineLanternBlock(), bulb_lantern, false);
 		
 		nugget = ModItems.registerItem(name + "_nugget", () -> new Item(itemSettings));
 		ingot = ModItems.registerItem(name + "_ingot", () -> new Item(itemSettings));
@@ -144,43 +143,7 @@ public class MetalMaterial
 		boots = ModItems.registerItem(name + "_boots", () -> new ArmorItem(armor, EquipmentSlotType.FEET, itemSettings));
 		
 		/*if (hasOre) {
-			FurnaceRecipe.make(name + "_ingot_furnace", ore, ingot).setGroup("end_ingot").build(true);
 			AlloyingRecipe.Builder.create(name + "_ingot_alloy").setInput(ore, ore).setOutput(ingot, 3).setExpiriense(2.1F).build();
 		}*/
-		
-		/*GridRecipe.make(name + "_ingot_from_nuggets", ingot).setShape("###", "###", "###").addMaterial('#', nugget).setGroup("end_metal_ingots_nug").build();
-		GridRecipe.make(name + "_block", block).setShape("###", "###", "###").addMaterial('#', ingot).setGroup("end_metal_blocks").build();
-		GridRecipe.make(name + "_ingot_from_block", ingot).setOutputCount(9).setList("#").addMaterial('#', block).setGroup("end_metal_ingots").build();
-		
-		GridRecipe.make(name + "_tile", tile).setOutputCount(4).setShape("##", "##").addMaterial('#', block).setGroup("end_metal_tiles").build();
-		GridRecipe.make(name + "_bars", bars).setOutputCount(16).setShape("###", "###").addMaterial('#', ingot).setGroup("end_metal_bars").build();
-		GridRecipe.make(name + "_plate", plate).setShape("##").addMaterial('#', ingot).setGroup("end_metal_plates").build();
-		GridRecipe.make(name + "_door", door).setOutputCount(3).setOutputCount(16).setShape("##", "##", "##").addMaterial('#', ingot).setGroup("end_metal_doors").build();
-		GridRecipe.make(name + "_trapdoor", trapdoor).setShape("##", "##").addMaterial('#', ingot).setGroup("end_metal_trapdoors").build();
-		GridRecipe.make(name + "_stairs", stairs).setOutputCount(4).setShape("#  ", "## ", "###").addMaterial('#', block, tile).setGroup("end_metal_stairs").build();
-		GridRecipe.make(name + "_slab", slab).setOutputCount(6).setShape("###").addMaterial('#', block, tile).setGroup("end_metal_slabs").build();
-		GridRecipe.make(name + "_chain", chain).setShape("N", "#", "N").addMaterial('#', ingot).addMaterial('N', nugget).setGroup("end_metal_chain").build();
-		GridRecipe.make(name + "_anvil", anvil).setOutputCount(3).setShape("###", " I ", "III").addMaterial('#', block, tile).addMaterial('I', ingot).setGroup("end_metal_anvil").build();
-		GridRecipe.make(name + "bulb_lantern", bulb_lantern).setShape("C", "I", "#").addMaterial('C', chain).addMaterial('I', ingot).addMaterial('#', ModItems.GLOWING_BULB).build();
-		
-		GridRecipe.make(name + "_axe", axe).setShape("##", "#I", " I").addMaterial('#', ingot).addMaterial('I', Items.STICK).setGroup("end_metal_axes").build();
-		GridRecipe.make(name + "_hoe", hoe).setShape("##", " I", " I").addMaterial('#', ingot).addMaterial('I', Items.STICK).setGroup("end_metal_hoes").build();
-		GridRecipe.make(name + "_pickaxe", pickaxe).setShape("###", " I ", " I ").addMaterial('#', ingot).addMaterial('I', Items.STICK).setGroup("end_metal_picks").build();
-		GridRecipe.make(name + "_sword", sword).setShape("#", "#", "I").addMaterial('#', ingot).addMaterial('I', Items.STICK).setGroup("end_metal_swords").build();
-		
-		GridRecipe.make(name + "_chandelier", chandelier).setShape("I#I", " # ").addMaterial('#', ingot).addMaterial('I', ModItems.LUMECORN_ROD).setGroup("end_metal_chandelier").build();
-		GridRecipe.make(name + "_hammer", hammer).setShape("III", "ISI", " S ").addMaterial('I', ingot).addMaterial('S', Items.STICK).setGroup("end_metal_hammers").build();
-		
-		FurnaceRecipe.make(name + "_axe_nugget", axe, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_hoe_nugget", hoe, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_pickaxe_nugget", pickaxe, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_sword_nugget", sword, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_hammer_nugget", hammer, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_helmet_nugget", helmet, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_chestplate_nugget", chestplate, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_leggings_nugget", leggings, nugget).setGroup("end_nugget").build(true);
-		FurnaceRecipe.make(name + "_boots_nugget", boots, nugget).setGroup("end_nugget").build(true);
-		
-		TagHelper.addTag(BlockTags.ANVIL, anvil);*/
 	}
 }

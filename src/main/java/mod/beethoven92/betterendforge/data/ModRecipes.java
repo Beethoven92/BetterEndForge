@@ -54,7 +54,7 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.DENSE_EMERALD_ICE.get()).key('#', ModBlocks.EMERALD_ICE.get()).patternLine("##").patternLine("##").addCriterion("has_emerald_ice", hasItem(ModBlocks.EMERALD_ICE.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.ANCIENT_EMERALD_ICE.get()).key('#', ModBlocks.DENSE_EMERALD_ICE.get()).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_dense_emerald_ice", hasItem(ModBlocks.DENSE_EMERALD_ICE.get())).build(consumer);
 	    
-	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.BULB_LANTERN.get()).key('C', Blocks.CHAIN).key('I', Items.IRON_INGOT).key('#', ModItems.GLOWING_BULB.get()).patternLine("C").patternLine("I").patternLine("#").addCriterion("has_glowing_bulb", hasItem(ModItems.GLOWING_BULB.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.IRON_BULB_LANTERN.get()).key('C', Blocks.CHAIN).key('I', Items.IRON_INGOT).key('#', ModItems.GLOWING_BULB.get()).patternLine("C").patternLine("I").patternLine("#").addCriterion("has_glowing_bulb", hasItem(ModItems.GLOWING_BULB.get())).build(consumer);
 	    
 	    // DYES
 		ShapelessRecipeBuilder.shapelessRecipe(Items.BLUE_DYE).addIngredient(ModBlocks.BLUE_VINE_SEED.get()).setGroup("blue_dye").addCriterion("has_blue_vine_seed", hasItem(ModBlocks.BLUE_VINE_SEED.get())).build(consumer, "blue_dye_from_blue_vine_seed");
@@ -175,7 +175,7 @@ public class ModRecipes extends RecipeProvider
 		
 		// COLORED MATERIALS
 		makeColoredMaterialRecipes(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED, consumer);
-		makeColoredMaterialRecipes(ModBlocks.BULB_LANTERN_COLORED, consumer);
+		makeColoredMaterialRecipes(ModBlocks.IRON_BULB_LANTERN_COLORED, consumer);
 	}
 	
 	private void makeWoodenMaterialRecipes(WoodenMaterial material, Consumer<IFinishedRecipe> consumer)
@@ -234,6 +234,8 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(material.chain.get()).key('N', material.nugget.get()).key('#', material.ingot.get()).patternLine("N").patternLine("#").patternLine("N").setGroup("end_metal_chain").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.anvil.get(), 3).key('#', material.block.get()).key('I', material.ingot.get()).patternLine("###").patternLine(" I ").patternLine("III").setGroup("end_metal_anvil").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.chandelier.get()).key('I', ModItems.LUMECORN_ROD.get()).key('#', material.ingot.get()).patternLine("I#I").patternLine(" # ").setGroup("end_metal_chandelier").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.bulb_lantern.get()).key('C', Blocks.CHAIN).key('I', material.ingot.get()).key('#', ModItems.GLOWING_BULB.get()).patternLine("C").patternLine("I").patternLine("#").addCriterion("has_glowing_bulb", hasItem(ModItems.GLOWING_BULB.get())).build(consumer);
+	    makeColoredMaterialRecipes(material.bulb_lantern_colored, consumer);
 	    ShapedRecipeBuilder.shapedRecipe(Blocks.SMITHING_TABLE).key('I', material.ingot.get()).key('#', ItemTags.PLANKS).patternLine("II").patternLine("##").patternLine("##").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer, "smithing_table_from_" + material.name + "_ingot");
 	    
 	    // Furnace & blast furnace

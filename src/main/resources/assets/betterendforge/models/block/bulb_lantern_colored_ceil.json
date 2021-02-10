@@ -3,7 +3,6 @@
 	"parent": "block/block",
 	"textures": {
 		"overlay": "betterendforge:block/bulb_vine_lantern_overlay",
-		"metal": "betterendforge:block/bulb_vine_lantern_metal",
 		"particle": "#overlay"
 	},
 	"elements": [ 	 

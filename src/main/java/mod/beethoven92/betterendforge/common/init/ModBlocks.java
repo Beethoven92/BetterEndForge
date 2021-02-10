@@ -951,10 +951,11 @@ public class ModBlocks
     		() -> new HydraluxPetalBlockColored(), HYDRALUX_PETAL_BLOCK, true);
     
   
-    public static final RegistryObject<Block> BULB_LANTERN = registerBlockWithDefaultItem("bulb_lantern", () -> new BulbVineLanternBlock());
+    public static final RegistryObject<Block> IRON_BULB_LANTERN = registerBlockWithDefaultItem("iron_bulb_lantern", 
+    		() -> new BulbVineLanternBlock());
     
-    public static final ColoredMaterial BULB_LANTERN_COLORED = new ColoredMaterial("bulb_lantern", 
-    		() -> new BulbVineLanternBlock(), BULB_LANTERN, false);
+    public static final ColoredMaterial IRON_BULB_LANTERN_COLORED = new ColoredMaterial("iron_bulb_lantern", 
+    		() -> new BulbVineLanternBlock(), IRON_BULB_LANTERN, false);
     
 	
 	//////////////////////////////////////////////////////

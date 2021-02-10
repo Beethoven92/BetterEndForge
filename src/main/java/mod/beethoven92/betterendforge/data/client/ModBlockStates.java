@@ -77,7 +77,7 @@ public class ModBlockStates extends BlockStateProvider
 		
 		// COLORED MATERIALS
 		registerColoredMaterialBlockStates(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED, "block_petal_colored");
-		bulbLanterns();
+		bulbLanterns("iron", ModBlocks.IRON_BULB_LANTERN.get(), ModBlocks.IRON_BULB_LANTERN_COLORED);
 		
 		// PEDESTALS
 		registerPedestals();
@@ -265,6 +265,8 @@ public class ModBlockStates extends BlockStateProvider
 		
 		// BlockItem handled in item model provider
 		chandelierBlock(material.chandelier.get());
+		
+		bulbLanterns(material.name, material.bulb_lantern.get(), material.bulb_lantern_colored);
 	}
 	
 	private void registerColoredMaterialBlockStates(ColoredMaterial material, String blockModel)
@@ -482,14 +484,16 @@ public class ModBlockStates extends BlockStateProvider
 		});
     }
     
-    private void bulbLanterns()
+    private void bulbLanterns(String material, Block bulbLantern, ColoredMaterial bulbLanternColored)
     {
-		ModelFile ceil = models().getExistingFile(modLoc("bulb_lantern_colored_ceil"));
-		ModelFile floor = models().getExistingFile(modLoc("bulb_lantern_colored_floor"));
+		ModelFile ceil = models().withExistingParent(material + "_bulb_lantern_colored_ceil", modLoc("bulb_lantern_colored_ceil")).
+				texture("metal", modLoc("block/" + material + "_bulb_vine_lantern_metal"));
+		ModelFile floor = models().withExistingParent(material + "_bulb_lantern_colored_ceil", modLoc("bulb_lantern_colored_floor")).
+				texture("metal", modLoc("block/" + material + "_bulb_vine_lantern_metal"));
 		
 		List<Block> lanterns = new ArrayList<>();
-		lanterns.add(ModBlocks.BULB_LANTERN.get());
-        Collections.addAll(lanterns, ModBlocks.BULB_LANTERN_COLORED.getBlocks());
+		lanterns.add(bulbLantern);
+        Collections.addAll(lanterns, bulbLanternColored.getBlocks());
         for (Block lantern : lanterns) {
 	        getVariantBuilder(lantern)
 	        .forAllStates(state -> {
@@ -498,7 +502,7 @@ public class ModBlockStates extends BlockStateProvider
 	           .modelFile(isFloor ? floor : ceil)
 	           .build();
 	        });
-			makeBlockItemFromExistingModel(lantern, "bulb_lantern_colored_ceil");
+			makeBlockItemFromExistingModel(lantern, material + "_bulb_lantern_colored_ceil");
         }
     }
     

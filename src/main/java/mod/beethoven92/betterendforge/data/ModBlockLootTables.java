@@ -341,8 +341,8 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		// COLORED MATERIALS
 		registerColoredMaterialLootTables(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED);
-		registerColoredMaterialLootTables(ModBlocks.BULB_LANTERN_COLORED);
-		registerDropSelfLootTable(ModBlocks.BULB_LANTERN.get());
+		registerColoredMaterialLootTables(ModBlocks.IRON_BULB_LANTERN_COLORED);
+		registerDropSelfLootTable(ModBlocks.IRON_BULB_LANTERN.get());
 	}
 		
 	private void lumecorn() {
@@ -443,6 +443,8 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(material.pressure_plate.get());
 		registerDropSelfLootTable(material.bars.get());
 		registerDropSelfLootTable(material.chandelier.get());
+		registerColoredMaterialLootTables(material.bulb_lantern_colored);
+		registerDropSelfLootTable(material.bulb_lantern.get());
 	}
 	
 	private void registerColoredMaterialLootTables(ColoredMaterial material)
