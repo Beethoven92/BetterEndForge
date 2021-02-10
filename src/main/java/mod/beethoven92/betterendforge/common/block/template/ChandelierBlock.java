@@ -33,7 +33,7 @@ public class ChandelierBlock extends AttachedBlock
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos,
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos,
 			ISelectionContext context) 
 	{
 		return BOUNDING_SHAPES.get(state.get(FACING));

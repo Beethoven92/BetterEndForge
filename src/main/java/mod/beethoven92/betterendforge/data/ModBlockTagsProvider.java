@@ -167,6 +167,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		
 		getOrCreateBuilder(BlockTags.PRESSURE_PLATES).add(material.pressure_plate.get());
 		
+		getOrCreateBuilder(BlockTags.ANVIL).add(material.anvil.get());
+		
 		// Forge Tags
 		if (material.hasOre)
 		{

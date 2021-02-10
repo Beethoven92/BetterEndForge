@@ -152,6 +152,8 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		
 		getOrCreateBuilder(ItemTags.TRAPDOORS).add(material.trapdoor.get().asItem());
 		
+		getOrCreateBuilder(ItemTags.ANVIL).add(material.anvil.get().asItem());
+		
 		// Forge Tags
 		getOrCreateBuilder(Tags.Items.NUGGETS).add(material.nugget.get());
 		

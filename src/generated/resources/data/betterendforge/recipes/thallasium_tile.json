@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_metal_tile",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:thallasium_block"
+    }
+  },
+  "result": {
+    "item": "betterendforge:thallasium_tile",
+    "count": 4
+  }
+}

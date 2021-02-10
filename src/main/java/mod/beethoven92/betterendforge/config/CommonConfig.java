@@ -23,7 +23,7 @@ public class CommonConfig
     
     static 
     {
-        BUILDER.push("Generation settings");
+        BUILDER.push("End generation settings");
         
         BUILDER.comment("\nEnable/disable BetterEnd integration with vanilla End biome provider."
         		+ "\nThis allows BetterEnd to inject its own biome generation infos into the vanilla EndBiomeProvider,"

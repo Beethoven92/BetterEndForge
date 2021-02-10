@@ -75,8 +75,11 @@ public class ModItemModels extends ItemModelProvider
         getBuilder(material.name + "_chain").parent(new ModelFile.UncheckedModelFile("item/generated")).
                 texture("layer0", modLoc("item/" + material.name + "_chain"));
        
-       /*(material.name + "_bars").parent(new ModelFile.UncheckedModelFile("item/generated")).
+       /*getBuilder(material.name + "_bars").parent(new ModelFile.UncheckedModelFile("item/generated")).
                 texture("layer0", modLoc("item/" + material.name + "_bars"));*/
+        
+        getBuilder(material.name + "_chandelier").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_chandelier"));
         
         getBuilder(material.name + "_nugget").parent(new ModelFile.UncheckedModelFile("item/generated")).
                 texture("layer0", modLoc("item/" + material.name + "_nugget"));
@@ -84,6 +87,26 @@ public class ModItemModels extends ItemModelProvider
         getBuilder(material.name + "_ingot").parent(new ModelFile.UncheckedModelFile("item/generated")).
                 texture("layer0", modLoc("item/" + material.name + "_ingot"));
        
+        // Tool parts
+        getBuilder(material.name + "_shovel_head").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_shovel_head"));
+
+        getBuilder(material.name + "_pickaxe_head").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_pickaxe_head"));
+
+        //getBuilder(material.name + "_axe_head").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                //texture("layer0", modLoc("item/" + material.name + "_axe_head"));
+
+        getBuilder(material.name + "_hoe_head").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_hoe_head"));
+
+        getBuilder(material.name + "_sword_handle").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_sword_handle"));
+
+        getBuilder(material.name + "_sword_blade").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_sword_blade"));
+
+        // Tools and armor
         getBuilder(material.name + "_shovel").parent(new ModelFile.UncheckedModelFile("item/handheld")).
                 texture("layer0", modLoc("item/" + material.name + "_shovel"));
         

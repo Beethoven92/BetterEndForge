@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "betterendforge:thallasium_sword_blade"
+  },
+  "addition": {
+    "item": "betterendforge:thallasium_sword_handle"
+  },
+  "result": {
+    "item": "betterendforge:thallasium_sword"
+  }
+}

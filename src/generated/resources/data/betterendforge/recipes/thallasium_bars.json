@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_metal_bars",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:thallasium_ingot"
+    }
+  },
+  "result": {
+    "item": "betterendforge:thallasium_bars",
+    "count": 16
+  }
+}

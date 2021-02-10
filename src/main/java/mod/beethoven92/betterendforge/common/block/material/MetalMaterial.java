@@ -1,6 +1,7 @@
 package mod.beethoven92.betterendforge.common.block.material;
 
 import mod.beethoven92.betterendforge.common.block.template.ChandelierBlock;
+import mod.beethoven92.betterendforge.common.block.template.EndAnvilBlock;
 import mod.beethoven92.betterendforge.common.block.template.MetalPaneBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModCreativeTabs;
@@ -40,7 +41,7 @@ public class MetalMaterial
 	public final RegistryObject<Block> pressure_plate;
 	public final RegistryObject<Block> door;
 	public final RegistryObject<Block> trapdoor;
-	//public final RegistryObject<Block> anvil;
+	public final RegistryObject<Block> anvil;
 	public final RegistryObject<Block> chain;
 	public final RegistryObject<Block> stairs;
 	public final RegistryObject<Block> slab;
@@ -51,6 +52,14 @@ public class MetalMaterial
 	
 	public final RegistryObject<Item> nugget;
 	public final RegistryObject<Item> ingot;
+	
+	public final RegistryObject<Item> shovelHead;
+	public final RegistryObject<Item> pickaxeHead;
+	public final RegistryObject<Item> axeHead;
+	public final RegistryObject<Item> hoeHead;
+	public final RegistryObject<Item> swordBlade;
+	public final RegistryObject<Item> swordHandle;
+	
 	public final RegistryObject<Item> shovel;
 	public final RegistryObject<Item> sword;
 	public final RegistryObject<Item> pickaxe;
@@ -93,7 +102,7 @@ public class MetalMaterial
 		
 		this.name = name;
 		
-		AbstractBlock.Properties lantern = blockSettings.sound(SoundType.LANTERN).hardnessAndResistance(1).setLightLevel((state) -> 15);
+		//AbstractBlock.Properties lantern = blockSettings.sound(SoundType.LANTERN).hardnessAndResistance(1).setLightLevel((state) -> 15);
 		AbstractBlock.Properties blockSettingsNotSolid = blockSettings.notSolid();
 		
 		ore = hasOre ? ModBlocks.registerBlockWithDefaultItem(name + "_ore", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE))) : null;
@@ -103,7 +112,7 @@ public class MetalMaterial
 		slab = ModBlocks.registerBlockWithDefaultItem(name + "_slab", () -> new SlabBlock(blockSettings));
 		door = ModBlocks.registerBlockWithDefaultItem(name + "_door", () -> new DoorBlock(blockSettingsNotSolid));
 		trapdoor = ModBlocks.registerBlockWithDefaultItem(name + "_trapdoor", () -> new TrapDoorBlock(blockSettingsNotSolid));
-		//anvil = ModBlocks.registerBlockWithDefaultItem(name + "_anvil", new AnvilBlock(block.getDefaultMaterialColor()));
+		anvil = ModBlocks.registerBlockWithDefaultItem(name + "_anvil", () -> new EndAnvilBlock(AbstractBlock.Properties.create(Material.ANVIL, block.get().getMaterialColor()).setRequiresTool().hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.ANVIL)));
 		bars = ModBlocks.registerBlockWithDefaultItem(name + "_bars", () -> new MetalPaneBlock(blockSettings.hardnessAndResistance(5.0F, 6.0F).notSolid()));
 		chain = ModBlocks.registerBlockWithDefaultItem(name + "_chain", () -> new ChainBlock(AbstractBlock.Properties.create(Material.IRON, block.get().getMaterialColor()).setRequiresTool().hardnessAndResistance(5.0F, 6.0F).sound(SoundType.CHAIN).notSolid()));
 		pressure_plate = ModBlocks.registerBlockWithDefaultItem(name + "_pressure_plate", () -> new PressurePlateBlock(Sensitivity.EVERYTHING, blockSettings));
@@ -114,6 +123,14 @@ public class MetalMaterial
 		
 		nugget = ModItems.registerItem(name + "_nugget", () -> new Item(itemSettings));
 		ingot = ModItems.registerItem(name + "_ingot", () -> new Item(itemSettings));
+		
+		shovelHead = ModItems.registerItem(name + "_shovel_head", () -> new Item(itemSettings));
+		pickaxeHead = ModItems.registerItem(name + "_pickaxe_head", () -> new Item(itemSettings));
+		axeHead = ModItems.registerItem(name + "_axe_head", () -> new Item(itemSettings));
+		hoeHead = ModItems.registerItem(name + "_hoe_head", () -> new Item(itemSettings));
+		swordHandle = ModItems.registerItem(name + "_sword_handle", () -> new Item(itemSettings));
+		swordBlade = ModItems.registerItem(name + "_sword_blade", () -> new Item(itemSettings));
+		
 		shovel = ModItems.registerItem(name + "_shovel", () -> new ShovelItem(material, 1.5F, -3.0F, itemSettings));
 		sword = ModItems.registerItem(name + "_sword", () -> new SwordItem(material, 3, -2.4F, itemSettings));
 		pickaxe = ModItems.registerItem(name + "_pickaxe", () -> new PickaxeItem(material, 1, -2.8F, itemSettings));
