@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.data;
 import java.util.function.Consumer;
 
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
+import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
@@ -117,7 +118,7 @@ public class ModRecipes extends RecipeProvider
 		// ARMORS AND TOOLS
 		String material = "terminite";    
 	    
-		makeMaterialAndBlockRecipes(ModBlocks.TERMINITE_BLOCK.get(), ModItems.TERMINITE_INGOT.get(), consumer, material);
+		makeIngotAndBlockRecipes(ModBlocks.TERMINITE_BLOCK.get(), ModItems.TERMINITE_INGOT.get(), consumer, material);
 	    
 	    makeHelmetRecipe(ModItems.TERMINITE_HELMET.get(), ModItems.TERMINITE_INGOT.get(), consumer, material);
 		makeChestplateRecipe(ModItems.TERMINITE_CHESTPLATE.get(), ModItems.TERMINITE_INGOT.get(), consumer, material);
@@ -133,7 +134,7 @@ public class ModRecipes extends RecipeProvider
 		
 		material = "aeternium";
 		
-		makeMaterialAndBlockRecipes(ModBlocks.AETERNIUM_BLOCK.get(), ModItems.AETERNIUM_INGOT.get(), consumer, material);
+		makeIngotAndBlockRecipes(ModBlocks.AETERNIUM_BLOCK.get(), ModItems.AETERNIUM_INGOT.get(), consumer, material);
 		
 		makeHammerRecipe(ModItems.GOLDEN_HAMMER.get(), Items.GOLD_INGOT, consumer, "gold");
 		makeHammerRecipe(ModItems.IRON_HAMMER.get(), Items.IRON_INGOT, consumer, "iron");
@@ -168,6 +169,9 @@ public class ModRecipes extends RecipeProvider
 		makeStoneMaterialRecipes(ModBlocks.FLAVOLITE, consumer);
 		makeStoneMaterialRecipes(ModBlocks.VIOLECITE, consumer);
 		makeStoneMaterialRecipes(ModBlocks.SULPHURIC_ROCK, consumer);
+		
+		// METAL MATERIALS
+		makeMetalMaterialRecipes(ModBlocks.THALLASIUM, consumer);
 		
 		// COLORED MATERIALS
 		makeColoredMaterialRecipes(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED, consumer);
@@ -213,6 +217,60 @@ public class ModRecipes extends RecipeProvider
 	    registerPedestal(material.pedestal.get(), material.slab.get(), material.pillar.get(), consumer, material.name);
 	}
 	
+	private void makeMetalMaterialRecipes(MetalMaterial material, Consumer<IFinishedRecipe> consumer)
+	{
+		// Base
+	    makeIngotAndBlockRecipes(material.block.get(), material.ingot.get(), consumer, material.name);
+	    ShapedRecipeBuilder.shapedRecipe(material.ingot.get()).key('#', material.nugget.get()).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_" + material.name + "_nugget", hasItem(material.nugget.get())).build(consumer, material.name + "_ingot_from_" + material.name + "_nuggets");
+		
+	    // Blocks
+	    ShapedRecipeBuilder.shapedRecipe(material.tile.get(), 4).key('#', material.block.get()).patternLine("##").patternLine("##").setGroup("end_metal_tile").addCriterion("has_" + material.name + "_block", hasItem(material.block.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.stairs.get(), 4).key('#', material.block.get()).patternLine("#  ").patternLine("## ").patternLine("###").setGroup("end_metal_stairs").addCriterion("has_" + material.name + "_block", hasItem(material.block.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.slab.get(), 6).key('#', material.block.get()).patternLine("###").setGroup("end_metal_slabs").addCriterion("has_" + material.block + "_block", hasItem(material.block.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.door.get(), 3).key('#', material.ingot.get()).patternLine("##").patternLine("##").patternLine("##").setGroup("end_metal_doors").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.trapdoor.get(), 2).key('#', material.ingot.get()).patternLine("###").patternLine("###").setGroup("end_metal_trapdoors").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.pressure_plate.get()).key('#', material.ingot.get()).patternLine("##").setGroup("end_metal_plates").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.bars.get(), 16).key('#', material.ingot.get()).patternLine("###").patternLine("###").setGroup("end_metal_bars").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.chain.get()).key('N', material.nugget.get()).key('#', material.ingot.get()).patternLine("N").patternLine("#").patternLine("N").setGroup("end_metal_chain").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.anvil.get(), 3).key('#', material.block.get()).key('I', material.ingot.get()).patternLine("###").patternLine(" I ").patternLine("III").setGroup("end_metal_anvil").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.chandelier.get()).key('I', ModItems.LUMECORN_ROD.get()).key('#', material.ingot.get()).patternLine("I#I").patternLine(" # ").setGroup("end_metal_chandelier").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(Blocks.SMITHING_TABLE).key('I', material.ingot.get()).key('#', ItemTags.PLANKS).patternLine("II").patternLine("##").patternLine("##").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer, "smithing_table_from_" + material.name + "_ingot");
+	    
+	    // Furnace & blast furnace
+	    if (material.hasOre)
+	    {
+	    	CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.ore.get()), material.ingot.get(), 0.35F, 200).addCriterion("has_" + material.name + "_ore", hasItem(material.ore.get())).build(consumer, material.name + "_ingot_from_smelting");
+	    	CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.ore.get()), material.ingot.get(), 0.35F, 200).addCriterion("has_" + material.name + "_ore", hasItem(material.ore.get())).build(consumer, material.name + "_ingot_from_blasting");
+	    }
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.axe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_axe", hasItem(material.axe.get())).build(consumer, material.name + "_nugget_from_axe_smelting");
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.axe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_axe", hasItem(material.axe.get())).build(consumer, material.name + "_nugget_from_axe_blasting");
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.pickaxe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_pickaxe", hasItem(material.pickaxe.get())).build(consumer, material.name + "_nugget_from_pickaxe_smelting");
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.pickaxe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_pickaxe", hasItem(material.pickaxe.get())).build(consumer, material.name + "_nugget_from_pickaxe_blasting");
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.hoe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hoe", hasItem(material.hoe.get())).build(consumer, material.name + "_nugget_from_hoe_smelting");
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.hoe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hoe", hasItem(material.hoe.get())).build(consumer, material.name + "_nugget_from_hoe_blasting");
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.sword.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_sword", hasItem(material.sword.get())).build(consumer, material.name + "_nugget_from_sword_smelting");
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.sword.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_sword", hasItem(material.sword.get())).build(consumer, material.name + "_nugget_from_sword_blasting");
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.hammer.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hammer", hasItem(material.hammer.get())).build(consumer, material.name + "_nugget_from_hammer_smelting");
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.hammer.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hammer", hasItem(material.hammer.get())).build(consumer, material.name + "_nugget_from_hammer_blasting");
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.helmet.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_helmet", hasItem(material.helmet.get())).build(consumer, material.name + "_nugget_from_helmet_smelting");
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.helmet.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_helmet", hasItem(material.helmet.get())).build(consumer, material.name + "_nugget_from_helmet_blasting");
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.chestplate.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_chestplate", hasItem(material.chestplate.get())).build(consumer, material.name + "_nugget_from_chestplate_smelting");
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.chestplate.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_chestplate", hasItem(material.chestplate.get())).build(consumer, material.name + "_nugget_from_chestplate_blasting");
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.leggings.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_leggings", hasItem(material.leggings.get())).build(consumer, material.name + "_nugget_from_leggings_smelting");
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.leggings.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_leggings", hasItem(material.leggings.get())).build(consumer, material.name + "_nugget_from_leggings_blasting");
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.boots.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_boots", hasItem(material.boots.get())).build(consumer, material.name + "_nugget_from_boots_smelting");
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.boots.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_boots", hasItem(material.boots.get())).build(consumer, material.name + "_nugget_from_boots_blasting");
+	
+	    // Smithing table
+	    makeSmithingRecipe(material.block.get().asItem(), Items.STICK, material.hammer.get(), consumer);
+		makeSmithingRecipe(material.shovelHead.get(), Items.STICK, material.shovel.get(), consumer);
+		makeSmithingRecipe(material.axeHead.get(), Items.STICK, material.axe.get(), consumer);
+		makeSmithingRecipe(material.pickaxeHead.get(), Items.STICK, material.pickaxe.get(), consumer);
+		makeSmithingRecipe(material.hoeHead.get(), Items.STICK, material.hoe.get(), consumer);
+		makeSmithingRecipe(material.ingot.get(), Items.STICK, material.swordHandle.get(), consumer);
+		makeSmithingRecipe(material.swordBlade.get(), material.swordHandle.get(), material.sword.get(), consumer);
+	}
+	
 	private void makeColoredMaterialRecipes(ColoredMaterial material, Consumer<IFinishedRecipe> consumer)
 	{
 		if (material.craftEight)
@@ -237,7 +295,7 @@ public class ModRecipes extends RecipeProvider
 		SmithingRecipeBuilder.smithingRecipe(Ingredient.fromItems(base), Ingredient.fromItems(addition), output).addCriterion("has_" + addition.getRegistryName().getPath(), hasItem(addition)).build(consumer, output.getRegistryName().getPath() + "_smithing");
 	}
 	
-	private void makeMaterialAndBlockRecipes(Block block, Item ingot, Consumer<IFinishedRecipe> consumer, String material)
+	private void makeIngotAndBlockRecipes(Block block, Item ingot, Consumer<IFinishedRecipe> consumer, String material)
 	{
 	    ShapedRecipeBuilder.shapedRecipe(block).key('#', ingot).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_" + material + "_ingot", hasItem(ingot)).build(consumer);
 	    ShapelessRecipeBuilder.shapelessRecipe(ingot, 9).addIngredient(block).setGroup(material + "_ingot").addCriterion("has_" + material + "_block", hasItem(block)).build(consumer, material + "_ingot_from_" + material + "_block");

@@ -12,6 +12,7 @@ import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
+import mod.beethoven92.betterendforge.common.block.template.AttachedBlock;
 import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
 import mod.beethoven92.betterendforge.common.block.template.PillarBlockTemplate;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
@@ -261,6 +262,9 @@ public class ModBlockStates extends BlockStateProvider
 		
 		// BlockItem handled in item model provider
 		barsBlock(material.bars.get());
+		
+		// BlockItem handled in item model provider
+		chandelierBlock(material.chandelier.get());
 	}
 	
 	private void registerColoredMaterialBlockStates(ColoredMaterial material, String blockModel)
@@ -513,6 +517,7 @@ public class ModBlockStates extends BlockStateProvider
     	simpleBlock(chain_block, pot);
     }
     
+    // TO DO: something is wrong with the block, investigate
     private void barsBlock(Block barsBlock) 
     {
         ModelFile post = models().withExistingParent(barsBlock.getRegistryName().
@@ -534,5 +539,48 @@ public class ModBlockStates extends BlockStateProvider
             }
         });*/
         fourWayMultipart(builder, side);
+    }
+    
+    private void chandelierBlock(Block chandelier)
+    {
+		ModelFile ceil = models().withExistingParent(chandelier.getRegistryName().getPath() + "_ceil", 
+				modLoc("chandelier_ceil")).
+				texture("rod", modLoc("block/" + chandelier.getRegistryName().getPath() + "_floor")).
+				texture("texture", modLoc("block/" + chandelier.getRegistryName().getPath() + "_ceil"));
+		ModelFile wall = models().withExistingParent(chandelier.getRegistryName().getPath() + "_wall", 
+				modLoc("chandelier_wall")).
+				texture("texture", modLoc("block/" + chandelier.getRegistryName().getPath() + "_wall"));
+		ModelFile floor = models().withExistingParent(chandelier.getRegistryName().getPath() + "_floor", 
+				modLoc("chandelier_floor")).
+				texture("texture", modLoc("block/" + chandelier.getRegistryName().getPath() + "_floor"));
+		
+		getVariantBuilder(chandelier)
+        .forAllStates(state -> {
+           Direction dir = state.get(AttachedBlock.FACING);
+           int y = 0;
+           switch (dir) 
+           {
+           case DOWN:
+        	   break;
+           case EAST:
+        	   y = 270;
+        	   break;
+           case NORTH:
+        	   y = 180;
+        	   break;
+           case SOUTH:
+        	   break;
+           case UP:
+        	   break;
+           case WEST:
+        	   y = 90;
+        	   break;
+           }
+           
+           return ConfiguredModel.builder()
+           .modelFile(dir == Direction.UP ? floor : dir == Direction.DOWN ? ceil : wall)
+           .rotationY(y)
+           .build();
+        });
     }
 }

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "betterendforge:thallasium_hammer"
+  },
+  "result": "betterendforge:thallasium_nugget",
+  "experience": 0.35,
+  "cookingtime": 200
+}

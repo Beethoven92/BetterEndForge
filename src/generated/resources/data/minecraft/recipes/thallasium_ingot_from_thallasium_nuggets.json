@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:thallasium_nugget"
+    }
+  },
+  "result": {
+    "item": "betterendforge:thallasium_ingot"
+  }
+}

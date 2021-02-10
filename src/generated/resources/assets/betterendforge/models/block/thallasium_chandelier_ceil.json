@@ -1,0 +1,7 @@
+{
+  "parent": "betterendforge:block/chandelier_ceil",
+  "textures": {
+    "rod": "betterendforge:block/thallasium_chandelier_floor",
+    "texture": "betterendforge:block/thallasium_chandelier_ceil"
+  }
+}
