@@ -97,6 +97,9 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> SALTEAGO = new SinglePlantFeature(ModBlocks.SALTEAGO.get(), 5);
 	public static final Feature<NoFeatureConfig> VAIOLUSH_FERN = new SinglePlantFeature(ModBlocks.VAIOLUSH_FERN.get(), 5);
 	public static final Feature<NoFeatureConfig> FRACTURN = new SinglePlantFeature(ModBlocks.FRACTURN.get(), 5);
+	public static final Feature<NoFeatureConfig> UMBRELLA_MOSS_RARE = new SinglePlantFeature(ModBlocks.UMBRELLA_MOSS.get(), 3);
+	public static final Feature<NoFeatureConfig> CREEPING_MOSS_RARE = new SinglePlantFeature(ModBlocks.CREEPING_MOSS.get(), 3);
+	public static final Feature<NoFeatureConfig> TWISTED_UMBRELLA_MOSS_RARE = new SinglePlantFeature(ModBlocks.TWISTED_UMBRELLA_MOSS.get(), 3);
 	public static final Feature<NoFeatureConfig> LUMECORN = new Lumecorn();
 	
 	// WALL PLANTS
@@ -209,6 +212,9 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), SALTEAGO, "salteago");
     	BetterEnd.register(event.getRegistry(), VAIOLUSH_FERN, "vaiolush_fern");
     	BetterEnd.register(event.getRegistry(), FRACTURN, "fracturn");
+    	BetterEnd.register(event.getRegistry(), UMBRELLA_MOSS_RARE, "umbrella_moss_rare");
+    	BetterEnd.register(event.getRegistry(), CREEPING_MOSS_RARE, "creeping_moss_rare");
+    	BetterEnd.register(event.getRegistry(), TWISTED_UMBRELLA_MOSS_RARE, "twisted_umbrella_moss_rare");
     	// WALL_PLANTS
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE, "purple_polypore");
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE_DENSE, "purple_polypore_dense");
