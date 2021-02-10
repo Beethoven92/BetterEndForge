@@ -95,6 +95,8 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> BLOSSOM_BERRY = new SinglePlantFeature(ModBlocks.BLOSSOM_BERRY.get(), 3, 3);
 	public static final Feature<NoFeatureConfig> BLOOMING_COOKSONIA = new SinglePlantFeature(ModBlocks.BLOOMING_COOKSONIA.get(), 5);
 	public static final Feature<NoFeatureConfig> SALTEAGO = new SinglePlantFeature(ModBlocks.SALTEAGO.get(), 5);
+	public static final Feature<NoFeatureConfig> VAIOLUSH_FERN = new SinglePlantFeature(ModBlocks.VAIOLUSH_FERN.get(), 5);
+	public static final Feature<NoFeatureConfig> FRACTURN = new SinglePlantFeature(ModBlocks.FRACTURN.get(), 5);
 	public static final Feature<NoFeatureConfig> LUMECORN = new Lumecorn();
 	
 	// WALL PLANTS
@@ -205,6 +207,8 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), LUMECORN, "lumecorn");
     	BetterEnd.register(event.getRegistry(), BLOOMING_COOKSONIA, "blooming_cooksonia");
     	BetterEnd.register(event.getRegistry(), SALTEAGO, "salteago");
+    	BetterEnd.register(event.getRegistry(), VAIOLUSH_FERN, "vaiolush_fern");
+    	BetterEnd.register(event.getRegistry(), FRACTURN, "fracturn");
     	// WALL_PLANTS
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE, "purple_polypore");
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE_DENSE, "purple_polypore_dense");
