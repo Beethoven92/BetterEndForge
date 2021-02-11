@@ -40,4 +40,7 @@ public class ModParticleTypes
 	
 	public static final RegistryObject<BasicParticleType> JUNGLE_SPORE = PARTICLE_TYPES.register("jungle_spore",
 			() -> new BasicParticleType(false));
+	
+	public static final RegistryObject<BasicParticleType> FIREFLY = PARTICLE_TYPES.register("firefly",
+			() -> new BasicParticleType(false));
 }
