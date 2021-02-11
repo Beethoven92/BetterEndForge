@@ -160,13 +160,24 @@ public abstract class BoneMealItemMixin
 		return result;
 	}
 	
+	private Block[] glowingGrasslandsGrass() {
+		return new Block[] { ModBlocks.BLOOMING_COOKSONIA.get(), ModBlocks.VAIOLUSH_FERN.get(),
+				ModBlocks.FRACTURN.get(), ModBlocks.SALTEAGO.get(), ModBlocks.CREEPING_MOSS.get(),
+				ModBlocks.UMBRELLA_MOSS.get(), ModBlocks.TWISTED_UMBRELLA_MOSS.get() };
+	}
+	
 	private BlockState getGrassState(World world, BlockPos pos) 
 	{
 		BlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 		if (block == ModBlocks.END_MOSS.get() || block == ModBlocks.END_MYCELIUM.get()) 
-		{
-			return world.rand.nextBoolean() ? ModBlocks.CREEPING_MOSS.get().getDefaultState() : ModBlocks.UMBRELLA_MOSS.get().getDefaultState();
+		{				
+			if (world.getBiome(pos).getRegistryName().equals(ModBiomes.GLOWING_GRASSLANDS.getID())) {
+				Block[] grasses = glowingGrasslandsGrass();
+				return grasses[world.rand.nextInt(grasses.length)].getDefaultState();
+			} else {
+				return world.rand.nextBoolean() ? ModBlocks.CREEPING_MOSS.get().getDefaultState() : ModBlocks.UMBRELLA_MOSS.get().getDefaultState();
+			}
 		}
 		else if (block == ModBlocks.CAVE_MOSS.get()) 
 		{

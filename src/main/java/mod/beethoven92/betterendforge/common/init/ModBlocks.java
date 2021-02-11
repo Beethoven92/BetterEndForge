@@ -375,7 +375,7 @@ public class ModBlocks
 			() -> new TerrainPlantBlock(JUNGLE_MOSS.get()));
 	
 	public static final RegistryObject<Block> BLOOMING_COOKSONIA = registerBlockWithDefaultItem("blooming_cooksonia", 
-			() -> new TerrainPlantBlock(END_MOSS.get())); // TODO: Bonemeal
+			() -> new TerrainPlantBlock(END_MOSS.get()));
 	
 	public static final RegistryObject<Block> SALTEAGO = registerBlockWithDefaultItem("salteago", 
 			() -> new TerrainPlantBlock(END_MOSS.get()));
