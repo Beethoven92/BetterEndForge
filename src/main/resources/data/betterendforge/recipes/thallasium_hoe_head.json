@@ -5,6 +5,7 @@
       "item": "betterendforge:thallasium_ingot"
   },
   "result": "betterendforge:thallasium_hoe_head",
+  "inputCount": 2,
   "level": 2,
   "damage": 2,
   "anvilLevel": 2

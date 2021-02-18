@@ -69,11 +69,6 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 	{
 		if (be_currentRecipe != null) 
 		{
-			/*ItemStack output = this.be_currentRecipe.craft(this.field_234643_d_, player);
-			if (!output.isEmpty()) 
-			{
-				info.setReturnValue(true);
-			}*/
 			info.setReturnValue(be_currentRecipe.checkHammerDurability(this.field_234643_d_, player));
 		}
 	}
@@ -116,12 +111,7 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 	public void updateRepairOutput(CallbackInfo info) 
 	{
 		be_recipes = this.recipeManager.getRecipes(AnvilSmithingRecipe.TYPE, this.field_234643_d_, world);
-		/*if (be_recipes.size() > 0) 
-		{
-			this.be_currentRecipe = recipeManager.getRecipe(AnvilSmithingRecipe.TYPE, this.field_234643_d_, world).get();
-			this.be_updateResult();
-			info.cancel();
-		}*/
+
 		if (be_recipes.size() > 0) 
 		{
 			int anvilLevel = this.anvilLevel.get();

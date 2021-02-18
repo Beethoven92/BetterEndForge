@@ -5,6 +5,7 @@
       "item": "betterendforge:terminite_ingot"
   },
   "result": "betterendforge:terminite_hoe_head",
+  "inputCount": 2,
   "level": 3,
   "damage": 3,
   "anvilLevel": 3

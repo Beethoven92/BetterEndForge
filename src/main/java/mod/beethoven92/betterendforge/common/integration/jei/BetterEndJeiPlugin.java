@@ -39,6 +39,9 @@ public class BetterEndJeiPlugin implements IModPlugin
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.END_STONE_SMELTER.get()), AlloyingRecipeCategory.UID);
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSION_PEDESTAL.get()), InfusionRecipeCategory.UID);
 		registration.addRecipeCatalyst(new ItemStack(Blocks.ANVIL), AnvilSmithingRecipeCategory.UID);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.THALLASIUM.anvil.get()), AnvilSmithingRecipeCategory.UID);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.TERMINITE.anvil.get()), AnvilSmithingRecipeCategory.UID);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.AETERNIUM_ANVIL.get()), AnvilSmithingRecipeCategory.UID);
 	}
 	
 	@Override

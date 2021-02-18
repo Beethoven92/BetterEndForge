@@ -21,11 +21,12 @@ public class AnvilSmithingRecipeSerializer extends net.minecraftforge.registries
 		ItemStack output = new ItemStack(Registry.ITEM.getOptional(resultId).orElseThrow(() -> {
 			return new IllegalStateException("Item: " + resultStr + " does not exists!");
 		}));
+		int inputCount = JSONUtils.getInt(json, "inputCount", 1);
 		int level = JSONUtils.getInt(json, "level", 1);
 		int damage = JSONUtils.getInt(json, "damage", 1);
 		int anvilLevel = JSONUtils.getInt(json, "anvilLevel", 1);
 		
-		return new AnvilSmithingRecipe(id, input, output, level, damage, anvilLevel);
+		return new AnvilSmithingRecipe(id, input, output, inputCount, level, damage, anvilLevel);
 	}
 
 	@Override
@@ -33,11 +34,12 @@ public class AnvilSmithingRecipeSerializer extends net.minecraftforge.registries
 	{
 		Ingredient input = Ingredient.read(buffer);
 		ItemStack output = buffer.readItemStack();
+		int inputCount = buffer.readVarInt();
 		int level = buffer.readVarInt();
 		int damage = buffer.readVarInt();
 		int anvilLevel = buffer.readVarInt();
 		
-		return new AnvilSmithingRecipe(id, input, output, level, damage, anvilLevel);
+		return new AnvilSmithingRecipe(id, input, output, inputCount, level, damage, anvilLevel);
 	}
 
 	@Override
@@ -45,6 +47,7 @@ public class AnvilSmithingRecipeSerializer extends net.minecraftforge.registries
 	{	
 		recipe.input.write(buffer);
 		buffer.writeItemStack(recipe.output);
+		buffer.writeVarInt(recipe.inputCount);
 		buffer.writeVarInt(recipe.level);
 		buffer.writeVarInt(recipe.damage);
 		buffer.writeVarInt(recipe.anvilLevel);
