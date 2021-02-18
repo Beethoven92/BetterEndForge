@@ -6,5 +6,6 @@
   },
   "result": "betterendforge:aeternium_sword_blade",
   "level": 4,
-  "damage": 6
+  "damage": 6,
+  "anvilLevel": 5
 }

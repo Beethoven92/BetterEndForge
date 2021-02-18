@@ -6,5 +6,6 @@
   },
   "result": "betterendforge:aeternium_hammer_head",
   "level": 4,
-  "damage": 6
+  "damage": 6,
+  "anvilLevel": 5
 }

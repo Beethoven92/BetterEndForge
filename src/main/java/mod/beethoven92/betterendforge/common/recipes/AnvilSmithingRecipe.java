@@ -25,14 +25,17 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 	public final ItemStack output;
 	public final int damage;
 	public final int level;
+	public final int anvilLevel;
 	
-	public AnvilSmithingRecipe(ResourceLocation identifier, Ingredient input, ItemStack output, int level, int damage) 
+	public AnvilSmithingRecipe(ResourceLocation identifier, Ingredient input, ItemStack output, int level, 
+			int damage, int anvilLevel) 
 	{
 		this.id = identifier;
 		this.input = input;
 		this.output = output;
 		this.level = level;
 		this.damage = damage;
+		this.anvilLevel = anvilLevel;
 	}
 	
 	@Override
@@ -46,7 +49,15 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 		int level = ((ToolItem)hammer.getItem()).getTier().getHarvestLevel();
 		return level >= this.level && this.input.test(inv.getStackInSlot(1));
 	}
-
+	
+	public boolean checkHammerDurability(IInventory craftingInventory, PlayerEntity player) 
+	{
+		if (player.isCreative()) return true;
+		ItemStack hammer = craftingInventory.getStackInSlot(0);
+		int damage = hammer.getDamage() + this.damage;
+		return damage < hammer.getMaxDamage();
+	}
+	
 	@Override
 	public NonNullList<Ingredient> getIngredients() 
 	{
@@ -70,9 +81,9 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 	{
 		if (!player.isCreative()) 
 		{
+			if (!checkHammerDurability(craftingInventory, player)) return ItemStack.EMPTY;
+			
 			ItemStack hammer = craftingInventory.getStackInSlot(0);
-			int damage = hammer.getDamage() + this.damage;
-			if (damage >= hammer.getMaxDamage()) return ItemStack.EMPTY;
 			hammer.damageItem(this.damage, player, entity -> {
 				entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
 			});

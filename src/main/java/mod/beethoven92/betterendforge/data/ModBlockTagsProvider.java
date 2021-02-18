@@ -65,6 +65,8 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		getOrCreateBuilder(BlockTags.ICE).add(ModBlocks.DENSE_EMERALD_ICE.get());
 		getOrCreateBuilder(BlockTags.ICE).add(ModBlocks.ANCIENT_EMERALD_ICE.get());
 		
+		getOrCreateBuilder(BlockTags.ANVIL).add(ModBlocks.AETERNIUM_ANVIL.get());
+		
 		// WOODEN MATERIALS
 		registerWoodenMaterialTags(ModBlocks.MOSSY_GLOWSHROOM);
 		registerWoodenMaterialTags(ModBlocks.LACUGROVE);

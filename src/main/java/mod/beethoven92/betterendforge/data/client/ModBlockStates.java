@@ -279,6 +279,7 @@ public class ModBlockStates extends BlockStateProvider
 		bulbLanterns(material.name, material.bulb_lantern.get(), material.bulb_lantern_colored);
 		
 		anvilBlock(material.anvil.get(), material.name);
+		makeBlockItemFromExistingModel(material.anvil.get(), "block/" + material.name + "_anvil_0");
 	}
 	
 	private void registerColoredMaterialBlockStates(ColoredMaterial material, String blockModel)

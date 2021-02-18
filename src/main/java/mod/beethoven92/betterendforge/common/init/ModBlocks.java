@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.init;
 import java.util.function.Supplier;
 
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.block.AeterniumAnvil;
 import mod.beethoven92.betterendforge.common.block.AncientEmeraldIceBlock;
 import mod.beethoven92.betterendforge.common.block.AuroraCrystalBlock;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
@@ -215,12 +216,6 @@ public class ModBlocks
 					                                 hardnessAndResistance(65F, 1200F).
 					                                 setRequiresTool().
 					                                 sound(SoundType.NETHERITE)));
-	
-	/*public static final RegistryObject<Block> TERMINITE_BLOCK = registerBlockWithDefaultItem("terminite_block",
-			() -> new Block(AbstractBlock.Properties.create(Material.IRON, MaterialColor.GREEN).
-					                                 hardnessAndResistance(7F, 9F).
-					                                 setRequiresTool().
-					                                 sound(SoundType.METAL)));*/
 	
 	public static final RegistryObject<Block> ENDER_BLOCK = registerBlockWithDefaultItem("ender_block",
 			() -> new Block(AbstractBlock.Properties.create(Material.ROCK).
@@ -895,6 +890,8 @@ public class ModBlocks
 					                                           )));
 	
 	// MISC
+	public static final RegistryObject<Block> AETERNIUM_ANVIL = registerBlockWithDefaultItem("aeternium_anvil", 
+			() -> new AeterniumAnvil(AbstractBlock.Properties.create(Material.ANVIL, MaterialColor.GRAY).setRequiresTool().hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.ANVIL)));
 	
 	public static final RegistryObject<Block> DENSE_SNOW = registerBlockWithDefaultItem("dense_snow", 
 			() -> new Block(AbstractBlock.Properties.create(Material.SNOW_BLOCK).

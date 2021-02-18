@@ -102,6 +102,8 @@ public class MetalMaterial
 		
 		this.name = name;
 		
+		final int anvilLevel = material.getHarvestLevel();
+		
 		AbstractBlock.Properties blockSettingsNotSolid = blockSettings.notSolid();
 		
 		ore = hasOre ? ModBlocks.registerBlockWithDefaultItem(name + "_ore", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE))) : null;
@@ -111,7 +113,7 @@ public class MetalMaterial
 		slab = ModBlocks.registerBlockWithDefaultItem(name + "_slab", () -> new SlabBlock(blockSettings));
 		door = ModBlocks.registerBlockWithDefaultItem(name + "_door", () -> new DoorBlock(blockSettingsNotSolid));
 		trapdoor = ModBlocks.registerBlockWithDefaultItem(name + "_trapdoor", () -> new TrapDoorBlock(blockSettingsNotSolid));
-		anvil = ModBlocks.registerBlockWithDefaultItem(name + "_anvil", () -> new EndAnvilBlock(AbstractBlock.Properties.create(Material.ANVIL, block.get().getMaterialColor()).setRequiresTool().hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.ANVIL)));
+		anvil = ModBlocks.registerBlockWithDefaultItem(name + "_anvil", () -> new EndAnvilBlock(AbstractBlock.Properties.create(Material.ANVIL, block.get().getMaterialColor()).setRequiresTool().hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.ANVIL), anvilLevel));
 		bars = ModBlocks.registerBlockWithDefaultItem(name + "_bars", () -> new MetalPaneBlock(blockSettings.hardnessAndResistance(5.0F, 6.0F).notSolid()));
 		chain = ModBlocks.registerBlockWithDefaultItem(name + "_chain", () -> new ChainBlock(AbstractBlock.Properties.create(Material.IRON, block.get().getMaterialColor()).setRequiresTool().hardnessAndResistance(5.0F, 6.0F).sound(SoundType.CHAIN).notSolid()));
 		pressure_plate = ModBlocks.registerBlockWithDefaultItem(name + "_pressure_plate", () -> new PressurePlateBlock(Sensitivity.EVERYTHING, blockSettings));
@@ -141,9 +143,5 @@ public class MetalMaterial
 		chestplate = ModItems.registerItem(name + "_chestplate", () -> new ArmorItem(armor, EquipmentSlotType.CHEST, itemSettings));
 		leggings = ModItems.registerItem(name + "_leggings", () -> new ArmorItem(armor, EquipmentSlotType.LEGS, itemSettings));
 		boots = ModItems.registerItem(name + "_boots", () -> new ArmorItem(armor, EquipmentSlotType.FEET, itemSettings));
-		
-		/*if (hasOre) {
-			AlloyingRecipe.Builder.create(name + "_ingot_alloy").setInput(ore, ore).setOutput(ingot, 3).setExpiriense(2.1F).build();
-		}*/
 	}
 }

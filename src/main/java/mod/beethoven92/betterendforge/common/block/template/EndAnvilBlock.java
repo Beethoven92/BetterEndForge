@@ -10,15 +10,17 @@ import net.minecraft.state.StateContainer.Builder;
 public class EndAnvilBlock extends AnvilBlock
 {
 	public static final IntegerProperty DESTRUCTION = BlockProperties.DESTRUCTION;
+	protected final int level;
 	
-	public EndAnvilBlock(Properties properties) 
+	public EndAnvilBlock(Properties properties, int level) 
 	{
 		super(properties);
+		this.level = level;
 	}
 
 	public int getCraftingLevel() 
 	{
-		return 1;
+		return level;
 	}
 	
 	public IntegerProperty getDestructionProperty() 

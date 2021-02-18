@@ -18,6 +18,7 @@ public class BlockProperties
 	public static final BooleanProperty NATURAL = BooleanProperty.create("natural");
 	public static final IntegerProperty FULLNESS = IntegerProperty.create("fullness", 0, 3);
 	public static final IntegerProperty DESTRUCTION = IntegerProperty.create("destruction", 0, 2);
+	public static final IntegerProperty DESTRUCTION_LONG = IntegerProperty.create("destruction", 0, 8);
 	
 	public static enum TripleShape implements IStringSerializable 
 	{

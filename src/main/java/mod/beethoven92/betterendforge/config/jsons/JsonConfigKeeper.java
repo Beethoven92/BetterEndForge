@@ -17,7 +17,7 @@ import net.minecraft.util.JSONUtils;
 
 public final class JsonConfigKeeper 
 {
-	private Map<JsonConfigKey, Entry<?>> configEntries = Maps.newHashMap();
+	private final Map<JsonConfigKey, Entry<?>> configEntries = Maps.newHashMap();
 	
 	private final JsonObject configObject;
 	private final JsonConfigWriter writer;

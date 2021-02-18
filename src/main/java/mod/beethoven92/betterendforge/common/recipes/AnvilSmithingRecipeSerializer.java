@@ -23,8 +23,9 @@ public class AnvilSmithingRecipeSerializer extends net.minecraftforge.registries
 		}));
 		int level = JSONUtils.getInt(json, "level", 1);
 		int damage = JSONUtils.getInt(json, "damage", 1);
+		int anvilLevel = JSONUtils.getInt(json, "anvilLevel", 1);
 		
-		return new AnvilSmithingRecipe(id, input, output, level, damage);
+		return new AnvilSmithingRecipe(id, input, output, level, damage, anvilLevel);
 	}
 
 	@Override
@@ -34,8 +35,9 @@ public class AnvilSmithingRecipeSerializer extends net.minecraftforge.registries
 		ItemStack output = buffer.readItemStack();
 		int level = buffer.readVarInt();
 		int damage = buffer.readVarInt();
+		int anvilLevel = buffer.readVarInt();
 		
-		return new AnvilSmithingRecipe(id, input, output, level, damage);
+		return new AnvilSmithingRecipe(id, input, output, level, damage, anvilLevel);
 	}
 
 	@Override
@@ -45,5 +47,6 @@ public class AnvilSmithingRecipeSerializer extends net.minecraftforge.registries
 		buffer.writeItemStack(recipe.output);
 		buffer.writeVarInt(recipe.level);
 		buffer.writeVarInt(recipe.damage);
+		buffer.writeVarInt(recipe.anvilLevel);
 	}
 }

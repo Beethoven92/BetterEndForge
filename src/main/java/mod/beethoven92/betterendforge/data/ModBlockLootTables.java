@@ -58,7 +58,9 @@ public class ModBlockLootTables extends BlockLootTables
 	@Override
 	protected void addTables() 
 	{
-		// BLOCKS		
+		// BLOCKS
+		registerDropSelfLootTable(ModBlocks.AETERNIUM_ANVIL.get());
+		
 	    registerLootTable(ModBlocks.RESPAWN_OBELISK.get(), (block) -> {
 	    	return droppingWhen(block, RespawnObeliskBlock.SHAPE, TripleShape.BOTTOM);
 	    });

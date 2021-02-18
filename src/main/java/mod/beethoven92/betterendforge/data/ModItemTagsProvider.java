@@ -57,6 +57,8 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		// Misc Minecraft tags
 		getOrCreateBuilder(ItemTags.PIGLIN_LOVED).add(ModItems.GOLDEN_HAMMER.get());
 		
+		getOrCreateBuilder(ItemTags.ANVIL).add(ModBlocks.AETERNIUM_ANVIL.get().asItem());
+		
 		// HAMMERS
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.IRON_HAMMER.get());
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.GOLDEN_HAMMER.get());

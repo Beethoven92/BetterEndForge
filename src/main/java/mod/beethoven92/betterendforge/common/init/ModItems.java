@@ -38,7 +38,6 @@ public class ModItems
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BetterEnd.MOD_ID);
 	
 	// MATERIAL ITEMS
-	//public static final RegistryObject<Item> TERMINITE_INGOT = ITEMS.register("terminite_ingot", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> AETERNIUM_INGOT = ITEMS.register("aeternium_ingot",() -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> ENDER_DUST = ITEMS.register("ender_dust",() -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public final static RegistryObject<Item> END_LILY_LEAF = ITEMS.register("end_lily_leaf",() -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
@@ -59,10 +58,6 @@ public class ModItems
 	public final static RegistryObject<Item> LUMECORN_ROD = ITEMS.register("lumecorn_rod", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	
 	// ARMOR ITEMS
-	//public static final RegistryObject<Item> TERMINITE_HELMET = ITEMS.register("terminite_helmet", () -> new ArmorItem(ModArmorMaterial.TERMINITE, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	//public static final RegistryObject<Item> TERMINITE_CHESTPLATE = ITEMS.register("terminite_chestplate", () -> new ArmorItem(ModArmorMaterial.TERMINITE, EquipmentSlotType.CHEST, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	//public static final RegistryObject<Item> TERMINITE_LEGGINGS = ITEMS.register("terminite_leggings", () -> new ArmorItem(ModArmorMaterial.TERMINITE, EquipmentSlotType.LEGS, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	//public static final RegistryObject<Item> TERMINITE_BOOTS = ITEMS.register("terminite_boots", () -> new ArmorItem(ModArmorMaterial.TERMINITE, EquipmentSlotType.FEET, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<Item> AETERNIUM_HELMET = ITEMS.register("aeternium_helmet", () -> new ArmorItem(ModArmorMaterial.AETERNIUM, EquipmentSlotType.HEAD, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<Item> AETERNIUM_CHESTPLATE = ITEMS.register("aeternium_chestplate", () -> new ArmorItem(ModArmorMaterial.AETERNIUM, EquipmentSlotType.CHEST, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<Item> AETERNIUM_LEGGINGS = ITEMS.register("aeternium_leggings", () -> new ArmorItem(ModArmorMaterial.AETERNIUM, EquipmentSlotType.LEGS, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
@@ -73,12 +68,6 @@ public class ModItems
 	public static final RegistryObject<Item> CRYSTALITE_BOOTS = ITEMS.register("crystalite_boots", () -> new CrystaliteArmor(ModArmorMaterial.CRYSTALITE, EquipmentSlotType.FEET, new Item.Properties().rarity(Rarity.UNCOMMON).group(ModCreativeTabs.CREATIVE_TAB)));
 
 	// TOOL ITEMS
-	//public static final RegistryObject<SwordItem> TERMINITE_SWORD = ITEMS.register("terminite_sword", () -> new SwordItem(ModItemTier.TERMINITE, 3, -2.0F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	//public static final RegistryObject<ToolItem> TERMINITE_SHOVEL = ITEMS.register("terminite_shovel", () -> new ShovelItem(ModItemTier.TERMINITE, 1.5F, -3.0F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	//public static final RegistryObject<ToolItem> TERMINITE_PICKAXE = ITEMS.register("terminite_pickaxe", () -> new PickaxeItem(ModItemTier.TERMINITE, 1, -2.8F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	//public static final RegistryObject<ToolItem> TERMINITE_AXE = ITEMS.register("terminite_axe", () -> new AxeItem(ModItemTier.TERMINITE, 6.0F, -3.0F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	//public static final RegistryObject<ToolItem> TERMINITE_HOE = ITEMS.register("terminite_hoe", () -> new HoeItem(ModItemTier.TERMINITE, -3, 0.0F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
-	//public static final RegistryObject<HammerItem> TERMINITE_HAMMER = ITEMS.register("terminite_hammer", () -> new HammerItem(ModItemTier.TERMINITE, 5.0F, -3.2F, 0.3D, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));	
 	public static final RegistryObject<SwordItem> AETERNIUM_SWORD = ITEMS.register("aeternium_sword", () -> new SwordItem(ModItemTier.AETERNIUM, 3, -2.4F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<ToolItem> AETERNIUM_SHOVEL = ITEMS.register("aeternium_shovel", () -> new ShovelItem(ModItemTier.AETERNIUM, 1.5F, -3.0F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 	public static final RegistryObject<ToolItem> AETERNIUM_PICKAXE = ITEMS.register("aeternium_pickaxe", () -> new PickaxeItem(ModItemTier.AETERNIUM, 1, -2.8F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
