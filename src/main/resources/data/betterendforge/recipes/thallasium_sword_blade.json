@@ -1,0 +1,11 @@
+{
+  "type": "betterendforge:anvil_smithing",
+  "input":
+  {
+      "item": "betterendforge:thallasium_ingot"
+  },
+  "result": "betterendforge:thallasium_sword_blade",
+  "level": 2,
+  "damage": 2,
+  "anvilLevel": 2
+}

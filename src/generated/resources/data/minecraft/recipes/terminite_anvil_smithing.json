@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "betterendforge:thallasium_anvil"
+  },
+  "addition": {
+    "item": "betterendforge:terminite_block"
+  },
+  "result": {
+    "item": "betterendforge:terminite_anvil"
+  }
+}

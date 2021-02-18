@@ -1,0 +1,11 @@
+{
+  "type": "betterendforge:anvil_smithing",
+  "input":
+  {
+      "item": "betterendforge:terminite_ingot"
+  },
+  "result": "betterendforge:terminite_sword_blade",
+  "level": 3,
+  "damage": 3,
+  "anvilLevel": 3
+}

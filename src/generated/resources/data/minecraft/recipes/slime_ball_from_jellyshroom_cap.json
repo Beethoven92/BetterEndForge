@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "betterendforge:jellyshroom_cap_purple"
+  },
+  "result": "minecraft:slime_ball",
+  "experience": 0.35,
+  "cookingtime": 200
+}

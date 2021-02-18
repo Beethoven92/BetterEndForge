@@ -1,0 +1,14 @@
+{
+  "type": "betterendforge:alloying",
+  "ingredients": [
+    {
+      "item": "betterendforge:thallasium_ingot"
+    },
+    {
+      "item": "betterendforge:ender_dust"
+    }
+  ],
+  "result": "betterendforge:terminite_ingot",
+  "experience": 2.5,
+  "smelttime": 450
+}

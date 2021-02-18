@@ -1,0 +1,16 @@
+{
+  "type": "betterendforge:alloying",
+  "ingredients": [
+    {
+      "item": "betterendforge:thallasium_ore"
+    },
+    {
+      "item": "betterendforge:thallasium_ore"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:thallasium_ingot",
+    "count": 3
+  },
+  "experience": 2.1
+}
