@@ -12,6 +12,7 @@ import mod.beethoven92.betterendforge.client.renderer.PedestalRenderer;
 import mod.beethoven92.betterendforge.client.renderer.ShadowWalkerEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.SilkMothEntityRenderer;
 import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
+import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModContainerTypes;
@@ -76,6 +77,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.DENSE_EMERALD_ICE.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(ModBlocks.IRON_CHANDELIER.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.GOLD_CHANDELIER.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.END_STONE_FURNACE.get(), RenderType.getCutout());
 		
 		// TREES
 		RenderTypeLookup.setRenderLayer(ModBlocks.END_LOTUS_LEAF.get(), RenderType.getCutout());
@@ -181,6 +183,11 @@ public class PhysicalClientSide implements IPhysicalSide
 		setWoodenMaterialRenderLayers(ModBlocks.UMBRELLA_TREE);
 		setWoodenMaterialRenderLayers(ModBlocks.JELLYSHROOM);
 		
+		// STONE MATERIALS
+		setStoneMaterialRenderLayers(ModBlocks.FLAVOLITE);
+		setStoneMaterialRenderLayers(ModBlocks.VIOLECITE);
+		setStoneMaterialRenderLayers(ModBlocks.SULPHURIC_ROCK);
+		
 		// METAL MATERIALS
 		setMetalMaterialRenderLayers(ModBlocks.THALLASIUM);
 		setMetalMaterialRenderLayers(ModBlocks.TERMINITE);
@@ -191,6 +198,11 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(material.door.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(material.trapdoor.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(material.ladder.get(), RenderType.getCutout());
+	}
+	
+	private void setStoneMaterialRenderLayers(StoneMaterial material)
+	{
+		RenderTypeLookup.setRenderLayer(material.furnace.get(), RenderType.getCutout());
 	}
 	
 	private void setMetalMaterialRenderLayers(MetalMaterial material)

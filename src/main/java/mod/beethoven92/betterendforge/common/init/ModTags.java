@@ -15,6 +15,7 @@ public class ModTags
 	public static final ITag.INamedTag<Block> GEN_TERRAIN = makeBlockTag("gen_terrain");
 	
 	public static final ITag.INamedTag<Item> HAMMERS = makeItemTag("hammers");
+	public static final ITag.INamedTag<Item> FURNACES = makeItemTag("furnaces");
 	
 	public static ITag.INamedTag<Block> makeBlockTag(final String name) 
 	{

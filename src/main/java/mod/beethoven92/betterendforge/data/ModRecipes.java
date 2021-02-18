@@ -8,6 +8,7 @@ import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
+import mod.beethoven92.betterendforge.common.init.ModTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.data.CookingRecipeBuilder;
@@ -48,7 +49,9 @@ public class ModRecipes extends RecipeProvider
 	    
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.END_LOTUS.log.get()).key('#', ModBlocks.END_LOTUS_STEM.get()).patternLine("##").patternLine("##").addCriterion("has_end_lotus_stem", hasItem(ModBlocks.END_LOTUS_STEM.get())).build(consumer);
 
-	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.END_STONE_SMELTER.get()).key('#', Blocks.END_STONE_BRICKS).key('V', Items.BUCKET).key('T', ModBlocks.THALLASIUM.ingot.get()).patternLine("T#T").patternLine("V V").patternLine("T#T").addCriterion("has_end_stone_bricks", hasItem(Blocks.END_STONE_BRICKS)).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.END_STONE_FURNACE.get()).key('#', Blocks.END_STONE).patternLine("###").patternLine("# #").patternLine("###").setGroup("end_stone_furnaces").addCriterion("has_end_stone", hasItem(Blocks.END_STONE)).build(consumer);
+	    
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.END_STONE_SMELTER.get()).key('#', Blocks.END_STONE_BRICKS).key('V', ModTags.FURNACES).key('T', ModBlocks.THALLASIUM.ingot.get()).patternLine("T#T").patternLine("V V").patternLine("T#T").addCriterion("has_end_stone_bricks", hasItem(Blocks.END_STONE_BRICKS)).build(consumer);
 	   
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.RESPAWN_OBELISK.get()).key('C', ModBlocks.AURORA_CRYSTAL.get()).key('S', ModItems.ETERNAL_CRYSTAL.get()).key('A', ModBlocks.AMBER_BLOCK.get()).patternLine("CSC").patternLine("CSC").patternLine("AAA").addCriterion("has_amber_block", hasItem(ModBlocks.AMBER_BLOCK.get())).build(consumer);
 	    
@@ -210,6 +213,7 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(material.pressure_plate.get()).key('#', material.stone.get()).patternLine("##").setGroup("end_stone_plates").addCriterion("has_stone", hasItem(material.stone.get())).build(consumer);
 	    registerLantern(material.lantern.get(), material.slab.get(), consumer, material.name);
 	    registerPedestal(material.pedestal.get(), material.slab.get(), material.pillar.get(), consumer, material.name);
+	    ShapedRecipeBuilder.shapedRecipe(material.furnace.get()).key('#', material.stone.get()).patternLine("###").patternLine("# #").patternLine("###").setGroup("end_stone_furnaces").addCriterion("has_stone", hasItem(material.stone.get())).build(consumer);
 	}
 	
 	private void makeMetalMaterialRecipes(MetalMaterial material, Consumer<IFinishedRecipe> consumer)

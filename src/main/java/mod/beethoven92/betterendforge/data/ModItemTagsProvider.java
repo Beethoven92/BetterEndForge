@@ -9,6 +9,7 @@ import mod.beethoven92.betterendforge.common.block.template.EndSaplingBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import mod.beethoven92.betterendforge.common.init.ModTags;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
@@ -59,12 +60,15 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		
 		getOrCreateBuilder(ItemTags.ANVIL).add(ModBlocks.AETERNIUM_ANVIL.get().asItem());
 		
-		// HAMMERS
+		// Mod Tags
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.IRON_HAMMER.get());
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.GOLDEN_HAMMER.get());
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.DIAMOND_HAMMER.get());
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.NETHERITE_HAMMER.get());
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.AETERNIUM_HAMMER.get());
+		
+		getOrCreateBuilder(ModTags.FURNACES).add(Blocks.FURNACE.asItem());
+		getOrCreateBuilder(ModTags.FURNACES).add(ModBlocks.END_STONE_FURNACE.get().asItem());
 		
 		// WOODEN MATERIALS
 		registerWoodenMaterialTags(ModBlocks.MOSSY_GLOWSHROOM);
@@ -140,6 +144,9 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		
 		// Forge Tags
 		getOrCreateBuilder(Tags.Items.STONE).add(material.stone.get().asItem());
+		
+		// Mod Tags
+		getOrCreateBuilder(ModTags.FURNACES).add(material.furnace.get().asItem());
 	}
 	
 	private void registerMetalMaterialTags(MetalMaterial material)
@@ -166,7 +173,7 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		
 		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(material.block.get().asItem());
 		
-		// Hammers
+		// Mod Tags
 		getOrCreateBuilder(ModTags.HAMMERS).add(material.hammer.get());
 	}
 }

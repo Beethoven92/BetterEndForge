@@ -160,6 +160,7 @@ public class ModBlockLootTables extends BlockLootTables
 	    });
 		
 		registerLootTable(ModBlocks.END_STONE_SMELTER.get(), BlockLootTables::droppingWithName);
+		registerLootTable(ModBlocks.END_STONE_FURNACE.get(), BlockLootTables::droppingWithName);
 		
 		// PLANTS
 		registerLootTable(ModBlocks.UMBRELLA_MOSS.get(), BlockLootTables::onlyWithShears);
@@ -429,6 +430,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(material.brick_wall.get());
 		registerDropSelfLootTable(material.lantern.get());
 		registerDropSelfLootTable(material.pedestal.get());
+		registerLootTable(material.furnace.get(), BlockLootTables::droppingWithName);
 	}
 	
 	private void registerMetalMaterialLootTables(MetalMaterial material)

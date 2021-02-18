@@ -27,6 +27,7 @@ import net.minecraft.block.DoorBlock;
 import net.minecraft.block.FenceBlock;
 import net.minecraft.block.FenceGateBlock;
 import net.minecraft.block.FlowerPotBlock;
+import net.minecraft.block.FurnaceBlock;
 import net.minecraft.block.LadderBlock;
 import net.minecraft.block.LanternBlock;
 import net.minecraft.block.PressurePlateBlock;
@@ -64,6 +65,9 @@ public class ModBlockStates extends BlockStateProvider
 		chandelierBlock(ModBlocks.IRON_CHANDELIER.get());
 		// BlockItem handled in item model provider
 		chandelierBlock(ModBlocks.GOLD_CHANDELIER.get());
+		
+		furnaceBlock(ModBlocks.END_STONE_FURNACE.get(), "end_stone");
+		makeBlockItemFromExistingModel(ModBlocks.END_STONE_FURNACE.get(), "end_stone_furnace");
 		
 		// WOODEN MATERIALS
 		registerWoodenMaterialBlockStates(ModBlocks.MOSSY_GLOWSHROOM);
@@ -236,6 +240,9 @@ public class ModBlockStates extends BlockStateProvider
 
 		pedestalBlock(material.pedestal.get(), material.name, modLoc("block/" + material.name + "_polished"), modLoc("block/" + material.name + "_pillar_side"));
 		makeBlockItemFromExistingModel(material.pedestal.get(), material.name + "_pedestal_default");
+		
+		furnaceBlock(material.furnace.get(), material.name);
+		makeBlockItemFromExistingModel(material.furnace.get(), material.name + "_furnace");
 	}	
 	
 	private void registerMetalMaterialBlockStates(MetalMaterial material)
@@ -632,6 +639,52 @@ public class ModBlockStates extends BlockStateProvider
            
            return ConfiguredModel.builder()
            .modelFile(anvil)
+           .rotationX(x)
+           .rotationY(y)
+           .build();
+        });
+    }
+    
+    private void furnaceBlock(Block block, String material)
+    {
+        ModelFile furnace = models().withExistingParent(material + "_furnace", mcLoc("block/orientable_with_bottom"))
+     		   .texture("top", modLoc("block/" + material + "_furnace_top"))
+ 			   .texture("front", modLoc("block/" + material + "_furnace_front"))
+ 			   .texture("side", modLoc("block/" + material + "_furnace_side"))
+ 			   .texture("bottom", modLoc("block/" + material + "_furnace_top"));
+        
+        ModelFile furnaceOn = models().withExistingParent(material + "_furnace_on", modLoc("block/furnace_glow"))
+      		   .texture("top", modLoc("block/" + material + "_furnace_top"))
+  			   .texture("front", modLoc("block/" + material + "_furnace_front_on"))
+  			   .texture("side", modLoc("block/" + material + "_furnace_side"))
+  			   .texture("glow", modLoc("block/" + material + "_furnace_glow"));
+        
+        getVariantBuilder(block)
+        .forAllStates(state -> {
+           boolean isLit = state.get(FurnaceBlock.LIT);
+       	           
+           Direction dir = state.get(FurnaceBlock.FACING);
+           int x = 0;
+           int y = 0;
+           switch (dir) 
+           {
+           case EAST:
+        	   y = 90;
+        	   break;
+           case NORTH:
+        	   break;
+           case SOUTH:
+        	   y = 180;
+        	   break;
+           case WEST:
+        	   y = 270;
+        	   break;
+		   default:
+			   break;
+           }
+           
+           return ConfiguredModel.builder()
+           .modelFile(isLit? furnaceOn : furnace)
            .rotationX(x)
            .rotationY(y)
            .build();

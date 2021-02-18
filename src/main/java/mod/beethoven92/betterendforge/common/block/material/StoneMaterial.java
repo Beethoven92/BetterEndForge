@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.common.collect.Iterables;
 
 import mod.beethoven92.betterendforge.common.block.ModLanternBlock;
+import mod.beethoven92.betterendforge.common.block.template.EndFurnaceBlock;
 import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
 import mod.beethoven92.betterendforge.common.block.template.PillarBlockTemplate;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
@@ -19,6 +20,7 @@ import net.minecraft.block.StoneButtonBlock;
 import net.minecraft.block.WallBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraftforge.fml.RegistryObject;
 
 public class StoneMaterial 
@@ -44,6 +46,8 @@ public class StoneMaterial
 	public final RegistryObject<Block> brick_stairs;
 	public final RegistryObject<Block> brick_slab;
 	public final RegistryObject<Block> brick_wall;
+	
+	public final RegistryObject<Block> furnace;
 	
 	public StoneMaterial(String name, MaterialColor color) 
 	{
@@ -90,6 +94,10 @@ public class StoneMaterial
 				() -> new SlabBlock(material));
 		brick_wall = ModBlocks.registerBlockWithDefaultItem(name + "_bricks_wall", 
 				() -> new WallBlock(material));
+		
+		furnace = ModBlocks.registerBlockWithDefaultItem(name + "_furnace", 
+				() -> new EndFurnaceBlock(AbstractBlock.Properties.from(bricks.get()).
+						setLightLevel((state) -> {return state.get(BlockStateProperties.LIT) ? 13 : 0;})));
 		
 		MATERIALS.add(this);
 	}

@@ -8,9 +8,11 @@ import com.google.common.collect.Lists;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.EndSignBlock;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
+import mod.beethoven92.betterendforge.common.block.template.EndFurnaceBlock;
 import mod.beethoven92.betterendforge.common.tileentity.EChestTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.ESignTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.EndBarrelTileEntity;
+import mod.beethoven92.betterendforge.common.tileentity.EndFurnaceTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.EndStoneSmelterTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.EternalPedestalTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.HydrothermalVentTileEntity;
@@ -70,7 +72,13 @@ public class ModTileEntityTypes
 					() -> TileEntityType.Builder.create(EndBarrelTileEntity::new, 
 							getBarrels()).build(null));
 	
-	static Block[] getPedestals() {
+	public static final RegistryObject<TileEntityType<EndFurnaceTileEntity>> FURNACE =
+			TILE_ENTITY_TYPES.register("furnace", 
+					() -> TileEntityType.Builder.create(EndFurnaceTileEntity::new, 
+							getFurnaces()).build(null));
+	
+	static Block[] getPedestals() 
+	{
 		List<Block> result = new ArrayList<>();
 		for (StoneMaterial m : StoneMaterial.getMaterials())
 			result.add(m.pedestal.get());
@@ -82,12 +90,15 @@ public class ModTileEntityTypes
 		return result.toArray(new Block[] {});
 	}
 	
-	static Block[] getChests() {
+	static Block[] getChests() 
+	{
 		List<Block> result = Lists.newArrayList();
 		ModItems.ITEMS.getEntries().forEach((item) -> {
-			if (item.get() instanceof BlockItem) {
+			if (item.get() instanceof BlockItem) 
+			{
 				Block block = ((BlockItem) item.get()).getBlock();
-				if (block instanceof ChestBlock) {
+				if (block instanceof ChestBlock) 
+				{
 					result.add(block);
 				}
 			}
@@ -95,12 +106,15 @@ public class ModTileEntityTypes
 		return result.toArray(new Block[] {});
 	}
 	
-	static Block[] getSigns() {
+	static Block[] getSigns() 
+	{
 		List<Block> result = Lists.newArrayList();
 		ModItems.ITEMS.getEntries().forEach((item) -> {
-			if (item.get() instanceof BlockItem) {
+			if (item.get() instanceof BlockItem) 
+			{
 				Block block = ((BlockItem) item.get()).getBlock();
-				if (block instanceof EndSignBlock) {
+				if (block instanceof EndSignBlock) 
+				{
 					result.add(block);
 				}
 			}
@@ -108,12 +122,31 @@ public class ModTileEntityTypes
 		return result.toArray(new Block[] {});
 	}
 	
-	static Block[] getBarrels() {
+	static Block[] getBarrels() 
+	{
 		List<Block> result = Lists.newArrayList();
 		ModItems.ITEMS.getEntries().forEach((item) -> {
-			if (item.get() instanceof BlockItem) {
+			if (item.get() instanceof BlockItem) 
+			{
 				Block block = ((BlockItem) item.get()).getBlock();
-				if (block instanceof BarrelBlock) {
+				if (block instanceof BarrelBlock) 
+				{
+					result.add(block);
+				}
+			}
+		});
+		return result.toArray(new Block[] {});
+	}
+	
+	static Block[] getFurnaces() 
+	{
+		List<Block> result = Lists.newArrayList();
+		ModItems.ITEMS.getEntries().forEach((item) -> {
+			if (item.get() instanceof BlockItem) 
+			{
+				Block block = ((BlockItem) item.get()).getBlock();
+				if (block instanceof EndFurnaceBlock) 
+				{
 					result.add(block);
 				}
 			}

@@ -81,6 +81,7 @@ import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.ChandelierBlock;
 import mod.beethoven92.betterendforge.common.block.template.EndCropBlock;
+import mod.beethoven92.betterendforge.common.block.template.EndFurnaceBlock;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import mod.beethoven92.betterendforge.common.block.template.FurBlock;
 import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
@@ -885,6 +886,12 @@ public class ModBlocks
 					                                           hardnessAndResistance(4F, 100F).
 					                                           setRequiresTool().
 					                                           sound(SoundType.STONE).
+					                                           setLightLevel((state) -> {
+					                                        	   return state.get(BlockStateProperties.LIT) ? 13 : 0;}
+					                                           )));
+	
+	public static final RegistryObject<Block> END_STONE_FURNACE = registerBlockWithDefaultItem("end_stone_furnace", 
+			() -> new EndFurnaceBlock(AbstractBlock.Properties.from(Blocks.END_STONE).
 					                                           setLightLevel((state) -> {
 					                                        	   return state.get(BlockStateProperties.LIT) ? 13 : 0;}
 					                                           )));
