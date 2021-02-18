@@ -74,6 +74,8 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.SULPHUR_CRYSTAL.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.EMERALD_ICE.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(ModBlocks.DENSE_EMERALD_ICE.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ModBlocks.IRON_CHANDELIER.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.GOLD_CHANDELIER.get(), RenderType.getCutout());
 		
 		// TREES
 		RenderTypeLookup.setRenderLayer(ModBlocks.END_LOTUS_LEAF.get(), RenderType.getCutout());
@@ -181,6 +183,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		
 		// METAL MATERIALS
 		setMetalMaterialRenderLayers(ModBlocks.THALLASIUM);
+		setMetalMaterialRenderLayers(ModBlocks.TERMINITE);
 	}
 	
 	private void setWoodenMaterialRenderLayers(WoodenMaterial material)

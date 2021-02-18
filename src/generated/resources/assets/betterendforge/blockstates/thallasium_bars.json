@@ -1,6 +1,12 @@
 {
   "multipart": [
     {
+      "when": {
+        "north": "false",
+        "south": "false",
+        "east": "false",
+        "west": "false"
+      },
       "apply": {
         "model": "betterendforge:block/thallasium_bars_post"
       }

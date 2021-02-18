@@ -13,7 +13,7 @@ public enum ModItemTier implements IItemTier
 		return Ingredient.fromItems(ModBlocks.THALLASIUM.ingot.get());
 	}),
 	TERMINITE(3, 1230, 8.5F, 3.0F, 14, () -> {
-		return Ingredient.fromItems(ModItems.TERMINITE_INGOT.get());
+		return Ingredient.fromItems(ModBlocks.TERMINITE.ingot.get());
 	}),
 	AETERNIUM(5, 2196, 10.0F, 4.5F, 18, () -> {
 		return Ingredient.fromItems(ModItems.AETERNIUM_INGOT.get());

@@ -13,10 +13,12 @@ import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.AttachedBlock;
+import mod.beethoven92.betterendforge.common.block.template.EndAnvilBlock;
 import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
 import mod.beethoven92.betterendforge.common.block.template.PillarBlockTemplate;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import net.minecraft.block.AbstractButtonBlock;
+import net.minecraft.block.AnvilBlock;
 import net.minecraft.block.BarrelBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.ComposterBlock;
@@ -28,6 +30,7 @@ import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.LadderBlock;
 import net.minecraft.block.LanternBlock;
 import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.SixWayBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.StoneButtonBlock;
@@ -56,6 +59,12 @@ public class ModBlockStates extends BlockStateProvider
 	@Override
 	protected void registerStatesAndModels() 
 	{
+		// BLOCKS
+		// BlockItem handled in item model provider
+		chandelierBlock(ModBlocks.IRON_CHANDELIER.get());
+		// BlockItem handled in item model provider
+		chandelierBlock(ModBlocks.GOLD_CHANDELIER.get());
+		
 		// WOODEN MATERIALS
 		registerWoodenMaterialBlockStates(ModBlocks.MOSSY_GLOWSHROOM);
 		registerWoodenMaterialBlockStates(ModBlocks.LACUGROVE);
@@ -74,6 +83,7 @@ public class ModBlockStates extends BlockStateProvider
 		
 		// METAL MATERIALS
 		registerMetalMaterialBlockStates(ModBlocks.THALLASIUM);
+		registerMetalMaterialBlockStates(ModBlocks.TERMINITE);
 		
 		// COLORED MATERIALS
 		registerColoredMaterialBlockStates(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED, "block_petal_colored");
@@ -267,6 +277,8 @@ public class ModBlockStates extends BlockStateProvider
 		chandelierBlock(material.chandelier.get());
 		
 		bulbLanterns(material.name, material.bulb_lantern.get(), material.bulb_lantern_colored);
+		
+		anvilBlock(material.anvil.get(), material.name);
 	}
 	
 	private void registerColoredMaterialBlockStates(ColoredMaterial material, String blockModel)
@@ -488,7 +500,7 @@ public class ModBlockStates extends BlockStateProvider
     {
 		ModelFile ceil = models().withExistingParent(material + "_bulb_lantern_colored_ceil", modLoc("bulb_lantern_colored_ceil")).
 				texture("metal", modLoc("block/" + material + "_bulb_vine_lantern_metal"));
-		ModelFile floor = models().withExistingParent(material + "_bulb_lantern_colored_ceil", modLoc("bulb_lantern_colored_floor")).
+		ModelFile floor = models().withExistingParent(material + "_bulb_lantern_colored_floor", modLoc("bulb_lantern_colored_floor")).
 				texture("metal", modLoc("block/" + material + "_bulb_vine_lantern_metal"));
 		
 		List<Block> lanterns = new ArrayList<>();
@@ -521,7 +533,6 @@ public class ModBlockStates extends BlockStateProvider
     	simpleBlock(chain_block, pot);
     }
     
-    // TO DO: something is wrong with the block, investigate
     private void barsBlock(Block barsBlock) 
     {
         ModelFile post = models().withExistingParent(barsBlock.getRegistryName().
@@ -533,15 +544,12 @@ public class ModBlockStates extends BlockStateProvider
         		texture("side", modLoc("block/" + barsBlock.getRegistryName().getPath()));
        
         MultiPartBlockStateBuilder builder = getMultipartBuilder(barsBlock)
-                .part().modelFile(post).addModel().end();
-        
-        /*SixWayBlock.FACING_TO_PROPERTY_MAP.entrySet().forEach(e -> {
-            Direction dir = e.getKey();
-            if (dir.getAxis().isHorizontal()) {
-                builder.part().modelFile(post).uvLock(true).addModel()
-                    .condition(e.getValue(), false);
-            }
-        });*/
+                .part().modelFile(post).addModel().
+                condition(SixWayBlock.FACING_TO_PROPERTY_MAP.get(Direction.NORTH), false).
+                condition(SixWayBlock.FACING_TO_PROPERTY_MAP.get(Direction.SOUTH), false).
+                condition(SixWayBlock.FACING_TO_PROPERTY_MAP.get(Direction.EAST), false).
+                condition(SixWayBlock.FACING_TO_PROPERTY_MAP.get(Direction.WEST), false).end();
+
         fourWayMultipart(builder, side);
     }
     
@@ -583,6 +591,47 @@ public class ModBlockStates extends BlockStateProvider
            
            return ConfiguredModel.builder()
            .modelFile(dir == Direction.UP ? floor : dir == Direction.DOWN ? ceil : wall)
+           .rotationY(y)
+           .build();
+        });
+    }
+    
+    private void anvilBlock(Block block, String material)
+    {
+        getVariantBuilder(block)
+        .forAllStates(state -> {
+           int destruction = state.get(EndAnvilBlock.DESTRUCTION);
+       	   
+           ModelFile anvil = models().withExistingParent(material + "_anvil_" + destruction, modLoc("block/anvil"))
+        		   .texture("front", modLoc("block/" + material + "_anvil_front"))
+    			   .texture("bottom", modLoc("block/" + material + "_anvil_bottom"))
+    			   .texture("back", modLoc("block/" + material + "_anvil_back"))
+    			   .texture("panel", modLoc("block/" + material + "_anvil_panel"))
+    			   .texture("top", modLoc("block/" + material + "_anvil_top_" + destruction));
+           
+           Direction dir = state.get(AnvilBlock.FACING);
+           int x = 0;
+           int y = 0;
+           switch (dir) 
+           {
+           case EAST:
+        	   y = 270;
+        	   break;
+           case NORTH:
+        	   y = 180;
+        	   break;
+           case SOUTH:
+        	   break;
+           case WEST:
+        	   y = 90;
+        	   break;
+		   default:
+			   break;
+           }
+           
+           return ConfiguredModel.builder()
+           .modelFile(anvil)
+           .rotationX(x)
            .rotationY(y)
            .build();
         });

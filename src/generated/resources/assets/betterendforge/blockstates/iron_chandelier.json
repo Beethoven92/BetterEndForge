@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "betterendforge:block/iron_chandelier_ceil"
+    },
+    "facing=up": {
+      "model": "betterendforge:block/iron_chandelier_floor"
+    },
+    "facing=north": {
+      "model": "betterendforge:block/iron_chandelier_wall",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "betterendforge:block/iron_chandelier_wall"
+    },
+    "facing=west": {
+      "model": "betterendforge:block/iron_chandelier_wall",
+      "y": 90
+    },
+    "facing=east": {
+      "model": "betterendforge:block/iron_chandelier_wall",
+      "y": 270
+    }
+  }
+}

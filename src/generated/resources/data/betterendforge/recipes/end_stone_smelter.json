@@ -1,9 +1,9 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "###",
+    "T#T",
     "V V",
-    "###"
+    "T#T"
   ],
   "key": {
     "#": {
@@ -11,6 +11,9 @@
     },
     "V": {
       "item": "minecraft:bucket"
+    },
+    "T": {
+      "item": "betterendforge:thallasium_ingot"
     }
   },
   "result": {

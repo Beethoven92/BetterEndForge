@@ -78,6 +78,7 @@ import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
+import mod.beethoven92.betterendforge.common.block.template.ChandelierBlock;
 import mod.beethoven92.betterendforge.common.block.template.EndCropBlock;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import mod.beethoven92.betterendforge.common.block.template.FurBlock;
@@ -215,11 +216,11 @@ public class ModBlocks
 					                                 setRequiresTool().
 					                                 sound(SoundType.NETHERITE)));
 	
-	public static final RegistryObject<Block> TERMINITE_BLOCK = registerBlockWithDefaultItem("terminite_block",
+	/*public static final RegistryObject<Block> TERMINITE_BLOCK = registerBlockWithDefaultItem("terminite_block",
 			() -> new Block(AbstractBlock.Properties.create(Material.IRON, MaterialColor.GREEN).
 					                                 hardnessAndResistance(7F, 9F).
 					                                 setRequiresTool().
-					                                 sound(SoundType.METAL)));
+					                                 sound(SoundType.METAL)));*/
 	
 	public static final RegistryObject<Block> ENDER_BLOCK = registerBlockWithDefaultItem("ender_block",
 			() -> new Block(AbstractBlock.Properties.create(Material.ROCK).
@@ -265,8 +266,23 @@ public class ModBlocks
                     setLightLevel(s -> 15)));
 	public static final RegistryObject<Block> BLACKSTONE_LANTERN = registerBlockWithDefaultItem("blackstone_lantern", 
 			() -> new ModLanternBlock(AbstractBlock.Properties.from(Blocks.BLACKSTONE).
-                    setLightLevel(s -> 15)));
-		
+                    setLightLevel(s -> 15)));  
+	  
+    public static final RegistryObject<Block> IRON_BULB_LANTERN = registerBlockWithDefaultItem("iron_bulb_lantern", 
+    		() -> new BulbVineLanternBlock());
+    
+	public static final RegistryObject<Block> IRON_CHANDELIER = registerBlockWithDefaultItem("iron_chandelier", 
+			() -> new ChandelierBlock(AbstractBlock.Properties.from(Blocks.IRON_BLOCK).
+					                                           doesNotBlockMovement().
+					                                           setRequiresTool().
+					                                           setLightLevel((state) -> 15)));
+	
+	public static final RegistryObject<Block> GOLD_CHANDELIER = registerBlockWithDefaultItem("gold_chandelier", 
+			() -> new ChandelierBlock(AbstractBlock.Properties.from(Blocks.GOLD_BLOCK).
+					                                           doesNotBlockMovement().
+					                                           setRequiresTool().
+					                                           setLightLevel((state) -> 15)));
+	
 	// ORES
 	public static final RegistryObject<Block> ENDER_ORE = registerBlockWithDefaultItem("ender_ore",
 			() -> new Block(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.SAND).
@@ -945,15 +961,12 @@ public class ModBlocks
     
     // METAL MATERIALS
     public static final MetalMaterial THALLASIUM = MetalMaterial.makeNormal("thallasium", MaterialColor.BLUE, ModItemTier.THALLASIUM, ModArmorMaterial.THALLASIUM);
+    public static final MetalMaterial TERMINITE = MetalMaterial.makeOreless("terminite", MaterialColor.GREEN, 7F, 9F, ModItemTier.TERMINITE, ModArmorMaterial.TERMINITE);
     
     // COLORED MATERIALS
     public static final ColoredMaterial HYDRALUX_PETAL_BLOCK_COLORED = new ColoredMaterial("hydralux_petal_block", 
     		() -> new HydraluxPetalBlockColored(), HYDRALUX_PETAL_BLOCK, true);
-    
-  
-    public static final RegistryObject<Block> IRON_BULB_LANTERN = registerBlockWithDefaultItem("iron_bulb_lantern", 
-    		() -> new BulbVineLanternBlock());
-    
+   
     public static final ColoredMaterial IRON_BULB_LANTERN_COLORED = new ColoredMaterial("iron_bulb_lantern", 
     		() -> new BulbVineLanternBlock(), IRON_BULB_LANTERN, false);
     

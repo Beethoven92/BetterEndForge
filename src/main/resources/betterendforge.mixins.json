@@ -21,7 +21,8 @@
 	      "EndSpikeFeatureMixin",
 	      "EndCityStructureMixin",
 	      "RecipeManagerMixin",
-	      "EndBiomeProviderMixin"
+	      "EndBiomeProviderMixin",
+	      "AnvilBlockMixin"
 	],
   "client": [
 	      "BiomeColorsMixin",

@@ -1,0 +1,10 @@
+{
+  "parent": "betterendforge:block/anvil",
+  "textures": {
+    "front": "betterendforge:block/thallasium_anvil_front",
+    "bottom": "betterendforge:block/thallasium_anvil_bottom",
+    "back": "betterendforge:block/thallasium_anvil_back",
+    "panel": "betterendforge:block/thallasium_anvil_panel",
+    "top": "betterendforge:block/thallasium_anvil_top_0"
+  }
+}

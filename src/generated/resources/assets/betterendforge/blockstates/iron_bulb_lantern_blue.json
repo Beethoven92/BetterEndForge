@@ -1,13 +1,13 @@
 {
   "variants": {
     "hanging=false,waterlogged=false": {
-      "model": "betterendforge:block/iron_bulb_lantern_colored_ceil"
+      "model": "betterendforge:block/iron_bulb_lantern_colored_floor"
     },
     "hanging=true,waterlogged=false": {
       "model": "betterendforge:block/iron_bulb_lantern_colored_ceil"
     },
     "hanging=false,waterlogged=true": {
-      "model": "betterendforge:block/iron_bulb_lantern_colored_ceil"
+      "model": "betterendforge:block/iron_bulb_lantern_colored_floor"
     },
     "hanging=true,waterlogged=true": {
       "model": "betterendforge:block/iron_bulb_lantern_colored_ceil"

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "betterendforge:terminite_ingot"
+  },
+  "addition": {
+    "item": "minecraft:stick"
+  },
+  "result": {
+    "item": "betterendforge:terminite_sword_handle"
+  }
+}

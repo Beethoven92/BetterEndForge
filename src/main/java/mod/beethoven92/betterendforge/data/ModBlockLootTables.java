@@ -69,7 +69,10 @@ public class ModBlockLootTables extends BlockLootTables
 	    registerSilkTouch(ModBlocks.EMERALD_ICE.get());
 		registerDropSelfLootTable(ModBlocks.DENSE_EMERALD_ICE.get());
 		registerDropSelfLootTable(ModBlocks.ANCIENT_EMERALD_ICE.get());
-	    
+		
+		registerDropSelfLootTable(ModBlocks.IRON_CHANDELIER.get());
+		registerDropSelfLootTable(ModBlocks.GOLD_CHANDELIER.get());
+		
 		// TERRAINS
 	    registerLootTable(ModBlocks.CRYSTAL_MOSS.get(), (terrain) -> {
 	    	return droppingWithSilkTouch(terrain, Blocks.END_STONE);
@@ -113,7 +116,6 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		// MATERIALS
 		registerDropSelfLootTable(ModBlocks.AETERNIUM_BLOCK.get());
-		registerDropSelfLootTable(ModBlocks.TERMINITE_BLOCK.get());
 		registerDropSelfLootTable(ModBlocks.ENDER_BLOCK.get());
 		registerDropSelfLootTable(ModBlocks.AMBER_BLOCK.get());
 	    registerLootTable(ModBlocks.AURORA_CRYSTAL.get(), (block) -> {
@@ -338,6 +340,7 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		// METAL MATERIALS
 		registerMetalMaterialLootTables(ModBlocks.THALLASIUM);
+		registerMetalMaterialLootTables(ModBlocks.TERMINITE);
 		
 		// COLORED MATERIALS
 		registerColoredMaterialLootTables(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED);

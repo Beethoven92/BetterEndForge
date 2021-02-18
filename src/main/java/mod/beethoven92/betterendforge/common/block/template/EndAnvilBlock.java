@@ -21,6 +21,11 @@ public class EndAnvilBlock extends AnvilBlock
 		return 1;
 	}
 	
+	public IntegerProperty getDestructionProperty() 
+	{
+		return DESTRUCTION;
+	}
+	
 	@Override
 	protected void fillStateContainer(Builder<Block, BlockState> builder) 
 	{

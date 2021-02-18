@@ -48,13 +48,16 @@ public class ModRecipes extends RecipeProvider
 	    
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.END_LOTUS.log.get()).key('#', ModBlocks.END_LOTUS_STEM.get()).patternLine("##").patternLine("##").addCriterion("has_end_lotus_stem", hasItem(ModBlocks.END_LOTUS_STEM.get())).build(consumer);
 
-	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.END_STONE_SMELTER.get()).key('#', Blocks.END_STONE_BRICKS).key('V', Items.BUCKET).patternLine("###").patternLine("V V").patternLine("###").addCriterion("has_end_stone_bricks", hasItem(Blocks.END_STONE_BRICKS)).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.END_STONE_SMELTER.get()).key('#', Blocks.END_STONE_BRICKS).key('V', Items.BUCKET).key('T', ModBlocks.THALLASIUM.ingot.get()).patternLine("T#T").patternLine("V V").patternLine("T#T").addCriterion("has_end_stone_bricks", hasItem(Blocks.END_STONE_BRICKS)).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.RESPAWN_OBELISK.get()).key('C', ModBlocks.AURORA_CRYSTAL.get()).key('S', ModItems.ETERNAL_CRYSTAL.get()).key('A', ModBlocks.AMBER_BLOCK.get()).patternLine("CSC").patternLine("CSC").patternLine("AAA").addCriterion("has_amber_block", hasItem(ModBlocks.AMBER_BLOCK.get())).build(consumer);
 	    
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.DENSE_EMERALD_ICE.get()).key('#', ModBlocks.EMERALD_ICE.get()).patternLine("##").patternLine("##").addCriterion("has_emerald_ice", hasItem(ModBlocks.EMERALD_ICE.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.ANCIENT_EMERALD_ICE.get()).key('#', ModBlocks.DENSE_EMERALD_ICE.get()).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_dense_emerald_ice", hasItem(ModBlocks.DENSE_EMERALD_ICE.get())).build(consumer);
 	    
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.IRON_BULB_LANTERN.get()).key('C', Blocks.CHAIN).key('I', Items.IRON_INGOT).key('#', ModItems.GLOWING_BULB.get()).patternLine("C").patternLine("I").patternLine("#").addCriterion("has_glowing_bulb", hasItem(ModItems.GLOWING_BULB.get())).build(consumer);
+	    
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.IRON_CHANDELIER.get()).key('I', ModItems.LUMECORN_ROD.get()).key('#', Items.IRON_INGOT).patternLine("I#I").patternLine(" # ").setGroup("end_metal_chandelier").addCriterion("has_iron_ingot", hasItem(Items.IRON_INGOT)).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.GOLD_CHANDELIER.get()).key('I', ModItems.LUMECORN_ROD.get()).key('#', Items.GOLD_INGOT).patternLine("I#I").patternLine(" # ").setGroup("end_metal_chandelier").addCriterion("has_gold_ingot", hasItem(Items.GOLD_INGOT)).build(consumer);
 	    
 	    // DYES
 		ShapelessRecipeBuilder.shapelessRecipe(Items.BLUE_DYE).addIngredient(ModBlocks.BLUE_VINE_SEED.get()).setGroup("blue_dye").addCriterion("has_blue_vine_seed", hasItem(ModBlocks.BLUE_VINE_SEED.get())).build(consumer, "blue_dye_from_blue_vine_seed");
@@ -68,6 +71,8 @@ public class ModRecipes extends RecipeProvider
 		ShapelessRecipeBuilder.shapelessRecipe(Items.MAGENTA_DYE).addIngredient(ModBlocks.BUSHY_GRASS.get()).setGroup("magenta_dye").addCriterion("has_bushy_grass", hasItem(ModBlocks.BUSHY_GRASS.get())).build(consumer, "magenta_dye_from_bushy_grass");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.PINK_DYE).addIngredient(ModBlocks.TWISTED_MOSS.get()).setGroup("pink_dye").addCriterion("has_twisted_moss", hasItem(ModBlocks.TWISTED_MOSS.get())).build(consumer, "pink_dye_from_twisted_moss");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.WHITE_DYE).addIngredient(ModItems.HYDRALUX_PETAL.get()).setGroup("white_dye").addCriterion("has_hydralux_petal", hasItem(ModItems.HYDRALUX_PETAL.get())).build(consumer, "white_dye_from_hydralux_petal");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE).addIngredient(ModBlocks.TWISTED_UMBRELLA_MOSS.get()).setGroup("purple_dye").addCriterion("has_twisted_umbrella_moss", hasItem(ModBlocks.TWISTED_UMBRELLA_MOSS.get())).build(consumer, "purple_dye_from_twisted_umbrella_moss");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE, 2).addIngredient(ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get()).setGroup("purple_dye").addCriterion("has_twisted_umbrella_moss_tall", hasItem(ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get())).build(consumer, "purple_dye_from_twisted_umbrella_moss_tall");
 		
 		ShapelessRecipeBuilder.shapelessRecipe(Items.RED_DYE).addIngredient(ModBlocks.CHARNIA_RED.get()).setGroup("red_dye").addCriterion("has_red_charnia", hasItem(ModBlocks.CHARNIA_RED.get())).build(consumer, "red_dye_from_red_charnia");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE).addIngredient(ModBlocks.CHARNIA_PURPLE.get()).setGroup("purple_dye").addCriterion("has_purple_charnia", hasItem(ModBlocks.CHARNIA_PURPLE.get())).build(consumer, "purple_dye_from_purple_charnia");
@@ -118,7 +123,7 @@ public class ModRecipes extends RecipeProvider
 		// ARMORS AND TOOLS
 		String material = "terminite";    
 	    
-		makeIngotAndBlockRecipes(ModBlocks.TERMINITE_BLOCK.get(), ModItems.TERMINITE_INGOT.get(), consumer, material);
+		/*makeIngotAndBlockRecipes(ModBlocks.TERMINITE_BLOCK.get(), ModItems.TERMINITE_INGOT.get(), consumer, material);
 	    
 	    makeHelmetRecipe(ModItems.TERMINITE_HELMET.get(), ModItems.TERMINITE_INGOT.get(), consumer, material);
 		makeChestplateRecipe(ModItems.TERMINITE_CHESTPLATE.get(), ModItems.TERMINITE_INGOT.get(), consumer, material);
@@ -130,7 +135,7 @@ public class ModRecipes extends RecipeProvider
 		makePickaxeRecipe(ModItems.TERMINITE_PICKAXE.get(), ModItems.TERMINITE_INGOT.get(), consumer, material);
 		makeShovelRecipe(ModItems.TERMINITE_SHOVEL.get(), ModItems.TERMINITE_INGOT.get(), consumer, material);
 		makeHoeRecipe(ModItems.TERMINITE_HOE.get(), ModItems.TERMINITE_INGOT.get(), consumer, material);
-		makeHammerRecipe(ModItems.TERMINITE_HAMMER.get(), ModItems.TERMINITE_INGOT.get(), consumer, material);
+		makeHammerRecipe(ModItems.TERMINITE_HAMMER.get(), ModItems.TERMINITE_INGOT.get(), consumer, material);*/
 		
 		material = "aeternium";
 		
@@ -142,17 +147,17 @@ public class ModRecipes extends RecipeProvider
 		makeHammerRecipe(ModItems.NETHERITE_HAMMER.get(), Items.NETHERITE_INGOT, consumer, "netherite");
 		
 		// SMITHING TABLE
-		makeSmithingRecipe(ModItems.TERMINITE_INGOT.get(), ModItems.LEATHER_WRAPPED_STICK.get(), ModItems.AETERNIUM_SWORD_HANDLE.get(), consumer);
+		makeSmithingRecipe(ModBlocks.TERMINITE.ingot.get(), ModItems.LEATHER_WRAPPED_STICK.get(), ModItems.AETERNIUM_SWORD_HANDLE.get(), consumer);
 		makeSmithingRecipe(ModItems.AETERNIUM_SWORD_BLADE.get(), ModItems.AETERNIUM_SWORD_HANDLE.get(), ModItems.AETERNIUM_SWORD.get(), consumer);
 		makeSmithingRecipe(ModItems.AETERNIUM_PICKAXE_HEAD.get(), ModItems.LEATHER_WRAPPED_STICK.get(), ModItems.AETERNIUM_PICKAXE.get(), consumer);
 		makeSmithingRecipe(ModItems.AETERNIUM_AXE_HEAD.get(), ModItems.LEATHER_WRAPPED_STICK.get(), ModItems.AETERNIUM_AXE.get(), consumer);
 		makeSmithingRecipe(ModItems.AETERNIUM_SHOVEL_HEAD.get(), ModItems.LEATHER_WRAPPED_STICK.get(), ModItems.AETERNIUM_SHOVEL.get(), consumer);
 		makeSmithingRecipe(ModItems.AETERNIUM_HOE_HEAD.get(), ModItems.LEATHER_WRAPPED_STICK.get(), ModItems.AETERNIUM_HOE.get(), consumer);
 		makeSmithingRecipe(ModItems.AETERNIUM_HAMMER_HEAD.get(), ModItems.LEATHER_WRAPPED_STICK.get(), ModItems.AETERNIUM_HAMMER.get(), consumer);
-		makeSmithingRecipe(ModItems.TERMINITE_HELMET.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_HELMET.get(), consumer);
-		makeSmithingRecipe(ModItems.TERMINITE_CHESTPLATE.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_CHESTPLATE.get(), consumer);
-		makeSmithingRecipe(ModItems.TERMINITE_LEGGINGS.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_LEGGINGS.get(), consumer);
-		makeSmithingRecipe(ModItems.TERMINITE_BOOTS.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_BOOTS.get(), consumer);
+		makeSmithingRecipe(ModBlocks.TERMINITE.helmet.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_HELMET.get(), consumer);
+		makeSmithingRecipe(ModBlocks.TERMINITE.chestplate.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_CHESTPLATE.get(), consumer);
+		makeSmithingRecipe(ModBlocks.TERMINITE.leggings.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_LEGGINGS.get(), consumer);
+		makeSmithingRecipe(ModBlocks.TERMINITE.boots.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_BOOTS.get(), consumer);
 		
 		// WOODEN MATERIALS
 		makeWoodenMaterialRecipes(ModBlocks.MOSSY_GLOWSHROOM, consumer);
@@ -172,6 +177,7 @@ public class ModRecipes extends RecipeProvider
 		
 		// METAL MATERIALS
 		makeMetalMaterialRecipes(ModBlocks.THALLASIUM, consumer);
+		makeMetalMaterialRecipes(ModBlocks.TERMINITE, consumer);
 		
 		// COLORED MATERIALS
 		makeColoredMaterialRecipes(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED, consumer);
@@ -232,7 +238,7 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(material.pressure_plate.get()).key('#', material.ingot.get()).patternLine("##").setGroup("end_metal_plates").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.bars.get(), 16).key('#', material.ingot.get()).patternLine("###").patternLine("###").setGroup("end_metal_bars").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.chain.get()).key('N', material.nugget.get()).key('#', material.ingot.get()).patternLine("N").patternLine("#").patternLine("N").setGroup("end_metal_chain").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
-	    ShapedRecipeBuilder.shapedRecipe(material.anvil.get(), 3).key('#', material.block.get()).key('I', material.ingot.get()).patternLine("###").patternLine(" I ").patternLine("III").setGroup("end_metal_anvil").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.anvil.get()).key('#', material.block.get()).key('I', material.ingot.get()).patternLine("###").patternLine(" I ").patternLine("III").setGroup("end_metal_anvil").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.chandelier.get()).key('I', ModItems.LUMECORN_ROD.get()).key('#', material.ingot.get()).patternLine("I#I").patternLine(" # ").setGroup("end_metal_chandelier").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.bulb_lantern.get()).key('C', Blocks.CHAIN).key('I', material.ingot.get()).key('#', ModItems.GLOWING_BULB.get()).patternLine("C").patternLine("I").patternLine("#").addCriterion("has_glowing_bulb", hasItem(ModItems.GLOWING_BULB.get())).build(consumer);
 	    makeColoredMaterialRecipes(material.bulb_lantern_colored, consumer);
@@ -271,6 +277,12 @@ public class ModRecipes extends RecipeProvider
 		makeSmithingRecipe(material.hoeHead.get(), Items.STICK, material.hoe.get(), consumer);
 		makeSmithingRecipe(material.ingot.get(), Items.STICK, material.swordHandle.get(), consumer);
 		makeSmithingRecipe(material.swordBlade.get(), material.swordHandle.get(), material.sword.get(), consumer);
+		
+		// Armor
+	    makeHelmetRecipe(material.helmet.get(), material.ingot.get(), consumer, material.name);
+		makeChestplateRecipe(material.chestplate.get(), material.ingot.get(), consumer, material.name);
+		makeLeggingsRecipe(material.leggings.get(), material.ingot.get(), consumer, material.name);
+		makeBootsRecipe(material.boots.get(), material.ingot.get(), consumer, material.name);
 	}
 	
 	private void makeColoredMaterialRecipes(ColoredMaterial material, Consumer<IFinishedRecipe> consumer)

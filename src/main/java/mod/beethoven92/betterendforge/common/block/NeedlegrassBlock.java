@@ -5,8 +5,10 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class NeedlegrassBlock extends PlantBlock
@@ -29,5 +31,11 @@ public class NeedlegrassBlock extends PlantBlock
 	protected boolean isTerrain(BlockState state) 
 	{
 		return state.isIn(ModBlocks.SHADOW_GRASS.get());
+	}
+	
+	@Override
+	public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) 
+	{
+		return false;
 	}
 }

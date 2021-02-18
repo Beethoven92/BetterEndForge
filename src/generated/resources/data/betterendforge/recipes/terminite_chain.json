@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_metal_chain",
+  "pattern": [
+    "N",
+    "#",
+    "N"
+  ],
+  "key": {
+    "N": {
+      "item": "betterendforge:terminite_nugget"
+    },
+    "#": {
+      "item": "betterendforge:terminite_ingot"
+    }
+  },
+  "result": {
+    "item": "betterendforge:terminite_chain"
+  }
+}

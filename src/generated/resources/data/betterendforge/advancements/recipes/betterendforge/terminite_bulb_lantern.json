@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:terminite_bulb_lantern"
+    ]
+  },
+  "criteria": {
+    "has_glowing_bulb": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:glowing_bulb"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:terminite_bulb_lantern"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_glowing_bulb",
+      "has_the_recipe"
+    ]
+  ]
+}

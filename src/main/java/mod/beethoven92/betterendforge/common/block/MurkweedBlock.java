@@ -8,9 +8,11 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.pathfinding.PathType;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class MurkweedBlock extends PlantBlock
@@ -43,5 +45,11 @@ public class MurkweedBlock extends PlantBlock
 	protected boolean isTerrain(BlockState state) 
 	{
 		return state.isIn(ModBlocks.SHADOW_GRASS.get());
+	}
+	
+	@Override
+	public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) 
+	{
+		return false;
 	}
 }

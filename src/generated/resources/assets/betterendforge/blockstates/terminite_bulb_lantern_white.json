@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "hanging=false,waterlogged=false": {
+      "model": "betterendforge:block/terminite_bulb_lantern_colored_floor"
+    },
+    "hanging=true,waterlogged=false": {
+      "model": "betterendforge:block/terminite_bulb_lantern_colored_ceil"
+    },
+    "hanging=false,waterlogged=true": {
+      "model": "betterendforge:block/terminite_bulb_lantern_colored_floor"
+    },
+    "hanging=true,waterlogged=true": {
+      "model": "betterendforge:block/terminite_bulb_lantern_colored_ceil"
+    }
+  }
+}

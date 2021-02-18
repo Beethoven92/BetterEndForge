@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "betterendforge:terminite_axe_head"
+  },
+  "addition": {
+    "item": "minecraft:stick"
+  },
+  "result": {
+    "item": "betterendforge:terminite_axe"
+  }
+}

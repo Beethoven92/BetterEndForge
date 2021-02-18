@@ -44,7 +44,6 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		});
 		
 		// Misc Forge tags
-		getOrCreateBuilder(Tags.Items.INGOTS).add(ModItems.TERMINITE_INGOT.get());
 		getOrCreateBuilder(Tags.Items.INGOTS).add(ModItems.AETERNIUM_INGOT.get());
 		
 		getOrCreateBuilder(Tags.Items.ORES).add(ModBlocks.ENDER_ORE.get().asItem());
@@ -52,7 +51,6 @@ public class ModItemTagsProvider extends ItemTagsProvider
 
 		getOrCreateBuilder(Tags.Items.DUSTS).add(ModItems.ENDER_DUST.get());
 		
-		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.TERMINITE_BLOCK.get().asItem());
 		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get().asItem());
 		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AMBER_BLOCK.get().asItem());
 		
@@ -64,7 +62,6 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.GOLDEN_HAMMER.get());
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.DIAMOND_HAMMER.get());
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.NETHERITE_HAMMER.get());
-		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.TERMINITE_HAMMER.get());
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.AETERNIUM_HAMMER.get());
 		
 		// WOODEN MATERIALS
@@ -85,6 +82,7 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		
 		// METAL MATERIALS
 		registerMetalMaterialTags(ModBlocks.THALLASIUM);
+		registerMetalMaterialTags(ModBlocks.TERMINITE);
 	}
 	
 	private void registerWoodenMaterialTags(WoodenMaterial material)
@@ -165,5 +163,8 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		}
 		
 		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(material.block.get().asItem());
+		
+		// Hammers
+		getOrCreateBuilder(ModTags.HAMMERS).add(material.hammer.get());
 	}
 }

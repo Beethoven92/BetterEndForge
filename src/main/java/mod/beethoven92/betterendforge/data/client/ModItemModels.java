@@ -21,6 +21,12 @@ public class ModItemModels extends ItemModelProvider
 	@Override
 	protected void registerModels() 
 	{
+		// BLOCK ITEMS
+        getBuilder("iron_chandelier").parent(new ModelFile.UncheckedModelFile("item/generated")).
+        texture("layer0", modLoc("item/iron_chandelier"));
+        getBuilder("gold_chandelier").parent(new ModelFile.UncheckedModelFile("item/generated")).
+        texture("layer0", modLoc("item/gold_chandelier"));
+        
 		// WOODEN MATERIALS
 		registerWoodenMaterialItemModels(ModBlocks.MOSSY_GLOWSHROOM);
 		registerWoodenMaterialItemModels(ModBlocks.LACUGROVE);
@@ -39,6 +45,7 @@ public class ModItemModels extends ItemModelProvider
 		
 		// METAL MATERIALS
 		registerMetalMaterialItemModels(ModBlocks.THALLASIUM);
+		registerMetalMaterialItemModels(ModBlocks.TERMINITE);
 	}
 	
 	private void registerWoodenMaterialItemModels(WoodenMaterial material)
@@ -75,8 +82,8 @@ public class ModItemModels extends ItemModelProvider
         getBuilder(material.name + "_chain").parent(new ModelFile.UncheckedModelFile("item/generated")).
                 texture("layer0", modLoc("item/" + material.name + "_chain"));
        
-       /*getBuilder(material.name + "_bars").parent(new ModelFile.UncheckedModelFile("item/generated")).
-                texture("layer0", modLoc("item/" + material.name + "_bars"));*/
+       getBuilder(material.name + "_bars").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("block/" + material.name + "_bars"));
         
         getBuilder(material.name + "_chandelier").parent(new ModelFile.UncheckedModelFile("item/generated")).
                 texture("layer0", modLoc("item/" + material.name + "_chandelier"));
@@ -94,8 +101,8 @@ public class ModItemModels extends ItemModelProvider
         getBuilder(material.name + "_pickaxe_head").parent(new ModelFile.UncheckedModelFile("item/generated")).
                 texture("layer0", modLoc("item/" + material.name + "_pickaxe_head"));
 
-        //getBuilder(material.name + "_axe_head").parent(new ModelFile.UncheckedModelFile("item/generated")).
-                //texture("layer0", modLoc("item/" + material.name + "_axe_head"));
+        getBuilder(material.name + "_axe_head").parent(new ModelFile.UncheckedModelFile("item/generated")).
+                texture("layer0", modLoc("item/" + material.name + "_axe_head"));
 
         getBuilder(material.name + "_hoe_head").parent(new ModelFile.UncheckedModelFile("item/generated")).
                 texture("layer0", modLoc("item/" + material.name + "_hoe_head"));
