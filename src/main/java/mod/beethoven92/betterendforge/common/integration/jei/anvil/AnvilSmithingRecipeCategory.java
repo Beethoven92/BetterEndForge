@@ -32,7 +32,7 @@ public class AnvilSmithingRecipeCategory implements IRecipeCategory<AnvilSmithin
 	private final IDrawable background;
 	private final IDrawable icon;
 	
-	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(BetterEnd.MOD_ID, "textures/gui/jei/jei_anvil_smithing_gui1.png");
+	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(BetterEnd.MOD_ID, "textures/gui/jei/jei_anvil_smithing_gui.png");
 	public static final ResourceLocation UID = new ResourceLocation(BetterEnd.MOD_ID, AnvilSmithingRecipe.GROUP);
 	
 	public AnvilSmithingRecipeCategory(IGuiHelper guiHelper)

@@ -240,6 +240,11 @@ public abstract class BoneMealItemMixin
 			return getRandomGrassState(world.rand, ModBlocks.CHARNIA_CYAN.get().getDefaultState(), 
 					ModBlocks.CHARNIA_GREEN.get().getDefaultState(), ModBlocks.CHARNIA_LIGHT_BLUE.get().getDefaultState());
 		}
+		else if (biome == ModBiomes.GLOWING_GRASSLANDS)
+		{
+			return getRandomGrassState(world.rand, ModBlocks.CHARNIA_CYAN.get().getDefaultState(), 
+					ModBlocks.CHARNIA_GREEN.get().getDefaultState(), ModBlocks.CHARNIA_LIGHT_BLUE.get().getDefaultState());
+		}
 		return ModBlocks.CHARNIA_RED.get().getDefaultState();
 		//return null;
 	}

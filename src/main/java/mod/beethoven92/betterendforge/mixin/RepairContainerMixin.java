@@ -78,7 +78,7 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 	{
 		if (be_currentRecipe != null)
 		{
-			this.field_234643_d_.getStackInSlot(1).shrink(1);
+			this.field_234643_d_.getStackInSlot(1).shrink(be_currentRecipe.inputCount);
 			this.onCraftMatrixChanged(field_234643_d_);
 
 			this.field_234644_e_.consume((world, blockPos) -> {
