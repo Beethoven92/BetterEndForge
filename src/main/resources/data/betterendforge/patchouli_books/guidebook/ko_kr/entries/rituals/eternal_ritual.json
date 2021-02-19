@@ -1,0 +1,44 @@
+{
+    "name": "영원한 의식",
+    "icon": "betterendforge:eternal_pedestal",
+    "read_by_default": true,
+    "category": "rituals",
+    "pages": [
+        {
+            "type": "text",
+            "text": "\"오버월드로 돌아가기 위한 그리 간단하진 않은 방법.\"$(br2)당신은 엔드 곳곳을 여행하며 고대의 폐허를 발견할 수 있을 겁니다."
+        },
+        {
+            "type": "image",
+            "text": "그곳엔 파괴된 (혹은 온전한) $(bold)룬이 새겨진 플레이벌라이트$() 틀과 그를 둘러싼 받침대 여덟 개가 있습니다.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/eternal_ritual/portal_structure.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "이것들은 한때 엔드와 오버월드를 연결했던 장엄한 포탈의 잔해입니다.$(br2)포탈을 활성화하려면 파괴된 틀을 복구해야합니다. (파괴된 경우에만)"
+        },
+        {
+            "type": "image",
+            "text": "그리고 받침대에 8개의 $(bold)영원한 수정$()을 놓으세요.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/eternal_ritual/portal_frame_full.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "마지막 수정을 놓는 순간 포탈이 활성화될 것입니다.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/eternal_ritual/ritual_finished.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "(틀을 복구하기 위한) $(bold)룬이 새겨진 플레이벌라이트$()와 $(bold)영원한 수정$()은 $(l:rituals/infusion_ritual)주입 의식$(/l)을 통해 얻을 수 있습니다."
+        }
+    ]
+}
