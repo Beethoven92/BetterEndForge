@@ -207,13 +207,16 @@ public class SilkMothEntity extends AnimalEntity implements IFlyingAnimal {
 		}
 	}
 
-	class ReturnToHiveGoal extends Goal {
-		ReturnToHiveGoal() {
+	class ReturnToHiveGoal extends Goal
+	{
+		ReturnToHiveGoal() 
+		{
 			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
 
 		@Override
-		public boolean shouldExecute() {
+		public boolean shouldExecute() 
+		{
 			return SilkMothEntity.this.hivePos != null && SilkMothEntity.this.hiveWorld == SilkMothEntity.this.world
 					&& SilkMothEntity.this.navigator.noPath() && SilkMothEntity.this.rand.nextInt(16) == 0
 					&& SilkMothEntity.this.getPositionVec().squareDistanceTo(SilkMothEntity.this.hivePos.getX(),
@@ -221,43 +224,53 @@ public class SilkMothEntity extends AnimalEntity implements IFlyingAnimal {
 		}
 
 		@Override
-		public boolean shouldContinueExecuting() {
+		public boolean shouldContinueExecuting() 
+		{
 			return SilkMothEntity.this.navigator.hasPath() && world.getBlockState(entrance).isAir()
 					&& world.getBlockState(hivePos).isIn(ModBlocks.SILK_MOTH_NEST.get());
 		}
 
 		@Override
-		public void startExecuting() {
+		public void startExecuting() 
+		{
 			BlockState state = SilkMothEntity.this.world.getBlockState(SilkMothEntity.this.hivePos);
-			if (!state.isIn(ModBlocks.SILK_MOTH_NEST.get())) {
+			if (!state.isIn(ModBlocks.SILK_MOTH_NEST.get())) 
+			{
 				SilkMothEntity.this.hivePos = null;
+				SilkMothEntity.this.entrance = null;
 			}
-			try {
+			else
+			{
 				SilkMothEntity.this.entrance = SilkMothEntity.this.hivePos.offset(state.get(SilkMothNestBlock.FACING));
-				SilkMothEntity.this.navigator.setPath(SilkMothEntity.this.navigator.getPathToPos(entrance, 1),
-						1.0D);
-			} catch (Exception e) {
+				SilkMothEntity.this.navigator.setPath(SilkMothEntity.this.navigator.getPathToPos(entrance, 1), 1.0D);
 			}
 		}
 
 		@Override
-		public void tick() {
-			super.tick();
-			double dx = Math.abs(SilkMothEntity.this.entrance.getX() - SilkMothEntity.this.getPosX());
-			double dy = Math.abs(SilkMothEntity.this.entrance.getY() - SilkMothEntity.this.getPosY());
-			double dz = Math.abs(SilkMothEntity.this.entrance.getZ() - SilkMothEntity.this.getPosZ());
-			if (dx + dy + dz < 1) {
-				BlockState state = SilkMothEntity.this.world.getBlockState(hivePos);
-				if (state.isIn(ModBlocks.SILK_MOTH_NEST.get())) {
-					int fullness = state.get(BlockProperties.FULLNESS);
-					if (fullness < 3 && SilkMothEntity.this.rand.nextBoolean()) {
-						fullness++;
-						BlockHelper.setWithUpdate(SilkMothEntity.this.hiveWorld, SilkMothEntity.this.hivePos, state);
-					}
-					SilkMothEntity.this.world.playSound(null, SilkMothEntity.this.entrance,
+		public void tick() 
+		{
+			if (SilkMothEntity.this.hivePos != null && SilkMothEntity.this.entrance != null)
+			{
+				super.tick();
+			    double dx = Math.abs(SilkMothEntity.this.entrance.getX() - SilkMothEntity.this.getPosX());
+			    double dy = Math.abs(SilkMothEntity.this.entrance.getY() - SilkMothEntity.this.getPosY());
+			    double dz = Math.abs(SilkMothEntity.this.entrance.getZ() - SilkMothEntity.this.getPosZ());
+			    if (dx + dy + dz < 1) 
+			    {
+			    	BlockState state = SilkMothEntity.this.world.getBlockState(hivePos);
+				    if (state.isIn(ModBlocks.SILK_MOTH_NEST.get())) 
+				    {
+				    	int fullness = state.get(BlockProperties.FULLNESS);
+					    if (fullness < 3 && SilkMothEntity.this.rand.nextBoolean()) 
+					    {
+					    	fullness++;
+						    BlockHelper.setWithUpdate(SilkMothEntity.this.hiveWorld, SilkMothEntity.this.hivePos, state);
+					    }
+					    SilkMothEntity.this.world.playSound(null, SilkMothEntity.this.entrance,
 							SoundEvents.BLOCK_BEEHIVE_ENTER, SoundCategory.BLOCKS, 1, 1);
-					SilkMothEntity.this.remove();
-				}
+					    SilkMothEntity.this.remove();
+				    }
+			    }
 			}
 		}
 	}
