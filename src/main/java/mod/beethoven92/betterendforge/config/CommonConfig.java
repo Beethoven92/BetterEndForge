@@ -14,11 +14,13 @@ public class CommonConfig
     public static final ForgeConfigSpec.BooleanValue DRAGON_FIGHT_ENABLED;
     public static final ForgeConfigSpec.BooleanValue GENERATE_VANILLA_PORTAL;
     public static final ForgeConfigSpec.BooleanValue GENERATE_OBSIDIAN_PILLARS;
+    public static final ForgeConfigSpec.BooleanValue GENERATE_OBSIDIAN_PLATFORM;
 	public static final ForgeConfigSpec.BooleanValue CUSTOM_CHORUS_PLANT_ENABLED;
 	public static final ForgeConfigSpec.BooleanValue CHORUS_IN_VANILLA_BIOMES_ENABLED;
     public static final ForgeConfigSpec.BooleanValue NEW_GENERATOR_ENABLED;
     public static final ForgeConfigSpec.BooleanValue NO_RING_VOID;
     public static final ForgeConfigSpec.BooleanValue GENERATE_CENTRAL_ISLAND;
+    public static final ForgeConfigSpec.BooleanValue SWAP_OVERWORLD_WITH_END;
     public static final ForgeConfigSpec.ConfigValue<Integer> END_CITY_FAIL_CHANCE;
     
     static 
@@ -46,7 +48,10 @@ public class CommonConfig
         
         BUILDER.comment("\nEnable/disable obsidian pillars generation.\nDefault value: true");
         GENERATE_OBSIDIAN_PILLARS = BUILDER.define("generateObsidianPillars", true);
-       
+        
+        BUILDER.comment("\nEnable/disable generation of the obsidian platform where the player spawns in the End.\nDefault value: true");
+        GENERATE_OBSIDIAN_PLATFORM = BUILDER.define("generateObsidianPlatform", true);
+        
         BUILDER.comment("\nEnable/disable custom chorus plant (set this to false if you experience block shifting issues)\nDefault value: true");
         CUSTOM_CHORUS_PLANT_ENABLED = BUILDER.define("customChorusPlantEnabled", true);
         
@@ -61,6 +66,9 @@ public class CommonConfig
         
         BUILDER.comment("\nEnable/disable generation of the central island.\nDefault value: false");
         GENERATE_CENTRAL_ISLAND = BUILDER.define("generateCentralIsland", false);
+        
+        BUILDER.comment("\nAllows the player to spawn in the End instead of the Overworld.\nDefault value: false");
+        SWAP_OVERWORLD_WITH_END = BUILDER.define("swapOverWorldWithEnd", false);
         
         BUILDER.comment("\nSet the chance for end city generation to fail. Higher values means lower chance of spawning\nDefault value: 5");
         END_CITY_FAIL_CHANCE = BUILDER.define("endCityGenerationFailChance", 5);
@@ -104,6 +112,11 @@ public class CommonConfig
     {
     	return GENERATE_OBSIDIAN_PILLARS.get();
     }
+   
+    public static boolean shouldGenerateObsidianPlatform()
+    {
+    	return GENERATE_OBSIDIAN_PLATFORM.get();
+    }
     
     public static boolean isCustomChorusPlantEnabled()
     {
@@ -128,6 +141,11 @@ public class CommonConfig
     public static boolean shouldGenerateCentralIsland() 
     {
         return GENERATE_CENTRAL_ISLAND.get();
+    }
+    
+    public static boolean swapOverworldWithEnd() 
+    {
+        return SWAP_OVERWORLD_WITH_END.get();
     }
     
     public static int endCityFailChance() 

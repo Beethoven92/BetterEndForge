@@ -22,7 +22,9 @@
 	      "EndCityStructureMixin",
 	      "RecipeManagerMixin",
 	      "EndBiomeProviderMixin",
-	      "AnvilBlockMixin"
+	      "AnvilBlockMixin",
+	      "PlayerListMixin",
+	      "MinecraftServerMixin"
 	],
   "client": [
 	      "BiomeColorsMixin",
