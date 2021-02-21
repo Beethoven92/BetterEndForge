@@ -36,6 +36,8 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tags.ITag;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorldReader;
 import net.minecraftforge.fml.RegistryObject;
 
 // TO DO? Make all wooden blocks flammable so they can take and spread fire
@@ -144,8 +146,13 @@ public class WoodenMaterial
 		barrel = registerBlockWithBurnItem(name + "_barrel",
 				() -> new EndBarrelBlock(materialPlanksNotSolid), 300);
 		shelf = registerBlockWithBurnItem(name + "_bookshelf",
-				() -> new Block(materialPlanks), 300);
-
+				() -> new Block(materialPlanks) {
+					@Override
+					public float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos) 
+					{
+						return 1;
+					};
+				}, 300);
 	}
 
 	public boolean isTreeLog(Block block) {
