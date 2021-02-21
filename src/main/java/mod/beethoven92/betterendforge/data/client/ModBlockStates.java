@@ -31,6 +31,7 @@ import net.minecraft.block.FurnaceBlock;
 import net.minecraft.block.LadderBlock;
 import net.minecraft.block.LanternBlock;
 import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.SixWayBlock;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.StairsBlock;
@@ -535,10 +536,10 @@ public class ModBlockStates extends BlockStateProvider
     
     private void chainBlock(Block chain_block)
     {
-    	ModelFile pot = models().withExistingParent(chain_block.getRegistryName().getPath(), mcLoc("block/chain"))
+    	ModelFile chain = models().withExistingParent(chain_block.getRegistryName().getPath(), mcLoc("block/chain"))
     			.texture("particle", modLoc("block/" + chain_block.getRegistryName().getPath()))
     			.texture("all", modLoc("block/" + chain_block.getRegistryName().getPath()));
-    	simpleBlock(chain_block, pot);
+    	axisBlock((RotatedPillarBlock)chain_block, chain, chain);
     }
     
     private void barsBlock(Block barsBlock) 
