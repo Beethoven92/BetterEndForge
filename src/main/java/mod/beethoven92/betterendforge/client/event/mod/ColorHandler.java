@@ -5,6 +5,7 @@ import java.util.List;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.AuroraCrystalBlock;
+import mod.beethoven92.betterendforge.common.block.EndPortalBlock;
 import mod.beethoven92.betterendforge.common.block.HelixTreeLeavesBlock;
 import mod.beethoven92.betterendforge.common.block.JellyshroomCapBlock;
 import mod.beethoven92.betterendforge.common.block.ModLanternBlock;
@@ -14,6 +15,7 @@ import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
+import mod.beethoven92.betterendforge.common.teleporter.EndPortals;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.SpawnEggItem;
@@ -53,6 +55,10 @@ public class ColorHandler
 		event.getBlockColors().register((state, reader, pos, color) ->
 						 {return ModLanternBlock.getBlockColor(state, reader, pos, color);}, 
 						 getLanterns());
+		
+		event.getBlockColors().register((state, reader, pos, color) ->
+                         {return EndPortals.getColor(state.get(EndPortalBlock.PORTAL));}, 
+                         ModBlocks.END_PORTAL_BLOCK.get());
 	}
 	
 	@SubscribeEvent
@@ -84,7 +90,10 @@ public class ColorHandler
 		event.getItemColors().register((stack, tintIndex) ->
 						 {return ModLanternBlock.getItemColor(stack, tintIndex);}, 
 						 getLanterns());
-
+		
+		event.getItemColors().register((stack, tintIndex) ->
+		                 {return EndPortals.getColor(0);}, 
+		                 ModBlocks.END_PORTAL_BLOCK.get());
 	}
 	
 	private static void registerColoredMaterialBlocks(ColorHandlerEvent.Block event, ColoredMaterial material)

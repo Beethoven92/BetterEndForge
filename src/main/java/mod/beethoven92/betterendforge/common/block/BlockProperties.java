@@ -1,5 +1,6 @@
 package mod.beethoven92.betterendforge.common.block;
 
+import mod.beethoven92.betterendforge.common.teleporter.EndPortals;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.IntegerProperty;
@@ -19,6 +20,7 @@ public class BlockProperties
 	public static final IntegerProperty FULLNESS = IntegerProperty.create("fullness", 0, 3);
 	public static final IntegerProperty DESTRUCTION = IntegerProperty.create("destruction", 0, 2);
 	public static final IntegerProperty DESTRUCTION_LONG = IntegerProperty.create("destruction", 0, 8);
+	public static final IntegerProperty PORTAL = IntegerProperty.create("portal", 0, EndPortals.getCount());
 	
 	public static enum TripleShape implements IStringSerializable 
 	{

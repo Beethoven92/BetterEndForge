@@ -5,10 +5,15 @@ import java.util.Random;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.interfaces.ITeleportingEntity;
 import mod.beethoven92.betterendforge.common.teleporter.BetterEndTeleporter;
+import mod.beethoven92.betterendforge.common.teleporter.EndPortals;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.NetherPortalBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Direction.Axis;
 import net.minecraft.util.Direction.AxisDirection;
@@ -27,6 +32,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EndPortalBlock extends NetherPortalBlock
 {
+	public static final IntegerProperty PORTAL = BlockProperties.PORTAL;
+	
 	public EndPortalBlock(Properties properties) 
 	{
 		super(properties);
@@ -81,7 +88,9 @@ public class EndPortalBlock extends NetherPortalBlock
 
 			
 			boolean isOverworld = worldIn.getDimensionKey().equals(World.OVERWORLD);
-			ServerWorld destination = ((ServerWorld) worldIn).getServer().getWorld(isOverworld ? World.THE_END : World.OVERWORLD);
+			MinecraftServer server = ((ServerWorld) worldIn).getServer();
+			ServerWorld destination = isOverworld ? server.getWorld(World.THE_END) : EndPortals.getWorld(server, state.get(PORTAL));
+			//ServerWorld destination = ((ServerWorld) worldIn).getServer().getWorld(isOverworld ? World.THE_END : World.OVERWORLD);
 	        
 			if (destination == null) 
 	        {
@@ -126,7 +135,8 @@ public class EndPortalBlock extends NetherPortalBlock
 		
 		BlockPos.Mutable basePos;
 		
-		if (world.getDimensionKey().equals(World.OVERWORLD)) 
+		if (!world.getDimensionKey().equals(World.THE_END))
+		//if (world.getDimensionKey().equals(World.OVERWORLD)) 
 		{
 			basePos = pos.toMutable().setPos(pos.getX() / mult, pos.getY(), pos.getZ() / mult);
 		} 
@@ -224,5 +234,12 @@ public class EndPortalBlock extends NetherPortalBlock
 			return findCenter(world, pos.move(leftDir), axis, ++step);
 		}
 		return pos;
+	}
+	
+	@Override
+	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	{
+		super.fillStateContainer(builder);
+		builder.add(PORTAL);
 	}
 }

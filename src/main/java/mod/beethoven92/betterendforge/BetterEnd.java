@@ -44,6 +44,7 @@ import mod.beethoven92.betterendforge.common.init.ModStructures;
 import mod.beethoven92.betterendforge.common.init.ModSurfaceBuilders;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.recipes.ModRecipeManager;
+import mod.beethoven92.betterendforge.common.teleporter.EndPortals;
 import mod.beethoven92.betterendforge.common.world.TerraforgedIntegrationWorldType;
 import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures;
 import mod.beethoven92.betterendforge.common.world.generator.BetterEndBiomeProvider;
@@ -93,6 +94,8 @@ public class BetterEnd
         JsonConfigs.saveConfigs();
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.getConfig(), CONFIG_PATH.resolve("client-config.toml").toString());
     	ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.getConfig(), CONFIG_PATH.resolve("world-generator-config.toml").toString());
+    	
+    	EndPortals.loadPortals();
     }
 
     private void setupCommon(final FMLCommonSetupEvent event)

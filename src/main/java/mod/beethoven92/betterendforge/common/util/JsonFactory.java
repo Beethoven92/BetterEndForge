@@ -87,6 +87,12 @@ public class JsonFactory
 		}
 	}
 	
+	public static int getInt(JsonObject object, String member, int def) 
+	{
+		JsonElement elem = object.get(member);
+		return elem == null ? def : elem.getAsInt();
+	}
+	
 	public static float getFloat(JsonObject object, String member, float def) 
 	{
 		JsonElement elem = object.get(member);

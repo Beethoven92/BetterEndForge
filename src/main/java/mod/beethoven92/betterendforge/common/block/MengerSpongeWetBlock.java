@@ -30,7 +30,7 @@ public class MengerSpongeWetBlock extends WetSpongeBlock
 	        worldIn.playSound((PlayerEntity)null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, (1.0F + worldIn.getRandom().nextFloat() * 0.2F) * 0.7F);
 	    }
 	}
-	
+
 	@Override
 	public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) 
 	{
