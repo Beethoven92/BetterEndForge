@@ -6,6 +6,11 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer.Builder;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.world.IBlockReader;
+import net.minecraftforge.fml.ModList;
 
 public class EndAnvilBlock extends AnvilBlock
 {
@@ -18,6 +23,23 @@ public class EndAnvilBlock extends AnvilBlock
 		this.level = level;
 	}
 
+	@Override
+	public boolean hasTileEntity(BlockState state) 
+	{
+		if (ModList.get().isLoaded("apotheosis")) return true;
+		return false;
+	}
+	
+	@Override
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) 
+	{
+		if (ModList.get().isLoaded("apotheosis"))
+		{
+			return Registry.BLOCK_ENTITY_TYPE.getOptional(new ResourceLocation("apotheosis", "anvil")).get().create();
+		}
+		return null;
+	}
+	
 	public int getCraftingLevel() 
 	{
 		return level;
