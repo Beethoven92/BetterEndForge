@@ -67,7 +67,9 @@ public class UnderwaterPlantBlock extends Block implements IGrowable, ILiquidCon
 		{
 			return Blocks.WATER.getDefaultState();
 		}
-		else {
+		else 
+		{
+			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
 			return stateIn;
 		}
 	}

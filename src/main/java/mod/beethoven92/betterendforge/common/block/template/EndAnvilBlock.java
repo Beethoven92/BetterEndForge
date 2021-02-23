@@ -35,6 +35,8 @@ public class EndAnvilBlock extends AnvilBlock
 	{
 		if (ModList.get().isLoaded("apotheosis"))
 		{
+			// Need to specify apotheosis anvil tile entity as the tile entity of this block if apotheosis is present.
+			// This helps fixing an incompatibility with their anvil mechanics overhaul.
 			return Registry.BLOCK_ENTITY_TYPE.getOptional(new ResourceLocation("apotheosis", "anvil")).get().create();
 		}
 		return null;
