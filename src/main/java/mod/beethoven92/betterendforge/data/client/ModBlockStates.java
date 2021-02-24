@@ -70,6 +70,9 @@ public class ModBlockStates extends BlockStateProvider
 		furnaceBlock(ModBlocks.END_STONE_FURNACE.get(), "end_stone");
 		makeBlockItemFromExistingModel(ModBlocks.END_STONE_FURNACE.get(), "end_stone_furnace");
 		
+		simpleBlock(ModBlocks.MISSING_TILE.get());
+		makeBlockItemFromExistingModel(ModBlocks.MISSING_TILE.get());
+		
 		// WOODEN MATERIALS
 		registerWoodenMaterialBlockStates(ModBlocks.MOSSY_GLOWSHROOM);
 		registerWoodenMaterialBlockStates(ModBlocks.LACUGROVE);

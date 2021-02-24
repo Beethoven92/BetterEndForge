@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#P",
+    "P#"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:violecite"
+    },
+    "P": {
+      "item": "minecraft:purpur_block"
+    }
+  },
+  "result": {
+    "item": "betterendforge:missing_tile",
+    "count": 4
+  }
+}

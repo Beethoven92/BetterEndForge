@@ -63,6 +63,8 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.IRON_CHANDELIER.get()).key('I', ModItems.LUMECORN_ROD.get()).key('#', Items.IRON_INGOT).patternLine("I#I").patternLine(" # ").setGroup("end_metal_chandelier").addCriterion("has_iron_ingot", hasItem(Items.IRON_INGOT)).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.GOLD_CHANDELIER.get()).key('I', ModItems.LUMECORN_ROD.get()).key('#', Items.GOLD_INGOT).patternLine("I#I").patternLine(" # ").setGroup("end_metal_chandelier").addCriterion("has_gold_ingot", hasItem(Items.GOLD_INGOT)).build(consumer);
 	    
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.MISSING_TILE.get(), 4).key('#', ModBlocks.VIOLECITE.stone.get()).key('P', Blocks.PURPUR_BLOCK).patternLine("#P").patternLine("P#").addCriterion("has_violecite", hasItem(ModBlocks.VIOLECITE.stone.get())).build(consumer);	    
+	    
 	    // DYES
 		ShapelessRecipeBuilder.shapelessRecipe(Items.BLUE_DYE).addIngredient(ModBlocks.BLUE_VINE_SEED.get()).setGroup("blue_dye").addCriterion("has_blue_vine_seed", hasItem(ModBlocks.BLUE_VINE_SEED.get())).build(consumer, "blue_dye_from_blue_vine_seed");
 		ShapelessRecipeBuilder.shapelessRecipe(Items.CYAN_DYE).addIngredient(ModBlocks.CREEPING_MOSS.get()).setGroup("cyan_dye").addCriterion("has_creeping_moss", hasItem(ModBlocks.CREEPING_MOSS.get())).build(consumer, "cyan_dye_from_creeping_moss");

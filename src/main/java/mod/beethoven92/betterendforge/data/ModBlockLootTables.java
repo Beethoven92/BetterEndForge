@@ -75,6 +75,8 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(ModBlocks.IRON_CHANDELIER.get());
 		registerDropSelfLootTable(ModBlocks.GOLD_CHANDELIER.get());
 		
+		registerDropSelfLootTable(ModBlocks.MISSING_TILE.get());
+		
 		// TERRAINS
 	    registerLootTable(ModBlocks.CRYSTAL_MOSS.get(), (terrain) -> {
 	    	return droppingWithSilkTouch(terrain, Blocks.END_STONE);

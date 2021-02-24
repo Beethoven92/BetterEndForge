@@ -183,6 +183,7 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> SILK_MOTH_NEST = registerBlockWithDefaultItem("silk_moth_nest", 
 			() -> new SilkMothNestBlock(AbstractBlock.Properties.create(Material.WOOL).hardnessAndResistance(0.5f, 0.1f).sound(SoundType.CLOTH).notSolid().tickRandomly()));
+	
 	//PATHS
 	public static final RegistryObject<Block> CRYSTAL_MOSS_PATH = registerBlockWithDefaultItem("crystal_moss_path", 
 			() -> new PathBlock(CRYSTAL_MOSS.get()));
@@ -937,6 +938,9 @@ public class ModBlocks
                                                                      doesNotBlockMovement().
                                                                      setOpaque((state, world, pos) -> { return false; }).
                                                                      noDrops()));
+	
+	public static final RegistryObject<Block> MISSING_TILE = registerBlockWithDefaultItem("missing_tile",
+			() -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE)));
 	
 	// FLOWER POT BLOCKS
 	public static final RegistryObject<Block> POTTED_MOSSY_GLOWSHROOM_SAPLING = registerFlowerPotBlock("potted_mossy_glowshroom_sapling", MOSSY_GLOWSHROOM_SAPLING);

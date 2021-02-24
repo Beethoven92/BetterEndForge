@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:missing_tile"
+    ]
+  },
+  "criteria": {
+    "has_violecite": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:violecite"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:missing_tile"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_violecite",
+      "has_the_recipe"
+    ]
+  ]
+}
