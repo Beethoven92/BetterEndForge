@@ -132,12 +132,14 @@ public class MetalMaterial
 		swordHandle = ModItems.registerItem(name + "_sword_handle", () -> new Item(itemSettings));
 		swordBlade = ModItems.registerItem(name + "_sword_blade", () -> new Item(itemSettings));
 		
-		shovel = ModItems.registerItem(name + "_shovel", () -> new ShovelItem(material, 1.5F, -3.0F, itemSettings));
-		sword = ModItems.registerItem(name + "_sword", () -> new SwordItem(material, 3, -2.4F, itemSettings));
-		pickaxe = ModItems.registerItem(name + "_pickaxe", () -> new PickaxeItem(material, 1, -2.8F, itemSettings));
-		axe = ModItems.registerItem(name + "_axe", () -> new AxeItem(material, 6.0F, -3.0F, itemSettings));
-		hoe = ModItems.registerItem(name + "_hoe", () -> new HoeItem(material, -3, 0.0F, itemSettings));
-		hammer = ModItems.registerItem(name + "_hammer", () -> new HammerItem(material, 5.0F, -3.2F, 0.3D, itemSettings));
+		// FIX: cannot use the same item settings instance for every tool type here, 
+		// because in each tool's constructor the respective tool type is added to the same Item.Properties
+		shovel = ModItems.registerItem(name + "_shovel", () -> new ShovelItem(material, 1.5F, -3.0F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+		sword = ModItems.registerItem(name + "_sword", () -> new SwordItem(material, 3, -2.4F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+		pickaxe = ModItems.registerItem(name + "_pickaxe", () -> new PickaxeItem(material, 1, -2.8F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+		axe = ModItems.registerItem(name + "_axe", () -> new AxeItem(material, 6.0F, -3.0F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+		hoe = ModItems.registerItem(name + "_hoe", () -> new HoeItem(material, -3, 0.0F, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+		hammer = ModItems.registerItem(name + "_hammer", () -> new HammerItem(material, 5.0F, -3.2F, 0.3D, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 		
 		helmet = ModItems.registerItem(name + "_helmet", () -> new ArmorItem(armor, EquipmentSlotType.HEAD, itemSettings));
 		chestplate = ModItems.registerItem(name + "_chestplate", () -> new ArmorItem(armor, EquipmentSlotType.CHEST, itemSettings));
