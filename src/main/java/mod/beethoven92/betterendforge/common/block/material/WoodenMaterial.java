@@ -78,8 +78,8 @@ public class WoodenMaterial
 	{
 		this.name = name;
 		
-		logBlockTag = ModTags.makeBlockTag(name + "_logs");
-		logItemTag = ModTags.makeItemTag(name + "_logs");
+		logBlockTag = ModTags.makeModBlockTag(name + "_logs");
+		logItemTag = ModTags.makeModItemTag(name + "_logs");
 
 		AbstractBlock.Properties materialPlanks = AbstractBlock.Properties.create(Material.WOOD, planksColor).
 				                                                           hardnessAndResistance(2.0F, 3.0F).

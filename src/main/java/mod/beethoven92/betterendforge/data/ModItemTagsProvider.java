@@ -130,6 +130,9 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		
 		getOrCreateBuilder(Tags.Items.CHESTS).add(material.chest.get().asItem());
 		getOrCreateBuilder(Tags.Items.CHESTS_WOODEN).add(material.chest.get().asItem());
+		
+		// Used by the Metal Barrels mod
+		getOrCreateBuilder(ModTags.ITEM_BARRELS).add(material.barrel.get().asItem());
 	}
 	
 	private void registerStoneMaterialTags(StoneMaterial material)

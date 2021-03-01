@@ -26,14 +26,15 @@ public class EndAnvilBlock extends AnvilBlock
 	@Override
 	public boolean hasTileEntity(BlockState state) 
 	{
-		if (ModList.get().isLoaded("apotheosis")) return true;
+		if (ModList.get().isLoaded("apotheosis") && Registry.BLOCK_ENTITY_TYPE.getOptional(new ResourceLocation("apotheosis", "anvil")).isPresent()) return true;
 		return false;
 	}
 	
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) 
 	{
-		if (ModList.get().isLoaded("apotheosis"))
+		// Need to check if the mod is loaded and also if their anvil module is enabled, otherwise this would crash!
+		if (ModList.get().isLoaded("apotheosis") && Registry.BLOCK_ENTITY_TYPE.getOptional(new ResourceLocation("apotheosis", "anvil")).isPresent())
 		{
 			// Need to specify apotheosis anvil tile entity as the tile entity of this block if apotheosis is present.
 			// This helps fixing an incompatibility with their anvil mechanics overhaul.

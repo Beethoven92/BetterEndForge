@@ -306,4 +306,12 @@ public class ModMathHelper
 		float length2 = lengthSqr(vec2.getX(), vec2.getY(), vec2.getZ());
 		return (float) Math.acos(dot / Math.sqrt(length1 * length2));
 	}
+	
+	public static Vector3f randomHorizontal(Random random) 
+	{
+		float angleY = randRange(0, PI2, random);
+		float vx = (float) Math.sin(angleY);
+		float vz = (float) Math.cos(angleY);
+		return new Vector3f(vx, 0, vz);
+	}
 }

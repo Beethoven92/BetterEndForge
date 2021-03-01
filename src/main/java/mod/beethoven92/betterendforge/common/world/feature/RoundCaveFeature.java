@@ -194,10 +194,9 @@ public class RoundCaveFeature extends Feature<NoFeatureConfig>
 			if (isReplaceable(world.getBlockState(down))) 
 			{
 				SDF prism = new SDFHexPrism().setHeight(radius * ModMathHelper.randRange(0.6F, 0.75F, random)).setRadius(ModMathHelper.randRange(1.7F, 3F, random)).setBlock(ModBlocks.AURORA_CRYSTAL.get());
-				float angleY = ModMathHelper.randRange(0, ModMathHelper.PI2, random);
-				float vx = (float) Math.sin(angleY);
-				float vz = (float) Math.sin(angleY);
-				prism = new SDFRotation().setRotation(new Vector3f(vx, 0, vz), random.nextFloat()).setSource(prism);
+				Vector3f vec = ModMathHelper.randomHorizontal(random);
+				prism = new SDFRotation().setRotation(vec, random.nextFloat()).setSource(prism);
+				
 				prism.setReplaceFunction((bState) -> {
 					return bState.getMaterial().isReplaceable()
 							|| bState.isIn(ModTags.GEN_TERRAIN)

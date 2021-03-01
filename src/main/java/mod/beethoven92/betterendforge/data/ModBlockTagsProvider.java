@@ -8,6 +8,7 @@ import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.block.template.EndSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
+import mod.beethoven92.betterendforge.common.init.ModTags;
 import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.data.BlockTagsProvider;
@@ -135,6 +136,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		
 		getOrCreateBuilder(Tags.Blocks.CHESTS).add(material.chest.get());
 		getOrCreateBuilder(Tags.Blocks.CHESTS_WOODEN).add(material.chest.get());
+		
+		// Used by the Metal Barrels mod
+		getOrCreateBuilder(ModTags.BLOCK_BARRELS).add(material.barrel.get());
 	}
 	
 	private void registerStoneMaterialTags(StoneMaterial material)

@@ -28,7 +28,8 @@ public class SurfaceVentFeature extends Feature<NoFeatureConfig>
 			NoFeatureConfig config) 
 	{
 		pos = FeatureHelper.getPosOnSurface(world, new BlockPos(pos.getX() + rand.nextInt(16), pos.getY(), pos.getZ() + rand.nextInt(16)));
-		if (pos.getY() < 57) 
+
+		if (!world.getBlockState(pos.down(3)).isIn(ModTags.GEN_TERRAIN))
 		{
 			return false;
 		}
