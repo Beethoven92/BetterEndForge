@@ -174,6 +174,20 @@ public class BlockHelper
 							}
 						}
 					}
+					else if (state.isIn(ModBlocks.SMARAGDANT_CRYSTAL.get())) 
+					{
+						POS.setY(POS.getY() - 1);
+						if (world.isAirBlock(POS)) 
+						{
+							POS.setY(POS.getY() + 1);
+							while (state.isIn(ModBlocks.SMARAGDANT_CRYSTAL.get())) 
+							{
+								setWithoutUpdate(world, POS, AIR);
+								POS.setY(POS.getY() + 1);
+								state = world.getBlockState(POS);
+							}
+						}
+					}
 					else if (!state.isValidPosition(world, POS)) 
 					{
 						// Chorus

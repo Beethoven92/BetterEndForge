@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 import com.google.common.collect.Lists;
@@ -15,6 +16,7 @@ import com.google.gson.JsonObject;
 import mod.beethoven92.betterendforge.common.util.JsonFactory;
 import mod.beethoven92.betterendforge.common.world.biome.AmberLandBiome;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
+import mod.beethoven92.betterendforge.common.world.biome.BetterEndCaveBiome;
 import mod.beethoven92.betterendforge.common.world.biome.BlossomingSpiresBiome;
 import mod.beethoven92.betterendforge.common.world.biome.ChorusForestBiome;
 import mod.beethoven92.betterendforge.common.world.biome.CrystalMountainsBiome;
@@ -28,6 +30,9 @@ import mod.beethoven92.betterendforge.common.world.biome.PaintedMountainsBiome;
 import mod.beethoven92.betterendforge.common.world.biome.ShadowForestBiome;
 import mod.beethoven92.betterendforge.common.world.biome.SulphurSpringsBiome;
 import mod.beethoven92.betterendforge.common.world.biome.UmbrellaJungleBiome;
+import mod.beethoven92.betterendforge.common.world.biome.cave.EmptyAuroraCaveBiome;
+import mod.beethoven92.betterendforge.common.world.biome.cave.EmptyEndCaveBiome;
+import mod.beethoven92.betterendforge.common.world.biome.cave.EmptySmaragdantCaveBiome;
 import mod.beethoven92.betterendforge.common.world.generator.BiomePicker;
 import mod.beethoven92.betterendforge.common.world.generator.EndBiomeType;
 import mod.beethoven92.betterendforge.config.jsons.JsonConfigs;
@@ -51,6 +56,7 @@ public class ModBiomes
 	
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
+	public static final BiomePicker CAVE_BIOMES = new BiomePicker();
 	public static final List<BetterEndBiome> SUBBIOMES = Lists.newArrayList();
 	private static final JsonObject EMPTY_JSON = new JsonObject();
 	
@@ -83,6 +89,13 @@ public class ModBiomes
 	// Better End void biomes
 	public static final BetterEndBiome ICE_STARFIELD = registerBiome(new IceStarfieldBiome(), EndBiomeType.VOID);
 	
+	// Better End Cave biomes
+	public static final BetterEndCaveBiome EMPTY_END_CAVE = registerCaveBiome(new EmptyEndCaveBiome());
+	public static final BetterEndCaveBiome EMPTY_SMARAGDANT_CAVE = registerCaveBiome(new EmptySmaragdantCaveBiome());
+	//public static final BetterEndCaveBiome LUSH_SMARAGDANT_CAVE = registerCaveBiome(new LushSmaragdantCaveBiome());
+	public static final BetterEndCaveBiome EMPTY_AURORA_CAVE = registerCaveBiome(new EmptyAuroraCaveBiome());
+	//public static final BetterEndCaveBiome LUSH_AURORA_CAVE = registerCaveBiome(new LushAuroraCaveBiome());
+	
 	public static void register() {}
 	
 	public static void mutateRegistry(Registry<Biome> biomeRegistry) 
@@ -91,6 +104,7 @@ public class ModBiomes
 		
 		LAND_BIOMES.clearMutables();
 		VOID_BIOMES.clearMutables();
+		CAVE_BIOMES.clearMutables();
 		
 		Map<String, JsonObject> configs = Maps.newHashMap();
 		
@@ -140,25 +154,23 @@ public class ModBiomes
 		
 		JsonConfigs.BIOME_CONFIG.saveChanges();
 		
-		LAND_BIOMES.rebuild();
-		VOID_BIOMES.rebuild();
-		
-		LAND_BIOMES.getBiomes().forEach((endBiome) -> {
-			Biome biome = biomeRegistry.getOrDefault(endBiome.getID());
-			endBiome.setActualBiome(biome);
-		});
-		
-		VOID_BIOMES.getBiomes().forEach((endBiome) -> {
-			Biome biome = biomeRegistry.getOrDefault(endBiome.getID());
-			endBiome.setActualBiome(biome);
-		});
+		rebuildPicker(LAND_BIOMES, biomeRegistry);
+		rebuildPicker(VOID_BIOMES, biomeRegistry);
+		rebuildPicker(CAVE_BIOMES, biomeRegistry);
 		
 		SUBBIOMES.forEach((endBiome) -> {
-			Biome biome = biomeRegistry.getOrDefault(endBiome.getID());
-			endBiome.setActualBiome(biome);
+			endBiome.updateActualBiomes(biomeRegistry);
 		});
 		
 		CLIENT.clear();
+	}
+	
+	private static void rebuildPicker(BiomePicker picker, Registry<Biome> biomeRegistry) 
+	{
+		picker.rebuild();
+		picker.getBiomes().forEach((endBiome) -> {
+			endBiome.updateActualBiomes(biomeRegistry);
+		});
 	}
 	
 	private static JsonObject loadJsonConfig(String namespace) 
@@ -255,9 +267,13 @@ public class ModBiomes
 	private static void addToPicker(BetterEndBiome biome, EndBiomeType type) 
 	{
 		if (type == EndBiomeType.LAND)
+		{
 			LAND_BIOMES.addBiome(biome);
+		}
 		else
+		{
 			VOID_BIOMES.addBiome(biome);
+		}
 	}
 	
 	private static void registerBiomeDirect(BetterEndBiome biome) 
@@ -303,7 +319,29 @@ public class ModBiomes
 		List<BetterEndBiome> result = Lists.newArrayList();
 		result.addAll(LAND_BIOMES.getBiomes());
 		result.addAll(VOID_BIOMES.getBiomes());
+		result.addAll(CAVE_BIOMES.getBiomes());
 		result.addAll(SUBBIOMES);
 		return result;
+	}
+	
+	public static BetterEndCaveBiome registerCaveBiome(BetterEndCaveBiome biome) 
+	{
+		registerBiomeDirect(biome);
+		if (JsonConfigs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) 
+		{
+			CAVE_BIOMES.addBiome(biome);
+			ID_MAP.put(biome.getID(), biome);
+		}
+		return biome;
+	}
+
+	public static BetterEndCaveBiome getCaveBiome(Random random) 
+	{
+		return (BetterEndCaveBiome)CAVE_BIOMES.getBiome(random);
+	}
+
+	public static boolean hasBiome(ResourceLocation biomeID) 
+	{
+		return ID_MAP.containsKey(biomeID);
 	}
 }

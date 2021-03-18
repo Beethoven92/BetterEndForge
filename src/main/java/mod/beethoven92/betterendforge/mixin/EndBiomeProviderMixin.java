@@ -21,7 +21,6 @@ import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biomes;
-import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.biome.provider.EndBiomeProvider;
 import net.minecraft.world.gen.SimplexNoiseGenerator;
@@ -83,10 +82,14 @@ public abstract class EndBiomeProviderMixin extends BiomeProvider
 	{
 		List<Biome> list = Lists.newArrayList();
 		biomeRegistry.forEach((biome) -> {
-			if (biome.getCategory() == Category.THEEND) 
+			if (ModBiomes.hasBiome(biomeRegistry.getKey(biome))) 
 			{
 				list.add(biome);
 			}
+			/*if (biome.getCategory() == Category.THEEND) 
+			{
+				list.add(biome);
+			}*/
 		});
 		return list;
 	}

@@ -15,7 +15,6 @@ import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryLookupCodec;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
 import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.biome.provider.EndBiomeProvider;
@@ -62,10 +61,14 @@ public class BetterEndBiomeProvider extends BiomeProvider
 	{
 		List<Biome> list = Lists.newArrayList();
 		biomeRegistry.forEach((biome) -> {
-			if (biome.getCategory() == Category.THEEND) 
+			if (ModBiomes.hasBiome(biomeRegistry.getKey(biome)))
 			{
 				list.add(biome);
 			}
+			/*if (biome.getCategory() == Category.THEEND) 
+			{
+				list.add(biome);
+			}*/
 		});
 		return list;
 	}

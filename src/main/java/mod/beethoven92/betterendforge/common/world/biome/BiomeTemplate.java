@@ -71,6 +71,7 @@ public class BiomeTemplate
 	private final ResourceLocation id;
 	private float genChance = 1F;
 	private boolean hasCaves = true;
+	private boolean isCaveBiome = false;
 	
 	public BiomeTemplate(String name)
 	{
@@ -200,6 +201,12 @@ public class BiomeTemplate
 	public BiomeTemplate setCaves(boolean hasCaves) 
 	{
 		this.hasCaves = hasCaves;
+		return this;
+	}
+	
+	public BiomeTemplate setCaveBiome() 
+	{
+		isCaveBiome = true;
 		return this;
 	}
 	
@@ -333,7 +340,7 @@ public class BiomeTemplate
 		if (particle != null) effects.setParticle(particle);
 		
 		return new Biome.Builder().
-				         category(Category.THEEND).
+				         category(isCaveBiome ? Category.NONE : Category.THEEND).
 				         precipitation(RainType.NONE).
 				         depth(this.depth).
 				         scale(this.scale).

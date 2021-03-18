@@ -28,8 +28,8 @@ import mod.beethoven92.betterendforge.common.world.feature.MossyGlowshroomFeatur
 import mod.beethoven92.betterendforge.common.world.feature.OreLayerFeature;
 import mod.beethoven92.betterendforge.common.world.feature.OverworldIslandFeature;
 import mod.beethoven92.betterendforge.common.world.feature.PythadendronFeature;
-import mod.beethoven92.betterendforge.common.world.feature.RoundCaveFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SilkMothNestFeature;
+import mod.beethoven92.betterendforge.common.world.feature.SingleBlockFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SingleInvertedScatterFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SinglePlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SpireFeature;
@@ -43,6 +43,7 @@ import mod.beethoven92.betterendforge.common.world.feature.UnderwaterPlantFeatur
 import mod.beethoven92.betterendforge.common.world.feature.VineFeature;
 import mod.beethoven92.betterendforge.common.world.feature.WallPlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.WallPlantOnLogFeature;
+import mod.beethoven92.betterendforge.common.world.feature.caves.RoundCaveFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.OreFeature;
@@ -128,7 +129,6 @@ public class ModFeatures
 		
 	// TERRAIN
 	public static final Feature<NoFeatureConfig> ROUND_CAVE = new RoundCaveFeature();
-	public static final Feature<NoFeatureConfig> ROUND_CAVE_RARE = new RoundCaveFeature();
 	public static final Feature<NoFeatureConfig> END_LAKE = new EndLakeFeature();
 	public static final Feature<NoFeatureConfig> END_LAKE_RARE = new EndLakeFeature();
 	public static final Feature<NoFeatureConfig> SPIRE = new SpireFeature();
@@ -164,6 +164,18 @@ public class ModFeatures
 	
 	// Mobs
 	public static final Feature<NoFeatureConfig> SILK_MOTH_NEST = new SilkMothNestFeature();
+	
+	// Caves
+    //public static final Feature<NoFeatureConfig> SMARAGDANT_CRYSTAL = new SmaragdantCrystalFeature();
+    public static final Feature<NoFeatureConfig> SMARAGDANT_CRYSTAL_SHARD = new SingleBlockFeature(ModBlocks.SMARAGDANT_CRYSTAL_SHARD.get());
+    //public static final Feature<NoFeatureConfig> BIG_AURORA_CRYSTAL = new BigAuroraCrystalFeature();
+	//public static final DefaultFeature CAVE_BUSH = new BushFeature(EndBlocks.CAVE_BUSH, EndBlocks.CAVE_BUSH);
+	//public static final DefaultFeature CAVE_GRASS = new SingleBlockFeature(EndBlocks.CAVE_GRASS);
+	//public static final DefaultFeature RUBINEA = new VineFeature(EndBlocks.RUBINEA, 8);
+	//public static final Feature<NoFeatureConfig> END_STONE_STALACTITE = new StalactiteFeature(true, EndBlocks.END_STONE_STALACTITE, Blocks.END_STONE);
+	//public static final Feature<NoFeatureConfig> END_STONE_STALAGMITE = new StalactiteFeature(false, EndBlocks.END_STONE_STALACTITE, Blocks.END_STONE);
+	//public static final Feature<NoFeatureConfig> END_STONE_STALACTITE_CAVEMOSS = new StalactiteFeature(true, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, Blocks.END_STONE, EndBlocks.CAVE_MOSS);
+	//public static final Feature<NoFeatureConfig> END_STONE_STALAGMITE_CAVEMOSS = new StalactiteFeature(false, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, EndBlocks.CAVE_MOSS);
 	
 	public static void registerFeatures(Register<Feature<?>> event)
     {
@@ -238,7 +250,6 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), SMALL_JELLYSHROOM_CEIL, "small_jellyshroom_ceil"); 
     	// TERRAIN
     	BetterEnd.register(event.getRegistry(), ROUND_CAVE, "round_cave");
-    	BetterEnd.register(event.getRegistry(), ROUND_CAVE_RARE, "round_cave_rare");
     	BetterEnd.register(event.getRegistry(), END_LAKE, "end_lake");   
     	BetterEnd.register(event.getRegistry(), END_LAKE_RARE, "end_lake_rare"); 
     	BetterEnd.register(event.getRegistry(), SPIRE, "spire");   
@@ -267,9 +278,10 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), VIOLECITE_LAYER, "violecite_layer");
     	// BUILDINGS
     	BetterEnd.register(event.getRegistry(), CRASHED_SHIP, "crashed_ship");
-    	BetterEnd.register(event.getRegistry(), NBT_STRUCTURES, "nbt_structures");
-    	
+    	BetterEnd.register(event.getRegistry(), NBT_STRUCTURES, "nbt_structures");    	
     	// MOBS
     	BetterEnd.register(event.getRegistry(), SILK_MOTH_NEST, "silk_moth_nest");
+    	//CAVES
+    	BetterEnd.register(event.getRegistry(), SMARAGDANT_CRYSTAL_SHARD, "smaragdant_crystal_shard");
     }
 }

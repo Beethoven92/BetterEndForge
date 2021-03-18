@@ -282,9 +282,6 @@ public class ModConfiguredFeatures
 	public static final ConfiguredFeature<?, ?> ROUND_CAVE = 
 			ModFeatures.ROUND_CAVE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.CHANCE.configure(new ChanceConfig(2)));
-	public static final ConfiguredFeature<?, ?> ROUND_CAVE_RARE = 
-			ModFeatures.ROUND_CAVE_RARE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
-			withPlacement(Placement.CHANCE.configure(new ChanceConfig(25)));
 	
 	public static final ConfiguredFeature<?, ?> END_LAKE = 
 			ModFeatures.END_LAKE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -411,6 +408,9 @@ public class ModConfiguredFeatures
 			ModFeatures.SILK_MOTH_NEST.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.CHANCE.configure(new ChanceConfig(2)));
 
+	//CAVES
+	public static final ConfiguredFeature<?, ?> SMARAGDANT_CRYSTAL_SHARD = 
+			ModFeatures.SMARAGDANT_CRYSTAL_SHARD.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
 	
 	public static void registerConfiguredFeatures() 	
 	{
@@ -486,7 +486,6 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "small_jellyshroom_ceil"), SMALL_JELLYSHROOM_CEIL);
         // TERRAIN
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "round_cave"), ROUND_CAVE);
-        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "round_cave_rare"), ROUND_CAVE_RARE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "end_lake"), END_LAKE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "end_lake_rare"), END_LAKE_RARE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "spire"), SPIRE);
@@ -518,6 +517,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "nbt_structures"), NBT_STRUCTURES);
         // MOBS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "silk_moth_nest"), SILK_MOTH_NEST);
-
+        // CAVES
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "smaragdant_crystal_shard"), SMARAGDANT_CRYSTAL_SHARD);
     }   
 }

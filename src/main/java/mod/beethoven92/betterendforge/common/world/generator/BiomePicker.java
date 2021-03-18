@@ -31,19 +31,20 @@ public class BiomePicker
 	public void addBiomeMutable(BetterEndBiome biome) 
 	{
 		biomes.add(biome);
-		maxChance = biome.mutateGenChance(maxChance);
 	}
 	
 	public void clearMutables() 
 	{
 		maxChance = maxChanceUnmutable;
 		for (int i = biomes.size() - 1; i >= biomeCount; i--)
+		{
 			biomes.remove(i);
+		}
 	}
 	
 	public BetterEndBiome getBiome(Random random) 
 	{
-		return tree.getBiome(random.nextFloat() * maxChance);
+		return biomes.isEmpty() ? null : tree.getBiome(random.nextFloat() * maxChance);
 	}
 	
 	public List<BetterEndBiome> getBiomes() 
@@ -56,8 +57,30 @@ public class BiomePicker
 		return immutableIDs.contains(id);
 	}
 	
+	public void removeMutableBiome(ResourceLocation id) 
+	{
+		for (int i = biomeCount; i < biomes.size(); i++) 
+		{
+			BetterEndBiome biome = biomes.get(i);
+			if (biome.getID().equals(id)) 
+			{
+				biomes.remove(i);
+				break;
+			}
+		}
+	}
+	
 	public void rebuild() 
 	{
+		if (biomes.isEmpty()) 
+		{
+			return;
+		}
+		maxChance = maxChanceUnmutable;
+		for (int i = biomeCount; i < biomes.size(); i++) 
+		{
+			maxChance = biomes.get(i).mutateGenChance(maxChance);
+		}
 		tree = new WeighTree(biomes);
 	}
 }

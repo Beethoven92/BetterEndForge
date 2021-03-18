@@ -14,6 +14,7 @@ import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures.St
 import mod.beethoven92.betterendforge.common.world.feature.NBTFeature.TerrainMerge;
 import mod.beethoven92.betterendforge.config.jsons.JsonConfigs;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 
 public class BetterEndBiome 
@@ -159,6 +160,19 @@ public class BetterEndBiome
 		return this.actualBiome;
 	}
 	
+	public void updateActualBiomes(Registry<Biome> biomeRegistry) 
+	{
+		subbiomes.forEach((sub) -> {
+			if (sub != this) {
+				sub.updateActualBiomes(biomeRegistry);
+			}
+		});
+		if (edge != null && edge != this) {
+			edge.updateActualBiomes(biomeRegistry);
+		}
+		this.actualBiome = biomeRegistry.getOrDefault(id);
+	}
+	
 	public boolean hasCaves() 
 	{
 		return hasCaves;
@@ -194,6 +208,23 @@ public class BetterEndBiome
 	public List<StructureInfo> getNBTStructures() 
 	{
 		return nbtStructures;
+	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj == this)
+		{
+			return true;
+		}
+		BetterEndBiome biome = (BetterEndBiome) obj;
+		return biome == null ? false : biome.id.equals(id);
+	}
+	
+	@Override
+	public int hashCode() 
+	{
+		return id.hashCode();
 	}
 }
 

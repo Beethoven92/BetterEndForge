@@ -46,8 +46,7 @@ public class BiomeModification
 			// Add end caves to biomes that have caves enabled
 			if (ModBiomes.getBiome(event.getName()).hasCaves()) 
 			{
-	  			event.getGeneration().getFeatures(Decoration.RAW_GENERATION).add(() -> ModConfiguredFeatures.ROUND_CAVE_RARE);
-    			event.getGeneration().getFeatures(Decoration.RAW_GENERATION).add(() -> ModConfiguredFeatures.CAVE_GRASS);
+	  			event.getGeneration().getFeatures(Decoration.RAW_GENERATION).add(() -> ModConfiguredFeatures.ROUND_CAVE);
 			}
 			
 			// Add scattered nbt structures to biomes

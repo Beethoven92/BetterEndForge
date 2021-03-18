@@ -24,7 +24,8 @@
 	      "EndBiomeProviderMixin",
 	      "AnvilBlockMixin",
 	      "PlayerListMixin",
-	      "MinecraftServerMixin"
+	      "MinecraftServerMixin",
+	      "BiomeContainerMixin"
 	],
   "client": [
 	      "BiomeColorsMixin",
