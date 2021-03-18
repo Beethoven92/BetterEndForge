@@ -78,6 +78,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.IRON_CHANDELIER.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.GOLD_CHANDELIER.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.END_STONE_FURNACE.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.SMARAGDANT_CRYSTAL_SHARD.get(), RenderType.getCutout());
 		
 		// TREES
 		RenderTypeLookup.setRenderLayer(ModBlocks.END_LOTUS_LEAF.get(), RenderType.getCutout());

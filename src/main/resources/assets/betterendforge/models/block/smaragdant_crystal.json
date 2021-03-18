@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "betterendforge:block/smaragdant_crystal_top",
+		"east": "betterendforge:block/smaragdant_crystal_side",
+		"north": "betterendforge:block/smaragdant_crystal_side",
+		"particle": "betterendforge:block/smaragdant_crystal_side",
+		"south": "betterendforge:block/smaragdant_crystal_side",
+		"up": "betterendforge:block/smaragdant_crystal_top",
+		"west": "betterendforge:block/smaragdant_crystal_side"
+	}
+}

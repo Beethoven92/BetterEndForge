@@ -62,6 +62,7 @@ import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowGrassBlock;
 import mod.beethoven92.betterendforge.common.block.SilkMothNestBlock;
 import mod.beethoven92.betterendforge.common.block.SmallJellyshroomBlock;
+import mod.beethoven92.betterendforge.common.block.SmaragdantCrystalShardBlock;
 import mod.beethoven92.betterendforge.common.block.SulphurCrystalBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaSaplingBlock;
@@ -96,6 +97,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.RotatedPillarBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -251,6 +253,21 @@ public class ModBlocks
 					hardnessAndResistance(5.0F, 6.0F).
 					sound(SoundType.METAL)));
 	
+	public static final RegistryObject<Block> SMARAGDANT_CRYSTAL = registerBlockWithDefaultItem("smaragdant_crystal", 
+			() -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.GREEN).
+					                                 harvestTool(ToolType.PICKAXE).
+					                                 hardnessAndResistance(1F).
+					                                 setLightLevel((value) -> {return 15;}).
+					                                 notSolid().     
+					                                 sound(SoundType.GLASS)));
+	
+	public static final RegistryObject<Block> SMARAGDANT_CRYSTAL_SHARD = registerBlockWithDefaultItem("smaragdant_crystal_shard", 
+			() -> new SmaragdantCrystalShardBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.GREEN).
+					                                                       harvestTool(ToolType.PICKAXE).
+					                                                       setRequiresTool().
+					                                                       setLightLevel((value) -> {return 15;}).
+					                                                       doesNotBlockMovement().     
+					                                                       sound(SoundType.GLASS)));
 	
 	// LANTERNS
 	public static final RegistryObject<Block> ANDESITE_LANTERN = registerBlockWithDefaultItem("andesite_lantern", 
@@ -976,7 +993,10 @@ public class ModBlocks
     public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
     public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.PURPLE);
     public static final StoneMaterial SULPHURIC_ROCK = new StoneMaterial("sulphuric_rock", MaterialColor.BROWN);
-    
+	public static final StoneMaterial VIRID_JADESTONE = new StoneMaterial("virid_jadestone", MaterialColor.GREEN);
+	public static final StoneMaterial AZURE_JADESTONE = new StoneMaterial("azure_jadestone", MaterialColor.LIGHT_BLUE);
+	public static final StoneMaterial SANDY_JADESTONE = new StoneMaterial("sandy_jadestone", MaterialColor.YELLOW);
+	
     // METAL MATERIALS
     public static final MetalMaterial THALLASIUM = MetalMaterial.makeNormal("thallasium", MaterialColor.BLUE, ModItemTier.THALLASIUM, ModArmorMaterial.THALLASIUM);
     public static final MetalMaterial TERMINITE = MetalMaterial.makeOreless("terminite", MaterialColor.GREEN, 7F, 9F, ModItemTier.TERMINITE, ModArmorMaterial.TERMINITE);

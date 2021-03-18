@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"facing=up":    { "model": "betterendforge:block/smaragdant_crystal_shard" },
+		"facing=down":  { "model": "betterendforge:block/smaragdant_crystal_shard", "x": 180 },
+		"facing=north": { "model": "betterendforge:block/smaragdant_crystal_shard", "x": 90 },
+		"facing=south": { "model": "betterendforge:block/smaragdant_crystal_shard", "x": 90, "y": 180 },
+		"facing=east":  { "model": "betterendforge:block/smaragdant_crystal_shard", "x": 90, "y": 90 },
+		"facing=west":  { "model": "betterendforge:block/smaragdant_crystal_shard", "x": 90, "y": 270 }
+	}
+}
