@@ -176,6 +176,13 @@ public class ModBlocks
                                                             sound(SoundType.GROUND).
                                                             tickRandomly()));
 	
+	public static final RegistryObject<Block> SANGNUM = registerBlockWithDefaultItem("sangnum", 
+			() -> new TerrainBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.RED).
+                                                            setRequiresTool().
+                                                            hardnessAndResistance(3.0F, 9.0F).
+                                                            sound(SoundType.GROUND).
+                                                            tickRandomly())); // TODO: Bonemeal
+	
 	public static final RegistryObject<Block> ENDSTONE_DUST = registerBlockWithDefaultItem("endstone_dust", 
 			() -> new EndstoneDustBlock(AbstractBlock.Properties.create(Material.SAND, Blocks.END_STONE.getMaterialColor()).
 					                                             hardnessAndResistance(0.5F).
@@ -211,6 +218,9 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> JUNGLE_MOSS_PATH = registerBlockWithDefaultItem("jungle_moss_path", 
 			() -> new PathBlock(JUNGLE_MOSS.get()));
+	
+	public static final RegistryObject<Block> SANGNUM_PATH = registerBlockWithDefaultItem("sangnum_path", 
+			() -> new PathBlock(SANGNUM.get()));
 	
 	// MATERIALS
 	public static final RegistryObject<Block> AETERNIUM_BLOCK = registerBlockWithDefaultItem("aeternium_block",

@@ -1,0 +1,21 @@
+{
+	"variants": {
+		"": [
+				{
+					"model": "betterendforge:block/sangnum"
+				},
+				{
+					"model": "betterendforge:block/sangnum",
+					"y": 90
+				},
+				{
+					"model": "betterendforge:block/sangnum",
+					"y": 180
+				},
+				{
+					"model": "betterendforge:block/sangnum",
+					"y": 270
+				}
+		]
+	}
+}

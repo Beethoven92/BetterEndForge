@@ -105,6 +105,9 @@ public class ModBlockLootTables extends BlockLootTables
 	    registerLootTable(ModBlocks.JUNGLE_MOSS.get(), (terrain) -> {
 	    	return droppingWithSilkTouch(terrain, Blocks.END_STONE);
 	    });
+	    registerLootTable(ModBlocks.SANGNUM.get(), (terrain) -> {
+	    	return droppingWithSilkTouch(terrain, Blocks.END_STONE);
+	    });
 		registerDropSelfLootTable(ModBlocks.ENDSTONE_DUST.get());
 		
 		// PATHS
@@ -117,6 +120,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropping(ModBlocks.PINK_MOSS_PATH.get(), Blocks.END_STONE);
 		registerDropping(ModBlocks.AMBER_MOSS_PATH.get(), Blocks.END_STONE);
 		registerDropping(ModBlocks.JUNGLE_MOSS_PATH.get(), Blocks.END_STONE);
+		registerDropping(ModBlocks.SANGNUM_PATH.get(), Blocks.END_STONE);
 		
 		// MATERIALS
 		registerDropSelfLootTable(ModBlocks.AETERNIUM_BLOCK.get());

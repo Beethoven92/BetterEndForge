@@ -1,0 +1,7 @@
+{   "parent": "betterendforge:block/path",
+    "textures": {
+        "top": "betterendforge:block/sangnum_path_top",
+        "side": "betterendforge:block/sangnum_side",
+        "bottom": "block/end_stone"
+    }
+}
