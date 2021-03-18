@@ -25,6 +25,7 @@ import mod.beethoven92.betterendforge.common.world.feature.LanceleafFeature;
 import mod.beethoven92.betterendforge.common.world.feature.Lumecorn;
 import mod.beethoven92.betterendforge.common.world.feature.MengerSpongeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MossyGlowshroomFeature;
+import mod.beethoven92.betterendforge.common.world.feature.ObsidianPillarBasementFeature;
 import mod.beethoven92.betterendforge.common.world.feature.OreLayerFeature;
 import mod.beethoven92.betterendforge.common.world.feature.OverworldIslandFeature;
 import mod.beethoven92.betterendforge.common.world.feature.PythadendronFeature;
@@ -140,6 +141,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> ICE_STAR = new IceStarFeature(5, 15, 10, 25);
 	public static final Feature<NoFeatureConfig> ICE_STAR_SMALL = new IceStarFeature(3, 5, 7, 12);
 	public static final Feature<NoFeatureConfig> OVERWORLD_ISLAND = new OverworldIslandFeature();
+	public static final Feature<NoFeatureConfig> OBSIDIAN_PILLAR_BASEMENT = new ObsidianPillarBasementFeature();
 	
 	// TREES
 	public static final Feature<NoFeatureConfig> MOSSY_GLOWSHROOM = new MossyGlowshroomFeature();
@@ -250,6 +252,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), ICE_STAR, "ice_star");
     	BetterEnd.register(event.getRegistry(), ICE_STAR_SMALL, "ice_star_small");
     	BetterEnd.register(event.getRegistry(), OVERWORLD_ISLAND, "overworld_island");
+    	BetterEnd.register(event.getRegistry(), OBSIDIAN_PILLAR_BASEMENT, "obsidian_pillar_basement");
     	// TREES
     	BetterEnd.register(event.getRegistry(), MOSSY_GLOWSHROOM, "mossy_glowshroom");
     	BetterEnd.register(event.getRegistry(), LACUGROVE, "lacugrove");   

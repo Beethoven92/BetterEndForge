@@ -122,6 +122,10 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropping(ModBlocks.JUNGLE_MOSS_PATH.get(), Blocks.END_STONE);
 		registerDropping(ModBlocks.SANGNUM_PATH.get(), Blocks.END_STONE);
 		
+	    registerLootTable(ModBlocks.MOSSY_OBSIDIAN.get(), (block) -> {
+	    	return droppingWithSilkTouch(block, Blocks.OBSIDIAN);
+	    });
+		
 		// MATERIALS
 		registerDropSelfLootTable(ModBlocks.AETERNIUM_BLOCK.get());
 		registerDropSelfLootTable(ModBlocks.ENDER_BLOCK.get());
