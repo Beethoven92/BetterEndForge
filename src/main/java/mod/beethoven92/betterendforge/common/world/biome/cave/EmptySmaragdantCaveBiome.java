@@ -1,6 +1,6 @@
 package mod.beethoven92.betterendforge.common.world.biome.cave;
 
-import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
+import mod.beethoven92.betterendforge.common.init.ModFeatures;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndCaveBiome;
 import mod.beethoven92.betterendforge.common.world.biome.BiomeTemplate;
@@ -19,10 +19,10 @@ public class EmptySmaragdantCaveBiome extends BetterEndCaveBiome
 				.setMusic(ModSoundEvents.MUSIC_FOREST.get()));
 				//.setParticles(ModParticleTypes.SMARAGDANT.get(), 0.001F));
 		
-		/*this.addFloorFeature(EndFeatures.SMARAGDANT_CRYSTAL, 1);
-		this.addFloorFeature(EndFeatures.SMARAGDANT_CRYSTAL_SHARD, 20);
+		this.addFloorFeature(ModFeatures.SMARAGDANT_CRYSTAL, 1);
+		this.addFloorFeature(ModFeatures.SMARAGDANT_CRYSTAL_SHARD, 20);
 		
-		this.addCeilFeature(EndFeatures.END_STONE_STALACTITE, 1);*/
+		//this.addCeilFeature(EndFeatures.END_STONE_STALACTITE, 1);
 	}
 	
 	@Override

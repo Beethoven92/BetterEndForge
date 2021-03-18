@@ -6,37 +6,38 @@ import java.util.Random;
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.util.WeightedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.gen.feature.Feature;
 
 public class BetterEndCaveBiome extends BetterEndBiome
 {
-	private List<Feature<?>> floorFeatures = Lists.newArrayList();
-	private List<Feature<?>> ceilFeatures = Lists.newArrayList();
-
+	private WeightedList<Feature<?>> floorFeatures = new WeightedList<Feature<?>>();
+	private WeightedList<Feature<?>> ceilFeatures = new WeightedList<Feature<?>>();
+	
 	public BetterEndCaveBiome(BiomeTemplate definition) 
 	{
 		super(definition.setCaveBiome());
 	}
 
-	public void addFloorFeature(Feature<?> feature) 
+	public void addFloorFeature(Feature<?> feature, int weight) 
 	{
-		floorFeatures.add(feature);
+		floorFeatures.func_226313_a_(feature, weight);
 	}
 
-	public void addCeilFeature(Feature<?> feature) 
+	public void addCeilFeature(Feature<?> feature, int weight) 
 	{
-		ceilFeatures.add(feature);
+		ceilFeatures.func_226313_a_(feature, weight);
 	}
 
 	public Feature<?> getFloorFeature(Random random) 
 	{
-		return floorFeatures.isEmpty() ? null : floorFeatures.get(random.nextInt(floorFeatures.size()));
+		return floorFeatures.func_234005_b_() ? null : floorFeatures.func_226318_b_(random);
 	}
 
 	public Feature<?> getCeilFeature(Random random) 
 	{
-		return ceilFeatures.isEmpty() ? null : ceilFeatures.get(random.nextInt(ceilFeatures.size()));
+		return ceilFeatures.func_234005_b_() ? null : ceilFeatures.func_226318_b_(random);
 	}
 	
 	public float getFloorDensity() 

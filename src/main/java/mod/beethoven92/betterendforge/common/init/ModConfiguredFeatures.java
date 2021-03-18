@@ -412,7 +412,9 @@ public class ModConfiguredFeatures
 			ModFeatures.SILK_MOTH_NEST.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.CHANCE.configure(new ChanceConfig(2)));
 
-	//CAVES
+	// CAVES
+	public static final ConfiguredFeature<?, ?> SMARAGDANT_CRYSTAL = 
+			ModFeatures.SMARAGDANT_CRYSTAL.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
 	public static final ConfiguredFeature<?, ?> SMARAGDANT_CRYSTAL_SHARD = 
 			ModFeatures.SMARAGDANT_CRYSTAL_SHARD.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
 	
@@ -523,6 +525,7 @@ public class ModConfiguredFeatures
         // MOBS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "silk_moth_nest"), SILK_MOTH_NEST);
         // CAVES
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "smaragdant_crystal"), SMARAGDANT_CRYSTAL);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "smaragdant_crystal_shard"), SMARAGDANT_CRYSTAL_SHARD);
-    }   
+	}   
 }

@@ -133,7 +133,9 @@ public class ModBlockLootTables extends BlockLootTables
 	    registerLootTable(ModBlocks.AURORA_CRYSTAL.get(), (block) -> {
 	    	return droppingItemWithFortune(block, ModItems.CRYSTAL_SHARDS.get());
 	    });
-		
+	    registerDropSelfLootTable(ModBlocks.SMARAGDANT_CRYSTAL.get());
+	    registerDropSelfLootTable(ModBlocks.SMARAGDANT_CRYSTAL_SHARD.get());
+	    
 		// ORES
 	    registerLootTable(ModBlocks.ENDER_ORE.get(), (ore) -> {
 	    	return droppingItemWithFortune(ore, ModItems.ENDER_SHARD.get());

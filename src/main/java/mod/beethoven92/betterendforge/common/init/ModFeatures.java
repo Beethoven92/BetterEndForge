@@ -33,6 +33,7 @@ import mod.beethoven92.betterendforge.common.world.feature.SilkMothNestFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SingleBlockFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SingleInvertedScatterFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SinglePlantFeature;
+import mod.beethoven92.betterendforge.common.world.feature.SmaragdantCrystalFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SpireFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SulphuricCaveFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SulphuricLakeFeature;
@@ -168,7 +169,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> SILK_MOTH_NEST = new SilkMothNestFeature();
 	
 	// Caves
-    //public static final Feature<NoFeatureConfig> SMARAGDANT_CRYSTAL = new SmaragdantCrystalFeature();
+    public static final Feature<NoFeatureConfig> SMARAGDANT_CRYSTAL = new SmaragdantCrystalFeature();
     public static final Feature<NoFeatureConfig> SMARAGDANT_CRYSTAL_SHARD = new SingleBlockFeature(ModBlocks.SMARAGDANT_CRYSTAL_SHARD.get());
     //public static final Feature<NoFeatureConfig> BIG_AURORA_CRYSTAL = new BigAuroraCrystalFeature();
 	//public static final DefaultFeature CAVE_BUSH = new BushFeature(EndBlocks.CAVE_BUSH, EndBlocks.CAVE_BUSH);
@@ -285,6 +286,7 @@ public class ModFeatures
     	// MOBS
     	BetterEnd.register(event.getRegistry(), SILK_MOTH_NEST, "silk_moth_nest");
     	//CAVES
+    	BetterEnd.register(event.getRegistry(), SMARAGDANT_CRYSTAL, "smaragdant_crystal");
     	BetterEnd.register(event.getRegistry(), SMARAGDANT_CRYSTAL_SHARD, "smaragdant_crystal_shard");
     }
 }
