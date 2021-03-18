@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/mossy_obsidian" },
+			{ "model": "betterendforge:block/mossy_obsidian", "y": 90 },
+			{ "model": "betterendforge:block/mossy_obsidian", "y": 180 },
+			{ "model": "betterendforge:block/mossy_obsidian", "y": 270 }
+		]
+	}
+}

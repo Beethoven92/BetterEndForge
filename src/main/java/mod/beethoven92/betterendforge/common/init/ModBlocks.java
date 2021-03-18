@@ -52,6 +52,7 @@ import mod.beethoven92.betterendforge.common.block.MengerSpongeWetBlock;
 import mod.beethoven92.betterendforge.common.block.ModLanternBlock;
 import mod.beethoven92.betterendforge.common.block.MossyGlowshroomCapBlock;
 import mod.beethoven92.betterendforge.common.block.MossyGlowshroomSaplingBlock;
+import mod.beethoven92.betterendforge.common.block.MossyObsidianBlock;
 import mod.beethoven92.betterendforge.common.block.MurkweedBlock;
 import mod.beethoven92.betterendforge.common.block.NeedlegrassBlock;
 import mod.beethoven92.betterendforge.common.block.PathBlock;
@@ -223,6 +224,11 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> SANGNUM_PATH = registerBlockWithDefaultItem("sangnum_path", 
 			() -> new PathBlock(SANGNUM.get()));
+	
+	
+	
+	public static final RegistryObject<Block> MOSSY_OBSIDIAN = registerBlockWithDefaultItem("mossy_obsidian", 
+			() -> new MossyObsidianBlock());
 	
 	// MATERIALS
 	public static final RegistryObject<Block> AETERNIUM_BLOCK = registerBlockWithDefaultItem("aeternium_block",
