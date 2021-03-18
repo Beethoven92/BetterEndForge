@@ -65,6 +65,7 @@ public class UnderwaterPlantBlock extends Block implements IGrowable, ILiquidCon
 	{
 		if (!isValidPosition(stateIn, worldIn, currentPos)) 
 		{
+			worldIn.destroyBlock(currentPos, true);
 			return Blocks.WATER.getDefaultState();
 		}
 		else 
