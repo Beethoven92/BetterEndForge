@@ -1,9 +1,6 @@
 package mod.beethoven92.betterendforge.common.world.biome;
 
-import java.util.List;
 import java.util.Random;
-
-import com.google.common.collect.Lists;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.util.WeightedList;

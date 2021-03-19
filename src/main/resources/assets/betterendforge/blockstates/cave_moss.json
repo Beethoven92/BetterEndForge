@@ -1,21 +1,22 @@
 {
-	"variants": {
-		"": [
-				{
-					"model": "betterendforge:block/cave_moss"
-				},
-				{
-					"model": "betterendforge:block/cave_moss",
-					"y": 90
-				},
-				{
-					"model": "betterendforge:block/cave_moss",
-					"y": 180
-				},
-				{
-					"model": "betterendforge:block/cave_moss",
-					"y": 270
-				}
+    "variants": {
+        "shape=bottom": [
+			{ "model": "betterendforge:block/cave_moss" },
+			{ "model": "betterendforge:block/cave_moss", "y": 90 },
+			{ "model": "betterendforge:block/cave_moss", "y": 180 },
+			{ "model": "betterendforge:block/cave_moss", "y": 270 }
+		],
+		"shape=middle": [
+			{ "model": "betterendforge:block/cave_moss" },
+			{ "model": "betterendforge:block/cave_moss", "y": 90 },
+			{ "model": "betterendforge:block/cave_moss", "y": 180 },
+			{ "model": "betterendforge:block/cave_moss", "y": 270 }
+		],
+		"shape=top": [
+			{ "model": "betterendforge:block/cave_moss", "x": 180 },
+			{ "model": "betterendforge:block/cave_moss", "x": 180, "y": 90 },
+			{ "model": "betterendforge:block/cave_moss", "x": 180, "y": 180 },
+			{ "model": "betterendforge:block/cave_moss", "x": 180, "y": 270 }
 		]
-	}
+    }
 }

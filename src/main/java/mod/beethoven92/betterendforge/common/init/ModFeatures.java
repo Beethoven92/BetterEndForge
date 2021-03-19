@@ -1,10 +1,10 @@
 package mod.beethoven92.betterendforge.common.init;
 
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.world.feature.BigAuroraCrystalFeature;
 import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures;
 import mod.beethoven92.betterendforge.common.world.feature.BlueVineFeature;
 import mod.beethoven92.betterendforge.common.world.feature.BushFeature;
-import mod.beethoven92.betterendforge.common.world.feature.CavePlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.CharniaFeature;
 import mod.beethoven92.betterendforge.common.world.feature.CrashedShipFeature;
 import mod.beethoven92.betterendforge.common.world.feature.DoublePlantFeature;
@@ -35,6 +35,7 @@ import mod.beethoven92.betterendforge.common.world.feature.SingleInvertedScatter
 import mod.beethoven92.betterendforge.common.world.feature.SinglePlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SmaragdantCrystalFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SpireFeature;
+import mod.beethoven92.betterendforge.common.world.feature.StalactiteFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SulphuricCaveFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SulphuricLakeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.SurfaceVentFeature;
@@ -46,6 +47,7 @@ import mod.beethoven92.betterendforge.common.world.feature.VineFeature;
 import mod.beethoven92.betterendforge.common.world.feature.WallPlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.WallPlantOnLogFeature;
 import mod.beethoven92.betterendforge.common.world.feature.caves.RoundCaveFeature;
+import net.minecraft.block.Blocks;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.OreFeature;
@@ -80,7 +82,6 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> UMBRELLA_MOSS = new DoublePlantFeature(ModBlocks.UMBRELLA_MOSS.get(), ModBlocks.UMBRELLA_MOSS_TALL.get(), 5);
 	public static final Feature<NoFeatureConfig> CREEPING_MOSS = new SinglePlantFeature(ModBlocks.CREEPING_MOSS.get(), 5);
 	public static final Feature<NoFeatureConfig> CHORUS_GRASS = new SinglePlantFeature(ModBlocks.CHORUS_GRASS.get(), 4);
-	public static final Feature<NoFeatureConfig> CAVE_GRASS = new CavePlantFeature(ModBlocks.CAVE_GRASS.get(), 7);
 	public static final Feature<NoFeatureConfig> CRYSTAL_GRASS = new SinglePlantFeature(ModBlocks.CRYSTAL_GRASS.get(), 8, false);
 	public static final Feature<NoFeatureConfig> AMBER_GRASS = new SinglePlantFeature(ModBlocks.AMBER_GRASS.get(), 6);
 	public static final Feature<NoFeatureConfig> SHADOW_PLANT = new SinglePlantFeature(ModBlocks.SHADOW_PLANT.get(), 6);
@@ -171,14 +172,14 @@ public class ModFeatures
 	// Caves
     public static final Feature<NoFeatureConfig> SMARAGDANT_CRYSTAL = new SmaragdantCrystalFeature();
     public static final Feature<NoFeatureConfig> SMARAGDANT_CRYSTAL_SHARD = new SingleBlockFeature(ModBlocks.SMARAGDANT_CRYSTAL_SHARD.get());
-    //public static final Feature<NoFeatureConfig> BIG_AURORA_CRYSTAL = new BigAuroraCrystalFeature();
-	//public static final DefaultFeature CAVE_BUSH = new BushFeature(EndBlocks.CAVE_BUSH, EndBlocks.CAVE_BUSH);
-	//public static final DefaultFeature CAVE_GRASS = new SingleBlockFeature(EndBlocks.CAVE_GRASS);
+    public static final Feature<NoFeatureConfig> BIG_AURORA_CRYSTAL = new BigAuroraCrystalFeature();
 	//public static final DefaultFeature RUBINEA = new VineFeature(EndBlocks.RUBINEA, 8);
-	//public static final Feature<NoFeatureConfig> END_STONE_STALACTITE = new StalactiteFeature(true, EndBlocks.END_STONE_STALACTITE, Blocks.END_STONE);
-	//public static final Feature<NoFeatureConfig> END_STONE_STALAGMITE = new StalactiteFeature(false, EndBlocks.END_STONE_STALACTITE, Blocks.END_STONE);
-	//public static final Feature<NoFeatureConfig> END_STONE_STALACTITE_CAVEMOSS = new StalactiteFeature(true, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, Blocks.END_STONE, EndBlocks.CAVE_MOSS);
-	//public static final Feature<NoFeatureConfig> END_STONE_STALAGMITE_CAVEMOSS = new StalactiteFeature(false, EndBlocks.END_STONE_STALACTITE_CAVEMOSS, EndBlocks.CAVE_MOSS);
+	public static final Feature<NoFeatureConfig> END_STONE_STALACTITE = new StalactiteFeature(true, ModBlocks.END_STONE_STALACTITE.get(), Blocks.END_STONE);
+	public static final Feature<NoFeatureConfig> END_STONE_STALAGMITE = new StalactiteFeature(false, ModBlocks.END_STONE_STALACTITE.get(), Blocks.END_STONE);
+	public static final Feature<NoFeatureConfig> END_STONE_STALACTITE_CAVEMOSS = new StalactiteFeature(true, ModBlocks.END_STONE_STALACTITE_CAVEMOSS.get(), Blocks.END_STONE, ModBlocks.CAVE_MOSS.get());
+	public static final Feature<NoFeatureConfig> END_STONE_STALAGMITE_CAVEMOSS = new StalactiteFeature(false, ModBlocks.END_STONE_STALACTITE_CAVEMOSS.get(), ModBlocks.CAVE_MOSS.get());
+	public static final Feature<NoFeatureConfig> CAVE_BUSH = new BushFeature(ModBlocks.CAVE_BUSH.get(), ModBlocks.CAVE_BUSH.get());
+	public static final Feature<NoFeatureConfig> CAVE_GRASS = new SingleBlockFeature(ModBlocks.CAVE_GRASS.get());
 	
 	public static void registerFeatures(Register<Feature<?>> event)
     {
@@ -206,7 +207,6 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), UMBRELLA_MOSS, "umbrella_moss");
     	BetterEnd.register(event.getRegistry(), CREEPING_MOSS, "creeping_moss");   	
     	BetterEnd.register(event.getRegistry(), CHORUS_GRASS, "chorus_grass");
-    	BetterEnd.register(event.getRegistry(), CAVE_GRASS, "cave_grass");
     	BetterEnd.register(event.getRegistry(), CRYSTAL_GRASS, "crystal_grass");
     	BetterEnd.register(event.getRegistry(), AMBER_GRASS, "amber_grass");
     	BetterEnd.register(event.getRegistry(), SHADOW_PLANT, "shadow_plant");  	
@@ -285,8 +285,15 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), NBT_STRUCTURES, "nbt_structures");    	
     	// MOBS
     	BetterEnd.register(event.getRegistry(), SILK_MOTH_NEST, "silk_moth_nest");
-    	//CAVES
+    	// CAVES
     	BetterEnd.register(event.getRegistry(), SMARAGDANT_CRYSTAL, "smaragdant_crystal");
     	BetterEnd.register(event.getRegistry(), SMARAGDANT_CRYSTAL_SHARD, "smaragdant_crystal_shard");
+    	BetterEnd.register(event.getRegistry(), BIG_AURORA_CRYSTAL, "big_aurora_crystal");
+    	BetterEnd.register(event.getRegistry(), END_STONE_STALACTITE, "end_stone_stalactite");
+    	BetterEnd.register(event.getRegistry(), END_STONE_STALAGMITE, "end_stone_stalagmite");
+    	BetterEnd.register(event.getRegistry(), END_STONE_STALACTITE_CAVEMOSS, "end_stone_stalactite_cavemoss");
+    	BetterEnd.register(event.getRegistry(), END_STONE_STALAGMITE_CAVEMOSS, "end_stone_stalagmite_cavemoss");
+    	BetterEnd.register(event.getRegistry(), CAVE_BUSH, "cave_bush");
+      	BetterEnd.register(event.getRegistry(), CAVE_GRASS, "cave_grass");
     }
 }

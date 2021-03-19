@@ -40,9 +40,16 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, 
 			BlockPos pos, NoFeatureConfig config) 
 	{
-		if (!(CommonConfig.isNewGeneratorEnabled() && CommonConfig.noRingVoid()) || pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500) 
+		/*if (!(CommonConfig.isNewGeneratorEnabled() && CommonConfig.noRingVoid()) || pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500) 
 		{
 			return false;
+		}*/
+		if (!(CommonConfig.isNewGeneratorEnabled() && CommonConfig.noRingVoid()))
+		{
+			if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500)
+			{
+				return false;
+			}
 		}
 		
 		if (biomeMissingCaves(world, pos)) 
@@ -53,7 +60,8 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 		int radius = ModMathHelper.randRange(10, 30, rand);
 		BlockPos center = findPos(world, pos, radius, rand);
 		
-		if (center == null) {
+		if (center == null) 
+		{
 			return false;
 		}
 		

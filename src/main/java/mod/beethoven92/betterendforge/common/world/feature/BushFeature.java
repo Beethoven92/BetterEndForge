@@ -53,7 +53,7 @@ public class BushFeature extends Feature<NoFeatureConfig>
 	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator_, Random random,
 			BlockPos pos, NoFeatureConfig config) 
 	{
-		if (!world.getBlockState(pos.down()).getBlock().isIn(ModTags.END_GROUND)) return false;
+		if (!world.getBlockState(pos.down()).getBlock().isIn(ModTags.END_GROUND) && !world.getBlockState(pos.up()).getBlock().isIn(ModTags.END_GROUND)) return false;
 		
 		float radius = ModMathHelper.randRange(1.8F, 3.5F, random);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextInt());
@@ -85,7 +85,14 @@ public class BushFeature extends Feature<NoFeatureConfig>
 			BlockPos p = pos.offset(d);
 			if (world.isAirBlock(p)) 
 			{
-				BlockHelper.setWithoutUpdate(world, p, leaves.getDefaultState().with(LeavesBlock.DISTANCE, 1));
+				if (leaves instanceof LeavesBlock) 
+				{
+					BlockHelper.setWithoutUpdate(world, p, leaves.getDefaultState().with(LeavesBlock.DISTANCE, 1));
+				}
+				else 
+				{
+					BlockHelper.setWithoutUpdate(world, p, leaves.getDefaultState());
+				}
 			}
 		}		
 		return true;

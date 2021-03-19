@@ -33,6 +33,7 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.common.Tags;
 
+@Deprecated
 public class RoundCaveFeature extends Feature<NoFeatureConfig>
 {
 	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();

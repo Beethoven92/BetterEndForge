@@ -11,6 +11,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 public class MengerSpongeWetBlock extends WetSpongeBlock
@@ -31,10 +32,16 @@ public class MengerSpongeWetBlock extends WetSpongeBlock
 	    }
 	}
 
-	@Override
+	/*@Override
 	public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) 
 	{
 		worldIn.destroyBlock(pos, !player.isCreative());
+		BlockHelper.setWithUpdate(worldIn, pos, Blocks.AIR);
+	}*/
+	
+	@Override
+	public void onPlayerDestroy(IWorld worldIn, BlockPos pos, BlockState state) 
+	{
 		BlockHelper.setWithUpdate(worldIn, pos, Blocks.AIR);
 	}
 	

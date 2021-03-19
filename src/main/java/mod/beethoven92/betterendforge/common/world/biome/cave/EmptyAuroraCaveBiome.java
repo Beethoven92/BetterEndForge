@@ -1,5 +1,6 @@
 package mod.beethoven92.betterendforge.common.world.biome.cave;
 
+import mod.beethoven92.betterendforge.common.init.ModFeatures;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndCaveBiome;
@@ -19,9 +20,8 @@ public class EmptyAuroraCaveBiome extends BetterEndCaveBiome
 				.setMusic(ModSoundEvents.MUSIC_FOREST.get())
 				.setParticles(ModParticleTypes.GLOWING_SPHERE.get(), 0.001F));
 		
-		//this.addFloorFeature(EndFeatures.BIG_AURORA_CRYSTAL, 1);
-		
-		//this.addCeilFeature(EndFeatures.END_STONE_STALACTITE, 1);
+		this.addFloorFeature(ModFeatures.BIG_AURORA_CRYSTAL, 1);		
+		this.addCeilFeature(ModFeatures.END_STONE_STALACTITE, 1);
 	}
 	
 	@Override

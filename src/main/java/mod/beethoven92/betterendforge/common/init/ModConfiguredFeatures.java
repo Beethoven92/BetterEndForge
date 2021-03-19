@@ -106,11 +106,7 @@ public class ModConfiguredFeatures
 	public static final ConfiguredFeature<?, ?> CHORUS_GRASS = 
 			ModFeatures.CHORUS_GRASS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(5));
-	
-	public static final ConfiguredFeature<?, ?> CAVE_GRASS = 
-			ModFeatures.CAVE_GRASS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
-			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(7));
-	
+
 	public static final ConfiguredFeature<?, ?> CRYSTAL_GRASS = 
 			ModFeatures.CRYSTAL_GRASS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(5));
@@ -415,8 +411,30 @@ public class ModConfiguredFeatures
 	// CAVES
 	public static final ConfiguredFeature<?, ?> SMARAGDANT_CRYSTAL = 
 			ModFeatures.SMARAGDANT_CRYSTAL.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+	
 	public static final ConfiguredFeature<?, ?> SMARAGDANT_CRYSTAL_SHARD = 
 			ModFeatures.SMARAGDANT_CRYSTAL_SHARD.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+	
+	public static final ConfiguredFeature<?, ?> BIG_AURORA_CRYSTAL = 
+			ModFeatures.BIG_AURORA_CRYSTAL.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+	
+	public static final ConfiguredFeature<?, ?> END_STONE_STALACTITE = 
+			ModFeatures.END_STONE_STALACTITE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+	
+	public static final ConfiguredFeature<?, ?> END_STONE_STALAGMITE = 
+			ModFeatures.END_STONE_STALAGMITE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+	
+	public static final ConfiguredFeature<?, ?> END_STONE_STALACTITE_CAVEMOSS = 
+			ModFeatures.END_STONE_STALACTITE_CAVEMOSS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+	
+	public static final ConfiguredFeature<?, ?> END_STONE_STALAGMITE_CAVEMOSS = 
+			ModFeatures.END_STONE_STALAGMITE_CAVEMOSS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+	
+	public static final ConfiguredFeature<?, ?> CAVE_BUSH = 
+			ModFeatures.CAVE_BUSH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+	
+	public static final ConfiguredFeature<?, ?> CAVE_GRASS = 
+			ModFeatures.CAVE_GRASS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
 	
 	public static void registerConfiguredFeatures() 	
 	{
@@ -445,7 +463,6 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "umbrella_moss"), UMBRELLA_MOSS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "creeping_moss"), CREEPING_MOSS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "chorus_grass"), CHORUS_GRASS);
-        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "cave_grass"), CAVE_GRASS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "crystal_grass"), CRYSTAL_GRASS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "amber_grass"), AMBER_GRASS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "shadow_plant"), SHADOW_PLANT);
@@ -527,5 +544,12 @@ public class ModConfiguredFeatures
         // CAVES
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "smaragdant_crystal"), SMARAGDANT_CRYSTAL);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "smaragdant_crystal_shard"), SMARAGDANT_CRYSTAL_SHARD);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "big_aurora_crystal"), BIG_AURORA_CRYSTAL);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "end_stone_stalactite"), END_STONE_STALACTITE);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "end_stone_stalagmite"), END_STONE_STALAGMITE);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "end_stone_stalactite_cavemoss"), END_STONE_STALACTITE_CAVEMOSS);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "end_stone_stalagmite_cavemoss"), END_STONE_STALAGMITE_CAVEMOSS);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "cave_bush"), CAVE_BUSH);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "cave_grass"), CAVE_GRASS);
 	}   
 }
