@@ -290,6 +290,8 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		registerLootTable(ModBlocks.JUNGLE_VINE.get(), BlockLootTables::onlyWithShears);
 		
+		registerLootTable(ModBlocks.RUBINEA.get(), BlockLootTables::onlyWithShears);
+		
 		// TREES		
 		registerDropSelfLootTable(ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get());
 		registerDropSelfLootTable(ModBlocks.MOSSY_GLOWSHROOM_CAP.get());

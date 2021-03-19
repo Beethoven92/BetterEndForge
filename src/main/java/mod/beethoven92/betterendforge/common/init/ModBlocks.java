@@ -762,6 +762,12 @@ public class ModBlocks
 					                                        doesNotBlockMovement().
 					                                        sound(SoundType.PLANT)));
 	
+	public static final RegistryObject<Block> RUBINEA = registerBlockWithDefaultItem("rubinea", 
+			() -> new EndVineBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                            zeroHardnessAndResistance().
+                                                            doesNotBlockMovement().
+                                                            sound(SoundType.PLANT)));
+	
 	// TREES
 	public static final RegistryObject<Block> MOSSY_GLOWSHROOM_SAPLING = registerBlockWithDefaultItem("mossy_glowshroom_sapling", 
 			() -> new MossyGlowshroomSaplingBlock(AbstractBlock.Properties.create(Material.PLANTS).

@@ -31,7 +31,7 @@ public class LushAuroraCaveBiome extends BetterEndCaveBiome
 		this.addFloorFeature(ModFeatures.CAVE_GRASS, 40);
 		this.addFloorFeature(ModFeatures.END_STONE_STALAGMITE_CAVEMOSS, 5);		
 		this.addCeilFeature(ModFeatures.CAVE_BUSH, 1);
-		//this.addCeilFeature(ModFeatures.RUBINEA, 3);
+		this.addCeilFeature(ModFeatures.RUBINEA, 3);
 		this.addCeilFeature(ModFeatures.END_STONE_STALACTITE_CAVEMOSS, 10);
 	}
 	

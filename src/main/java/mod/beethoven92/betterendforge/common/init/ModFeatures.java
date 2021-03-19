@@ -173,13 +173,13 @@ public class ModFeatures
     public static final Feature<NoFeatureConfig> SMARAGDANT_CRYSTAL = new SmaragdantCrystalFeature();
     public static final Feature<NoFeatureConfig> SMARAGDANT_CRYSTAL_SHARD = new SingleBlockFeature(ModBlocks.SMARAGDANT_CRYSTAL_SHARD.get());
     public static final Feature<NoFeatureConfig> BIG_AURORA_CRYSTAL = new BigAuroraCrystalFeature();
-	//public static final DefaultFeature RUBINEA = new VineFeature(EndBlocks.RUBINEA, 8);
 	public static final Feature<NoFeatureConfig> END_STONE_STALACTITE = new StalactiteFeature(true, ModBlocks.END_STONE_STALACTITE.get(), Blocks.END_STONE);
 	public static final Feature<NoFeatureConfig> END_STONE_STALAGMITE = new StalactiteFeature(false, ModBlocks.END_STONE_STALACTITE.get(), Blocks.END_STONE);
 	public static final Feature<NoFeatureConfig> END_STONE_STALACTITE_CAVEMOSS = new StalactiteFeature(true, ModBlocks.END_STONE_STALACTITE_CAVEMOSS.get(), Blocks.END_STONE, ModBlocks.CAVE_MOSS.get());
 	public static final Feature<NoFeatureConfig> END_STONE_STALAGMITE_CAVEMOSS = new StalactiteFeature(false, ModBlocks.END_STONE_STALACTITE_CAVEMOSS.get(), ModBlocks.CAVE_MOSS.get());
 	public static final Feature<NoFeatureConfig> CAVE_BUSH = new BushFeature(ModBlocks.CAVE_BUSH.get(), ModBlocks.CAVE_BUSH.get());
 	public static final Feature<NoFeatureConfig> CAVE_GRASS = new SingleBlockFeature(ModBlocks.CAVE_GRASS.get());
+	public static final Feature<NoFeatureConfig> RUBINEA = new VineFeature(ModBlocks.RUBINEA.get(), 8);
 	
 	public static void registerFeatures(Register<Feature<?>> event)
     {
@@ -295,5 +295,6 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), END_STONE_STALAGMITE_CAVEMOSS, "end_stone_stalagmite_cavemoss");
     	BetterEnd.register(event.getRegistry(), CAVE_BUSH, "cave_bush");
       	BetterEnd.register(event.getRegistry(), CAVE_GRASS, "cave_grass");
+      	BetterEnd.register(event.getRegistry(), RUBINEA, "rubinea");
     }
 }

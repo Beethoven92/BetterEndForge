@@ -436,6 +436,9 @@ public class ModConfiguredFeatures
 	public static final ConfiguredFeature<?, ?> CAVE_GRASS = 
 			ModFeatures.CAVE_GRASS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
 	
+	public static final ConfiguredFeature<?, ?> RUBINEA = 
+			ModFeatures.RUBINEA.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+	
 	public static void registerConfiguredFeatures() 	
 	{
         Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
@@ -551,5 +554,6 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "end_stone_stalagmite_cavemoss"), END_STONE_STALAGMITE_CAVEMOSS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "cave_bush"), CAVE_BUSH);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "cave_grass"), CAVE_GRASS);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "rubinea"), RUBINEA);
 	}   
 }
