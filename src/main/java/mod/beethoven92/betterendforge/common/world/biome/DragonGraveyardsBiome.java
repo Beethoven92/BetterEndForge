@@ -20,7 +20,7 @@ public class DragonGraveyardsBiome extends BetterEndBiome {
 				.setSurface(ModBlocks.SANGNUM.get())
 				.setWaterFogColor(203, 59, 167).setFoliageColor(244, 46, 79)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.OBSIDIAN_PILLAR_BASEMENT)
-//				.addFeature(EndFeatures.FALLEN_PILLAR)
+				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.FALLEN_PILLAR)
 //				.addFeature(EndFeatures.OBSIDIAN_BOULDER)
 //				.addFeature(EndFeatures.GIGANTIC_AMARANITA)
 //				.addFeature(EndFeatures.LARGE_AMARANITA)
