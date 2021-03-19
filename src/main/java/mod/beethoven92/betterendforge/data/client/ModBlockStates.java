@@ -8,6 +8,7 @@ import java.util.Map;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.PedestalState;
+import mod.beethoven92.betterendforge.common.block.StalactiteBlock;
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
@@ -72,6 +73,11 @@ public class ModBlockStates extends BlockStateProvider
 		
 		simpleBlock(ModBlocks.MISSING_TILE.get());
 		makeBlockItemFromExistingModel(ModBlocks.MISSING_TILE.get());
+		
+		// BlockItem handled in item model provider
+		stalactiteBlock(ModBlocks.END_STONE_STALACTITE.get());
+		// BlockItem handled in item model provider
+		stalactiteBlock(ModBlocks.END_STONE_STALACTITE_CAVEMOSS.get());
 		
 		// WOODEN MATERIALS
 		registerWoodenMaterialBlockStates(ModBlocks.MOSSY_GLOWSHROOM);
@@ -691,6 +697,24 @@ public class ModBlockStates extends BlockStateProvider
            .modelFile(isLit? furnaceOn : furnace)
            .rotationX(x)
            .rotationY(y)
+           .build();
+        });
+    }
+   
+    private void stalactiteBlock(Block block)
+    {       
+        getVariantBuilder(block)
+        .forAllStates(state -> {
+           boolean isFloor = state.get(StalactiteBlock.IS_FLOOR);
+       	           
+           int size = state.get(StalactiteBlock.SIZE);
+           
+           ModelFile currentSize = models().withExistingParent(block.getRegistryName().getPath() + "_" + size, modLoc("block/stalactite_" + size))
+         		   .texture("texture", modLoc("block/" + block.getRegistryName().getPath() + "_" + size));
+           
+           return ConfiguredModel.builder()
+           .modelFile(currentSize)
+           .rotationX(isFloor? 180 : 0)
            .build();
         });
     }

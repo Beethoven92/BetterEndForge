@@ -64,11 +64,13 @@ import mod.beethoven92.betterendforge.common.block.ShadowGrassBlock;
 import mod.beethoven92.betterendforge.common.block.SilkMothNestBlock;
 import mod.beethoven92.betterendforge.common.block.SmallJellyshroomBlock;
 import mod.beethoven92.betterendforge.common.block.SmaragdantCrystalShardBlock;
+import mod.beethoven92.betterendforge.common.block.StalactiteBlock;
 import mod.beethoven92.betterendforge.common.block.SulphurCrystalBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
 import mod.beethoven92.betterendforge.common.block.TenaneaSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.TerrainBlock;
 import mod.beethoven92.betterendforge.common.block.TerrainPlantBlock;
+import mod.beethoven92.betterendforge.common.block.TripleTerrainBlock;
 import mod.beethoven92.betterendforge.common.block.TwistedUmbrellaMossBlock;
 import mod.beethoven92.betterendforge.common.block.TwistedUmbrellaMossTallBlock;
 import mod.beethoven92.betterendforge.common.block.UmbrellaMossBlock;
@@ -145,7 +147,7 @@ public class ModBlocks
                                                             tickRandomly()));
 	
 	public static final RegistryObject<Block> CAVE_MOSS = registerBlockWithDefaultItem("cave_moss", 
-			() -> new TerrainBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.PURPLE).
+			() -> new TripleTerrainBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.PURPLE).
                                                             setRequiresTool().
                                                             hardnessAndResistance(3.0F, 9.0F).
                                                             sound(SoundType.GROUND).
@@ -371,7 +373,12 @@ public class ModBlocks
 	public static final RegistryObject<Block> GRANITE_PEDESTAL = registerBlockWithDefaultItem("granite_pedestal",
 			() -> new PedestalBlock(AbstractBlock.Properties.from(Blocks.GRANITE).setLightLevel(PedestalBlock.light())));
 
-			
+	public static final RegistryObject<Block> END_STONE_STALACTITE = registerBlockWithDefaultItem("end_stone_stalactite", 
+			() -> new StalactiteBlock(AbstractBlock.Properties.from(Blocks.END_STONE).notSolid()));
+	
+	public static final RegistryObject<Block> END_STONE_STALACTITE_CAVEMOSS = registerBlockWithDefaultItem("end_stone_stalactite_cavemoss", 
+			() -> new StalactiteBlock(AbstractBlock.Properties.from(CAVE_MOSS.get()).notSolid()));		
+	
 	// PLANTS
 	public static final RegistryObject<Block> UMBRELLA_MOSS = registerBlockWithDefaultItem("umbrella_moss", 
 			() -> new UmbrellaMossBlock(AbstractBlock.Properties.create(Material.PLANTS).

@@ -174,6 +174,9 @@ public class ModBlockLootTables extends BlockLootTables
 		registerLootTable(ModBlocks.END_STONE_SMELTER.get(), BlockLootTables::droppingWithName);
 		registerLootTable(ModBlocks.END_STONE_FURNACE.get(), BlockLootTables::droppingWithName);
 		
+		registerDropSelfLootTable(ModBlocks.END_STONE_STALACTITE.get());
+		registerDropSelfLootTable(ModBlocks.END_STONE_STALACTITE_CAVEMOSS.get());
+		
 		// PLANTS
 		registerLootTable(ModBlocks.UMBRELLA_MOSS.get(), BlockLootTables::onlyWithShears);
 		registerLootTable(ModBlocks.UMBRELLA_MOSS_TALL.get(), BlockLootTables::onlyWithShears);

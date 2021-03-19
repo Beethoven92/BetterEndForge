@@ -11,16 +11,20 @@ public class BlockProperties
 	public static final EnumProperty<TripleShape> TRIPLE_SHAPE = EnumProperty.create("shape", TripleShape.class);
 	public static final EnumProperty<PedestalState> PEDESTAL_STATE = EnumProperty.create("state", PedestalState.class);
 	public static final EnumProperty<HydraluxShape> HYDRALUX_SHAPE = EnumProperty.create("shape", HydraluxShape.class);
+	public static final EnumProperty<PentaShape> PENTA_SHAPE = EnumProperty.create("shape", PentaShape.class);
+	
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
 	public static final BooleanProperty HAS_LIGHT = BooleanProperty.create("has_light");
 	public static final BooleanProperty ACTIVATED = BooleanProperty.create("active");
-	public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 3);
-	public static final EnumProperty<PentaShape> PENTA_SHAPE = EnumProperty.create("shape", PentaShape.class);
 	public static final BooleanProperty NATURAL = BooleanProperty.create("natural");
+	public static final BooleanProperty IS_FLOOR = BooleanProperty.create("is_floor");
+	
+	public static final IntegerProperty ROTATION = IntegerProperty.create("rotation", 0, 3);
 	public static final IntegerProperty FULLNESS = IntegerProperty.create("fullness", 0, 3);
 	public static final IntegerProperty DESTRUCTION = IntegerProperty.create("destruction", 0, 2);
 	public static final IntegerProperty DESTRUCTION_LONG = IntegerProperty.create("destruction", 0, 8);
 	public static final IntegerProperty PORTAL = IntegerProperty.create("portal", 0, EndPortals.getCount());
+	public static final IntegerProperty SIZE = IntegerProperty.create("size", 0, 7);
 	
 	public static enum TripleShape implements IStringSerializable 
 	{

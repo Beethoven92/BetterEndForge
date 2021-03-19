@@ -1,0 +1,6 @@
+{
+  "parent": "betterendforge:block/stalactite_1",
+  "textures": {
+    "texture": "betterendforge:block/end_stone_stalactite_cavemoss_1"
+  }
+}

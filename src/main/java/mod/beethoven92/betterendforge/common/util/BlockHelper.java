@@ -6,6 +6,7 @@ import java.util.Set;
 import com.google.common.collect.Sets;
 
 import mod.beethoven92.betterendforge.common.block.BlueVineBlock;
+import mod.beethoven92.betterendforge.common.block.StalactiteBlock;
 import mod.beethoven92.betterendforge.common.block.template.DoublePlantBlock;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import mod.beethoven92.betterendforge.common.block.template.FurBlock;
@@ -185,6 +186,30 @@ public class BlockHelper
 								setWithoutUpdate(world, POS, AIR);
 								POS.setY(POS.getY() + 1);
 								state = world.getBlockState(POS);
+							}
+						}
+					}
+					else if (state.getBlock() instanceof StalactiteBlock) 
+					{					
+						if (!state.isValidPosition(world, POS)) 
+						{
+							if (world.getBlockState(POS.up()).getBlock() instanceof StalactiteBlock) 
+							{
+								while (state.getBlock() instanceof StalactiteBlock) 
+								{
+									setWithoutUpdate(world, POS, AIR);
+									POS.setY(POS.getY() + 1);
+									state = world.getBlockState(POS);
+								}
+							}
+							else
+							{
+								while (state.getBlock() instanceof StalactiteBlock)
+								{
+									setWithoutUpdate(world, POS, AIR);
+									POS.setY(POS.getY() - 1);
+									state = world.getBlockState(POS);
+								}
 							}
 						}
 					}

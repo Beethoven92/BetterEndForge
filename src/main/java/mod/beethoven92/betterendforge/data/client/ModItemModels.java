@@ -27,7 +27,12 @@ public class ModItemModels extends ItemModelProvider
         getBuilder("gold_chandelier").parent(new ModelFile.UncheckedModelFile("item/generated")).
         texture("layer0", modLoc("item/gold_chandelier"));
         
-		// WOODEN MATERIALS
+        getBuilder("end_stone_stalactite").parent(new ModelFile.UncheckedModelFile("item/generated")).
+        texture("layer0", modLoc("item/end_stone_stalactite"));
+        getBuilder("end_stone_stalactite_cavemoss").parent(new ModelFile.UncheckedModelFile("item/generated")).
+        texture("layer0", modLoc("item/end_stone_stalactite_cavemoss"));
+        
+        // WOODEN MATERIALS
 		registerWoodenMaterialItemModels(ModBlocks.MOSSY_GLOWSHROOM);
 		registerWoodenMaterialItemModels(ModBlocks.LACUGROVE);
 		registerWoodenMaterialItemModels(ModBlocks.END_LOTUS);
