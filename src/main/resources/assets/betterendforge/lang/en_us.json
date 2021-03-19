@@ -219,7 +219,12 @@
 	"block.betterendforge.end_stone_furnace": "End Stone Furnace",
 	"block.betterendforge.aeternium_anvil": "Aeternium Anvil",
     "block.betterendforge.missing_tile": "Missing Tile",
-    
+    "block.betterendforge.end_stone_stalactite": "End Stone Stalactite",
+	"block.betterendforge.end_stone_stalactite_cavemoss": "Cave Moss Endstone Stalactite",
+	"block.betterendforge.smaragdant_crystal": "Smaragdant Crystal",
+	"block.betterendforge.smaragdant_crystal_shard": "Smaragdant Crystal Shard",
+	"block.betterendforge.rubinea": "Rubinea",
+	
     "block.betterendforge.andesite_pedestal": "Andesite Pedestal",
 	"block.betterendforge.diorite_pedestal": "Diorite Pedestal",
 	"block.betterendforge.granite_pedestal": "Granite Pedestal",
