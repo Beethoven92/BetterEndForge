@@ -1,0 +1,6 @@
+{
+    "parent": "betterendforge:block/crop_block_inverted",
+    "textures": {
+        "texture": "betterendforge:block/amber_root_3"
+    }
+}

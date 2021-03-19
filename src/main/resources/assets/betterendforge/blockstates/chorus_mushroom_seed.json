@@ -1,0 +1,20 @@
+{
+    "variants": {
+        "age=0": [
+			{ "model": "betterendforge:block/chorus_mushroom_0" },
+			{ "model": "betterendforge:block/chorus_mushroom_1" }
+		],
+        "age=1": [
+			{ "model": "betterendforge:block/chorus_mushroom_2" },
+			{ "model": "betterendforge:block/chorus_mushroom_3" }
+		],
+        "age=2": [
+			{ "model": "betterendforge:block/chorus_mushroom_4" },
+			{ "model": "betterendforge:block/chorus_mushroom_5" }
+		],
+        "age=3": [
+			{ "model": "betterendforge:block/chorus_mushroom_6" },
+			{ "model": "betterendforge:block/chorus_mushroom_7" }
+		]
+    }
+}

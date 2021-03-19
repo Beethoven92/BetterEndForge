@@ -127,6 +127,7 @@ public class ModRecipes extends RecipeProvider
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModItems.SHADOW_BERRY_RAW.get()), ModItems.SHADOW_BERRY_COOKED.get(), 0.35F, 200).addCriterion("has_shadow_berry_raw", hasItem(ModItems.SHADOW_BERRY_RAW.get())).build(consumer);
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModBlocks.JELLYSHROOM_CAP_PURPLE.get()), Items.SLIME_BALL, 0.35F, 200).addCriterion("has_jellyshroom_cap", hasItem(ModBlocks.JELLYSHROOM_CAP_PURPLE.get())).build(consumer, "slime_ball_from_jellyshroom_cap");
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModBlocks.MENGER_SPONGE_WET.get()), ModBlocks.MENGER_SPONGE.get(), 0.35F, 200).addCriterion("has_menger_sponge_wet", hasItem(ModBlocks.MENGER_SPONGE_WET.get())).build(consumer);
+		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModItems.CHORUS_MUSHROOM_RAW.get()), ModItems.CHORUS_MUSHROOM_COOKED.get(), 0.35F, 200).addCriterion("has_chorus_mushroom_raw", hasItem(ModItems.CHORUS_MUSHROOM_RAW.get())).build(consumer);
 		
 		// ARMORS AND TOOLS
 		makeIngotAndBlockRecipes(ModBlocks.AETERNIUM_BLOCK.get(), ModItems.AETERNIUM_INGOT.get(), consumer, "aeternium");

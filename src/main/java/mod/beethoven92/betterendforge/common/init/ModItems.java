@@ -104,9 +104,12 @@ public class ModItems
 	public final static RegistryObject<Item> SWEET_BERRY_JELLY = ITEMS.register("sweet_berry_jelly", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(3).saturation(0.75f).build())));
 	public final static RegistryObject<Item> SHADOW_BERRY_JELLY = ITEMS.register("shadow_berry_jelly", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(4).saturation(0.75f).effect(() -> new EffectInstance(Effects.NIGHT_VISION, 400), 1).build())));
 	public final static RegistryObject<Item> BLOSSOM_BERRY = ITEMS.register("blossom_berry", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(Foods.APPLE)));
+	public final static RegistryObject<Item> AMBER_ROOT_RAW = ITEMS.register("amber_root_raw", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(2).saturation(0.8F).build())));
+	public final static RegistryObject<Item> CHORUS_MUSHROOM_RAW = ITEMS.register("chorus_mushroom_raw", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(new Food.Builder().hunger(3).saturation(0.5F).build())));
+	public final static RegistryObject<Item> CHORUS_MUSHROOM_COOKED = ITEMS.register("chorus_mushroom_cooked", () -> new Item(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).food(Foods.MUSHROOM_STEW)));
 	
 	// DRINK ITEMS
-	public final static RegistryObject<Item> UMBRELLA_CLUSTER_JUICE = ITEMS.register("umbrella_cluster_juice", () -> new UmbrellaClusterJuiceItem(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
+	public final static RegistryObject<Item> UMBRELLA_CLUSTER_JUICE = ITEMS.register("umbrella_cluster_juice", () -> new UmbrellaClusterJuiceItem(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1).food(new Food.Builder().hunger(5).saturation(0.7F).build())));
 	
 	// MISC ITEMS
 	public final static RegistryObject<Item> BUCKET_END_FISH = ITEMS.register("bucket_end_fish", () -> new FishBucketItem(() -> ModEntityTypes.END_FISH.get(), () -> Fluids.WATER, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));

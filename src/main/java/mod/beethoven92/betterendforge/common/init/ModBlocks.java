@@ -682,6 +682,30 @@ public class ModBlocks
                                                             sound(SoundType.PLANT),
                                                             PINK_MOSS.get()));
 	
+	public static final RegistryObject<Block> AMBER_ROOT = registerBlockWithDefaultItem("amber_root_seed", 
+			() -> new EndCropBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                            zeroHardnessAndResistance().
+                                                            doesNotBlockMovement().
+                                                            tickRandomly().
+                                                            sound(SoundType.PLANT),
+                                                            AMBER_MOSS.get()));
+	
+	public static final RegistryObject<Block> CHORUS_MUSHROOM = registerBlockWithDefaultItem("chorus_mushroom_seed", 
+			() -> new EndCropBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                            zeroHardnessAndResistance().
+                                                            doesNotBlockMovement().
+                                                            tickRandomly().
+                                                            sound(SoundType.PLANT),
+                                                            CHORUS_NYLIUM.get()));
+	
+	public static final RegistryObject<Block> PEARLBERRY = registerBlockWithDefaultItem("pearlberry_seed", 
+			() -> new EndCropBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                            zeroHardnessAndResistance().
+                                                            doesNotBlockMovement().
+                                                            tickRandomly().
+                                                            sound(SoundType.PLANT),
+                                                            END_MOSS.get(), END_MYCELIUM.get()));
+	
 	// WALL PLANTS
 	public static final RegistryObject<Block> PURPLE_POLYPORE = registerBlockWithDefaultItem("purple_polypore", 
 			() -> new WallMushroomBlock(AbstractBlock.Properties.create(Material.PLANTS).

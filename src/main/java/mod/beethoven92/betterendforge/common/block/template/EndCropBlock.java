@@ -8,12 +8,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 public class EndCropBlock extends PlantBlock
 {
+	private static final VoxelShape SHAPE = Block.makeCuboidShape(2, 0, 2, 14, 14, 14);
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 3);
 	
 	private final Block[] terrain;
@@ -25,6 +28,12 @@ public class EndCropBlock extends PlantBlock
 		this.setDefaultState(getDefaultState().with(AGE, 0));
 	}
 
+	@Override
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	{
+		return SHAPE;
+	}
+	
 	@Override
 	public OffsetType getOffsetType()
 	{

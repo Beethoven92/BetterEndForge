@@ -222,9 +222,6 @@ public class ModBlockLootTables extends BlockLootTables
 		registerLootTable(ModBlocks.NEEDLEGRASS.get(), (block) -> {
 	    	return droppingWithShears(block, withExplosionDecay(block, ItemLootEntry.builder(Items.STICK).acceptFunction(SetCount.builder(RandomValueRange.of(0.0F, 2.0F)))));
 	    });
-		
-	    ILootCondition.IBuilder ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.SHADOW_BERRY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(ShadowBerryBlock.AGE, 3));
-	    registerLootTable(ModBlocks.SHADOW_BERRY.get(), droppingAndBonusWhen(ModBlocks.SHADOW_BERRY.get(), ModItems.SHADOW_BERRY_RAW.get(), ModBlocks.SHADOW_BERRY.get().asItem(), ilootcondition$ibuilder)); 
 	    
 	    registerDropSelfLootTable(ModBlocks.MENGER_SPONGE.get());
 	    registerDropSelfLootTable(ModBlocks.MENGER_SPONGE_WET.get());
@@ -255,14 +252,27 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		registerLootTable(ModBlocks.SMALL_JELLYSHROOM.get(), BlockLootTables::onlyWithShears);
 	    
-		ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.BLOSSOM_BERRY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EndCropBlock.AGE, 3));
-	    registerLootTable(ModBlocks.BLOSSOM_BERRY.get(), droppingAndBonusWhen(ModBlocks.BLOSSOM_BERRY.get(), ModItems.BLOSSOM_BERRY.get(), ModBlocks.BLOSSOM_BERRY.get().asItem(), ilootcondition$ibuilder)); 
-	    
 	    registerLootTable(ModBlocks.SILK_MOTH_NEST.get(), (block) -> {
 	        return LootTable.builder().addLootPool(withSurvivesExplosion(block, LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block).acceptCondition(BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withBoolProp(SilkMothNestBlock.ACTIVE, true))))));
 	    });
 	    
-		// WALL_PLANTS
+	    // CROPS
+	    ILootCondition.IBuilder ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.SHADOW_BERRY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(ShadowBerryBlock.AGE, 3));
+	    registerLootTable(ModBlocks.SHADOW_BERRY.get(), droppingAndBonusWhen(ModBlocks.SHADOW_BERRY.get(), ModItems.SHADOW_BERRY_RAW.get(), ModBlocks.SHADOW_BERRY.get().asItem(), ilootcondition$ibuilder)); 
+		
+	    ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.BLOSSOM_BERRY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EndCropBlock.AGE, 3));
+	    registerLootTable(ModBlocks.BLOSSOM_BERRY.get(), droppingAndBonusWhen(ModBlocks.BLOSSOM_BERRY.get(), ModItems.BLOSSOM_BERRY.get(), ModBlocks.BLOSSOM_BERRY.get().asItem(), ilootcondition$ibuilder)); 
+	    
+		ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.AMBER_ROOT.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EndCropBlock.AGE, 3));
+	    registerLootTable(ModBlocks.AMBER_ROOT.get(), droppingAndBonusWhen(ModBlocks.AMBER_ROOT.get(), ModItems.AMBER_ROOT_RAW.get(), ModBlocks.AMBER_ROOT.get().asItem(), ilootcondition$ibuilder)); 
+		
+	    ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.CHORUS_MUSHROOM.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EndCropBlock.AGE, 3));
+	    registerLootTable(ModBlocks.CHORUS_MUSHROOM.get(), droppingAndBonusWhen(ModBlocks.CHORUS_MUSHROOM.get(), ModItems.CHORUS_MUSHROOM_RAW.get(), ModBlocks.CHORUS_MUSHROOM.get().asItem(), ilootcondition$ibuilder)); 
+		
+	    ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.PEARLBERRY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EndCropBlock.AGE, 3));
+	    registerLootTable(ModBlocks.PEARLBERRY.get(), droppingAndBonusWhen(ModBlocks.PEARLBERRY.get(), ModItems.BLOSSOM_BERRY.get(), ModBlocks.PEARLBERRY.get().asItem(), ilootcondition$ibuilder)); 
+	    
+	    // WALL_PLANTS
 		registerDropSelfLootTable(ModBlocks.PURPLE_POLYPORE.get());
 		
 		registerLootTable(ModBlocks.TAIL_MOSS.get(), BlockLootTables::onlyWithShears);

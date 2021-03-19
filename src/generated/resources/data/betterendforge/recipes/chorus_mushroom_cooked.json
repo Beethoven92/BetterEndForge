@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "betterendforge:chorus_mushroom_raw"
+  },
+  "result": "betterendforge:chorus_mushroom_cooked",
+  "experience": 0.35,
+  "cookingtime": 200
+}
