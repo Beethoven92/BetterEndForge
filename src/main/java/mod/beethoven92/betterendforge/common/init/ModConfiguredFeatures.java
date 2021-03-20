@@ -328,6 +328,10 @@ public class ModConfiguredFeatures
 			ModFeatures.FALLEN_PILLAR.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.CHANCE.configure(new ChanceConfig(20)));
 	
+	public static final ConfiguredFeature<?, ?> OBSIDIAN_BOULDER = 
+			ModFeatures.OBSIDIAN_BOULDER.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.CHANCE.configure(new ChanceConfig(10)));
+	
 	// TREES
 	public static final ConfiguredFeature<?, ?> MOSSY_GLOWSHROOM = 
 			ModFeatures.MOSSY_GLOWSHROOM.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -529,6 +533,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "overworld_island"), OVERWORLD_ISLAND);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "obsidian_pillar_basement"), OBSIDIAN_PILLAR_BASEMENT);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "fallen_pillar"), FALLEN_PILLAR);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "obsidian_boulder"), OBSIDIAN_BOULDER);
         // TREES
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "mossy_glowshroom"), MOSSY_GLOWSHROOM);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "lacugrove"), LACUGROVE);
