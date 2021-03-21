@@ -16,6 +16,7 @@ import mod.beethoven92.betterendforge.common.world.feature.EndLotusLeafFeature;
 import mod.beethoven92.betterendforge.common.world.feature.FallenPillarFeature;
 import mod.beethoven92.betterendforge.common.world.feature.FloatingSpireFeature;
 import mod.beethoven92.betterendforge.common.world.feature.GeyserFeature;
+import mod.beethoven92.betterendforge.common.world.feature.GiganticAmaranitaFeature;
 import mod.beethoven92.betterendforge.common.world.feature.GlowPillarFeature;
 import mod.beethoven92.betterendforge.common.world.feature.HelixTreeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.HydraluxFeature;
@@ -158,6 +159,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> HELIX_TREE = new HelixTreeFeature();
 	public static final Feature<NoFeatureConfig> UMBRELLA_TREE = new UmbrellaTreeFeature();
 	public static final Feature<NoFeatureConfig> JELLYSHROOM = new JellyshroomFeature();
+	public static final Feature<NoFeatureConfig> GIGANTIC_AMARANITA = new GiganticAmaranitaFeature();
 	
 	// ORES
 	public static final Feature<OreFeatureConfig> ENDER_ORE = new OreFeature(OreFeatureConfig.CODEC);
@@ -280,6 +282,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), HELIX_TREE, "helix_tree");
     	BetterEnd.register(event.getRegistry(), UMBRELLA_TREE, "umbrella_tree");
     	BetterEnd.register(event.getRegistry(), JELLYSHROOM, "jellyshroom");
+    	BetterEnd.register(event.getRegistry(), GIGANTIC_AMARANITA, "gigantic_amaranita");
     	// ORES
     	BetterEnd.register(event.getRegistry(), THALLASIUM_ORE, "thallasium_ore");
     	BetterEnd.register(event.getRegistry(), ENDER_ORE, "ender_ore");

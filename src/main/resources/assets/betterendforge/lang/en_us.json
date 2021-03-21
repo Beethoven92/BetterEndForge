@@ -27,6 +27,12 @@
 	"block.betterendforge.sangnum": "Sangnum",
 	"block.betterendforge.sangnum_path": "Sangnum Path",
 	"block.betterendforge.mossy_obsidian": "Mossy Obsidian",
+	"block.betterendforge.amaranita_cap": "Amaranita Cap",
+	"block.betterendforge.amaranita_fur": "Amaranita Fur",
+	"block.betterendforge.amaranita_hymenophore": "Amaranita Hymenophore",
+	"block.betterendforge.amaranita_hyphae": "Amaranita Hyphae",
+	"block.betterendforge.amaranita_lantern": "Amaranita Lantern",
+	"block.betterendforge.amaranita_stem": "Amaranita Stem",       
 	
 	"biome.betterendforge.dragon_graveyards": "Dragon Graveyards",
 	"biome.betterendforge.crystal_mountains": "Crystal Mountains",
@@ -332,7 +338,7 @@
 	"item.betterendforge.blossom_berry": "Blossom Berry",
 	"item.betterendforge.amber_root_raw": "Raw Amber Root",
 	"item.betterendforge.chorus_mushroom_cooked": "Cooked Chorus Mushroom",
-	"item.betterendforge.chorus_mushroom_raw": "Raw Chorus Mushroom"
+	"item.betterendforge.chorus_mushroom_raw": "Raw Chorus Mushroom",
 
 	"item.betterendforge.bucket_end_fish": "End Fish Bucket",
 	"item.betterendforge.end_fish_cooked": "Cooked End Fish",

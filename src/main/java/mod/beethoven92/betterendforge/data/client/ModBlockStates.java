@@ -111,6 +111,11 @@ public class ModBlockStates extends BlockStateProvider
 		
 		// FLOWER POTS
 		registerFlowerPots();
+		
+		simpleBlock(ModBlocks.AMARANITA_HYMENOPHORE.get());
+		makeBlockItemFromExistingModel(ModBlocks.AMARANITA_HYMENOPHORE.get());
+		simpleBlock(ModBlocks.AMARANITA_CAP.get());
+		makeBlockItemFromExistingModel(ModBlocks.AMARANITA_CAP.get());
 	}
 	
 	private void registerLanterns() 

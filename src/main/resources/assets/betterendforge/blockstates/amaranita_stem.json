@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=x": { "model": "betterendforge:block/amaranita_stem", "x": 90, "y": 90 },
+    "axis=y": { "model": "betterendforge:block/amaranita_stem" },
+    "axis=z": { "model": "betterendforge:block/amaranita_stem", "x": 90 }
+  }
+}
