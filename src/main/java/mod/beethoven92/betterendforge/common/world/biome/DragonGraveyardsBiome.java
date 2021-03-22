@@ -23,7 +23,7 @@ public class DragonGraveyardsBiome extends BetterEndBiome {
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.FALLEN_PILLAR)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.OBSIDIAN_BOULDER)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.GIGANTIC_AMARANITA)
-//				.addFeature(EndFeatures.LARGE_AMARANITA)
+				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.LARGE_AMARANITA)
 //				.addFeature(EndFeatures.SMALL_AMARANITA)
 //				.addFeature(EndFeatures.GLOBULAGUS)
 //				.addFeature(EndFeatures.CLAWFERN)

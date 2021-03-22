@@ -45,6 +45,7 @@ import mod.beethoven92.betterendforge.common.block.JellyshroomCapBlock;
 import mod.beethoven92.betterendforge.common.block.LacugroveSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.LanceleafBlock;
 import mod.beethoven92.betterendforge.common.block.LanceleafSeedBlock;
+import mod.beethoven92.betterendforge.common.block.LargeAmaranitaBlock;
 import mod.beethoven92.betterendforge.common.block.LumecornBlock;
 import mod.beethoven92.betterendforge.common.block.LumecornSeedBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeBlock;
@@ -940,6 +941,8 @@ public class ModBlocks
 					                                                    tickRandomly().
 					                                                    sound(SoundType.WART)));
 	
+	public static final RegistryObject<Block> LARGE_AMARANITA_MUSHROOM = registerBlock("large_amaranita_mushroom",
+			() -> new LargeAmaranitaBlock());
 	
 	public static final RegistryObject<Block> AMARANITA_STEM = registerBlockWithDefaultItem("amaranita_stem",
 			() -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD, MaterialColor.LIME).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));

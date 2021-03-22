@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"shape=top": { "model": "betterendforge:block/large_amaranita_cap" },
+		"shape=middle": { "model": "betterendforge:block/large_amaranita_stem" },
+		"shape=bottom": { "model": "betterendforge:block/large_amaranita_roots" }
+	}
+}

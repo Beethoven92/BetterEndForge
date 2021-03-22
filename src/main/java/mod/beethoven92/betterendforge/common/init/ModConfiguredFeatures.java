@@ -89,6 +89,10 @@ public class ModConfiguredFeatures
 			withPlacement(Placement.TOP_SOLID_HEIGHTMAP.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG)));
 	
+	public static final ConfiguredFeature<?, ?> LARGE_AMARANITA = 
+			ModFeatures.LARGE_AMARANITA.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(5);
+	
 	public static final ConfiguredFeature<?, ?> TENANEA_BUSH = 
 			ModFeatures.TENANEA_BUSH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.TOP_SOLID_HEIGHTMAP.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).
@@ -474,6 +478,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "pythadendron_bush"), PYTHADENDRON_BUSH);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "dragon_tree_bush"), DRAGON_TREE_BUSH);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "tenanea_bush"), TENANEA_BUSH);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "large_amaranita"), LARGE_AMARANITA);
         // PLANTS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "umbrella_moss"), UMBRELLA_MOSS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "creeping_moss"), CREEPING_MOSS);
