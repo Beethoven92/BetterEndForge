@@ -13,8 +13,10 @@ import mod.beethoven92.betterendforge.common.world.feature.EndLakeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLilyFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLotusFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLotusLeafFeature;
+import mod.beethoven92.betterendforge.common.world.feature.FallenPillarFeature;
 import mod.beethoven92.betterendforge.common.world.feature.FloatingSpireFeature;
 import mod.beethoven92.betterendforge.common.world.feature.GeyserFeature;
+import mod.beethoven92.betterendforge.common.world.feature.GiganticAmaranitaFeature;
 import mod.beethoven92.betterendforge.common.world.feature.GlowPillarFeature;
 import mod.beethoven92.betterendforge.common.world.feature.HelixTreeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.HydraluxFeature;
@@ -25,6 +27,7 @@ import mod.beethoven92.betterendforge.common.world.feature.LanceleafFeature;
 import mod.beethoven92.betterendforge.common.world.feature.Lumecorn;
 import mod.beethoven92.betterendforge.common.world.feature.MengerSpongeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MossyGlowshroomFeature;
+import mod.beethoven92.betterendforge.common.world.feature.ObsidianBoulderFeature;
 import mod.beethoven92.betterendforge.common.world.feature.ObsidianPillarBasementFeature;
 import mod.beethoven92.betterendforge.common.world.feature.OreLayerFeature;
 import mod.beethoven92.betterendforge.common.world.feature.OverworldIslandFeature;
@@ -144,6 +147,8 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> ICE_STAR_SMALL = new IceStarFeature(3, 5, 7, 12);
 	public static final Feature<NoFeatureConfig> OVERWORLD_ISLAND = new OverworldIslandFeature();
 	public static final Feature<NoFeatureConfig> OBSIDIAN_PILLAR_BASEMENT = new ObsidianPillarBasementFeature();
+	public static final Feature<NoFeatureConfig> FALLEN_PILLAR = new FallenPillarFeature();
+	public static final Feature<NoFeatureConfig> OBSIDIAN_BOULDER = new ObsidianBoulderFeature();
 	
 	// TREES
 	public static final Feature<NoFeatureConfig> MOSSY_GLOWSHROOM = new MossyGlowshroomFeature();
@@ -154,6 +159,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> HELIX_TREE = new HelixTreeFeature();
 	public static final Feature<NoFeatureConfig> UMBRELLA_TREE = new UmbrellaTreeFeature();
 	public static final Feature<NoFeatureConfig> JELLYSHROOM = new JellyshroomFeature();
+	public static final Feature<NoFeatureConfig> GIGANTIC_AMARANITA = new GiganticAmaranitaFeature();
 	
 	// ORES
 	public static final Feature<OreFeatureConfig> ENDER_ORE = new OreFeature(OreFeatureConfig.CODEC);
@@ -265,6 +271,8 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), ICE_STAR_SMALL, "ice_star_small");
     	BetterEnd.register(event.getRegistry(), OVERWORLD_ISLAND, "overworld_island");
     	BetterEnd.register(event.getRegistry(), OBSIDIAN_PILLAR_BASEMENT, "obsidian_pillar_basement");
+    	BetterEnd.register(event.getRegistry(), FALLEN_PILLAR, "fallen_pillar");
+    	BetterEnd.register(event.getRegistry(), OBSIDIAN_BOULDER, "obsidian_boulder");
     	// TREES
     	BetterEnd.register(event.getRegistry(), MOSSY_GLOWSHROOM, "mossy_glowshroom");
     	BetterEnd.register(event.getRegistry(), LACUGROVE, "lacugrove");   
@@ -274,6 +282,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), HELIX_TREE, "helix_tree");
     	BetterEnd.register(event.getRegistry(), UMBRELLA_TREE, "umbrella_tree");
     	BetterEnd.register(event.getRegistry(), JELLYSHROOM, "jellyshroom");
+    	BetterEnd.register(event.getRegistry(), GIGANTIC_AMARANITA, "gigantic_amaranita");
     	// ORES
     	BetterEnd.register(event.getRegistry(), THALLASIUM_ORE, "thallasium_ore");
     	BetterEnd.register(event.getRegistry(), ENDER_ORE, "ender_ore");

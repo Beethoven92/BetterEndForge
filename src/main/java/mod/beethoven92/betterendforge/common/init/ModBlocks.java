@@ -940,6 +940,30 @@ public class ModBlocks
 					                                                    tickRandomly().
 					                                                    sound(SoundType.WART)));
 	
+	
+	public static final RegistryObject<Block> AMARANITA_STEM = registerBlockWithDefaultItem("amaranita_stem",
+			() -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD, MaterialColor.LIME).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
+	
+	public static final RegistryObject<Block> AMARANITA_HYPHAE = registerBlockWithDefaultItem("amaranita_hyphae",
+			() -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD, MaterialColor.LIME).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
+	
+	public static final RegistryObject<Block> AMARANITA_HYMENOPHORE = registerBlockWithDefaultItem("amaranita_hymenophore",
+			() -> new Block(AbstractBlock.Properties.create(Material.WOOD).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
+	
+	public static final RegistryObject<Block> AMARANITA_LANTERN = registerBlockWithDefaultItem("amaranita_lantern",
+			() -> new Block(AbstractBlock.Properties.create(Material.WOOD).harvestTool(ToolType.AXE).sound(SoundType.WART).setLightLevel(s -> 15)));
+	
+	public static final RegistryObject<Block> AMARANITA_FUR = registerBlockWithDefaultItem("amaranita_fur",
+			() -> new FurBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS).
+                    zeroHardnessAndResistance().
+                    setLightLevel((value) -> {return 15;}).
+                    doesNotBlockMovement().
+                    sound(SoundType.WET_GRASS)));
+	
+	public static final RegistryObject<Block> AMARANITA_CAP = registerBlockWithDefaultItem("amaranita_cap",
+			() -> new Block(AbstractBlock.Properties.create(Material.WOOD).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
+	
+	
 	public static final RegistryObject<Block> JELLYSHROOM_CAP_PURPLE = registerBlockWithDefaultItem("jellyshroom_cap_purple", 
 			() -> new JellyshroomCapBlock(217, 142, 255, 164, 0, 255));
 	

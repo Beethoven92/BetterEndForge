@@ -349,6 +349,15 @@ public class ModBlockLootTables extends BlockLootTables
 		
 		registerDropSelfLootTable(ModBlocks.JELLYSHROOM_CAP_PURPLE.get());
 		
+		registerDropSelfLootTable(ModBlocks.AMARANITA_STEM.get());
+		registerDropSelfLootTable(ModBlocks.AMARANITA_HYPHAE.get());
+		registerDropSelfLootTable(ModBlocks.AMARANITA_HYMENOPHORE.get());
+		registerDropSelfLootTable(ModBlocks.AMARANITA_LANTERN.get());
+		registerDropSelfLootTable(ModBlocks.AMARANITA_CAP.get());
+		registerLootTable(ModBlocks.AMARANITA_FUR.get(), (block) -> {
+			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
+		});
+		
 		// FLOWER POT BLOCKS
 		registerFlowerPotLootTables();
 		

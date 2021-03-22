@@ -104,6 +104,8 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.UMBRELLA_TREE_SAPLING.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(ModBlocks.UMBRELLA_TREE_MEMBRANE.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(ModBlocks.JELLYSHROOM_CAP_PURPLE.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ModBlocks.AMARANITA_HYMENOPHORE.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.AMARANITA_FUR.get(), RenderType.getCutout());
 		
 		// PLANTS
 		RenderTypeLookup.setRenderLayer(ModBlocks.UMBRELLA_MOSS.get(), RenderType.getCutout());
