@@ -44,7 +44,9 @@ public class ModRecipes extends RecipeProvider
 	    
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.HYDRALUX_PETAL_BLOCK.get()).key('#', ModItems.HYDRALUX_PETAL.get()).patternLine("##").patternLine("##").addCriterion("has_hydralux_petal", hasItem(ModItems.HYDRALUX_PETAL.get())).build(consumer);
 	    
-	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.AMBER_BLOCK.get()).key('#', ModItems.AMBER_GEM.get()).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_amber_gem", hasItem(ModItems.AMBER_GEM.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.AMBER_BLOCK.get()).key('#', ModItems.AMBER_GEM.get()).patternLine("##").patternLine("##").addCriterion("has_amber_gem", hasItem(ModItems.AMBER_GEM.get())).build(consumer);
+	    ShapelessRecipeBuilder.shapelessRecipe(ModItems.AMBER_GEM.get(), 4).addIngredient(ModBlocks.AMBER_BLOCK.get()).addCriterion("has_amber_block", hasItem(ModBlocks.AMBER_BLOCK.get())).build(consumer, "amber_gem_from_amber_block");
+	    
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.AURORA_CRYSTAL.get()).key('#', ModItems.CRYSTAL_SHARDS.get()).patternLine("##").patternLine("##").addCriterion("has_crystal_shard", hasItem(ModItems.CRYSTAL_SHARDS.get())).build(consumer);
 	    
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.END_LOTUS.log.get()).key('#', ModBlocks.END_LOTUS_STEM.get()).patternLine("##").patternLine("##").addCriterion("has_end_lotus_stem", hasItem(ModBlocks.END_LOTUS_STEM.get())).build(consumer);

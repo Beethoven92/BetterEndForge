@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "betterendforge:amber_block"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:amber_gem",
+    "count": 4
+  }
+}
