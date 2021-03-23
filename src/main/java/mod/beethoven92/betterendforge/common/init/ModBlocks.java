@@ -63,6 +63,7 @@ import mod.beethoven92.betterendforge.common.block.RunedFlavoliteBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowGrassBlock;
 import mod.beethoven92.betterendforge.common.block.SilkMothNestBlock;
+import mod.beethoven92.betterendforge.common.block.SmallAmaranitaBlock;
 import mod.beethoven92.betterendforge.common.block.SmallJellyshroomBlock;
 import mod.beethoven92.betterendforge.common.block.SmaragdantCrystalShardBlock;
 import mod.beethoven92.betterendforge.common.block.StalactiteBlock;
@@ -940,6 +941,9 @@ public class ModBlocks
 					                                                    hardnessAndResistance(1.0F).
 					                                                    tickRandomly().
 					                                                    sound(SoundType.WART)));
+	
+	public static final RegistryObject<Block> SMALL_AMARANITA_MUSHROOM = registerBlockWithDefaultItem("small_amaranita_mushroom",
+			() -> new SmallAmaranitaBlock());
 	
 	public static final RegistryObject<Block> LARGE_AMARANITA_MUSHROOM = registerBlock("large_amaranita_mushroom",
 			() -> new LargeAmaranitaBlock());

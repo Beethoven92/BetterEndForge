@@ -203,6 +203,11 @@ public class ModConfiguredFeatures
 			ModFeatures.TWISTED_UMBRELLA_MOSS_RARE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(2);
 	
+	public static final ConfiguredFeature<?, ?> SMALL_AMARANITA = 
+			ModFeatures.SMALL_AMARANITA.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(4);
+
+	
 	// WALL PLANTS
 	public static final ConfiguredFeature<?, ?> PURPLE_POLYPORE = 
 			ModFeatures.PURPLE_POLYPORE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -506,6 +511,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "umbrella_moss_rare"), UMBRELLA_MOSS_RARE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "creeping_moss_rare"), CREEPING_MOSS_RARE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "twisted_umbrella_moss_rare"), TWISTED_UMBRELLA_MOSS_RARE);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "small_amaranita"), SMALL_AMARANITA);
         // WALL PLANTS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "purple_polypore"), PURPLE_POLYPORE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "purple_polypore_dense"), PURPLE_POLYPORE_DENSE);

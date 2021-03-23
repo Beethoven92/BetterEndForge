@@ -24,7 +24,7 @@ public class DragonGraveyardsBiome extends BetterEndBiome {
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.OBSIDIAN_BOULDER)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.GIGANTIC_AMARANITA)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.LARGE_AMARANITA)
-//				.addFeature(EndFeatures.SMALL_AMARANITA)
+				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.SMALL_AMARANITA)
 //				.addFeature(EndFeatures.GLOBULAGUS)
 //				.addFeature(EndFeatures.CLAWFERN)
 				.addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
