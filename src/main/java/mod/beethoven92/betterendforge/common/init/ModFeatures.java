@@ -111,6 +111,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> TWISTED_UMBRELLA_MOSS_RARE = new SinglePlantFeature(ModBlocks.TWISTED_UMBRELLA_MOSS.get(), 3);
 	public static final Feature<NoFeatureConfig> LUMECORN = new Lumecorn();
 	public static final Feature<NoFeatureConfig> SMALL_AMARANITA = new SinglePlantFeature(ModBlocks.SMALL_AMARANITA_MUSHROOM.get(), 5, 5);
+	public static final Feature<NoFeatureConfig> GLOBULAGUS = new SinglePlantFeature(ModBlocks.GLOBULAGUS.get(), 5, 3);
 	
 	// WALL PLANTS
 	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 3);
@@ -241,6 +242,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), CREEPING_MOSS_RARE, "creeping_moss_rare");
     	BetterEnd.register(event.getRegistry(), TWISTED_UMBRELLA_MOSS_RARE, "twisted_umbrella_moss_rare");
     	BetterEnd.register(event.getRegistry(), SMALL_AMARANITA, "small_amaranita");
+    	BetterEnd.register(event.getRegistry(), GLOBULAGUS, "globulagus");
     	// WALL_PLANTS
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE, "purple_polypore");
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE_DENSE, "purple_polypore_dense");

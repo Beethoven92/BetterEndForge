@@ -6,26 +6,21 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
 
-public class TerrainPlantBlock extends PlantBlock
-{
-	private final Block ground;
-	
-	public TerrainPlantBlock(Block ground)
-	{
-		super(AbstractBlock.Properties.create(Material.TALL_PLANTS).
-                zeroHardnessAndResistance().
-                doesNotBlockMovement().
-                sound(SoundType.PLANT));
-		
+public class TerrainPlantBlock extends PlantBlock {
+	private final Block[] ground;
+
+	public TerrainPlantBlock(Block... ground) {
+		super(AbstractBlock.Properties.create(Material.TALL_PLANTS).zeroHardnessAndResistance().doesNotBlockMovement()
+				.sound(SoundType.PLANT));
+
 		this.ground = ground;
 	}
-	
+
 	@Override
-	protected boolean isTerrain(BlockState state) 
-	{
-		return state.isIn(ground);
+	protected boolean isTerrain(BlockState state) {
+		for (Block b : ground)
+			return state.isIn(b);
+		return false;
 	}
 }
