@@ -444,6 +444,10 @@ public class ModBlocks
 	public static final RegistryObject<Block> GLOBULAGUS = registerBlockWithDefaultItem("globulagus", 
 			() -> new TerrainPlantBlock(SANGNUM.get(), MOSSY_OBSIDIAN.get())); // TODO: Add MOSSY_DRAGON_BONE
 	
+	public static final RegistryObject<Block> CLAWFERN = registerBlockWithDefaultItem("clawfern", 
+			() -> new TerrainPlantBlock(SANGNUM.get(), MOSSY_OBSIDIAN.get())); // TODO: Add MOSSY_DRAGON_BONE
+
+	
 	public static final RegistryObject<Block> BLUE_VINE_SEED = registerBlockWithDefaultItem("blue_vine_seed", 
 			() -> new BlueVineSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).
 					                                             zeroHardnessAndResistance().

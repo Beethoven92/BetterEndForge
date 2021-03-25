@@ -171,6 +171,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.LARGE_AMARANITA_MUSHROOM.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.SMALL_AMARANITA_MUSHROOM.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.GLOBULAGUS.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.CLAWFERN.get(), RenderType.getCutout());
 		
 		// MISC
 		RenderTypeLookup.setRenderLayer(ModBlocks.END_PORTAL_BLOCK.get(), RenderType.getTranslucent());
