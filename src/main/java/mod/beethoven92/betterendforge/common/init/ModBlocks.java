@@ -51,6 +51,7 @@ import mod.beethoven92.betterendforge.common.block.LumecornSeedBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeWetBlock;
 import mod.beethoven92.betterendforge.common.block.ModLanternBlock;
+import mod.beethoven92.betterendforge.common.block.MossyDragonBoneBlock;
 import mod.beethoven92.betterendforge.common.block.MossyGlowshroomCapBlock;
 import mod.beethoven92.betterendforge.common.block.MossyGlowshroomSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.MossyObsidianBlock;
@@ -103,7 +104,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.StairsBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
@@ -233,6 +236,18 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> MOSSY_OBSIDIAN = registerBlockWithDefaultItem("mossy_obsidian", 
 			() -> new MossyObsidianBlock());
+	
+	public static final RegistryObject<RotatedPillarBlock> DRAGON_BONE_BLOCK = registerBlockWithDefaultItem("dragon_bone_block", 
+			() -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.SAND).setRequiresTool().hardnessAndResistance(2.0F).sound(SoundType.BONE)));
+	
+	public static final RegistryObject<StairsBlock> DRAGON_BONE_STAIRS = registerBlockWithDefaultItem("dragon_bone_stairs", 
+			() -> new StairsBlock(() -> DRAGON_BONE_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(DRAGON_BONE_BLOCK.get())));
+	
+	public static final RegistryObject<SlabBlock> DRAGON_BONE_SLAB = registerBlockWithDefaultItem("dragon_bone_slab", 
+			() -> new SlabBlock(AbstractBlock.Properties.from(DRAGON_BONE_BLOCK.get())));
+
+	public static final RegistryObject<Block> MOSSY_DRAGON_BONE = registerBlockWithDefaultItem("mossy_dragon_bone", 
+			() -> new MossyDragonBoneBlock());
 	
 	// MATERIALS
 	public static final RegistryObject<Block> AETERNIUM_BLOCK = registerBlockWithDefaultItem("aeternium_block",
@@ -442,10 +457,10 @@ public class ModBlocks
 			() -> new TerrainPlantBlock(END_MOSS.get()));
 	
 	public static final RegistryObject<Block> GLOBULAGUS = registerBlockWithDefaultItem("globulagus", 
-			() -> new TerrainPlantBlock(SANGNUM.get(), MOSSY_OBSIDIAN.get())); // TODO: Add MOSSY_DRAGON_BONE
+			() -> new TerrainPlantBlock(SANGNUM.get(), MOSSY_OBSIDIAN.get(), MOSSY_DRAGON_BONE.get()));
 	
 	public static final RegistryObject<Block> CLAWFERN = registerBlockWithDefaultItem("clawfern", 
-			() -> new TerrainPlantBlock(SANGNUM.get(), MOSSY_OBSIDIAN.get())); // TODO: Add MOSSY_DRAGON_BONE
+			() -> new TerrainPlantBlock(SANGNUM.get(), MOSSY_OBSIDIAN.get(), MOSSY_DRAGON_BONE.get()));
 
 	
 	public static final RegistryObject<Block> BLUE_VINE_SEED = registerBlockWithDefaultItem("blue_vine_seed", 

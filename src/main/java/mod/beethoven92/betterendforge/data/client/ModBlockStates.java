@@ -116,6 +116,13 @@ public class ModBlockStates extends BlockStateProvider
 		makeBlockItemFromExistingModel(ModBlocks.AMARANITA_HYMENOPHORE.get());
 		simpleBlock(ModBlocks.AMARANITA_CAP.get());
 		makeBlockItemFromExistingModel(ModBlocks.AMARANITA_CAP.get());
+		axisBlock(ModBlocks.DRAGON_BONE_BLOCK.get(), modLoc("block/dragon_bone_block_side"), modLoc("block/dragon_bone_block_top"));
+		makeBlockItemFromExistingModel(ModBlocks.DRAGON_BONE_BLOCK.get());
+		stairsBlock(ModBlocks.DRAGON_BONE_STAIRS.get(), modLoc("block/dragon_bone_block"));
+		makeBlockItemFromExistingModel(ModBlocks.DRAGON_BONE_STAIRS.get());
+		slabBlock(ModBlocks.DRAGON_BONE_SLAB.get(), modLoc("block/dragon_bone_block"), modLoc("block/dragon_bone_block"));
+		makeBlockItemFromExistingModel(ModBlocks.DRAGON_BONE_SLAB.get());
+
 	}
 	
 	private void registerLanterns() 

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "side": "betterendforge:block/dragon_bone_block_side",
+    "end": "betterendforge:block/dragon_bone_block_top"
+  }
+}

@@ -31,9 +31,7 @@ public class SmallAmaranitaBlock extends PlantBlock {
 
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		// TODO: Enable this
-//		return state.isIn(ModBlocks.SANGNUM.get()) || state.isIn(ModBlocks.MOSSY_OBSIDIAN.get()) || state.isIn(ModBlocks.MOSSY_DRAGON_BONE.get());
-		return state.isIn(ModBlocks.SANGNUM.get()) || state.isIn(ModBlocks.MOSSY_OBSIDIAN.get());
+		return state.isIn(ModBlocks.SANGNUM.get()) || state.isIn(ModBlocks.MOSSY_OBSIDIAN.get()) || state.isIn(ModBlocks.MOSSY_DRAGON_BONE.get());
 	}
 
 	@Override

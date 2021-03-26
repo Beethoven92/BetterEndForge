@@ -362,6 +362,14 @@ public class ModBlockLootTables extends BlockLootTables
 			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
 		});
 		
+	    registerLootTable(ModBlocks.MOSSY_DRAGON_BONE.get(), (block) -> {
+	    	return droppingWithSilkTouch(block, ModBlocks.DRAGON_BONE_BLOCK.get());
+	    });
+		registerDropSelfLootTable(ModBlocks.DRAGON_BONE_BLOCK.get());
+		registerDropSelfLootTable(ModBlocks.DRAGON_BONE_SLAB.get());
+		registerDropSelfLootTable(ModBlocks.DRAGON_BONE_STAIRS.get());
+
+		
 		// FLOWER POT BLOCKS
 		registerFlowerPotLootTables();
 		
