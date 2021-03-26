@@ -1,0 +1,8 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/clawfern_01" },
+			{ "model": "betterendforge:block/clawfern_02" }
+		]
+	}
+}

@@ -194,6 +194,10 @@ public class ModBlockLootTables extends BlockLootTables
 		registerLootTable(ModBlocks.SALTEAGO.get(), BlockLootTables::onlyWithShears);
 		registerLootTable(ModBlocks.VAIOLUSH_FERN.get(), BlockLootTables::onlyWithShears);
 		registerLootTable(ModBlocks.FRACTURN.get(), BlockLootTables::onlyWithShears);
+		registerLootTable(ModBlocks.LARGE_AMARANITA_MUSHROOM.get(), blockNoDrop());
+		registerLootTable(ModBlocks.SMALL_AMARANITA_MUSHROOM.get(), BlockLootTables::onlyWithShears);		
+		registerLootTable(ModBlocks.GLOBULAGUS.get(), BlockLootTables::onlyWithShears);		
+		registerLootTable(ModBlocks.CLAWFERN.get(), BlockLootTables::onlyWithShears);		
 		
 		registerLootTable(ModBlocks.BLUE_VINE_SEED.get(), BlockLootTables::onlyWithShears);
 		registerLootTable(ModBlocks.BLUE_VINE.get(), BlockLootTables::onlyWithShears);
@@ -357,6 +361,14 @@ public class ModBlockLootTables extends BlockLootTables
 		registerLootTable(ModBlocks.AMARANITA_FUR.get(), (block) -> {
 			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
 		});
+		
+	    registerLootTable(ModBlocks.MOSSY_DRAGON_BONE.get(), (block) -> {
+	    	return droppingWithSilkTouch(block, ModBlocks.DRAGON_BONE_BLOCK.get());
+	    });
+		registerDropSelfLootTable(ModBlocks.DRAGON_BONE_BLOCK.get());
+		registerDropSelfLootTable(ModBlocks.DRAGON_BONE_SLAB.get());
+		registerDropSelfLootTable(ModBlocks.DRAGON_BONE_STAIRS.get());
+
 		
 		// FLOWER POT BLOCKS
 		registerFlowerPotLootTables();

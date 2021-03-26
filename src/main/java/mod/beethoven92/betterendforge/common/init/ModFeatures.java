@@ -24,6 +24,7 @@ import mod.beethoven92.betterendforge.common.world.feature.IceStarFeature;
 import mod.beethoven92.betterendforge.common.world.feature.JellyshroomFeature;
 import mod.beethoven92.betterendforge.common.world.feature.LacugroveFeature;
 import mod.beethoven92.betterendforge.common.world.feature.LanceleafFeature;
+import mod.beethoven92.betterendforge.common.world.feature.LargeAmaranitaFeature;
 import mod.beethoven92.betterendforge.common.world.feature.Lumecorn;
 import mod.beethoven92.betterendforge.common.world.feature.MengerSpongeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MossyGlowshroomFeature;
@@ -80,6 +81,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> PYTHADENDRON_BUSH = new BushFeature(ModBlocks.PYTHADENDRON_LEAVES.get(), ModBlocks.PYTHADENDRON.bark.get());
 	public static final Feature<NoFeatureConfig> DRAGON_TREE_BUSH = new BushFeature(ModBlocks.DRAGON_TREE_LEAVES.get(), ModBlocks.DRAGON_TREE.bark.get());
 	public static final Feature<NoFeatureConfig> TENANEA_BUSH = new TenaneaBushFeature();
+	public static final Feature<NoFeatureConfig> LARGE_AMARANITA = new LargeAmaranitaFeature();
 	
 	// PLANTS
 	public static final Feature<NoFeatureConfig> UMBRELLA_MOSS = new DoublePlantFeature(ModBlocks.UMBRELLA_MOSS.get(), ModBlocks.UMBRELLA_MOSS_TALL.get(), 5);
@@ -108,6 +110,9 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> CREEPING_MOSS_RARE = new SinglePlantFeature(ModBlocks.CREEPING_MOSS.get(), 3);
 	public static final Feature<NoFeatureConfig> TWISTED_UMBRELLA_MOSS_RARE = new SinglePlantFeature(ModBlocks.TWISTED_UMBRELLA_MOSS.get(), 3);
 	public static final Feature<NoFeatureConfig> LUMECORN = new Lumecorn();
+	public static final Feature<NoFeatureConfig> SMALL_AMARANITA = new SinglePlantFeature(ModBlocks.SMALL_AMARANITA_MUSHROOM.get(), 5, 5);
+	public static final Feature<NoFeatureConfig> GLOBULAGUS = new SinglePlantFeature(ModBlocks.GLOBULAGUS.get(), 5, 3);
+	public static final Feature<NoFeatureConfig> CLAWFERN = new SinglePlantFeature(ModBlocks.CLAWFERN.get(), 5, 4);
 	
 	// WALL PLANTS
 	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 3);
@@ -209,6 +214,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), PYTHADENDRON_BUSH, "pythadendron_bush"); 
     	BetterEnd.register(event.getRegistry(), DRAGON_TREE_BUSH, "dragon_tree_bush"); 
     	BetterEnd.register(event.getRegistry(), TENANEA_BUSH, "tenanea_bush"); 
+    	BetterEnd.register(event.getRegistry(), LARGE_AMARANITA, "large_amaranita"); 
     	// PLANTS
     	BetterEnd.register(event.getRegistry(), UMBRELLA_MOSS, "umbrella_moss");
     	BetterEnd.register(event.getRegistry(), CREEPING_MOSS, "creeping_moss");   	
@@ -236,6 +242,9 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), UMBRELLA_MOSS_RARE, "umbrella_moss_rare");
     	BetterEnd.register(event.getRegistry(), CREEPING_MOSS_RARE, "creeping_moss_rare");
     	BetterEnd.register(event.getRegistry(), TWISTED_UMBRELLA_MOSS_RARE, "twisted_umbrella_moss_rare");
+    	BetterEnd.register(event.getRegistry(), SMALL_AMARANITA, "small_amaranita");
+    	BetterEnd.register(event.getRegistry(), GLOBULAGUS, "globulagus");
+    	BetterEnd.register(event.getRegistry(), CLAWFERN, "clawfern");
     	// WALL_PLANTS
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE, "purple_polypore");
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE_DENSE, "purple_polypore_dense");

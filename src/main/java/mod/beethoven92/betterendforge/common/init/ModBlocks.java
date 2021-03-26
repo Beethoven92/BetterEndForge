@@ -45,11 +45,13 @@ import mod.beethoven92.betterendforge.common.block.JellyshroomCapBlock;
 import mod.beethoven92.betterendforge.common.block.LacugroveSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.LanceleafBlock;
 import mod.beethoven92.betterendforge.common.block.LanceleafSeedBlock;
+import mod.beethoven92.betterendforge.common.block.LargeAmaranitaBlock;
 import mod.beethoven92.betterendforge.common.block.LumecornBlock;
 import mod.beethoven92.betterendforge.common.block.LumecornSeedBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeWetBlock;
 import mod.beethoven92.betterendforge.common.block.ModLanternBlock;
+import mod.beethoven92.betterendforge.common.block.MossyDragonBoneBlock;
 import mod.beethoven92.betterendforge.common.block.MossyGlowshroomCapBlock;
 import mod.beethoven92.betterendforge.common.block.MossyGlowshroomSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.MossyObsidianBlock;
@@ -62,6 +64,7 @@ import mod.beethoven92.betterendforge.common.block.RunedFlavoliteBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
 import mod.beethoven92.betterendforge.common.block.ShadowGrassBlock;
 import mod.beethoven92.betterendforge.common.block.SilkMothNestBlock;
+import mod.beethoven92.betterendforge.common.block.SmallAmaranitaBlock;
 import mod.beethoven92.betterendforge.common.block.SmallJellyshroomBlock;
 import mod.beethoven92.betterendforge.common.block.SmaragdantCrystalShardBlock;
 import mod.beethoven92.betterendforge.common.block.StalactiteBlock;
@@ -101,7 +104,9 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowerPotBlock;
 import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.StairsBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
@@ -231,6 +236,18 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> MOSSY_OBSIDIAN = registerBlockWithDefaultItem("mossy_obsidian", 
 			() -> new MossyObsidianBlock());
+	
+	public static final RegistryObject<RotatedPillarBlock> DRAGON_BONE_BLOCK = registerBlockWithDefaultItem("dragon_bone_block", 
+			() -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.SAND).setRequiresTool().hardnessAndResistance(2.0F).sound(SoundType.BONE)));
+	
+	public static final RegistryObject<StairsBlock> DRAGON_BONE_STAIRS = registerBlockWithDefaultItem("dragon_bone_stairs", 
+			() -> new StairsBlock(() -> DRAGON_BONE_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(DRAGON_BONE_BLOCK.get())));
+	
+	public static final RegistryObject<SlabBlock> DRAGON_BONE_SLAB = registerBlockWithDefaultItem("dragon_bone_slab", 
+			() -> new SlabBlock(AbstractBlock.Properties.from(DRAGON_BONE_BLOCK.get())));
+
+	public static final RegistryObject<Block> MOSSY_DRAGON_BONE = registerBlockWithDefaultItem("mossy_dragon_bone", 
+			() -> new MossyDragonBoneBlock());
 	
 	// MATERIALS
 	public static final RegistryObject<Block> AETERNIUM_BLOCK = registerBlockWithDefaultItem("aeternium_block",
@@ -438,6 +455,13 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> FRACTURN = registerBlockWithDefaultItem("fracturn", 
 			() -> new TerrainPlantBlock(END_MOSS.get()));
+	
+	public static final RegistryObject<Block> GLOBULAGUS = registerBlockWithDefaultItem("globulagus", 
+			() -> new TerrainPlantBlock(SANGNUM.get(), MOSSY_OBSIDIAN.get(), MOSSY_DRAGON_BONE.get()));
+	
+	public static final RegistryObject<Block> CLAWFERN = registerBlockWithDefaultItem("clawfern", 
+			() -> new TerrainPlantBlock(SANGNUM.get(), MOSSY_OBSIDIAN.get(), MOSSY_DRAGON_BONE.get()));
+
 	
 	public static final RegistryObject<Block> BLUE_VINE_SEED = registerBlockWithDefaultItem("blue_vine_seed", 
 			() -> new BlueVineSeedBlock(AbstractBlock.Properties.create(Material.PLANTS).
@@ -940,6 +964,11 @@ public class ModBlocks
 					                                                    tickRandomly().
 					                                                    sound(SoundType.WART)));
 	
+	public static final RegistryObject<Block> SMALL_AMARANITA_MUSHROOM = registerBlockWithDefaultItem("small_amaranita_mushroom",
+			() -> new SmallAmaranitaBlock());
+	
+	public static final RegistryObject<Block> LARGE_AMARANITA_MUSHROOM = registerBlock("large_amaranita_mushroom",
+			() -> new LargeAmaranitaBlock());
 	
 	public static final RegistryObject<Block> AMARANITA_STEM = registerBlockWithDefaultItem("amaranita_stem",
 			() -> new RotatedPillarBlock(AbstractBlock.Properties.create(Material.WOOD, MaterialColor.LIME).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
