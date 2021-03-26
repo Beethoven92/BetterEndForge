@@ -555,7 +555,7 @@ public class ModBlockLootTables extends BlockLootTables
 		LootPool.Builder color_5_loot = LootPool.builder().addEntry(block_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(UmbrellaTreeMembraneBlock.COLOR, 5)));
 		LootPool.Builder color_6_loot = LootPool.builder().addEntry(block_drop).acceptCondition(BlockStateProperty.builder(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(UmbrellaTreeMembraneBlock.COLOR, 6)));
 		
-		return LootTable.builder().addLootPool(color_0_loot).addLootPool(color_1_loot).addLootPool(color_2_loot).addLootPool(color_3_loot).addLootPool(color_4_loot).addLootPool(color_4_loot).addLootPool(color_5_loot).addLootPool(color_6_loot);
+		return LootTable.builder().addLootPool(color_0_loot).addLootPool(color_1_loot).addLootPool(color_2_loot).addLootPool(color_3_loot).addLootPool(color_4_loot).addLootPool(color_5_loot).addLootPool(color_6_loot);
 	}
 	
 	// Need to improve
