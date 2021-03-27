@@ -207,6 +207,9 @@ public abstract class BoneMealItemMixin
 		{
 			return getRandomGrassState(world.rand, ModBlocks.TWISTED_UMBRELLA_MOSS.get().getDefaultState(),
 					ModBlocks.SMALL_JELLYSHROOM.get().getDefaultState(), ModBlocks.JUNGLE_GRASS.get().getDefaultState());
+		} else if (block == ModBlocks.SANGNUM.get() || block == ModBlocks.MOSSY_DRAGON_BONE.get() || block == ModBlocks.MOSSY_OBSIDIAN.get()) {
+			return getRandomGrassState(world.rand, ModBlocks.GLOBULAGUS.get().getDefaultState(),
+					ModBlocks.CLAWFERN.get().getDefaultState(), ModBlocks.SMALL_AMARANITA_MUSHROOM.get().getDefaultState());			
 		}
 		return null;
 	}
