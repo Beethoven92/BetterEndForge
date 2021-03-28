@@ -110,24 +110,6 @@
           "condition": "minecraft:block_state_property",
           "block": "betterendforge:umbrella_tree_membrane",
           "properties": {
-            "color": "4"
-          }
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "betterendforge:umbrella_tree_membrane"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "betterendforge:umbrella_tree_membrane",
-          "properties": {
             "color": "5"
           }
         }

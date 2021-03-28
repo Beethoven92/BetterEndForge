@@ -193,6 +193,13 @@ public class ModBlocks
                                                             sound(SoundType.GROUND).
                                                             tickRandomly()));
 	
+	public static final RegistryObject<Block> RUTISCUS = registerBlockWithDefaultItem("rutiscus", 
+			() -> new TerrainBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.ADOBE).
+                                                            setRequiresTool().
+                                                            hardnessAndResistance(3.0F, 9.0F).
+                                                            sound(SoundType.GROUND).
+                                                            tickRandomly())); // TODO: Bonemeal
+	
 	public static final RegistryObject<Block> ENDSTONE_DUST = registerBlockWithDefaultItem("endstone_dust", 
 			() -> new EndstoneDustBlock(AbstractBlock.Properties.create(Material.SAND, Blocks.END_STONE.getMaterialColor()).
 					                                             hardnessAndResistance(0.5F).
@@ -232,6 +239,8 @@ public class ModBlocks
 	public static final RegistryObject<Block> SANGNUM_PATH = registerBlockWithDefaultItem("sangnum_path", 
 			() -> new PathBlock(SANGNUM.get()));
 	
+	public static final RegistryObject<Block> RUTISCUS_PATH = registerBlockWithDefaultItem("rutiscus_path", 
+			() -> new PathBlock(RUTISCUS.get()));
 	
 	
 	public static final RegistryObject<Block> MOSSY_OBSIDIAN = registerBlockWithDefaultItem("mossy_obsidian", 
