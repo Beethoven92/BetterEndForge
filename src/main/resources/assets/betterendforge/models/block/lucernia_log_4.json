@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube_mirrored",
+	"textures": {
+		"down": "betterendforge:block/lucernia_log_top",
+		"east": "betterendforge:block/lucernia_log_side_2",
+		"north": "betterendforge:block/lucernia_log_side_2",
+		"particle": "betterendforge:block/lucernia_log_side_2",
+		"south": "betterendforge:block/lucernia_log_side_2",
+		"up": "betterendforge:block/lucernia_log_top",
+		"west": "betterendforge:block/lucernia_log_side_2"
+	}
+}

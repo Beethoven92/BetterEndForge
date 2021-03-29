@@ -166,6 +166,7 @@ public class ModRecipes extends RecipeProvider
 		makeWoodenMaterialRecipes(ModBlocks.HELIX_TREE, consumer);
 		makeWoodenMaterialRecipes(ModBlocks.UMBRELLA_TREE, consumer);
 		makeWoodenMaterialRecipes(ModBlocks.JELLYSHROOM, consumer);
+		makeWoodenMaterialRecipes(ModBlocks.LUCERNIA, consumer);
 		
 		// STONE MATERIALS
 		makeStoneMaterialRecipes(ModBlocks.FLAVOLITE, consumer);

@@ -32,6 +32,7 @@ public class ModItemModels extends ItemModelProvider
         getBuilder("end_stone_stalactite_cavemoss").parent(new ModelFile.UncheckedModelFile("item/generated")).
         texture("layer0", modLoc("item/end_stone_stalactite_cavemoss"));
         
+        
         // WOODEN MATERIALS
 		registerWoodenMaterialItemModels(ModBlocks.MOSSY_GLOWSHROOM);
 		registerWoodenMaterialItemModels(ModBlocks.LACUGROVE);
@@ -42,6 +43,7 @@ public class ModItemModels extends ItemModelProvider
 		registerWoodenMaterialItemModels(ModBlocks.HELIX_TREE);
 		registerWoodenMaterialItemModels(ModBlocks.UMBRELLA_TREE);
 		registerWoodenMaterialItemModels(ModBlocks.JELLYSHROOM);
+		registerWoodenMaterialItemModels(ModBlocks.LUCERNIA);
 		
 		// STONE MATERIALS
 		registerStoneMaterialItemModels(ModBlocks.FLAVOLITE);

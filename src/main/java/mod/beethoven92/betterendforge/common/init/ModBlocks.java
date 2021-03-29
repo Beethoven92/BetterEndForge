@@ -29,6 +29,7 @@ import mod.beethoven92.betterendforge.common.block.EndPortalBlock;
 import mod.beethoven92.betterendforge.common.block.EndStoneSmelter;
 import mod.beethoven92.betterendforge.common.block.EndstoneDustBlock;
 import mod.beethoven92.betterendforge.common.block.EternalPedestal;
+import mod.beethoven92.betterendforge.common.block.FilaluxBlock;
 import mod.beethoven92.betterendforge.common.block.GlowingMossBlock;
 import mod.beethoven92.betterendforge.common.block.GlowingPillarLuminophorBlock;
 import mod.beethoven92.betterendforge.common.block.GlowingPillarRootsBlock;
@@ -46,6 +47,7 @@ import mod.beethoven92.betterendforge.common.block.LacugroveSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.LanceleafBlock;
 import mod.beethoven92.betterendforge.common.block.LanceleafSeedBlock;
 import mod.beethoven92.betterendforge.common.block.LargeAmaranitaBlock;
+import mod.beethoven92.betterendforge.common.block.LucerniaSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.LumecornBlock;
 import mod.beethoven92.betterendforge.common.block.LumecornSeedBlock;
 import mod.beethoven92.betterendforge.common.block.MengerSpongeBlock;
@@ -1093,6 +1095,34 @@ public class ModBlocks
 	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ADOBE);
 	public static final WoodenMaterial UMBRELLA_TREE = new WoodenMaterial("umbrella_tree", MaterialColor.BLUE, MaterialColor.GREEN);
 	public static final WoodenMaterial JELLYSHROOM = new WoodenMaterial("jellyshroom", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
+	public static final WoodenMaterial LUCERNIA = new WoodenMaterial("lucernia", MaterialColor.ADOBE, MaterialColor.ADOBE);
+	
+	public static final RegistryObject<Block> LUCERNIA_SAPLING = registerBlockWithDefaultItem("lucernia_sapling",
+			() -> new LucerniaSaplingBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                    zeroHardnessAndResistance().
+                    doesNotBlockMovement().
+                    sound(SoundType.PLANT).
+                    tickRandomly()));
+	
+	public static final RegistryObject<Block> LUCERNIA_LEAVES = registerBlockWithDefaultItem("lucernia_leaves",
+			() -> new LeavesBlock(AbstractBlock.Properties.create(Material.LEAVES, MaterialColor.ADOBE).
+                    hardnessAndResistance(0.2F).tickRandomly().
+                    sound(SoundType.PLANT).
+                    notSolid().
+                    setSuffocates((state, world, pos) -> { return false; }).
+                    setAllowsSpawn((state, reader, pos, entity) -> {return false;}).
+                    setBlocksVision((state, reader, pos) -> {return false;})));
+	
+	public static final RegistryObject<Block> LUCERNIA_OUTER_LEAVES = registerBlockWithDefaultItem("lucernia_outer_leaves",
+			() -> new FurBlock(AbstractBlock.Properties.create(Material.TALL_PLANTS, MaterialColor.ADOBE).
+                    zeroHardnessAndResistance().
+                    setLightLevel((value) -> {return 15;}).
+                    doesNotBlockMovement().
+                    sound(SoundType.WET_GRASS)));
+	
+	public static final RegistryObject<Block> FILALUX = registerBlockWithDefaultItem("filalux",
+			() -> new FilaluxBlock());
+
 	
 	// STONE MATERIALS
     public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);

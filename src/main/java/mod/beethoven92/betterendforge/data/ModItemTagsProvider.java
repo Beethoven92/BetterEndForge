@@ -80,6 +80,7 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		registerWoodenMaterialTags(ModBlocks.HELIX_TREE);
 		registerWoodenMaterialTags(ModBlocks.UMBRELLA_TREE);
 		registerWoodenMaterialTags(ModBlocks.JELLYSHROOM);
+		registerWoodenMaterialTags(ModBlocks.LUCERNIA);
 		
 		// STONE MATERIALS
 		registerStoneMaterialTags(ModBlocks.FLAVOLITE);

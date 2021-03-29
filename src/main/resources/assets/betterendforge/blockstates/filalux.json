@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"shape=top": { "model": "betterendforge:block/filalux_middle" },
+		"shape=middle": { "model": "betterendforge:block/filalux_middle" },
+		"shape=bottom": { "model": "betterendforge:block/filalux_bottom" }
+	}
+}

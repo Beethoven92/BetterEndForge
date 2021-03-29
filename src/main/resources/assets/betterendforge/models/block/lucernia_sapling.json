@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/cross",
+	"textures": {
+		"cross": "betterendforge:block/lucernia_sapling"
+	}
+}

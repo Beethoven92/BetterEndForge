@@ -1,0 +1,56 @@
+{
+    "variants": {
+        "facing=north":  [
+			{ "model": "betterendforge:block/lucernia_outer_leaves_1", "y": 180 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_2", "y": 180 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_3", "y": 180 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_4", "y": 180 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_5", "y": 180 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_6", "y": 180 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_7", "y": 180 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_8", "y": 180 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_9", "y": 180 }
+		],
+        "facing=south":  [
+			{ "model": "betterendforge:block/lucernia_outer_leaves_1" },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_2" },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_3" },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_4" },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_5" },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_6" },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_7" },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_8" },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_9" }
+		],
+        "facing=east":  [
+			{ "model": "betterendforge:block/lucernia_outer_leaves_1", "y": 270 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_2", "y": 270 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_3", "y": 270 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_4", "y": 270 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_5", "y": 270 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_6", "y": 270 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_7", "y": 270 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_8", "y": 270 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_9", "y": 270 }
+		],
+        "facing=west":  [
+			{ "model": "betterendforge:block/lucernia_outer_leaves_1", "y": 90 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_2", "y": 90 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_3", "y": 90 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_4", "y": 90 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_5", "y": 90 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_6", "y": 90 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_7", "y": 90 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_8", "y": 90 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_9", "y": 90 }
+		],
+		"facing=up": [
+			{ "model": "betterendforge:block/lucernia_outer_leaves_up_1" },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_up_2" }
+		],
+        "facing=down": [
+			{ "model": "betterendforge:block/lucernia_outer_leaves_up_1", "x": 180 },
+			{ "model": "betterendforge:block/lucernia_outer_leaves_up_2", "x": 180 }
+		]
+    }
+}

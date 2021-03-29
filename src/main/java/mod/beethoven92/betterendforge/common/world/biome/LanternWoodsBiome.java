@@ -1,10 +1,12 @@
 package mod.beethoven92.betterendforge.common.world.biome;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
+import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.feature.structure.StructureFeatures;
 
 public class LanternWoodsBiome extends BetterEndBiome {
@@ -20,7 +22,7 @@ public class LanternWoodsBiome extends BetterEndBiome {
 				.setParticles(ModParticleTypes.GLOWING_SPHERE.get(), 0.001F)
 //				.addFeature(ModConfiguredFeatures.END_LAKE_NORMAL)
 //				.addFeature(ModConfiguredFeatures.FLAMAEA)
-//				.addFeature(ModConfiguredFeatures.LUCERNIA)
+				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.LUCERNIA)
 //				.addFeature(ModConfiguredFeatures.LUCERNIA_BUSH)
 //				.addFeature(ModConfiguredFeatures.FILALUX)
 //				.addFeature(ModConfiguredFeatures.AERIDIUM)

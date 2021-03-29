@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/lucernia_leaves_1" },
+			{ "model": "betterendforge:block/lucernia_leaves_2" },
+			{ "model": "betterendforge:block/lucernia_leaves_3" },
+			{ "model": "betterendforge:block/lucernia_leaves_4" }
+		]
+	}
+}

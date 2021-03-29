@@ -372,6 +372,17 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(ModBlocks.DRAGON_BONE_BLOCK.get());
 		registerDropSelfLootTable(ModBlocks.DRAGON_BONE_SLAB.get());
 		registerDropSelfLootTable(ModBlocks.DRAGON_BONE_STAIRS.get());
+		
+		registerDropSelfLootTable(ModBlocks.LUCERNIA_SAPLING.get());
+		registerLootTable(ModBlocks.LUCERNIA_LEAVES.get(), (block) -> {
+			return droppingWithSilkTouchOrShears(block, withSurvivesExplosion(block, ItemLootEntry.builder(ModBlocks.LUCERNIA_SAPLING.get())).acceptCondition(TableBonus.builder(Enchantments.FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
+		});
+		registerLootTable(ModBlocks.LUCERNIA_OUTER_LEAVES.get(), (block) -> {
+			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(Items.AIR));
+		});
+		registerLootTable(ModBlocks.FILALUX.get(), (block) -> {
+			return droppingWithSilkTouchOrShears(block, ItemLootEntry.builder(Items.AIR));
+		});
 
 		
 		// FLOWER POT BLOCKS
@@ -387,6 +398,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerWoodenMaterialLootTables(ModBlocks.HELIX_TREE);
 		registerWoodenMaterialLootTables(ModBlocks.UMBRELLA_TREE);
 		registerWoodenMaterialLootTables(ModBlocks.JELLYSHROOM);
+		registerWoodenMaterialLootTables(ModBlocks.LUCERNIA);
 		
 		// STONE MATERIALS
 		registerStoneMaterialLootTables(ModBlocks.FLAVOLITE);

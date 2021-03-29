@@ -394,6 +394,10 @@ public class ModConfiguredFeatures
 			ModFeatures.GIGANTIC_AMARANITA.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(1);
 	
+	public static final ConfiguredFeature<?, ?> LUCERNIA = 
+			ModFeatures.LUCERNIA.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(3);
+	
 	// ORES
 	public static final ConfiguredFeature<?, ?> THALLASIUM_ORE =
 			ModFeatures.THALLASIUM_ORE.withConfiguration(
@@ -569,6 +573,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "umbrella_tree"), UMBRELLA_TREE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "jellyshroom"), JELLYSHROOM);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "gigantic_amaranita"), GIGANTIC_AMARANITA);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "lucernia"), LUCERNIA);
         // ORES
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "thallasium_ore"), THALLASIUM_ORE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "ender_ore"), ENDER_ORE);

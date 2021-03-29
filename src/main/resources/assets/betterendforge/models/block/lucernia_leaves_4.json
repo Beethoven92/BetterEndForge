@@ -1,0 +1,6 @@
+{
+	"parent": "betterendforge:block/cube_noshade",
+	"textures": {
+		"texture": "betterendforge:block/lucernia_leaves_4"
+	}
+}

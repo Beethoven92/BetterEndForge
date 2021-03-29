@@ -172,6 +172,10 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.SMALL_AMARANITA_MUSHROOM.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.GLOBULAGUS.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.CLAWFERN.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.FILALUX.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.LUCERNIA_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.LUCERNIA_OUTER_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.LUCERNIA_SAPLING.get(), RenderType.getCutout());
 		
 		// MISC
 		RenderTypeLookup.setRenderLayer(ModBlocks.END_PORTAL_BLOCK.get(), RenderType.getTranslucent());
@@ -194,6 +198,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		setWoodenMaterialRenderLayers(ModBlocks.HELIX_TREE);
 		setWoodenMaterialRenderLayers(ModBlocks.UMBRELLA_TREE);
 		setWoodenMaterialRenderLayers(ModBlocks.JELLYSHROOM);
+		setWoodenMaterialRenderLayers(ModBlocks.LUCERNIA);
 		
 		// STONE MATERIALS
 		setStoneMaterialRenderLayers(ModBlocks.FLAVOLITE);

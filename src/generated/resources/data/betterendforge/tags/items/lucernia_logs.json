@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:lucernia_log",
+    "betterendforge:lucernia_bark",
+    "betterendforge:lucernia_stripped_log",
+    "betterendforge:lucernia_stripped_bark"
+  ]
+}
