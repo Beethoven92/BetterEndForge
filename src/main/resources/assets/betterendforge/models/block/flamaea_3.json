@@ -1,0 +1,6 @@
+{
+	"parent": "betterendforge:block/plane_bottom",
+	"textures": {
+		"texture": "betterendforge:block/flamaea_3"
+	}
+}

@@ -21,7 +21,7 @@ public class LanternWoodsBiome extends BetterEndBiome {
 				.setMusic(ModSoundEvents.MUSIC_FOREST.get())
 				.setParticles(ModParticleTypes.GLOWING_SPHERE.get(), 0.001F)
 				.addFeature(Decoration.LAKES, ModConfiguredFeatures.END_LAKE_NORMAL)
-//				.addFeature(ModConfiguredFeatures.FLAMAEA)
+				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.FLAMAEA)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.LUCERNIA)
 //				.addFeature(ModConfiguredFeatures.LUCERNIA_BUSH)
 //				.addFeature(ModConfiguredFeatures.FILALUX)

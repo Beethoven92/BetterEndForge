@@ -1,0 +1,11 @@
+{
+    "variants": {
+        "": [
+			{ "model": "betterendforge:block/flamaea_1" },
+			{ "model": "betterendforge:block/flamaea_2" },
+			{ "model": "betterendforge:block/flamaea_3" },
+			{ "model": "betterendforge:block/flamaea_4" },
+			{ "model": "betterendforge:block/flamaea_5" }
+		]
+    }
+}

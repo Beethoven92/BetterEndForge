@@ -30,6 +30,7 @@ import mod.beethoven92.betterendforge.common.block.EndStoneSmelter;
 import mod.beethoven92.betterendforge.common.block.EndstoneDustBlock;
 import mod.beethoven92.betterendforge.common.block.EternalPedestal;
 import mod.beethoven92.betterendforge.common.block.FilaluxBlock;
+import mod.beethoven92.betterendforge.common.block.FlamaeaBlock;
 import mod.beethoven92.betterendforge.common.block.GlowingMossBlock;
 import mod.beethoven92.betterendforge.common.block.GlowingPillarLuminophorBlock;
 import mod.beethoven92.betterendforge.common.block.GlowingPillarRootsBlock;
@@ -605,6 +606,9 @@ public class ModBlocks
 					                                        zeroHardnessAndResistance().
 					                                        sound(SoundType.WET_GRASS).
 					                                        doesNotBlockMovement()));
+	
+	public static final RegistryObject<Block> FLAMAEA = registerBlock("flamaea",
+			() -> new FlamaeaBlock());
 	
 	public static final RegistryObject<Block> HYDRALUX_SAPLING = registerBlockWithDefaultItem("hydralux_sapling",
 			() -> new HydraluxSaplingBlock(AbstractBlock.Properties.create(Material.OCEAN_PLANT).

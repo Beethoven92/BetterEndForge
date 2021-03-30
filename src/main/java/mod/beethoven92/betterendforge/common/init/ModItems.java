@@ -22,6 +22,7 @@ import net.minecraft.item.Foods;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemTier;
+import net.minecraft.item.LilyPadItem;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.Rarity;
 import net.minecraft.item.ShovelItem;
@@ -114,6 +115,7 @@ public class ModItems
 	// MISC ITEMS
 	public final static RegistryObject<Item> BUCKET_END_FISH = ITEMS.register("bucket_end_fish", () -> new FishBucketItem(() -> ModEntityTypes.END_FISH.get(), () -> Fluids.WATER, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
 	public final static RegistryObject<Item> GUIDE_BOOK = ITEMS.register("guidebook", () -> new GuideBookItem(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
+	public final static RegistryObject<Item> FLAMAEA = ITEMS.register("flamaea", () -> new LilyPadItem(ModBlocks.FLAMAEA.get(), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 
 	
 	//////////////////////////////////////////////////////
