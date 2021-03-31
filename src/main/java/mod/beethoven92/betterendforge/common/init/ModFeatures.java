@@ -5,6 +5,7 @@ import mod.beethoven92.betterendforge.common.world.feature.BigAuroraCrystalFeatu
 import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures;
 import mod.beethoven92.betterendforge.common.world.feature.BlueVineFeature;
 import mod.beethoven92.betterendforge.common.world.feature.BushFeature;
+import mod.beethoven92.betterendforge.common.world.feature.BushWithOuterFeature;
 import mod.beethoven92.betterendforge.common.world.feature.CharniaFeature;
 import mod.beethoven92.betterendforge.common.world.feature.CrashedShipFeature;
 import mod.beethoven92.betterendforge.common.world.feature.DoublePlantFeature;
@@ -84,6 +85,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> DRAGON_TREE_BUSH = new BushFeature(ModBlocks.DRAGON_TREE_LEAVES.get(), ModBlocks.DRAGON_TREE.bark.get());
 	public static final Feature<NoFeatureConfig> TENANEA_BUSH = new TenaneaBushFeature();
 	public static final Feature<NoFeatureConfig> LARGE_AMARANITA = new LargeAmaranitaFeature();
+	public static final Feature<NoFeatureConfig> LUCERNIA_BUSH = new BushWithOuterFeature(ModBlocks.LUCERNIA_LEAVES.get(), ModBlocks.LUCERNIA_OUTER_LEAVES.get(), ModBlocks.LUCERNIA.bark.get());
 	
 	// PLANTS
 	public static final Feature<NoFeatureConfig> UMBRELLA_MOSS = new DoublePlantFeature(ModBlocks.UMBRELLA_MOSS.get(), ModBlocks.UMBRELLA_MOSS_TALL.get(), 5);
@@ -219,6 +221,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), DRAGON_TREE_BUSH, "dragon_tree_bush"); 
     	BetterEnd.register(event.getRegistry(), TENANEA_BUSH, "tenanea_bush"); 
     	BetterEnd.register(event.getRegistry(), LARGE_AMARANITA, "large_amaranita"); 
+    	BetterEnd.register(event.getRegistry(), LUCERNIA_BUSH, "lucernia_bush"); 
     	// PLANTS
     	BetterEnd.register(event.getRegistry(), UMBRELLA_MOSS, "umbrella_moss");
     	BetterEnd.register(event.getRegistry(), CREEPING_MOSS, "creeping_moss");   	

@@ -23,7 +23,7 @@ public class LanternWoodsBiome extends BetterEndBiome {
 				.addFeature(Decoration.LAKES, ModConfiguredFeatures.END_LAKE_NORMAL)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.FLAMAEA)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.LUCERNIA)
-//				.addFeature(ModConfiguredFeatures.LUCERNIA_BUSH)
+				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.LUCERNIA_BUSH)
 //				.addFeature(ModConfiguredFeatures.FILALUX)
 //				.addFeature(ModConfiguredFeatures.AERIDIUM)
 //				.addFeature(ModConfiguredFeatures.LAMELLARIUM)
