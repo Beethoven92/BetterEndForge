@@ -30,6 +30,7 @@ import mod.beethoven92.betterendforge.common.block.EndStoneSmelter;
 import mod.beethoven92.betterendforge.common.block.EndstoneDustBlock;
 import mod.beethoven92.betterendforge.common.block.EternalPedestal;
 import mod.beethoven92.betterendforge.common.block.FilaluxBlock;
+import mod.beethoven92.betterendforge.common.block.FilaluxWingsBlock;
 import mod.beethoven92.betterendforge.common.block.FlamaeaBlock;
 import mod.beethoven92.betterendforge.common.block.GlowingMossBlock;
 import mod.beethoven92.betterendforge.common.block.GlowingPillarLuminophorBlock;
@@ -1126,6 +1127,10 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> FILALUX = registerBlockWithDefaultItem("filalux",
 			() -> new FilaluxBlock());
+	public static final RegistryObject<Block> FILALUX_WINGS = registerBlockWithDefaultItem("filalux_wings",
+			() -> new FilaluxWingsBlock());
+	public static final RegistryObject<Block> FILALUX_LANTERN = registerBlockWithDefaultItem("filalux_lantern",
+			() -> new Block(AbstractBlock.Properties.create(Material.WOOD).setLightLevel(b -> 15).sound(SoundType.WOOD).harvestTool(ToolType.AXE)));
 
 	
 	// STONE MATERIALS

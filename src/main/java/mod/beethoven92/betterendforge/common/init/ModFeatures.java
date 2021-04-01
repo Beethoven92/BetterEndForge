@@ -15,6 +15,7 @@ import mod.beethoven92.betterendforge.common.world.feature.EndLilyFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLotusFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLotusLeafFeature;
 import mod.beethoven92.betterendforge.common.world.feature.FallenPillarFeature;
+import mod.beethoven92.betterendforge.common.world.feature.FilaluxFeature;
 import mod.beethoven92.betterendforge.common.world.feature.FloatingSpireFeature;
 import mod.beethoven92.betterendforge.common.world.feature.GeyserFeature;
 import mod.beethoven92.betterendforge.common.world.feature.GiganticAmaranitaFeature;
@@ -117,6 +118,9 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> SMALL_AMARANITA = new SinglePlantFeature(ModBlocks.SMALL_AMARANITA_MUSHROOM.get(), 5, 5);
 	public static final Feature<NoFeatureConfig> GLOBULAGUS = new SinglePlantFeature(ModBlocks.GLOBULAGUS.get(), 5, 3);
 	public static final Feature<NoFeatureConfig> CLAWFERN = new SinglePlantFeature(ModBlocks.CLAWFERN.get(), 5, 4);
+	
+	// SKY PLANTS
+	public static final Feature<NoFeatureConfig> FILALUX = new FilaluxFeature();
 	
 	// WALL PLANTS
 	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 3);
@@ -252,6 +256,8 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), SMALL_AMARANITA, "small_amaranita");
     	BetterEnd.register(event.getRegistry(), GLOBULAGUS, "globulagus");
     	BetterEnd.register(event.getRegistry(), CLAWFERN, "clawfern");
+    	// SKY PLANTS
+    	BetterEnd.register(event.getRegistry(), FILALUX, "filalux");    	
     	// WALL_PLANTS
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE, "purple_polypore");
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE_DENSE, "purple_polypore_dense");

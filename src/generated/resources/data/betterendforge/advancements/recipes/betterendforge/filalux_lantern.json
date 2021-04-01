@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:filalux_lantern"
+    ]
+  },
+  "criteria": {
+    "has_filalux": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:filalux"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:filalux_lantern"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_filalux",
+      "has_the_recipe"
+    ]
+  ]
+}

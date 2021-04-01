@@ -123,7 +123,9 @@ public class ModBlockStates extends BlockStateProvider
 		makeBlockItemFromExistingModel(ModBlocks.DRAGON_BONE_STAIRS.get());
 		slabBlock(ModBlocks.DRAGON_BONE_SLAB.get(), modLoc("block/dragon_bone_block"), modLoc("block/dragon_bone_block"));
 		makeBlockItemFromExistingModel(ModBlocks.DRAGON_BONE_SLAB.get());
-
+		
+		simpleBlock(ModBlocks.FILALUX_LANTERN.get());
+		makeBlockItemFromExistingModel(ModBlocks.FILALUX_LANTERN.get());
 	}
 	
 	private void registerLanterns() 

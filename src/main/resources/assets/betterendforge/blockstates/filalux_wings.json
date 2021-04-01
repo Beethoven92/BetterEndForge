@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=north": { "model": "betterendforge:block/filalux_wings", "y": 180 },
+        "facing=south": { "model": "betterendforge:block/filalux_wings" },
+        "facing=east":  { "model": "betterendforge:block/filalux_wings", "y": 270 },
+        "facing=west":  { "model": "betterendforge:block/filalux_wings", "y": 90 },
+		"facing=up":    { "model": "betterendforge:block/filalux_wings_top" },
+        "facing=down":  { "model": "betterendforge:block/filalux_wings_bottom", "x": 180 }
+    }
+}

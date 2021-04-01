@@ -265,6 +265,10 @@ public class ModBlockLootTables extends BlockLootTables
 	        return LootTable.builder().addLootPool(withSurvivesExplosion(block, LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(block).acceptCondition(BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withBoolProp(SilkMothNestBlock.ACTIVE, true))))));
 	    });
 	    
+	    // SKY PLANTS
+	    registerDropSelfLootTable(ModBlocks.FILALUX_LANTERN.get());
+	    registerDropSelfLootTable(ModBlocks.FILALUX_WINGS.get());
+	    
 	    // CROPS
 	    ILootCondition.IBuilder ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.SHADOW_BERRY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(ShadowBerryBlock.AGE, 3));
 	    registerLootTable(ModBlocks.SHADOW_BERRY.get(), droppingAndBonusWhen(ModBlocks.SHADOW_BERRY.get(), ModItems.SHADOW_BERRY_RAW.get(), ModBlocks.SHADOW_BERRY.get().asItem(), ilootcondition$ibuilder)); 

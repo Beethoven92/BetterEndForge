@@ -223,7 +223,13 @@ public class ModConfiguredFeatures
 	public static final ConfiguredFeature<?, ?> CLAWFERN = 
 			ModFeatures.CLAWFERN.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(5);
+	
+	// SKY PLANTS
+	public static final ConfiguredFeature<?, ?> FILALUX = 
+			ModFeatures.FILALUX.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(1);
 
+	
 	
 	// WALL PLANTS
 	public static final ConfiguredFeature<?, ?> PURPLE_POLYPORE = 
@@ -540,6 +546,8 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "small_amaranita"), SMALL_AMARANITA);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "globulagus"), GLOBULAGUS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "clawfern"), CLAWFERN);
+        // SKY PLANTS
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "filalux"), FILALUX);
         // WALL PLANTS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "purple_polypore"), PURPLE_POLYPORE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "purple_polypore_dense"), PURPLE_POLYPORE_DENSE);
