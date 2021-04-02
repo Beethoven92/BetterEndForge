@@ -1,0 +1,8 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/aeridium_01" },
+			{ "model": "betterendforge:block/aeridium_02" }
+		]
+	}
+}

@@ -118,6 +118,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> SMALL_AMARANITA = new SinglePlantFeature(ModBlocks.SMALL_AMARANITA_MUSHROOM.get(), 5, 5);
 	public static final Feature<NoFeatureConfig> GLOBULAGUS = new SinglePlantFeature(ModBlocks.GLOBULAGUS.get(), 5, 3);
 	public static final Feature<NoFeatureConfig> CLAWFERN = new SinglePlantFeature(ModBlocks.CLAWFERN.get(), 5, 4);
+	public static final Feature<NoFeatureConfig> AERIDIUM = new SinglePlantFeature(ModBlocks.AERIDIUM.get(), 5, 4);
 	
 	// SKY PLANTS
 	public static final Feature<NoFeatureConfig> FILALUX = new FilaluxFeature();
@@ -256,6 +257,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), SMALL_AMARANITA, "small_amaranita");
     	BetterEnd.register(event.getRegistry(), GLOBULAGUS, "globulagus");
     	BetterEnd.register(event.getRegistry(), CLAWFERN, "clawfern");
+    	BetterEnd.register(event.getRegistry(), AERIDIUM, "aeridium");
     	// SKY PLANTS
     	BetterEnd.register(event.getRegistry(), FILALUX, "filalux");    	
     	// WALL_PLANTS
