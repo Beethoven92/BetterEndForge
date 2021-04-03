@@ -203,6 +203,7 @@ public class ModBlockLootTables extends BlockLootTables
 		registerLootTable(ModBlocks.GLOBULAGUS.get(), BlockLootTables::onlyWithShears);		
 		registerLootTable(ModBlocks.CLAWFERN.get(), BlockLootTables::onlyWithShears);		
 		registerLootTable(ModBlocks.AERIDIUM.get(), BlockLootTables::onlyWithShears);		
+		registerLootTable(ModBlocks.LAMELLARIUM.get(), BlockLootTables::onlyWithShears);		
 		registerDropSelfLootTable(ModBlocks.FLAMAEA.get());
 		
 		registerLootTable(ModBlocks.BLUE_VINE_SEED.get(), BlockLootTables::onlyWithShears);

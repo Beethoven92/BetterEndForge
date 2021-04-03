@@ -477,6 +477,9 @@ public class ModBlocks
 
 	public static final RegistryObject<Block> AERIDIUM = registerBlockWithDefaultItem("aeridium", 
 			() -> new TerrainPlantBlock(RUTISCUS.get()));
+	
+	public static final RegistryObject<Block> LAMELLARIUM = registerBlockWithDefaultItem("lamellarium", 
+			() -> new TerrainPlantBlock(RUTISCUS.get()));
 
 	
 	public static final RegistryObject<Block> BLUE_VINE_SEED = registerBlockWithDefaultItem("blue_vine_seed", 

@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/lamellarium_01" },
+			{ "model": "betterendforge:block/lamellarium_02" },
+			{ "model": "betterendforge:block/lamellarium_03" },
+			{ "model": "betterendforge:block/lamellarium_04" }
+		]
+	}
+}
