@@ -10,6 +10,7 @@ import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.block.BlueVineBlock;
 import mod.beethoven92.betterendforge.common.block.BlueVineLanternBlock;
 import mod.beethoven92.betterendforge.common.block.BlueVineSeedBlock;
+import mod.beethoven92.betterendforge.common.block.BoluxMushroomBlock;
 import mod.beethoven92.betterendforge.common.block.BrimstoneBlock;
 import mod.beethoven92.betterendforge.common.block.BubbleCoralBlock;
 import mod.beethoven92.betterendforge.common.block.BulbVineBlock;
@@ -480,6 +481,10 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> LAMELLARIUM = registerBlockWithDefaultItem("lamellarium", 
 			() -> new TerrainPlantBlock(RUTISCUS.get()));
+	
+	public static final RegistryObject<Block> BOLUX_MUSHROOM = registerBlockWithDefaultItem("bolux_mushroom", 
+			() -> new BoluxMushroomBlock());
+
 
 	
 	public static final RegistryObject<Block> BLUE_VINE_SEED = registerBlockWithDefaultItem("blue_vine_seed", 
