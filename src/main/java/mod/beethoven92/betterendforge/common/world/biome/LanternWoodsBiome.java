@@ -28,7 +28,7 @@ public class LanternWoodsBiome extends BetterEndBiome {
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.AERIDIUM)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.LAMELLARIUM)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BOLUX_MUSHROOM)
-//				.addFeature(ModConfiguredFeatures.AURANT_POLYPORE)
+				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.AURANT_POLYPORE)
 //				.addFeature(ModConfiguredFeatures.POND_ANEMONE)
 //				.addFeature(ModConfiguredFeatures.CHARNIA_ORANGE)
 //				.addFeature(ModConfiguredFeatures.CHARNIA_RED)

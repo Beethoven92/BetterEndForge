@@ -766,6 +766,14 @@ public class ModBlocks
                                                                  sound(SoundType.WOOD).
                                                                  setLightLevel((value) -> {return 13;})));
 	
+	public static final RegistryObject<Block> AURANT_POLYPORE = registerBlockWithDefaultItem("aurant_polypore", 
+			() -> new WallMushroomBlock(AbstractBlock.Properties.create(Material.PLANTS).
+					                                             harvestTool(ToolType.AXE).
+					                                             hardnessAndResistance(0.2F).
+                                                                 doesNotBlockMovement().
+                                                                 sound(SoundType.WOOD).
+                                                                 setLightLevel((value) -> {return 13;})));
+	
 	public static final RegistryObject<Block> TAIL_MOSS = registerBlockWithDefaultItem("tail_moss", 
 			() -> new WallPlantBlock(AbstractBlock.Properties.create(Material.PLANTS).
                                                               zeroHardnessAndResistance().

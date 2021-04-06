@@ -127,6 +127,7 @@ public class ModFeatures
 	
 	// WALL PLANTS
 	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 3);
+	public static final Feature<NoFeatureConfig> AURANT_POLYPORE = new WallPlantOnLogFeature(ModBlocks.AURANT_POLYPORE.get(), 3);
 	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE_DENSE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 5);
 	public static final Feature<NoFeatureConfig> TAIL_MOSS = new WallPlantFeature(ModBlocks.TAIL_MOSS.get(), 3);
 	public static final Feature<NoFeatureConfig> TAIL_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.TAIL_MOSS.get(), 4);
@@ -266,6 +267,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), FILALUX, "filalux");    	
     	// WALL_PLANTS
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE, "purple_polypore");
+    	BetterEnd.register(event.getRegistry(), AURANT_POLYPORE, "aurant_polypore");
     	BetterEnd.register(event.getRegistry(), PURPLE_POLYPORE_DENSE, "purple_polypore_dense");
     	BetterEnd.register(event.getRegistry(), TAIL_MOSS, "tail_moss");
     	BetterEnd.register(event.getRegistry(), TAIL_MOSS_WOOD, "tail_moss_wood");  	
