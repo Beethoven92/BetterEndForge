@@ -80,6 +80,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> CHARNIA_RED_RARE = new CharniaFeature(ModBlocks.CHARNIA_RED.get());
 	public static final Feature<NoFeatureConfig> HYDRALUX = new HydraluxFeature(5);
 	public static final Feature<NoFeatureConfig> FLAMAEA = new SinglePlantFeature(ModBlocks.FLAMAEA.get(), 12, false, 5);
+	public static final Feature<NoFeatureConfig> POND_ANEMONE = new UnderwaterPlantFeature(ModBlocks.POND_ANEMONE.get(), 6);
 	
 	// BUSHES
 	public static final Feature<NoFeatureConfig> PYTHADENDRON_BUSH = new BushFeature(ModBlocks.PYTHADENDRON_LEAVES.get(), ModBlocks.PYTHADENDRON.bark.get());
@@ -224,6 +225,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), CHARNIA_RED_RARE, "charnia_red_rare");
     	BetterEnd.register(event.getRegistry(), HYDRALUX, "hydralux");
     	BetterEnd.register(event.getRegistry(), FLAMAEA, "flamaea");
+    	BetterEnd.register(event.getRegistry(), POND_ANEMONE, "pond_anemone");
     	//BUSHES
     	BetterEnd.register(event.getRegistry(), PYTHADENDRON_BUSH, "pythadendron_bush"); 
     	BetterEnd.register(event.getRegistry(), DRAGON_TREE_BUSH, "dragon_tree_bush"); 

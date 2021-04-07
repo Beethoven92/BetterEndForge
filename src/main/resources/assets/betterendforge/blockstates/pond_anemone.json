@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"": [
+			{ "model": "betterendforge:block/pond_anemone" },
+			{ "model": "betterendforge:block/pond_anemone", "y":  90 },
+			{ "model": "betterendforge:block/pond_anemone", "y": 180 },
+			{ "model": "betterendforge:block/pond_anemone", "y": 270 }
+		]
+	}
+}

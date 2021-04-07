@@ -63,6 +63,7 @@ import mod.beethoven92.betterendforge.common.block.MossyObsidianBlock;
 import mod.beethoven92.betterendforge.common.block.MurkweedBlock;
 import mod.beethoven92.betterendforge.common.block.NeedlegrassBlock;
 import mod.beethoven92.betterendforge.common.block.PathBlock;
+import mod.beethoven92.betterendforge.common.block.PondAnemoneBlock;
 import mod.beethoven92.betterendforge.common.block.PythadendronSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
 import mod.beethoven92.betterendforge.common.block.RunedFlavoliteBlock;
@@ -810,6 +811,9 @@ public class ModBlocks
                                                               zeroHardnessAndResistance().
                                                               doesNotBlockMovement().
                                                               sound(SoundType.PLANT)));
+	
+	public static final RegistryObject<Block> POND_ANEMONE = registerBlockWithDefaultItem("pond_anemone", 
+			() -> new PondAnemoneBlock());
 	
 	// VINES
 	public static final RegistryObject<Block> DENSE_VINE = registerBlockWithDefaultItem("dense_vine",
