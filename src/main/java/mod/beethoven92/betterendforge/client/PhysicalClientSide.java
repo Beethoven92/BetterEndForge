@@ -182,6 +182,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.BOLUX_MUSHROOM.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.AURANT_POLYPORE.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.POND_ANEMONE.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.RUSCUS.get(), RenderType.getCutout());
 		
 		// SKY PLANTS
 		RenderTypeLookup.setRenderLayer(ModBlocks.FILALUX_WINGS.get(), RenderType.getCutout());

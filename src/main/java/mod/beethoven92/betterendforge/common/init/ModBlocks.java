@@ -812,6 +812,13 @@ public class ModBlocks
                                                               doesNotBlockMovement().
                                                               sound(SoundType.PLANT)));
 	
+	public static final RegistryObject<Block> RUSCUS = registerBlockWithDefaultItem("ruscus", 
+			() -> new WallPlantBlock(AbstractBlock.Properties.create(Material.PLANTS).
+                                                              zeroHardnessAndResistance().
+                                                              doesNotBlockMovement().
+                                                              sound(SoundType.PLANT)));
+
+	
 	public static final RegistryObject<Block> POND_ANEMONE = registerBlockWithDefaultItem("pond_anemone", 
 			() -> new PondAnemoneBlock());
 	

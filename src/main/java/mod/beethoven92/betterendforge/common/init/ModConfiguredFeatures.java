@@ -306,6 +306,10 @@ public class ModConfiguredFeatures
 			ModFeatures.JUNGLE_FERN_WOOD.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(12));
 	
+	public static final ConfiguredFeature<?, ?> RUSCUS = 
+			ModFeatures.RUSCUS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(10));
+	
 	// VINES
 	public static final ConfiguredFeature<?, ?> DENSE_VINE = 
 			ModFeatures.DENSE_VINE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -589,6 +593,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "small_jellyshroom_wall"), SMALL_JELLYSHROOM_WALL);      
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "small_jellyshroom_wood"), SMALL_JELLYSHROOM_WOOD); 
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "jungle_fern_wood"), JUNGLE_FERN_WOOD); 
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "ruscus"), RUSCUS); 
         // VINES
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "dense_vine"), DENSE_VINE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "twisted_vine"), TWISTED_VINE);
