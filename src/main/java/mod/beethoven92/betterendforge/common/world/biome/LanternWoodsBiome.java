@@ -33,7 +33,7 @@ public class LanternWoodsBiome extends BetterEndBiome {
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_ORANGE)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_RED)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.RUSCUS)
-//				.addFeature(ModConfiguredFeatures.RUSCUS_WOOD)
+				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.RUSCUS_WOOD)
 				.addStructure(StructureFeatures.END_CITY)
 				.addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
 	}

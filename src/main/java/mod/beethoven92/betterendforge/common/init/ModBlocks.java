@@ -127,6 +127,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModBlocks 
 {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BetterEnd.MOD_ID);
+	
+	// TODO: Add ORANGO and LUTEBUS
 
 	// TERRAINS
 	public static final RegistryObject<Block> CRYSTAL_MOSS = registerBlockWithDefaultItem("crystal_moss",
@@ -204,7 +206,7 @@ public class ModBlocks
                                                             setRequiresTool().
                                                             hardnessAndResistance(3.0F, 9.0F).
                                                             sound(SoundType.GROUND).
-                                                            tickRandomly())); // TODO: Bonemeal
+                                                            tickRandomly()));
 	
 	public static final RegistryObject<Block> ENDSTONE_DUST = registerBlockWithDefaultItem("endstone_dust", 
 			() -> new EndstoneDustBlock(AbstractBlock.Properties.create(Material.SAND, Blocks.END_STONE.getMaterialColor()).

@@ -142,6 +142,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_WOOD = new WallPlantOnLogFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 4);
 	public static final Feature<NoFeatureConfig> JUNGLE_FERN_WOOD = new WallPlantOnLogFeature(ModBlocks.JUNGLE_FERN.get(), 3);
 	public static final Feature<NoFeatureConfig> RUSCUS = new WallPlantFeature(ModBlocks.RUSCUS.get(), 6);
+	public static final Feature<NoFeatureConfig> RUSCUS_WOOD = new WallPlantOnLogFeature(ModBlocks.RUSCUS.get(), 6);
 	
 	// VINES
 	public static final Feature<NoFeatureConfig> DENSE_VINE = new VineFeature(ModBlocks.DENSE_VINE.get(), 24);
@@ -284,6 +285,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), SMALL_JELLYSHROOM_WOOD, "small_jellyshroom_wood");
     	BetterEnd.register(event.getRegistry(), JUNGLE_FERN_WOOD, "jungle_fern_wood");
     	BetterEnd.register(event.getRegistry(), RUSCUS, "ruscus");
+    	BetterEnd.register(event.getRegistry(), RUSCUS_WOOD, "ruscus_wood");
     	// VINES
     	BetterEnd.register(event.getRegistry(), DENSE_VINE, "dense_vine"); 
     	BetterEnd.register(event.getRegistry(), TWISTED_VINE, "twisted_vine"); 
