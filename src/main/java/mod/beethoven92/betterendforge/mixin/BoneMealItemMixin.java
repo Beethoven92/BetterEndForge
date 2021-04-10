@@ -212,7 +212,7 @@ public abstract class BoneMealItemMixin
 					ModBlocks.CLAWFERN.get().getDefaultState(), ModBlocks.SMALL_AMARANITA_MUSHROOM.get().getDefaultState());			
 		} else if (block == ModBlocks.RUTISCUS.get()) {
 			return getRandomGrassState(world.rand, ModBlocks.AERIDIUM.get().getDefaultState(),
-					ModBlocks.LAMELLARIUM.get().getDefaultState(), ModBlocks.BOLUX_MUSHROOM.get().getDefaultState());			
+					ModBlocks.LAMELLARIUM.get().getDefaultState(), ModBlocks.BOLUX_MUSHROOM.get().getDefaultState(), ModBlocks.ORANGO.get().getDefaultState(), ModBlocks.LUTEBUS.get().getDefaultState());			
 		}
 		return null;
 	}

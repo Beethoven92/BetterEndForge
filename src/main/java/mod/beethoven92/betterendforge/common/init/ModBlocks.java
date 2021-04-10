@@ -482,6 +482,12 @@ public class ModBlocks
 	public static final RegistryObject<Block> AERIDIUM = registerBlockWithDefaultItem("aeridium", 
 			() -> new TerrainPlantBlock(RUTISCUS.get()));
 	
+	public static final RegistryObject<Block> ORANGO = registerBlockWithDefaultItem("orango", 
+			() -> new TerrainPlantBlock(RUTISCUS.get()));
+	
+	public static final RegistryObject<Block> LUTEBUS = registerBlockWithDefaultItem("lutebus", 
+			() -> new TerrainPlantBlock(RUTISCUS.get()));
+	
 	public static final RegistryObject<Block> LAMELLARIUM = registerBlockWithDefaultItem("lamellarium", 
 			() -> new TerrainPlantBlock(RUTISCUS.get()));
 	
