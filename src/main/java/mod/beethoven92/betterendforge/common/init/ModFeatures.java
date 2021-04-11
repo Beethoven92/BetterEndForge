@@ -122,6 +122,8 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> AERIDIUM = new SinglePlantFeature(ModBlocks.AERIDIUM.get(), 5, 4);
 	public static final Feature<NoFeatureConfig> LAMELLARIUM = new SinglePlantFeature(ModBlocks.LAMELLARIUM.get(), 5);
 	public static final Feature<NoFeatureConfig> BOLUX_MUSHROOM = new SinglePlantFeature(ModBlocks.BOLUX_MUSHROOM.get(), 5, 5);
+	public static final Feature<NoFeatureConfig> ORANGO = new SinglePlantFeature(ModBlocks.ORANGO.get(), 5);
+	public static final Feature<NoFeatureConfig> LUTEBUS = new SinglePlantFeature(ModBlocks.LUTEBUS.get(), 5, 2);
 	
 	// SKY PLANTS
 	public static final Feature<NoFeatureConfig> FILALUX = new FilaluxFeature();
@@ -267,6 +269,8 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), AERIDIUM, "aeridium");
     	BetterEnd.register(event.getRegistry(), LAMELLARIUM, "lamellarium");
     	BetterEnd.register(event.getRegistry(), BOLUX_MUSHROOM, "bolux_mushroom");
+    	BetterEnd.register(event.getRegistry(), ORANGO, "orango");
+    	BetterEnd.register(event.getRegistry(), LUTEBUS, "lutebus");
     	// SKY PLANTS
     	BetterEnd.register(event.getRegistry(), FILALUX, "filalux");    	
     	// WALL_PLANTS

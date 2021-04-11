@@ -21,6 +21,7 @@ import mod.beethoven92.betterendforge.common.world.biome.BlossomingSpiresBiome;
 import mod.beethoven92.betterendforge.common.world.biome.ChorusForestBiome;
 import mod.beethoven92.betterendforge.common.world.biome.CrystalMountainsBiome;
 import mod.beethoven92.betterendforge.common.world.biome.DragonGraveyardsBiome;
+import mod.beethoven92.betterendforge.common.world.biome.DryShrublandBiome;
 import mod.beethoven92.betterendforge.common.world.biome.DustWastelandsBiome;
 import mod.beethoven92.betterendforge.common.world.biome.FoggyMushroomlandBiome;
 import mod.beethoven92.betterendforge.common.world.biome.GlowingGrasslandsBiome;
@@ -91,6 +92,7 @@ public class ModBiomes
 	public static final BetterEndBiome GLOWING_GRASSLANDS = registerBiome(new GlowingGrasslandsBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome DRAGON_GRAVEYARDS = registerBiome(new DragonGraveyardsBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome LANTERN_WOODS = registerBiome(new LanternWoodsBiome(), EndBiomeType.LAND);
+	public static final BetterEndBiome DRY_SHRUBLAND = registerBiome(new DryShrublandBiome(), EndBiomeType.LAND);
 	
 	// Better End void biomes
 	public static final BetterEndBiome ICE_STARFIELD = registerBiome(new IceStarfieldBiome(), EndBiomeType.VOID);

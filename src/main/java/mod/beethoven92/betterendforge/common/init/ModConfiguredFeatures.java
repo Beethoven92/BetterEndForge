@@ -240,6 +240,14 @@ public class ModConfiguredFeatures
 	public static final ConfiguredFeature<?, ?> BOLUX_MUSHROOM = 
 			ModFeatures.BOLUX_MUSHROOM.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(2); 
+	
+	public static final ConfiguredFeature<?, ?> ORANGO = 
+			ModFeatures.ORANGO.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(6); 
+	
+	public static final ConfiguredFeature<?, ?> LUTEBUS = 
+			ModFeatures.LUTEBUS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(5); 
 
 	
 	// SKY PLANTS
@@ -581,6 +589,8 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "aeridium"), AERIDIUM);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "lamellarium"), LAMELLARIUM);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "bolux_mushroom"), BOLUX_MUSHROOM);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "lutebus"), LUTEBUS);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "orango"), ORANGO);
         // SKY PLANTS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "filalux"), FILALUX);
         // WALL PLANTS
