@@ -5,6 +5,7 @@ import java.util.Random;
 
 import com.google.common.collect.Maps;
 
+import mod.beethoven92.betterendforge.common.block.template.PlantBlock;
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModStructurePieces;
@@ -12,8 +13,10 @@ import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
@@ -141,10 +144,11 @@ public class LakePiece extends StructurePiece
 					if (dist < r2) 
 					{
 						BlockState state = chunk.getBlockState(mut);
-						if (state.isIn(ModTags.GEN_TERRAIN) || state.isAir()) 
+						if (canReplace(chunk, mut, state)) 
 						{
 							state = mut.getY() < center.getY() ? WATER : AIR;
 							chunk.setBlockState(mut, state, false);
+							removePlant(chunk, mut.toImmutable().up());
 						}
 					}
 					else if (dist <= r3 && mut.getY() < center.getY()) 
@@ -173,6 +177,30 @@ public class LakePiece extends StructurePiece
 		return true;
 	}
 	
+	private boolean canReplace(IChunk chunk, BlockPos pos, BlockState state) {
+		if (state.isIn(ModTags.GEN_TERRAIN) || state.isAir())
+			return true;
+		Block b = state.getBlock();
+		if (b instanceof PlantBlock && !(b instanceof IWaterLoggable)) {
+			removePlant(chunk, pos);
+			return true;
+		}
+		return false;
+	}
+	
+	private void removePlant(IChunk chunk, BlockPos pos) {
+		BlockPos p = new BlockPos(pos);
+		while (chunk.getBlockState(p).getBlock() instanceof PlantBlock) {
+			chunk.setBlockState(p, AIR, false);
+			p = p.up();
+		}
+		p = new BlockPos(pos).down();
+		while (chunk.getBlockState(p).getBlock() instanceof PlantBlock) {
+			chunk.setBlockState(p, AIR, false);
+			p = p.down();
+		}
+	}
+
 	private void fixWater(ISeedReader world, IChunk chunk, Mutable mut, Random random, int sx, int sz) 
 	{
 		int minY = this.boundingBox.minY;
