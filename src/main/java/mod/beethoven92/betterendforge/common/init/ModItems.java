@@ -114,6 +114,7 @@ public class ModItems
 	
 	// MISC ITEMS
 	public final static RegistryObject<Item> BUCKET_END_FISH = ITEMS.register("bucket_end_fish", () -> new FishBucketItem(() -> ModEntityTypes.END_FISH.get(), () -> Fluids.WATER, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
+	public final static RegistryObject<Item> BUCKET_CUBOZOA = ITEMS.register("bucket_cubozoa", () -> new FishBucketItem(() -> ModEntityTypes.CUBOZOA.get(), () -> Fluids.WATER, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
 	public final static RegistryObject<Item> GUIDE_BOOK = ITEMS.register("guidebook", () -> new GuideBookItem(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
 	public final static RegistryObject<Item> FLAMAEA = ITEMS.register("flamaea", () -> new LilyPadItem(ModBlocks.FLAMAEA.get(), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 

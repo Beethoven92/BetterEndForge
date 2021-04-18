@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
+import mod.beethoven92.betterendforge.common.init.ModItems;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
@@ -16,7 +17,6 @@ import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -50,6 +50,14 @@ public class CubozoaEntity extends AbstractGroupFishEntity {
 		{
 			this.dataManager.set(VARIANT, (byte) 1);
 		}
+		
+		if (entityTag != null) {
+			if (entityTag.contains("variant"))
+				this.dataManager.set(VARIANT, entityTag.getByte("variant"));
+			if (entityTag.contains("scale"))
+				this.dataManager.set(SCALE, entityTag.getByte("scale"));
+		}
+		
 		this.recalculateSize();
 		return data;
 	}
@@ -118,7 +126,11 @@ public class CubozoaEntity extends AbstractGroupFishEntity {
 
 	@Override
 	protected ItemStack getFishBucket() {
-		return new ItemStack(Items.WATER_BUCKET);
+		ItemStack bucket = ModItems.BUCKET_CUBOZOA.get().getDefaultInstance();
+		CompoundNBT tag = bucket.getOrCreateTag();
+		tag.putByte("variant", dataManager.get(VARIANT));
+		tag.putByte("scale", dataManager.get(SCALE));
+		return bucket;
 	}
 
 	@Override

@@ -47,10 +47,18 @@ public class EndFishEntity extends AbstractGroupFishEntity
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) 
 	{
 		ILivingEntityData data = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-		if (ModBiomes.getFromBiome(world.getBiome(getPosition())) == ModBiomes.SULPHUR_SPRINGS) 
-		{
+		
+		if (ModBiomes.getFromBiome(world.getBiome(getPosition())) == ModBiomes.SULPHUR_SPRINGS) {
 			this.dataManager.set(VARIANT, (byte) (rand.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
 		}
+
+		if (dataTag != null) {
+			if (dataTag.contains("variant"))
+				this.dataManager.set(VARIANT, dataTag.getByte("variant"));
+			if (dataTag.contains("scale"))
+				this.dataManager.set(SCALE, dataTag.getByte("scale"));
+		}
+		
 		this.recalculateSize();
 		return data;
 	}
@@ -88,7 +96,11 @@ public class EndFishEntity extends AbstractGroupFishEntity
 	@Override
 	protected ItemStack getFishBucket() 
 	{
-		return new ItemStack(ModItems.BUCKET_END_FISH.get());
+		ItemStack bucket = ModItems.BUCKET_END_FISH.get().getDefaultInstance();
+		CompoundNBT tag = bucket.getOrCreateTag();
+		tag.putByte("variant", dataManager.get(VARIANT));
+		tag.putByte("scale", dataManager.get(SCALE));
+		return bucket;
 	}
 
 	@Override
