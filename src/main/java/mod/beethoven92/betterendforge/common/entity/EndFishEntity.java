@@ -76,7 +76,7 @@ public class EndFishEntity extends AbstractGroupFishEntity
 	{
 		super.writeAdditional(compound);
 		compound.putByte("Variant", (byte)this.getVariant());
-		compound.putByte("Scale", (byte)this.getScale());
+		compound.putByte("Scale", dataManager.get(SCALE));
 	}
 
 	@Override

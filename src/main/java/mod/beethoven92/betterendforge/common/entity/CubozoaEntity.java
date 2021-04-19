@@ -73,7 +73,7 @@ public class CubozoaEntity extends AbstractGroupFishEntity {
 	public void writeAdditional(CompoundNBT tag) {
 		super.writeAdditional(tag);
 		tag.putByte("Variant", (byte) getVariant());
-		tag.putByte("Scale", (byte) getScale());
+		tag.putByte("Scale", dataManager.get(SCALE));
 	}
 
 	@Override
