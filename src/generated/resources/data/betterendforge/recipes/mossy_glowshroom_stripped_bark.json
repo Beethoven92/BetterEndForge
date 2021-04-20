@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:mossy_glowshroom_stripped_log"
+    }
+  },
+  "result": {
+    "item": "betterendforge:mossy_glowshroom_stripped_bark",
+    "count": 3
+  }
+}

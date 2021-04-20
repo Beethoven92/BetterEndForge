@@ -195,6 +195,8 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(material.pressurePlate.get()).key('#', material.planks.get()).patternLine("##").setGroup("end_planks_plates").addCriterion("has_planks", hasItem(material.planks.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.trapdoor.get(), 2).key('#', material.planks.get()).patternLine("###").patternLine("###").setGroup("end_trapdoors").addCriterion("has_planks", hasItem(material.planks.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.door.get(), 3).key('#', material.planks.get()).patternLine("##").patternLine("##").patternLine("##").setGroup("end_doors").addCriterion("has_planks", hasItem(material.planks.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.bark.get(), 3).key('#', material.log.get()).patternLine("##").patternLine("##").addCriterion("has_log", hasItem(material.log.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(material.bark_stripped.get(), 3).key('#', material.log_stripped.get()).patternLine("##").patternLine("##").addCriterion("has_log_stripped", hasItem(material.log_stripped.get())).build(consumer);
 	    
 	    ShapedRecipeBuilder.shapedRecipe(material.composter.get(), 1).key('#', material.slab.get()).patternLine("# #").patternLine("# #").patternLine("###").setGroup("end_composters").addCriterion("has_slabs", hasItem(material.slab.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.craftingTable.get(), 1).key('#', material.planks.get()).patternLine("##").patternLine("##").setGroup("end_crafting_tables").addCriterion("has_planks", hasItem(material.planks.get())).build(consumer);
