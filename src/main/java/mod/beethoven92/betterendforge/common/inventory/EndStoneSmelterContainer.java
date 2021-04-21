@@ -137,7 +137,7 @@ public class EndStoneSmelterContainer extends RecipeBookContainer<IInventory>
 			itemStack = itemStack2.copy();
 			if (index == 3) 
 			{
-				if (this.mergeItemStack(itemStack2, 4, 40, true)) 
+				if (!this.mergeItemStack(itemStack2, 4, 40, true)) 
 				{
 					return ItemStack.EMPTY;
 				}
