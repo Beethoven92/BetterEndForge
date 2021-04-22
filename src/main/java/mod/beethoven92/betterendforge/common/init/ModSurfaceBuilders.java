@@ -28,6 +28,10 @@ public class ModSurfaceBuilders
 	public static final RegistryObject<SurfaceBuilder<SurfaceBuilderConfig>> MUSHROOMLAND_SURFACE = SURFACE_BUILDERS.register("mushroomland_surface",
 			() -> new DoubleBlockSurfaceBuilder(ModBlocks.END_MOSS.get(), ModBlocks.END_MYCELIUM.get()));
 	
+	public static final RegistryObject<SurfaceBuilder<SurfaceBuilderConfig>> NEON_OASIS_SURFACE = SURFACE_BUILDERS.register("neon_oasis_surface",
+			() -> new DoubleBlockSurfaceBuilder(ModBlocks.ENDSTONE_DUST.get(), ModBlocks.END_MOSS.get()));
+
+	
 	public static final RegistryObject<SurfaceBuilder<SurfaceBuilderConfig>> SULPHURIC_SURFACE = SURFACE_BUILDERS.register("sulphuric_surface",
 			() -> new SulphuricSurfaceBuilder());
 	

@@ -29,6 +29,7 @@ import mod.beethoven92.betterendforge.common.world.biome.IceStarfieldBiome;
 import mod.beethoven92.betterendforge.common.world.biome.LanternWoodsBiome;
 import mod.beethoven92.betterendforge.common.world.biome.MegalakeBiome;
 import mod.beethoven92.betterendforge.common.world.biome.MegalakeGroveBiome;
+import mod.beethoven92.betterendforge.common.world.biome.NeonOasisBiome;
 import mod.beethoven92.betterendforge.common.world.biome.PaintedMountainsBiome;
 import mod.beethoven92.betterendforge.common.world.biome.ShadowForestBiome;
 import mod.beethoven92.betterendforge.common.world.biome.SulphurSpringsBiome;
@@ -93,6 +94,7 @@ public class ModBiomes
 	public static final BetterEndBiome DRAGON_GRAVEYARDS = registerBiome(new DragonGraveyardsBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome LANTERN_WOODS = registerBiome(new LanternWoodsBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome DRY_SHRUBLAND = registerBiome(new DryShrublandBiome(), EndBiomeType.LAND);
+	public static final BetterEndBiome NEON_OASIS = registerSubBiome(new NeonOasisBiome(), DUST_WASTELANDS);
 	
 	// Better End void biomes
 	public static final BetterEndBiome ICE_STARFIELD = registerBiome(new IceStarfieldBiome(), EndBiomeType.VOID);
