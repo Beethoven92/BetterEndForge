@@ -1,0 +1,7 @@
+{
+	"parent": "betterendforge:block/column_noshade",
+	"textures": {
+		"end": "betterendforge:block/neon_cactus_big_top",
+		"side": "betterendforge:block/neon_cactus_big_side"
+	}
+}

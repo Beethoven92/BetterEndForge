@@ -18,7 +18,7 @@ public class NeonOasisBiome extends BetterEndBiome {
 				.setAmbientSound(ModSoundEvents.AMBIENT_DUST_WASTELANDS.get())
 				.setMusic(ModSoundEvents.MUSIC_OPENSPACE.get())
 //				.addFeature(Decoration.LAKES, ModConfiguredFeatures.DESERT_LAKE)
-//				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.NEON_CACTUS)
+				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.NEON_CACTUS)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.UMBRELLA_MOSS)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CREEPING_MOSS)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_GREEN)

@@ -31,6 +31,7 @@ import mod.beethoven92.betterendforge.common.world.feature.LucerniaFeature;
 import mod.beethoven92.betterendforge.common.world.feature.Lumecorn;
 import mod.beethoven92.betterendforge.common.world.feature.MengerSpongeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.MossyGlowshroomFeature;
+import mod.beethoven92.betterendforge.common.world.feature.NeonCactusFeature;
 import mod.beethoven92.betterendforge.common.world.feature.ObsidianBoulderFeature;
 import mod.beethoven92.betterendforge.common.world.feature.ObsidianPillarBasementFeature;
 import mod.beethoven92.betterendforge.common.world.feature.OreLayerFeature;
@@ -88,6 +89,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> TENANEA_BUSH = new TenaneaBushFeature();
 	public static final Feature<NoFeatureConfig> LARGE_AMARANITA = new LargeAmaranitaFeature();
 	public static final Feature<NoFeatureConfig> LUCERNIA_BUSH = new BushWithOuterFeature(ModBlocks.LUCERNIA_LEAVES.get(), ModBlocks.LUCERNIA_OUTER_LEAVES.get(), ModBlocks.LUCERNIA.bark.get());
+	public static final Feature<NoFeatureConfig> NEON_CACTUS = new NeonCactusFeature();
 	
 	// PLANTS
 	public static final Feature<NoFeatureConfig> UMBRELLA_MOSS = new DoublePlantFeature(ModBlocks.UMBRELLA_MOSS.get(), ModBlocks.UMBRELLA_MOSS_TALL.get(), 5);
@@ -236,6 +238,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), TENANEA_BUSH, "tenanea_bush"); 
     	BetterEnd.register(event.getRegistry(), LARGE_AMARANITA, "large_amaranita"); 
     	BetterEnd.register(event.getRegistry(), LUCERNIA_BUSH, "lucernia_bush"); 
+    	BetterEnd.register(event.getRegistry(), NEON_CACTUS, "neon_cactus"); 
     	// PLANTS
     	BetterEnd.register(event.getRegistry(), UMBRELLA_MOSS, "umbrella_moss");
     	BetterEnd.register(event.getRegistry(), CREEPING_MOSS, "creeping_moss");   	

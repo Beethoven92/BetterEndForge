@@ -110,6 +110,11 @@ public class ModConfiguredFeatures
 	public static final ConfiguredFeature<?, ?> LUCERNIA_BUSH = 
 			ModFeatures.LUCERNIA_BUSH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(10);
+	
+	public static final ConfiguredFeature<?, ?> NEON_CACTUS = 
+			ModFeatures.NEON_CACTUS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(2);
+
 
 	
 	// PLANTS
@@ -556,6 +561,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "tenanea_bush"), TENANEA_BUSH);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "large_amaranita"), LARGE_AMARANITA);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "lucernia_bush"), LUCERNIA_BUSH);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "neon_cactus"), NEON_CACTUS);
         // PLANTS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "umbrella_moss"), UMBRELLA_MOSS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "creeping_moss"), CREEPING_MOSS);

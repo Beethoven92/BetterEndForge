@@ -62,6 +62,7 @@ import mod.beethoven92.betterendforge.common.block.MossyGlowshroomSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.MossyObsidianBlock;
 import mod.beethoven92.betterendforge.common.block.MurkweedBlock;
 import mod.beethoven92.betterendforge.common.block.NeedlegrassBlock;
+import mod.beethoven92.betterendforge.common.block.NeonCactusBlock;
 import mod.beethoven92.betterendforge.common.block.PathBlock;
 import mod.beethoven92.betterendforge.common.block.PondAnemoneBlock;
 import mod.beethoven92.betterendforge.common.block.PythadendronSaplingBlock;
@@ -128,8 +129,6 @@ public class ModBlocks
 {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BetterEnd.MOD_ID);
 	
-	// TODO: Add ORANGO and LUTEBUS
-
 	// TERRAINS
 	public static final RegistryObject<Block> CRYSTAL_MOSS = registerBlockWithDefaultItem("crystal_moss",
 			() -> new TerrainBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.PINK).
@@ -725,6 +724,9 @@ public class ModBlocks
 					                                                 zeroHardnessAndResistance().
                                                                      doesNotBlockMovement().
                                                                      sound(SoundType.NETHER_WART)));
+	
+	public static final RegistryObject<Block> NEON_CACTUS = registerBlockWithDefaultItem("neon_cactus", 
+			() -> new NeonCactusBlock());
 	
 	// CROPS
 	public static final RegistryObject<Block> SHADOW_BERRY = registerBlockWithDefaultItem("shadow_berry", 
