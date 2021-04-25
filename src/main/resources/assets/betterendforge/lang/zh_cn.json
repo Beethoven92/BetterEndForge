@@ -578,7 +578,7 @@
     "block.betterendforge.sulphuric_rock_tiles": "硫磺石瓷砖",
     "block.betterendforge.sulphuric_rock_wall": "硫磺石墙",
 
-  "block.betterendforge.sulphuric_furnace": "硫磺石熔炉",
+  "block.betterendforge.sulphuric_rock_furnace": "硫磺石熔炉",
   "block.betterendforge.thallasium_ore": "铊矿",
   "block.betterendforge.thallasium_block": "铊方块",
   "item.betterendforge.thallasium_ingot": "铊锭",
