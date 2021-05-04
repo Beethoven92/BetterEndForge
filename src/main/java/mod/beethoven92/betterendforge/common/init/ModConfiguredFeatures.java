@@ -365,6 +365,10 @@ public class ModConfiguredFeatures
 			ModFeatures.END_LAKE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.WATER_LAKE.configure(new ChanceConfig(20)));
 	
+	public static final ConfiguredFeature<?, ?> DESERT_LAKE = 
+			ModFeatures.DESERT_LAKE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+			withPlacement(Placement.WATER_LAKE.configure(new ChanceConfig(8)));
+	
 	public static final ConfiguredFeature<?, ?> SPIRE = 
 			ModFeatures.SPIRE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.CHANCE.configure(new ChanceConfig(2)));
@@ -627,6 +631,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "round_cave"), ROUND_CAVE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "end_lake"), END_LAKE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "end_lake_rare"), END_LAKE_RARE);
+        Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "desert_lake"), DESERT_LAKE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "end_lake_normal"), END_LAKE_NORMAL);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "spire"), SPIRE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "floating_spire"), FLOATING_SPIRE);

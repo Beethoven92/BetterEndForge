@@ -8,6 +8,7 @@ import mod.beethoven92.betterendforge.common.world.feature.BushFeature;
 import mod.beethoven92.betterendforge.common.world.feature.BushWithOuterFeature;
 import mod.beethoven92.betterendforge.common.world.feature.CharniaFeature;
 import mod.beethoven92.betterendforge.common.world.feature.CrashedShipFeature;
+import mod.beethoven92.betterendforge.common.world.feature.DesertLakeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.DoublePlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.DragonTreeFeature;
 import mod.beethoven92.betterendforge.common.world.feature.EndLakeFeature;
@@ -161,6 +162,7 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> ROUND_CAVE = new RoundCaveFeature();
 	public static final Feature<NoFeatureConfig> END_LAKE = new EndLakeFeature();
 	public static final Feature<NoFeatureConfig> END_LAKE_RARE = new EndLakeFeature();
+	public static final Feature<NoFeatureConfig> DESERT_LAKE = new DesertLakeFeature();
 	public static final Feature<NoFeatureConfig> SPIRE = new SpireFeature();
 	public static final Feature<NoFeatureConfig> FLOATING_SPIRE = new FloatingSpireFeature();
 	public static final Feature<NoFeatureConfig> GEYSER = new GeyserFeature();
@@ -304,6 +306,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), ROUND_CAVE, "round_cave");
     	BetterEnd.register(event.getRegistry(), END_LAKE, "end_lake");   
     	BetterEnd.register(event.getRegistry(), END_LAKE_RARE, "end_lake_rare"); 
+    	BetterEnd.register(event.getRegistry(), DESERT_LAKE, "desert_lake"); 
     	BetterEnd.register(event.getRegistry(), SPIRE, "spire");   
     	BetterEnd.register(event.getRegistry(), FLOATING_SPIRE, "floating_spire");
     	BetterEnd.register(event.getRegistry(), GEYSER, "geyser");
