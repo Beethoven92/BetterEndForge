@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:neon_cactus_block"
+    }
+  },
+  "result": {
+    "item": "betterendforge:neon_cactus_stairs",
+    "count": 4
+  }
+}

@@ -26,7 +26,9 @@
 	"biome.betterendforge.dry_shrubland": "Dry Shrubland",
 	"biome.betterendforge.neon_oasis": "Neon Oasis",
 	"block.betterendforge.neon_cactus": "Neon Cactus",
-
+	"block.betterendforge.neon_cactus_block": "Neon Cactus Block",
+	"block.betterendforge.neon_cactus_slab": "Neon Cactus Slab",
+	"block.betterendforge.neon_cactus_stairs": "Neon Cactus Stairs", 
 
 	"block.betterendforge.rutiscus": "Rutiscus",
 	"block.betterendforge.rutiscus_path": "Rutiscus Path",

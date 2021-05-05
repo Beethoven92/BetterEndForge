@@ -158,6 +158,12 @@ public class ModRecipes extends RecipeProvider
 		makeSmithingRecipe(ModBlocks.TERMINITE.leggings.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_LEGGINGS.get(), consumer);
 		makeSmithingRecipe(ModBlocks.TERMINITE.boots.get(), ModItems.AETERNIUM_INGOT.get(), ModItems.AETERNIUM_BOOTS.get(), consumer);
 		
+		
+		// NEON CACTUS
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.NEON_CACTUS_BLOCK.get()).key('#', ModBlocks.NEON_CACTUS.get()).patternLine("##").patternLine("##").addCriterion("has_neon_cactus", hasItem(ModBlocks.NEON_CACTUS.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get(), 6).key('#', ModBlocks.NEON_CACTUS_BLOCK.get()).patternLine("###").addCriterion("has_neon_cactus_block", hasItem(ModBlocks.NEON_CACTUS_BLOCK.get())).build(consumer);
+	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get(), 4).key('#', ModBlocks.NEON_CACTUS_BLOCK.get()).patternLine("#  ").patternLine("## ").patternLine("###").addCriterion("has_neon_cactus_block", hasItem(ModBlocks.NEON_CACTUS_BLOCK.get())).build(consumer);
+		
 		// WOODEN MATERIALS
 		makeWoodenMaterialRecipes(ModBlocks.MOSSY_GLOWSHROOM, consumer);
 		makeWoodenMaterialRecipes(ModBlocks.LACUGROVE, consumer);

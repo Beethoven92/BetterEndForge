@@ -12,6 +12,8 @@ public class BlockProperties
 	public static final EnumProperty<PedestalState> PEDESTAL_STATE = EnumProperty.create("state", PedestalState.class);
 	public static final EnumProperty<HydraluxShape> HYDRALUX_SHAPE = EnumProperty.create("shape", HydraluxShape.class);
 	public static final EnumProperty<PentaShape> PENTA_SHAPE = EnumProperty.create("shape", PentaShape.class);
+	public static final EnumProperty<CactusBottom> CACTUS_BOTTOM = EnumProperty.create("bottom", CactusBottom.class);
+
 	
 	public static final BooleanProperty HAS_ITEM = BooleanProperty.create("has_item");
 	public static final BooleanProperty HAS_LIGHT = BooleanProperty.create("has_light");
@@ -28,15 +30,17 @@ public class BlockProperties
 	
 	public static enum TripleShape implements IStringSerializable 
 	{
-		TOP("top"),
-		MIDDLE("middle"),
-		BOTTOM("bottom");
+		TOP("top", 0),
+		MIDDLE("middle", 1),
+		BOTTOM("bottom", 2);
 		
 		private final String name;
+		private final int index;
 		
-		TripleShape(String name) 
+		TripleShape(String name, int index) 
 		{
 			this.name = name;
+			this.index = index;
 		}
 		
 		@Override
@@ -49,6 +53,14 @@ public class BlockProperties
 		public String toString() 
 		{
 			return name;
+		}
+		
+		public int getIndex() {
+			return index;
+		}
+		
+		public static TripleShape fromIndex(int index) {
+			return index > 1 ? BOTTOM : index == 1 ? MIDDLE : TOP;
 		}
 	}
 	
@@ -170,6 +182,28 @@ public class BlockProperties
 		
 		public int getLight() {
 			return light;
+		}
+	}
+	
+	public static enum CactusBottom implements IStringSerializable {
+		EMPTY("empty"),
+		SAND("sand"),
+		MOSS("moss");
+		
+		private final String name;
+		
+		CactusBottom(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String getString() {
+			return name;
+		}
+		
+		@Override
+		public String toString() {
+			return name;
 		}
 	}
 }

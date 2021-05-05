@@ -115,7 +115,6 @@ public class ModConfiguredFeatures
 			ModFeatures.NEON_CACTUS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(2);
 
-
 	
 	// PLANTS
 	public static final ConfiguredFeature<?, ?> UMBRELLA_MOSS = 

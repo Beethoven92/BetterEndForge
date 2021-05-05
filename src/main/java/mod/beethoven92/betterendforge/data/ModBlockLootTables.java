@@ -212,6 +212,9 @@ public class ModBlockLootTables extends BlockLootTables
 		registerDropSelfLootTable(ModBlocks.BOLUX_MUSHROOM.get());
 		registerDropSelfLootTable(ModBlocks.AURANT_POLYPORE.get());
 		registerDropSelfLootTable(ModBlocks.NEON_CACTUS.get());
+		registerDropSelfLootTable(ModBlocks.NEON_CACTUS_BLOCK.get());
+		registerDropSelfLootTable(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get());
+		registerDropSelfLootTable(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get());
 		
 		registerLootTable(ModBlocks.BLUE_VINE_SEED.get(), BlockLootTables::onlyWithShears);
 		registerLootTable(ModBlocks.BLUE_VINE.get(), BlockLootTables::onlyWithShears);

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "betterendforge:block/neon_cactus_slab_top"
+    },
+    "type=bottom": {
+      "model": "betterendforge:block/neon_cactus_slab"
+    },
+    "type=double": {
+      "model": "betterendforge:block/neon_cactus_block"
+    }
+  }
+}

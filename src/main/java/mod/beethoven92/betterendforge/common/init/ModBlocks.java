@@ -62,7 +62,7 @@ import mod.beethoven92.betterendforge.common.block.MossyGlowshroomSaplingBlock;
 import mod.beethoven92.betterendforge.common.block.MossyObsidianBlock;
 import mod.beethoven92.betterendforge.common.block.MurkweedBlock;
 import mod.beethoven92.betterendforge.common.block.NeedlegrassBlock;
-import mod.beethoven92.betterendforge.common.block.NeonCactusBlock;
+import mod.beethoven92.betterendforge.common.block.NeonCactusPlantBlock;
 import mod.beethoven92.betterendforge.common.block.PathBlock;
 import mod.beethoven92.betterendforge.common.block.PondAnemoneBlock;
 import mod.beethoven92.betterendforge.common.block.PythadendronSaplingBlock;
@@ -726,8 +726,16 @@ public class ModBlocks
                                                                      sound(SoundType.NETHER_WART)));
 	
 	public static final RegistryObject<Block> NEON_CACTUS = registerBlockWithDefaultItem("neon_cactus", 
-			() -> new NeonCactusBlock());
+			() -> new NeonCactusPlantBlock());
 	
+	public static final RegistryObject<Block> NEON_CACTUS_BLOCK = registerBlockWithDefaultItem("neon_cactus_block", 
+			() -> new RotatedPillarBlock(AbstractBlock.Properties.from(Blocks.CACTUS).setLightLevel(s -> { return 15; } )));
+	
+	public static final RegistryObject<Block> NEON_CACTUS_BLOCK_STAIRS = registerBlockWithDefaultItem("neon_cactus_stairs", 
+			() -> new StairsBlock(() -> NEON_CACTUS_BLOCK.get().getDefaultState(), AbstractBlock.Properties.from(Blocks.CACTUS).setLightLevel(s -> { return 15; })));
+	
+	public static final RegistryObject<Block> NEON_CACTUS_BLOCK_SLAB = registerBlockWithDefaultItem("neon_cactus_slab", 
+			() -> new SlabBlock(AbstractBlock.Properties.from(Blocks.CACTUS).setLightLevel(s -> { return 15; })));	
 	// CROPS
 	public static final RegistryObject<Block> SHADOW_BERRY = registerBlockWithDefaultItem("shadow_berry", 
 			() -> new ShadowBerryBlock(AbstractBlock.Properties.create(Material.PLANTS).

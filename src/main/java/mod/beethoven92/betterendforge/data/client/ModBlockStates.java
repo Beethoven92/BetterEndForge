@@ -124,6 +124,13 @@ public class ModBlockStates extends BlockStateProvider
 		slabBlock(ModBlocks.DRAGON_BONE_SLAB.get(), modLoc("block/dragon_bone_block"), modLoc("block/dragon_bone_block"));
 		makeBlockItemFromExistingModel(ModBlocks.DRAGON_BONE_SLAB.get());
 		
+		axisBlock((RotatedPillarBlock) ModBlocks.NEON_CACTUS_BLOCK.get(), modLoc("block/neon_cactus_block_side"), modLoc("block/neon_cactus_block_top"));
+		makeBlockItemFromExistingModel(ModBlocks.NEON_CACTUS_BLOCK.get());
+		stairsBlock((StairsBlock) ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get(), modLoc("block/neon_cactus_block_side"), modLoc("block/neon_cactus_block_top"), modLoc("block/neon_cactus_block_top"));
+		makeBlockItemFromExistingModel(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get());
+		slabBlock((SlabBlock) ModBlocks.NEON_CACTUS_BLOCK_SLAB.get(), modLoc("block/neon_cactus_block"), modLoc("block/neon_cactus_block_side"), modLoc("block/neon_cactus_block_top"), modLoc("block/neon_cactus_block_top"));
+		makeBlockItemFromExistingModel(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get());
+		
 		simpleBlock(ModBlocks.FILALUX_LANTERN.get());
 		makeBlockItemFromExistingModel(ModBlocks.FILALUX_LANTERN.get());
 	}

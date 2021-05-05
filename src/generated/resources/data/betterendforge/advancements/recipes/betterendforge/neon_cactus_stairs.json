@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:neon_cactus_stairs"
+    ]
+  },
+  "criteria": {
+    "has_neon_cactus_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:neon_cactus_block"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:neon_cactus_stairs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_neon_cactus_block",
+      "has_the_recipe"
+    ]
+  ]
+}

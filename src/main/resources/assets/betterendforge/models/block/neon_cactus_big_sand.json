@@ -2,7 +2,8 @@
 	"__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
 	"textures": {
 		"particle": "betterendforge:block/neon_cactus_big_side",
-		"side": "betterendforge:block/neon_cactus_big_side",
+		"overlay": "betterendforge:block/neon_cactus_big_side_dust_overlay",
+		"side": "betterendforge:block/neon_cactus_big_side_dust",
 		"top": "betterendforge:block/neon_cactus_medium_top"
 	},
 	"elements": [ 	 
@@ -18,6 +19,17 @@
 				"south": { "uv": [ 2, 0, 14, 16 ], "texture": "#side" },
 				"west": { "uv": [ 2, 0, 14, 16 ], "texture": "#side" },
 				"east": { "uv": [ 2, 0, 14, 16 ], "texture": "#side" }
+			}
+		},
+		{
+			"__comment": "Box1",
+			"from": [ 2, -2, 2 ],
+			"to": [ 14, 14, 14 ],
+			"faces": {
+				"north": { "uv": [ 2, 0, 14, 16 ], "texture": "#overlay" },
+				"south": { "uv": [ 2, 0, 14, 16 ], "texture": "#overlay" },
+				"west": { "uv": [ 2, 0, 14, 16 ], "texture": "#overlay" },
+				"east": { "uv": [ 2, 0, 14, 16 ], "texture": "#overlay" }
 			}
 		},
 		{
