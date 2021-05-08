@@ -4,18 +4,9 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.block.*;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.HydraluxShape;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
-import mod.beethoven92.betterendforge.common.block.BlockProperties;
-import mod.beethoven92.betterendforge.common.block.BulbVineBlock;
-import mod.beethoven92.betterendforge.common.block.EndLilyBlock;
-import mod.beethoven92.betterendforge.common.block.HydraluxBlock;
-import mod.beethoven92.betterendforge.common.block.LumecornBlock;
-import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
-import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
-import mod.beethoven92.betterendforge.common.block.SilkMothNestBlock;
-import mod.beethoven92.betterendforge.common.block.SulphurCrystalBlock;
-import mod.beethoven92.betterendforge.common.block.UmbrellaTreeMembraneBlock;
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
@@ -260,7 +251,7 @@ public class ModBlockLootTables extends BlockLootTables
 	    });
 		
 		registerLootTable(ModBlocks.LANCELEAF_SEED.get(), BlockLootTables::onlyWithShears);
-		registerLootTable(ModBlocks.LANCELEAF.get(), BlockLootTables::onlyWithShears);
+		lanceleaf();
 		
 		lumecorn();
 				
@@ -431,7 +422,36 @@ public class ModBlockLootTables extends BlockLootTables
 		registerColoredMaterialLootTables(ModBlocks.IRON_BULB_LANTERN_COLORED);
 		registerDropSelfLootTable(ModBlocks.IRON_BULB_LANTERN.get());
 	}
-		
+
+	private void lanceleaf() {
+		ILootCondition.IBuilder lanceleafSeedCond1 = BlockStateProperty.builder((ModBlocks.LANCELEAF.get()))
+				.fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(LanceleafBlock.SHAPE,
+						BlockProperties.PentaShape.BOTTOM));
+		ILootCondition.IBuilder lanceleafSeedCond2 = BlockStateProperty.builder((ModBlocks.LANCELEAF.get()))
+				.fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(LanceleafBlock.SHAPE,
+						BlockProperties.PentaShape.PRE_BOTTOM));
+		ILootCondition.IBuilder lanceleafSeedCond3 = BlockStateProperty.builder((ModBlocks.LANCELEAF.get()))
+				.fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(LanceleafBlock.SHAPE,
+						BlockProperties.PentaShape.MIDDLE));
+		ILootCondition.IBuilder lanceleafSeedCond4 = BlockStateProperty.builder((ModBlocks.LANCELEAF.get()))
+				.fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(LanceleafBlock.SHAPE,
+						BlockProperties.PentaShape.PRE_TOP));
+		ILootCondition.IBuilder lanceleafSeedCond5 = BlockStateProperty.builder((ModBlocks.LANCELEAF.get()))
+				.fromProperties(StatePropertiesPredicate.Builder.newBuilder().withProp(LanceleafBlock.SHAPE,
+						BlockProperties.PentaShape.TOP));
+		LootEntry.Builder<?> lanceleafSeedDrop = ItemLootEntry.builder(ModBlocks.LANCELEAF_SEED.get())
+				.acceptCondition(RandomChance.builder(0.5F));
+		registerLootTable(ModBlocks.LANCELEAF.get(),
+				LootTable.builder()
+						.addLootPool(LootPool.builder().addEntry(lanceleafSeedDrop).acceptCondition(lanceleafSeedCond1))
+						.addLootPool(LootPool.builder().addEntry(lanceleafSeedDrop).acceptCondition(lanceleafSeedCond2))
+						.addLootPool(LootPool.builder().addEntry(lanceleafSeedDrop).acceptCondition(lanceleafSeedCond3))
+						.addLootPool(LootPool.builder().addEntry(lanceleafSeedDrop).acceptCondition(lanceleafSeedCond4))
+						.addLootPool(LootPool.builder().addEntry(lanceleafSeedDrop).acceptCondition(lanceleafSeedCond5)));
+
+
+	}
+
 	private void lumecorn() {
 		registerLootTable(ModBlocks.LUMECORN_SEED.get(), BlockLootTables::onlyWithShears);
 		ILootCondition.IBuilder lumecornSeedCond1 = BlockStateProperty.builder(ModBlocks.LUMECORN.get())
