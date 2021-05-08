@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:blue_dye_from_blue_vine_seed"
+    ]
+  },
+  "criteria": {
+    "has_blue_vine_seed": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:blue_vine_seed"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:blue_dye_from_blue_vine_seed"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_blue_vine_seed",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:orange_dye_from_orange_charnia"
+    ]
+  },
+  "criteria": {
+    "has_orange_charnia": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:charnia_orange"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:orange_dye_from_orange_charnia"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_orange_charnia",
+      "has_the_recipe"
+    ]
+  ]
+}

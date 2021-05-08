@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:ender_pearl_from_ender_block"
+    ]
+  },
+  "criteria": {
+    "has_ender_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:ender_block"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:ender_pearl_from_ender_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ender_block",
+      "has_the_recipe"
+    ]
+  ]
+}

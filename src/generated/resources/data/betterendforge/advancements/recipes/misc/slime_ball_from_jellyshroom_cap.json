@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:slime_ball_from_jellyshroom_cap"
+    ]
+  },
+  "criteria": {
+    "has_jellyshroom_cap": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:jellyshroom_cap_purple"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:slime_ball_from_jellyshroom_cap"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_jellyshroom_cap",
+      "has_the_recipe"
+    ]
+  ]
+}

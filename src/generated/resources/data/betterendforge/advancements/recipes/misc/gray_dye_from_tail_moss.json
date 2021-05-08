@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:gray_dye_from_tail_moss"
+    ]
+  },
+  "criteria": {
+    "has_tail_moss": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:tail_moss"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:gray_dye_from_tail_moss"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_tail_moss",
+      "has_the_recipe"
+    ]
+  ]
+}

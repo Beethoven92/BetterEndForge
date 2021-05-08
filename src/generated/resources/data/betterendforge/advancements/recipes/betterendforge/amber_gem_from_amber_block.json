@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:amber_gem_from_amber_block"
+    ]
+  },
+  "criteria": {
+    "has_amber_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:amber_block"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:amber_gem_from_amber_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_amber_block",
+      "has_the_recipe"
+    ]
+  ]
+}

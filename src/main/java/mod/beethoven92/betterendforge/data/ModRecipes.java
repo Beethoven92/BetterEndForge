@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.data;
 
 import java.util.function.Consumer;
 
+import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
@@ -27,6 +28,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ResourceLocation;
 
 public class ModRecipes extends RecipeProvider
 {
@@ -35,17 +37,21 @@ public class ModRecipes extends RecipeProvider
 		super(generatorIn);
 	}
 	
+	private ResourceLocation rl(String s) {
+		return new ResourceLocation(BetterEnd.MOD_ID, s);
+	}
+	
 	@Override
 	protected void registerRecipes(Consumer<IFinishedRecipe> consumer) 
 	{
 		// BLOCKS
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.ENDER_BLOCK.get()).key('#', Items.ENDER_PEARL).patternLine("##").patternLine("##").addCriterion("has_ender_pearl", hasItem(Items.ENDER_PEARL)).build(consumer);	    
-	    ShapelessRecipeBuilder.shapelessRecipe(Items.ENDER_PEARL, 4).addIngredient(ModBlocks.ENDER_BLOCK.get()).addCriterion("has_ender_block", hasItem(ModBlocks.ENDER_BLOCK.get())).build(consumer, "ender_pearl_from_ender_block");
+	    ShapelessRecipeBuilder.shapelessRecipe(Items.ENDER_PEARL, 4).addIngredient(ModBlocks.ENDER_BLOCK.get()).addCriterion("has_ender_block", hasItem(ModBlocks.ENDER_BLOCK.get())).build(consumer, rl("ender_pearl_from_ender_block"));
 	    
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.HYDRALUX_PETAL_BLOCK.get()).key('#', ModItems.HYDRALUX_PETAL.get()).patternLine("##").patternLine("##").addCriterion("has_hydralux_petal", hasItem(ModItems.HYDRALUX_PETAL.get())).build(consumer);
 	    
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.AMBER_BLOCK.get()).key('#', ModItems.AMBER_GEM.get()).patternLine("##").patternLine("##").addCriterion("has_amber_gem", hasItem(ModItems.AMBER_GEM.get())).build(consumer);
-	    ShapelessRecipeBuilder.shapelessRecipe(ModItems.AMBER_GEM.get(), 4).addIngredient(ModBlocks.AMBER_BLOCK.get()).addCriterion("has_amber_block", hasItem(ModBlocks.AMBER_BLOCK.get())).build(consumer, "amber_gem_from_amber_block");
+	    ShapelessRecipeBuilder.shapelessRecipe(ModItems.AMBER_GEM.get(), 4).addIngredient(ModBlocks.AMBER_BLOCK.get()).addCriterion("has_amber_block", hasItem(ModBlocks.AMBER_BLOCK.get())).build(consumer, rl("amber_gem_from_amber_block"));
 	    
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.AURORA_CRYSTAL.get()).key('#', ModItems.CRYSTAL_SHARDS.get()).patternLine("##").patternLine("##").addCriterion("has_crystal_shard", hasItem(ModItems.CRYSTAL_SHARDS.get())).build(consumer);
 	    
@@ -70,41 +76,41 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(ModBlocks.FILALUX_LANTERN.get()).key('#', ModBlocks.FILALUX.get()).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_filalux", hasItem(ModBlocks.FILALUX.get())).build(consumer);	    
 	    
 	    // DYES
-		ShapelessRecipeBuilder.shapelessRecipe(Items.BLUE_DYE).addIngredient(ModBlocks.BLUE_VINE_SEED.get()).setGroup("blue_dye").addCriterion("has_blue_vine_seed", hasItem(ModBlocks.BLUE_VINE_SEED.get())).build(consumer, "blue_dye_from_blue_vine_seed");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.CYAN_DYE).addIngredient(ModBlocks.CREEPING_MOSS.get()).setGroup("cyan_dye").addCriterion("has_creeping_moss", hasItem(ModBlocks.CREEPING_MOSS.get())).build(consumer, "cyan_dye_from_creeping_moss");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.CYAN_DYE).addIngredient(ModBlocks.CYAN_MOSS.get()).setGroup("cyan_dye").addCriterion("has_cyan_moss", hasItem(ModBlocks.CYAN_MOSS.get())).build(consumer, "cyan_dye_from_cyan_moss");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.YELLOW_DYE).addIngredient(ModBlocks.UMBRELLA_MOSS.get()).setGroup("yellow_dye").addCriterion("has_umbrella_moss", hasItem(ModBlocks.UMBRELLA_MOSS.get())).build(consumer, "yellow_dye_from_umbrella_moss");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.YELLOW_DYE, 2).addIngredient(ModBlocks.UMBRELLA_MOSS_TALL.get()).setGroup("yellow_dye").addCriterion("has_umbrella_moss_tall", hasItem(ModBlocks.UMBRELLA_MOSS_TALL.get())).build(consumer, "yellow_dye_from_umbrella_moss_tall");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.BLACK_DYE).addIngredient(ModBlocks.SHADOW_PLANT.get()).setGroup("black_dye").addCriterion("has_shadow_plant", hasItem(ModBlocks.SHADOW_PLANT.get())).build(consumer, "black_dye_from_shadow_plant");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE).addIngredient(ModBlocks.PURPLE_POLYPORE.get()).setGroup("purple_dye").addCriterion("has_purple_polypore", hasItem(ModBlocks.PURPLE_POLYPORE.get())).build(consumer, "purple_dye_from_purple_polypore");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.GRAY_DYE).addIngredient(ModBlocks.TAIL_MOSS.get()).setGroup("gray_dye").addCriterion("has_tail_moss", hasItem(ModBlocks.TAIL_MOSS.get())).build(consumer, "gray_dye_from_tail_moss");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.MAGENTA_DYE).addIngredient(ModBlocks.BUSHY_GRASS.get()).setGroup("magenta_dye").addCriterion("has_bushy_grass", hasItem(ModBlocks.BUSHY_GRASS.get())).build(consumer, "magenta_dye_from_bushy_grass");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.PINK_DYE).addIngredient(ModBlocks.TWISTED_MOSS.get()).setGroup("pink_dye").addCriterion("has_twisted_moss", hasItem(ModBlocks.TWISTED_MOSS.get())).build(consumer, "pink_dye_from_twisted_moss");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.WHITE_DYE).addIngredient(ModItems.HYDRALUX_PETAL.get()).setGroup("white_dye").addCriterion("has_hydralux_petal", hasItem(ModItems.HYDRALUX_PETAL.get())).build(consumer, "white_dye_from_hydralux_petal");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE).addIngredient(ModBlocks.TWISTED_UMBRELLA_MOSS.get()).setGroup("purple_dye").addCriterion("has_twisted_umbrella_moss", hasItem(ModBlocks.TWISTED_UMBRELLA_MOSS.get())).build(consumer, "purple_dye_from_twisted_umbrella_moss");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE, 2).addIngredient(ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get()).setGroup("purple_dye").addCriterion("has_twisted_umbrella_moss_tall", hasItem(ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get())).build(consumer, "purple_dye_from_twisted_umbrella_moss_tall");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.BLUE_DYE).addIngredient(ModBlocks.BLUE_VINE_SEED.get()).setGroup("blue_dye").addCriterion("has_blue_vine_seed", hasItem(ModBlocks.BLUE_VINE_SEED.get())).build(consumer, rl("blue_dye_from_blue_vine_seed"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.CYAN_DYE).addIngredient(ModBlocks.CREEPING_MOSS.get()).setGroup("cyan_dye").addCriterion("has_creeping_moss", hasItem(ModBlocks.CREEPING_MOSS.get())).build(consumer, rl("cyan_dye_from_creeping_moss"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.CYAN_DYE).addIngredient(ModBlocks.CYAN_MOSS.get()).setGroup("cyan_dye").addCriterion("has_cyan_moss", hasItem(ModBlocks.CYAN_MOSS.get())).build(consumer, rl("cyan_dye_from_cyan_moss"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.YELLOW_DYE).addIngredient(ModBlocks.UMBRELLA_MOSS.get()).setGroup("yellow_dye").addCriterion("has_umbrella_moss", hasItem(ModBlocks.UMBRELLA_MOSS.get())).build(consumer, rl("yellow_dye_from_umbrella_moss"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.YELLOW_DYE, 2).addIngredient(ModBlocks.UMBRELLA_MOSS_TALL.get()).setGroup("yellow_dye").addCriterion("has_umbrella_moss_tall", hasItem(ModBlocks.UMBRELLA_MOSS_TALL.get())).build(consumer, rl("yellow_dye_from_umbrella_moss_tall"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.BLACK_DYE).addIngredient(ModBlocks.SHADOW_PLANT.get()).setGroup("black_dye").addCriterion("has_shadow_plant", hasItem(ModBlocks.SHADOW_PLANT.get())).build(consumer, rl("black_dye_from_shadow_plant"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE).addIngredient(ModBlocks.PURPLE_POLYPORE.get()).setGroup("purple_dye").addCriterion("has_purple_polypore", hasItem(ModBlocks.PURPLE_POLYPORE.get())).build(consumer, rl("purple_dye_from_purple_polypore"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.GRAY_DYE).addIngredient(ModBlocks.TAIL_MOSS.get()).setGroup("gray_dye").addCriterion("has_tail_moss", hasItem(ModBlocks.TAIL_MOSS.get())).build(consumer, rl("gray_dye_from_tail_moss"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.MAGENTA_DYE).addIngredient(ModBlocks.BUSHY_GRASS.get()).setGroup("magenta_dye").addCriterion("has_bushy_grass", hasItem(ModBlocks.BUSHY_GRASS.get())).build(consumer, rl("magenta_dye_from_bushy_grass"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.PINK_DYE).addIngredient(ModBlocks.TWISTED_MOSS.get()).setGroup("pink_dye").addCriterion("has_twisted_moss", hasItem(ModBlocks.TWISTED_MOSS.get())).build(consumer, rl("pink_dye_from_twisted_moss"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.WHITE_DYE).addIngredient(ModItems.HYDRALUX_PETAL.get()).setGroup("white_dye").addCriterion("has_hydralux_petal", hasItem(ModItems.HYDRALUX_PETAL.get())).build(consumer, rl("white_dye_from_hydralux_petal"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE).addIngredient(ModBlocks.TWISTED_UMBRELLA_MOSS.get()).setGroup("purple_dye").addCriterion("has_twisted_umbrella_moss", hasItem(ModBlocks.TWISTED_UMBRELLA_MOSS.get())).build(consumer, rl("purple_dye_from_twisted_umbrella_moss"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE, 2).addIngredient(ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get()).setGroup("purple_dye").addCriterion("has_twisted_umbrella_moss_tall", hasItem(ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get())).build(consumer, rl("purple_dye_from_twisted_umbrella_moss_tall"));
 		
-		ShapelessRecipeBuilder.shapelessRecipe(Items.RED_DYE).addIngredient(ModBlocks.CHARNIA_RED.get()).setGroup("red_dye").addCriterion("has_red_charnia", hasItem(ModBlocks.CHARNIA_RED.get())).build(consumer, "red_dye_from_red_charnia");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE).addIngredient(ModBlocks.CHARNIA_PURPLE.get()).setGroup("purple_dye").addCriterion("has_purple_charnia", hasItem(ModBlocks.CHARNIA_PURPLE.get())).build(consumer, "purple_dye_from_purple_charnia");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.ORANGE_DYE).addIngredient(ModBlocks.CHARNIA_ORANGE.get()).setGroup("orange_dye").addCriterion("has_orange_charnia", hasItem(ModBlocks.CHARNIA_ORANGE.get())).build(consumer, "orange_dye_from_orange_charnia");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.LIGHT_BLUE_DYE).addIngredient(ModBlocks.CHARNIA_LIGHT_BLUE.get()).setGroup("light_blue_dye").addCriterion("has_light_blue_charnia", hasItem(ModBlocks.CHARNIA_LIGHT_BLUE.get())).build(consumer, "light_blue_dye_from_light_blue_charnia");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.CYAN_DYE).addIngredient(ModBlocks.CHARNIA_CYAN.get()).setGroup("cyan_dye").addCriterion("has_cyan_charnia", hasItem(ModBlocks.CHARNIA_CYAN.get())).build(consumer, "cyan_dye_from_cyan_charnia");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.GREEN_DYE).addIngredient(ModBlocks.CHARNIA_GREEN.get()).setGroup("green_dye").addCriterion("has_green_charnia", hasItem(ModBlocks.CHARNIA_GREEN.get())).build(consumer, "green_dye_from_green_charnia");
+		ShapelessRecipeBuilder.shapelessRecipe(Items.RED_DYE).addIngredient(ModBlocks.CHARNIA_RED.get()).setGroup("red_dye").addCriterion("has_red_charnia", hasItem(ModBlocks.CHARNIA_RED.get())).build(consumer, rl("red_dye_from_red_charnia"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.PURPLE_DYE).addIngredient(ModBlocks.CHARNIA_PURPLE.get()).setGroup("purple_dye").addCriterion("has_purple_charnia", hasItem(ModBlocks.CHARNIA_PURPLE.get())).build(consumer, rl("purple_dye_from_purple_charnia"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.ORANGE_DYE).addIngredient(ModBlocks.CHARNIA_ORANGE.get()).setGroup("orange_dye").addCriterion("has_orange_charnia", hasItem(ModBlocks.CHARNIA_ORANGE.get())).build(consumer, rl("orange_dye_from_orange_charnia"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.LIGHT_BLUE_DYE).addIngredient(ModBlocks.CHARNIA_LIGHT_BLUE.get()).setGroup("light_blue_dye").addCriterion("has_light_blue_charnia", hasItem(ModBlocks.CHARNIA_LIGHT_BLUE.get())).build(consumer, rl("light_blue_dye_from_light_blue_charnia"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.CYAN_DYE).addIngredient(ModBlocks.CHARNIA_CYAN.get()).setGroup("cyan_dye").addCriterion("has_cyan_charnia", hasItem(ModBlocks.CHARNIA_CYAN.get())).build(consumer, rl("cyan_dye_from_cyan_charnia"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.GREEN_DYE).addIngredient(ModBlocks.CHARNIA_GREEN.get()).setGroup("green_dye").addCriterion("has_green_charnia", hasItem(ModBlocks.CHARNIA_GREEN.get())).build(consumer, rl("green_dye_from_green_charnia"));
 		
 		// ITEMS
-		ShapedRecipeBuilder.shapedRecipe(Items.PAPER, 3).key('#', ModItems.END_LILY_LEAF_DRIED.get()).patternLine("###").addCriterion("has_end_lily_leaf_dried", hasItem(ModItems.END_LILY_LEAF_DRIED.get())).build(consumer, "paper_from_end_lily_leaf_dried");
-		ShapelessRecipeBuilder.shapelessRecipe(Items.STICK, 2).addIngredient(ModBlocks.NEEDLEGRASS.get()).addCriterion("has_needlegrass", hasItem(ModBlocks.NEEDLEGRASS.get())).build(consumer, "stick_from_needlegrass");
-		ShapelessRecipeBuilder.shapelessRecipe(ModBlocks.SHADOW_BERRY.get(), 4).addIngredient(ModItems.SHADOW_BERRY_RAW.get()).addCriterion("has_shadow_berry_raw", hasItem(ModItems.SHADOW_BERRY_RAW.get())).build(consumer, "shadow_berry_from_shadow_berry_raw");
+		ShapedRecipeBuilder.shapedRecipe(Items.PAPER, 3).key('#', ModItems.END_LILY_LEAF_DRIED.get()).patternLine("###").addCriterion("has_end_lily_leaf_dried", hasItem(ModItems.END_LILY_LEAF_DRIED.get())).build(consumer, rl("paper_from_end_lily_leaf_dried"));
+		ShapelessRecipeBuilder.shapelessRecipe(Items.STICK, 2).addIngredient(ModBlocks.NEEDLEGRASS.get()).addCriterion("has_needlegrass", hasItem(ModBlocks.NEEDLEGRASS.get())).build(consumer, rl("stick_from_needlegrass"));
+		ShapelessRecipeBuilder.shapelessRecipe(ModBlocks.SHADOW_BERRY.get(), 4).addIngredient(ModItems.SHADOW_BERRY_RAW.get()).addCriterion("has_shadow_berry_raw", hasItem(ModItems.SHADOW_BERRY_RAW.get())).build(consumer, rl("shadow_berry_from_shadow_berry_raw"));
 		ShapelessRecipeBuilder.shapelessRecipe(ModItems.SWEET_BERRY_JELLY.get()).addIngredient(ModItems.GELATINE.get()).addIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER).getItem()).addIngredient(Items.SUGAR).addIngredient(Items.SWEET_BERRIES).addCriterion("has_gelatine", hasItem(ModItems.GELATINE.get())).build(consumer);
 		ShapelessRecipeBuilder.shapelessRecipe(ModItems.SHADOW_BERRY_JELLY.get()).addIngredient(ModItems.GELATINE.get()).addIngredient(PotionUtils.addPotionToItemStack(new ItemStack(Items.POTION), Potions.WATER).getItem()).addIngredient(Items.SUGAR).addIngredient(ModItems.SHADOW_BERRY_COOKED.get()).addCriterion("has_gelatine", hasItem(ModItems.GELATINE.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(ModItems.AMBER_GEM.get()).key('#', ModItems.RAW_AMBER.get()).patternLine("##").patternLine("##").addCriterion("has_raw_amber", hasItem(ModItems.RAW_AMBER.get())).build(consumer);
-	    ShapelessRecipeBuilder.shapelessRecipe(Items.GUNPOWDER).addIngredient(ModItems.CRYSTALLINE_SULPHUR.get()).addIngredient(ItemTags.COALS).addIngredient(Items.BONE_MEAL).addCriterion("has_crystalline_sulphur", hasItem(ModItems.CRYSTALLINE_SULPHUR.get())).build(consumer, "gunpowder_from_sulphur");
+	    ShapelessRecipeBuilder.shapelessRecipe(Items.GUNPOWDER).addIngredient(ModItems.CRYSTALLINE_SULPHUR.get()).addIngredient(ItemTags.COALS).addIngredient(Items.BONE_MEAL).addCriterion("has_crystalline_sulphur", hasItem(ModItems.CRYSTALLINE_SULPHUR.get())).build(consumer, rl("gunpowder_from_sulphur"));
 	    ShapedRecipeBuilder.shapedRecipe(ModItems.GUIDE_BOOK.get()).key('D', ModItems.ENDER_DUST.get()).key('B', Items.BOOK).key('C', ModItems.CRYSTAL_SHARDS.get()).patternLine("D").patternLine("B").patternLine("C").addCriterion("has_crystal_shards", hasItem(ModItems.CRYSTAL_SHARDS.get())).build(consumer);
-	    ShapelessRecipeBuilder.shapelessRecipe(ModItems.LEATHER_STRIPE.get(), 3).addIngredient(Items.LEATHER).addCriterion("has_leather", hasItem(Items.LEATHER)).build(consumer, "leather_to_stripes");
-	    ShapelessRecipeBuilder.shapelessRecipe(Items.LEATHER).addIngredient(ModItems.LEATHER_STRIPE.get()).addIngredient(ModItems.LEATHER_STRIPE.get()).addIngredient(ModItems.LEATHER_STRIPE.get()).addCriterion("has_leather_stripe", hasItem(ModItems.LEATHER_STRIPE.get())).build(consumer, "stripes_to_leather");
+	    ShapelessRecipeBuilder.shapelessRecipe(ModItems.LEATHER_STRIPE.get(), 3).addIngredient(Items.LEATHER).addCriterion("has_leather", hasItem(Items.LEATHER)).build(consumer, rl("leather_to_stripes"));
+	    ShapelessRecipeBuilder.shapelessRecipe(Items.LEATHER).addIngredient(ModItems.LEATHER_STRIPE.get()).addIngredient(ModItems.LEATHER_STRIPE.get()).addIngredient(ModItems.LEATHER_STRIPE.get()).addCriterion("has_leather_stripe", hasItem(ModItems.LEATHER_STRIPE.get())).build(consumer, rl("stripes_to_leather"));
 	    ShapelessRecipeBuilder.shapelessRecipe(ModItems.LEATHER_WRAPPED_STICK.get()).addIngredient(Items.STICK).addIngredient(ModItems.LEATHER_STRIPE.get()).addCriterion("has_leather_stripe", hasItem(ModItems.LEATHER_STRIPE.get())).build(consumer);
-	    ShapedRecipeBuilder.shapedRecipe(Items.ENDER_EYE).key('S', ModItems.CRYSTAL_SHARDS.get()).key('A', ModItems.AMBER_GEM.get()).key('P', Items.ENDER_PEARL).patternLine("SAS").patternLine("APA").patternLine("SAS").addCriterion("has_amber_gem", hasItem(ModItems.AMBER_GEM.get())).build(consumer, "ender_eye_from_amber_gem");
-	    ShapedRecipeBuilder.shapedRecipe(Items.STRING, 6).key('#', ModItems.SILK_FIBER.get()).patternLine("#").patternLine("#").patternLine("#").addCriterion("has_silk_fiber", hasItem(ModItems.SILK_FIBER.get())).build(consumer, "fiber_string");
+	    ShapedRecipeBuilder.shapedRecipe(Items.ENDER_EYE).key('S', ModItems.CRYSTAL_SHARDS.get()).key('A', ModItems.AMBER_GEM.get()).key('P', Items.ENDER_PEARL).patternLine("SAS").patternLine("APA").patternLine("SAS").addCriterion("has_amber_gem", hasItem(ModItems.AMBER_GEM.get())).build(consumer, rl("ender_eye_from_amber_gem"));
+	    ShapedRecipeBuilder.shapedRecipe(Items.STRING, 6).key('#', ModItems.SILK_FIBER.get()).patternLine("#").patternLine("#").patternLine("#").addCriterion("has_silk_fiber", hasItem(ModItems.SILK_FIBER.get())).build(consumer, rl("fiber_string"));
 	    
 	    // LANTERNS
 	    registerLantern(ModBlocks.ANDESITE_LANTERN.get(), Blocks.ANDESITE_SLAB, consumer, "andesite");
@@ -127,9 +133,9 @@ public class ModRecipes extends RecipeProvider
 		// FURNACE
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModItems.END_FISH_RAW.get()), ModItems.END_FISH_COOKED.get(), 0.35F, 200).addCriterion("has_end_fish_raw", hasItem(ModItems.END_FISH_RAW.get())).build(consumer);
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModItems.END_LILY_LEAF.get()), ModItems.END_LILY_LEAF_DRIED.get(), 0.35F, 200).addCriterion("has_end_lily_leaf", hasItem(ModItems.END_LILY_LEAF.get())).build(consumer);
-		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModBlocks.ENDSTONE_DUST.get()), Blocks.GLASS.asItem(), 0.35F, 200).addCriterion("has_end_stone_dust", hasItem(ModBlocks.ENDSTONE_DUST.get())).build(consumer, "glass_from_end_stone_dust");
+		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModBlocks.ENDSTONE_DUST.get()), Blocks.GLASS.asItem(), 0.35F, 200).addCriterion("has_end_stone_dust", hasItem(ModBlocks.ENDSTONE_DUST.get())).build(consumer, rl("glass_from_end_stone_dust"));
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModItems.SHADOW_BERRY_RAW.get()), ModItems.SHADOW_BERRY_COOKED.get(), 0.35F, 200).addCriterion("has_shadow_berry_raw", hasItem(ModItems.SHADOW_BERRY_RAW.get())).build(consumer);
-		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModBlocks.JELLYSHROOM_CAP_PURPLE.get()), Items.SLIME_BALL, 0.35F, 200).addCriterion("has_jellyshroom_cap", hasItem(ModBlocks.JELLYSHROOM_CAP_PURPLE.get())).build(consumer, "slime_ball_from_jellyshroom_cap");
+		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModBlocks.JELLYSHROOM_CAP_PURPLE.get()), Items.SLIME_BALL, 0.35F, 200).addCriterion("has_jellyshroom_cap", hasItem(ModBlocks.JELLYSHROOM_CAP_PURPLE.get())).build(consumer, rl("slime_ball_from_jellyshroom_cap"));
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModBlocks.MENGER_SPONGE_WET.get()), ModBlocks.MENGER_SPONGE.get(), 0.35F, 200).addCriterion("has_menger_sponge_wet", hasItem(ModBlocks.MENGER_SPONGE_WET.get())).build(consumer);
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModItems.CHORUS_MUSHROOM_RAW.get()), ModItems.CHORUS_MUSHROOM_COOKED.get(), 0.35F, 200).addCriterion("has_chorus_mushroom_raw", hasItem(ModItems.CHORUS_MUSHROOM_RAW.get())).build(consumer);
 		
@@ -236,7 +242,7 @@ public class ModRecipes extends RecipeProvider
 	{
 		// Base
 	    makeIngotAndBlockRecipes(material.block.get(), material.ingot.get(), consumer, material.name);
-	    ShapedRecipeBuilder.shapedRecipe(material.ingot.get()).key('#', material.nugget.get()).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_" + material.name + "_nugget", hasItem(material.nugget.get())).build(consumer, material.name + "_ingot_from_" + material.name + "_nuggets");
+	    ShapedRecipeBuilder.shapedRecipe(material.ingot.get()).key('#', material.nugget.get()).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_" + material.name + "_nugget", hasItem(material.nugget.get())).build(consumer, rl(material.name + "_ingot_from_" + material.name + "_nuggets"));
 		
 	    // Blocks
 	    ShapedRecipeBuilder.shapedRecipe(material.tile.get(), 4).key('#', material.block.get()).patternLine("##").patternLine("##").setGroup("end_metal_tile").addCriterion("has_" + material.name + "_block", hasItem(material.block.get())).build(consumer);
@@ -251,32 +257,32 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(material.chandelier.get()).key('I', ModItems.LUMECORN_ROD.get()).key('#', material.ingot.get()).patternLine("I#I").patternLine(" # ").setGroup("end_metal_chandelier").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer);
 	    ShapedRecipeBuilder.shapedRecipe(material.bulb_lantern.get()).key('C', Blocks.CHAIN).key('I', material.ingot.get()).key('#', ModItems.GLOWING_BULB.get()).patternLine("C").patternLine("I").patternLine("#").addCriterion("has_glowing_bulb", hasItem(ModItems.GLOWING_BULB.get())).build(consumer);
 	    makeColoredMaterialRecipes(material.bulb_lantern_colored, consumer);
-	    ShapedRecipeBuilder.shapedRecipe(Blocks.SMITHING_TABLE).key('I', material.ingot.get()).key('#', ItemTags.PLANKS).patternLine("II").patternLine("##").patternLine("##").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer, "smithing_table_from_" + material.name + "_ingot");
+	    ShapedRecipeBuilder.shapedRecipe(Blocks.SMITHING_TABLE).key('I', material.ingot.get()).key('#', ItemTags.PLANKS).patternLine("II").patternLine("##").patternLine("##").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer, rl("smithing_table_from_" + material.name + "_ingot"));
 	    
 	    // Furnace & blast furnace
 	    if (material.hasOre)
 	    {
-	    	CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.ore.get()), material.ingot.get(), 0.35F, 200).addCriterion("has_" + material.name + "_ore", hasItem(material.ore.get())).build(consumer, material.name + "_ingot_from_smelting");
-	    	CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.ore.get()), material.ingot.get(), 0.35F, 200).addCriterion("has_" + material.name + "_ore", hasItem(material.ore.get())).build(consumer, material.name + "_ingot_from_blasting");
+	    	CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.ore.get()), material.ingot.get(), 0.35F, 200).addCriterion("has_" + material.name + "_ore", hasItem(material.ore.get())).build(consumer, rl(material.name + "_ingot_from_smelting"));
+	    	CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.ore.get()), material.ingot.get(), 0.35F, 200).addCriterion("has_" + material.name + "_ore", hasItem(material.ore.get())).build(consumer, rl(material.name + "_ingot_from_blasting"));
 	    }
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.axe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_axe", hasItem(material.axe.get())).build(consumer, material.name + "_nugget_from_axe_smelting");
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.axe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_axe", hasItem(material.axe.get())).build(consumer, material.name + "_nugget_from_axe_blasting");
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.pickaxe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_pickaxe", hasItem(material.pickaxe.get())).build(consumer, material.name + "_nugget_from_pickaxe_smelting");
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.pickaxe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_pickaxe", hasItem(material.pickaxe.get())).build(consumer, material.name + "_nugget_from_pickaxe_blasting");
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.hoe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hoe", hasItem(material.hoe.get())).build(consumer, material.name + "_nugget_from_hoe_smelting");
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.hoe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hoe", hasItem(material.hoe.get())).build(consumer, material.name + "_nugget_from_hoe_blasting");
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.sword.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_sword", hasItem(material.sword.get())).build(consumer, material.name + "_nugget_from_sword_smelting");
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.sword.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_sword", hasItem(material.sword.get())).build(consumer, material.name + "_nugget_from_sword_blasting");
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.hammer.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hammer", hasItem(material.hammer.get())).build(consumer, material.name + "_nugget_from_hammer_smelting");
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.hammer.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hammer", hasItem(material.hammer.get())).build(consumer, material.name + "_nugget_from_hammer_blasting");
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.helmet.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_helmet", hasItem(material.helmet.get())).build(consumer, material.name + "_nugget_from_helmet_smelting");
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.helmet.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_helmet", hasItem(material.helmet.get())).build(consumer, material.name + "_nugget_from_helmet_blasting");
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.chestplate.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_chestplate", hasItem(material.chestplate.get())).build(consumer, material.name + "_nugget_from_chestplate_smelting");
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.chestplate.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_chestplate", hasItem(material.chestplate.get())).build(consumer, material.name + "_nugget_from_chestplate_blasting");
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.leggings.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_leggings", hasItem(material.leggings.get())).build(consumer, material.name + "_nugget_from_leggings_smelting");
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.leggings.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_leggings", hasItem(material.leggings.get())).build(consumer, material.name + "_nugget_from_leggings_blasting");
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.boots.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_boots", hasItem(material.boots.get())).build(consumer, material.name + "_nugget_from_boots_smelting");
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.boots.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_boots", hasItem(material.boots.get())).build(consumer, material.name + "_nugget_from_boots_blasting");
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.axe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_axe", hasItem(material.axe.get())).build(consumer, rl(material.name + "_nugget_from_axe_smelting"));
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.axe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_axe", hasItem(material.axe.get())).build(consumer, rl(material.name + "_nugget_from_axe_blasting"));
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.pickaxe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_pickaxe", hasItem(material.pickaxe.get())).build(consumer, rl(material.name + "_nugget_from_pickaxe_smelting"));
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.pickaxe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_pickaxe", hasItem(material.pickaxe.get())).build(consumer, rl(material.name + "_nugget_from_pickaxe_blasting"));
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.hoe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hoe", hasItem(material.hoe.get())).build(consumer, rl(material.name + "_nugget_from_hoe_smelting"));
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.hoe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hoe", hasItem(material.hoe.get())).build(consumer, rl(material.name + "_nugget_from_hoe_blasting"));
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.sword.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_sword", hasItem(material.sword.get())).build(consumer, rl(material.name + "_nugget_from_sword_smelting"));
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.sword.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_sword", hasItem(material.sword.get())).build(consumer, rl(material.name + "_nugget_from_sword_blasting"));
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.hammer.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hammer", hasItem(material.hammer.get())).build(consumer, rl(material.name + "_nugget_from_hammer_smelting"));
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.hammer.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hammer", hasItem(material.hammer.get())).build(consumer, rl(material.name + "_nugget_from_hammer_blasting"));
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.helmet.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_helmet", hasItem(material.helmet.get())).build(consumer, rl(material.name + "_nugget_from_helmet_smelting"));
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.helmet.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_helmet", hasItem(material.helmet.get())).build(consumer, rl(material.name + "_nugget_from_helmet_blasting"));
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.chestplate.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_chestplate", hasItem(material.chestplate.get())).build(consumer, rl(material.name + "_nugget_from_chestplate_smelting"));
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.chestplate.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_chestplate", hasItem(material.chestplate.get())).build(consumer, rl(material.name + "_nugget_from_chestplate_blasting"));
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.leggings.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_leggings", hasItem(material.leggings.get())).build(consumer, rl(material.name + "_nugget_from_leggings_smelting"));
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.leggings.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_leggings", hasItem(material.leggings.get())).build(consumer, rl(material.name + "_nugget_from_leggings_blasting"));
+	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.boots.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_boots", hasItem(material.boots.get())).build(consumer, rl(material.name + "_nugget_from_boots_smelting"));
+	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.boots.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_boots", hasItem(material.boots.get())).build(consumer, rl(material.name + "_nugget_from_boots_blasting"));
 	
 	    // Smithing table
 	    makeSmithingRecipe(material.block.get().asItem(), Items.STICK, material.hammer.get(), consumer);
@@ -315,13 +321,13 @@ public class ModRecipes extends RecipeProvider
 	
 	private void makeSmithingRecipe(Item base, Item addition, Item output, Consumer<IFinishedRecipe> consumer)
 	{
-		SmithingRecipeBuilder.smithingRecipe(Ingredient.fromItems(base), Ingredient.fromItems(addition), output).addCriterion("has_" + addition.getRegistryName().getPath(), hasItem(addition)).build(consumer, output.getRegistryName().getPath() + "_smithing");
+		SmithingRecipeBuilder.smithingRecipe(Ingredient.fromItems(base), Ingredient.fromItems(addition), output).addCriterion("has_" + addition.getRegistryName().getPath(), hasItem(addition)).build(consumer, rl(output.getRegistryName().getPath() + "_smithing"));
 	}
 	
 	private void makeIngotAndBlockRecipes(Block block, Item ingot, Consumer<IFinishedRecipe> consumer, String material)
 	{
 	    ShapedRecipeBuilder.shapedRecipe(block).key('#', ingot).patternLine("###").patternLine("###").patternLine("###").addCriterion("has_" + material + "_ingot", hasItem(ingot)).build(consumer);
-	    ShapelessRecipeBuilder.shapelessRecipe(ingot, 9).addIngredient(block).setGroup(material + "_ingot").addCriterion("has_" + material + "_block", hasItem(block)).build(consumer, material + "_ingot_from_" + material + "_block");
+	    ShapelessRecipeBuilder.shapelessRecipe(ingot, 9).addIngredient(block).setGroup(material + "_ingot").addCriterion("has_" + material + "_block", hasItem(block)).build(consumer, rl(material + "_ingot_from_" + material + "_block"));
 	}
 	
 	private void makeHelmetRecipe(Item result, Item ingredient, Consumer<IFinishedRecipe> consumer, String material)

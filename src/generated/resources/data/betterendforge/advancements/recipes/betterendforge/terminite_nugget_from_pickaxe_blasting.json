@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:terminite_nugget_from_pickaxe_blasting"
+    ]
+  },
+  "criteria": {
+    "has_terminite_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_pickaxe"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:terminite_nugget_from_pickaxe_blasting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_terminite_pickaxe",
+      "has_the_recipe"
+    ]
+  ]
+}

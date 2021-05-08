@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:terminite_nugget_from_boots_smelting"
+    ]
+  },
+  "criteria": {
+    "has_terminite_boots": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_boots"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:terminite_nugget_from_boots_smelting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_terminite_boots",
+      "has_the_recipe"
+    ]
+  ]
+}

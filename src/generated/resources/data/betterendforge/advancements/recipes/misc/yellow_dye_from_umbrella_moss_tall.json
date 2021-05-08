@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:yellow_dye_from_umbrella_moss_tall"
+    ]
+  },
+  "criteria": {
+    "has_umbrella_moss_tall": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:umbrella_moss_tall"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:yellow_dye_from_umbrella_moss_tall"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_umbrella_moss_tall",
+      "has_the_recipe"
+    ]
+  ]
+}

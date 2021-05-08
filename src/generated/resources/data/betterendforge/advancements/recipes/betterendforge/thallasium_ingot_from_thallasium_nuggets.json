@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:thallasium_ingot_from_thallasium_nuggets"
+    ]
+  },
+  "criteria": {
+    "has_thallasium_nugget": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:thallasium_nugget"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:thallasium_ingot_from_thallasium_nuggets"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_thallasium_nugget",
+      "has_the_recipe"
+    ]
+  ]
+}

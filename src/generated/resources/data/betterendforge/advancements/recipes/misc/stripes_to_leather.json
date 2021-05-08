@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:stripes_to_leather"
+    ]
+  },
+  "criteria": {
+    "has_leather_stripe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:leather_stripe"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:stripes_to_leather"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_leather_stripe",
+      "has_the_recipe"
+    ]
+  ]
+}
