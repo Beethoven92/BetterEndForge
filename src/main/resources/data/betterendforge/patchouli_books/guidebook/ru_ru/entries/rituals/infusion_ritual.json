@@ -1,0 +1,64 @@
+{
+    "name": "Ритуал Инфузии",
+    "icon": "betterendforge:infusion_pedestal",
+    "read_by_default": true,
+    "category": "rituals",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Предметы будут наделены силой элементов."
+        },
+        {
+            "type": "crafting",
+            "title": "Подготовка конструкции",
+            "text": "В первую очередь, будет необходимо изготовить $(bold)Пьедесталы Инфузии$() и восемь пьедесталов $(bold)любого$() другого типа.",
+            "recipe": "betterendforge:infusion_pedestal"
+        },
+        {
+            "type": "image",
+            "text": "Затем нужно расположить Пьедестал Инфузии в центре, а остальные пьедесталы - вокруг него.",
+            "border": true,
+            "images": [
+                "betterendforge:textures/images/infusion_ritual/infusion_ritual_start.png",
+                "betterendforge:textures/images/infusion_ritual/infusion_ritual_full.png"
+            ]
+        },
+        {
+            "type": "image",
+            "title": "Инфузия",
+            "text": "Когда конструкция готова, можно начинать инфузию.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/infusion_ritual/ritual_structure.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "Pасположите основной ингредиент на $(bold)Пьедестал Инфузии$(), а на остальные - катализаторы.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/infusion_ritual/ritual_ready.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "Рецепт можно посмотреть в $(l:https://www.curseforge.com/minecraft/mc-mods/jei)JEI$(/l).$(br2)Чтобы начать Инфузию, просто положите основной ингредиент последним, или дотронтесь до $(bold)Пьедестала Инфузии$()."
+        },
+        {
+            "type": "image",
+            "text": "Затем нужно дождаться окончания ритуала.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/infusion_ritual/ritual_started.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "И забрать получившийся предмет.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/infusion_ritual/ritual_finished.png"
+            ]
+        }
+    ]
+}

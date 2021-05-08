@@ -1,0 +1,44 @@
+{
+    "name": "Неизменный Ритуал",
+    "icon": "betterendforge:eternal_pedestal",
+    "read_by_default": true,
+    "category": "rituals",
+    "pages": [
+        {
+            "type": "text",
+            "text": "\"Непростой способ вернуться в Верхний Мир\"$(br2)Странствуя по миру края, можно обнаружить древние руины."
+        },
+        {
+            "type": "image",
+            "text": "Разрушенная конструкция из $(bold)рунного флаволита$() и восемь пьедесталов вокруг.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/eternal_ritual/portal_structure.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "Это развалины грандиозных порталов, что в былые времена соеденяли Край с Верхним Миром.$(br2)Чтобы активировать портал, нужно восстановить рамку."
+        },
+        {
+            "type": "image",
+            "text": "И положить восемь $(bold)Неизменных Кристаллов$() на пьедесталы.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/eternal_ritual/portal_frame_full.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "Когда все кристаллы будут на своих местах, портал активируется.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/eternal_ritual/ritual_finished.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "$(bold)Рунный флаволит$() для восстановления рамок и $(bold)Неизменные Кристаллы$() могут быть получены через $(l:rituals/infusion_ritual)Ритуал Инфузии$(/l)."
+        }
+    ]
+}
