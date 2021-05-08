@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableSet;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaRecipeCategoryUid;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
@@ -37,11 +38,33 @@ public class BetterEndJeiPlugin implements IModPlugin
 	public void registerRecipeCatalysts(IRecipeCatalystRegistration registration)
 	{
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.END_STONE_SMELTER.get()), AlloyingRecipeCategory.UID);
+
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSION_PEDESTAL.get()), InfusionRecipeCategory.UID);
+
 		registration.addRecipeCatalyst(new ItemStack(Blocks.ANVIL), AnvilSmithingRecipeCategory.UID);
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.THALLASIUM.anvil.get()), AnvilSmithingRecipeCategory.UID);
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.TERMINITE.anvil.get()), AnvilSmithingRecipeCategory.UID);
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.AETERNIUM_ANVIL.get()), AnvilSmithingRecipeCategory.UID);
+
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.END_STONE_FURNACE.get()), VanillaRecipeCategoryUid.FURNACE);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.FLAVOLITE.furnace.get()), VanillaRecipeCategoryUid.FURNACE);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.VIOLECITE.furnace.get()), VanillaRecipeCategoryUid.FURNACE);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.SULPHURIC_ROCK.furnace.get()), VanillaRecipeCategoryUid.FURNACE);
+
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.END_STONE_FURNACE.get()), VanillaRecipeCategoryUid.FUEL);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.FLAVOLITE.furnace.get()), VanillaRecipeCategoryUid.FUEL);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.VIOLECITE.furnace.get()), VanillaRecipeCategoryUid.FUEL);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.SULPHURIC_ROCK.furnace.get()), VanillaRecipeCategoryUid.FUEL);
+
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.MOSSY_GLOWSHROOM.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.LACUGROVE.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.END_LOTUS.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.PYTHADENDRON.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.DRAGON_TREE.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.TENANEA.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.HELIX_TREE.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.UMBRELLA_TREE.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.JELLYSHROOM.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
 	}
 	
 	@Override
