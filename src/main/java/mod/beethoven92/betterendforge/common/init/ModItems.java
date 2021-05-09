@@ -23,6 +23,7 @@ import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemTier;
 import net.minecraft.item.LilyPadItem;
+import net.minecraft.item.MusicDiscItem;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.Rarity;
 import net.minecraft.item.ShovelItem;
@@ -117,6 +118,13 @@ public class ModItems
 	public final static RegistryObject<Item> BUCKET_CUBOZOA = ITEMS.register("bucket_cubozoa", () -> new FishBucketItem(() -> ModEntityTypes.CUBOZOA.get(), () -> Fluids.WATER, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
 	public final static RegistryObject<Item> GUIDE_BOOK = ITEMS.register("guidebook", () -> new GuideBookItem(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
 	public final static RegistryObject<Item> FLAMAEA = ITEMS.register("flamaea", () -> new LilyPadItem(ModBlocks.FLAMAEA.get(), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	
+	// MUSIC DISCS
+	public final static RegistryObject<Item> MUSIC_DISC_STRANGE_AND_ALIEN = ITEMS.register("music_disc_strange_and_alien", () -> new MusicDiscItem(0, ModSoundEvents.RECORD_STRANGE_AND_ALIEN, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
+	public final static RegistryObject<Item> MUSIC_DISC_GRASPING_AT_STARS = ITEMS.register("music_disc_grasping_at_stars", () -> new MusicDiscItem(0, ModSoundEvents.RECORD_GRASPING_AT_STARS, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
+	public final static RegistryObject<Item> MUSIC_DISC_ENDSEEKER = ITEMS.register("music_disc_endseeker", () -> new MusicDiscItem(0, ModSoundEvents.RECORD_ENDSEEKER, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
+	public final static RegistryObject<Item> MUSIC_DISC_EO_DRACONA = ITEMS.register("music_disc_eo_dracona", () -> new MusicDiscItem(0, ModSoundEvents.RECORD_EO_DRACONA, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
+
 
 	
 	//////////////////////////////////////////////////////

@@ -9,79 +9,7 @@
           "conditions": [
             {
               "condition": "minecraft:random_chance",
-              "chance": 0.25
-            }
-          ],
-          "name": "betterendforge:lanceleaf_seed"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "betterendforge:lanceleaf",
-          "properties": {
-            "shape": "pre_top"
-          }
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.25
-            }
-          ],
-          "name": "betterendforge:lanceleaf_seed"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "betterendforge:lanceleaf",
-          "properties": {
-            "shape": "top"
-          }
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.25
-            }
-          ],
-          "name": "betterendforge:lanceleaf_seed"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:block_state_property",
-          "block": "betterendforge:lanceleaf",
-          "properties": {
-            "shape": "pre_bottom"
-          }
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:random_chance",
-              "chance": 0.25
+              "chance": 0.5
             }
           ],
           "name": "betterendforge:lanceleaf_seed"
@@ -105,7 +33,31 @@
           "conditions": [
             {
               "condition": "minecraft:random_chance",
-              "chance": 0.25
+              "chance": 0.5
+            }
+          ],
+          "name": "betterendforge:lanceleaf_seed"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "betterendforge:lanceleaf",
+          "properties": {
+            "shape": "pre_bottom"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.5
             }
           ],
           "name": "betterendforge:lanceleaf_seed"
@@ -117,6 +69,54 @@
           "block": "betterendforge:lanceleaf",
           "properties": {
             "shape": "middle"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.5
+            }
+          ],
+          "name": "betterendforge:lanceleaf_seed"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "betterendforge:lanceleaf",
+          "properties": {
+            "shape": "pre_top"
+          }
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.5
+            }
+          ],
+          "name": "betterendforge:lanceleaf_seed"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:block_state_property",
+          "block": "betterendforge:lanceleaf",
+          "properties": {
+            "shape": "top"
           }
         }
       ]

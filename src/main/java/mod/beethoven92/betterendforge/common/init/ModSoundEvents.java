@@ -51,6 +51,17 @@ public class ModSoundEvents
 			registerSoundEvent("betterendforge.entity.shadow_walker_damage");
 	public static final RegistryObject<SoundEvent> ENTITY_SHADOW_WALKER_DEATH = 
 			registerSoundEvent("betterendforge.entity.shadow_walker_death");
+	
+	// TODO: Add this to end city loot table (hard to do before update to 1.16.5)
+	// RECORDS
+	public static final RegistryObject<SoundEvent> RECORD_STRANGE_AND_ALIEN = 
+			registerSoundEvent("betterendforge.record.strange_and_alien");
+	public static final RegistryObject<SoundEvent> RECORD_GRASPING_AT_STARS = 
+			registerSoundEvent("betterendforge.record.grasping_at_stars");
+	public static final RegistryObject<SoundEvent> RECORD_ENDSEEKER = 
+			registerSoundEvent("betterendforge.record.endseeker");
+	public static final RegistryObject<SoundEvent> RECORD_EO_DRACONA = 
+			registerSoundEvent("betterendforge.record.eo_dracona");
 
 	private static RegistryObject<SoundEvent> registerSoundEvent(String name)
 	{

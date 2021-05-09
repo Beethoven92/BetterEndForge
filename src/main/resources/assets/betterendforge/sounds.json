@@ -231,5 +231,42 @@
 				"stream": false
 			}
 		]
+	},
+	
+	"betterendforge.record.strange_and_alien": {
+		"category": "record",
+		"sounds": [
+			{
+				"name": "betterendforge:records/firel-strange_and_alien",
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.record.grasping_at_stars": {
+		"category": "record",
+		"sounds": [
+			{
+				"name": "betterendforge:records/firel-grasping_at_stars",
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.record.endseeker": {
+		"category": "record",
+		"sounds": [
+			{
+				"name": "betterendforge:records/firel-endseeker",
+				"stream": false
+			}
+		]
+	},
+	"betterendforge.record.eo_dracona": {
+		"category": "record",
+		"sounds": [
+			{
+				"name": "betterendforge:records/firel-eo_dracona",
+				"stream": false
+			}
+		]
 	}
 }

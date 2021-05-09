@@ -30,6 +30,15 @@
 	"block.betterendforge.neon_cactus_slab": "Neon Cactus Slab",
 	"block.betterendforge.neon_cactus_stairs": "Neon Cactus Stairs", 
 
+	"item.betterendforge.music_disc_strange_and_alien": "§bMusic Disc§r",
+	"item.betterendforge.music_disc_strange_and_alien.desc": "§5Firel§r - §fStrange And Alien§r",
+	"item.betterendforge.music_disc_grasping_at_stars": "§bMusic Disc§r",
+	"item.betterendforge.music_disc_grasping_at_stars.desc": "§5Firel§r - §fGrasping At Stars§r",
+	"item.betterendforge.music_disc_endseeker": "§bMusic Disc§r",
+	"item.betterendforge.music_disc_endseeker.desc": "§5Firel§r - §fEndseeker§r",
+	"item.betterendforge.music_disc_eo_dracona": "§bMusic Disc§r",
+	"item.betterendforge.music_disc_eo_dracona.desc": "§5Firel§r - §fEo Dracona§r",
+
 	"block.betterendforge.rutiscus": "Rutiscus",
 	"block.betterendforge.rutiscus_path": "Rutiscus Path",
 	"biome.betterendforge.lantern_woods": "Lantern Woods",
