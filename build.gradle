@@ -7,7 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
@@ -21,7 +21,7 @@ mixin {
     add sourceSets.main, "betterendforge.refmap.json"
 }
 
-version = '1.16.4-1.6.0'
+version = '1.16.5-1.6.0'
 group = 'mod.beethoven92.betterendforge' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'betterendforge'
 
@@ -44,7 +44,7 @@ repositories {
 }
 
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -136,13 +136,16 @@ dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.16.4-35.1.13'
+    minecraft 'net.minecraftforge:forge:1.16.5-36.1.0'
 
     compileOnly fg.deobf("mezz.jei:jei-1.16.4:7.6.0.62:api")
     runtimeOnly fg.deobf("mezz.jei:jei-1.16.4:7.6.0.62")
 
     compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-48:api")
     runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16.4-48")
+    
+    annotationProcessor 'org.spongepowered:mixin:0.8.2:processor'
+    
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
