@@ -10,13 +10,17 @@ import mod.beethoven92.betterendforge.common.entity.SilkMothEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+@Mod.EventBusSubscriber(modid = BetterEnd.MOD_ID, bus = Bus.MOD)
 public class ModEntityTypes 
 {
 	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = 
@@ -53,15 +57,14 @@ public class ModEntityTypes
 			build(new ResourceLocation(BetterEnd.MOD_ID, "silk_moth").toString()));
 
 	
-	
-	public static void registerGlobalEntityAttributes()
-	{
-		GlobalEntityTypeAttributes.put(ModEntityTypes.END_FISH.get(), EndFishEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.DRAGONFLY.get(), DragonflyEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.SHADOW_WALKER.get(), ShadowWalkerEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.END_SLIME.get(), EndSlimeEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.CUBOZOA.get(), CubozoaEntity.registerAttributes().create());
-		GlobalEntityTypeAttributes.put(ModEntityTypes.SILK_MOTH.get(), SilkMothEntity.registerAttributes().create());
+	@SubscribeEvent
+	public static void registerGlobalEntityAttributes(EntityAttributeCreationEvent event) {
+		event.put(ModEntityTypes.END_FISH.get(), EndFishEntity.registerAttributes().create());
+		event.put(ModEntityTypes.DRAGONFLY.get(), DragonflyEntity.registerAttributes().create());
+		event.put(ModEntityTypes.SHADOW_WALKER.get(), ShadowWalkerEntity.registerAttributes().create());
+		event.put(ModEntityTypes.END_SLIME.get(), EndSlimeEntity.registerAttributes().create());
+		event.put(ModEntityTypes.CUBOZOA.get(), CubozoaEntity.registerAttributes().create());
+		event.put(ModEntityTypes.SILK_MOTH.get(), SilkMothEntity.registerAttributes().create());
 	}
 	
 	public static void registerEntitySpawns()

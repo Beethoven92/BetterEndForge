@@ -102,7 +102,6 @@ public class BetterEnd
     {   	
     	event.enqueueWork(() -> {
         	BetterEndBiomeProvider.register();
-    		ModEntityTypes.registerGlobalEntityAttributes();
     		ModEntityTypes.registerEntitySpawns();
     	    BiomeNBTStructures.loadStructures();
     	    ModRecipeManager.registerSpecialRecipes();
