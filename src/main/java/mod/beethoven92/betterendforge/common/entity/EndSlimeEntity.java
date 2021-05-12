@@ -111,9 +111,9 @@ public class EndSlimeEntity extends SlimeEntity {
 	}
 
 	@Override
-	public void remove() {
+	public void remove(boolean keepData) {
 		int i = this.getSlimeSize();
-		if (!this.world.isRemote && i > 1 && this.dead) {
+		if (!this.world.isRemote && i > 1 && getShouldBeDead()) {
 			ITextComponent text = this.getCustomName();
 			boolean bl = this.isAIDisabled();
 			float f = (float) i / 4.0F;
@@ -140,7 +140,8 @@ public class EndSlimeEntity extends SlimeEntity {
 				this.world.addEntity(slimeEntity);
 			}
 		}
-		this.remove(true);
+		this.removed = true;
+		super.remove(keepData);
 	}
 
 	/*
