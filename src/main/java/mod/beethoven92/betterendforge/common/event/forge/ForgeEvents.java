@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.common.event.forge;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModItems;
+import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
@@ -15,7 +16,7 @@ public class ForgeEvents
 	public static void giveGuideBookToPlayer(AdvancementEvent event)
 	{
 		ResourceLocation id = event.getAdvancement().getId();
-		if (id.equals(new ResourceLocation("minecraft:end/enter_end_gateway")))
+		if (id.equals(new ResourceLocation("minecraft:end/enter_end_gateway")) && CommonConfig.giveGuideBook())
 		{
 			event.getPlayer().addItemStackToInventory(new ItemStack(ModItems.GUIDE_BOOK.get()));
 		}

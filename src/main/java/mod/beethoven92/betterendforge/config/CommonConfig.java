@@ -21,6 +21,7 @@ public class CommonConfig
     public static final ForgeConfigSpec.BooleanValue NO_RING_VOID;
     public static final ForgeConfigSpec.BooleanValue GENERATE_CENTRAL_ISLAND;
     public static final ForgeConfigSpec.BooleanValue SWAP_OVERWORLD_WITH_END;
+    public static final ForgeConfigSpec.BooleanValue GIVE_GUIDE_BOOK;
     public static final ForgeConfigSpec.ConfigValue<Integer> END_CITY_FAIL_CHANCE;
     
     static 
@@ -70,8 +71,17 @@ public class CommonConfig
         BUILDER.comment("\nAllows the player to spawn in the End instead of the Overworld.\nDefault value: false");
         SWAP_OVERWORLD_WITH_END = BUILDER.define("swapOverWorldWithEnd", false);
         
+
+        
         BUILDER.comment("\nSet the chance for end city generation to fail. Higher values means lower chance of spawning\nDefault value: 5");
         END_CITY_FAIL_CHANCE = BUILDER.define("endCityGenerationFailChance", 5);
+        
+        BUILDER.pop();
+        
+        BUILDER.push("Other");
+        
+        BUILDER.comment("\nShould the guide book be given to players when using an end gateway for the first time?\nDefault value: true");
+        GIVE_GUIDE_BOOK = BUILDER.define("giveGuideBook", true);
         
         BUILDER.pop();
         
@@ -146,6 +156,11 @@ public class CommonConfig
     public static boolean swapOverworldWithEnd() 
     {
         return SWAP_OVERWORLD_WITH_END.get();
+    }
+    
+    public static boolean giveGuideBook() 
+    {
+        return GIVE_GUIDE_BOOK.get();
     }
     
     public static int endCityFailChance() 
