@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.item.CrystaliteArmor;
 import mod.beethoven92.betterendforge.common.item.EnchantedPetalItem;
+import mod.beethoven92.betterendforge.common.item.EndAnvilItem;
 import mod.beethoven92.betterendforge.common.item.GuideBookItem;
 import mod.beethoven92.betterendforge.common.item.HammerItem;
 import mod.beethoven92.betterendforge.common.item.ModArmorMaterial;
@@ -118,6 +119,9 @@ public class ModItems
 	public final static RegistryObject<Item> BUCKET_CUBOZOA = ITEMS.register("bucket_cubozoa", () -> new FishBucketItem(() -> ModEntityTypes.CUBOZOA.get(), () -> Fluids.WATER, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
 	public final static RegistryObject<Item> GUIDE_BOOK = ITEMS.register("guidebook", () -> new GuideBookItem(new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
 	public final static RegistryObject<Item> FLAMAEA = ITEMS.register("flamaea", () -> new LilyPadItem(ModBlocks.FLAMAEA.get(), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+	
+	public final static RegistryObject<Item> AETERNIUM_ANVIL = ITEMS.register("aeternium_anvil", () -> new EndAnvilItem(ModBlocks.AETERNIUM_ANVIL.get(), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
+
 	
 	// MUSIC DISCS
 	public final static RegistryObject<Item> MUSIC_DISC_STRANGE_AND_ALIEN = ITEMS.register("music_disc_strange_and_alien", () -> new MusicDiscItem(0, ModSoundEvents.RECORD_STRANGE_AND_ALIEN, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));

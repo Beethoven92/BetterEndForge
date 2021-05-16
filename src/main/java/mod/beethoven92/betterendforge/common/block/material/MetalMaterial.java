@@ -7,6 +7,7 @@ import mod.beethoven92.betterendforge.common.block.template.MetalPaneBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModCreativeTabs;
 import mod.beethoven92.betterendforge.common.init.ModItems;
+import mod.beethoven92.betterendforge.common.item.EndAnvilItem;
 import mod.beethoven92.betterendforge.common.item.HammerItem;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -14,11 +15,11 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.ChainBlock;
 import net.minecraft.block.DoorBlock;
 import net.minecraft.block.PressurePlateBlock;
+import net.minecraft.block.PressurePlateBlock.Sensitivity;
 import net.minecraft.block.SlabBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.TrapDoorBlock;
-import net.minecraft.block.PressurePlateBlock.Sensitivity;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -113,10 +114,13 @@ public class MetalMaterial
 		slab = ModBlocks.registerBlockWithDefaultItem(name + "_slab", () -> new SlabBlock(blockSettings));
 		door = ModBlocks.registerBlockWithDefaultItem(name + "_door", () -> new DoorBlock(blockSettingsNotSolid));
 		trapdoor = ModBlocks.registerBlockWithDefaultItem(name + "_trapdoor", () -> new TrapDoorBlock(blockSettingsNotSolid));
-		anvil = ModBlocks.registerBlockWithDefaultItem(name + "_anvil", () -> new EndAnvilBlock(AbstractBlock.Properties.create(Material.ANVIL, block.get().getMaterialColor()).setRequiresTool().hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.ANVIL), anvilLevel));
+		anvil = ModBlocks.registerBlock(name + "_anvil", () -> new EndAnvilBlock(AbstractBlock.Properties.create(Material.ANVIL, block.get().getMaterialColor()).setRequiresTool().hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.ANVIL), anvilLevel));
 		bars = ModBlocks.registerBlockWithDefaultItem(name + "_bars", () -> new MetalPaneBlock(blockSettings.hardnessAndResistance(5.0F, 6.0F).notSolid()));
 		chain = ModBlocks.registerBlockWithDefaultItem(name + "_chain", () -> new ChainBlock(AbstractBlock.Properties.create(Material.IRON, block.get().getMaterialColor()).setRequiresTool().hardnessAndResistance(5.0F, 6.0F).sound(SoundType.CHAIN).notSolid()));
 		pressure_plate = ModBlocks.registerBlockWithDefaultItem(name + "_pressure_plate", () -> new PressurePlateBlock(Sensitivity.EVERYTHING, blockSettings));
+		
+		ModItems.registerItem(name + "_anvil", () -> new EndAnvilItem(anvil.get(), itemSettings));
+
 		
 		chandelier = ModBlocks.registerBlockWithDefaultItem(name + "_chandelier", () -> new ChandelierBlock(blockSettingsNotSolid.doesNotBlockMovement().setRequiresTool().setLightLevel((state) -> 15)));
 		bulb_lantern = ModBlocks.registerBlockWithDefaultItem(name + "_bulb_lantern", () -> new BulbVineLanternBlock(blockSettings));

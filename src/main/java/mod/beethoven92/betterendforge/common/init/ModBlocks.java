@@ -1085,7 +1085,7 @@ public class ModBlocks
 					                                           )));
 	
 	// MISC
-	public static final RegistryObject<Block> AETERNIUM_ANVIL = registerBlockWithDefaultItem("aeternium_anvil", 
+	public static final RegistryObject<Block> AETERNIUM_ANVIL = registerBlock("aeternium_anvil", 
 			() -> new AeterniumAnvil(AbstractBlock.Properties.create(Material.ANVIL, MaterialColor.GRAY).setRequiresTool().hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.ANVIL)));
 	
 	public static final RegistryObject<Block> DENSE_SNOW = registerBlockWithDefaultItem("dense_snow", 

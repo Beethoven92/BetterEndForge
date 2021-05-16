@@ -16,6 +16,9 @@
 	
 	"container.betterendforge.end_stone_smelter": "End Stone Smelter",
 
+	"message.betterendforge.anvil_damage": "§cDamage",
+
+
 	"block.betterendforge.lumecorn": "Lumecorn",
 	"block.betterendforge.lumecorn_seed": "Lumecorn Seed",
 	"item.betterendforge.lumecorn_rod": "Lumecorn Rod",  
