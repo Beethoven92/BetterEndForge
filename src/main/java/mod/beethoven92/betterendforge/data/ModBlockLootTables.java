@@ -285,8 +285,8 @@ public class ModBlockLootTables extends BlockLootTables
 	    ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.CHORUS_MUSHROOM.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EndCropBlock.AGE, 3));
 	    registerLootTable(ModBlocks.CHORUS_MUSHROOM.get(), droppingAndBonusWhen(ModBlocks.CHORUS_MUSHROOM.get(), ModItems.CHORUS_MUSHROOM_RAW.get(), ModBlocks.CHORUS_MUSHROOM.get().asItem(), ilootcondition$ibuilder)); 
 		
-	    ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.PEARLBERRY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EndCropBlock.AGE, 3));
-	    registerLootTable(ModBlocks.PEARLBERRY.get(), droppingAndBonusWhen(ModBlocks.PEARLBERRY.get(), ModItems.BLOSSOM_BERRY.get(), ModBlocks.PEARLBERRY.get().asItem(), ilootcondition$ibuilder)); 
+//	    ilootcondition$ibuilder = BlockStateProperty.builder(ModBlocks.PEARLBERRY.get()).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(EndCropBlock.AGE, 3));
+//	    registerLootTable(ModBlocks.PEARLBERRY.get(), droppingAndBonusWhen(ModBlocks.PEARLBERRY.get(), ModItems.BLOSSOM_BERRY.get(), ModBlocks.PEARLBERRY.get().asItem(), ilootcondition$ibuilder)); 
 	    
 	    // WALL_PLANTS
 		registerDropSelfLootTable(ModBlocks.PURPLE_POLYPORE.get());

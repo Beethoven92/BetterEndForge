@@ -768,13 +768,13 @@ public class ModBlocks
                                                             sound(SoundType.PLANT),
                                                             CHORUS_NYLIUM.get()));
 	
-	public static final RegistryObject<Block> PEARLBERRY = registerBlockWithDefaultItem("pearlberry_seed", 
-			() -> new EndCropBlock(AbstractBlock.Properties.create(Material.PLANTS).
-                                                            zeroHardnessAndResistance().
-                                                            doesNotBlockMovement().
-                                                            tickRandomly().
-                                                            sound(SoundType.PLANT),
-                                                            END_MOSS.get(), END_MYCELIUM.get()));
+//	public static final RegistryObject<Block> PEARLBERRY = registerBlockWithDefaultItem("pearlberry_seed", 
+//			() -> new EndCropBlock(AbstractBlock.Properties.create(Material.PLANTS).
+//                                                            zeroHardnessAndResistance().
+//                                                            doesNotBlockMovement().
+//                                                            tickRandomly().
+//                                                            sound(SoundType.PLANT),
+//                                                            END_MOSS.get(), END_MYCELIUM.get()));
 	
 	// WALL PLANTS
 	public static final RegistryObject<Block> PURPLE_POLYPORE = registerBlockWithDefaultItem("purple_polypore", 
