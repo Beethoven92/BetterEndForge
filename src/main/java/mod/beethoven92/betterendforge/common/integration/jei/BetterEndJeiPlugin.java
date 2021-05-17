@@ -65,6 +65,7 @@ public class BetterEndJeiPlugin implements IModPlugin
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.HELIX_TREE.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.UMBRELLA_TREE.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.JELLYSHROOM.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.LUCERNIA.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
 	}
 	
 	@Override
