@@ -95,7 +95,7 @@ public class LakePiece extends StructurePiece
 	private void makeBoundingBox() 
 	{
 		int minX = ModMathHelper.floor(center.getX() - radius - 8);
-		int minY = ModMathHelper.floor(center.getX() - depth - 8);
+		int minY = ModMathHelper.floor(center.getY() - depth - 8);
 		int minZ = ModMathHelper.floor(center.getZ() - radius - 8);
 		int maxX = ModMathHelper.floor(center.getX() + radius + 8);
 		int maxY = ModMathHelper.floor(center.getY() + depth);
@@ -320,12 +320,6 @@ public class LakePiece extends StructurePiece
 			heightmap.put(p, (byte) 0);
 			return 0;
 		}
-		
-		/*h = world.getTopY(Type.WORLD_SURFACE, pos.getX(), pos.getZ());
-		if (!world.getBlockState(new BlockPos(pos.getX(), h - 1, pos.getZ())).getFluidState().isEmpty()) {
-			heightmap.put(p, (byte) 0);
-			return 0;
-		}*/
 		
 		h = world.getHeight(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		h = MathHelper.abs(h - center.getY());
