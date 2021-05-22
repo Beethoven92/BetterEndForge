@@ -347,6 +347,8 @@ public class ModBiomes
 
 	public static BetterEndCaveBiome getCaveBiome(Random random) 
 	{
+		if (!CAVE_BIOMES.isRebuilt())
+			mutateRegistry(biomeRegistry);
 		return (BetterEndCaveBiome)CAVE_BIOMES.getBiome(random);
 	}
 

@@ -83,4 +83,8 @@ public class BiomePicker
 		}
 		tree = new WeighTree(biomes);
 	}
+	
+	public boolean isRebuilt() {
+		return tree != null;
+	}
 }
