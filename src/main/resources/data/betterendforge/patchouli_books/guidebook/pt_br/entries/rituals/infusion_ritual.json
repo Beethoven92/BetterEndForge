@@ -11,7 +11,7 @@
         {
             "type": "crafting",
             "title": "Preparando a estrutura",
-            "text": "Primeiramente, você precisará fabricar um $(bold)pedestal de infusão$() e 8 pedestais de $(bold)qualquer$() outro tipo.",
+            "text": "Primeiramente, você precisará fabricar um $(bold)pedestal de infusão$() e 8 pedestais de $(bold)qualquer$() outro material ou tipo.",
             "recipe": "betterendforge:infusion_pedestal"
         },
         {
@@ -34,7 +34,7 @@
         },
         {
             "type": "image",
-            "text": "Place main ingredient to the $(bold)Infusion Pedestal$() and catalists to others.",
+            "text": "Posicione o ingrediente principal no $(bold)pedestal de infusão$() e os catalizadores nos outros.",
             "border": false,
             "images": [
                 "betterendforge:textures/images/infusion_ritual/ritual_ready.png"
@@ -42,11 +42,11 @@
         },
         {
             "type": "text",
-            "text": "You can look recipes in the $(l:https://www.curseforge.com/minecraft/mc-mods/jei)JEI$(/l).$(br2)To start the Infusion just place main ingredient last or right click the $(bold)Infusion Pedestal$()."
+            "text": "Você pode procurar quaisquer receitas com $(l:https://www.curseforge.com/minecraft/mc-mods/jei)JEI$(/l).$(br2)Para começar a infusão, posicione o ingrediente principal por último ou clique com o botão direito no $(bold)pedestal de infusão$()."
         },
         {
             "type": "image",
-            "text": "Then you need to wait until the ritual is completed.",
+            "text": "Então é só esperar até o ritual estar completo.",
             "border": false,
             "images": [
                 "betterendforge:textures/images/infusion_ritual/ritual_started.png"
@@ -54,7 +54,7 @@
         },
         {
             "type": "image",
-            "text": "And take the result.",
+            "text": "E veja o resultado.",
             "border": false,
             "images": [
                 "betterendforge:textures/images/infusion_ritual/ritual_finished.png"
