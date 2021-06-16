@@ -10,7 +10,7 @@
         },
         {
             "type": "image",
-            "text": "Você perceberá que nessas ruínas haverá uma estrutura feita de $(bold)flavolitos com runas$(), da qual pode estar destruída ou não, e oito pedestais em sua volta.",
+            "text": "De primeira, você verá que essas ruínas contém uma estrutura feita de $(bold)flavolitos com runas$(), da qual pode estar destruída ou não, e oito pedestais em sua volta.",
             "border": false,
             "images": [
                 "betterendforge:textures/images/eternal_ritual/portal_structure.png"
@@ -18,7 +18,7 @@
         },
         {
             "type": "text",
-            "text": "Esses são os restos dos outrora majestosos portais que antes conectavam o The End com o mundo normal.$(br2)Caso essa estrutura esteja destruída, você precisará reconstruí-la para ativar o portal."
+            "text": "Esses são os restos dos outrora majestosos portais que antes conectavam o The End com o mundo normal.$(br2)Caso essa estrutura esteja destruída, será necessário reconstruí-la para que se possa ativar o portal."
         },
         {
             "type": "image",
@@ -30,7 +30,7 @@
         },
         {
             "type": "image",
-            "text": "Depois de posicionar o último cristal, o portal será ativado.",
+            "text": "Depois de posicionar o último cristal, o portal estará ativado.",
             "border": false,
             "images": [
                 "betterendforge:textures/images/eternal_ritual/ritual_finished.png"
