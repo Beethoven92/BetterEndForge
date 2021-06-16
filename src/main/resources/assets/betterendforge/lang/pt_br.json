@@ -164,7 +164,7 @@
 	"item.betterendforge.shadow_berry_jelly": "Geleia de baga sombria",
 
 	"block.betterendforge.respawn_obelisk": "Obelisco do renascimento",
-	"message.betterendforge.set_spawn": "\u00A7b\u00A7lSeu ponto de renascimento é aqui",
+	"message.betterendforge.set_spawn": "\u00A7b\u00A7lO ponto de renascimento foi definido",
 	"message.betterendforge.fail_spawn": "\u00A7c\u00A7lVocê precisa de 6 jóias de âmbar para definir seu ponto de renascimento",     
 
 	"block.betterendforge.dragon_tree_composter": "Composteira de dragonácea",
