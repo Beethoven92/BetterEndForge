@@ -22,7 +22,7 @@
         },
         {
             "type": "image",
-            "text": "Após isso, posicione 8 $(bold)cristais eternos$() nos pedestais.",
+            "text": "Após isso, posicione 8 $(bold)cristais eternos$() nos pedestais em volta da estrutura.",
             "border": false,
             "images": [
                 "betterendforge:textures/images/eternal_ritual/portal_frame_full.png"
@@ -38,7 +38,7 @@
         },
         {
             "type": "text",
-            "text": "$(bold)Flavolitos com runas$() e $(bold)cristais eternos$() podem ser obtidos através de um $(l:rituals/infusion_ritual)ritual de infusão$(/l)."
+            "text": "Se estiver em falta, $(bold)flavolitos com runas$() e $(bold)cristais eternos$() podem ser obtidos através de um $(l:rituals/infusion_ritual)ritual de infusão$(/l)."
         }
     ]
 }
