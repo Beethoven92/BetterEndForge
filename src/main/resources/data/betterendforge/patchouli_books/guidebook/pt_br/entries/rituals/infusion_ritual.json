@@ -34,7 +34,7 @@
         },
         {
             "type": "image",
-            "text": "Posicione o ingrediente principal no $(bold)pedestal de infusão$() e os catalizadores nos outros.",
+            "text": "Agora, posicione o ingrediente principal no $(bold)pedestal de infusão$() e os catalizadores nos outros.",
             "border": false,
             "images": [
                 "betterendforge:textures/images/infusion_ritual/ritual_ready.png"
@@ -42,11 +42,11 @@
         },
         {
             "type": "text",
-            "text": "Você pode procurar quaisquer receitas com $(l:https://www.curseforge.com/minecraft/mc-mods/jei)JEI$(/l).$(br2)Para começar a infusão, posicione o ingrediente principal por último ou clique com o botão direito no $(bold)pedestal de infusão$()."
+            "text": "Lembrando que você pode procurar por quaisquer receitas com o $(l:https://www.curseforge.com/minecraft/mc-mods/jei)JEI$(/l).$(br2)Para começar a infusão, posicione o ingrediente principal por último ou clique com o botão direito no $(bold)pedestal de infusão$()."
         },
         {
             "type": "image",
-            "text": "Então é só esperar até o ritual estar completo.",
+            "text": "Após isso, basta apenas esperar até o ritual estar completo.",
             "border": false,
             "images": [
                 "betterendforge:textures/images/infusion_ritual/ritual_started.png"
@@ -54,7 +54,7 @@
         },
         {
             "type": "image",
-            "text": "E veja o resultado.",
+            "text": "E então veja o resultado.",
             "border": false,
             "images": [
                 "betterendforge:textures/images/infusion_ritual/ritual_finished.png"
