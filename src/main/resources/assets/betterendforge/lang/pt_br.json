@@ -14,7 +14,7 @@
 	
 	"itemGroup.betterendforge": "Better End",
 	
-	"container.betterendforge.end_stone_smelter": "Forja do End",
+	"container.betterendforge.end_stone_smelter": "Fundidora do End",
 
 	"message.betterendforge.anvil_damage": "§cDano",
 
@@ -61,7 +61,7 @@
 	"block.betterendforge.lucernia_ladder": "Escada de mão de lucérnia",
 	"block.betterendforge.lucernia_leaves": "Folhas de lucérnia",
 	"block.betterendforge.lucernia_log": "Tronco de lucérnia",
-	"block.betterendforge.lucernia_outer_leaves": "Folhas de lucérnia hepífitas",
+	"block.betterendforge.lucernia_outer_leaves": "Folhas de lucérnia epífitas",
 	"block.betterendforge.lucernia_planks": "Tábuas de lucérnia",
 	"block.betterendforge.lucernia_pressure_plate": "Placa de pressão de lucérnia",
 	"block.betterendforge.lucernia_sapling": "Muda de lucérnia",
@@ -101,7 +101,7 @@
 	"block.betterendforge.mossy_dragon_bone": "Bloco de osso de dragão musgoso",
 	
 	"biome.betterendforge.dragon_graveyards": "Cemitério de dragões",
-	"biome.betterendforge.crystal_mountains": "Montanhas de cristais",
+	"biome.betterendforge.crystal_mountains": "Montanhas de cristal",
         "biome.betterendforge.foggy_mushroomland": "Terras-fúngicas nevoentas",
 	"biome.betterendforge.dust_wastelands": "Deserto poeirento",
 	"biome.betterendforge.chorus_forest": "Floresta do coro",
@@ -288,7 +288,7 @@
 	"block.betterendforge.ender_ore": "Minério de ender",
 	"block.betterendforge.aeternium_block": "Bloco de etérnio",
 	"block.betterendforge.ender_block": "Bloco de ender",
-	"block.betterendforge.end_stone_smelter": "Forja do End",
+	"block.betterendforge.end_stone_smelter": "Fundidora do End",
 	"block.betterendforge.flavolite_runed": "Flavolito com runas",
 	"block.betterendforge.end_portal_block": "Portal do End",
 	"block.betterendforge.eternal_pedestal": "Pedestal eterno",
@@ -618,7 +618,7 @@
 	"block.betterendforge.flavolite_bricks_stairs": "Escadas de tijolos de flavolito",
 	"block.betterendforge.flavolite_bricks_wall": "Muro de tijolos de flavolito",
 	"block.betterendforge.flavolite_button": "Botão de flavolito",
-	"block.betterendforge.flavolite_pillar": "Pilar de falvolito",
+	"block.betterendforge.flavolite_pillar": "Pilar de flavolito",
 	"block.betterendforge.flavolite_pressure_plate": "Placa de pressão de flavolito",
 	"block.betterendforge.flavolite_slab": "Laje de flavolito",
 	"block.betterendforge.flavolite_tiles": "Ladrilhos de flavolito",
@@ -697,7 +697,7 @@
 	"block.betterendforge.terminite_block": "Bloco de terminita",
 	"item.betterendforge.terminite_ingot": "Barra de terminita",
 	"item.betterendforge.terminite_nugget": "Pepita de terminita",
-	"block.betterendforge.terminite_bars": "Grades de terminitas",
+	"block.betterendforge.terminite_bars": "Grades de terminita",
 	"block.betterendforge.terminite_door": "Porta de terminita",
 	"block.betterendforge.terminite_pressure_plate": "Placa de pressão de terminita",
 	"block.betterendforge.terminite_tile": "Ladrilhos de terminita",
