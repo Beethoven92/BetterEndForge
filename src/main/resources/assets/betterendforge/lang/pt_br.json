@@ -164,7 +164,7 @@
 	"item.betterendforge.shadow_berry_jelly": "Geleia de baga sombria",
 
 	"block.betterendforge.respawn_obelisk": "Obelisco do renascimento",
-	"message.betterendforge.set_spawn": "\u00A7b\u00A7lO ponto de renascimento foi definido",
+	"message.betterendforge.set_spawn": "\u00A7b\u00A7lSeu ponto de renascimento foi definido aqui",
 	"message.betterendforge.fail_spawn": "\u00A7c\u00A7lVocê precisa de 6 jóias de âmbar para definir seu ponto de renascimento",     
 
 	"block.betterendforge.dragon_tree_composter": "Composteira de dragonácea",
@@ -222,7 +222,7 @@
 	"block.betterendforge.helix_tree_log": "Tora de ondulendro",
 	"block.betterendforge.helix_tree_planks": "Tábuas de ondulendro",
 	"block.betterendforge.helix_tree_pressure_plate": "Placa de pressão de ondulendro",
-	"block.betterendforge.helix_tree_sapling": "Broto de ondulendro",
+	"block.betterendforge.helix_tree_sapling": "Muda de ondulendro",
 	"block.betterendforge.helix_tree_sign": "Placa de ondulendro",
 	"block.betterendforge.helix_tree_slab": "Laje de ondulendro",
 	"block.betterendforge.helix_tree_stairs": "Escadas de ondulendro",
@@ -316,7 +316,7 @@
 	"block.betterendforge.cave_grass": "Grama-das-cavernas",
 	"block.betterendforge.crystal_grass": "Grama-cristal",
 	"block.betterendforge.shadow_plant": "Planta sombria",
-        "block.betterendforge.bushy_grass": "Grama arbustiva",
+        "block.betterendforge.bushy_grass": "Grama espessa",
         "block.betterendforge.amber_grass": "Grama-de-âmbar",
         "block.betterendforge.jungle_grass": "Grama da selva-de-umbrelas",
     
@@ -359,7 +359,7 @@
 	"block.betterendforge.jungle_vine": "Trepadeira da selva-de-umbrelas",
 	"block.betterendforge.jungle_fern": "Samambaia da selva-de-umbrelas",
 	"block.betterendforge.blossom_berry_seed": "Semente de baga-flor",
-	"block.betterendforge.amber_root_seed": "Semente de raíz-âmbar",
+	"block.betterendforge.amber_root_seed": "Sementes de raíz-âmbar",
 	"block.betterendforge.chorus_mushroom_seed": "Esporos de cogumelo do coro",
 	"block.betterendforge.pearlberry_seed": "Semente de baga-pérola",
 	
@@ -550,7 +550,7 @@
 	"block.betterendforge.tenanea_stripped_log": "Tronco de tenanéia descascado",
 	"block.betterendforge.tenanea_trapdoor": "Alçapão de tenanéia",
 	
-	"block.betterendforge.umbrella_tree_sapling": "Broto de umbrelácea",
+	"block.betterendforge.umbrella_tree_sapling": "Muda de umbrelácea",
 	"block.betterendforge.umbrella_tree_bark": "Lenho de umbrelácea",
 	"block.betterendforge.umbrella_tree_barrel": "Barril de umbrelácea",
 	"block.betterendforge.umbrella_tree_bookshelf": "Estante de livros de umbrelácea",
