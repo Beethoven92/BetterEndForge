@@ -1,0 +1,44 @@
+{
+    "name": "Ritual eterno",
+    "icon": "betterendforge:eternal_pedestal",
+    "read_by_default": true,
+    "category": "rituals",
+    "pages": [
+        {
+            "type": "text",
+            "text": "\"Uma maneira não tão simples de retornar para o mundo normal.\"$(br2)Enquanto explora as redonzas do The End, você pode acabar encontrando ruínas antigas."
+        },
+        {
+            "type": "image",
+            "text": "Você verá que elas contém uma estrutura, provavelmente destruída, feita de $(bold)flavolitos com runas$() e 8 pedestais em volta.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/eternal_ritual/portal_structure.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "Esses são os restos dos outrora majestosos portais que antes conectavam o The End com o mundo normal.$(br2)Caso esteja destruída, é necessário reconstruí-la para ativar o portal."
+        },
+        {
+            "type": "image",
+            "text": "Após isso, posicione 8 $(bold)cristais eternos$() nos pedestais em volta.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/eternal_ritual/portal_frame_full.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "Depois de posicionar o último cristal, o portal estará ativado.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/eternal_ritual/ritual_finished.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "Se estiver em falta, $(bold)flavolitos com runas$() e $(bold)cristais eternos$() podem ser obtidos através de um $(l:rituals/infusion_ritual)ritual de infusão$(/l)."
+        }
+    ]
+}

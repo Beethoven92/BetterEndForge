@@ -1,0 +1,64 @@
+{
+    "name": "Ritual de infusão",
+    "icon": "betterendforge:infusion_pedestal",
+    "read_by_default": true,
+    "category": "rituals",
+    "pages": [
+        {
+            "type": "text",
+            "text": "Infusão de itens com o poder dos elementos."
+        },
+        {
+            "type": "crafting",
+            "title": "Preparando a estrutura",
+            "text": "Primeiramente, você precisará fabricar um $(bold)pedestal de infusão$() e 8 pedestais de $(bold)qualquer$() outro tipo.",
+            "recipe": "betterendforge:infusion_pedestal"
+        },
+        {
+            "type": "image",
+            "text": "Depois, posicione o pedestal de infusão no centro e os outros pedestais em volta.",
+            "border": true,
+            "images": [
+                "betterendforge:textures/images/infusion_ritual/infusion_ritual_start.png",
+                "betterendforge:textures/images/infusion_ritual/infusion_ritual_full.png"
+            ]
+        },
+        {
+            "type": "image",
+            "title": "Infusão",
+            "text": "Quando a estrutura do ritual estiver pronta, você pode começar a infusão.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/infusion_ritual/ritual_structure.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "Comece posicionando o ingrediente principal no $(bold)pedestal de infusão$() e os catalizadores nos outros.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/infusion_ritual/ritual_ready.png"
+            ]
+        },
+        {
+            "type": "text",
+            "text": "Obs.: quaisquer receitas que você precisar podem ser vistas com o $(l:https://www.curseforge.com/minecraft/mc-mods/jei)JEI$(/l).$(br2)Para começar a infusão, posicione o ingrediente principal por último ou clique com o botão direito no $(bold)pedestal de infusão$()."
+        },
+        {
+            "type": "image",
+            "text": "Depois, basta só esperar até o ritual estar completo.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/infusion_ritual/ritual_started.png"
+            ]
+        },
+        {
+            "type": "image",
+            "text": "E então veja o resultado.",
+            "border": false,
+            "images": [
+                "betterendforge:textures/images/infusion_ritual/ritual_finished.png"
+            ]
+        }
+    ]
+}
