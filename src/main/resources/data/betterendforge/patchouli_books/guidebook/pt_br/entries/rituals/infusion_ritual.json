@@ -42,7 +42,7 @@
         },
         {
             "type": "text",
-            "text": "Lembrando que você pode procurar por quaisquer receitas com o $(l:https://www.curseforge.com/minecraft/mc-mods/jei)JEI$(/l).$(br2)Para começar a infusão, posicione o ingrediente principal por último ou clique com o botão direito no $(bold)pedestal de infusão$()."
+            "text": "Lembrando que você pode procurar por quaisquer receitas com o $(l:https://www.curseforge.com/minecraft/mc-mods/jei)JEI$(/l) instalado.$(br2)Para começar a infusão, posicione o ingrediente principal por último ou clique com o botão direito no $(bold)pedestal de infusão$()."
         },
         {
             "type": "image",
