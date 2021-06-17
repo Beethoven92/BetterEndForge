@@ -21,7 +21,7 @@
 
 	"block.betterendforge.lumecorn": "Lumilheto",
 	"block.betterendforge.lumecorn_seed": "Semente de lumilheto",
-	"item.betterendforge.lumecorn_rod": "Espiga de lumilheto",
+	"item.betterendforge.lumecorn_rod": "Vareta de lumilheto",
  	"block.betterendforge.blooming_cooksonia": "Cooksonia florescente",
         "block.betterendforge.salteago": "Salterbácea",
 	"block.betterendforge.vaiolush_fern": "Samambaia vaiolush",
@@ -299,7 +299,7 @@
         "block.betterendforge.end_stone_stalactite": "Espeleotema de pedra do End",
 	"block.betterendforge.end_stone_stalactite_cavemoss": "Espeleotema de pedra do End musgoso",
 	"block.betterendforge.smaragdant_crystal": "Cristal de smaragdant",
-	"block.betterendforge.smaragdant_crystal_shard": "Fragmento de cristal de smaragdant",
+	"block.betterendforge.smaragdant_crystal_shard": "Pedaço de cristal de smaragdant",
 	"block.betterendforge.rubinea": "Rubínea",
 	
         "block.betterendforge.andesite_pedestal": "Pedestal de andesito",
@@ -311,7 +311,7 @@
     
         "block.betterendforge.umbrella_moss": "Musgumbrela",
 	"block.betterendforge.umbrella_moss_tall": "Musgumbrela alto",
-	"block.betterendforge.creeping_moss": "Musgo-rastejante",
+	"block.betterendforge.creeping_moss": "Musgo rastejante",
 	"block.betterendforge.chorus_grass": "Grama do coro",
 	"block.betterendforge.cave_grass": "Grama-das-cavernas",
 	"block.betterendforge.crystal_grass": "Grama-cristal",
