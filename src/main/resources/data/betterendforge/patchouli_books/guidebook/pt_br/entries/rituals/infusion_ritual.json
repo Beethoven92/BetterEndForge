@@ -11,7 +11,7 @@
         {
             "type": "crafting",
             "title": "Preparando a estrutura",
-            "text": "Primeiramente, você precisará fabricar um $(bold)pedestal de infusão$() e 8 pedestais de $(bold)qualquer$() outro material ou tipo.",
+            "text": "Primeiramente, você precisará fabricar um $(bold)pedestal de infusão$() e 8 pedestais de $(bold)qualquer$() outro tipo.",
             "recipe": "betterendforge:infusion_pedestal"
         },
         {
@@ -34,7 +34,7 @@
         },
         {
             "type": "image",
-            "text": "Agora, posicione o ingrediente principal no $(bold)pedestal de infusão$() e os catalizadores nos outros.",
+            "text": "Comece posicionando o ingrediente principal no $(bold)pedestal de infusão$() e os catalizadores nos outros.",
             "border": false,
             "images": [
                 "betterendforge:textures/images/infusion_ritual/ritual_ready.png"
@@ -42,11 +42,11 @@
         },
         {
             "type": "text",
-            "text": "Lembrando que você pode procurar por quaisquer receitas com o $(l:https://www.curseforge.com/minecraft/mc-mods/jei)JEI$(/l) instalado.$(br2)Para começar a infusão, posicione o ingrediente principal por último ou clique com o botão direito no $(bold)pedestal de infusão$()."
+            "text": "Obs.: quaisquer receitas que você precisar podem ser vistas com o $(l:https://www.curseforge.com/minecraft/mc-mods/jei)JEI$(/l).$(br2)Para começar a infusão, posicione o ingrediente principal por último ou clique com o botão direito no $(bold)pedestal de infusão$()."
         },
         {
             "type": "image",
-            "text": "Após isso, basta apenas esperar até o ritual estar completo.",
+            "text": "Depois, basta só esperar até o ritual estar completo.",
             "border": false,
             "images": [
                 "betterendforge:textures/images/infusion_ritual/ritual_started.png"
