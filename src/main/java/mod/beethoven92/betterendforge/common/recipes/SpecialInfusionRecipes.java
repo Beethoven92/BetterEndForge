@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 
 // Defines special recipes that cannot be handled by jsons
+// TODO: Move this to json now that output item can have NBT
 public class SpecialInfusionRecipes
 {
 	public static void createRecipes()
