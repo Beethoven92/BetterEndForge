@@ -68,6 +68,14 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		
 		getOrCreateBuilder(BlockTags.ANVIL).add(ModBlocks.AETERNIUM_ANVIL.get());
 		
+		getOrCreateBuilder(BlockTags.SLABS).add(ModBlocks.DRAGON_BONE_SLAB.get());
+		getOrCreateBuilder(BlockTags.SLABS).add(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get());
+		getOrCreateBuilder(BlockTags.WOODEN_SLABS).add(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get());
+
+		getOrCreateBuilder(BlockTags.STAIRS).add(ModBlocks.DRAGON_BONE_STAIRS.get());
+		getOrCreateBuilder(BlockTags.STAIRS).add(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get());
+		getOrCreateBuilder(BlockTags.WOODEN_STAIRS).add(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get());
+		
 		// WOODEN MATERIALS
 		registerWoodenMaterialTags(ModBlocks.MOSSY_GLOWSHROOM);
 		registerWoodenMaterialTags(ModBlocks.LACUGROVE);
@@ -151,6 +159,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		
 		getOrCreateBuilder(BlockTags.SLABS).add(material.slab.get());
 		getOrCreateBuilder(BlockTags.SLABS).add(material.brick_slab.get());
+		
+		getOrCreateBuilder(BlockTags.STAIRS).add(material.stairs.get());
+		getOrCreateBuilder(BlockTags.STAIRS).add(material.brick_stairs.get());
 		
 		getOrCreateBuilder(BlockTags.PRESSURE_PLATES).add(material.pressure_plate.get());
 		getOrCreateBuilder(BlockTags.STONE_PRESSURE_PLATES).add(material.pressure_plate.get());

@@ -5,7 +5,10 @@ import mod.beethoven92.betterendforge.common.block.TerrainBlock;
 import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
 import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
+import mod.beethoven92.betterendforge.common.block.template.EndCropBlock;
 import mod.beethoven92.betterendforge.common.block.template.EndSaplingBlock;
+import mod.beethoven92.betterendforge.common.block.template.PlantBlockWithAge;
+import mod.beethoven92.betterendforge.common.block.template.UnderwaterPlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import mod.beethoven92.betterendforge.common.init.ModTags;
@@ -42,23 +45,42 @@ public class ModItemTagsProvider extends ItemTagsProvider
 			{
 				getOrCreateBuilder(ItemTags.SAPLINGS).add(block.asItem());
 			}
+			if (block instanceof EndCropBlock || block instanceof PlantBlockWithAge || block instanceof UnderwaterPlantBlockWithAge)
+			{
+				getOrCreateBuilder(Tags.Items.SEEDS).add(block.asItem());
+			}
 		});
 		
 		// Misc Forge tags
+		getOrCreateBuilder(Tags.Items.DUSTS).add(ModItems.ENDER_DUST.get());
+
 		getOrCreateBuilder(Tags.Items.INGOTS).add(ModItems.AETERNIUM_INGOT.get());
+		
+		getOrCreateBuilder(Tags.Items.MUSHROOMS).add(ModBlocks.BOLUX_MUSHROOM.get().asItem());
+		getOrCreateBuilder(Tags.Items.MUSHROOMS).add(ModItems.CHORUS_MUSHROOM_RAW.get());
 		
 		getOrCreateBuilder(Tags.Items.ORES).add(ModBlocks.ENDER_ORE.get().asItem());
 		getOrCreateBuilder(Tags.Items.ORES).add(ModBlocks.AMBER_ORE.get().asItem());
-
-		getOrCreateBuilder(Tags.Items.DUSTS).add(ModItems.ENDER_DUST.get());
+		
+		getOrCreateBuilder(Tags.Items.SEEDS).add(ModBlocks.END_LOTUS_SEED.get().asItem());
 		
 		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get().asItem());
 		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AMBER_BLOCK.get().asItem());
 		
 		// Misc Minecraft tags
+		getOrCreateBuilder(ItemTags.ANVIL).add(ModBlocks.AETERNIUM_ANVIL.get().asItem());
+		
+		getOrCreateBuilder(ItemTags.BEACON_PAYMENT_ITEMS).add(ModItems.AETERNIUM_INGOT.get());
+		
 		getOrCreateBuilder(ItemTags.PIGLIN_LOVED).add(ModItems.GOLDEN_HAMMER.get());
 		
-		getOrCreateBuilder(ItemTags.ANVIL).add(ModBlocks.AETERNIUM_ANVIL.get().asItem());
+		getOrCreateBuilder(ItemTags.SLABS).add(ModBlocks.DRAGON_BONE_SLAB.get().asItem());
+		getOrCreateBuilder(ItemTags.SLABS).add(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get().asItem());
+		getOrCreateBuilder(ItemTags.WOODEN_SLABS).add(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get().asItem());
+		
+		getOrCreateBuilder(ItemTags.STAIRS).add(ModBlocks.DRAGON_BONE_STAIRS.get().asItem());
+		getOrCreateBuilder(ItemTags.STAIRS).add(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get().asItem());
+		getOrCreateBuilder(ItemTags.WOODEN_STAIRS).add(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get().asItem());
 		
 		// Mod Tags
 		getOrCreateBuilder(ModTags.HAMMERS).add(ModItems.IRON_HAMMER.get());
@@ -122,6 +144,8 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		getOrCreateBuilder(ItemTags.TRAPDOORS).add(material.trapdoor.get().asItem());
 		getOrCreateBuilder(ItemTags.WOODEN_TRAPDOORS).add(material.trapdoor.get().asItem());
 		
+		getOrCreateBuilder(ItemTags.SIGNS).add(material.sign.get().asItem());
+		
 		// Forge Tags
 		getOrCreateBuilder(Tags.Items.FENCES).add(material.fence.get().asItem());
 		getOrCreateBuilder(Tags.Items.FENCES_WOODEN).add(material.fence.get().asItem());
@@ -140,8 +164,14 @@ public class ModItemTagsProvider extends ItemTagsProvider
 	{
 		getOrCreateBuilder(ItemTags.STONE_BRICKS).add(material.bricks.get().asItem());
 		
+		getOrCreateBuilder(ItemTags.WALLS).add(material.wall.get().asItem());
+		getOrCreateBuilder(ItemTags.WALLS).add(material.brick_wall.get().asItem());
+		
 		getOrCreateBuilder(ItemTags.SLABS).add(material.slab.get().asItem());
 		getOrCreateBuilder(ItemTags.SLABS).add(material.brick_slab.get().asItem());
+		
+		getOrCreateBuilder(ItemTags.STAIRS).add(material.stairs.get().asItem());
+		getOrCreateBuilder(ItemTags.STAIRS).add(material.brick_stairs.get().asItem());
 		
 		getOrCreateBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(material.stone.get().asItem());
 		getOrCreateBuilder(ItemTags.STONE_TOOL_MATERIALS).add(material.stone.get().asItem());
@@ -164,6 +194,8 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		getOrCreateBuilder(ItemTags.TRAPDOORS).add(material.trapdoor.get().asItem());
 		
 		getOrCreateBuilder(ItemTags.ANVIL).add(material.anvil.get().asItem());
+		
+		getOrCreateBuilder(ItemTags.BEACON_PAYMENT_ITEMS).add(material.ingot.get());
 		
 		// Forge Tags
 		getOrCreateBuilder(Tags.Items.NUGGETS).add(material.nugget.get());
