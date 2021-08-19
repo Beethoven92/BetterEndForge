@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "betterendforge:violecite"
+  },
+  "result": "betterendforge:violecite_bricks_stairs",
+  "count": 1
+}

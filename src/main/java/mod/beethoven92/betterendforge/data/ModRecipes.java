@@ -18,6 +18,7 @@ import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
 import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
+import net.minecraft.data.SingleItemRecipeBuilder;
 import net.minecraft.data.SmithingRecipeBuilder;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.DyeItem;
@@ -221,6 +222,7 @@ public class ModRecipes extends RecipeProvider
 	
 	private void makeStoneMaterialRecipes(StoneMaterial material, Consumer<IFinishedRecipe> consumer)
 	{
+		// Crafting
 		ShapedRecipeBuilder.shapedRecipe(material.bricks.get(), 4).key('#', material.stone.get()).patternLine("##").patternLine("##").setGroup("end_bricks").addCriterion("has_stone", hasItem(material.stone.get())).build(consumer);
 		ShapedRecipeBuilder.shapedRecipe(material.polished.get(), 4).key('#', material.bricks.get()).patternLine("##").patternLine("##").setGroup("end_tile").addCriterion("has_bricks", hasItem(material.bricks.get())).build(consumer);
 		ShapedRecipeBuilder.shapedRecipe(material.tiles.get(), 4).key('#', material.polished.get()).patternLine("##").patternLine("##").setGroup("end_small_tile").addCriterion("has_polished_stone", hasItem(material.polished.get())).build(consumer);
@@ -236,6 +238,22 @@ public class ModRecipes extends RecipeProvider
 	    registerLantern(material.lantern.get(), material.slab.get(), consumer, material.name);
 	    registerPedestal(material.pedestal.get(), material.slab.get(), material.pillar.get(), consumer, material.name);
 	    ShapedRecipeBuilder.shapedRecipe(material.furnace.get()).key('#', material.stone.get()).patternLine("###").patternLine("# #").patternLine("###").setGroup("end_stone_furnaces").addCriterion("has_stone", hasItem(material.stone.get())).build(consumer);
+
+		// Stonecutting
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.stone.get()), material.bricks.get()).addCriterion("has_stone", hasItem(material.stone.get())).build(consumer, rl(material.name + "_bricks_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.stone.get()), material.polished.get()).addCriterion("has_stone", hasItem(material.stone.get())).build(consumer, rl(material.name + "_polished_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.stone.get()), material.tiles.get()).addCriterion("has_stone", hasItem(material.stone.get())).build(consumer, rl(material.name + "_tiles_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.stone.get()), material.pillar.get()).addCriterion("has_stone", hasItem(material.stone.get())).build(consumer, rl(material.name + "_pillar_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.stone.get()), material.stairs.get()).addCriterion("has_stone", hasItem(material.stone.get())).build(consumer, rl(material.name + "_stairs_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.stone.get()), material.slab.get(), 2).addCriterion("has_stone", hasItem(material.stone.get())).build(consumer, rl(material.name + "_slab_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.stone.get()), material.brick_stairs.get()).addCriterion("has_stone", hasItem(material.stone.get())).build(consumer, rl(material.name + "_bricks_stairs_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.stone.get()), material.brick_slab.get(), 2).addCriterion("has_stone", hasItem(material.stone.get())).build(consumer, rl(material.name + "_bricks_slab_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.stone.get()), material.wall.get()).addCriterion("has_stone", hasItem(material.stone.get())).build(consumer, rl(material.name + "_wall_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.stone.get()), material.brick_wall.get()).addCriterion("has_stone", hasItem(material.stone.get())).build(consumer, rl(material.name + "_bricks_wall_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.stone.get()), material.button.get()).addCriterion("has_stone", hasItem(material.stone.get())).build(consumer, rl(material.name + "_button_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.bricks.get()), material.brick_stairs.get()).addCriterion("has_bricks", hasItem(material.bricks.get())).build(consumer, rl(material.name + "_bricks_stairs_from_" + material.name + "_bricks_stonecutting"));
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.bricks.get()), material.brick_slab.get(), 2).addCriterion("has_bricks", hasItem(material.bricks.get())).build(consumer, rl(material.name + "_bricks_slab_from_" + material.name + "_bricks_stonecutting"));
+		SingleItemRecipeBuilder.stonecuttingRecipe(Ingredient.fromItems(material.bricks.get()), material.brick_wall.get()).addCriterion("has_bricks", hasItem(material.bricks.get())).build(consumer, rl(material.name + "_bricks_wall_from_" + material.name + "_bricks_stonecutting"));
 	}
 	
 	private void makeMetalMaterialRecipes(MetalMaterial material, Consumer<IFinishedRecipe> consumer)
