@@ -24,6 +24,7 @@ import net.minecraft.item.DyeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
@@ -131,13 +132,13 @@ public class ModRecipes extends RecipeProvider
 		ShapedRecipeBuilder.shapedRecipe(ModBlocks.INFUSION_PEDESTAL.get()).key('O', Items.ENDER_PEARL).key('Y', Items.ENDER_EYE).key('#', Blocks.OBSIDIAN).patternLine(" Y ").patternLine("O#O").patternLine(" # ").addCriterion("has_ender_pearl", hasItem(Items.ENDER_PEARL)).addCriterion("has_ender_eye", hasItem(Items.ENDER_EYE)).addCriterion("has_obsidian", hasItem(Blocks.OBSIDIAN)).build(consumer);
 		
 		// FURNACE
-		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModItems.END_FISH_RAW.get()), ModItems.END_FISH_COOKED.get(), 0.35F, 200).addCriterion("has_end_fish_raw", hasItem(ModItems.END_FISH_RAW.get())).build(consumer);
-		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModItems.END_LILY_LEAF.get()), ModItems.END_LILY_LEAF_DRIED.get(), 0.35F, 200).addCriterion("has_end_lily_leaf", hasItem(ModItems.END_LILY_LEAF.get())).build(consumer);
+		cookFood(ModItems.END_FISH_RAW.get(), ModItems.END_FISH_COOKED.get(), 0.35F, 200, consumer);
+		cookFood(ModItems.END_LILY_LEAF.get(), ModItems.END_LILY_LEAF_DRIED.get(), 0.35F, 200, consumer);
+		cookFood(ModItems.SHADOW_BERRY_RAW.get(), ModItems.SHADOW_BERRY_COOKED.get(), 0.35F, 200, consumer);
+		cookFood(ModItems.CHORUS_MUSHROOM_RAW.get(), ModItems.CHORUS_MUSHROOM_COOKED.get(), 0.35F, 200, consumer);
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModBlocks.ENDSTONE_DUST.get()), Blocks.GLASS.asItem(), 0.35F, 200).addCriterion("has_end_stone_dust", hasItem(ModBlocks.ENDSTONE_DUST.get())).build(consumer, rl("glass_from_end_stone_dust"));
-		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModItems.SHADOW_BERRY_RAW.get()), ModItems.SHADOW_BERRY_COOKED.get(), 0.35F, 200).addCriterion("has_shadow_berry_raw", hasItem(ModItems.SHADOW_BERRY_RAW.get())).build(consumer);
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModBlocks.JELLYSHROOM_CAP_PURPLE.get()), Items.SLIME_BALL, 0.35F, 200).addCriterion("has_jellyshroom_cap", hasItem(ModBlocks.JELLYSHROOM_CAP_PURPLE.get())).build(consumer, rl("slime_ball_from_jellyshroom_cap"));
 		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModBlocks.MENGER_SPONGE_WET.get()), ModBlocks.MENGER_SPONGE.get(), 0.35F, 200).addCriterion("has_menger_sponge_wet", hasItem(ModBlocks.MENGER_SPONGE_WET.get())).build(consumer);
-		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(ModItems.CHORUS_MUSHROOM_RAW.get()), ModItems.CHORUS_MUSHROOM_COOKED.get(), 0.35F, 200).addCriterion("has_chorus_mushroom_raw", hasItem(ModItems.CHORUS_MUSHROOM_RAW.get())).build(consumer);
 		
 		// ARMORS AND TOOLS
 		makeIngotAndBlockRecipes(ModBlocks.AETERNIUM_BLOCK.get(), ModItems.AETERNIUM_INGOT.get(), consumer, "aeternium");
@@ -317,6 +318,12 @@ public class ModRecipes extends RecipeProvider
 			}
 		}
 			
+	}
+	
+	private void cookFood(Item in, Item out, float exp, int time, Consumer<IFinishedRecipe> consumer) {
+		CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(in), out, exp, time).addCriterion("has_" + in.getRegistryName().getPath(), hasItem(in)).build(consumer);
+	    CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(in), out, exp, time / 2, IRecipeSerializer.SMOKING).addCriterion("has_" + in.getRegistryName().getPath(), hasItem(in)).build(consumer, new ResourceLocation(BetterEnd.MOD_ID, out.getRegistryName().getPath() + "_from_smoking"));
+	    CookingRecipeBuilder.cookingRecipe(Ingredient.fromItems(in), out, exp, time * 3, IRecipeSerializer.CAMPFIRE_COOKING).addCriterion("has_" + in.getRegistryName().getPath(), hasItem(in)).build(consumer, new ResourceLocation(BetterEnd.MOD_ID, out.getRegistryName().getPath() + "_from_campfire_cooking"));
 	}
 	
 	private void makeSmithingRecipe(Item base, Item addition, Item output, Consumer<IFinishedRecipe> consumer)
