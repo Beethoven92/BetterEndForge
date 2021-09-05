@@ -731,12 +731,12 @@ public class ModBlockStates extends BlockStateProvider
        	           
            int size = state.get(StalactiteBlock.SIZE);
            
-           ModelFile currentSize = models().withExistingParent(block.getRegistryName().getPath() + "_" + size, modLoc("block/stalactite_" + size))
-         		   .texture("texture", modLoc("block/" + block.getRegistryName().getPath() + "_" + size));
+           ModelFile currentSize = models().withExistingParent(block.getRegistryName().getPath() + "_" + size, mcLoc("block/cross"))
+         		   .texture("cross", modLoc("block/" + block.getRegistryName().getPath() + "_" + size));
            
            return ConfiguredModel.builder()
            .modelFile(currentSize)
-           .rotationX(isFloor? 180 : 0)
+           .rotationX(isFloor? 0 : 180)
            .build();
         });
     }

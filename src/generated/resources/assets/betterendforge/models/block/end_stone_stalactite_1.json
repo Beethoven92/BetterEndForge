@@ -1,6 +1,6 @@
 {
-  "parent": "betterendforge:block/stalactite_1",
+  "parent": "minecraft:block/cross",
   "textures": {
-    "texture": "betterendforge:block/end_stone_stalactite_1"
+    "cross": "betterendforge:block/end_stone_stalactite_1"
   }
 }
