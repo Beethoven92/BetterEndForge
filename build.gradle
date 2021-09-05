@@ -21,7 +21,7 @@ mixin {
     add sourceSets.main, "betterendforge.refmap.json"
 }
 
-version = '1.16.5-1.6.0'
+version = '1.16.5-1.6.1'
 group = 'mod.beethoven92.betterendforge' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'betterendforge'
 
