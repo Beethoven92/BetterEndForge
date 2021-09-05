@@ -22,6 +22,7 @@ public class CommonConfig
     public static final ForgeConfigSpec.BooleanValue GENERATE_CENTRAL_ISLAND;
     public static final ForgeConfigSpec.BooleanValue SWAP_OVERWORLD_WITH_END;
     public static final ForgeConfigSpec.BooleanValue GIVE_GUIDE_BOOK;
+    public static final ForgeConfigSpec.BooleanValue REDUCE_ENDERMAN_SPAWN;
     public static final ForgeConfigSpec.ConfigValue<Integer> END_CITY_FAIL_CHANCE;
     
     static 
@@ -82,6 +83,9 @@ public class CommonConfig
         
         BUILDER.comment("\nShould the guide book be given to players when using an end gateway for the first time?\nDefault value: true");
         GIVE_GUIDE_BOOK = BUILDER.define("giveGuideBook", true);
+        
+        BUILDER.comment("\nShould natural enderman spawn rate be reduced?\nDefault value: true");
+        REDUCE_ENDERMAN_SPAWN = BUILDER.define("reduceEndermanSpawn", true);
         
         BUILDER.pop();
         
@@ -161,6 +165,11 @@ public class CommonConfig
     public static boolean giveGuideBook() 
     {
         return GIVE_GUIDE_BOOK.get();
+    }
+    
+    public static boolean reduceEndermanSpawn() 
+    {
+        return REDUCE_ENDERMAN_SPAWN.get();
     }
     
     public static int endCityFailChance() 

@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.EndermanEntity;
@@ -26,7 +27,7 @@ public class MonsterEntityMixin
 			SpawnReason spawnReason, BlockPos pos, Random random, CallbackInfoReturnable<Boolean> info) 
 	{
 		boolean canSpawn = info.getReturnValue();
-		if (canSpawn && spawnReason == SpawnReason.NATURAL && type == EntityType.ENDERMAN) 
+		if (CommonConfig.reduceEndermanSpawn() && canSpawn && spawnReason == SpawnReason.NATURAL && type == EntityType.ENDERMAN) 
 		{
 			AxisAlignedBB box = new AxisAlignedBB(pos).grow(16);
 			List<EndermanEntity> entities = world.getEntitiesWithinAABB(EndermanEntity.class, box, (entity) -> { return true; });
