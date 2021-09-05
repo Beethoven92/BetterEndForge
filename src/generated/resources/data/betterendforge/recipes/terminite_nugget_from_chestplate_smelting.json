@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "betterendforge:terminite_chestplate"
-  },
-  "result": "betterendforge:terminite_nugget",
-  "experience": 0.35,
-  "cookingtime": 200
-}

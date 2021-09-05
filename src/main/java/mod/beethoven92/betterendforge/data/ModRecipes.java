@@ -261,30 +261,24 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shapedRecipe(Blocks.SMITHING_TABLE).key('I', material.ingot.get()).key('#', ItemTags.PLANKS).patternLine("II").patternLine("##").patternLine("##").addCriterion("has_" + material.name + "_ingot", hasItem(material.ingot.get())).build(consumer, rl("smithing_table_from_" + material.name + "_ingot"));
 	    
 	    // Furnace & blast furnace
+	    float exp = 0.35f;
+	    int smeltTime = 200;
+	    int blastTime = smeltTime / 2;
 	    if (material.hasOre)
 	    {
-	    	CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.ore.get()), material.ingot.get(), 0.35F, 200).addCriterion("has_" + material.name + "_ore", hasItem(material.ore.get())).build(consumer, rl(material.name + "_ingot_from_smelting"));
-	    	CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.ore.get()), material.ingot.get(), 0.35F, 200).addCriterion("has_" + material.name + "_ore", hasItem(material.ore.get())).build(consumer, rl(material.name + "_ingot_from_blasting"));
+	    	CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.ore.get()), material.ingot.get(), exp, smeltTime).addCriterion("has_" + material.name + "_ore", hasItem(material.ore.get())).build(consumer, rl(material.name + "_ingot_from_smelting"));
+	    	CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.ore.get()), material.ingot.get(), exp, blastTime).addCriterion("has_" + material.name + "_ore", hasItem(material.ore.get())).build(consumer, rl(material.name + "_ingot_from_blasting"));
 	    }
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.axe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_axe", hasItem(material.axe.get())).build(consumer, rl(material.name + "_nugget_from_axe_smelting"));
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.axe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_axe", hasItem(material.axe.get())).build(consumer, rl(material.name + "_nugget_from_axe_blasting"));
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.pickaxe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_pickaxe", hasItem(material.pickaxe.get())).build(consumer, rl(material.name + "_nugget_from_pickaxe_smelting"));
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.pickaxe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_pickaxe", hasItem(material.pickaxe.get())).build(consumer, rl(material.name + "_nugget_from_pickaxe_blasting"));
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.hoe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hoe", hasItem(material.hoe.get())).build(consumer, rl(material.name + "_nugget_from_hoe_smelting"));
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.hoe.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hoe", hasItem(material.hoe.get())).build(consumer, rl(material.name + "_nugget_from_hoe_blasting"));
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.sword.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_sword", hasItem(material.sword.get())).build(consumer, rl(material.name + "_nugget_from_sword_smelting"));
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.sword.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_sword", hasItem(material.sword.get())).build(consumer, rl(material.name + "_nugget_from_sword_blasting"));
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.hammer.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hammer", hasItem(material.hammer.get())).build(consumer, rl(material.name + "_nugget_from_hammer_smelting"));
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.hammer.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_hammer", hasItem(material.hammer.get())).build(consumer, rl(material.name + "_nugget_from_hammer_blasting"));
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.helmet.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_helmet", hasItem(material.helmet.get())).build(consumer, rl(material.name + "_nugget_from_helmet_smelting"));
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.helmet.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_helmet", hasItem(material.helmet.get())).build(consumer, rl(material.name + "_nugget_from_helmet_blasting"));
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.chestplate.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_chestplate", hasItem(material.chestplate.get())).build(consumer, rl(material.name + "_nugget_from_chestplate_smelting"));
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.chestplate.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_chestplate", hasItem(material.chestplate.get())).build(consumer, rl(material.name + "_nugget_from_chestplate_blasting"));
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.leggings.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_leggings", hasItem(material.leggings.get())).build(consumer, rl(material.name + "_nugget_from_leggings_smelting"));
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.leggings.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_leggings", hasItem(material.leggings.get())).build(consumer, rl(material.name + "_nugget_from_leggings_blasting"));
-	    CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(material.boots.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_boots", hasItem(material.boots.get())).build(consumer, rl(material.name + "_nugget_from_boots_smelting"));
-	    CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(material.boots.get()), material.nugget.get(), 0.35F, 200).addCriterion("has_" + material.name + "_boots", hasItem(material.boots.get())).build(consumer, rl(material.name + "_nugget_from_boots_blasting"));
-	
+	    Item[] nuggetables = new Item[] { material.axe.get(), material.pickaxe.get(), material.shovel.get(), material.hoe.get(),material.sword.get(), material.hammer.get(), material.helmet.get(), material.chestplate.get(), material.leggings.get(), material.boots.get() };
+	    CookingRecipeBuilder nuggetSmeltingRecipes = CookingRecipeBuilder.smeltingRecipe(Ingredient.fromItems(nuggetables), material.nugget.get(), exp, smeltTime);
+	    CookingRecipeBuilder nuggetBlastingRecipes = CookingRecipeBuilder.blastingRecipe(Ingredient.fromItems(nuggetables), material.nugget.get(), exp, blastTime);
+	    for (Item nuggetable : nuggetables) {
+	    	nuggetSmeltingRecipes.addCriterion("has_" + nuggetable.getRegistryName().getPath(), hasItem(nuggetable));
+	    	nuggetBlastingRecipes.addCriterion("has_" + nuggetable.getRegistryName().getPath(), hasItem(nuggetable));
+	    }
+	    nuggetSmeltingRecipes.build(consumer, rl(material.name + "_nugget_from_smelting"));
+	    nuggetBlastingRecipes.build(consumer, rl(material.name + "_nugget_from_blasting"));
+
 	    // Smithing table
 	    makeSmithingRecipe(material.block.get().asItem(), Items.STICK, material.hammer.get(), consumer);
 		makeSmithingRecipe(material.shovelHead.get(), Items.STICK, material.shovel.get(), consumer);

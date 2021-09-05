@@ -1,0 +1,131 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:thallasium_nugget_from_blasting"
+    ]
+  },
+  "criteria": {
+    "has_thallasium_axe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:thallasium_axe"
+          }
+        ]
+      }
+    },
+    "has_thallasium_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:thallasium_pickaxe"
+          }
+        ]
+      }
+    },
+    "has_thallasium_shovel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:thallasium_shovel"
+          }
+        ]
+      }
+    },
+    "has_thallasium_hoe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:thallasium_hoe"
+          }
+        ]
+      }
+    },
+    "has_thallasium_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:thallasium_sword"
+          }
+        ]
+      }
+    },
+    "has_thallasium_hammer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:thallasium_hammer"
+          }
+        ]
+      }
+    },
+    "has_thallasium_helmet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:thallasium_helmet"
+          }
+        ]
+      }
+    },
+    "has_thallasium_chestplate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:thallasium_chestplate"
+          }
+        ]
+      }
+    },
+    "has_thallasium_leggings": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:thallasium_leggings"
+          }
+        ]
+      }
+    },
+    "has_thallasium_boots": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:thallasium_boots"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:thallasium_nugget_from_blasting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_thallasium_axe",
+      "has_thallasium_pickaxe",
+      "has_thallasium_shovel",
+      "has_thallasium_hoe",
+      "has_thallasium_sword",
+      "has_thallasium_hammer",
+      "has_thallasium_helmet",
+      "has_thallasium_chestplate",
+      "has_thallasium_leggings",
+      "has_thallasium_boots",
+      "has_the_recipe"
+    ]
+  ]
+}
