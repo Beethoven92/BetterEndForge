@@ -97,7 +97,7 @@ public class MetalMaterial
 		return new MetalMaterial(name, false, AbstractBlock.Properties.create(Material.IRON, color).setRequiresTool().hardnessAndResistance(hardness, resistance).sound(SoundType.METAL), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB), material, armor);
 	}
 	
-	private MetalMaterial(String name, boolean hasOre, AbstractBlock.Properties blockSettings, Item.Properties itemSettings, IItemTier material, IArmorMaterial armor) 
+	public MetalMaterial(String name, boolean hasOre, AbstractBlock.Properties blockSettings, Item.Properties itemSettings, IItemTier material, IArmorMaterial armor) 
 	{		
 		this.hasOre = hasOre;
 		

@@ -12,6 +12,9 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
+import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
+import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.integration.jei.alloying.AlloyingRecipeCategory;
 import mod.beethoven92.betterendforge.common.integration.jei.anvil.AnvilSmithingRecipeCategory;
@@ -41,31 +44,22 @@ public class BetterEndJeiPlugin implements IModPlugin
 
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.INFUSION_PEDESTAL.get()), InfusionRecipeCategory.UID);
 
-		registration.addRecipeCatalyst(new ItemStack(Blocks.ANVIL), AnvilSmithingRecipeCategory.UID);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.THALLASIUM.anvil.get()), AnvilSmithingRecipeCategory.UID);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.TERMINITE.anvil.get()), AnvilSmithingRecipeCategory.UID);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.AETERNIUM_ANVIL.get()), AnvilSmithingRecipeCategory.UID);
+		registration.addRecipeCatalyst(new ItemStack(Blocks.ANVIL), VanillaRecipeCategoryUid.ANVIL);
+		registration.addRecipeCatalyst(new ItemStack(ModBlocks.AETERNIUM_ANVIL.get()), VanillaRecipeCategoryUid.ANVIL);
+		for (MetalMaterial material : ModBlocks.getMetalMaterials()) {
+			registration.addRecipeCatalyst(new ItemStack(material.anvil.get()), VanillaRecipeCategoryUid.ANVIL);
+		}
+
 
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.END_STONE_FURNACE.get()), VanillaRecipeCategoryUid.FURNACE);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.FLAVOLITE.furnace.get()), VanillaRecipeCategoryUid.FURNACE);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.VIOLECITE.furnace.get()), VanillaRecipeCategoryUid.FURNACE);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.SULPHURIC_ROCK.furnace.get()), VanillaRecipeCategoryUid.FURNACE);
-
 		registration.addRecipeCatalyst(new ItemStack(ModBlocks.END_STONE_FURNACE.get()), VanillaRecipeCategoryUid.FUEL);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.FLAVOLITE.furnace.get()), VanillaRecipeCategoryUid.FUEL);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.VIOLECITE.furnace.get()), VanillaRecipeCategoryUid.FUEL);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.SULPHURIC_ROCK.furnace.get()), VanillaRecipeCategoryUid.FUEL);
+		for (StoneMaterial material : ModBlocks.getStoneMaterials()) {
+			registration.addRecipeCatalyst(new ItemStack(material.furnace.get()), VanillaRecipeCategoryUid.FUEL);
+			registration.addRecipeCatalyst(new ItemStack(material.furnace.get()), VanillaRecipeCategoryUid.FURNACE);
+		}
 
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.MOSSY_GLOWSHROOM.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.LACUGROVE.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.END_LOTUS.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.PYTHADENDRON.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.DRAGON_TREE.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.TENANEA.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.HELIX_TREE.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.UMBRELLA_TREE.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.JELLYSHROOM.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
-		registration.addRecipeCatalyst(new ItemStack(ModBlocks.LUCERNIA.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
+		for (WoodenMaterial material : ModBlocks.getWoodenMaterials())
+			registration.addRecipeCatalyst(new ItemStack(material.craftingTable.get()), VanillaRecipeCategoryUid.CRAFTING);
 	}
 	
 	@Override

@@ -1,6 +1,10 @@
 package mod.beethoven92.betterendforge.common.init;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
+
+import com.google.common.collect.ImmutableList;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.AeterniumAnvil;
@@ -117,6 +121,8 @@ import net.minecraft.block.StairsBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.IArmorMaterial;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -1139,16 +1145,20 @@ public class ModBlocks
 	public static final RegistryObject<Block> POTTED_UMBRELLA_TREE_SAPLING = registerFlowerPotBlock("potted_umbrella_tree_sapling", UMBRELLA_TREE_SAPLING);
 
 	// WOODEN MATERIALS
-	public static final WoodenMaterial MOSSY_GLOWSHROOM = new WoodenMaterial("mossy_glowshroom", MaterialColor.GRAY, MaterialColor.WOOD);
-	public static final WoodenMaterial LACUGROVE = new WoodenMaterial("lacugrove", MaterialColor.BROWN, MaterialColor.YELLOW);
-	public static final WoodenMaterial END_LOTUS = new WoodenMaterial("end_lotus", MaterialColor.LIGHT_BLUE, MaterialColor.CYAN);
-	public static final WoodenMaterial PYTHADENDRON = new WoodenMaterial("pythadendron", MaterialColor.MAGENTA, MaterialColor.PURPLE);
-	public static final WoodenMaterial DRAGON_TREE = new WoodenMaterial("dragon_tree", MaterialColor.BLACK, MaterialColor.MAGENTA);
-	public static final WoodenMaterial TENANEA = new WoodenMaterial("tenanea", MaterialColor.BROWN, MaterialColor.PINK);
-	public static final WoodenMaterial HELIX_TREE = new WoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ADOBE);
-	public static final WoodenMaterial UMBRELLA_TREE = new WoodenMaterial("umbrella_tree", MaterialColor.BLUE, MaterialColor.GREEN);
-	public static final WoodenMaterial JELLYSHROOM = new WoodenMaterial("jellyshroom", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
-	public static final WoodenMaterial LUCERNIA = new WoodenMaterial("lucernia", MaterialColor.ADOBE, MaterialColor.ADOBE);
+	private static List<WoodenMaterial> woodenMaterials;
+	public static List<WoodenMaterial> getWoodenMaterials() {
+		return ImmutableList.copyOf(woodenMaterials);
+	}
+	public static final WoodenMaterial MOSSY_GLOWSHROOM = createWoodenMaterial("mossy_glowshroom", MaterialColor.GRAY, MaterialColor.WOOD);
+	public static final WoodenMaterial LACUGROVE = createWoodenMaterial("lacugrove", MaterialColor.BROWN, MaterialColor.YELLOW);
+	public static final WoodenMaterial END_LOTUS = createWoodenMaterial("end_lotus", MaterialColor.LIGHT_BLUE, MaterialColor.CYAN);
+	public static final WoodenMaterial PYTHADENDRON = createWoodenMaterial("pythadendron", MaterialColor.MAGENTA, MaterialColor.PURPLE);
+	public static final WoodenMaterial DRAGON_TREE = createWoodenMaterial("dragon_tree", MaterialColor.BLACK, MaterialColor.MAGENTA);
+	public static final WoodenMaterial TENANEA = createWoodenMaterial("tenanea", MaterialColor.BROWN, MaterialColor.PINK);
+	public static final WoodenMaterial HELIX_TREE = createWoodenMaterial("helix_tree", MaterialColor.GRAY, MaterialColor.ADOBE);
+	public static final WoodenMaterial UMBRELLA_TREE = createWoodenMaterial("umbrella_tree", MaterialColor.BLUE, MaterialColor.GREEN);
+	public static final WoodenMaterial JELLYSHROOM = createWoodenMaterial("jellyshroom", MaterialColor.PURPLE, MaterialColor.LIGHT_BLUE);
+	public static final WoodenMaterial LUCERNIA = createWoodenMaterial("lucernia", MaterialColor.ADOBE, MaterialColor.ADOBE);
 	
 	public static final RegistryObject<Block> LUCERNIA_SAPLING = registerBlockWithDefaultItem("lucernia_sapling",
 			() -> new LucerniaSaplingBlock(AbstractBlock.Properties.create(Material.PLANTS).
@@ -1182,16 +1192,25 @@ public class ModBlocks
 
 	
 	// STONE MATERIALS
-    public static final StoneMaterial FLAVOLITE = new StoneMaterial("flavolite", MaterialColor.SAND);
-    public static final StoneMaterial VIOLECITE = new StoneMaterial("violecite", MaterialColor.PURPLE);
-    public static final StoneMaterial SULPHURIC_ROCK = new StoneMaterial("sulphuric_rock", MaterialColor.BROWN);
+	private static List<StoneMaterial> stoneMaterials;
+	public static List<StoneMaterial> getStoneMaterials() {
+		return ImmutableList.copyOf(stoneMaterials);
+	}
+    public static final StoneMaterial FLAVOLITE = createStoneMaterial("flavolite", MaterialColor.SAND);
+    public static final StoneMaterial VIOLECITE = createStoneMaterial("violecite", MaterialColor.PURPLE);
+    public static final StoneMaterial SULPHURIC_ROCK = createStoneMaterial("sulphuric_rock", MaterialColor.BROWN);
 	//public static final StoneMaterial VIRID_JADESTONE = new StoneMaterial("virid_jadestone", MaterialColor.GREEN);
 	//public static final StoneMaterial AZURE_JADESTONE = new StoneMaterial("azure_jadestone", MaterialColor.LIGHT_BLUE);
 	//public static final StoneMaterial SANDY_JADESTONE = new StoneMaterial("sandy_jadestone", MaterialColor.YELLOW);
 	
     // METAL MATERIALS
-    public static final MetalMaterial THALLASIUM = MetalMaterial.makeNormal("thallasium", MaterialColor.BLUE, ModItemTier.THALLASIUM, ModArmorMaterial.THALLASIUM);
-    public static final MetalMaterial TERMINITE = MetalMaterial.makeOreless("terminite", MaterialColor.GREEN, 7F, 9F, ModItemTier.TERMINITE, ModArmorMaterial.TERMINITE);
+	private static List<MetalMaterial> metalMaterials;
+	public static List<MetalMaterial> getMetalMaterials() {
+		return ImmutableList.copyOf(metalMaterials);
+	}
+    public static final MetalMaterial THALLASIUM = createMetalMaterial("thallasium", true, AbstractBlock.Properties.create(Material.IRON, MaterialColor.BLUE).setRequiresTool().hardnessAndResistance(5.0F, 6.0F).sound(SoundType.METAL), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB), ModItemTier.THALLASIUM, ModArmorMaterial.THALLASIUM);
+    public static final MetalMaterial TERMINITE = createMetalMaterial("terminite", false, AbstractBlock.Properties.create(Material.IRON, MaterialColor.GREEN).setRequiresTool().hardnessAndResistance(7, 9).sound(SoundType.METAL), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB), ModItemTier.TERMINITE, ModArmorMaterial.TERMINITE);
+
     
     // COLORED MATERIALS
     public static final ColoredMaterial HYDRALUX_PETAL_BLOCK_COLORED = new ColoredMaterial("hydralux_petal_block", 
@@ -1231,5 +1250,32 @@ public class ModBlocks
 	{
 		RegistryObject<Block> flowerPot = BLOCKS.register(name, () -> new FlowerPotBlock(plant.get(), AbstractBlock.Properties.create(Material.MISCELLANEOUS).zeroHardnessAndResistance().notSolid()));
 		return flowerPot;
+	}
+	
+	public static WoodenMaterial createWoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) {
+		if (woodenMaterials == null)
+			woodenMaterials = new ArrayList<>();
+		
+		WoodenMaterial material = new WoodenMaterial(name, woodColor, planksColor);
+		woodenMaterials.add(material);
+		return material;
+	}
+	
+	public static StoneMaterial createStoneMaterial(String name, MaterialColor color) {
+		if (stoneMaterials == null)
+			stoneMaterials = new ArrayList<>();
+		
+		StoneMaterial material = new StoneMaterial(name, color);
+		stoneMaterials.add(material);
+		return material;
+	}
+	
+	public static MetalMaterial createMetalMaterial(String name, boolean hasOre, AbstractBlock.Properties blockSettings, Item.Properties itemSettings, IItemTier itemTier, IArmorMaterial armor) {
+		if (metalMaterials == null)
+			metalMaterials = new ArrayList<>();
+		
+		MetalMaterial material = new MetalMaterial(name, hasOre, blockSettings, itemSettings, itemTier, armor);
+		metalMaterials.add(material);
+		return material;
 	}
 }
