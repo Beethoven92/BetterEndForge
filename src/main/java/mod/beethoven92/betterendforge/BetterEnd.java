@@ -104,7 +104,6 @@ public class BetterEnd
         	BetterEndBiomeProvider.register();
     		ModEntityTypes.registerEntitySpawns();
     	    BiomeNBTStructures.loadStructures();
-    	    ModRecipeManager.registerSpecialRecipes();
     	});    
     }    
     

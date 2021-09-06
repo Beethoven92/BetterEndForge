@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.JsonOps;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -10,7 +11,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.crafting.CraftingHelper;
 
 public class InfusionRecipeSerializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>
 		implements IRecipeSerializer<InfusionRecipe> {
@@ -30,7 +30,7 @@ public class InfusionRecipeSerializer extends net.minecraftforge.registries.Forg
 				throw new IllegalStateException(
 						"BETTER_END_FORGE: Infusion recipe ingredient index out of bounds, must be between 0 and 8 (excluded)");
 			}
-			Ingredient item = Ingredient.deserialize(indexedIngredient);
+			Ingredient item = readIngredient(indexedIngredient.get("item"));
 			recipe.ingredientPositions.put(index, item);
 		}
 		for (int i = 0; i < 8; i++) {
@@ -42,10 +42,17 @@ public class InfusionRecipeSerializer extends net.minecraftforge.registries.Forg
 		return recipe;
 	}
 
+	private Ingredient readIngredient(JsonElement jsonElement) {
+		if (jsonElement.isJsonPrimitive())
+			return Ingredient.fromItems(JSONUtils.getItem(jsonElement, "item"));
+		else
+			return Ingredient.deserialize(jsonElement);
+	}
+
 	private ItemStack readOutput(JsonObject json) {
 		JsonElement outputElem = json.get("output");
 		if (outputElem.isJsonObject())
-			return CraftingHelper.getItemStack(outputElem.getAsJsonObject(), true);
+			return ItemStack.CODEC.parse(JsonOps.INSTANCE, outputElem).result().get();
 		else
 			return new ItemStack(JSONUtils.getItem(outputElem, "output"));
 	}

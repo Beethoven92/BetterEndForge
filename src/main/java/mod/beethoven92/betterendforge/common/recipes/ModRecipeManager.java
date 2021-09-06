@@ -56,10 +56,4 @@ public class ModRecipeManager
 
 		return result;
 	}
-	
-	// Create some special recipes that cannot be handled by jsons
-	public static void registerSpecialRecipes()
-	{
-		SpecialInfusionRecipes.createRecipes();
-	}
 }

@@ -1,6 +1,7 @@
 package mod.beethoven92.betterendforge.common.init;
 
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.data.InfusionRecipes;
 import mod.beethoven92.betterendforge.data.ModBlockTagsProvider;
 import mod.beethoven92.betterendforge.data.ModItemTagsProvider;
 import mod.beethoven92.betterendforge.data.ModLootModifierProvider;
@@ -38,6 +39,7 @@ public class ModData
 			dataGenerator.addProvider(new ModItemTagsProvider(dataGenerator, blockTags, existingFileHelper));
 			
 			dataGenerator.addProvider(new ModRecipes(dataGenerator));
+			dataGenerator.addProvider(new InfusionRecipes(dataGenerator));
 			
 			dataGenerator.addProvider(new ModLootTableProvider(dataGenerator));
 			dataGenerator.addProvider(new ModLootModifierProvider(dataGenerator));

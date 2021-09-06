@@ -1,24 +1,38 @@
-package mod.beethoven92.betterendforge.common.recipes;
+package mod.beethoven92.betterendforge.data;
 
+import java.util.function.Consumer;
+
+import com.google.common.collect.ImmutableMap;
+
+import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
+import mod.beethoven92.betterendforge.common.recipes.InfusionRecipe;
 import net.minecraft.block.Blocks;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.IFinishedRecipe;
+import net.minecraft.data.RecipeProvider;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentData;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.ResourceLocation;
 
-// Defines special recipes that cannot be handled by jsons
-// TODO: Move this to json now that output item can have NBT
-public class SpecialInfusionRecipes
-{
-	public static void createRecipes()
-	{
-		InfusionRecipe.Builder.create("protection_book").
+public class InfusionRecipes extends RecipeProvider {
+	public InfusionRecipes(DataGenerator generatorIn) {
+		super(generatorIn);
+	}
+
+	private ResourceLocation rl(String s) {
+		return new ResourceLocation(BetterEnd.MOD_ID, s);
+	}
+
+	@Override
+	protected void registerRecipes(Consumer<IFinishedRecipe> consumer) {
+		InfusionRecipe.Builder.create().
         setInput(Items.BOOK).
-        setOutput(createEnchantedBook(Enchantments.PROTECTION, 1)).
+        setOutput(enchBook(Enchantments.PROTECTION, 1)).
         setTime(300).
         addCatalyst(0, ModItems.ENCHANTED_PETAL.get()).
         addCatalyst(4, Items.TURTLE_HELMET).
@@ -26,11 +40,11 @@ public class SpecialInfusionRecipes
         addCatalyst(3, Items.LAPIS_LAZULI).
         addCatalyst(5, Items.LAPIS_LAZULI).
         addCatalyst(7, Items.LAPIS_LAZULI).
-        build();
+        build(consumer, rl("protection_book"));
 		
-		InfusionRecipe.Builder.create("fire_protection_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.FIRE_PROTECTION, 1))
+		.setOutput(enchBook(Enchantments.FIRE_PROTECTION, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.BLAZE_ROD)
 		.addCatalyst(4, Items.BLAZE_ROD)
@@ -41,11 +55,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("fire_protection_book"));
 	     
-		InfusionRecipe.Builder.create("feather_falling_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.FEATHER_FALLING, 1))
+		.setOutput(enchBook(Enchantments.FEATHER_FALLING, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.FEATHER)
 		.addCatalyst(4, Items.FEATHER)
@@ -56,11 +70,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("feather_falling_book"));
 	     
-		InfusionRecipe.Builder.create("blast_protection_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.BLAST_PROTECTION, 1))
+		.setOutput(enchBook(Enchantments.BLAST_PROTECTION, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Blocks.OBSIDIAN)
 		.addCatalyst(4, Blocks.OBSIDIAN)
@@ -71,11 +85,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("blast_protection_book"));
 	    
-		InfusionRecipe.Builder.create("projectile_protection_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.PROJECTILE_PROTECTION, 1))
+		.setOutput(enchBook(Enchantments.PROJECTILE_PROTECTION, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.SCUTE)
 		.addCatalyst(4, Items.SHIELD)
@@ -86,11 +100,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("projectile_protection_book"));
 	    
-		InfusionRecipe.Builder.create("respiration_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.RESPIRATION, 1))
+		.setOutput(enchBook(Enchantments.RESPIRATION, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.NAUTILUS_SHELL)
 		.addCatalyst(4, Items.NAUTILUS_SHELL)
@@ -101,11 +115,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("respiration_book"));
 	    
-		InfusionRecipe.Builder.create("aqua_affinity_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.AQUA_AFFINITY, 1))
+		.setOutput(enchBook(Enchantments.AQUA_AFFINITY, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.PRISMARINE_CRYSTALS)
 		.addCatalyst(4, Items.PRISMARINE_CRYSTALS)
@@ -116,11 +130,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("aqua_affinity_book"));
 	    
-		InfusionRecipe.Builder.create("thorns_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.THORNS, 1))
+		.setOutput(enchBook(Enchantments.THORNS, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Blocks.CACTUS)
 		.addCatalyst(4, Blocks.CACTUS)
@@ -131,11 +145,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("thorns_book"));
 	    
-		InfusionRecipe.Builder.create("depth_strider_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.DEPTH_STRIDER, 1))
+		.setOutput(enchBook(Enchantments.DEPTH_STRIDER, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Blocks.LILY_PAD)
 		.addCatalyst(4, ModBlocks.END_LILY_SEED.get())
@@ -146,11 +160,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("depth_strider_book"));
 	    
-		InfusionRecipe.Builder.create("frost_walker_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.FROST_WALKER, 1))
+		.setOutput(enchBook(Enchantments.FROST_WALKER, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(4, ModBlocks.ANCIENT_EMERALD_ICE.get())
 		.addCatalyst(1, Items.LAPIS_LAZULI)
@@ -159,11 +173,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("frost_walker_book"));
 	    
-		InfusionRecipe.Builder.create("soul_speed_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.SOUL_SPEED, 1))
+		.setOutput(enchBook(Enchantments.SOUL_SPEED, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Blocks.SOUL_SAND, Blocks.SOUL_SOIL)
 		.addCatalyst(4, Blocks.SOUL_SAND, Blocks.SOUL_SOIL)
@@ -174,11 +188,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("soul_speed_book"));
 	    
-		InfusionRecipe.Builder.create("sharpness_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.SHARPNESS, 1))
+		.setOutput(enchBook(Enchantments.SHARPNESS, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(4, Items.NETHERITE_SCRAP)
 		.addCatalyst(1, Items.LAPIS_LAZULI)
@@ -187,11 +201,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("sharpness_book"));
 	    
-		InfusionRecipe.Builder.create("smite_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.SMITE, 1))
+		.setOutput(enchBook(Enchantments.SMITE, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Blocks.SUNFLOWER)
 		.addCatalyst(4, Items.GOLD_INGOT)
@@ -202,11 +216,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("smite_book"));
 	    
-		InfusionRecipe.Builder.create("bane_of_arthropods_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.BANE_OF_ARTHROPODS, 1))
+		.setOutput(enchBook(Enchantments.BANE_OF_ARTHROPODS, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.FERMENTED_SPIDER_EYE)
 		.addCatalyst(4, Items.IRON_INGOT)
@@ -217,11 +231,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("bane_of_arthropods_book"));
 	    
-		InfusionRecipe.Builder.create("knockback_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.KNOCKBACK, 1))
+		.setOutput(enchBook(Enchantments.KNOCKBACK, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.REDSTONE)
 		.addCatalyst(4, Blocks.PISTON)
@@ -232,11 +246,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("knockback_book"));
 	    
-		InfusionRecipe.Builder.create("fire_aspect_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.FIRE_ASPECT, 1))
+		.setOutput(enchBook(Enchantments.FIRE_ASPECT, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.BLAZE_POWDER)
 		.addCatalyst(4, Items.MAGMA_CREAM)
@@ -247,11 +261,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("fire_aspect_book"));
 	    
-		InfusionRecipe.Builder.create("looting_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.LOOTING, 1))
+		.setOutput(enchBook(Enchantments.LOOTING, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.EMERALD)
 		.addCatalyst(4, Items.GOLD_INGOT)
@@ -262,11 +276,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("looting_book"));
 	    
-		InfusionRecipe.Builder.create("sweeping_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.SWEEPING, 1))
+		.setOutput(enchBook(Enchantments.SWEEPING, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.GOLDEN_SWORD)
 		.addCatalyst(4, Items.IRON_SWORD)
@@ -277,11 +291,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("sweeping_book"));
 	    
-		InfusionRecipe.Builder.create("efficiency_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.EFFICIENCY, 1))
+		.setOutput(enchBook(Enchantments.EFFICIENCY, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, ModItems.AMBER_GEM.get())
 		.addCatalyst(4, ModItems.AMBER_GEM.get())
@@ -292,11 +306,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("efficiency_book"));
 	    
-		InfusionRecipe.Builder.create("silk_touch_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.SILK_TOUCH, 1))
+		.setOutput(enchBook(Enchantments.SILK_TOUCH, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Blocks.COBWEB)
 		.addCatalyst(4, ModItems.ETERNAL_CRYSTAL.get())
@@ -307,11 +321,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(375)
-		.build();
+		.build(consumer, rl("silk_touch_book"));
 	    
-		InfusionRecipe.Builder.create("unbreaking_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.UNBREAKING, 1))
+		.setOutput(enchBook(Enchantments.UNBREAKING, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.DIAMOND)
 		.addCatalyst(4, Items.DIAMOND)
@@ -322,11 +336,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("unbreaking_book"));
 	    
-		InfusionRecipe.Builder.create("fortune_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.FORTUNE, 1))
+		.setOutput(enchBook(Enchantments.FORTUNE, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.EMERALD)
 		.addCatalyst(4, Items.RABBIT_FOOT)
@@ -337,11 +351,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("fortune_book"));
 	    
-		InfusionRecipe.Builder.create("power_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.POWER, 1))
+		.setOutput(enchBook(Enchantments.POWER, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, ModItems.AMBER_GEM.get())
 		.addCatalyst(4, Items.DIAMOND_SWORD)
@@ -352,11 +366,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("power_book"));
 	    
-		InfusionRecipe.Builder.create("punch_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.PUNCH, 1))
+		.setOutput(enchBook(Enchantments.PUNCH, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.POPPED_CHORUS_FRUIT)
 		.addCatalyst(4, Items.SPECTRAL_ARROW)
@@ -367,11 +381,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("punch_book"));
 	    
-		InfusionRecipe.Builder.create("flame_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.FLAME, 1))
+		.setOutput(enchBook(Enchantments.FLAME, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.BLAZE_POWDER)
 		.addCatalyst(4, Items.SPECTRAL_ARROW)
@@ -382,11 +396,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("flame_book"));
 	    
-		InfusionRecipe.Builder.create("infinity_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.INFINITY, 1))
+		.setOutput(enchBook(Enchantments.INFINITY, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.SPECTRAL_ARROW)
 		.addCatalyst(4, ModItems.ETERNAL_CRYSTAL.get())
@@ -397,11 +411,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(375)
-		.build();
+		.build(consumer, rl("infinity_book"));
 	    
-		InfusionRecipe.Builder.create("luck_of_sea_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.LUCK_OF_THE_SEA, 1))
+		.setOutput(enchBook(Enchantments.LUCK_OF_THE_SEA, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.EMERALD)
 		.addCatalyst(4, Items.FISHING_ROD)
@@ -412,11 +426,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("luck_of_sea_book"));
 	    
-		InfusionRecipe.Builder.create("lure_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.LURE, 1))
+		.setOutput(enchBook(Enchantments.LURE, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.GOLD_NUGGET)
 		.addCatalyst(4, Items.FISHING_ROD)
@@ -427,11 +441,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("lure_book"));
 	    
-		InfusionRecipe.Builder.create("loyalty_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.LOYALTY, 1))
+		.setOutput(enchBook(Enchantments.LOYALTY, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.ENDER_EYE)
 		.addCatalyst(4, Items.HEART_OF_THE_SEA)
@@ -442,11 +456,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(375)
-		.build();
+		.build(consumer, rl("loyalty_book"));
 	    
-		InfusionRecipe.Builder.create("impaling_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.IMPALING, 1))
+		.setOutput(enchBook(Enchantments.IMPALING, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.PRISMARINE_SHARD)
 		.addCatalyst(4, Items.IRON_SWORD)
@@ -457,11 +471,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("impaling_book"));
 	    
-		InfusionRecipe.Builder.create("riptide_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.RIPTIDE, 1))
+		.setOutput(enchBook(Enchantments.RIPTIDE, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.LEAD)
 		.addCatalyst(4, Items.HEART_OF_THE_SEA)
@@ -472,11 +486,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(375)
-		.build();
+		.build(consumer, rl("riptide_book"));
 	    
-		InfusionRecipe.Builder.create("channeling_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.CHANNELING, 1))
+		.setOutput(enchBook(Enchantments.CHANNELING, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.CHAIN)
 		.addCatalyst(4, Items.HEART_OF_THE_SEA)
@@ -487,11 +501,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(375)
-		.build();
+		.build(consumer, rl("channeling_book"));
 	    
-		InfusionRecipe.Builder.create("multishot_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.MULTISHOT, 1))
+		.setOutput(enchBook(Enchantments.MULTISHOT, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.ARROW)
 		.addCatalyst(4, Items.SPECTRAL_ARROW)
@@ -502,11 +516,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("multishot_book"));
 	    
-		InfusionRecipe.Builder.create("quick_charge_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.QUICK_CHARGE, 1))
+		.setOutput(enchBook(Enchantments.QUICK_CHARGE, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.QUARTZ)
 		.addCatalyst(4, Items.GLOWSTONE_DUST)
@@ -517,11 +531,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("quick_charge_book"));
 	    
-		InfusionRecipe.Builder.create("piercing_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.PIERCING, 1))
+		.setOutput(enchBook(Enchantments.PIERCING, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.GLOWSTONE_DUST)
 		.addCatalyst(4, Items.SPECTRAL_ARROW)
@@ -532,11 +546,11 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(300)
-		.build();
+		.build(consumer, rl("piercing_book"));
 	    
-		InfusionRecipe.Builder.create("mending_book")
+		InfusionRecipe.Builder.create()
 		.setInput(Items.BOOK)
-		.setOutput(createEnchantedBook(Enchantments.MENDING, 1))
+		.setOutput(enchBook(Enchantments.MENDING, 1))
 		.addCatalyst(0, ModItems.ENCHANTED_PETAL.get())
 		.addCatalyst(2, Items.EXPERIENCE_BOTTLE)
 		.addCatalyst(4, Blocks.ANVIL)
@@ -547,13 +561,17 @@ public class SpecialInfusionRecipes
 		.addCatalyst(7, Items.LAPIS_LAZULI)
 		.setGroup("enchantment")
 		.setTime(375)
-		.build();
+		.build(consumer, rl("mending_book"));
 	}
 	
-	private static ItemStack createEnchantedBook(Enchantment enchantment, int level) 
-	{
+	private ItemStack enchBook(Enchantment enchantment, int level) {
 		ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
-		EnchantedBookItem.addEnchantment(book, new EnchantmentData(enchantment, level));
+		EnchantmentHelper.setEnchantments(ImmutableMap.of(enchantment, level), book);
 		return book;
+	}
+	
+	@Override
+	public String getName() {
+		return "Infusion " + super.getName();
 	}
 }
