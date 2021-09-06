@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_stone_slabs": {
+    "has_flavolite_slab": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -25,7 +25,7 @@
   },
   "requirements": [
     [
-      "has_stone_slabs",
+      "has_flavolite_slab",
       "has_the_recipe"
     ]
   ]
