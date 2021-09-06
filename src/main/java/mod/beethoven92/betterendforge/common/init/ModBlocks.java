@@ -305,7 +305,6 @@ public class ModBlocks
 					                                 harvestTool(ToolType.PICKAXE).
 					                                 hardnessAndResistance(1F).
 					                                 setLightLevel((value) -> {return 15;}).
-					                                 notSolid().     
 					                                 sound(SoundType.GLASS)));
 	
 	public static final RegistryObject<Block> SMARAGDANT_CRYSTAL_SHARD = registerBlockWithDefaultItem("smaragdant_crystal_shard", 

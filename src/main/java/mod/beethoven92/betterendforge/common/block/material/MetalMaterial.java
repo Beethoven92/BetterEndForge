@@ -105,15 +105,13 @@ public class MetalMaterial
 		
 		final int anvilLevel = material.getHarvestLevel();
 		
-		AbstractBlock.Properties blockSettingsNotSolid = blockSettings.notSolid();
-		
 		ore = hasOre ? ModBlocks.registerBlockWithDefaultItem(name + "_ore", () -> new Block(AbstractBlock.Properties.from(Blocks.END_STONE))) : null;
 		block = ModBlocks.registerBlockWithDefaultItem(name + "_block", () -> new Block(blockSettings));
 		tile = ModBlocks.registerBlockWithDefaultItem(name + "_tile", () -> new Block(blockSettings));
 		stairs = ModBlocks.registerBlockWithDefaultItem(name + "_stairs", () -> new StairsBlock(() -> tile.get().getDefaultState(), blockSettings));
 		slab = ModBlocks.registerBlockWithDefaultItem(name + "_slab", () -> new SlabBlock(blockSettings));
-		door = ModBlocks.registerBlockWithDefaultItem(name + "_door", () -> new DoorBlock(blockSettingsNotSolid));
-		trapdoor = ModBlocks.registerBlockWithDefaultItem(name + "_trapdoor", () -> new TrapDoorBlock(blockSettingsNotSolid));
+		door = ModBlocks.registerBlockWithDefaultItem(name + "_door", () -> new DoorBlock(AbstractBlock.Properties.from(block.get()).notSolid()));
+		trapdoor = ModBlocks.registerBlockWithDefaultItem(name + "_trapdoor", () -> new TrapDoorBlock(AbstractBlock.Properties.from(block.get()).notSolid()));
 		anvil = ModBlocks.registerBlock(name + "_anvil", () -> new EndAnvilBlock(AbstractBlock.Properties.create(Material.ANVIL, block.get().getMaterialColor()).setRequiresTool().hardnessAndResistance(5.0F, 1200.0F).sound(SoundType.ANVIL), anvilLevel));
 		bars = ModBlocks.registerBlockWithDefaultItem(name + "_bars", () -> new MetalPaneBlock(blockSettings.hardnessAndResistance(5.0F, 6.0F).notSolid()));
 		chain = ModBlocks.registerBlockWithDefaultItem(name + "_chain", () -> new ChainBlock(AbstractBlock.Properties.create(Material.IRON, block.get().getMaterialColor()).setRequiresTool().hardnessAndResistance(5.0F, 6.0F).sound(SoundType.CHAIN).notSolid()));
@@ -122,7 +120,7 @@ public class MetalMaterial
 		ModItems.registerItem(name + "_anvil", () -> new EndAnvilItem(anvil.get(), itemSettings));
 
 		
-		chandelier = ModBlocks.registerBlockWithDefaultItem(name + "_chandelier", () -> new ChandelierBlock(blockSettingsNotSolid.doesNotBlockMovement().setRequiresTool().setLightLevel((state) -> 15)));
+		chandelier = ModBlocks.registerBlockWithDefaultItem(name + "_chandelier", () -> new ChandelierBlock(AbstractBlock.Properties.from(block.get()).notSolid().doesNotBlockMovement().setRequiresTool().setLightLevel((state) -> 15)));
 		bulb_lantern = ModBlocks.registerBlockWithDefaultItem(name + "_bulb_lantern", () -> new BulbVineLanternBlock(blockSettings));
 		bulb_lantern_colored = new ColoredMaterial(name + "_bulb_lantern", () -> new BulbVineLanternBlock(), bulb_lantern, false);
 		
