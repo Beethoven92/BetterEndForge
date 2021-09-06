@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
+    "betterendforge:dragon_bone_slab",
+    "betterendforge:neon_cactus_slab",
     "betterendforge:mossy_glowshroom_slab",
     "betterendforge:lacugrove_slab",
     "betterendforge:end_lotus_slab",

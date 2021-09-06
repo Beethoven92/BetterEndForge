@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
+    "betterendforge:dragon_bone_stairs",
+    "betterendforge:neon_cactus_stairs",
     "betterendforge:mossy_glowshroom_stairs",
     "betterendforge:lacugrove_stairs",
     "betterendforge:end_lotus_stairs",
@@ -11,6 +13,12 @@
     "betterendforge:umbrella_tree_stairs",
     "betterendforge:jellyshroom_stairs",
     "betterendforge:lucernia_stairs",
+    "betterendforge:flavolite_stairs",
+    "betterendforge:flavolite_bricks_stairs",
+    "betterendforge:violecite_stairs",
+    "betterendforge:violecite_bricks_stairs",
+    "betterendforge:sulphuric_rock_stairs",
+    "betterendforge:sulphuric_rock_bricks_stairs",
     "betterendforge:thallasium_stairs",
     "betterendforge:terminite_stairs"
   ]

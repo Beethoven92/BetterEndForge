@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:flavolite_wall",
+    "betterendforge:flavolite_bricks_wall",
+    "betterendforge:violecite_wall",
+    "betterendforge:violecite_bricks_wall",
+    "betterendforge:sulphuric_rock_wall",
+    "betterendforge:sulphuric_rock_bricks_wall"
+  ]
+}
