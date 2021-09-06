@@ -14,9 +14,11 @@ import net.minecraft.block.LeavesBlock;
 import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.versions.forge.ForgeVersion;
 
 public class ModBlockTagsProvider extends BlockTagsProvider
 {
@@ -146,8 +148,16 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		getOrCreateBuilder(Tags.Blocks.CHESTS).add(material.chest.get());
 		getOrCreateBuilder(Tags.Blocks.CHESTS_WOODEN).add(material.chest.get());
 		
+		getOrCreateBuilder(Tags.Blocks.CHESTS_WOODEN).add(material.chest.get());
+		
+		getOrCreateBuilder(BlockTags.createOptional(frl("workbench"))).add(material.craftingTable.get());
+		
 		// Used by the Metal Barrels mod
 		getOrCreateBuilder(ModTags.BLOCK_BARRELS).add(material.barrel.get());
+	}
+	
+	private ResourceLocation frl(String tag) {
+		return new ResourceLocation(ForgeVersion.MOD_ID, tag);
 	}
 	
 	private void registerStoneMaterialTags(StoneMaterial material)
