@@ -161,7 +161,7 @@ public class ModBlocks
 			() -> new TerrainBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.MAGENTA).
                                                             setRequiresTool().
                                                             hardnessAndResistance(3.0F, 9.0F).
-                                                            sound(SoundType.GROUND).
+                                                            sound(SoundType.STONE).
                                                             tickRandomly()));
 	
 	public static final RegistryObject<Block> CAVE_MOSS = registerBlockWithDefaultItem("cave_moss", 
