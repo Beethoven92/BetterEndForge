@@ -60,7 +60,7 @@ public class SmallJellyshroomBlock extends AttachedBlock implements IGrowable
 	@Override
 	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
-		return true;
+		return state.get(FACING) == Direction.UP && worldIn.getBlockState(pos.down()).isIn(ModTags.END_GROUND);
 	}
 
 	@Override
