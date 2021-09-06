@@ -18,9 +18,11 @@ import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.versions.forge.ForgeVersion;
 
 public class ModItemTagsProvider extends ItemTagsProvider
 {
@@ -66,6 +68,13 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		
 		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get().asItem());
 		getOrCreateBuilder(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AMBER_BLOCK.get().asItem());
+		
+		getOrCreateBuilder(ItemTags.createOptional(frl("cooked_fishes"))).add(ModItems.END_FISH_COOKED.get());
+		getOrCreateBuilder(ItemTags.createOptional(frl("fruits"))).add(ModItems.BLOSSOM_BERRY.get(), ModItems.SHADOW_BERRY_RAW.get());
+		getOrCreateBuilder(ItemTags.createOptional(frl("ice"))).add(ModBlocks.ANCIENT_EMERALD_ICE.get().asItem(), ModBlocks.DENSE_EMERALD_ICE.get().asItem(), ModBlocks.EMERALD_ICE.get().asItem());
+		getOrCreateBuilder(ItemTags.createOptional(frl("raw_fishes"))).add(ModItems.END_FISH_RAW.get());
+		getOrCreateBuilder(ItemTags.createOptional(frl("saplings"))).add(ModBlocks.DRAGON_TREE_SAPLING.get().asItem(), ModBlocks.HELIX_TREE_SAPLING.get().asItem(), ModBlocks.HYDRALUX_SAPLING.get().asItem(), ModBlocks.LACUGROVE_SAPLING.get().asItem(), ModBlocks.LUCERNIA_SAPLING.get().asItem(), ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get().asItem(), ModBlocks.PYTHADENDRON_SAPLING.get().asItem(), ModBlocks.TENANEA_SAPLING.get().asItem(), ModBlocks.UMBRELLA_TREE_SAPLING.get().asItem());
+		getOrCreateBuilder(ItemTags.createOptional(frl("vegetables"))).add(ModItems.AMBER_ROOT_RAW.get());
 		
 		// Misc Minecraft tags
 		getOrCreateBuilder(ItemTags.ANVIL).add(ModBlocks.AETERNIUM_ANVIL.get().asItem());
@@ -114,6 +123,10 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		registerMetalMaterialTags(ModBlocks.TERMINITE);
 	}
 	
+	private ResourceLocation frl(String tag) {
+		return new ResourceLocation(ForgeVersion.MOD_ID, tag);
+	}
+
 	private void registerWoodenMaterialTags(WoodenMaterial material)
 	{
 		this.copy(material.logBlockTag, material.logItemTag);
