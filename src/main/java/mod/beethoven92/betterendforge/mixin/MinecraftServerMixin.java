@@ -47,43 +47,43 @@ public class MinecraftServerMixin
 	@Inject(method = "func_241755_D_", at = @At(value = "HEAD"), cancellable = true)
 	private final void be_GetOverworld(CallbackInfoReturnable<ServerWorld> info) 
 	{
-		if (CommonConfig.swapOverworldWithEnd()) 
-		{
-			ServerWorld world = worlds.get(World.THE_END);
-			if (world == null) 
-			{
-				world = worlds.get(World.OVERWORLD);
-			}
-			info.setReturnValue(world);
-			info.cancel();
-		}
+//		if (CommonConfig.swapOverworldWithEnd()) 
+//		{
+//			ServerWorld world = worlds.get(World.THE_END);
+//			if (world == null) 
+//			{
+//				world = worlds.get(World.OVERWORLD);
+//			}
+//			info.setReturnValue(world);
+//			info.cancel();
+//		}
 	}
 	
 	@Inject(method = "func_240787_a_", at = @At(value = "TAIL"))
 	private final void be_CreateWorlds(IChunkStatusListener worldGenerationProgressListener, CallbackInfo info) 
 	{
-		if (CommonConfig.swapOverworldWithEnd()) 
-		{
-			ServerWorld world = worlds.get(World.THE_END);
-			if (world == null) 
-			{
-				world = worlds.get(World.OVERWORLD);
-			}
-			this.getPlayerList().func_212504_a(world);
-		    IServerWorldInfo iServerWorldInfo = this.serverConfig.getServerWorldInfo();
-		    DimensionGeneratorSettings dimensionGeneratorSettings = this.serverConfig.getDimensionGeneratorSettings();
-			boolean bl = dimensionGeneratorSettings.func_236227_h_();
-			func_240786_a_(world, iServerWorldInfo, dimensionGeneratorSettings.hasBonusChest(), bl, true);
-		}
+//		if (CommonConfig.swapOverworldWithEnd()) 
+//		{
+//			ServerWorld world = worlds.get(World.THE_END);
+//			if (world == null) 
+//			{
+//				world = worlds.get(World.OVERWORLD);
+//			}
+//			this.getPlayerList().func_212504_a(world);
+//		    IServerWorldInfo iServerWorldInfo = this.serverConfig.getServerWorldInfo();
+//		    DimensionGeneratorSettings dimensionGeneratorSettings = this.serverConfig.getDimensionGeneratorSettings();
+//			boolean bl = dimensionGeneratorSettings.func_236227_h_();
+//			func_240786_a_(world, iServerWorldInfo, dimensionGeneratorSettings.hasBonusChest(), bl, true);
+//		}
 	}
 	
 	@Inject(method = "func_240786_a_", at = @At(value = "HEAD"), cancellable = true)
 	private static void be_SetupSpawn(ServerWorld world, IServerWorldInfo serverWorldProperties, 
 			boolean bonusChest, boolean debugWorld, boolean bl, CallbackInfo info) 
 	{
-		if (CommonConfig.swapOverworldWithEnd() && world.getDimensionKey() == World.OVERWORLD) 
-		{
-			info.cancel();
-		}
+//		if (CommonConfig.swapOverworldWithEnd() && world.getDimensionKey() == World.OVERWORLD) 
+//		{
+//			info.cancel();
+//		}
 	}
 }

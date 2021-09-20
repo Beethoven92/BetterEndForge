@@ -100,9 +100,6 @@ public abstract class ChorusFlowerBlockMixin extends Block
 	}
 	
 	@Shadow
-	private static boolean areAllNeighborsEmpty(IWorldReader world, BlockPos pos, @Nullable Direction exceptDirection) { return false; }
-	
-	@Shadow
 	private void placeGrownFlower(World world, BlockPos pos, int age) {}
 	
 	@Inject(method = "placeDeadFlower", at = @At("HEAD"), cancellable = true)
