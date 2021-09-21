@@ -3,14 +3,19 @@ package mod.beethoven92.betterendforge.common.recipes;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
 import com.mojang.serialization.JsonOps;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
 
 public class InfusionRecipeSerializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>
 		implements IRecipeSerializer<InfusionRecipe> {
@@ -30,7 +35,7 @@ public class InfusionRecipeSerializer extends net.minecraftforge.registries.Forg
 				throw new IllegalStateException(
 						"BETTER_END_FORGE: Infusion recipe ingredient index out of bounds, must be between 0 and 8 (excluded)");
 			}
-			Ingredient item = readIngredient(indexedIngredient.get("item"));
+			Ingredient item = readIngredient(indexedIngredient);
 			recipe.ingredientPositions.put(index, item);
 		}
 		for (int i = 0; i < 8; i++) {
@@ -42,11 +47,13 @@ public class InfusionRecipeSerializer extends net.minecraftforge.registries.Forg
 		return recipe;
 	}
 
-	private Ingredient readIngredient(JsonElement jsonElement) {
-		if (jsonElement.isJsonPrimitive())
-			return Ingredient.fromItems(JSONUtils.getItem(jsonElement, "item"));
-		else
-			return Ingredient.deserialize(jsonElement);
+	private Ingredient readIngredient(JsonObject json) {
+		if ((json.has("item") && json.get("item").isJsonPrimitive()) || json.has("tag"))
+			return Ingredient.deserialize(json);
+		else if (json.has("item"))
+			return Ingredient.deserialize(json.get("item"));
+
+		throw new JsonSyntaxException("Catalyst needs to have either item or tag" + json);
 	}
 
 	private ItemStack readOutput(JsonObject json) {
