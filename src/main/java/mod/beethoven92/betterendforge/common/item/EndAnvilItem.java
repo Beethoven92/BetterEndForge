@@ -23,6 +23,8 @@ public class EndAnvilItem extends BlockItem {
 	@Override
 	protected BlockState getStateForPlacement(BlockItemUseContext context) {
 		BlockState blockState = super.getStateForPlacement(context);
+		if (blockState == null)
+			return null;
 		ItemStack stack = context.getItem();
 		int level = stack.getOrCreateTag().getInt("level");
 		blockState = blockState.with(((EndAnvilBlock) blockState.getBlock()).getDestructionProperty(), level);
