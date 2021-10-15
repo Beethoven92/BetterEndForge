@@ -1,5 +1,7 @@
 package mod.beethoven92.betterendforge.mixin;
 
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.fml.ModList;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -14,57 +16,55 @@ import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.biome.BiomeColors;
 
+import java.awt.*;
+import java.util.Arrays;
+import java.util.Comparator;
+
 @Mixin(BiomeColors.class)
-public abstract class BiomeColorsMixin 
-{
+public class BiomeColorsMixin {
 	private static final int POISON_COLOR = ModMathHelper.color(92, 160, 78);
 	private static final int STREAM_COLOR = ModMathHelper.color(105, 213, 244);
+	private static final Point[] OFFSETS;
+	private static final boolean HAS_MAGNESIUM;
 
 	@Inject(method = "getWaterColor", at = @At("RETURN"), cancellable = true)
-	private static void getWaterColor(IBlockDisplayReader world, BlockPos pos, CallbackInfoReturnable<Integer> info) 
-	{
-		int color = info.getReturnValue();
-		
-		boolean scanDeep = true;
+	private static void be_getWaterColor(IBlockDisplayReader world, BlockPos blockPos, CallbackInfoReturnable<Integer> info) {
+		IBlockDisplayReader view = HAS_MAGNESIUM ? Minecraft.getInstance().world : world;
 		Mutable mut = new Mutable();
-		for (Direction d: BlockHelper.HORIZONTAL_DIRECTIONS) 
-		{
-			mut.setPos(pos).move(d);
-			if ((world.getBlockState(mut).isIn(ModBlocks.BRIMSTONE.get())))
-			{
-				color = POISON_COLOR;
-				scanDeep = false;
-				break;
+		mut.setY(blockPos.getY());
+		for (int i = 0; i < OFFSETS.length; i++) {
+			mut.setX(blockPos.getX() + OFFSETS[i].x);
+			mut.setZ(blockPos.getZ() + OFFSETS[i].y);
+			if ((view.getBlockState(mut).getBlockState().isIn(ModBlocks.BRIMSTONE.get()))) {
+				info.setReturnValue(i < 16 ? STREAM_COLOR : POISON_COLOR);
+				info.cancel();
+				return;
 			}
 		}
 
-		if (scanDeep) 
-		{
-			int x1 = pos.getX() - 2;
-			int z1 = pos.getZ() - 2;
-
-			int x2 = pos.getX() + 3;
-			int z2 = pos.getZ() + 3;
-
-			mut.setY(pos.getY());
-			for (int x = x1; x < x2 && scanDeep; x++)
-			{
-				mut.setX(x);
-				for (int z = z1; z < z2 && scanDeep; z++) 
-				{
-					mut.setZ(z);
-					if (Math.abs(pos.getX() - x) != 2 || Math.abs(pos.getZ() - z) != 2) 
-					{
-						if ((world.getBlockState(mut).isIn(ModBlocks.BRIMSTONE.get()))) 
-						{
-							color = STREAM_COLOR;
-							scanDeep = false;
-						}
-					}
-				}
-			}
-		}
-		
-		info.setReturnValue(color);
 	}
+
+	//Magnesium Compat
+	static {
+		HAS_MAGNESIUM = ModList.get().isLoaded("magnesium");
+
+		OFFSETS = new Point[20];
+		for (int i = 0; i < 3; i++) {
+			int p = i - 1;
+			OFFSETS[i] = new Point(p, -2);
+			OFFSETS[i + 3] = new Point(p, 2);
+			OFFSETS[i + 6] = new Point(-2, p);
+			OFFSETS[i + 9] = new Point(2, p);
+		}
+
+		for (int i = 0; i < 4; i++) {
+			int inner = i + 16;
+			Direction dir = BlockHelper.HORIZONTAL_DIRECTIONS[i];
+			OFFSETS[inner] = new Point(dir.getXOffset(), dir.getZOffset());
+			dir = BlockHelper.HORIZONTAL_DIRECTIONS[(i + 1) & 3];
+			OFFSETS[i + 12] = new Point(OFFSETS[inner].x + dir.getXOffset(), OFFSETS[inner].y + dir.getZOffset());
+		}
+
+	}
+
 }
