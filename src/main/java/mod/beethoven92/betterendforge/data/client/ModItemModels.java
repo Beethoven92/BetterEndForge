@@ -53,8 +53,8 @@ public class ModItemModels extends ItemModelProvider
 		registerStoneMaterialItemModels(ModBlocks.VIOLECITE);
 		registerStoneMaterialItemModels(ModBlocks.SULPHURIC_ROCK);
 		registerStoneMaterialItemModels(ModBlocks.VIRID_JADESTONE);
-		//registerStoneMaterialItemModels(ModBlocks.AZURE_JADESTONE);
-		//registerStoneMaterialItemModels(ModBlocks.SANDY_JADESTONE);
+		registerStoneMaterialItemModels(ModBlocks.AZURE_JADESTONE);
+		registerStoneMaterialItemModels(ModBlocks.SANDY_JADESTONE);
 		
 		// METAL MATERIALS
 		registerMetalMaterialItemModels(ModBlocks.THALLASIUM);

@@ -118,8 +118,8 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		registerStoneMaterialTags(ModBlocks.VIOLECITE);
 		registerStoneMaterialTags(ModBlocks.SULPHURIC_ROCK);
 		registerStoneMaterialTags(ModBlocks.VIRID_JADESTONE);
-		//registerStoneMaterialTags(ModBlocks.AZURE_JADESTONE);
-		//registerStoneMaterialTags(ModBlocks.SANDY_JADESTONE);
+		registerStoneMaterialTags(ModBlocks.AZURE_JADESTONE);
+		registerStoneMaterialTags(ModBlocks.SANDY_JADESTONE);
 
 		
 		// METAL MATERIALS
