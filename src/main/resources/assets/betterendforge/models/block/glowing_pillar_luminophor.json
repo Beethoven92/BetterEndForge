@@ -1,6 +1,0 @@
-{
-	"parent": "betterendforge:block/cube_noshade",
-	"textures": {
-		"texture": "betterendforge:block/glowing_pillar_luminophor"
-	}
-}

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "side": "betterendforge:block/dragon_bone_block",
-    "bottom": "betterendforge:block/dragon_bone_block",
-    "top": "betterendforge:block/dragon_bone_block"
-  }
-}

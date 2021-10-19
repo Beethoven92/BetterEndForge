@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "betterendforge:violecite"
-  },
-  "result": "betterendforge:violecite_tiles",
-  "count": 1
-}

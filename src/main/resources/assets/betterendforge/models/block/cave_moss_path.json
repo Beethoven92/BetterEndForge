@@ -1,7 +1,0 @@
-{   "parent": "betterendforge:block/path",
-    "textures": {
-        "top": "betterendforge:block/cave_moss_path_top",
-        "side": "betterendforge:block/cave_moss_side",
-        "bottom": "block/end_stone"
-    }
-}

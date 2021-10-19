@@ -1,6 +1,0 @@
-{
-	"parent": "betterendforge:block/wall_moss_02",
-	"textures": {
-		"texture": "betterendforge:block/tail_moss"
-	}
-}

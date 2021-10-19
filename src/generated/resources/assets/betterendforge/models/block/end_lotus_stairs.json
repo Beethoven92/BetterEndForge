@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "side": "betterendforge:block/end_lotus_planks",
-    "bottom": "betterendforge:block/end_lotus_planks",
-    "top": "betterendforge:block/end_lotus_planks"
-  }
-}

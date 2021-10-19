@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "betterendforge:flavolite"
-  },
-  "result": "betterendforge:flavolite_slab",
-  "count": 2
-}

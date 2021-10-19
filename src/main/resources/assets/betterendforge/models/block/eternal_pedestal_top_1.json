@@ -1,8 +1,0 @@
-{
-	"parent": "betterendforge:block/pedestal_top",
-	"textures": {
-		"top": "betterendforge:block/flavolite_runed_1",
-		"base": "betterendforge:block/flavolite_polished",
-		"pillar": "betterendforge:block/flavolite_pillar_side"
-	}
-}
