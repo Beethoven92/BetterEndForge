@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "betterendforge:block/sandy_jadestone_pressure_plate"
+    },
+    "powered=true": {
+      "model": "betterendforge:block/sandy_jadestone_pressure_plate_down"
+    }
+  }
+}

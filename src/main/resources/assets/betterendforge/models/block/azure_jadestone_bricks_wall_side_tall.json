@@ -1,0 +1,20 @@
+{
+    "textures": {
+        "wall": "betterendforge:block/azure_jadestone_bricks",
+        "top": "betterendforge:block/azure_jadestone_bricks",
+		"particle": "#wall"
+    },
+    "elements": [
+        {
+			"from": [ 5, 0, 0 ],
+            "to": [ 11, 16, 8 ],
+            "faces": {
+                "down":  { "texture": "#top", "cullface": "down" },
+                "up":    { "texture": "#top", "cullface": "up"},
+                "north": { "texture": "#wall", "cullface": "north" },
+                "west":  { "texture": "#wall" },
+                "east":  { "texture": "#wall" }
+            }
+        }
+    ]
+}

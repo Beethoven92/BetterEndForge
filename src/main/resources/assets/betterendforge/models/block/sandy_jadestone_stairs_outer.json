@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "side": "betterendforge:block/sandy_jadestone",
+    "bottom": "betterendforge:block/sandy_jadestone",
+    "top": "betterendforge:block/sandy_jadestone"
+  }
+}

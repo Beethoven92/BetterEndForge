@@ -1,0 +1,9 @@
+{
+  "parent": "betterendforge:block/furnace_glow",
+  "textures": {
+    "top": "betterendforge:block/sandy_jadestone_furnace_top",
+    "front": "betterendforge:block/sandy_jadestone_furnace_front_on",
+    "side": "betterendforge:block/sandy_jadestone_furnace_side",
+    "glow": "betterendforge:block/sandy_jadestone_furnace_glow"
+  }
+}
