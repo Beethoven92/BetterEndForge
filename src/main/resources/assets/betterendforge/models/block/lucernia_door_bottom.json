@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom",
+  "textures": {
+    "bottom": "betterendforge:block/lucernia_door_bottom",
+    "top": "betterendforge:block/lucernia_door_top"
+  }
+}

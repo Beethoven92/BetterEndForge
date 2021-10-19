@@ -188,6 +188,9 @@ public class ModRecipes extends RecipeProvider
 		makeStoneMaterialRecipes(ModBlocks.FLAVOLITE, consumer);
 		makeStoneMaterialRecipes(ModBlocks.VIOLECITE, consumer);
 		makeStoneMaterialRecipes(ModBlocks.SULPHURIC_ROCK, consumer);
+		makeStoneMaterialRecipes(ModBlocks.VIRID_JADESTONE, consumer);
+		//makeStoneMaterialRecipes(ModBlocks.AZURE_JADESTONE, consumer);
+		//makeStoneMaterialRecipes(ModBlocks.SANDY_JADESTONE, consumer);
 		
 		// METAL MATERIALS
 		makeMetalMaterialRecipes(ModBlocks.THALLASIUM, consumer);

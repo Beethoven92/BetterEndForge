@@ -94,6 +94,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 		registerStoneMaterialTags(ModBlocks.FLAVOLITE);
 		registerStoneMaterialTags(ModBlocks.VIOLECITE);
 		registerStoneMaterialTags(ModBlocks.SULPHURIC_ROCK);
+		registerStoneMaterialTags(ModBlocks.VIRID_JADESTONE);
+		//registerStoneMaterialTags(ModBlocks.AZURE_JADESTONE);
+		//registerStoneMaterialTags(ModBlocks.SANDY_JADESTONE);
 		
 		// METAL MATERIALS
 		registerMetalMaterialTags(ModBlocks.THALLASIUM);

@@ -1,0 +1,6 @@
+{
+	"parent": "betterendforge:block/cube_noshade",
+	"textures": {
+		"texture": "betterendforge:block/mossy_glowshroom_hymenophore_4"
+	}
+}

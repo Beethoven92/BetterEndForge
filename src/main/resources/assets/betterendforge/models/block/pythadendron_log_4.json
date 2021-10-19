@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube_mirrored",
+	"textures": {
+		"down": "betterendforge:block/pythadendron_log_top",
+		"east": "betterendforge:block/pythadendron_log_side_mossy",
+		"north": "betterendforge:block/pythadendron_log_side_mossy",
+		"particle": "betterendforge:block/pythadendron_log_side_mossy",
+		"south": "betterendforge:block/pythadendron_log_side_mossy",
+		"up": "betterendforge:block/pythadendron_log_top",
+		"west": "betterendforge:block/pythadendron_log_side_mossy"
+	}
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "side": "betterendforge:block/violecite_bricks",
+    "bottom": "betterendforge:block/violecite_bricks",
+    "top": "betterendforge:block/violecite_bricks"
+  }
+}

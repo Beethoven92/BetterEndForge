@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:mossy_glowshroom_log",
+    "betterendforge:mossy_glowshroom_bark",
+    "betterendforge:mossy_glowshroom_stripped_log",
+    "betterendforge:mossy_glowshroom_stripped_bark"
+  ]
+}

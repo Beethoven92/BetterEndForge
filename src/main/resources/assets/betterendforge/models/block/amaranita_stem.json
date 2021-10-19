@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "betterendforge:block/amaranita_hyphae_top",
+		"east": "betterendforge:block/amaranita_hyphae_side",
+		"north": "betterendforge:block/amaranita_hyphae_side",
+		"particle": "betterendforge:block/amaranita_hyphae_side",
+		"south": "betterendforge:block/amaranita_hyphae_side",
+		"up": "betterendforge:block/amaranita_hyphae_top",
+		"west": "betterendforge:block/amaranita_hyphae_side"
+	}
+}

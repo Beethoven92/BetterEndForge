@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:tenanea_log",
+    "betterendforge:tenanea_bark",
+    "betterendforge:tenanea_stripped_log",
+    "betterendforge:tenanea_stripped_bark"
+  ]
+}

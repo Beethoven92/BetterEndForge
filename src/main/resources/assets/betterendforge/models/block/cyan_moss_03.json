@@ -1,0 +1,6 @@
+{
+	"parent": "betterendforge:block/wall_moss_03",
+	"textures": {
+		"texture": "betterendforge:block/cyan_moss"
+	}
+}

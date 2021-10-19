@@ -1,0 +1,7 @@
+{
+  "parent": "betterendforge:block/chandelier_ceil",
+  "textures": {
+    "rod": "betterendforge:block/terminite_chandelier_floor",
+    "texture": "betterendforge:block/terminite_chandelier_ceil"
+  }
+}

@@ -1,0 +1,13 @@
+{
+	"variants": {
+		"":  [
+			{ "model": "betterendforge:block/umbralith_1", "weight": 10 },
+			{ "model": "betterendforge:block/umbralith_2", "weight": 10 },
+			{ "model": "betterendforge:block/umbralith_6", "weight": 10 },
+			{ "model": "betterendforge:block/umbralith_7", "weight": 10 },
+			{ "model": "betterendforge:block/umbralith_3", "weight": 1 },
+			{ "model": "betterendforge:block/umbralith_4", "weight": 1 },
+			{ "model": "betterendforge:block/umbralith_5", "weight": 1 }
+		]
+	}
+}

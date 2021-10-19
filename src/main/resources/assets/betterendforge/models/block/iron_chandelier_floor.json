@@ -1,0 +1,6 @@
+{
+  "parent": "betterendforge:block/chandelier_floor",
+  "textures": {
+    "texture": "betterendforge:block/iron_chandelier_floor"
+  }
+}

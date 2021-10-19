@@ -1,0 +1,116 @@
+{
+  "variants": {
+    "is_floor=false,size=0,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_0",
+      "x": 180
+    },
+    "is_floor=true,size=0,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_0"
+    },
+    "is_floor=false,size=1,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_1",
+      "x": 180
+    },
+    "is_floor=true,size=1,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_1"
+    },
+    "is_floor=false,size=2,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_2",
+      "x": 180
+    },
+    "is_floor=true,size=2,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_2"
+    },
+    "is_floor=false,size=3,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_3",
+      "x": 180
+    },
+    "is_floor=true,size=3,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_3"
+    },
+    "is_floor=false,size=4,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_4",
+      "x": 180
+    },
+    "is_floor=true,size=4,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_4"
+    },
+    "is_floor=false,size=5,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_5",
+      "x": 180
+    },
+    "is_floor=true,size=5,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_5"
+    },
+    "is_floor=false,size=6,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_6",
+      "x": 180
+    },
+    "is_floor=true,size=6,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_6"
+    },
+    "is_floor=false,size=7,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_7",
+      "x": 180
+    },
+    "is_floor=true,size=7,waterlogged=false": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_7"
+    },
+    "is_floor=false,size=0,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_0",
+      "x": 180
+    },
+    "is_floor=true,size=0,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_0"
+    },
+    "is_floor=false,size=1,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_1",
+      "x": 180
+    },
+    "is_floor=true,size=1,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_1"
+    },
+    "is_floor=false,size=2,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_2",
+      "x": 180
+    },
+    "is_floor=true,size=2,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_2"
+    },
+    "is_floor=false,size=3,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_3",
+      "x": 180
+    },
+    "is_floor=true,size=3,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_3"
+    },
+    "is_floor=false,size=4,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_4",
+      "x": 180
+    },
+    "is_floor=true,size=4,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_4"
+    },
+    "is_floor=false,size=5,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_5",
+      "x": 180
+    },
+    "is_floor=true,size=5,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_5"
+    },
+    "is_floor=false,size=6,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_6",
+      "x": 180
+    },
+    "is_floor=true,size=6,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_6"
+    },
+    "is_floor=false,size=7,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_7",
+      "x": 180
+    },
+    "is_floor=true,size=7,waterlogged=true": {
+      "model": "betterendforge:block/end_stone_stalactite_cavemoss_7"
+    }
+  }
+}

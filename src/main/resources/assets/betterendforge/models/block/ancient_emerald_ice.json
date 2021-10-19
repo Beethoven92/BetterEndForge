@@ -1,0 +1,6 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "betterendforge:block/ancient_emerald_ice"
+	}
+}

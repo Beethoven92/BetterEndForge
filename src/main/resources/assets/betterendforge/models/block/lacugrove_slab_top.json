@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "side": "betterendforge:block/lacugrove_planks",
+    "bottom": "betterendforge:block/lacugrove_planks",
+    "top": "betterendforge:block/lacugrove_planks"
+  }
+}

@@ -739,5 +739,24 @@
 	"block.betterendforge.terminite_bulb_lantern_purple": "Purple Terminite Bulb Lantern",
 	"block.betterendforge.terminite_bulb_lantern_red": "Red Terminite Bulb Lantern",
 	"block.betterendforge.terminite_bulb_lantern_white": "White Terminite Bulb Lantern",
-	"block.betterendforge.terminite_bulb_lantern_yellow": "Yellow Terminite Bulb Lantern"
+	"block.betterendforge.terminite_bulb_lantern_yellow": "Yellow Terminite Bulb Lantern",
+
+	"block.betterendforge.virid_jadestone": "Virid Jadestone",
+	"block.betterendforge.virid_jadestone_bricks": "Virid Jadestone Bricks",
+	"block.betterendforge.virid_jadestone_bricks_slab": "Virid Jadestone Brick Slab",
+	"block.betterendforge.virid_jadestone_bricks_stairs": "Virid Jadestone Brick Stairs",
+	"block.betterendforge.virid_jadestone_bricks_wall": "Virid Jadestone Brick Wall",
+	"block.betterendforge.virid_jadestone_button": "Virid Jadestone Button",
+	"block.betterendforge.virid_jadestone_pillar": "Virid Jadestone Pillar",
+	"block.betterendforge.virid_jadestone_pressure_plate": "Virid Jadestone Pressure Plate",
+	"block.betterendforge.virid_jadestone_slab": "Virid Jadestone Slab",
+	"block.betterendforge.virid_jadestone_tiles": "Virid Jadestone Tiles",
+	"block.betterendforge.virid_jadestone_stairs": "Virid Jadestone Stairs",
+	"block.betterendforge.virid_jadestone_polished": "Polished Virid Jadestone",
+	"block.betterendforge.virid_jadestone_wall": "Virid Jadestone Wall",
+	"block.betterendforge.virid_jadestone_pedestal": "Virid Jadestone Pedestal",
+	"block.betterendforge.virid_jadestone_lantern": "FVirid Jadestone Lantern",
+	"block.betterendforge.virid_jadestone_furnace": "Virid Jadestone Furnace"
+
+
 }

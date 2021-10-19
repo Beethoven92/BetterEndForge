@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:lacugrove_log",
+    "betterendforge:lacugrove_bark",
+    "betterendforge:lacugrove_stripped_log",
+    "betterendforge:lacugrove_stripped_bark"
+  ]
+}

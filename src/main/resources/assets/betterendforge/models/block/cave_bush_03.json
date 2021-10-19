@@ -1,0 +1,6 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "betterendforge:block/cave_bush_leaves_3"
+	}
+}

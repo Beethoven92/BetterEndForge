@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "betterendforge:block/mossy_glowshroom_log_top",
+		"east": "betterendforge:block/mossy_glowshroom_log_side",
+		"north": "betterendforge:block/mossy_glowshroom_log_side",
+		"particle": "betterendforge:block/mossy_glowshroom_log_side",
+		"south": "betterendforge:block/mossy_glowshroom_log_side",
+		"up": "betterendforge:block/mossy_glowshroom_log_top",
+		"west": "betterendforge:block/mossy_glowshroom_log_side"
+	}
+}

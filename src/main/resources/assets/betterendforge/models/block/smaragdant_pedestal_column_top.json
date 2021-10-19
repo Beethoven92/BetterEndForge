@@ -1,0 +1,7 @@
+{
+	"parent": "betterendforge:block/lit_pedestal_column_top",
+	"textures": {
+		"base": "betterendforge:block/smaragdant_crystal_side",
+		"pillar": "betterendforge:block/smaragdant_crystal_pillar_side"
+	}
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "betterendforge:block/thallasium_chain",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "betterendforge:block/thallasium_chain"
+    },
+    "axis=z": {
+      "model": "betterendforge:block/thallasium_chain",
+      "x": 90
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "is_floor=false": { "model": "betterendforge:block/bulb_vine_lantern_ceil" },
+        "is_floor=true": { "model": "betterendforge:block/bulb_vine_lantern_floor" }
+    }
+}

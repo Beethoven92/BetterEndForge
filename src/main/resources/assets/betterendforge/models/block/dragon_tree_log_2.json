@@ -1,0 +1,12 @@
+{
+	"parent": "block/cube",
+	"textures": {
+		"down": "betterendforge:block/dragon_tree_log_top",
+		"east": "betterendforge:block/dragon_tree_log_side_2",
+		"north": "betterendforge:block/dragon_tree_log_side_2",
+		"particle": "betterendforge:block/dragon_tree_log_side_2",
+		"south": "betterendforge:block/dragon_tree_log_side_2",
+		"up": "betterendforge:block/dragon_tree_log_top",
+		"west": "betterendforge:block/dragon_tree_log_side_2"
+	}
+}

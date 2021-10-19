@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "side": "betterendforge:block/flavolite_bricks",
+    "bottom": "betterendforge:block/flavolite_bricks",
+    "top": "betterendforge:block/flavolite_bricks"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "betterendforge:block/ladder",
+  "textures": {
+    "texture": "betterendforge:block/helix_tree_ladder"
+  }
+}

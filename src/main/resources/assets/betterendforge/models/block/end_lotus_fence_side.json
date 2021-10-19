@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_side",
+  "textures": {
+    "texture": "betterendforge:block/end_lotus_planks"
+  }
+}

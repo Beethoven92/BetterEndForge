@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:pythadendron_log",
+    "betterendforge:pythadendron_bark",
+    "betterendforge:pythadendron_stripped_log",
+    "betterendforge:pythadendron_stripped_bark"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+	"parent": "betterendforge:block/charnia",
+	"textures": {
+		"texture": "betterendforge:block/charnia_light_blue"
+	}
+}

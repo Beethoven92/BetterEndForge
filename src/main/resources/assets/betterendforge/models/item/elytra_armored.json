@@ -1,0 +1,14 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "betterendforge:item/elytra_armored"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "broken": 1
+            },
+            "model": "betterendforge:item/elytra_armored_broken"
+        }
+    ]
+}

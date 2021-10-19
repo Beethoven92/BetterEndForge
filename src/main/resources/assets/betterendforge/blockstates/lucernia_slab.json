@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "betterendforge:block/lucernia_slab_top"
+    },
+    "type=bottom": {
+      "model": "betterendforge:block/lucernia_slab"
+    },
+    "type=double": {
+      "model": "betterendforge:block/lucernia_planks"
+    }
+  }
+}

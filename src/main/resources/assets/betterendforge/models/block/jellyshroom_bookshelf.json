@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "betterendforge:block/jellyshroom_bookshelf",
+    "end": "betterendforge:block/jellyshroom_planks"
+  }
+}

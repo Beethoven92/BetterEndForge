@@ -1,0 +1,15 @@
+{
+	"variants": {
+		"type=bottom": {
+			"model": "betterendforge:block/smaragdant_slab"
+		},
+		"type=top": {
+			"model": "betterendforge:block/smaragdant_slab",
+			"x": 180,
+			"uvlock": true
+		},
+		"type=double": {
+			"model": "betterendforge:block/smaragdant_crystal"
+		}
+	}
+}

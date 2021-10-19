@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "betterendforge:item/music_disc_strange_and_alien"
+  }
+}

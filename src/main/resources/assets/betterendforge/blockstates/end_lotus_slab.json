@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "betterendforge:block/end_lotus_slab_top"
+    },
+    "type=bottom": {
+      "model": "betterendforge:block/end_lotus_slab"
+    },
+    "type=double": {
+      "model": "betterendforge:block/end_lotus_planks"
+    }
+  }
+}

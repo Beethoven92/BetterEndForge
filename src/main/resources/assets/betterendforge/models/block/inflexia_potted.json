@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "betterendforge:block/inflexia_potted"
+    }
+}

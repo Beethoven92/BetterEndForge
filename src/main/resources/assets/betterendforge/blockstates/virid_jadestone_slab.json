@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "betterendforge:block/virid_jadestone_slab_top"
+    },
+    "type=bottom": {
+      "model": "betterendforge:block/virid_jadestone_slab"
+    },
+    "type=double": {
+      "model": "betterendforge:block/virid_jadestone"
+    }
+  }
+}

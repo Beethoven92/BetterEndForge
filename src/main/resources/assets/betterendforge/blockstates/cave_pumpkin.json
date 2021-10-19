@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "small=true": { "model": "betterendforge:block/cave_pumpkin_small" },
+        "small=false": { "model": "betterendforge:block/cave_pumpkin" }
+    }
+}

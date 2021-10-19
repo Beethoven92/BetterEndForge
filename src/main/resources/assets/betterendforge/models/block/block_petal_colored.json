@@ -1,0 +1,6 @@
+{
+	"parent": "betterendforge:block/tint_cube",
+	"textures": {
+		"texture": "betterendforge:block/hydralux_petal_block_colored"
+	}
+}

@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/composter",
+  "textures": {
+    "particle": "betterendforge:block/mossy_glowshroom_composter_side",
+    "top": "betterendforge:block/mossy_glowshroom_composter_top",
+    "bottom": "betterendforge:block/mossy_glowshroom_composter_bottom",
+    "side": "betterendforge:block/mossy_glowshroom_composter_side",
+    "inside": "betterendforge:block/mossy_glowshroom_composter_bottom"
+  }
+}

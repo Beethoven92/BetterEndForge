@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/composter_contents1",
+  "textures": {
+    "particle": "minecraft:block/composter_compost",
+    "inside": "minecraft:block/composter_compost"
+  }
+}

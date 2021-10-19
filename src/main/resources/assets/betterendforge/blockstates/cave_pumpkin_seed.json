@@ -1,0 +1,20 @@
+{
+    "variants": {
+        "age=0": [
+			{ "model": "betterendforge:block/cave_pumpkin_vine_1" },
+			{ "model": "betterendforge:block/cave_pumpkin_vine_2" }
+		],
+        "age=1": [
+			{ "model": "betterendforge:block/cave_pumpkin_vine_3" },
+			{ "model": "betterendforge:block/cave_pumpkin_vine_4" }
+		],
+        "age=2": [
+			{ "model": "betterendforge:block/cave_pumpkin_vine_5" },
+			{ "model": "betterendforge:block/cave_pumpkin_vine_6" }
+		],
+        "age=3": [
+			{ "model": "betterendforge:block/cave_pumpkin_vine_7" },
+			{ "model": "betterendforge:block/cave_pumpkin_vine_8" }
+		]
+    }
+}

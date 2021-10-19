@@ -1,0 +1,6 @@
+{
+    "parent": "betterendforge:block/lit_wall_side",
+	"textures": {
+        "wall": "betterendforge:block/smaragdant_crystal_bricks"
+    }
+}

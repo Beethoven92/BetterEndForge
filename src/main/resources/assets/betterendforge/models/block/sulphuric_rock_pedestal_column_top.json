@@ -1,0 +1,7 @@
+{
+  "parent": "betterendforge:block/pedestal_column_top",
+  "textures": {
+    "base": "betterendforge:block/sulphuric_rock_polished",
+    "pillar": "betterendforge:block/sulphuric_rock_pillar_side"
+  }
+}

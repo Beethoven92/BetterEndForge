@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "betterendforge:block/end_lotus_planks"
+  }
+}

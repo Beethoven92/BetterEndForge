@@ -1,0 +1,6 @@
+{
+	"parent": "betterendforge:block/lit_pedestal_pillar",
+	"textures": {
+		"pillar": "betterendforge:block/smaragdant_crystal_pillar_side"
+	}
+}

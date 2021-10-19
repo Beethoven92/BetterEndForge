@@ -1,0 +1,9 @@
+{
+  "parent": "betterendforge:block/furnace_glow",
+  "textures": {
+    "top": "betterendforge:block/violecite_furnace_top",
+    "front": "betterendforge:block/violecite_furnace_front_on",
+    "side": "betterendforge:block/violecite_furnace_side",
+    "glow": "betterendforge:block/violecite_furnace_glow"
+  }
+}

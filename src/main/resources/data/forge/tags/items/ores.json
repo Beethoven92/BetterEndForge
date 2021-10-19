@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:ender_ore",
+    "betterendforge:amber_ore",
+    "betterendforge:thallasium_ore"
+  ]
+}

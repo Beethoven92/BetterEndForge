@@ -1,0 +1,7 @@
+{   "parent": "betterendforge:block/path",
+    "textures": {
+        "top": "betterendforge:block/pink_moss_path_top",
+        "side": "betterendforge:block/pink_moss_side",
+        "bottom": "block/end_stone"
+    }
+}

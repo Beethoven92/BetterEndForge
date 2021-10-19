@@ -1,0 +1,6 @@
+{
+  "parent": "betterendforge:block/chandelier_wall",
+  "textures": {
+    "texture": "betterendforge:block/terminite_chandelier_wall"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "parent": "betterendforge:block/stone_lantern_ceil",
+  "textures": {
+    "particle": "betterendforge:block/sulphuric_rock_lantern_side",
+    "texture": "betterendforge:block/sulphuric_rock_lantern_side",
+    "top": "betterendforge:block/sulphuric_rock_lantern_top",
+    "crystal": "betterendforge:block/aurora_crystal",
+    "bottom": "betterendforge:block/sulphuric_rock_lantern_bottom"
+  }
+}

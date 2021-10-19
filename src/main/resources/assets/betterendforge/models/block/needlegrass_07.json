@@ -1,0 +1,6 @@
+{
+    "parent": "betterendforge:block/cross_inverted",
+    "textures": {
+        "cross": "betterendforge:block/needlegrass_03"
+    }
+}

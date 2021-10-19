@@ -1198,9 +1198,9 @@ public class ModBlocks
     public static final StoneMaterial FLAVOLITE = createStoneMaterial("flavolite", MaterialColor.SAND);
     public static final StoneMaterial VIOLECITE = createStoneMaterial("violecite", MaterialColor.PURPLE);
     public static final StoneMaterial SULPHURIC_ROCK = createStoneMaterial("sulphuric_rock", MaterialColor.BROWN);
-	//public static final StoneMaterial VIRID_JADESTONE = new StoneMaterial("virid_jadestone", MaterialColor.GREEN);
-	//public static final StoneMaterial AZURE_JADESTONE = new StoneMaterial("azure_jadestone", MaterialColor.LIGHT_BLUE);
-	//public static final StoneMaterial SANDY_JADESTONE = new StoneMaterial("sandy_jadestone", MaterialColor.YELLOW);
+	public static final StoneMaterial VIRID_JADESTONE = createStoneMaterial("virid_jadestone", MaterialColor.GREEN);
+	//public static final StoneMaterial AZURE_JADESTONE = createStoneMaterial("azure_jadestone", MaterialColor.LIGHT_BLUE);
+	//public static final StoneMaterial SANDY_JADESTONE = createStoneMaterial("sandy_jadestone", MaterialColor.YELLOW);
 	
     // METAL MATERIALS
 	private static List<MetalMaterial> metalMaterials;
