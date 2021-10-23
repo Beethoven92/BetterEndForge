@@ -3,18 +3,6 @@
 		"": [
 				{
 					"model": "betterendforge:block/pallidium_full"
-				},
-				{
-					"model": "betterendforge:block/pallidium_full",
-					"y": 90
-				},
-				{
-					"model": "betterendforge:block/pallidium_full",
-					"y": 180
-				},
-				{
-					"model": "betterendforge:block/pallidium_full",
-					"y": 270
 				}
 		]
 	}
