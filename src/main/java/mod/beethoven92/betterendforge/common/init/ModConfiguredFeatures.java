@@ -251,9 +251,17 @@ public class ModConfiguredFeatures
 	
 	public static final ConfiguredFeature<?, ?> LUTEBUS = 
 			ModFeatures.LUTEBUS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
-			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(5); 
+			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(5);
 
-	
+	public static final ConfiguredFeature<?, ?> FLAMMALIX =
+			ModFeatures.FLAMMALIX.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+					withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(5);
+
+	public static final ConfiguredFeature<?, ?> INFLEXIA =
+			ModFeatures.INFLEXIA.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+					withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(16);
+
+
 	// SKY PLANTS
 	public static final ConfiguredFeature<?, ?> FILALUX = 
 			ModFeatures.FILALUX.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -418,6 +426,13 @@ public class ModConfiguredFeatures
 			ModFeatures.TUNEL_CAVE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
 			.withPlacement(Placement.CHANCE.configure(new ChanceConfig(1)));
 
+	public static final ConfiguredFeature<?, ?> THIN_ARCH =
+			ModFeatures.THIN_ARCH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
+					.withPlacement(Placement.CHANCE.configure(new ChanceConfig(15)));
+
+	public static final ConfiguredFeature<?, ?> UMBRALITH_ARCH =
+			ModFeatures.THIN_ARCH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
+					.withPlacement(Placement.CHANCE.configure(new ChanceConfig(10)));
 
 	// TREES
 	public static final ConfiguredFeature<?, ?> MOSSY_GLOWSHROOM = 
@@ -605,7 +620,9 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "bolux_mushroom"), BOLUX_MUSHROOM);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "lutebus"), LUTEBUS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "orango"), ORANGO);
-        // SKY PLANTS
+		Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "flammalix"), FLAMMALIX);
+		Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "inflexia"), INFLEXIA);
+		// SKY PLANTS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "filalux"), FILALUX);
         // WALL PLANTS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "purple_polypore"), PURPLE_POLYPORE);
@@ -649,6 +666,8 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "obsidian_pillar_basement"), OBSIDIAN_PILLAR_BASEMENT);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "fallen_pillar"), FALLEN_PILLAR);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "obsidian_boulder"), OBSIDIAN_BOULDER);
+		Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "thin_arch"), THIN_ARCH);
+		Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "umbralith_arch"), UMBRALITH_ARCH);
         // TREES
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "mossy_glowshroom"), MOSSY_GLOWSHROOM);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "lacugrove"), LACUGROVE);
