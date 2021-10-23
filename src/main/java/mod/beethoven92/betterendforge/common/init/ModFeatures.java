@@ -1,7 +1,6 @@
 package mod.beethoven92.betterendforge.common.init;
 
-import mod.beethoven92.betterendforge.BetterEnd;
-import mod.beethoven92.betterendforge.common.world.feature.BigAuroraCrystalFeature;
+import mod.beethoven92.betterendforge.BetterEnd;import mod.beethoven92.betterendforge.common.world.feature.BigAuroraCrystalFeature;
 import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures;
 import mod.beethoven92.betterendforge.common.world.feature.BlueVineFeature;
 import mod.beethoven92.betterendforge.common.world.feature.BushFeature;
@@ -93,14 +92,17 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> TENANEA_BUSH = new TenaneaBushFeature();
 	public static final Feature<NoFeatureConfig> LARGE_AMARANITA = new LargeAmaranitaFeature();
 	public static final Feature<NoFeatureConfig> LUCERNIA_BUSH = new BushWithOuterFeature(ModBlocks.LUCERNIA_LEAVES.get(), ModBlocks.LUCERNIA_OUTER_LEAVES.get(), ModBlocks.LUCERNIA.bark.get());
+	public static final Feature<NoFeatureConfig> LUCERNIA_BUSH_RARE = new BushWithOuterFeature(ModBlocks.LUCERNIA_LEAVES.get(), ModBlocks.LUCERNIA_OUTER_LEAVES.get(), ModBlocks.LUCERNIA.bark.get());
 	public static final Feature<NoFeatureConfig> NEON_CACTUS = new NeonCactusFeature();
 	
 	// PLANTS
 	public static final Feature<NoFeatureConfig> UMBRELLA_MOSS = new DoublePlantFeature(ModBlocks.UMBRELLA_MOSS.get(), ModBlocks.UMBRELLA_MOSS_TALL.get(), 5);
 	public static final Feature<NoFeatureConfig> CREEPING_MOSS = new SinglePlantFeature(ModBlocks.CREEPING_MOSS.get(), 5);
 	public static final Feature<NoFeatureConfig> CHORUS_GRASS = new SinglePlantFeature(ModBlocks.CHORUS_GRASS.get(), 4);
+	public static final Feature<NoFeatureConfig> CHORUS_MUSHROOM = new SinglePlantFeature(ModBlocks.CHORUS_MUSHROOM.get(), 5, 5);
 	public static final Feature<NoFeatureConfig> CRYSTAL_GRASS = new SinglePlantFeature(ModBlocks.CRYSTAL_GRASS.get(), 8, false);
 	public static final Feature<NoFeatureConfig> AMBER_GRASS = new SinglePlantFeature(ModBlocks.AMBER_GRASS.get(), 6);
+	public static final Feature<NoFeatureConfig> AMBER_ROOT = new SinglePlantFeature(ModBlocks.AMBER_ROOT.get(), 5, 5);
 	public static final Feature<NoFeatureConfig> SHADOW_PLANT = new SinglePlantFeature(ModBlocks.SHADOW_PLANT.get(), 6);
 	public static final Feature<NoFeatureConfig> BLUE_VINE = new BlueVineFeature(5);
 	public static final Feature<NoFeatureConfig> MURKWEED = new SinglePlantFeature(ModBlocks.MURKWEED.get(), 3);
@@ -223,7 +225,9 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> CAVE_BUSH = new BushFeature(ModBlocks.CAVE_BUSH.get(), ModBlocks.CAVE_BUSH.get());
 	public static final Feature<NoFeatureConfig> CAVE_GRASS = new SingleBlockFeature(ModBlocks.CAVE_GRASS.get());
 	public static final Feature<NoFeatureConfig> RUBINEA = new VineFeature(ModBlocks.RUBINEA.get(), 8);
-	
+
+	//Integration
+
 	public static void registerFeatures(Register<Feature<?>> event)
     {
 		// WATER PLANTS
@@ -249,8 +253,9 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), DRAGON_TREE_BUSH, "dragon_tree_bush"); 
     	BetterEnd.register(event.getRegistry(), TENANEA_BUSH, "tenanea_bush"); 
     	BetterEnd.register(event.getRegistry(), LARGE_AMARANITA, "large_amaranita"); 
-    	BetterEnd.register(event.getRegistry(), LUCERNIA_BUSH, "lucernia_bush"); 
-    	BetterEnd.register(event.getRegistry(), NEON_CACTUS, "neon_cactus"); 
+    	BetterEnd.register(event.getRegistry(), LUCERNIA_BUSH, "lucernia_bush");
+		BetterEnd.register(event.getRegistry(), LUCERNIA_BUSH_RARE, "lucernia_bush_rare");
+		BetterEnd.register(event.getRegistry(), NEON_CACTUS, "neon_cactus");
     	// PLANTS
     	BetterEnd.register(event.getRegistry(), UMBRELLA_MOSS, "umbrella_moss");
     	BetterEnd.register(event.getRegistry(), CREEPING_MOSS, "creeping_moss");   	
@@ -288,6 +293,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), LUTEBUS, "lutebus");
 		BetterEnd.register(event.getRegistry(), FLAMMALIX, "flammalix");
 		BetterEnd.register(event.getRegistry(), INFLEXIA, "inflexia");
+		BetterEnd.register(event.getRegistry(), AMBER_ROOT, "amber_root");
     	// SKY PLANTS
     	BetterEnd.register(event.getRegistry(), FILALUX, "filalux");    	
     	// WALL_PLANTS
@@ -368,7 +374,9 @@ public class ModFeatures
       	BetterEnd.register(event.getRegistry(), CAVE_GRASS, "cave_grass");
       	BetterEnd.register(event.getRegistry(), RUBINEA, "rubinea");
 		BetterEnd.register(event.getRegistry(), TUNEL_CAVE, "tunel_cave");
-    }
+
+		//Integration
+	}
 
 
 }

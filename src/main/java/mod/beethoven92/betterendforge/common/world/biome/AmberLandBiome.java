@@ -26,6 +26,7 @@ public class AmberLandBiome extends BetterEndBiome {
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.LANCELEAF)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.GLOW_PILLAR)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.AMBER_GRASS)
+				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.AMBER_ROOT)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BULB_MOSS)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BULB_MOSS_WOOD)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_ORANGE)

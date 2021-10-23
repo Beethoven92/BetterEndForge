@@ -110,6 +110,10 @@ public class ModConfiguredFeatures
 	public static final ConfiguredFeature<?, ?> LUCERNIA_BUSH = 
 			ModFeatures.LUCERNIA_BUSH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(10);
+
+	public static final ConfiguredFeature<?, ?> LUCERNIA_BUSH_RARE =
+			ModFeatures.LUCERNIA_BUSH_RARE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+					withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(1);
 	
 	public static final ConfiguredFeature<?, ?> NEON_CACTUS = 
 			ModFeatures.NEON_CACTUS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -129,6 +133,10 @@ public class ModConfiguredFeatures
 			ModFeatures.CHORUS_GRASS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(5));
 
+	public static final ConfiguredFeature<?, ?> CHORUS_MUSHROOM =
+			ModFeatures.CHORUS_MUSHROOM.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+					withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(1));
+
 	public static final ConfiguredFeature<?, ?> CRYSTAL_GRASS = 
 			ModFeatures.CRYSTAL_GRASS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(5));
@@ -136,7 +144,11 @@ public class ModConfiguredFeatures
 	public static final ConfiguredFeature<?, ?> AMBER_GRASS = 
 			ModFeatures.AMBER_GRASS.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(9));
-	
+
+	public static final ConfiguredFeature<?, ?> AMBER_ROOT =
+			ModFeatures.AMBER_ROOT.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
+					withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(1));
+
 	public static final ConfiguredFeature<?, ?> SHADOW_PLANT = 
 			ModFeatures.SHADOW_PLANT.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.SQUARE.configure(NoPlacementConfig.NO_PLACEMENT_CONFIG).func_242731_b(9));
@@ -482,7 +494,7 @@ public class ModConfiguredFeatures
 	public static final ConfiguredFeature<?, ?> LUCERNIA = 
 			ModFeatures.LUCERNIA.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).func_242732_c(3);
-	
+
 	// ORES
 	public static final ConfiguredFeature<?, ?> THALLASIUM_ORE =
 			ModFeatures.THALLASIUM_ORE.withConfiguration(
@@ -584,6 +596,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "tenanea_bush"), TENANEA_BUSH);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "large_amaranita"), LARGE_AMARANITA);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "lucernia_bush"), LUCERNIA_BUSH);
+		Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "lucernia_bush_rare"), LUCERNIA_BUSH_RARE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "neon_cactus"), NEON_CACTUS);
         // PLANTS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "umbrella_moss"), UMBRELLA_MOSS);
@@ -622,6 +635,8 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "orango"), ORANGO);
 		Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "flammalix"), FLAMMALIX);
 		Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "inflexia"), INFLEXIA);
+		Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "amber_root"), AMBER_ROOT);
+		Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "chorus_mushroom"), CHORUS_MUSHROOM);
 		// SKY PLANTS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "filalux"), FILALUX);
         // WALL PLANTS
@@ -702,5 +717,7 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "cave_grass"), CAVE_GRASS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "rubinea"), RUBINEA);
 		Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "tunel_cave"), TUNEL_CAVE);
+
+		//Compat
 	}   
 }

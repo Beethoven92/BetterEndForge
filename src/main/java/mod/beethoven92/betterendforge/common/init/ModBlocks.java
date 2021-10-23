@@ -709,7 +709,7 @@ public class ModBlocks
                                                             sound(SoundType.PLANT),
                                                             CHORUS_NYLIUM.get()));
 	
-//	public static final RegistryObject<Block> PEARLBERRY = registerBlockWithDefaultItem("pearlberry_seed", 
+//	public static final RegistryObject<Block> PEARLBERRY = registerBlockWithDefaultItem("pearlberry_seed",
 //			() -> new EndCropBlock(AbstractBlock.Properties.create(Material.PLANTS).
 //                                                            zeroHardnessAndResistance().
 //                                                            doesNotBlockMovement().

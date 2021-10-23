@@ -92,7 +92,7 @@ public class ModBiomes
 	public static final BetterEndCaveBiome LUSH_SMARAGDANT_CAVE = registerCaveBiome(new LushSmaragdantCaveBiome());
 	public static final BetterEndCaveBiome EMPTY_AURORA_CAVE = registerCaveBiome(new EmptyAuroraCaveBiome());
 	public static final BetterEndCaveBiome LUSH_AURORA_CAVE = registerCaveBiome(new LushAuroraCaveBiome());
-	
+
 	public static void register() {}
 
 	public static void onWorldLoad(long seed, Registry<Biome> registry) {
@@ -233,7 +233,7 @@ public class ModBiomes
 		}
 		return endBiome;
 	}
-	
+
 	// REGISTER A NEW BETTER END BIOME
 	public static BetterEndBiome registerBiome(BetterEndBiome biome, EndBiomeType type) 
 	{

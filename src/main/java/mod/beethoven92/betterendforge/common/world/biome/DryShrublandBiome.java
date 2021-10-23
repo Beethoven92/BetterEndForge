@@ -23,6 +23,7 @@ public class DryShrublandBiome extends BetterEndBiome {
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.AERIDIUM)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.LUTEBUS)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.LAMELLARIUM)
+				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.LUCERNIA_BUSH_RARE)
 				.addStructure(StructureFeatures.END_CITY)
 				.addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
 	}

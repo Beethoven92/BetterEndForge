@@ -130,6 +130,10 @@ public class BetterEndBiome
 		genChance += chance;
 		return genChance;
 	}
+
+	public boolean containsSubBiome(BetterEndBiome biome) {
+		return subbiomes.contains(biome);
+	}
 	
 	public Biome getBiome() 
     {

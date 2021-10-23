@@ -32,6 +32,7 @@ public class FoggyMushroomlandBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.UMBRELLA_MOSS).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CREEPING_MOSS).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.DENSE_VINE).
+				//addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.PEARLBERRY).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CYAN_MOSS).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CYAN_MOSS_WOOD).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.END_LILY).
