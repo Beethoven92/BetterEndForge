@@ -54,7 +54,7 @@ public class ArchFeature extends Feature<NoFeatureConfig> {
 		if (smallRadius + bigRadius > 23) {
 			smallRadius = 23 - bigRadius;
 		}
-		SDF arch = new SDFTorus().setBigRadius(bigRadius).setSmallRadius(smallRadius).setBlock(ModBlocks.UMBRALITH.stone.get());
+		SDF arch = new SDFTorus().setBigRadius(bigRadius).setSmallRadius(smallRadius).setBlock(block);
 		arch = new SDFRotation().setRotation(ModMathHelper.randomHorizontal(random), (float) Math.PI * 0.5F).setSource(arch);
 		
 		final float smallRadiusF = smallRadius;
