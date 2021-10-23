@@ -21,6 +21,12 @@ public class UmbraValleyBiome extends BetterEndBiome
 			.setSurface(ModConfiguredSurfaceBuilders.get(ModConfiguredSurfaceBuilders.UMBRA_SURFACE))
 			.setParticles(ModParticleTypes.AMBER_SPHERE.get(), 0.0001F)
 			.setMusic(ModSoundEvents.AMBIENT_UMBRA_VALLEY.get())
+				.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.INFLEXIA)
+				.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.FLAMMALIX)
+				.addFeature(GenerationStage.Decoration.RAW_GENERATION, ModConfiguredFeatures.THIN_ARCH)
+				.addFeature(GenerationStage.Decoration.RAW_GENERATION, ModConfiguredFeatures.UMBRALITH_ARCH)
+
+
 		);
 	}
 }
