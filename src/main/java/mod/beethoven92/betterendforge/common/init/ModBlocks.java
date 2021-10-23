@@ -7,92 +7,8 @@ import java.util.function.Supplier;
 import com.google.common.collect.ImmutableList;
 
 import mod.beethoven92.betterendforge.BetterEnd;
-import mod.beethoven92.betterendforge.common.block.AeterniumAnvil;
-import mod.beethoven92.betterendforge.common.block.AncientEmeraldIceBlock;
-import mod.beethoven92.betterendforge.common.block.AuroraCrystalBlock;
+import mod.beethoven92.betterendforge.common.block.*;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
-import mod.beethoven92.betterendforge.common.block.BlueVineBlock;
-import mod.beethoven92.betterendforge.common.block.BlueVineLanternBlock;
-import mod.beethoven92.betterendforge.common.block.BlueVineSeedBlock;
-import mod.beethoven92.betterendforge.common.block.BoluxMushroomBlock;
-import mod.beethoven92.betterendforge.common.block.BrimstoneBlock;
-import mod.beethoven92.betterendforge.common.block.BubbleCoralBlock;
-import mod.beethoven92.betterendforge.common.block.BulbVineBlock;
-import mod.beethoven92.betterendforge.common.block.BulbVineLanternBlock;
-import mod.beethoven92.betterendforge.common.block.BulbVineSeedBlock;
-import mod.beethoven92.betterendforge.common.block.CharniaBlock;
-import mod.beethoven92.betterendforge.common.block.ChorusGrassBlock;
-import mod.beethoven92.betterendforge.common.block.DragonTreeSaplingBlock;
-import mod.beethoven92.betterendforge.common.block.EmeraldIceBlock;
-import mod.beethoven92.betterendforge.common.block.EndLilyBlock;
-import mod.beethoven92.betterendforge.common.block.EndLilySeedBlock;
-import mod.beethoven92.betterendforge.common.block.EndLotusFlowerBlock;
-import mod.beethoven92.betterendforge.common.block.EndLotusLeafBlock;
-import mod.beethoven92.betterendforge.common.block.EndLotusSeedBlock;
-import mod.beethoven92.betterendforge.common.block.EndLotusStemBlock;
-import mod.beethoven92.betterendforge.common.block.EndPortalBlock;
-import mod.beethoven92.betterendforge.common.block.EndStoneSmelter;
-import mod.beethoven92.betterendforge.common.block.EndstoneDustBlock;
-import mod.beethoven92.betterendforge.common.block.EternalPedestal;
-import mod.beethoven92.betterendforge.common.block.FilaluxBlock;
-import mod.beethoven92.betterendforge.common.block.FilaluxWingsBlock;
-import mod.beethoven92.betterendforge.common.block.FlamaeaBlock;
-import mod.beethoven92.betterendforge.common.block.GlowingMossBlock;
-import mod.beethoven92.betterendforge.common.block.GlowingPillarLuminophorBlock;
-import mod.beethoven92.betterendforge.common.block.GlowingPillarRootsBlock;
-import mod.beethoven92.betterendforge.common.block.GlowingPillarSeedBlock;
-import mod.beethoven92.betterendforge.common.block.HelixTreeLeavesBlock;
-import mod.beethoven92.betterendforge.common.block.HelixTreeSaplingBlock;
-import mod.beethoven92.betterendforge.common.block.HydraluxBlock;
-import mod.beethoven92.betterendforge.common.block.HydraluxPetalBlock;
-import mod.beethoven92.betterendforge.common.block.HydraluxPetalBlockColored;
-import mod.beethoven92.betterendforge.common.block.HydraluxSaplingBlock;
-import mod.beethoven92.betterendforge.common.block.HydrothermalVentBlock;
-import mod.beethoven92.betterendforge.common.block.InfusionPedestal;
-import mod.beethoven92.betterendforge.common.block.JellyshroomCapBlock;
-import mod.beethoven92.betterendforge.common.block.LacugroveSaplingBlock;
-import mod.beethoven92.betterendforge.common.block.LanceleafBlock;
-import mod.beethoven92.betterendforge.common.block.LanceleafSeedBlock;
-import mod.beethoven92.betterendforge.common.block.LargeAmaranitaBlock;
-import mod.beethoven92.betterendforge.common.block.LucerniaSaplingBlock;
-import mod.beethoven92.betterendforge.common.block.LumecornBlock;
-import mod.beethoven92.betterendforge.common.block.LumecornSeedBlock;
-import mod.beethoven92.betterendforge.common.block.MengerSpongeBlock;
-import mod.beethoven92.betterendforge.common.block.MengerSpongeWetBlock;
-import mod.beethoven92.betterendforge.common.block.ModLanternBlock;
-import mod.beethoven92.betterendforge.common.block.MossyDragonBoneBlock;
-import mod.beethoven92.betterendforge.common.block.MossyGlowshroomCapBlock;
-import mod.beethoven92.betterendforge.common.block.MossyGlowshroomSaplingBlock;
-import mod.beethoven92.betterendforge.common.block.MossyObsidianBlock;
-import mod.beethoven92.betterendforge.common.block.MurkweedBlock;
-import mod.beethoven92.betterendforge.common.block.NeedlegrassBlock;
-import mod.beethoven92.betterendforge.common.block.NeonCactusPlantBlock;
-import mod.beethoven92.betterendforge.common.block.PathBlock;
-import mod.beethoven92.betterendforge.common.block.PondAnemoneBlock;
-import mod.beethoven92.betterendforge.common.block.PythadendronSaplingBlock;
-import mod.beethoven92.betterendforge.common.block.RespawnObeliskBlock;
-import mod.beethoven92.betterendforge.common.block.RunedFlavoliteBlock;
-import mod.beethoven92.betterendforge.common.block.ShadowBerryBlock;
-import mod.beethoven92.betterendforge.common.block.ShadowGrassBlock;
-import mod.beethoven92.betterendforge.common.block.SilkMothNestBlock;
-import mod.beethoven92.betterendforge.common.block.SmallAmaranitaBlock;
-import mod.beethoven92.betterendforge.common.block.SmallJellyshroomBlock;
-import mod.beethoven92.betterendforge.common.block.SmaragdantCrystalShardBlock;
-import mod.beethoven92.betterendforge.common.block.StalactiteBlock;
-import mod.beethoven92.betterendforge.common.block.SulphurCrystalBlock;
-import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
-import mod.beethoven92.betterendforge.common.block.TenaneaSaplingBlock;
-import mod.beethoven92.betterendforge.common.block.TerrainBlock;
-import mod.beethoven92.betterendforge.common.block.TerrainPlantBlock;
-import mod.beethoven92.betterendforge.common.block.TripleTerrainBlock;
-import mod.beethoven92.betterendforge.common.block.TwistedUmbrellaMossBlock;
-import mod.beethoven92.betterendforge.common.block.TwistedUmbrellaMossTallBlock;
-import mod.beethoven92.betterendforge.common.block.UmbrellaMossBlock;
-import mod.beethoven92.betterendforge.common.block.UmbrellaMossTallBlock;
-import mod.beethoven92.betterendforge.common.block.UmbrellaTreeClusterBlock;
-import mod.beethoven92.betterendforge.common.block.UmbrellaTreeMembraneBlock;
-import mod.beethoven92.betterendforge.common.block.UmbrellaTreeSaplingBlock;
-import mod.beethoven92.betterendforge.common.block.VentBubbleColumnBlock;
 import mod.beethoven92.betterendforge.common.block.material.ColoredMaterial;
 import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
@@ -206,13 +122,30 @@ public class ModBlocks
                                                             sound(SoundType.GROUND).
                                                             tickRandomly()));
 	
-	public static final RegistryObject<Block> RUTISCUS = registerBlockWithDefaultItem("rutiscus", 
+	public static final RegistryObject<Block> RUTISCUS = registerBlockWithDefaultItem("rutiscus",
 			() -> new TerrainBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.ADOBE).
                                                             setRequiresTool().
                                                             hardnessAndResistance(3.0F, 9.0F).
                                                             sound(SoundType.GROUND).
                                                             tickRandomly()));
-	
+
+	public static final RegistryObject<Block> PALLIDIUM_FULL = registerBlockWithDefaultItem("pallidium_full",
+			() -> new PallidiumBlock("full", null));
+
+	public static final RegistryObject<Block> PALLIDIUM_HEAVY = registerBlockWithDefaultItem("pallidium_heavy",
+			() -> new PallidiumBlock("heavy", PALLIDIUM_FULL.get()));
+
+	public static final RegistryObject<Block> PALLIDIUM_THIN = registerBlockWithDefaultItem("pallidium_thin",
+			() -> new PallidiumBlock("thin", PALLIDIUM_HEAVY.get()));
+
+	public static final RegistryObject<Block> PALLIDIUM_TINY = registerBlockWithDefaultItem("pallidium_tiny",
+			() -> new PallidiumBlock("tiny", PALLIDIUM_THIN.get()));
+
+
+	public static final RegistryObject<Block> FLAMMALIX = registerBlockWithDefaultItem("flammalix",
+			() -> new FlammalixBlock());
+
+
 	public static final RegistryObject<Block> ENDSTONE_DUST = registerBlockWithDefaultItem("endstone_dust", 
 			() -> new EndstoneDustBlock(AbstractBlock.Properties.create(Material.SAND, Blocks.END_STONE.getMaterialColor()).
 					                                             hardnessAndResistance(0.5F).
@@ -222,7 +155,7 @@ public class ModBlocks
 			() -> new SilkMothNestBlock(AbstractBlock.Properties.create(Material.WOOL).hardnessAndResistance(0.5f, 0.1f).sound(SoundType.CLOTH).notSolid().tickRandomly()));
 	
 	//PATHS
-	public static final RegistryObject<Block> CRYSTAL_MOSS_PATH = registerBlockWithDefaultItem("crystal_moss_path", 
+	public static final RegistryObject<Block> CRYSTAL_MOSS_PATH = registerBlockWithDefaultItem("crystal_moss_path",
 			() -> new PathBlock(CRYSTAL_MOSS.get()));
 	
 	public static final RegistryObject<Block> END_MYCELIUM_PATH = registerBlockWithDefaultItem("end_mycelium_path", 
@@ -479,7 +412,10 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> GLOBULAGUS = registerBlockWithDefaultItem("globulagus", 
 			() -> new TerrainPlantBlock(SANGNUM.get(), MOSSY_OBSIDIAN.get(), MOSSY_DRAGON_BONE.get()));
-	
+
+	public static final RegistryObject<Block> INFLEXIA = registerBlockWithDefaultItem("inflexia",
+			() -> new TerrainPlantBlock(PALLIDIUM_FULL.get(), PALLIDIUM_HEAVY.get(), PALLIDIUM_THIN.get(), PALLIDIUM_TINY.get()));
+
 	public static final RegistryObject<Block> CLAWFERN = registerBlockWithDefaultItem("clawfern", 
 			() -> new TerrainPlantBlock(SANGNUM.get(), MOSSY_OBSIDIAN.get(), MOSSY_DRAGON_BONE.get()));
 
@@ -1201,8 +1137,10 @@ public class ModBlocks
 	public static final StoneMaterial VIRID_JADESTONE = createStoneMaterial("virid_jadestone", MaterialColor.GREEN);
 	public static final StoneMaterial AZURE_JADESTONE = createStoneMaterial("azure_jadestone", MaterialColor.LIGHT_BLUE);
 	public static final StoneMaterial SANDY_JADESTONE = createStoneMaterial("sandy_jadestone", MaterialColor.YELLOW);
-	
-    // METAL MATERIALS
+	public static final StoneMaterial UMBRALITH = new StoneMaterial("umbralith", MaterialColor.BLACK);
+
+
+	// METAL MATERIALS
 	private static List<MetalMaterial> metalMaterials;
 	public static List<MetalMaterial> getMetalMaterials() {
 		return ImmutableList.copyOf(metalMaterials);
