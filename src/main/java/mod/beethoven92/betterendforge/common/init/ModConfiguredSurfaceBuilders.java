@@ -23,6 +23,7 @@ public class ModConfiguredSurfaceBuilders
 	public static RegistryKey<ConfiguredSurfaceBuilder<?>> MUSHROOMLAND_SURFACE = makeKey("mushroomland_surface");
 	public static RegistryKey<ConfiguredSurfaceBuilder<?>> SULPHURIC_SURFACE = makeKey("sulphuric_surface");
 	public static RegistryKey<ConfiguredSurfaceBuilder<?>> NEON_OASUS_SURFACE = makeKey("neon_oasis_surface");
+	public static RegistryKey<ConfiguredSurfaceBuilder<?>> UMBRA_SURFACE = makeKey("umbra_surface");
 	
 	private static RegistryKey<ConfiguredSurfaceBuilder<?>> makeKey(final String name) 
 	{
@@ -47,6 +48,8 @@ public class ModConfiguredSurfaceBuilders
 			register(MUSHROOMLAND_SURFACE, new ConfiguredSurfaceBuilder<>(ModSurfaceBuilders.MUSHROOMLAND_SURFACE.get(), ModSurfaceBuilders.Configs.DUMMY));
 			register(SULPHURIC_SURFACE, new ConfiguredSurfaceBuilder<>(ModSurfaceBuilders.SULPHURIC_SURFACE.get(), ModSurfaceBuilders.Configs.DUMMY));
 			register(NEON_OASUS_SURFACE, new ConfiguredSurfaceBuilder<>(ModSurfaceBuilders.NEON_OASIS_SURFACE.get(), ModSurfaceBuilders.Configs.DUMMY));
+			register(UMBRA_SURFACE, new ConfiguredSurfaceBuilder<>(ModSurfaceBuilders.UMBRA_SURFACE.get(), ModSurfaceBuilders.Configs.DUMMY));
+
 		}
 
 		private static void register(final RegistryKey<ConfiguredSurfaceBuilder<?>> key, 
