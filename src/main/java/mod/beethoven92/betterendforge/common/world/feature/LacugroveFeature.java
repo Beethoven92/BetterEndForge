@@ -24,6 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.ISeedReader;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.Feature;
@@ -157,7 +158,7 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 		return true;
 	}
 	
-	private void leavesBall(IWorld world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) 
+	private void leavesBall(IServerWorld world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise)
 	{
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(ModBlocks.LACUGROVE_LEAVES.get().getDefaultState().with(LeavesBlock.DISTANCE, 6));
 		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
