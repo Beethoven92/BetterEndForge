@@ -1,5 +1,5 @@
 package mod.beethoven92.betterendforge.common.world.feature;
-
+/*
 import java.util.Random;
 import java.util.Set;
 
@@ -238,3 +238,5 @@ public class RoundCaveFeature extends Feature<NoFeatureConfig>
 		world.setBlockState(blockPos, ModBlocks.CAVE_BUSH.get().getDefaultState(), 1 | 2 | 16);
 	}
 }
+
+ */

@@ -22,7 +22,6 @@ public class ModStructures
 	public static final Structure<NoFeatureConfig> PAINTED_MOUNTAIN = new PaintedMountainStructure(NoFeatureConfig.field_236558_a_);
 	public static final Structure<NoFeatureConfig> ETERNAL_PORTAL = new EternalPortalStructure(NoFeatureConfig.field_236558_a_);
 	public static final Structure<NoFeatureConfig> GIANT_ICE_STAR = new GiantIceStarStructure(NoFeatureConfig.field_236558_a_);
-	public static final Structure<NoFeatureConfig> CAVE = new CaveStructure(NoFeatureConfig.field_236558_a_);
 
 	public static void registerStructures(Register<Structure<?>> event)
     {
@@ -33,7 +32,6 @@ public class ModStructures
     	BetterEnd.register(event.getRegistry(), PAINTED_MOUNTAIN, "painted_mountain_structure");
     	BetterEnd.register(event.getRegistry(), ETERNAL_PORTAL, "eternal_portal_structure");
     	BetterEnd.register(event.getRegistry(), GIANT_ICE_STAR, "giant_ice_star_structure");
-		BetterEnd.register(event.getRegistry(), CAVE, "cave");
 
     	setupStructure(MOUNTAIN, new StructureSeparationSettings(3, 2, 1234567890));
     	setupStructure(MEGALAKE, new StructureSeparationSettings(4, 1, 1237890));
@@ -42,7 +40,6 @@ public class ModStructures
     	setupStructure(PAINTED_MOUNTAIN, new StructureSeparationSettings(3, 2, 12890));
     	setupStructure(ETERNAL_PORTAL, new StructureSeparationSettings(16, 6, 1289052454));
     	setupStructure(GIANT_ICE_STAR, new StructureSeparationSettings(16, 8, 128954));
-		setupStructure(CAVE, new StructureSeparationSettings(2, 1, 128954));
 
         ModStructurePieces.registerAllPieces();
     }

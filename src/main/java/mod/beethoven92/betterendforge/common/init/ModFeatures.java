@@ -1,6 +1,8 @@
 package mod.beethoven92.betterendforge.common.init;
 
-import mod.beethoven92.betterendforge.BetterEnd;import mod.beethoven92.betterendforge.common.world.feature.BigAuroraCrystalFeature;
+import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
+import mod.beethoven92.betterendforge.common.world.feature.BigAuroraCrystalFeature;
 import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures;
 import mod.beethoven92.betterendforge.common.world.feature.BlueVineFeature;
 import mod.beethoven92.betterendforge.common.world.feature.BushFeature;
@@ -63,6 +65,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.*;
 import net.minecraftforge.event.RegistryEvent.Register;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 public class ModFeatures
 {
@@ -377,6 +382,9 @@ public class ModFeatures
 
 		//Integration
 	}
+
+
+
 
 
 }

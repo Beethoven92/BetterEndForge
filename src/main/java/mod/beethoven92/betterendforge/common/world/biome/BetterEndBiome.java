@@ -8,6 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.util.JsonFactory;
 import mod.beethoven92.betterendforge.common.util.StructureHelper;
 import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures.StructureInfo;
@@ -131,7 +132,7 @@ public class BetterEndBiome
 		return genChance;
 	}
 
-	public boolean containsSubBiome(BetterEndBiome biome) {
+	public boolean containsSubBiome(ModBiomes biome) {
 		return subbiomes.contains(biome);
 	}
 	

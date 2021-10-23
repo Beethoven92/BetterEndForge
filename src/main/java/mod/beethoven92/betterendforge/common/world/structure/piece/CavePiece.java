@@ -93,7 +93,6 @@ public class CavePiece extends BasePiece {
 	protected void readAdditional(CompoundNBT tag) {
 		center = NBTUtil.readBlockPos(tag.getCompound("center"));
 		radius = tag.getFloat("radius");
-		noise = new OpenSimplexNoise(ModMathHelper.getSeed(534, center.getX(), center.getZ()));
 	}
 
 
@@ -111,6 +110,8 @@ public class CavePiece extends BasePiece {
 	protected void fromNbt(CompoundNBT tag) {
 		tag.put("center", NBTUtil.writeBlockPos(center));
 		tag.putFloat("radius", radius);
+		noise = new OpenSimplexNoise(ModMathHelper.getSeed(534, center.getX(), center.getZ()));
+
 
 	}
 

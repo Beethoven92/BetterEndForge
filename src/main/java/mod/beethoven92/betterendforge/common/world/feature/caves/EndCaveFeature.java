@@ -274,7 +274,9 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 		}
 		return false;
 	}
-	
+
+
+
 	protected boolean biomeMissingCaves(ISeedReader world, BlockPos pos) 
 	{
 		for (int x = -2; x < 3; x++) 
