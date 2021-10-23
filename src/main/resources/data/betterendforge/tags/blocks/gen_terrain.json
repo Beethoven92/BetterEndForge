@@ -6,7 +6,7 @@
 		"betterendforge:crystal_moss",
 		"betterendforge:end_mycelium",
 		"betterendforge:end_moss",
-	    	"betterendforge:chorus_nylium",
+		"betterendforge:chorus_nylium",
 		"betterendforge:cave_moss",
 		"betterendforge:shadow_grass",
 		"betterendforge:pink_moss",
@@ -21,6 +21,11 @@
 		"betterendforge:jungle_moss",
 		"betterendforge:thallasium_ore",
 		"betterendforge:rutiscus",
-		"betterendforge:sangnum"
+		"betterendforge:sangnum",
+		"betterendforge:umbralith",
+		"betterendforge:pallidium_full",
+		"betterendforge:pallidium_heavy",
+		"betterendforge:pallidium_thin",
+		"betterendforge:pallidium_tiny"
 	]
 }
