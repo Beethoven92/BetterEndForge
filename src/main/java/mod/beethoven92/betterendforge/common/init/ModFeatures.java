@@ -55,8 +55,10 @@ import mod.beethoven92.betterendforge.common.world.feature.UnderwaterPlantFeatur
 import mod.beethoven92.betterendforge.common.world.feature.VineFeature;
 import mod.beethoven92.betterendforge.common.world.feature.WallPlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.WallPlantOnLogFeature;
+import mod.beethoven92.betterendforge.common.world.feature.*;
 import mod.beethoven92.betterendforge.common.world.feature.caves.RoundCaveFeature;
 import mod.beethoven92.betterendforge.common.world.feature.caves.TunelCaveFeature;
+import mod.beethoven92.betterendforge.common.world.surfacebuilder.UmbraSurfaceBuilder;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.GenerationStage;
@@ -128,7 +130,9 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> BOLUX_MUSHROOM = new SinglePlantFeature(ModBlocks.BOLUX_MUSHROOM.get(), 5, 5);
 	public static final Feature<NoFeatureConfig> ORANGO = new SinglePlantFeature(ModBlocks.ORANGO.get(), 5);
 	public static final Feature<NoFeatureConfig> LUTEBUS = new SinglePlantFeature(ModBlocks.LUTEBUS.get(), 5, 2);
-	//public static final Feature<NoFeatureConfig> FLAMMALIX = new SinglePlantFeature(ModBlocks.FLAMMALIX.get(), 5, 2);
+	public static final Feature<NoFeatureConfig> INFLEXIA = new SinglePlantFeature(ModBlocks.INFLEXIA.get(), 7, false, 3);
+	public static final Feature<NoFeatureConfig> FLAMMALIX = new SinglePlantFeature(ModBlocks.FLAMMALIX.get(), 3, false, 7);
+
 
 	// SKY PLANTS
 	public static final Feature<NoFeatureConfig> FILALUX = new FilaluxFeature();
@@ -178,6 +182,9 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> FALLEN_PILLAR = new FallenPillarFeature();
 	public static final Feature<NoFeatureConfig> OBSIDIAN_BOULDER = new ObsidianBoulderFeature();
 	public static final Feature<NoFeatureConfig> TUNEL_CAVE = new TunelCaveFeature();
+	public static final Feature<NoFeatureConfig> THIN_ARCH = new ThinArchFeature(ModBlocks.UMBRALITH.stone.get());
+	public static final Feature<NoFeatureConfig> UMBRALITH_ARCH = new ArchFeature(ModBlocks.UMBRALITH.stone.get(), UmbraSurfaceBuilder::getSurfaceState);
+
 
 	// TREES
 	public static final Feature<NoFeatureConfig> MOSSY_GLOWSHROOM = new MossyGlowshroomFeature();
@@ -279,6 +286,8 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), BOLUX_MUSHROOM, "bolux_mushroom");
     	BetterEnd.register(event.getRegistry(), ORANGO, "orango");
     	BetterEnd.register(event.getRegistry(), LUTEBUS, "lutebus");
+		BetterEnd.register(event.getRegistry(), FLAMMALIX, "flammalix");
+		BetterEnd.register(event.getRegistry(), INFLEXIA, "inflexia");
     	// SKY PLANTS
     	BetterEnd.register(event.getRegistry(), FILALUX, "filalux");    	
     	// WALL_PLANTS
@@ -322,7 +331,9 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), OBSIDIAN_PILLAR_BASEMENT, "obsidian_pillar_basement");
     	BetterEnd.register(event.getRegistry(), FALLEN_PILLAR, "fallen_pillar");
     	BetterEnd.register(event.getRegistry(), OBSIDIAN_BOULDER, "obsidian_boulder");
-    	// TREES
+		BetterEnd.register(event.getRegistry(), THIN_ARCH, "thin_arch");
+
+		// TREES
     	BetterEnd.register(event.getRegistry(), MOSSY_GLOWSHROOM, "mossy_glowshroom");
     	BetterEnd.register(event.getRegistry(), LACUGROVE, "lacugrove");   
     	BetterEnd.register(event.getRegistry(), PYTHADENDRON, "pythadendron"); 
