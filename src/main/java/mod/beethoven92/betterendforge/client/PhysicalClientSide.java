@@ -220,6 +220,7 @@ public class PhysicalClientSide implements IPhysicalSide
 		setStoneMaterialRenderLayers(ModBlocks.VIRID_JADESTONE);
 		setStoneMaterialRenderLayers(ModBlocks.AZURE_JADESTONE);
 		setStoneMaterialRenderLayers(ModBlocks.SANDY_JADESTONE);
+		setStoneMaterialRenderLayers(ModBlocks.UMBRALITH);
 		
 		// METAL MATERIALS
 		setMetalMaterialRenderLayers(ModBlocks.THALLASIUM);
