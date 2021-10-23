@@ -1,11 +1,13 @@
 package mod.beethoven92.betterendforge.common.world.biome;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
+import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredStructures;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.world.gen.GenerationStage;
 
 public class PaintedMountainsBiome extends BetterEndBiome
 {
@@ -21,6 +23,7 @@ public class PaintedMountainsBiome extends BetterEndBiome
 				setAmbientSound(ModSoundEvents.AMBIENT_DUST_WASTELANDS.get()).
 				setSurface(ModBlocks.ENDSTONE_DUST.get()).
 				addStructure(ModConfiguredStructures.PAINTED_MOUNTAIN).
+				addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, ModConfiguredFeatures.TUNEL_CAVE).
 				setParticles(ParticleTypes.WHITE_ASH, 0.01F).
 				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
 	}

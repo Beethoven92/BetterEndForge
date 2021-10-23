@@ -6,6 +6,7 @@ import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.GenerationStage.Decoration;
 import net.minecraft.world.gen.feature.structure.StructureFeatures;
 
@@ -31,6 +32,7 @@ public class AmberLandBiome extends BetterEndBiome {
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BULB_MOSS_WOOD)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_ORANGE)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_RED)
+				.addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, ModConfiguredFeatures.TUNEL_CAVE)
 				.addStructure(StructureFeatures.END_CITY)
 				.addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 4));
 	}
