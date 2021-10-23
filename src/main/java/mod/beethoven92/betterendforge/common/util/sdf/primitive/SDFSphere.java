@@ -4,20 +4,8 @@ import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 
 public class SDFSphere extends SDFPrimitive 
 {
-	private float radiusSmall;
-	private float radiusBig;
 	private float radius;
 
-	public SDFSphere setBigRadius(float radius) {
-		this.radiusBig = radius;
-		return this;
-	}
-	
-	public SDFSphere setSmallRadius(float radius)
-	{
-		this.radiusSmall =  radius;
-		return this;
-	}
 
 	public SDFSphere setRadius(float radius) {
 		this.radius = radius;

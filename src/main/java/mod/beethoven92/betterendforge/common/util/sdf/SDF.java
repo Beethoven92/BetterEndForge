@@ -18,6 +18,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 
 public abstract class SDF 
@@ -44,7 +45,7 @@ public abstract class SDF
 		return this;
 	}
 
-	public void fillRecursive(IWorld world, BlockPos start) 
+	public void fillRecursive(IServerWorld world, BlockPos start)
 	{
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
@@ -54,7 +55,7 @@ public abstract class SDF
 		ends.add(new BlockPos(0, 0, 0));
 		boolean run = true;
 		
-		Mutable bPos = new Mutable();
+		BlockPos.Mutable bPos = new BlockPos.Mutable();
 		
 		while (run) 
 		{
@@ -114,12 +115,12 @@ public abstract class SDF
 		}
 	}
 	
-	public void fillArea(IWorld world, BlockPos center, AxisAlignedBB box) 
+	public void fillArea(IServerWorld world, BlockPos center, AxisAlignedBB box)
 	{
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
 		
-		Mutable mut = new Mutable();
+		BlockPos.Mutable mut = new BlockPos.Mutable();
 		for (int y = (int) box.minY; y <= box.maxY; y++) 
 		{
 			mut.setY(y);
@@ -170,7 +171,7 @@ public abstract class SDF
 		}
 	}
 	
-	public void fillRecursiveIgnore(IWorld world, BlockPos start, Function<BlockState, Boolean> ignore) 
+	public void fillRecursiveIgnore(IServerWorld world, BlockPos start, Function<BlockState, Boolean> ignore)
 	{
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
@@ -179,8 +180,8 @@ public abstract class SDF
 		Set<BlockPos> add = Sets.newHashSet();
 		ends.add(new BlockPos(0, 0, 0));
 		boolean run = true;
-		
-		Mutable bPos = new Mutable();
+
+		BlockPos.Mutable bPos = new BlockPos.Mutable();
 		
 		while (run) 
 		{
@@ -249,8 +250,8 @@ public abstract class SDF
 		Set<BlockPos> add = Sets.newHashSet();
 		ends.add(new BlockPos(0, 0, 0));
 		boolean run = true;
-		
-		Mutable bPos = new Mutable();
+
+		BlockPos.Mutable bPos = new BlockPos.Mutable();
 		
 		while (run) 
 		{
@@ -302,5 +303,40 @@ public abstract class SDF
 		infos.forEach((info) -> {
 			world.setBlock(info.getPos(), info.getState());
 		});
+	}
+
+
+	public Set<BlockPos> getPositions(IServerWorld world, BlockPos start) {
+		Set<BlockPos> blocks = Sets.newHashSet();
+		Set<BlockPos> ends = Sets.newHashSet();
+		Set<BlockPos> add = Sets.newHashSet();
+		ends.add(new BlockPos(0, 0, 0));
+		boolean run = true;
+
+		BlockPos.Mutable bPos = new BlockPos.Mutable();
+
+		while (run) {
+			for (BlockPos center : ends) {
+				for (Direction dir : Direction.values()) {
+					bPos.setPos(center).move(dir);
+					BlockPos wpos = bPos.add(start);
+					BlockState state = world.getBlockState(wpos);
+					if (!blocks.contains(wpos) && canReplace.apply(state)) {
+						if (this.getDistance(bPos.getX(), bPos.getY(), bPos.getZ()) < 0) {
+							add.add(bPos.toImmutable());
+						}
+					}
+				}
+			}
+
+			ends.forEach((end) -> blocks.add(end.add(start)));
+			ends.clear();
+			ends.addAll(add);
+			add.clear();
+
+			run &= !ends.isEmpty();
+		}
+
+		return blocks;
 	}
 }
