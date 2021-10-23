@@ -18,6 +18,7 @@ public class UmbraValleyBiome extends BetterEndBiome
 			.setFogColor(100, 100, 100)
 			.setFoliageColor(172, 189, 190)
 			.setWaterFogColor(69, 104, 134)
+				.setFogDensity(1.5F)
 			.setSurface(ModConfiguredSurfaceBuilders.get(ModConfiguredSurfaceBuilders.UMBRA_SURFACE))
 			.setParticles(ModParticleTypes.AMBER_SPHERE.get(), 0.0001F)
 			.setMusic(ModSoundEvents.AMBIENT_UMBRA_VALLEY.get())
