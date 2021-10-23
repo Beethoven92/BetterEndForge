@@ -33,7 +33,6 @@ public class ChorusForestBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.PYTHADENDRON_BUSH).
 				addFeature(Decoration.VEGETAL_DECORATION, Features.CHORUS_PLANT).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHORUS_GRASS).
-				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHORUS_MUSHROOM).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.PURPLE_POLYPORE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TAIL_MOSS).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TAIL_MOSS_WOOD).
