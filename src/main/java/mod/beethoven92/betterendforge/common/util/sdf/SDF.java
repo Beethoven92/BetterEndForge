@@ -121,20 +121,15 @@ public abstract class SDF
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
 		
 		BlockPos.Mutable mut = new BlockPos.Mutable();
-		for (int y = (int) box.minY; y <= box.maxY; y++) 
-		{
+		for (int y = (int) box.minY; y <= box.maxY; y++) {
 			mut.setY(y);
-			for (int x = (int) box.minX; x <= box.maxX; x++) 
-			{
+			for (int x = (int) box.minX; x <= box.maxX; x++) {
 				mut.setX(x);
-				for (int z = (int) box.minZ; z <= box.maxZ; z++) 
-				{
+				for (int z = (int) box.minZ; z <= box.maxZ; z++) {
 					mut.setZ(z);
-					if (canReplace.apply(world.getBlockState(mut))) 
-					{
+					if (canReplace.apply(world.getBlockState(mut))) {
 						BlockPos fpos = mut.subtract(center);
-						if (this.getDistance(fpos.getX(), fpos.getY(), fpos.getZ()) < 0) 
-						{
+						if (this.getDistance(fpos.getX(), fpos.getY(), fpos.getZ()) < 0) {
 							PosInfo.create(mapWorld, addInfo, mut.toImmutable()).setState(getBlockState(mut));
 						}
 					}
@@ -143,8 +138,7 @@ public abstract class SDF
 		}
 
 		List<PosInfo> infos = new ArrayList<PosInfo>(mapWorld.values());
-		if (infos.size() > 0) 
-		{
+		if (infos.size() > 0) {
 			Collections.sort(infos);
 			postProcesses.forEach((postProcess) -> {
 				infos.forEach((info) -> {
