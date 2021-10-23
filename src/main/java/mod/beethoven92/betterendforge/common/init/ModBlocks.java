@@ -36,11 +36,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.StairsBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
+import net.minecraft.item.*;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
@@ -203,7 +199,7 @@ public class ModBlocks
 
 	public static final RegistryObject<Block> MOSSY_DRAGON_BONE = registerBlockWithDefaultItem("mossy_dragon_bone", 
 			() -> new MossyDragonBoneBlock());
-	
+
 	// MATERIALS
 	public static final RegistryObject<Block> AETERNIUM_BLOCK = registerBlockWithDefaultItem("aeternium_block",
 			() -> new Block(AbstractBlock.Properties.create(Material.IRON, MaterialColor.GRAY).
@@ -379,6 +375,10 @@ public class ModBlocks
                                                                 zeroHardnessAndResistance().
                                                                 doesNotBlockMovement().
                                                                 sound(SoundType.PLANT)));
+
+	public static final RegistryObject<Block> CHARCOAL_BLOCK = registerBlockWithNoItem("charcoal_block",
+			() -> new CharcoalBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.BLACK).
+					sound(SoundType.STONE)));
 	
 	public static final RegistryObject<Block> CAVE_GRASS = registerBlockWithDefaultItem("cave_grass", 
 			() -> new TerrainPlantBlock(CAVE_MOSS.get()));
@@ -1174,6 +1174,14 @@ public class ModBlocks
 		ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)));
 		return block;
 	}
+
+	public static <T extends Block> RegistryObject<T> registerBlockWithNoItem(String name, Supplier<? extends T> blockSupplier)
+	{
+		RegistryObject<T> block = BLOCKS.register(name, blockSupplier);
+		return block;
+	}
+
+
 	
 	public static <T extends Block> RegistryObject<T> registerBlockWithDefaultItem(String name, Supplier<? extends T> blockSupplier, 
 			ItemGroup group)

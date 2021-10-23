@@ -13,23 +13,10 @@ import mod.beethoven92.betterendforge.common.item.ModItemTier;
 import mod.beethoven92.betterendforge.common.item.ModSpawnEggItem;
 import mod.beethoven92.betterendforge.common.item.UmbrellaClusterJuiceItem;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
+import net.minecraft.block.Block;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.FishBucketItem;
-import net.minecraft.item.Food;
-import net.minecraft.item.Foods;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemTier;
-import net.minecraft.item.LilyPadItem;
-import net.minecraft.item.MusicDiscItem;
-import net.minecraft.item.PickaxeItem;
-import net.minecraft.item.Rarity;
-import net.minecraft.item.ShovelItem;
-import net.minecraft.item.SwordItem;
-import net.minecraft.item.ToolItem;
+import net.minecraft.item.*;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.fml.RegistryObject;
@@ -130,7 +117,16 @@ public class ModItems
 	public final static RegistryObject<Item> MUSIC_DISC_EO_DRACONA = ITEMS.register("music_disc_eo_dracona", () -> new MusicDiscItem(0, ModSoundEvents.RECORD_EO_DRACONA, new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB).maxStackSize(1)));
 
 
-	
+
+	public final static RegistryObject<BlockItem> CHARCOAL_BLOCK = ITEMS.register("charcoal_block", () -> new BlockItem(ModBlocks.CHARCOAL_BLOCK.get(), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB))
+	{
+		@Override
+		public int getBurnTime(ItemStack itemStack) {
+			return 16000;
+	    }
+	});
+
+
 	//////////////////////////////////////////////////////
 	//
 	// Item registration helpers
