@@ -431,7 +431,7 @@ public class ModConfiguredFeatures
 					.withPlacement(Placement.CHANCE.configure(new ChanceConfig(15)));
 
 	public static final ConfiguredFeature<?, ?> UMBRALITH_ARCH =
-			ModFeatures.THIN_ARCH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
+			ModFeatures.UMBRALITH_ARCH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
 					.withPlacement(Placement.CHANCE.configure(new ChanceConfig(10)));
 
 	// TREES
