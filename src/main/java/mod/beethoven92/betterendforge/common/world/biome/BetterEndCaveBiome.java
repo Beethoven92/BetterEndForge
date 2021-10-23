@@ -11,8 +11,8 @@ public class BetterEndCaveBiome extends BetterEndBiome
 {
 	private WeightedList<Feature<?>> floorFeatures = new WeightedList<Feature<?>>();
 	private WeightedList<Feature<?>> ceilFeatures = new WeightedList<Feature<?>>();
-	
-	public BetterEndCaveBiome(BiomeTemplate definition) 
+
+	public BetterEndCaveBiome(BiomeTemplate definition)
 	{
 		super(definition.setCaveBiome());
 	}
@@ -49,6 +49,10 @@ public class BetterEndCaveBiome extends BetterEndBiome
 	
 	public BlockState getCeil(BlockPos pos) 
 	{
+		return null;
+	}
+
+	public BlockState getWall(BlockPos pos) {
 		return null;
 	}
 }
