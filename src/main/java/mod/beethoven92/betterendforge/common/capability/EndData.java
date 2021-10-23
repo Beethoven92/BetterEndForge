@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableList;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
+import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.block.PortalInfo;
 import net.minecraft.entity.Entity;
@@ -60,7 +61,7 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 
 	private void teleportToSpawn(ServerPlayerEntity player) {
 		// If custom spawn point is set or config not set, get out of here
-		if (player.func_241140_K_() != null || !CommonConfig.swapOverworldWithEnd())
+		if (player.func_241140_K_() != null || !GeneratorOptions.swapOverworldToEnd())
 			return;
 
 		ServerWorld world = player.getServerWorld();

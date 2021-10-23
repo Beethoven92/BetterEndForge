@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_metal_bars",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:terminite_ingot"
+    }
+  },
+  "result": {
+    "item": "betterendforge:terminite_bars",
+    "count": 16
+  }
+}

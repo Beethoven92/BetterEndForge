@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "betterendforge:thallasium_ore"
+  },
+  "result": "betterendforge:thallasium_ingot",
+  "experience": 0.35,
+  "cookingtime": 200
+}

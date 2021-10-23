@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "betterendforge:block/lucernia_crafting_table_bottom",
+    "up": "betterendforge:block/lucernia_crafting_table_top",
+    "north": "betterendforge:block/lucernia_crafting_table_front",
+    "south": "betterendforge:block/lucernia_crafting_table_side",
+    "east": "betterendforge:block/lucernia_crafting_table_side",
+    "west": "betterendforge:block/lucernia_crafting_table_front",
+    "particle": "betterendforge:block/lucernia_crafting_table_top"
+  }
+}

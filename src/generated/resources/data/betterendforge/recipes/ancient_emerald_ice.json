@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:dense_emerald_ice"
+    }
+  },
+  "result": {
+    "item": "betterendforge:ancient_emerald_ice"
+  }
+}

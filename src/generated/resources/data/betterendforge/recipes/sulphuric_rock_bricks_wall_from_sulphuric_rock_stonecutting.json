@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "betterendforge:sulphuric_rock"
+  },
+  "result": "betterendforge:sulphuric_rock_bricks_wall",
+  "count": 1
+}

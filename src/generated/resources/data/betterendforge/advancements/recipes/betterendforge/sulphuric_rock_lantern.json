@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:sulphuric_rock_lantern"
+    ]
+  },
+  "criteria": {
+    "has_sulphuric_rock_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:sulphuric_rock_slab"
+          }
+        ]
+      }
+    },
+    "has_crystal_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:crystal_shards"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:sulphuric_rock_lantern"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sulphuric_rock_slab",
+      "has_crystal_shard",
+      "has_the_recipe"
+    ]
+  ]
+}

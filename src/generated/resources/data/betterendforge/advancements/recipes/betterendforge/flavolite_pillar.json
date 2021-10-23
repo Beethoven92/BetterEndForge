@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:flavolite_pillar"
+    ]
+  },
+  "criteria": {
+    "has_flavolite_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:flavolite_slab"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:flavolite_pillar"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_flavolite_slab",
+      "has_the_recipe"
+    ]
+  ]
+}

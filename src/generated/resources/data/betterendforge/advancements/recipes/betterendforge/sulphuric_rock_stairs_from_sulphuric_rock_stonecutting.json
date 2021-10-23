@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:sulphuric_rock_stairs_from_sulphuric_rock_stonecutting"
+    ]
+  },
+  "criteria": {
+    "has_sulphuric_rock": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:sulphuric_rock"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:sulphuric_rock_stairs_from_sulphuric_rock_stonecutting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sulphuric_rock",
+      "has_the_recipe"
+    ]
+  ]
+}

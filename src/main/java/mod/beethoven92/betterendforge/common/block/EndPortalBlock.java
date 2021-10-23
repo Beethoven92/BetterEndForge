@@ -3,7 +3,7 @@ package mod.beethoven92.betterendforge.common.block;
 import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
-import mod.beethoven92.betterendforge.common.interfaces.ITeleportingEntity;
+import mod.beethoven92.betterendforge.common.interfaces.TeleportingEntity;
 import mod.beethoven92.betterendforge.common.teleporter.BetterEndTeleporter;
 import mod.beethoven92.betterendforge.common.teleporter.EndPortals;
 import net.minecraft.block.Block;
@@ -80,7 +80,7 @@ public class EndPortalBlock extends NetherPortalBlock
 		if (worldIn instanceof ServerWorld && !entityIn.isPassenger() && !entityIn.isBeingRidden() 
 				&& entityIn.isNonBoss()) 
 		{
-			ITeleportingEntity teleEntity = ITeleportingEntity.class.cast(entityIn);
+			TeleportingEntity teleEntity = TeleportingEntity.class.cast(entityIn);
 			
 			//if (teleEntity.hasCooldown()) return;
 			// Checks if entity has nether portal cooldown

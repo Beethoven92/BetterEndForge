@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_planks_slabs",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:lacugrove_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:lacugrove_slab",
+    "count": 6
+  }
+}

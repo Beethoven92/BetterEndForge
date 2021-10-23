@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:cyan_dye_from_cyan_moss"
+    ]
+  },
+  "criteria": {
+    "has_cyan_moss": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:cyan_moss"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:cyan_dye_from_cyan_moss"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_cyan_moss",
+      "has_the_recipe"
+    ]
+  ]
+}

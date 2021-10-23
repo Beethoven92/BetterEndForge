@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "betterendforge:thallasium_ingot"
+    }
+  },
+  "result": {
+    "item": "betterendforge:thallasium_leggings"
+  }
+}

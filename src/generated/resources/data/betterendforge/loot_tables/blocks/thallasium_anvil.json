@@ -1,0 +1,77 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "betterendforge:thallasium_anvil",
+              "properties": {
+                "destruction": "0"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{level:0}"
+            }
+          ],
+          "name": "betterendforge:thallasium_anvil"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "betterendforge:thallasium_anvil",
+              "properties": {
+                "destruction": "1"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{level:1}"
+            }
+          ],
+          "name": "betterendforge:thallasium_anvil"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "betterendforge:thallasium_anvil",
+              "properties": {
+                "destruction": "2"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{level:2}"
+            }
+          ],
+          "name": "betterendforge:thallasium_anvil"
+        }
+      ]
+    }
+  ]
+}

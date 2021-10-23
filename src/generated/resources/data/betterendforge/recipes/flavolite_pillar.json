@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_pillar",
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:flavolite_slab"
+    }
+  },
+  "result": {
+    "item": "betterendforge:flavolite_pillar"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_planks_plates",
+  "pattern": [
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:umbrella_tree_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:umbrella_tree_pressure_plate"
+  }
+}

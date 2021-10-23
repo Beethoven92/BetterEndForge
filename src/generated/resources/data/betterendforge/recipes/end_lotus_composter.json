@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_composters",
+  "pattern": [
+    "# #",
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:end_lotus_slab"
+    }
+  },
+  "result": {
+    "item": "betterendforge:end_lotus_composter"
+  }
+}

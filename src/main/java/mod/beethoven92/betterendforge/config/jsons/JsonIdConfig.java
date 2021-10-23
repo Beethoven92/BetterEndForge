@@ -12,10 +12,10 @@ import net.minecraft.util.ResourceLocation;
 public class JsonIdConfig extends JsonConfig
 {
 	protected final BiFunction<ResourceLocation, String, JsonConfigKey> keyFactory;
-	
-	public JsonIdConfig(String group, BiFunction<ResourceLocation, String, JsonConfigKey> keyFactory) 
+
+	public JsonIdConfig(String modID, String group, BiFunction<ResourceLocation, String, JsonConfigKey> keyFactory)
 	{
-		super(group);
+		super(modID, group);
 		this.keyFactory = keyFactory;
 	}
 
@@ -102,6 +102,14 @@ public class JsonIdConfig extends JsonConfig
 	public boolean getBoolean(ResourceLocation id, String key) 
 	{
 		return this.getBoolean(createKey(id, key));
+	}
+
+	public boolean getBooleanRoot(String key, boolean defaultValue) {
+		return this.getBoolean(createKey(key), defaultValue);
+	}
+
+	public boolean getBooleanRoot(String key) {
+		return this.getBoolean(createKey(key));
 	}
 
 	public boolean setBoolean(ResourceLocation id, String key, boolean value) 

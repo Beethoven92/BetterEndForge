@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_chests",
+  "pattern": [
+    "###",
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:helix_tree_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:helix_tree_chest"
+  }
+}

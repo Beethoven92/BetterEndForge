@@ -29,7 +29,7 @@ public abstract class SDFStructure extends Structure<NoFeatureConfig>
 	{
 		super(NoFeatureConfig.field_236558_a_);
 	}*/
-	
+
 	protected abstract SDF getSDF(BlockPos pos, Random random);
 	
 	@Override

@@ -2,7 +2,7 @@
 	"__comment": "Designed by Paulevs with Cubik Studio - https://cubik.studio",
 	"textures": {
 		"particle": "betterendforge:block/chorus_plant",
-		"texture": "betterendforge:block/chorus_plant",
+		"texture": "minecraft:block/chorus_plant",
 		"needles": "betterendforge:block/chorus_plant_needles"
 	},
 	"elements": [ 	 

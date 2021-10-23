@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:mossy_glowshroom_stripped_bark"
+    ]
+  },
+  "criteria": {
+    "has_log_stripped": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:mossy_glowshroom_stripped_log"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:mossy_glowshroom_stripped_bark"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_log_stripped",
+      "has_the_recipe"
+    ]
+  ]
+}

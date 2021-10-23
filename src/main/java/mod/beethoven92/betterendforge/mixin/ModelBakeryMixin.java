@@ -1,5 +1,6 @@
 package mod.beethoven92.betterendforge.mixin;
 
+import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -13,7 +14,7 @@ public class ModelBakeryMixin
 	@ModifyVariable(method = "loadBlockstate", ordinal = 2, at = @At(value = "INVOKE"))
 	public ResourceLocation be_SwitchModel(ResourceLocation id) 
 	{
-		if (CommonConfig.isCustomChorusPlantEnabled() && id.getNamespace().equals("minecraft") && 
+		if (GeneratorOptions.changeChorusPlant() && id.getNamespace().equals("minecraft") &&
 				id.getPath().startsWith("blockstates/") && id.getPath().contains("chorus") && 
 				!id.getPath().contains("custom_"))
 		{

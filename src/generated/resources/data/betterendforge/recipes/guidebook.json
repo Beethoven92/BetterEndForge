@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "D",
+    "B",
+    "C"
+  ],
+  "key": {
+    "D": {
+      "item": "betterendforge:ender_dust"
+    },
+    "B": {
+      "item": "minecraft:book"
+    },
+    "C": {
+      "item": "betterendforge:crystal_shards"
+    }
+  },
+  "result": {
+    "item": "betterendforge:guidebook"
+  }
+}

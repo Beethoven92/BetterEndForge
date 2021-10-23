@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:aeternium_shovel_smithing"
+    ]
+  },
+  "criteria": {
+    "has_leather_wrapped_stick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:leather_wrapped_stick"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:aeternium_shovel_smithing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_leather_wrapped_stick",
+      "has_the_recipe"
+    ]
+  ]
+}

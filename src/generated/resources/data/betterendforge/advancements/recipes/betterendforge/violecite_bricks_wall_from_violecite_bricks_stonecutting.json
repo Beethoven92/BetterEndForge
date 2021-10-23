@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:violecite_bricks_wall_from_violecite_bricks_stonecutting"
+    ]
+  },
+  "criteria": {
+    "has_violecite_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:violecite_bricks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:violecite_bricks_wall_from_violecite_bricks_stonecutting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_violecite_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}

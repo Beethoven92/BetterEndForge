@@ -2,6 +2,8 @@ package mod.beethoven92.betterendforge.mixin;
 
 import java.util.Random;
 
+import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
+import net.minecraft.block.SixWayBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,20 +30,17 @@ public abstract class ChorusPlantFeatureMixin
 	private void be_generate(ISeedReader worldIn, ChunkGenerator chunkGenerator, Random random, 
 			BlockPos blockPos, NoFeatureConfig config, CallbackInfoReturnable<Boolean> info) 
 	{
-		if (worldIn.isAirBlock(blockPos) && worldIn.getBlockState(blockPos.down()).isIn(ModBlocks.CHORUS_NYLIUM.get())) 
-		{
-			ChorusFlowerBlock.generatePlant(worldIn, blockPos, random, ModMathHelper.randRange(8, 16, random));
-			BlockState bottom = worldIn.getBlockState(blockPos);
-			if (bottom.isIn(Blocks.CHORUS_PLANT)) 
-			{
-				if ((CommonConfig.isCustomChorusPlantEnabled())) 
-				{
-					BlockHelper.setWithoutUpdate(worldIn, blockPos, bottom.with(BlockHelper.ROOTS, true).with(BlockStateProperties.DOWN, true));
-				}
-				else 
-				{
-					BlockHelper.setWithoutUpdate(worldIn, blockPos, bottom.with(BlockStateProperties.DOWN, true));
-				}
+
+		final ISeedReader structureWorldAccess = worldIn;
+		if (structureWorldAccess.isAirBlock(blockPos) && structureWorldAccess.getBlockState(blockPos.down()).isIn(ModBlocks.CHORUS_NYLIUM.get())) {
+			ChorusFlowerBlock.generatePlant(structureWorldAccess, blockPos, random, ModMathHelper.randRange(8, 16, random));
+			BlockState bottom = structureWorldAccess.getBlockState(blockPos);
+			if (bottom.isIn(Blocks.CHORUS_PLANT)) {
+				BlockHelper.setWithoutUpdate(
+						structureWorldAccess,
+						blockPos,
+						bottom.with(SixWayBlock.DOWN, true)
+				);
 			}
 			info.setReturnValue(true);
 		}

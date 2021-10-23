@@ -4,6 +4,7 @@ import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredStructures;
+import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -68,7 +69,7 @@ public class BiomeModification
 	@SubscribeEvent(priority = EventPriority.NORMAL)
     public static void removeChorusFromVanillaBiomes(final BiomeLoadingEvent event) 
     {	   	    
-		if (!CommonConfig.isChorusInVanillaBiomesEnabled())
+		if (GeneratorOptions.removeChorusFromVanillaBiomes())
 		{
 			if (event.getCategory() == Category.THEEND) 
 			{

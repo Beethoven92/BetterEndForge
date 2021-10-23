@@ -13,34 +13,19 @@ import com.google.common.collect.Sets;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import mod.beethoven92.betterendforge.common.util.FeatureHelper;
 import mod.beethoven92.betterendforge.common.util.JsonFactory;
-import mod.beethoven92.betterendforge.common.world.biome.AmberLandBiome;
-import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
-import mod.beethoven92.betterendforge.common.world.biome.BetterEndCaveBiome;
-import mod.beethoven92.betterendforge.common.world.biome.BlossomingSpiresBiome;
-import mod.beethoven92.betterendforge.common.world.biome.ChorusForestBiome;
-import mod.beethoven92.betterendforge.common.world.biome.CrystalMountainsBiome;
-import mod.beethoven92.betterendforge.common.world.biome.DragonGraveyardsBiome;
-import mod.beethoven92.betterendforge.common.world.biome.DryShrublandBiome;
-import mod.beethoven92.betterendforge.common.world.biome.DustWastelandsBiome;
-import mod.beethoven92.betterendforge.common.world.biome.FoggyMushroomlandBiome;
-import mod.beethoven92.betterendforge.common.world.biome.GlowingGrasslandsBiome;
-import mod.beethoven92.betterendforge.common.world.biome.IceStarfieldBiome;
-import mod.beethoven92.betterendforge.common.world.biome.LanternWoodsBiome;
-import mod.beethoven92.betterendforge.common.world.biome.MegalakeBiome;
-import mod.beethoven92.betterendforge.common.world.biome.MegalakeGroveBiome;
-import mod.beethoven92.betterendforge.common.world.biome.NeonOasisBiome;
-import mod.beethoven92.betterendforge.common.world.biome.PaintedMountainsBiome;
-import mod.beethoven92.betterendforge.common.world.biome.ShadowForestBiome;
-import mod.beethoven92.betterendforge.common.world.biome.SulphurSpringsBiome;
-import mod.beethoven92.betterendforge.common.world.biome.UmbrellaJungleBiome;
+import mod.beethoven92.betterendforge.common.world.biome.*;
 import mod.beethoven92.betterendforge.common.world.biome.cave.EmptyAuroraCaveBiome;
 import mod.beethoven92.betterendforge.common.world.biome.cave.EmptyEndCaveBiome;
 import mod.beethoven92.betterendforge.common.world.biome.cave.EmptySmaragdantCaveBiome;
 import mod.beethoven92.betterendforge.common.world.biome.cave.LushAuroraCaveBiome;
 import mod.beethoven92.betterendforge.common.world.biome.cave.LushSmaragdantCaveBiome;
+import mod.beethoven92.betterendforge.common.world.generator.BiomeMap;
 import mod.beethoven92.betterendforge.common.world.generator.BiomePicker;
 import mod.beethoven92.betterendforge.common.world.generator.EndBiomeType;
+import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
+import mod.beethoven92.betterendforge.config.Configs;
 import mod.beethoven92.betterendforge.config.jsons.JsonConfigs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
@@ -59,6 +44,7 @@ public class ModBiomes
 	private static final HashMap<ResourceLocation, BetterEndBiome> ID_MAP = Maps.newHashMap();
 	private static final HashMap<Biome, BetterEndBiome> CLIENT = Maps.newHashMap();
 	private static final Set<ResourceLocation> SUBBIOMES_UNMUTABLES = Sets.newHashSet();
+	private static BiomeMap caveBiomeMap;
 	
 	public static final BiomePicker LAND_BIOMES = new BiomePicker();
 	public static final BiomePicker VOID_BIOMES = new BiomePicker();
@@ -95,7 +81,8 @@ public class ModBiomes
 	public static final BetterEndBiome LANTERN_WOODS = registerBiome(new LanternWoodsBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome DRY_SHRUBLAND = registerBiome(new DryShrublandBiome(), EndBiomeType.LAND);
 	public static final BetterEndBiome NEON_OASIS = registerSubBiome(new NeonOasisBiome(), DUST_WASTELANDS);
-	
+	public static final BetterEndBiome UMBRA_VALLEY = registerBiome(new UmbraValleyBiome(), EndBiomeType.LAND);
+
 	// Better End void biomes
 	public static final BetterEndBiome ICE_STARFIELD = registerBiome(new IceStarfieldBiome(), EndBiomeType.VOID);
 	
@@ -107,6 +94,14 @@ public class ModBiomes
 	public static final BetterEndCaveBiome LUSH_AURORA_CAVE = registerCaveBiome(new LushAuroraCaveBiome());
 	
 	public static void register() {}
+
+	public static void onWorldLoad(long seed, Registry<Biome> registry) {
+		CAVE_BIOMES.getBiomes().forEach(biome -> biome.updateActualBiomes(registry));
+		CAVE_BIOMES.rebuild();
+		if (caveBiomeMap == null || caveBiomeMap.getSeed() != seed) {
+			caveBiomeMap = new BiomeMap(seed, GeneratorOptions.getBiomeSizeCaves(), CAVE_BIOMES);
+		}
+	}
 	
 	public static void mutateRegistry(Registry<Biome> biomeRegistry) 
 	{
@@ -123,7 +118,7 @@ public class ModBiomes
 			{
 				ResourceLocation id = biomeRegistry.getKey(biome);
 				
-				if (JsonConfigs.BIOME_CONFIG.getBoolean(id, "enabled", true))
+				if (Configs.BIOME_CONFIG.getBoolean(id, "enabled", true))
 				{
 					if (!LAND_BIOMES.containsImmutable(id) && !VOID_BIOMES.containsImmutable(id) && !SUBBIOMES_UNMUTABLES.contains(id)) 
 					{
@@ -161,8 +156,8 @@ public class ModBiomes
 				}
 			}
 		});
-		
-		JsonConfigs.BIOME_CONFIG.saveChanges();
+
+		Configs.BIOME_CONFIG.saveChanges();
 		
 		rebuildPicker(LAND_BIOMES, biomeRegistry);
 		rebuildPicker(VOID_BIOMES, biomeRegistry);
@@ -213,7 +208,7 @@ public class ModBiomes
 	public static BetterEndBiome registerBiome(Biome biome, EndBiomeType type, float fogDensity, float genChance) 
 	{
 		BetterEndBiome endBiome = new BetterEndBiome(WorldGenRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, true);
-		if (JsonConfigs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true))
+		if (Configs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true))
 		{
 			addToPicker(endBiome, type);
 		}
@@ -229,7 +224,7 @@ public class ModBiomes
 	public static BetterEndBiome registerSubBiome(Biome biome, BetterEndBiome parent, float fogDensity, float genChance, boolean hasCaves) 
 	{
 		BetterEndBiome endBiome = new BetterEndBiome(WorldGenRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, hasCaves);
-		if (JsonConfigs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true))
+		if (Configs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true))
 		{
 			parent.addSubBiome(endBiome);
 		    SUBBIOMES.add(endBiome);
@@ -243,7 +238,7 @@ public class ModBiomes
 	public static BetterEndBiome registerBiome(BetterEndBiome biome, EndBiomeType type) 
 	{
 		registerBiomeDirect(biome);
-		if (JsonConfigs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true))
+		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true))
 		{
 			addToPicker(biome, type);
 			ID_MAP.put(biome.getID(), biome);
@@ -254,7 +249,7 @@ public class ModBiomes
 	public static BetterEndBiome registerSubBiome(BetterEndBiome biome, BetterEndBiome parent) 
 	{
 		registerBiomeDirect(biome);
-		if (JsonConfigs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true))
+		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true))
 		{
 			parent.addSubBiome(biome);
 			SUBBIOMES.add(biome);
@@ -288,7 +283,7 @@ public class ModBiomes
 	
 	private static void registerBiomeDirect(BetterEndBiome biome) 
 	{
-		if (JsonConfigs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true))
+		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true))
 		{
 			biome.getBiome().setRegistryName(biome.getID()); 
 		}
@@ -337,7 +332,7 @@ public class ModBiomes
 	public static BetterEndCaveBiome registerCaveBiome(BetterEndCaveBiome biome) 
 	{
 		registerBiomeDirect(biome);
-		if (JsonConfigs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true)) 
+		if (Configs.BIOME_CONFIG.getBoolean(biome.getID(), "enabled", true))
 		{
 			CAVE_BIOMES.addBiome(biome);
 			ID_MAP.put(biome.getID(), biome);
@@ -345,7 +340,7 @@ public class ModBiomes
 		return biome;
 	}
 
-	public static BetterEndCaveBiome getCaveBiome(Random random) 
+	public static BetterEndCaveBiome getCaveBiome(Random random)
 	{
 		if (!CAVE_BIOMES.isRebuilt())
 			mutateRegistry(biomeRegistry);

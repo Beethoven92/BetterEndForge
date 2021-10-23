@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_composters",
+  "pattern": [
+    "# #",
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:lacugrove_slab"
+    }
+  },
+  "result": {
+    "item": "betterendforge:lacugrove_composter"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:mossy_glowshroom_chest",
+    "betterendforge:mossy_glowshroom_barrel",
+    "betterendforge:lacugrove_chest",
+    "betterendforge:lacugrove_barrel",
+    "betterendforge:end_lotus_chest",
+    "betterendforge:end_lotus_barrel",
+    "betterendforge:pythadendron_chest",
+    "betterendforge:pythadendron_barrel",
+    "betterendforge:dragon_tree_chest",
+    "betterendforge:dragon_tree_barrel",
+    "betterendforge:tenanea_chest",
+    "betterendforge:tenanea_barrel",
+    "betterendforge:helix_tree_chest",
+    "betterendforge:helix_tree_barrel",
+    "betterendforge:umbrella_tree_chest",
+    "betterendforge:umbrella_tree_barrel",
+    "betterendforge:jellyshroom_chest",
+    "betterendforge:jellyshroom_barrel",
+    "betterendforge:lucernia_chest",
+    "betterendforge:lucernia_barrel"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "betterendforge:block/furnace_glow",
+  "textures": {
+    "top": "betterendforge:block/sulphuric_rock_furnace_top",
+    "front": "betterendforge:block/sulphuric_rock_furnace_front_on",
+    "side": "betterendforge:block/sulphuric_rock_furnace_side",
+    "glow": "betterendforge:block/sulphuric_rock_furnace_glow"
+  }
+}

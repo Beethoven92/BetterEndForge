@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "top": "betterendforge:block/end_stone_furnace_top",
+    "front": "betterendforge:block/end_stone_furnace_front",
+    "side": "betterendforge:block/end_stone_furnace_side",
+    "bottom": "betterendforge:block/end_stone_furnace_top"
+  }
+}

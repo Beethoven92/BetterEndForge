@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:umbrella_tree_log",
+    "betterendforge:umbrella_tree_bark",
+    "betterendforge:umbrella_tree_stripped_log",
+    "betterendforge:umbrella_tree_stripped_bark"
+  ]
+}

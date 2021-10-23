@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "betterendforge:end_fish_raw"
+  },
+  "result": "betterendforge:end_fish_cooked",
+  "experience": 0.35,
+  "cookingtime": 200
+}

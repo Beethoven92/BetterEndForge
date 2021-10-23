@@ -17,6 +17,7 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSubtraction;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFHexPrism;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
+import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
 import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.block.BlockState;
@@ -47,7 +48,7 @@ public class RoundCaveFeature extends Feature<NoFeatureConfig>
 	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
 			BlockPos pos, NoFeatureConfig config) 
 	{
-		if (!(CommonConfig.isNewGeneratorEnabled() && CommonConfig.noRingVoid()))
+		if (!(GeneratorOptions.useNewGenerator() && GeneratorOptions.noRingVoid()))
 		{
 			if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500)
 			{

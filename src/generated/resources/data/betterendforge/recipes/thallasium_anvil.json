@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_metal_anvil",
+  "pattern": [
+    "###",
+    " I ",
+    "III"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:thallasium_block"
+    },
+    "I": {
+      "item": "betterendforge:thallasium_ingot"
+    }
+  },
+  "result": {
+    "item": "betterendforge:thallasium_anvil"
+  }
+}

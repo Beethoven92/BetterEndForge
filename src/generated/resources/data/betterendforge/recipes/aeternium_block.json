@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:aeternium_ingot"
+    }
+  },
+  "result": {
+    "item": "betterendforge:aeternium_block"
+  }
+}

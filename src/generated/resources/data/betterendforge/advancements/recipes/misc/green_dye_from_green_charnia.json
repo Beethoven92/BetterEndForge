@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:green_dye_from_green_charnia"
+    ]
+  },
+  "criteria": {
+    "has_green_charnia": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:charnia_green"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:green_dye_from_green_charnia"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_green_charnia",
+      "has_the_recipe"
+    ]
+  ]
+}

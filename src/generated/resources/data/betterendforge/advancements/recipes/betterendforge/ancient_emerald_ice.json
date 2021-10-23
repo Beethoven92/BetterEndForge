@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:ancient_emerald_ice"
+    ]
+  },
+  "criteria": {
+    "has_dense_emerald_ice": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:dense_emerald_ice"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:ancient_emerald_ice"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_dense_emerald_ice",
+      "has_the_recipe"
+    ]
+  ]
+}

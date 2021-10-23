@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_metal_stairs",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:terminite_block"
+    }
+  },
+  "result": {
+    "item": "betterendforge:terminite_stairs",
+    "count": 4
+  }
+}

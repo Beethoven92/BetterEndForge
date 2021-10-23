@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_metal_trapdoors",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:thallasium_ingot"
+    }
+  },
+  "result": {
+    "item": "betterendforge:thallasium_trapdoor"
+  }
+}

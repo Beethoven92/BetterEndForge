@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import mod.beethoven92.betterendforge.common.interfaces.ITeleportingEntity;
+import mod.beethoven92.betterendforge.common.interfaces.TeleportingEntity;
 import net.minecraft.block.PortalInfo;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 @Mixin(Entity.class)
-public abstract class EntityMixin implements ITeleportingEntity 
+public abstract class EntityMixin implements TeleportingEntity
 {	
 	private BlockPos exitPos;
 	private long cooldown;
@@ -91,44 +91,44 @@ public abstract class EntityMixin implements ITeleportingEntity
 	@Inject(method = "baseTick", at = @At("TAIL"))
 	public void baseTick(CallbackInfo info) 
 	{
-		if (hasCooldown()) 
+		if (hasCooldown())
 		{
 			this.cooldown--;
 		}
 	}
 	
 	@Override
-	public long beGetCooldown() 
+	public long beGetCooldown()
 	{
 		return this.cooldown;
 	}
 
 	@Override
-	public void beSetCooldown(long time) 
+	public void beSetCooldown(long time)
 	{
 		this.cooldown = time;
 	}
 
 	@Override
-	public void beSetExitPos(BlockPos pos) 
+	public void beSetExitPos(BlockPos pos)
 	{
 		this.exitPos = pos.toImmutable();
 	}
 
 	@Override
-	public BlockPos beGetExitPos() 
+	public BlockPos beGetExitPos()
 	{
 		return this.exitPos;
 	}
 	
 	@Override
-	public void beResetExitPos() 
+	public void beResetExitPos()
 	{
 		this.exitPos = null;
 	}
 	
 	@Override
-	public boolean beCanTeleport() 
+	public boolean beCanTeleport()
 	{
 		return this.exitPos != null;
 	}

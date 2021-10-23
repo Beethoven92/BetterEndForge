@@ -1,0 +1,131 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:terminite_nugget_from_blasting"
+    ]
+  },
+  "criteria": {
+    "has_terminite_axe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_axe"
+          }
+        ]
+      }
+    },
+    "has_terminite_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_pickaxe"
+          }
+        ]
+      }
+    },
+    "has_terminite_shovel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_shovel"
+          }
+        ]
+      }
+    },
+    "has_terminite_hoe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_hoe"
+          }
+        ]
+      }
+    },
+    "has_terminite_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_sword"
+          }
+        ]
+      }
+    },
+    "has_terminite_hammer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_hammer"
+          }
+        ]
+      }
+    },
+    "has_terminite_helmet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_helmet"
+          }
+        ]
+      }
+    },
+    "has_terminite_chestplate": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_chestplate"
+          }
+        ]
+      }
+    },
+    "has_terminite_leggings": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_leggings"
+          }
+        ]
+      }
+    },
+    "has_terminite_boots": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_boots"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:terminite_nugget_from_blasting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_terminite_axe",
+      "has_terminite_pickaxe",
+      "has_terminite_shovel",
+      "has_terminite_hoe",
+      "has_terminite_sword",
+      "has_terminite_hammer",
+      "has_terminite_helmet",
+      "has_terminite_chestplate",
+      "has_terminite_leggings",
+      "has_terminite_boots",
+      "has_the_recipe"
+    ]
+  ]
+}

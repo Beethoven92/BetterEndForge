@@ -1,5 +1,6 @@
 package mod.beethoven92.betterendforge.mixin;
 
+import mod.beethoven92.betterendforge.client.ClientOptions;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -83,7 +84,7 @@ public abstract class FogRendererMixin
 		Biome biome = entity.world.getBiome(entity.getPosition());
 		FluidState fluidState = activeRenderInfoIn.getFluidState();
 		
-		if (ClientConfig.isFogDensityEnabled() && biome.getCategory() == Category.THEEND && fluidState.isEmpty()) 
+		if (ClientOptions.useFogDensity() && biome.getCategory() == Category.THEEND && fluidState.isEmpty())
 		{			
 			BetterEndBiome endBiome = ModBiomes.getRenderBiome(biome);
 			if (fogDensity == 0) 

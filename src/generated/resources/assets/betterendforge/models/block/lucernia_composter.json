@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/composter",
+  "textures": {
+    "particle": "betterendforge:block/lucernia_composter_side",
+    "top": "betterendforge:block/lucernia_composter_top",
+    "bottom": "betterendforge:block/lucernia_composter_bottom",
+    "side": "betterendforge:block/lucernia_composter_side",
+    "inside": "betterendforge:block/lucernia_composter_bottom"
+  }
+}

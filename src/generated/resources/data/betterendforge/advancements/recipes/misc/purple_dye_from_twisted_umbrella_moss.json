@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:purple_dye_from_twisted_umbrella_moss"
+    ]
+  },
+  "criteria": {
+    "has_twisted_umbrella_moss": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:twisted_umbrella_moss"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:purple_dye_from_twisted_umbrella_moss"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_twisted_umbrella_moss",
+      "has_the_recipe"
+    ]
+  ]
+}

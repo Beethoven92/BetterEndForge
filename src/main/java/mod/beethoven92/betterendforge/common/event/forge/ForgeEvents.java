@@ -18,9 +18,6 @@ public class ForgeEvents {
 	@SubscribeEvent
 	public static void giveGuideBookToPlayer(AdvancementEvent event) {
 		ResourceLocation id = event.getAdvancement().getId();
-		if (id.equals(new ResourceLocation("minecraft:end/enter_end_gateway")) && CommonConfig.giveGuideBook()) {
-			event.getPlayer().addItemStackToInventory(new ItemStack(ModItems.GUIDE_BOOK.get()));
-		}
 	}
 
 	@SubscribeEvent

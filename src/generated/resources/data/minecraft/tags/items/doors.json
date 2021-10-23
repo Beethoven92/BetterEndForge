@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:mossy_glowshroom_door",
+    "betterendforge:lacugrove_door",
+    "betterendforge:end_lotus_door",
+    "betterendforge:pythadendron_door",
+    "betterendforge:dragon_tree_door",
+    "betterendforge:tenanea_door",
+    "betterendforge:helix_tree_door",
+    "betterendforge:umbrella_tree_door",
+    "betterendforge:jellyshroom_door",
+    "betterendforge:lucernia_door",
+    "betterendforge:thallasium_door",
+    "betterendforge:terminite_door"
+  ]
+}

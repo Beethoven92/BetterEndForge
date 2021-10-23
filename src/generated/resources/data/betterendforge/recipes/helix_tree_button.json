@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "end_planks_buttons",
+  "ingredients": [
+    {
+      "item": "betterendforge:helix_tree_planks"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:helix_tree_button"
+  }
+}

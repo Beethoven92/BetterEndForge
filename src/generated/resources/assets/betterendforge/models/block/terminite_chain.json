@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/chain",
+  "textures": {
+    "particle": "betterendforge:block/terminite_chain",
+    "all": "betterendforge:block/terminite_chain"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "betterendforge:block/ladder",
+  "textures": {
+    "texture": "betterendforge:block/mossy_glowshroom_ladder"
+  }
+}

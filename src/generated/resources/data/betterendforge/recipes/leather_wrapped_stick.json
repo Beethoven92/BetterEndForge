@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:stick"
+    },
+    {
+      "item": "betterendforge:leather_stripe"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:leather_wrapped_stick"
+  }
+}

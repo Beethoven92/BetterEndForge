@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_metal_slabs",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:terminite_block"
+    }
+  },
+  "result": {
+    "item": "betterendforge:terminite_slab",
+    "count": 6
+  }
+}

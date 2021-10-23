@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:aeternium_ingot_from_aeternium_block"
+    ]
+  },
+  "criteria": {
+    "has_aeternium_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:aeternium_block"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:aeternium_ingot_from_aeternium_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_aeternium_block",
+      "has_the_recipe"
+    ]
+  ]
+}

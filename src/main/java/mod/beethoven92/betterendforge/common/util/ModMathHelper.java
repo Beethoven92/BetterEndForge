@@ -158,6 +158,18 @@ public class ModMathHelper
 			array[i2] = element;
 		}
 	}
+
+	public static int sqr(int i) {
+		return i * i;
+	}
+
+	public static float sqr(float f) {
+		return f * f;
+	}
+
+	public static double sqr(double d) {
+		return d * d;
+	}
 	
 	public static int pow2(int i)
 	{

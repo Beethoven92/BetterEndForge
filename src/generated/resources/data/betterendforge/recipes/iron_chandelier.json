@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_metal_chandelier",
+  "pattern": [
+    "I#I",
+    " # "
+  ],
+  "key": {
+    "I": {
+      "item": "betterendforge:lumecorn_rod"
+    },
+    "#": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "betterendforge:iron_chandelier"
+  }
+}

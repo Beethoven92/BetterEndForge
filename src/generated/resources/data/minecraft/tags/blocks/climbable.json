@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:dense_vine",
+    "betterendforge:twisted_vine",
+    "betterendforge:bulb_vine",
+    "betterendforge:jungle_vine",
+    "betterendforge:rubinea",
+    "betterendforge:tenanea_flowers",
+    "betterendforge:filalux",
+    "betterendforge:mossy_glowshroom_ladder",
+    "betterendforge:lacugrove_ladder",
+    "betterendforge:end_lotus_ladder",
+    "betterendforge:pythadendron_ladder",
+    "betterendforge:dragon_tree_ladder",
+    "betterendforge:tenanea_ladder",
+    "betterendforge:helix_tree_ladder",
+    "betterendforge:umbrella_tree_ladder",
+    "betterendforge:jellyshroom_ladder",
+    "betterendforge:lucernia_ladder"
+  ]
+}

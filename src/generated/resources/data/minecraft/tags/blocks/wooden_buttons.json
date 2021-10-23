@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:mossy_glowshroom_button",
+    "betterendforge:lacugrove_button",
+    "betterendforge:end_lotus_button",
+    "betterendforge:pythadendron_button",
+    "betterendforge:dragon_tree_button",
+    "betterendforge:tenanea_button",
+    "betterendforge:helix_tree_button",
+    "betterendforge:umbrella_tree_button",
+    "betterendforge:jellyshroom_button",
+    "betterendforge:lucernia_button"
+  ]
+}

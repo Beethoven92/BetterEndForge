@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "thallasium_ingot",
+  "ingredients": [
+    {
+      "item": "betterendforge:thallasium_block"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:thallasium_ingot",
+    "count": 9
+  }
+}

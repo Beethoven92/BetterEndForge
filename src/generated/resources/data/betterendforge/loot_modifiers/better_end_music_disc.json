@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "condition": "minecraft:random_chance",
+      "chance": 0.1
+    },
+    {
+      "condition": "betterendforge:from_loot_table",
+      "loot_table": "minecraft:chests/end_city_treasure"
+    }
+  ],
+  "min": 0,
+  "max": 5,
+  "type": "betterendforge:better_end_music_disc"
+}

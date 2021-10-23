@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:cyan_dye_from_cyan_charnia"
+    ]
+  },
+  "criteria": {
+    "has_cyan_charnia": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:charnia_cyan"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:cyan_dye_from_cyan_charnia"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_cyan_charnia",
+      "has_the_recipe"
+    ]
+  ]
+}

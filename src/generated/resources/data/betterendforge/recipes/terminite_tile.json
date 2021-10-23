@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_metal_tile",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:terminite_block"
+    }
+  },
+  "result": {
+    "item": "betterendforge:terminite_tile",
+    "count": 4
+  }
+}

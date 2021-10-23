@@ -56,11 +56,11 @@ import mod.beethoven92.betterendforge.common.world.feature.VineFeature;
 import mod.beethoven92.betterendforge.common.world.feature.WallPlantFeature;
 import mod.beethoven92.betterendforge.common.world.feature.WallPlantOnLogFeature;
 import mod.beethoven92.betterendforge.common.world.feature.caves.RoundCaveFeature;
+import mod.beethoven92.betterendforge.common.world.feature.caves.TunelCaveFeature;
 import net.minecraft.block.Blocks;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.OreFeature;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.feature.*;
 import net.minecraftforge.event.RegistryEvent.Register;
 
 public class ModFeatures
@@ -83,7 +83,8 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> HYDRALUX = new HydraluxFeature(5);
 	public static final Feature<NoFeatureConfig> FLAMAEA = new SinglePlantFeature(ModBlocks.FLAMAEA.get(), 12, false, 5);
 	public static final Feature<NoFeatureConfig> POND_ANEMONE = new UnderwaterPlantFeature(ModBlocks.POND_ANEMONE.get(), 6);
-	
+
+
 	// BUSHES
 	public static final Feature<NoFeatureConfig> PYTHADENDRON_BUSH = new BushFeature(ModBlocks.PYTHADENDRON_LEAVES.get(), ModBlocks.PYTHADENDRON.bark.get());
 	public static final Feature<NoFeatureConfig> DRAGON_TREE_BUSH = new BushFeature(ModBlocks.DRAGON_TREE_LEAVES.get(), ModBlocks.DRAGON_TREE.bark.get());
@@ -127,7 +128,8 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> BOLUX_MUSHROOM = new SinglePlantFeature(ModBlocks.BOLUX_MUSHROOM.get(), 5, 5);
 	public static final Feature<NoFeatureConfig> ORANGO = new SinglePlantFeature(ModBlocks.ORANGO.get(), 5);
 	public static final Feature<NoFeatureConfig> LUTEBUS = new SinglePlantFeature(ModBlocks.LUTEBUS.get(), 5, 2);
-	
+	//public static final Feature<NoFeatureConfig> FLAMMALIX = new SinglePlantFeature(ModBlocks.FLAMMALIX.get(), 5, 2);
+
 	// SKY PLANTS
 	public static final Feature<NoFeatureConfig> FILALUX = new FilaluxFeature();
 	
@@ -175,7 +177,8 @@ public class ModFeatures
 	public static final Feature<NoFeatureConfig> OBSIDIAN_PILLAR_BASEMENT = new ObsidianPillarBasementFeature();
 	public static final Feature<NoFeatureConfig> FALLEN_PILLAR = new FallenPillarFeature();
 	public static final Feature<NoFeatureConfig> OBSIDIAN_BOULDER = new ObsidianBoulderFeature();
-	
+	public static final Feature<NoFeatureConfig> TUNEL_CAVE = new TunelCaveFeature();
+
 	// TREES
 	public static final Feature<NoFeatureConfig> MOSSY_GLOWSHROOM = new MossyGlowshroomFeature();
 	public static final Feature<NoFeatureConfig> LACUGROVE = new LacugroveFeature();
@@ -352,5 +355,8 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), CAVE_BUSH, "cave_bush");
       	BetterEnd.register(event.getRegistry(), CAVE_GRASS, "cave_grass");
       	BetterEnd.register(event.getRegistry(), RUBINEA, "rubinea");
+		BetterEnd.register(event.getRegistry(), TUNEL_CAVE, "tunel_cave");
     }
+
+
 }

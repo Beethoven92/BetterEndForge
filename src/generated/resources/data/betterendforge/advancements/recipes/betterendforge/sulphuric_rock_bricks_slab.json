@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:sulphuric_rock_bricks_slab"
+    ]
+  },
+  "criteria": {
+    "has_sulphuric_rock_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:sulphuric_rock_bricks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:sulphuric_rock_bricks_slab"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sulphuric_rock_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}

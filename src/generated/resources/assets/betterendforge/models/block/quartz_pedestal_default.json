@@ -1,0 +1,9 @@
+{
+  "parent": "betterendforge:block/pedestal_default",
+  "textures": {
+    "top": "minecraft:block/quartz_block_side",
+    "base": "minecraft:block/quartz_block_side",
+    "pillar": "minecraft:block/quartz_pillar",
+    "bottom": "minecraft:block/quartz_block_side"
+  }
+}

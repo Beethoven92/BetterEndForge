@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "betterendforge:block/thallasium_slab_top"
+    },
+    "type=bottom": {
+      "model": "betterendforge:block/thallasium_slab"
+    },
+    "type=double": {
+      "model": "betterendforge:block/thallasium_tile"
+    }
+  }
+}

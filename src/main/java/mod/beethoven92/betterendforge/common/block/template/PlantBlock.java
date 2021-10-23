@@ -22,7 +22,7 @@ import net.minecraftforge.common.IForgeShearable;
 public class PlantBlock extends Block implements IGrowable, IForgeShearable
 {
 	private static final VoxelShape SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 14, 12);
-	
+
 	public PlantBlock(Properties properties)
 	{
 		super(properties);

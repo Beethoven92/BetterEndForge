@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "end_planks_buttons",
+  "ingredients": [
+    {
+      "item": "betterendforge:lucernia_planks"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:lucernia_button"
+  }
+}

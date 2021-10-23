@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_crafting_tables",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:lucernia_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:lucernia_crafting_table"
+  }
+}

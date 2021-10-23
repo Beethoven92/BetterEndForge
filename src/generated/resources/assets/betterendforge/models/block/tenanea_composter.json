@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/composter",
+  "textures": {
+    "particle": "betterendforge:block/tenanea_composter_side",
+    "top": "betterendforge:block/tenanea_composter_top",
+    "bottom": "betterendforge:block/tenanea_composter_bottom",
+    "side": "betterendforge:block/tenanea_composter_side",
+    "inside": "betterendforge:block/tenanea_composter_bottom"
+  }
+}

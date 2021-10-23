@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:sulphuric_rock_pedestal"
+    ]
+  },
+  "criteria": {
+    "has_sulphuric_rock_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:sulphuric_rock_slab"
+          }
+        ]
+      }
+    },
+    "has_sulphuric_rock_pillar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:sulphuric_rock_pillar"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:sulphuric_rock_pedestal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sulphuric_rock_slab",
+      "has_sulphuric_rock_pillar",
+      "has_the_recipe"
+    ]
+  ]
+}

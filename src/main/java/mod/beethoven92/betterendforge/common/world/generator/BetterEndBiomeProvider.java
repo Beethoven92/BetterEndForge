@@ -43,8 +43,8 @@ public class BetterEndBiomeProvider extends BiomeProvider
 	{
 		super(getBiomes(lookupRegistry));
 		
-		this.mapLand = new BiomeMap(seed, CommonConfig.biomeSizeLand(), ModBiomes.LAND_BIOMES);
-		this.mapVoid = new BiomeMap(seed, CommonConfig.biomeSizeVoid(), ModBiomes.VOID_BIOMES);
+		this.mapLand = new BiomeMap(seed, GeneratorOptions.getBiomeSizeLand(), ModBiomes.LAND_BIOMES);
+		this.mapVoid = new BiomeMap(seed, GeneratorOptions.getBiomeSizeVoid(), ModBiomes.VOID_BIOMES);
 		this.centerBiome = lookupRegistry.getOrThrow(Biomes.THE_END);
 		this.barrens = lookupRegistry.getOrThrow(Biomes.END_BARRENS);
 		this.lookupRegistry = lookupRegistry;
@@ -76,7 +76,7 @@ public class BetterEndBiomeProvider extends BiomeProvider
 	@Override
 	public Biome getNoiseBiome(int x, int y, int z) 
 	{
-		boolean hasVoid = !CommonConfig.isNewGeneratorEnabled() || !CommonConfig.noRingVoid();
+		boolean hasVoid = !GeneratorOptions.useNewGenerator() || !GeneratorOptions.noRingVoid();
 		
 		long i = (long) x * (long) x;
 		long j = (long) z * (long) z;
@@ -88,7 +88,7 @@ public class BetterEndBiomeProvider extends BiomeProvider
 			mapVoid.clearCache();
 		}
 		
-		if (CommonConfig.isNewGeneratorEnabled()) 
+		if (GeneratorOptions.useNewGenerator())
 		{
 			if (TerrainGenerator.isLand(x, z)) 
 			{

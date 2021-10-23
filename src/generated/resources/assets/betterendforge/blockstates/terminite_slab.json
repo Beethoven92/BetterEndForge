@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "betterendforge:block/terminite_slab_top"
+    },
+    "type=bottom": {
+      "model": "betterendforge:block/terminite_slab"
+    },
+    "type=double": {
+      "model": "betterendforge:block/terminite_tile"
+    }
+  }
+}

@@ -27,11 +27,11 @@ public class MonsterEntityMixin
 			SpawnReason spawnReason, BlockPos pos, Random random, CallbackInfoReturnable<Boolean> info) 
 	{
 		boolean canSpawn = info.getReturnValue();
-		if (CommonConfig.reduceEndermanSpawn() && canSpawn && spawnReason == SpawnReason.NATURAL && type == EntityType.ENDERMAN) 
-		{
+		//if (CommonConfig.reduceEndermanSpawn() && canSpawn && spawnReason == SpawnReason.NATURAL && type == EntityType.ENDERMAN)
+		//{
 			AxisAlignedBB box = new AxisAlignedBB(pos).grow(16);
 			List<EndermanEntity> entities = world.getEntitiesWithinAABB(EndermanEntity.class, box, (entity) -> { return true; });
 			info.setReturnValue(entities.size() < 6);
-		}
+		//}
 	}
 }

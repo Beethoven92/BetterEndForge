@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -60,48 +61,33 @@ public abstract class ChorusFlowerBlockMixin extends Block
 	@Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
 	private void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo info) 
 	{
-		if (world.getBlockState(pos.down()).isIn(ModTags.END_GROUND)) 
-		{
+		if (world.getBlockState(pos.down()).isIn(ModTags.END_GROUND)) {
 			BlockPos up = pos.up();
-			if (world.isAirBlock(up) && up.getY() < 256) 
-			{
+			if (world.isAirBlock(up) && up.getY() < 256) {
 				int i = state.get(ChorusFlowerBlock.AGE);
-				if (i < 5) 
-				{
-					placeGrownFlower(world, up, i + 1);
-					if (CommonConfig.isCustomChorusPlantEnabled()) 
-					{
-						BlockHelper.setWithoutUpdate(world, pos, plantBlock.getDefaultState().with(BlockStateProperties.UP, true).with(BlockStateProperties.DOWN, true).with(BlockHelper.ROOTS, true));
-					}
-					else 
-					{
-						BlockHelper.setWithoutUpdate(world, pos, plantBlock.getDefaultState().with(BlockStateProperties.UP, true).with(BlockStateProperties.DOWN, true));
-					}
+				if (i < 5) {
+					this.placeGrownFlower(world, up, i + 1);
+					BlockHelper.setWithoutUpdate(world, pos, plantBlock.getDefaultState().with(ChorusPlantBlock.UP, true).with(ChorusPlantBlock.DOWN, true));
 					info.cancel();
 				}
 			}
 		}
 	}
-	
-	@Inject(method = "generatePlant", at = @At("RETURN"), cancellable = true)
-	private static void generatePlant(IWorld world, BlockPos pos, Random random, int size, CallbackInfo info) 
-	{
-		BlockState state = world.getBlockState(pos);
-		if (CommonConfig.isCustomChorusPlantEnabled() && state.isIn(Blocks.CHORUS_PLANT)) 
-		{
-			BlockHelper.setWithoutUpdate(world, pos, state.with(BlockHelper.ROOTS, true));
-		}
-	}
-	
-	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader view, BlockPos pos, ISelectionContext context) 
-	{
-		return state.get(ChorusFlowerBlock.AGE) == 5 ? SHAPE_HALF : SHAPE_FULL;
-	}
-	
+
 	@Shadow
 	private void placeGrownFlower(World world, BlockPos pos, int age) {}
-	
+
+	@Override
+	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context)
+	{
+		if (GeneratorOptions.changeChorusPlant()) {
+			return state.get(ChorusFlowerBlock.AGE) == 5 ? SHAPE_HALF : SHAPE_FULL;
+		}
+		else {
+			return super.getShape(state, world, pos, context);
+		}
+	}
+
 	@Inject(method = "placeDeadFlower", at = @At("HEAD"), cancellable = true)
 	private void beOnDie(World world, BlockPos pos, CallbackInfo info) 
 	{

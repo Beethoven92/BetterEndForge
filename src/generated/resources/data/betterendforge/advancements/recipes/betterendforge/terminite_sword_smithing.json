@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:terminite_sword_smithing"
+    ]
+  },
+  "criteria": {
+    "has_terminite_sword_handle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:terminite_sword_handle"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:terminite_sword_smithing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_terminite_sword_handle",
+      "has_the_recipe"
+    ]
+  ]
+}

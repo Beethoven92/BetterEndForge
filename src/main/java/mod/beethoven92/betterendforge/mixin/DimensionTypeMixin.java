@@ -1,5 +1,6 @@
 package mod.beethoven92.betterendforge.mixin;
 
+import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -28,7 +29,7 @@ public abstract class DimensionTypeMixin
     @Inject(method = "doesHasDragonFight", at = @At("HEAD"), cancellable = true)
 	private void be_hasEnderDragonFight(CallbackInfoReturnable<Boolean> info)
     {
-		if (!CommonConfig.isDragonFightEnabled()) 
+		if (!GeneratorOptions.hasDragonFights())
 		{
 			info.setReturnValue(false);
 			info.cancel();

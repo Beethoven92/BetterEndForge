@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.mixin;
 
 import java.util.List;
 
+import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -61,20 +62,19 @@ public abstract class EndBiomeProviderMixin extends BiomeProvider
 	@Inject(at = @At("RETURN"), method = "<init>")
 	private void be_init(Registry<Biome> lookupRegistry, long seed, CallbackInfo info)
 	{
-		if (CommonConfig.isVanillaEndIntegrationEnabled())
-		{
+
 			// The "biomes" list is filled when the EndBiomeProvider constructor is called
 			// and by default is hardcoded to contain only vanilla End biomes.
 			// We need to reset this list to include all End biomes (vanilla and modded) that are found in the registry.
 		    this.biomes = be_getBiomes(lookupRegistry);
 		
-		    this.mapLand = new BiomeMap(seed, CommonConfig.biomeSizeLand(), ModBiomes.LAND_BIOMES);
-		    this.mapVoid = new BiomeMap(seed, CommonConfig.biomeSizeVoid(), ModBiomes.VOID_BIOMES);
+		    this.mapLand = new BiomeMap(seed, GeneratorOptions.getBiomeSizeLand(), ModBiomes.LAND_BIOMES);
+		    this.mapVoid = new BiomeMap(seed, GeneratorOptions.getBiomeSizeVoid(), ModBiomes.VOID_BIOMES);
 		    this.centerBiome = lookupRegistry.getOrThrow(Biomes.THE_END);
 		    this.barrens = lookupRegistry.getOrThrow(Biomes.END_BARRENS);
 	    
 		    ModBiomes.mutateRegistry(lookupRegistry);
-		}
+
 	}
 	
 	// Gathers all available End biomes in the registry
@@ -100,9 +100,7 @@ public abstract class EndBiomeProviderMixin extends BiomeProvider
 	@Inject(at = @At("HEAD"), method = "getNoiseBiome(III)Lnet/minecraft/world/biome/Biome;", cancellable = true)
 	private void be_getNoiseBiome(int x, int y, int z, CallbackInfoReturnable<Biome> info) 
 	{
-		if (CommonConfig.isVanillaEndIntegrationEnabled())
-		{
-			boolean hasVoid = !CommonConfig.isNewGeneratorEnabled() || !CommonConfig.noRingVoid();
+			boolean hasVoid = !GeneratorOptions.useNewGenerator() || !GeneratorOptions.noRingVoid();
 		
 			long i = (long) x * (long) x;
 		    long j = (long) z * (long) z;
@@ -119,7 +117,7 @@ public abstract class EndBiomeProviderMixin extends BiomeProvider
 			    mapVoid.clearCache();
 			}
 		
-		    if (CommonConfig.isNewGeneratorEnabled()) 
+		    if (GeneratorOptions.useNewGenerator())
 		    {
 		    	if (TerrainGenerator.isLand(x, z)) 
 		    	{
@@ -150,16 +148,15 @@ public abstract class EndBiomeProviderMixin extends BiomeProvider
 		    	info.cancel();
 		    	return;
 		    }
-		}
+
 	}
 	
 	@Inject(method = "getBiomeProvider", at = @At("HEAD"), cancellable = true)
 	private void be_getBiomeProvider(long seed, CallbackInfoReturnable<BiomeProvider> info) 
 	{
-		if (CommonConfig.isVanillaEndIntegrationEnabled())
-		{
+
 			info.setReturnValue(new EndBiomeProvider(this.lookupRegistry, seed));
 			info.cancel();
-		}
+
 	}
 }

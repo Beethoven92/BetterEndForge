@@ -41,6 +41,8 @@ public class ModSoundEvents
 			registerSoundEvent("betterendforge.ambient.umbrella_jungle");
 	public static final RegistryObject<SoundEvent> AMBIENT_GLOWING_GRASSLANDS = 
 			registerSoundEvent("betterendforge.ambient.glowing_grasslands");
+	public static final RegistryObject<SoundEvent> AMBIENT_UMBRA_VALLEY =
+			registerSoundEvent("betterendforge.ambient.umbra_valley");
 	
 	// ENTITY SOUNDS
 	public static final RegistryObject<SoundEvent> ENTITY_DRAGONFLY = 

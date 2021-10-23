@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_wall",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:sulphuric_rock_bricks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:sulphuric_rock_bricks_wall",
+    "count": 6
+  }
+}

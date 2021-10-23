@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:neon_cactus_stairs",
+    "betterendforge:mossy_glowshroom_stairs",
+    "betterendforge:lacugrove_stairs",
+    "betterendforge:end_lotus_stairs",
+    "betterendforge:pythadendron_stairs",
+    "betterendforge:dragon_tree_stairs",
+    "betterendforge:tenanea_stairs",
+    "betterendforge:helix_tree_stairs",
+    "betterendforge:umbrella_tree_stairs",
+    "betterendforge:jellyshroom_stairs",
+    "betterendforge:lucernia_stairs"
+  ]
+}

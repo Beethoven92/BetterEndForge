@@ -257,7 +257,7 @@ public class BiomeTemplate
 		structures.add(structure);
 		return this;
 	}
-	
+
 	public BiomeTemplate addFeature(Decoration stage, ConfiguredFeature<?,?> feature)
 	{
 		FeatureInfo info = new FeatureInfo();

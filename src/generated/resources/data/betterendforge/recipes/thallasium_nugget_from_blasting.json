@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": [
+    {
+      "item": "betterendforge:thallasium_axe"
+    },
+    {
+      "item": "betterendforge:thallasium_pickaxe"
+    },
+    {
+      "item": "betterendforge:thallasium_shovel"
+    },
+    {
+      "item": "betterendforge:thallasium_hoe"
+    },
+    {
+      "item": "betterendforge:thallasium_sword"
+    },
+    {
+      "item": "betterendforge:thallasium_hammer"
+    },
+    {
+      "item": "betterendforge:thallasium_helmet"
+    },
+    {
+      "item": "betterendforge:thallasium_chestplate"
+    },
+    {
+      "item": "betterendforge:thallasium_leggings"
+    },
+    {
+      "item": "betterendforge:thallasium_boots"
+    }
+  ],
+  "result": "betterendforge:thallasium_nugget",
+  "experience": 0.35,
+  "cookingtime": 100
+}

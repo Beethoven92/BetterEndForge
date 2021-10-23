@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "end_planks",
+  "ingredients": [
+    {
+      "tag": "betterendforge:helix_tree_logs"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:helix_tree_planks",
+    "count": 4
+  }
+}

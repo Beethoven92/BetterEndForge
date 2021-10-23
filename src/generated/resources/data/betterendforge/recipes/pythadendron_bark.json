@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:pythadendron_log"
+    }
+  },
+  "result": {
+    "item": "betterendforge:pythadendron_bark",
+    "count": 3
+  }
+}

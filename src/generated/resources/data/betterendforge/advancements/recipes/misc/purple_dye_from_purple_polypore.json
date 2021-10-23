@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:purple_dye_from_purple_polypore"
+    ]
+  },
+  "criteria": {
+    "has_purple_polypore": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:purple_polypore"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:purple_dye_from_purple_polypore"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_purple_polypore",
+      "has_the_recipe"
+    ]
+  ]
+}

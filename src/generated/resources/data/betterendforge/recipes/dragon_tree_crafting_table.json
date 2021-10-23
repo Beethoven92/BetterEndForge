@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_crafting_tables",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:dragon_tree_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:dragon_tree_crafting_table"
+  }
+}

@@ -1,5 +1,6 @@
 package mod.beethoven92.betterendforge.mixin;
 
+import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,9 +24,9 @@ public abstract class EndCityStructureMixin
 			SharedSeedRandom chunkRandom, int i, int j, Biome biome, ChunkPos chunkPos,
 			NoFeatureConfig config, CallbackInfoReturnable<Boolean> info) 
 	{
-		if (CommonConfig.isNewGeneratorEnabled()) 
+		if (GeneratorOptions.useNewGenerator())
 		{
-			int chance = CommonConfig.endCityFailChance();
+			int chance = GeneratorOptions.getEndCityFailChance();
 			if (chance == 0) 
 			{
 				info.setReturnValue(getYPosForStructure(i, j, chunkGenerator) >= 60);

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:smithing_table_from_thallasium_ingot"
+    ]
+  },
+  "criteria": {
+    "has_thallasium_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:thallasium_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:smithing_table_from_thallasium_ingot"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_thallasium_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

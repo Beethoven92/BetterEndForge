@@ -1,0 +1,21 @@
+{
+	"variants": {
+		"": [
+				{
+					"model": "betterendforge:block/pallidium_thin"
+				},
+				{
+					"model": "betterendforge:block/pallidium_thin",
+					"y": 90
+				},
+				{
+					"model": "betterendforge:block/pallidium_thin",
+					"y": 180
+				},
+				{
+					"model": "betterendforge:block/pallidium_thin",
+					"y": 270
+				}
+		]
+	}
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_composters",
+  "pattern": [
+    "# #",
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:helix_tree_slab"
+    }
+  },
+  "result": {
+    "item": "betterendforge:helix_tree_composter"
+  }
+}

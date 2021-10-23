@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_crafting_tables",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:end_lotus_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:end_lotus_crafting_table"
+  }
+}

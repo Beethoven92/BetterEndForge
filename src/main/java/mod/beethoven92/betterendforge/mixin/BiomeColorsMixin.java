@@ -1,5 +1,6 @@
 package mod.beethoven92.betterendforge.mixin;
 
+import mod.beethoven92.betterendforge.client.ClientOptions;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.ModList;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,16 +30,17 @@ public class BiomeColorsMixin {
 
 	@Inject(method = "getWaterColor", at = @At("RETURN"), cancellable = true)
 	private static void be_getWaterColor(IBlockDisplayReader world, BlockPos blockPos, CallbackInfoReturnable<Integer> info) {
-		IBlockDisplayReader view = HAS_MAGNESIUM ? Minecraft.getInstance().world : world;
-		Mutable mut = new Mutable();
-		mut.setY(blockPos.getY());
-		for (int i = 0; i < OFFSETS.length; i++) {
-			mut.setX(blockPos.getX() + OFFSETS[i].x);
-			mut.setZ(blockPos.getZ() + OFFSETS[i].y);
-			if ((view.getBlockState(mut).getBlockState().isIn(ModBlocks.BRIMSTONE.get()))) {
-				info.setReturnValue(i < 16 ? STREAM_COLOR : POISON_COLOR);
-				info.cancel();
-				return;
+		if (ClientOptions.useSulfurWaterColor()) {
+			IBlockDisplayReader view = HAS_MAGNESIUM ? Minecraft.getInstance().world : world;
+			Mutable mut = new Mutable();
+			mut.setY(blockPos.getY());
+			for (int i = 0; i < OFFSETS.length; i++) {
+				mut.setX(blockPos.getX() + OFFSETS[i].x);
+				mut.setZ(blockPos.getZ() + OFFSETS[i].y);
+				if ((view.getBlockState(mut).isIn(ModBlocks.BRIMSTONE.get()))) {
+					info.setReturnValue(i < 4 ? POISON_COLOR : STREAM_COLOR);
+					return;
+				}
 			}
 		}
 
@@ -48,23 +50,16 @@ public class BiomeColorsMixin {
 	static {
 		HAS_MAGNESIUM = ModList.get().isLoaded("magnesium");
 
+		int index = 0;
 		OFFSETS = new Point[20];
-		for (int i = 0; i < 3; i++) {
-			int p = i - 1;
-			OFFSETS[i] = new Point(p, -2);
-			OFFSETS[i + 3] = new Point(p, 2);
-			OFFSETS[i + 6] = new Point(-2, p);
-			OFFSETS[i + 9] = new Point(2, p);
+		for (int x = -2; x < 3; x++) {
+			for (int z = -2; z < 3; z++) {
+				if ((x != 0 || z != 0) && (Math.abs(x) != 2 || Math.abs(z) != 2)) {
+					OFFSETS[index++] = new Point(x, z);
+				}
+			}
 		}
-
-		for (int i = 0; i < 4; i++) {
-			int inner = i + 16;
-			Direction dir = BlockHelper.HORIZONTAL_DIRECTIONS[i];
-			OFFSETS[inner] = new Point(dir.getXOffset(), dir.getZOffset());
-			dir = BlockHelper.HORIZONTAL_DIRECTIONS[(i + 1) & 3];
-			OFFSETS[i + 12] = new Point(OFFSETS[inner].x + dir.getXOffset(), OFFSETS[inner].y + dir.getZOffset());
-		}
-
+		Arrays.sort(OFFSETS, Comparator.comparingInt(pos -> ModMathHelper.sqr(pos.x) + ModMathHelper.sqr(pos.y)));
 	}
 
 }

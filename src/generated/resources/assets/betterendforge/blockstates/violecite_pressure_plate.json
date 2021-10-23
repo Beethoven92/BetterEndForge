@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "betterendforge:block/violecite_pressure_plate"
+    },
+    "powered=true": {
+      "model": "betterendforge:block/violecite_pressure_plate_down"
+    }
+  }
+}

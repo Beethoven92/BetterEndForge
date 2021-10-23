@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:aeternium_block",
+    "betterendforge:amber_block",
+    "betterendforge:thallasium_block",
+    "betterendforge:terminite_block"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:lacugrove_log"
+    }
+  },
+  "result": {
+    "item": "betterendforge:lacugrove_bark",
+    "count": 3
+  }
+}

@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.mixin;
 
 import java.util.Random;
 
+import mod.beethoven92.betterendforge.client.ClientOptions;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -42,7 +43,7 @@ public class MusicTickerMixin
 	@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
 	public void be_onTick(CallbackInfo info) 
 	{
-		if (ClientConfig.shouldBlendBiomeMusic()) 
+		if (ClientOptions.blendBiomeMusic())
 		{
 			BackgroundMusicSelector musicSound = client.getBackgroundMusicSelector();
 			if (volume > 0 && beIsInEnd() && beShouldChangeSound(musicSound)) 

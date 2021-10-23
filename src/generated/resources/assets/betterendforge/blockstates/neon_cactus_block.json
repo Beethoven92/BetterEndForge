@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "betterendforge:block/neon_cactus_block_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "betterendforge:block/neon_cactus_block"
+    },
+    "axis=z": {
+      "model": "betterendforge:block/neon_cactus_block_horizontal",
+      "x": 90
+    }
+  }
+}

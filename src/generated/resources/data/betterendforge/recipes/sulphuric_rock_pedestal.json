@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "#",
+    "S"
+  ],
+  "key": {
+    "S": {
+      "item": "betterendforge:sulphuric_rock_slab"
+    },
+    "#": {
+      "item": "betterendforge:sulphuric_rock_pillar"
+    }
+  },
+  "result": {
+    "item": "betterendforge:sulphuric_rock_pedestal",
+    "count": 2
+  }
+}

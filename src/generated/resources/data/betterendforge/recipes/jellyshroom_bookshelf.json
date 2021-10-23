@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_bookshelves",
+  "pattern": [
+    "###",
+    "PPP",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:jellyshroom_planks"
+    },
+    "P": {
+      "item": "minecraft:book"
+    }
+  },
+  "result": {
+    "item": "betterendforge:jellyshroom_bookshelf"
+  }
+}

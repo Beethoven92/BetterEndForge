@@ -1,5 +1,6 @@
 package mod.beethoven92.betterendforge.mixin;
 
+import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -27,121 +28,50 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 @Mixin(value = ChorusPlantBlock.class, priority = 100)
-public abstract class ChorusPlantBlockMixin extends SixWayBlock
-{
-	public ChorusPlantBlockMixin(float apothem, Properties properties)
-	{
-		super(apothem, properties);
+public abstract class ChorusPlantBlockMixin extends Block {
+	public ChorusPlantBlockMixin(Properties settings) {
+		super(settings);
 	}
-	
-	@Inject(method = "<init>*", at = @At("TAIL"))
-	private void init(AbstractBlock.Properties settings, CallbackInfo info) 
-	{
-		if (CommonConfig.isCustomChorusPlantEnabled()) 
-		{
-			this.setDefaultState(this.getDefaultState().with(BlockHelper.ROOTS, false));
-		}
-	}
-	
+
 	@Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
-	private void getStateForPlacement(BlockItemUseContext context, CallbackInfoReturnable<BlockState> info) 
-	{
-		BlockPos pos = context.getPos();
-		World world = context.getWorld();
+	private void be_getStateForPlacement(BlockItemUseContext ctx, CallbackInfoReturnable<BlockState> info) {
+		BlockPos pos = ctx.getPos();
+		World world = ctx.getWorld();
 		BlockState plant = info.getReturnValue();
-		if (context.canPlace() && plant.isIn(Blocks.CHORUS_PLANT) && world.getBlockState(pos.down()).isIn(ModTags.END_GROUND))
-		{
-			if (CommonConfig.isCustomChorusPlantEnabled()) 
-			{
-				info.setReturnValue(plant.with(BlockHelper.ROOTS, true).with(BlockStateProperties.DOWN, true));
-			}
-			else 
-			{
-				info.setReturnValue(plant.with(BlockStateProperties.DOWN, true));
-			}
-			info.cancel();
+		if (ctx.canPlace() && plant.isIn(Blocks.CHORUS_PLANT) && world.getBlockState(pos.down()).isIn(ModTags.END_GROUND)) {
+			info.setReturnValue(plant.with(BlockStateProperties.DOWN, true));
 		}
 	}
-	
-	@Inject(method = "updatePostPlacement", at = @At("RETURN"), cancellable = true)
-	private void updatePostPlacement(BlockState state, Direction direction, BlockState newState, IWorld world, 
-			BlockPos pos, BlockPos posFrom, CallbackInfoReturnable<BlockState> info) 
-	{
-		BlockState plant = info.getReturnValue();
-		if (plant.isIn(Blocks.CHORUS_PLANT)) 
-		{
-			if (world.getBlockState(pos.down()).isIn(ModTags.END_GROUND)) 
-			{
-				if (CommonConfig.isCustomChorusPlantEnabled()) 
-				{
-					plant = plant.with(BlockStateProperties.DOWN, true).with(BlockHelper.ROOTS, true);
-				}
-				else 
-				{
-					plant = plant.with(BlockStateProperties.DOWN, true);
-				}
-				info.cancel();
-			}
-			else 
-			{
-				if (CommonConfig.isCustomChorusPlantEnabled()) 
-				{
-					plant = plant.with(BlockHelper.ROOTS, false);
-				}
-				info.cancel();
-			}
-			info.setReturnValue(plant);
-			info.cancel();
-		}
-	}
-	
+
 	@Inject(method = "makeConnections", at = @At("RETURN"), cancellable = true)
-	private void beConnectionProperties(IBlockReader world, BlockPos pos, CallbackInfoReturnable<BlockState> info) 
+	private void beConnectionProperties(IBlockReader blockGetter, BlockPos blockPos, CallbackInfoReturnable<BlockState> info)
 	{
 		BlockState plant = info.getReturnValue();
-		if (plant.isIn(Blocks.CHORUS_PLANT)) 
-		{
-			if (world.getBlockState(pos.down()).isIn(ModTags.END_GROUND)) 
-			{
-				if (CommonConfig.isCustomChorusPlantEnabled()) 
-				{
-					info.setReturnValue(plant.with(BlockStateProperties.DOWN, true).with(BlockHelper.ROOTS, true));
-				}
-				else 
-				{
-					info.setReturnValue(plant.with(BlockStateProperties.DOWN, true));
-				}
-				info.cancel();
-			}
-			else 
-			{
-				if (CommonConfig.isCustomChorusPlantEnabled()) 
-				{
-					info.setReturnValue(plant.with(BlockHelper.ROOTS, false));
-				}
-				info.cancel();
-			}
+		if (plant.isIn(Blocks.CHORUS_PLANT) && blockGetter.getBlockState(blockPos.down()).isIn(ModTags.END_GROUND)) {
+			info.setReturnValue(plant.with(BlockStateProperties.DOWN, true));
 		}
+
 	}
-	
+
 	@Inject(method = "isValidPosition", at = @At("HEAD"), cancellable = true)
-	private void isValidPosition(BlockState state, IWorldReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info) 
+	private void isValidPosition(BlockState state, IWorldReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info)
 	{
 		BlockState down = world.getBlockState(pos.down());
-		if (down.isIn(ModBlocks.CHORUS_NYLIUM.get()) || down.isIn(Blocks.END_STONE)) 
-		{
+		if (down.isIn(ModBlocks.CHORUS_NYLIUM.get()) || down.isIn(Blocks.END_STONE)) {
 			info.setReturnValue(true);
-			info.cancel();
 		}
 	}
-	
-	@Inject(method = "fillStateContainer", at = @At("TAIL"))
-	private void fillStateContainer(StateContainer.Builder<Block, BlockState> builder, CallbackInfo info) 
+
+	@Inject(method = "updatePostPlacement", at = @At("RETURN"), cancellable = true)
+	private void updatePostPlacement(BlockState state, Direction direction, BlockState newState, IWorld world,
+			BlockPos pos, BlockPos posFrom, CallbackInfoReturnable<BlockState> info)
 	{
-		if (CommonConfig.isCustomChorusPlantEnabled()) 
-		{
-			builder.add(BlockHelper.ROOTS);
+		BlockState plant = info.getReturnValue();
+		if (plant.isIn(Blocks.CHORUS_PLANT) && world.getBlockState(pos.down()).isIn(ModTags.END_GROUND)) {
+			plant = plant.with(BlockStateProperties.DOWN, true);
+			info.setReturnValue(plant);
+
 		}
 	}
-	
+
 }

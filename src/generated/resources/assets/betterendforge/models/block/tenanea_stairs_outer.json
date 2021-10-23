@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "side": "betterendforge:block/tenanea_planks",
+    "bottom": "betterendforge:block/tenanea_planks",
+    "top": "betterendforge:block/tenanea_planks"
+  }
+}

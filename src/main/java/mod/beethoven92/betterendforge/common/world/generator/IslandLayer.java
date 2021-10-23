@@ -9,54 +9,47 @@ import com.google.common.collect.Maps;
 
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.util.sdf.SDF;
+import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFFlatWave;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFScale;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSmoothUnion;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFCappedCone;
+import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFRadialNoiseMap;
 import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.util.math.BlockPos;
 
 public class IslandLayer
 {
 	private static final Random RANDOM = new Random();
-	private static final SDF ISLAND;
-	
+	private final SDFRadialNoiseMap noise;
+	private final SDF island;
+
 	private final List<BlockPos> positions = new ArrayList<BlockPos>(9);
 	private final Map<BlockPos, SDF> islands = Maps.newHashMap();
 	private final OpenSimplexNoise density;
-	private final double distance;
-	private final float scale;
 	private final int seed;
-	private final int minY;
-	private final int maxY;
-	private final long center;
-	private final boolean hasCentralIsland;
 	private int lastX = Integer.MIN_VALUE;
 	private int lastZ = Integer.MIN_VALUE;
-	
-	static 
-	{
+	private final LayerOptions options;
+
+	public IslandLayer(int seed, LayerOptions options) {
+		this.density = new OpenSimplexNoise(seed);
+		this.options = options;
+		this.seed = seed;
+
+
 		SDF cone1 = makeCone(0, 0.4F, 0.2F, -0.3F);
 		SDF cone2 = makeCone(0.4F, 0.5F, 0.1F, -0.1F);
 		SDF cone3 = makeCone(0.5F, 0.45F, 0.03F, 0.0F);
 		SDF cone4 = makeCone(0.45F, 0, 0.02F, 0.03F);
-		
+
 		SDF coneBottom = new SDFSmoothUnion().setRadius(0.02F).setSourceA(cone1).setSourceB(cone2);
 		SDF coneTop = new SDFSmoothUnion().setRadius(0.02F).setSourceA(cone3).setSourceB(cone4);
-		
-		ISLAND = new SDFSmoothUnion().setRadius(0.01F).setSourceA(coneTop).setSourceB(coneBottom);
-	}
-	
-	public IslandLayer(int seed, double distance, float scale, int center, int heightVariation, boolean hasCentralIsland)
-	{
-		this.distance = distance;
-		this.density = new OpenSimplexNoise(seed);
-		this.scale = scale;
-		this.seed = seed;
-		this.minY = center - heightVariation;
-		this.maxY = center + heightVariation;
-		this.center = ModMathHelper.floor(1000 / distance);
-		this.hasCentralIsland = hasCentralIsland;
+		noise = (SDFRadialNoiseMap) new SDFRadialNoiseMap().setSeed(seed)
+				.setRadius(0.5F)
+				.setIntensity(0.2F)
+				.setSource(coneTop);
+		island = new SDFSmoothUnion().setRadius(0.01F).setSourceA(noise).setSourceB(coneBottom);
 	}
 	
 	private int getSeed(int x, int z) 
@@ -67,36 +60,53 @@ public class IslandLayer
 	}
 	
 	public void updatePositions(double x, double z) {
-		
-		int ix = ModMathHelper.floor(x / distance);
-		int iz = ModMathHelper.floor(z / distance);
+
+
+		int ix = ModMathHelper.floor(x / options.distance);
+		int iz = ModMathHelper.floor(z / options.distance);
 		if (lastX != ix || lastZ != iz)
 		{
 			lastX = ix;
 			lastZ = iz;
 			positions.clear();
-			for (int pox = -1; pox < 2; pox++) 
+			for (int pox = -1; pox < 2; pox++)
 			{
 				int px = pox + ix;
-				for (int poz = -1; poz < 2; poz++) 
+				long px2 = px;
+				for (int poz = -1; poz < 2; poz++)
 				{
 					int pz = poz + iz;
-					if (CommonConfig.noRingVoid() || (long) px + (long) pz > center) 
+					long pz2 = pz;
+					if (GeneratorOptions.noRingVoid() || px2 * px2 + pz2 * pz2 > options.centerDist)
 					{
 						RANDOM.setSeed(getSeed(px, pz));
-						double posX = (px + RANDOM.nextFloat()) * distance;
-						double posY = ModMathHelper.randRange(minY, maxY, RANDOM);
-						double posZ = (pz + RANDOM.nextFloat()) * distance;
+						double posX = (px + RANDOM.nextFloat()) * options.distance;
+						double posY = ModMathHelper.randRange(options.minY, options.maxY, RANDOM);
+						double posZ = (pz + RANDOM.nextFloat()) * options.distance;
 						if (density.eval(posX * 0.01, posZ * 0.01) > 0) {
 							positions.add(new BlockPos(posX, posY, posZ));
 						}
 					}
 				}
 			}
-			if (hasCentralIsland && CommonConfig.shouldGenerateCentralIsland() && ix < 2 && iz < 2 && ix > -2 && iz > -2) 
-			{
-				positions.add(new BlockPos(0, 64, 0));
+
+			if (GeneratorOptions.hasCentralIsland() && Math.abs(ix) < GeneratorOptions.getIslandDistChunk() && Math.abs(iz) < GeneratorOptions
+					.getIslandDistChunk()) {
+				int count = positions.size();
+				for (int n = 0; n < count; n++) {
+					BlockPos pos = positions.get(n);
+					long d = (long) pos.getX() * (long) pos.getX() + (long) pos.getZ() * (long) pos.getZ();
+					if (d < GeneratorOptions.getIslandDistBlock()) {
+						positions.remove(n);
+						count--;
+						n--;
+					}
+				}
+				if (GeneratorOptions.hasCentralIsland()) {
+					positions.add(new BlockPos(0, 64, 0));
+				}
 			}
+
 		}
 	}
 	
@@ -107,23 +117,24 @@ public class IslandLayer
 		{
 			if (pos.getX() == 0 && pos.getZ() == 0) 
 			{
-				island = new SDFScale().setScale(1.3F).setSource(ISLAND);
+				island = new SDFScale().setScale(1.3F).setSource(this.island);
 			}
 			else 
 			{
 				RANDOM.setSeed(getSeed(pos.getX(), pos.getZ()));
-				island = new SDFScale().setScale(RANDOM.nextFloat() + 0.5F).setSource(ISLAND);
+				island = new SDFScale().setScale(RANDOM.nextFloat() + 0.5F).setSource(this.island);
 			}
 			islands.put(pos, island);
 		}
+		noise.setOffset(pos.getX(), pos.getZ());
 		return island;
 	}
 	
 	private float getRelativeDistance(SDF sdf, BlockPos center, double px, double py, double pz) 
 	{
-		float x = (float) (px - center.getX()) / scale;
-		float y = (float) (py - center.getY()) / scale;
-		float z = (float) (pz - center.getZ()) / scale;
+		float x = (float) (px - center.getX()) / options.scale;
+		float y = (float) (py - center.getY()) / options.scale;
+		float z = (float) (pz - center.getZ()) / options.scale;
 		return sdf.getDistance(x, y, z);
 	}
 	
@@ -138,9 +149,14 @@ public class IslandLayer
 		}
 		return distance;
 	}
-	
-	public float getDensity(double x, double y, double z) 
-	{
+
+	public float getDensity(double x, double y, double z) {
+		return -calculateSDF(x, y, z);
+	}
+
+	public float getDensity(double x, double y, double z, float height) {
+		noise.setIntensity(height);
+		noise.setRadius(0.5F / (1 + height));
 		return -calculateSDF(x, y, z);
 	}
 	

@@ -12,6 +12,7 @@ import mod.beethoven92.betterendforge.common.util.JsonFactory;
 import mod.beethoven92.betterendforge.common.util.StructureHelper;
 import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures.StructureInfo;
 import mod.beethoven92.betterendforge.common.world.feature.NBTFeature.TerrainMerge;
+import mod.beethoven92.betterendforge.config.Configs;
 import mod.beethoven92.betterendforge.config.jsons.JsonConfigs;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
@@ -45,9 +46,9 @@ public class BetterEndBiome
 		biome = template.build();
 		
 		id = template.getID();
-		fogDensity = JsonConfigs.BIOME_CONFIG.getFloat(id, "fog_density", template.getFogDensity());
-		genChanceUnmutable = JsonConfigs.BIOME_CONFIG.getFloat(id, "generation_chance", template.getGenChance());
-		hasCaves = JsonConfigs.BIOME_CONFIG.getBoolean(id, "has_caves", template.hasCaves());
+		fogDensity = Configs.BIOME_CONFIG.getFloat(id, "fog_density", template.getFogDensity());
+		genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(id, "generation_chance", template.getGenChance());
+		hasCaves = Configs.BIOME_CONFIG.getBoolean(id, "has_caves", template.hasCaves());
 		this.readNBTStructureList();
 	}
 	
@@ -55,9 +56,9 @@ public class BetterEndBiome
 	{
 		this.biome = biome;
 		this.id = id;
-		this.fogDensity = JsonConfigs.BIOME_CONFIG.getFloat(id, "fog_density", fogDensity);
-		this.genChanceUnmutable = JsonConfigs.BIOME_CONFIG.getFloat(id, "generation_chance", genChance);
-		this.hasCaves = JsonConfigs.BIOME_CONFIG.getBoolean(id, "has_caves", hasCaves);
+		this.fogDensity = Configs.BIOME_CONFIG.getFloat(id, "fog_density", fogDensity);
+		this.genChanceUnmutable = Configs.BIOME_CONFIG.getFloat(id, "generation_chance", genChance);
+		this.hasCaves = Configs.BIOME_CONFIG.getBoolean(id, "has_caves", hasCaves);
 		this.readNBTStructureList();
 	}
 	

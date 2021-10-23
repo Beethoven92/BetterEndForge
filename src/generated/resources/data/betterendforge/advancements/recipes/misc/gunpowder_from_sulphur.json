@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:gunpowder_from_sulphur"
+    ]
+  },
+  "criteria": {
+    "has_crystalline_sulphur": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:crystalline_sulphur"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:gunpowder_from_sulphur"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_crystalline_sulphur",
+      "has_the_recipe"
+    ]
+  ]
+}

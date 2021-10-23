@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:fiber_string"
+    ]
+  },
+  "criteria": {
+    "has_silk_fiber": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:silk_fiber"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:fiber_string"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_silk_fiber",
+      "has_the_recipe"
+    ]
+  ]
+}

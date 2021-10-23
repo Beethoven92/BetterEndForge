@@ -4,6 +4,7 @@
 	"compatibilityLevel": "JAVA_8",
 	"refmap": "betterendforge.refmap.json",
 	"mixins": [
+		  "BiomeGenerationSettingsAccessor",
 	      "BoneMealItemMixin",
 	      "ChorusFlowerBlockMixin",
 	      "ChorusPlantBlockMixin",
@@ -25,7 +26,10 @@
 	      "AnvilBlockMixin",
 	      "PlayerListMixin",
 	      "MinecraftServerMixin",
-	      "BiomeContainerMixin"
+	      "BiomeContainerMixin",
+		  "ServerPlayerEntityMixin",
+		  "ServerLevelMixin",
+		  "EndSpikeMixin"
 	],
   "client": [
 	      "BiomeColorsMixin",
@@ -37,6 +41,9 @@
 	      "MinecraftMixin",
 	      "ModelBakeryMixin",
 	      "AnvilScreenMixin"
-	], 
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
   "minVersion": "0.8"
 }

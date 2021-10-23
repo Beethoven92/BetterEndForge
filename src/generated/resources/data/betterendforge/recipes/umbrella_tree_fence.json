@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_planks_fences",
+  "pattern": [
+    "W#W",
+    "W#W"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "W": {
+      "item": "betterendforge:umbrella_tree_planks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:umbrella_tree_fence",
+    "count": 3
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:thallasium_bulb_lantern_light_gray"
+    ]
+  },
+  "criteria": {
+    "has_thallasium_bulb_lantern": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:thallasium_bulb_lantern"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:thallasium_bulb_lantern_light_gray"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_thallasium_bulb_lantern",
+      "has_the_recipe"
+    ]
+  ]
+}

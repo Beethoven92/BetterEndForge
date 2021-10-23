@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:aeternium_anvil_smithing"
+    ]
+  },
+  "criteria": {
+    "has_aeternium_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:aeternium_block"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:aeternium_anvil_smithing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_aeternium_block",
+      "has_the_recipe"
+    ]
+  ]
+}

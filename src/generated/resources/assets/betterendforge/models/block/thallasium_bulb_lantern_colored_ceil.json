@@ -1,0 +1,6 @@
+{
+  "parent": "betterendforge:block/bulb_lantern_colored_ceil",
+  "textures": {
+    "metal": "betterendforge:block/thallasium_bulb_vine_lantern_metal"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "betterendforge:item/end_stone_stalactite"
+  }
+}

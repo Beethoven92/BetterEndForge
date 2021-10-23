@@ -413,7 +413,12 @@ public class ModConfiguredFeatures
 	public static final ConfiguredFeature<?, ?> OBSIDIAN_BOULDER = 
 			ModFeatures.OBSIDIAN_BOULDER.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
 			withPlacement(Placement.CHANCE.configure(new ChanceConfig(10)));
-	
+
+	public static final ConfiguredFeature<?, ?> TUNEL_CAVE =
+			ModFeatures.TUNEL_CAVE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
+			.withPlacement(Placement.CHANCE.configure(new ChanceConfig(1)));
+
+
 	// TREES
 	public static final ConfiguredFeature<?, ?> MOSSY_GLOWSHROOM = 
 			ModFeatures.MOSSY_GLOWSHROOM.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).
@@ -677,5 +682,6 @@ public class ModConfiguredFeatures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "cave_bush"), CAVE_BUSH);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "cave_grass"), CAVE_GRASS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "rubinea"), RUBINEA);
+		Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "tunel_cave"), TUNEL_CAVE);
 	}   
 }

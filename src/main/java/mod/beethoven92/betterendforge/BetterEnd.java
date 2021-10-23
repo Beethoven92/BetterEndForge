@@ -1,9 +1,14 @@
 package mod.beethoven92.betterendforge;
 
+import mod.beethoven92.betterendforge.client.ClientOptions;
+import mod.beethoven92.betterendforge.common.init.*;
+import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
+import mod.beethoven92.betterendforge.config.Configs;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.ForgeWorldType;
 import net.minecraftforge.event.RegistryEvent;
@@ -16,6 +21,7 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -26,23 +32,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import mod.beethoven92.betterendforge.client.PhysicalClientSide;
-import mod.beethoven92.betterendforge.common.init.ModBiomes;
-import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
-import mod.beethoven92.betterendforge.common.init.ModConfiguredStructures;
-import mod.beethoven92.betterendforge.common.init.ModContainerTypes;
-import mod.beethoven92.betterendforge.common.init.ModEffects;
-import mod.beethoven92.betterendforge.common.init.ModEnchantments;
-import mod.beethoven92.betterendforge.common.init.ModEntityTypes;
-import mod.beethoven92.betterendforge.common.init.ModFeatures;
-import mod.beethoven92.betterendforge.common.init.ModItems;
-import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
-import mod.beethoven92.betterendforge.common.init.ModPotions;
-import mod.beethoven92.betterendforge.common.init.ModRecipeSerializers;
-import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
-import mod.beethoven92.betterendforge.common.init.ModStructures;
-import mod.beethoven92.betterendforge.common.init.ModSurfaceBuilders;
-import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.recipes.ModRecipeManager;
 import mod.beethoven92.betterendforge.common.teleporter.EndPortals;
 import mod.beethoven92.betterendforge.common.world.TerraforgedIntegrationWorldType;
@@ -87,15 +76,17 @@ public class BetterEnd
     	ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
     	ModSoundEvents.SOUND_EVENTS.register(modEventBus);
     	ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
+
+		ModStructurePieces.registerAllPieces();
         
     	File configDirectory = new File(CONFIG_PATH.toString());
         if (!configDirectory.exists()) configDirectory.mkdir();
-    	
-        JsonConfigs.saveConfigs();
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ClientConfig.getConfig(), CONFIG_PATH.resolve("client-config.toml").toString());
-    	ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CommonConfig.getConfig(), CONFIG_PATH.resolve("world-generator-config.toml").toString());
-    	
+		GeneratorOptions.init();
+		ClientOptions.init();
+        Configs.saveConfigs();
+
     	EndPortals.loadPortals();
+
     }
 
     private void setupCommon(final FMLCommonSetupEvent event)
@@ -146,4 +137,14 @@ public class BetterEnd
         registry.register(entry);
         return entry;
     }
+
+
+	public static boolean isClient() {
+		return FMLLoader.getDist() == Dist.CLIENT;
+	}
+
+	public static ResourceLocation makeID(String path) {
+		return new ResourceLocation(MOD_ID, path);
+	}
+
 }

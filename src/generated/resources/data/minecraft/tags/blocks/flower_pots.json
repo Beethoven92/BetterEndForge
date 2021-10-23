@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "betterendforge:potted_mossy_glowshroom_sapling",
+    "betterendforge:potted_lacugrove_sapling",
+    "betterendforge:potted_pythadendron_sapling",
+    "betterendforge:potted_dragon_tree_sapling",
+    "betterendforge:potted_tenanea_sapling",
+    "betterendforge:potted_helix_tree_sapling",
+    "betterendforge:potted_umbrella_tree_sapling"
+  ]
+}

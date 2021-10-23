@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:aeternium_leggings_smithing"
+    ]
+  },
+  "criteria": {
+    "has_aeternium_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:aeternium_ingot"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:aeternium_leggings_smithing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_aeternium_ingot",
+      "has_the_recipe"
+    ]
+  ]
+}

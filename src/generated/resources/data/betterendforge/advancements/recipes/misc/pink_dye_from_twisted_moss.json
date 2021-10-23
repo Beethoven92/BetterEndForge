@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:pink_dye_from_twisted_moss"
+    ]
+  },
+  "criteria": {
+    "has_twisted_moss": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:twisted_moss"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:pink_dye_from_twisted_moss"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_twisted_moss",
+      "has_the_recipe"
+    ]
+  ]
+}

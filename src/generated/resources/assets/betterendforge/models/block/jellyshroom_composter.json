@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/composter",
+  "textures": {
+    "particle": "betterendforge:block/jellyshroom_composter_side",
+    "top": "betterendforge:block/jellyshroom_composter_top",
+    "bottom": "betterendforge:block/jellyshroom_composter_bottom",
+    "side": "betterendforge:block/jellyshroom_composter_side",
+    "inside": "betterendforge:block/jellyshroom_composter_bottom"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "betterendforge:block/bulb_lantern_colored_floor",
+  "textures": {
+    "metal": "betterendforge:block/terminite_bulb_vine_lantern_metal"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:furnace",
+    "betterendforge:end_stone_furnace",
+    "betterendforge:flavolite_furnace",
+    "betterendforge:violecite_furnace",
+    "betterendforge:sulphuric_rock_furnace"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "betterendforge:block/violecite_slab_top"
+    },
+    "type=bottom": {
+      "model": "betterendforge:block/violecite_slab"
+    },
+    "type=double": {
+      "model": "betterendforge:block/violecite"
+    }
+  }
+}

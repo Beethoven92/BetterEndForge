@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:purpur_pedestal"
+    ]
+  },
+  "criteria": {
+    "has_purpur_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:purpur_slab"
+          }
+        ]
+      }
+    },
+    "has_purpur_pillar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:purpur_pillar"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:purpur_pedestal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_purpur_slab",
+      "has_purpur_pillar",
+      "has_the_recipe"
+    ]
+  ]
+}

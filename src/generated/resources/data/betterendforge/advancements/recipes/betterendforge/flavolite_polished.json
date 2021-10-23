@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:flavolite_polished"
+    ]
+  },
+  "criteria": {
+    "has_flavolite_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:flavolite_bricks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:flavolite_polished"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_flavolite_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}

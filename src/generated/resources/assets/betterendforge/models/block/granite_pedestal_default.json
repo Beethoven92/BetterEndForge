@@ -1,0 +1,9 @@
+{
+  "parent": "betterendforge:block/pedestal_default",
+  "textures": {
+    "top": "minecraft:block/polished_granite",
+    "base": "minecraft:block/polished_granite",
+    "pillar": "minecraft:block/granite_pillar",
+    "bottom": "minecraft:block/polished_granite"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": [
+    {
+      "item": "betterendforge:terminite_axe"
+    },
+    {
+      "item": "betterendforge:terminite_pickaxe"
+    },
+    {
+      "item": "betterendforge:terminite_shovel"
+    },
+    {
+      "item": "betterendforge:terminite_hoe"
+    },
+    {
+      "item": "betterendforge:terminite_sword"
+    },
+    {
+      "item": "betterendforge:terminite_hammer"
+    },
+    {
+      "item": "betterendforge:terminite_helmet"
+    },
+    {
+      "item": "betterendforge:terminite_chestplate"
+    },
+    {
+      "item": "betterendforge:terminite_leggings"
+    },
+    {
+      "item": "betterendforge:terminite_boots"
+    }
+  ],
+  "result": "betterendforge:terminite_nugget",
+  "experience": 0.35,
+  "cookingtime": 100
+}

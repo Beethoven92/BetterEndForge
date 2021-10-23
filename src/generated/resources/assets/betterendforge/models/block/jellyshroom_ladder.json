@@ -1,0 +1,6 @@
+{
+  "parent": "betterendforge:block/ladder",
+  "textures": {
+    "texture": "betterendforge:block/jellyshroom_ladder"
+  }
+}

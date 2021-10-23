@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.mixin;
 
 import java.util.Random;
 
+import mod.beethoven92.betterendforge.client.ClientOptions;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -95,7 +96,7 @@ public abstract class WorldRendererMixin
 	@Inject(method = "renderSkyEnd", at = @At("HEAD"), cancellable = true)
 	private void renderSkyEnd(MatrixStack matrices, CallbackInfo info) 
 	{
-		if (ClientConfig.shouldCustomSkyRender())
+		if (ClientOptions.isCustomSky())
 		{
 			time = (ticks % 360000) * 0.000017453292F;
 			time2 = time * 2;

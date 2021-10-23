@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:granite_lantern"
+    ]
+  },
+  "criteria": {
+    "has_granite_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "minecraft:granite_slab"
+          }
+        ]
+      }
+    },
+    "has_crystal_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:crystal_shards"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:granite_lantern"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_granite_slab",
+      "has_crystal_shard",
+      "has_the_recipe"
+    ]
+  ]
+}

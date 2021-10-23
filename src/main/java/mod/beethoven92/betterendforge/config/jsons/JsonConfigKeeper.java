@@ -24,7 +24,7 @@ public final class JsonConfigKeeper
 	
 	private boolean changed = false;
 	
-	public JsonConfigKeeper(String group) 
+	public JsonConfigKeeper(String group)
 	{
 		this.writer = new JsonConfigWriter(group);
 		this.configObject = writer.load();

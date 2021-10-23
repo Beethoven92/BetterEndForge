@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:end_lily_leaf_dried"
+    ]
+  },
+  "criteria": {
+    "has_end_lily_leaf": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:end_lily_leaf"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:end_lily_leaf_dried"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_end_lily_leaf",
+      "has_the_recipe"
+    ]
+  ]
+}
