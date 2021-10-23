@@ -4,24 +4,27 @@ import java.util.Random;
 
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.math.vector.Vector3i;
 
 public class ModMathHelper 
 {
 	public static final Random RANDOM = new Random();
-	
+
+	private static final Vector3i[] RANDOM_OFFSETS = new Vector3i[3 * 3 * 3 - 1];
+
 	public static final float PI2 = (float) (Math.PI * 2);
-	
+
 	private static final int ALPHA = 255 << 24;
-	
+
 	public static final float PHI = (float) (Math.PI * (3 - Math.sqrt(5)));
-	
+
 	private static final float RAD_TO_DEG = 57.295779513082320876798154814105F;
-	
-	public static int color(int r, int g, int b) 
+
+	public static int color(int r, int g, int b)
 	{
 		return ALPHA | (r << 16) | (g << 8) | b;
 	}
-	
+
 	public static int getColor(int r, int g, int b) 
 	{
 		r = MathHelper.clamp(r, 0, 255);
@@ -185,22 +188,22 @@ public class ModMathHelper
 	{
 		return d * d;
 	}
-	
-	public static int randRange(int min, int max, Random random) 
+
+	public static int randRange(int min, int max, Random random)
 	{
 		return min + random.nextInt(max - min + 1);
 	}
-	
-	public static double randRange(double min, double max, Random random) 
+
+	public static double randRange(double min, double max, Random random)
 	{
 		return min + random.nextDouble() * (max - min);
 	}
 
-	public static float randRange(float min, float max, Random random) 
+	public static float randRange(float min, float max, Random random)
 	{
 		return min + random.nextFloat() * (max - min);
 	}
-	
+
 	public static float lengthSqr(float x, float y, float z) 
 	{
 		return x * x + y * y + z * z;
@@ -325,5 +328,24 @@ public class ModMathHelper
 		float vx = (float) Math.sin(angleY);
 		float vz = (float) Math.cos(angleY);
 		return new Vector3f(vx, 0, vz);
+	}
+
+	public static Vector3i[] getOffsets(Random random) {
+		shuffle(RANDOM_OFFSETS, random);
+		return RANDOM_OFFSETS;
+	}
+
+
+	static {
+		int index = 0;
+		for (int x = -1; x <= 1; x++) {
+			for (int y = -1; y <= 1; y++) {
+				for (int z = -1; z <= 1; z++) {
+					if (x != 0 || y != 0 || z != 0) {
+						RANDOM_OFFSETS[index++] = new Vector3i(x, y, z);
+					}
+				}
+			}
+		}
 	}
 }
