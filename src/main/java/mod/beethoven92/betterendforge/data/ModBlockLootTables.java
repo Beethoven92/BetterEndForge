@@ -470,6 +470,7 @@ public class ModBlockLootTables extends BlockLootTables {
 		registerStoneMaterialLootTables(ModBlocks.VIRID_JADESTONE);
 		registerStoneMaterialLootTables(ModBlocks.AZURE_JADESTONE);
 		registerStoneMaterialLootTables(ModBlocks.SANDY_JADESTONE);
+		registerStoneMaterialLootTables(ModBlocks.UMBRALITH);
 
 
 		// METAL MATERIALS

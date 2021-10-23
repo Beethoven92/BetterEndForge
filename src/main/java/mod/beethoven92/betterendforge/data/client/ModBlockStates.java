@@ -98,6 +98,7 @@ public class ModBlockStates extends BlockStateProvider
 		registerStoneMaterialBlockStates(ModBlocks.VIRID_JADESTONE);
 		registerStoneMaterialBlockStates(ModBlocks.AZURE_JADESTONE);
 		registerStoneMaterialBlockStates(ModBlocks.SANDY_JADESTONE);
+		registerStoneMaterialBlockStates(ModBlocks.UMBRALITH);
 
 		
 		// METAL MATERIALS
