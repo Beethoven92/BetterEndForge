@@ -436,7 +436,7 @@ public class ModConfiguredFeatures
 
 	public static final ConfiguredFeature<?, ?> TUNEL_CAVE =
 			ModFeatures.TUNEL_CAVE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
-			.withPlacement(Placement.CHANCE.configure(new ChanceConfig(1)));
+			.withPlacement(Placement.CHANCE.configure(new ChanceConfig(50)));
 
 	public static final ConfiguredFeature<?, ?> THIN_ARCH =
 			ModFeatures.THIN_ARCH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
@@ -445,6 +445,7 @@ public class ModConfiguredFeatures
 	public static final ConfiguredFeature<?, ?> UMBRALITH_ARCH =
 			ModFeatures.UMBRALITH_ARCH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
 					.withPlacement(Placement.CHANCE.configure(new ChanceConfig(10)));
+
 
 	// TREES
 	public static final ConfiguredFeature<?, ?> MOSSY_GLOWSHROOM = 
