@@ -41,7 +41,6 @@ public class UmbrellaJungleBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_GREEN).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_LIGHT_BLUE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_RED_RARE).
-				addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, ModConfiguredFeatures.TUNEL_CAVE).
 				addStructure(StructureFeatures.END_CITY).
 				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
 	}

@@ -40,7 +40,6 @@ public class ShadowForestBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TAIL_MOSS_WOOD).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_PURPLE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_RED_RARE).
-				addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, ModConfiguredFeatures.TUNEL_CAVE).
 				addStructure(StructureFeatures.END_CITY).
 				addMobSpawn(EntityClassification.MONSTER, ModEntityTypes.SHADOW_WALKER.get(), 80, 2, 4).
 				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 40, 1, 4));

@@ -23,7 +23,6 @@ public class PaintedMountainsBiome extends BetterEndBiome
 				setAmbientSound(ModSoundEvents.AMBIENT_DUST_WASTELANDS.get()).
 				setSurface(ModBlocks.ENDSTONE_DUST.get()).
 				addStructure(ModConfiguredStructures.PAINTED_MOUNTAIN).
-				addFeature(GenerationStage.Decoration.LOCAL_MODIFICATIONS, ModConfiguredFeatures.TUNEL_CAVE).
 				setParticles(ParticleTypes.WHITE_ASH, 0.01F).
 				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
 	}

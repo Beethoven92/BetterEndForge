@@ -6,12 +6,15 @@ import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import mod.beethoven92.betterendforge.config.Configs;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.ForgeWorldType;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -87,6 +90,9 @@ public class BetterEnd
 
     	EndPortals.loadPortals();
 
+		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+		forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
+
     }
 
     private void setupCommon(final FMLCommonSetupEvent event)
@@ -147,4 +153,14 @@ public class BetterEnd
 		return new ResourceLocation(MOD_ID, path);
 	}
 
+	public void biomeModification(final BiomeLoadingEvent event) {
+		Biome.Category category = event.getCategory();
+		switch (category) {
+			case THEEND:
+				event.getGeneration().getFeatures(GenerationStage.Decoration.LOCAL_MODIFICATIONS).add(() -> ModConfiguredFeatures.TUNEL_CAVE);
+			default:
+				break;
+		}
+
+	}
 }
