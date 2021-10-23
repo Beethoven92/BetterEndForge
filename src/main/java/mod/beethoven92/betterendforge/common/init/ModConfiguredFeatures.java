@@ -436,7 +436,7 @@ public class ModConfiguredFeatures
 
 	public static final ConfiguredFeature<?, ?> TUNEL_CAVE =
 			ModFeatures.TUNEL_CAVE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
-			.withPlacement(Placement.CHANCE.configure(new ChanceConfig(50)));
+			.withPlacement(Placement.COUNT.configure(new FeatureSpreadConfig(1)));
 
 	public static final ConfiguredFeature<?, ?> THIN_ARCH =
 			ModFeatures.THIN_ARCH.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
