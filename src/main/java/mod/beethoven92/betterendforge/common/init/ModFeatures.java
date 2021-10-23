@@ -332,6 +332,7 @@ public class ModFeatures
     	BetterEnd.register(event.getRegistry(), FALLEN_PILLAR, "fallen_pillar");
     	BetterEnd.register(event.getRegistry(), OBSIDIAN_BOULDER, "obsidian_boulder");
 		BetterEnd.register(event.getRegistry(), THIN_ARCH, "thin_arch");
+		BetterEnd.register(event.getRegistry(), UMBRALITH_ARCH, "umbralith_arch");
 
 		// TREES
     	BetterEnd.register(event.getRegistry(), MOSSY_GLOWSHROOM, "mossy_glowshroom");
