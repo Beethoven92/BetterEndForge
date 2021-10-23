@@ -19,8 +19,11 @@ public class TerrainPlantBlock extends PlantBlock {
 
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		for (Block b : ground)
-			return state.isIn(b);
+		for (Block block : ground) {
+			if (state.isIn(block)) {
+				return true;
+			}
+		}
 		return false;
 	}
 }
