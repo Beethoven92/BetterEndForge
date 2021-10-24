@@ -122,7 +122,7 @@ public class ModItems
 	{
 		@Override
 		public int getBurnTime(ItemStack itemStack) {
-			return 16000;
+			return 14400;
 	    }
 	});
 
