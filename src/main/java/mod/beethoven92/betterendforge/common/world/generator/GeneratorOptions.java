@@ -44,7 +44,7 @@ public class GeneratorOptions {
 		hasPillars = Configs.GENERATOR_CONFIG.getBoolean("spikes", "hasSpikes", true);
 		hasDragonFights = Configs.GENERATOR_CONFIG.getBooleanRoot("hasDragonFights", true);
 		swapOverworldToEnd = Configs.GENERATOR_CONFIG.getBooleanRoot("swapOverworldToEnd", false	);
-		changeChorusPlant = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant", "changeChorusPlant", false);
+		changeChorusPlant = Configs.GENERATOR_CONFIG.getBoolean("chorusPlant", "changeChorusPlant", true);
 		removeChorusFromVanillaBiomes = Configs.GENERATOR_CONFIG.getBoolean(
 			"chorusPlant",
 			"removeChorusFromVanillaBiomes",
