@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:umbralith_bricks_wall_from_umbralith_bricks_stonecutting"
+    ]
+  },
+  "criteria": {
+    "has_umbralith_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:umbralith_bricks"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:umbralith_bricks_wall_from_umbralith_bricks_stonecutting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_umbralith_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}

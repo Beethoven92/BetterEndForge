@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_wall",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:virid_jadestone"
+    }
+  },
+  "result": {
+    "item": "betterendforge:virid_jadestone_wall",
+    "count": 6
+  }
+}

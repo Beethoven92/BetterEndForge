@@ -3,6 +3,9 @@
   "values": [
     "betterendforge:flavolite_bricks",
     "betterendforge:violecite_bricks",
-    "betterendforge:sulphuric_rock_bricks"
+    "betterendforge:sulphuric_rock_bricks",
+    "betterendforge:virid_jadestone_bricks",
+    "betterendforge:azure_jadestone_bricks",
+    "betterendforge:sandy_jadestone_bricks"
   ]
 }

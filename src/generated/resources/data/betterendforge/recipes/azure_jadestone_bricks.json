@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_bricks",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:azure_jadestone"
+    }
+  },
+  "result": {
+    "item": "betterendforge:azure_jadestone_bricks",
+    "count": 4
+  }
+}

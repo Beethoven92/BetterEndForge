@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "betterendforge:azure_jadestone_bricks"
+  },
+  "result": "betterendforge:azure_jadestone_bricks_wall",
+  "count": 1
+}

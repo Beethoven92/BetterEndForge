@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "betterendforge:sandy_jadestone"
+  },
+  "result": "betterendforge:sandy_jadestone_stairs",
+  "count": 1
+}

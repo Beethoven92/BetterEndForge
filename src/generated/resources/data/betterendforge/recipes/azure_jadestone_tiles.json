@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_small_tile",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:azure_jadestone_polished"
+    }
+  },
+  "result": {
+    "item": "betterendforge:azure_jadestone_tiles",
+    "count": 4
+  }
+}

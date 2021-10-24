@@ -3,6 +3,10 @@
   "values": [
     "betterendforge:flavolite_pressure_plate",
     "betterendforge:violecite_pressure_plate",
-    "betterendforge:sulphuric_rock_pressure_plate"
+    "betterendforge:sulphuric_rock_pressure_plate",
+    "betterendforge:virid_jadestone_pressure_plate",
+    "betterendforge:azure_jadestone_pressure_plate",
+    "betterendforge:sandy_jadestone_pressure_plate",
+    "betterendforge:umbralith_pressure_plate"
   ]
 }

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "top": "betterendforge:block/azure_jadestone_furnace_top",
+    "front": "betterendforge:block/azure_jadestone_furnace_front",
+    "side": "betterendforge:block/azure_jadestone_furnace_side",
+    "bottom": "betterendforge:block/azure_jadestone_furnace_top"
+  }
+}

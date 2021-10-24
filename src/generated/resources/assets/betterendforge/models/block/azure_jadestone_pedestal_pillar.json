@@ -1,0 +1,6 @@
+{
+  "parent": "betterendforge:block/pedestal_pillar",
+  "textures": {
+    "pillar": "betterendforge:block/azure_jadestone_pillar_side"
+  }
+}

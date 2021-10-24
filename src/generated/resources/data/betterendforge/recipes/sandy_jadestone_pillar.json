@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_pillar",
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:sandy_jadestone_slab"
+    }
+  },
+  "result": {
+    "item": "betterendforge:sandy_jadestone_pillar"
+  }
+}

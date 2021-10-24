@@ -1,0 +1,9 @@
+{
+  "parent": "betterendforge:block/pedestal_default",
+  "textures": {
+    "top": "betterendforge:block/umbralith_polished",
+    "base": "betterendforge:block/umbralith_polished",
+    "pillar": "betterendforge:block/umbralith_pillar_side",
+    "bottom": "betterendforge:block/umbralith_polished"
+  }
+}

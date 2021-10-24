@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_stone_slabs",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:umbralith_bricks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:umbralith_bricks_slab",
+    "count": 6
+  }
+}

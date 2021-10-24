@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_wall",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:azure_jadestone_bricks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:azure_jadestone_bricks_wall",
+    "count": 6
+  }
+}

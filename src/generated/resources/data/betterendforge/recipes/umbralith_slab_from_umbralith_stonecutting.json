@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "betterendforge:umbralith"
+  },
+  "result": "betterendforge:umbralith_slab",
+  "count": 2
+}

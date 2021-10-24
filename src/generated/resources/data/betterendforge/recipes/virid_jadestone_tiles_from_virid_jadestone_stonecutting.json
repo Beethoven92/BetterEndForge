@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "betterendforge:virid_jadestone"
+  },
+  "result": "betterendforge:virid_jadestone_tiles",
+  "count": 1
+}

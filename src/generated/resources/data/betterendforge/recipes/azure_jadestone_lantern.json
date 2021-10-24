@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "#",
+    "S"
+  ],
+  "key": {
+    "S": {
+      "item": "betterendforge:azure_jadestone_slab"
+    },
+    "#": {
+      "item": "betterendforge:crystal_shards"
+    }
+  },
+  "result": {
+    "item": "betterendforge:azure_jadestone_lantern"
+  }
+}

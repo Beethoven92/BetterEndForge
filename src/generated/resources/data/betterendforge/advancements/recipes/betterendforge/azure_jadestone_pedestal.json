@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:azure_jadestone_pedestal"
+    ]
+  },
+  "criteria": {
+    "has_azure_jadestone_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:azure_jadestone_slab"
+          }
+        ]
+      }
+    },
+    "has_azure_jadestone_pillar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:azure_jadestone_pillar"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:azure_jadestone_pedestal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_azure_jadestone_slab",
+      "has_azure_jadestone_pillar",
+      "has_the_recipe"
+    ]
+  ]
+}

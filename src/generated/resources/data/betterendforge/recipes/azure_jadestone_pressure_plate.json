@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_stone_plates",
+  "pattern": [
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:azure_jadestone"
+    }
+  },
+  "result": {
+    "item": "betterendforge:azure_jadestone_pressure_plate"
+  }
+}

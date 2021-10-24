@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "end_stone_buttons",
+  "ingredients": [
+    {
+      "item": "betterendforge:azure_jadestone"
+    }
+  ],
+  "result": {
+    "item": "betterendforge:azure_jadestone_button"
+  }
+}

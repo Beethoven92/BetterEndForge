@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:umbralith_slab"
+    ]
+  },
+  "criteria": {
+    "has_umbralith": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:umbralith"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:umbralith_slab"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_umbralith",
+      "has_the_recipe"
+    ]
+  ]
+}

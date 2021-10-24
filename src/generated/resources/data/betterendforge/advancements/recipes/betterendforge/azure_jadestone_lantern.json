@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:azure_jadestone_lantern"
+    ]
+  },
+  "criteria": {
+    "has_azure_jadestone_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:azure_jadestone_slab"
+          }
+        ]
+      }
+    },
+    "has_crystal_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:crystal_shards"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:azure_jadestone_lantern"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_azure_jadestone_slab",
+      "has_crystal_shard",
+      "has_the_recipe"
+    ]
+  ]
+}

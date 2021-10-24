@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "#",
+    "S"
+  ],
+  "key": {
+    "S": {
+      "item": "betterendforge:umbralith_slab"
+    },
+    "#": {
+      "item": "betterendforge:umbralith_pillar"
+    }
+  },
+  "result": {
+    "item": "betterendforge:umbralith_pedestal",
+    "count": 2
+  }
+}

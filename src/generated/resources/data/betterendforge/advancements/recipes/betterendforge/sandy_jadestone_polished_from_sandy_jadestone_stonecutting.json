@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:sandy_jadestone_polished_from_sandy_jadestone_stonecutting"
+    ]
+  },
+  "criteria": {
+    "has_sandy_jadestone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:sandy_jadestone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:sandy_jadestone_polished_from_sandy_jadestone_stonecutting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sandy_jadestone",
+      "has_the_recipe"
+    ]
+  ]
+}

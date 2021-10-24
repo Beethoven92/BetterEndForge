@@ -5,6 +5,9 @@
     "betterendforge:end_stone_furnace",
     "betterendforge:flavolite_furnace",
     "betterendforge:violecite_furnace",
-    "betterendforge:sulphuric_rock_furnace"
+    "betterendforge:sulphuric_rock_furnace",
+    "betterendforge:virid_jadestone_furnace",
+    "betterendforge:azure_jadestone_furnace",
+    "betterendforge:sandy_jadestone_furnace"
   ]
 }

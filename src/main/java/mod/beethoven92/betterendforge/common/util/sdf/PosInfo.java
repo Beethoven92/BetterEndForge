@@ -14,14 +14,12 @@ public class PosInfo implements Comparable<PosInfo>
 	private final Map<BlockPos, PosInfo> add;
 	private final BlockPos pos;
 	private BlockState state;
-	
-	public static PosInfo create(Map<BlockPos, PosInfo> blocks, Map<BlockPos, PosInfo> add, BlockPos pos) 
-	{
+
+	public static PosInfo create(Map<BlockPos, PosInfo> blocks, Map<BlockPos, PosInfo> add, BlockPos pos) {
 		return new PosInfo(blocks, add, pos);
 	}
-	
-	private PosInfo(Map<BlockPos, PosInfo> blocks, Map<BlockPos, PosInfo> add, BlockPos pos) 
-	{
+
+	private PosInfo(Map<BlockPos, PosInfo> blocks, Map<BlockPos, PosInfo> add, BlockPos pos) {
 		this.blocks = blocks;
 		this.add = add;
 		this.pos = pos;
@@ -32,9 +30,8 @@ public class PosInfo implements Comparable<PosInfo>
 	{
 		return state;
 	}
-	
-	public BlockState getState(BlockPos pos) 
-	{
+
+	public BlockState getState(BlockPos pos) {
 		PosInfo info = blocks.get(pos);
 		if (info == null) {
 			info = add.get(pos);
@@ -47,9 +44,8 @@ public class PosInfo implements Comparable<PosInfo>
 	{
 		this.state = state;
 	}
-	
-	public void setState(BlockPos pos, BlockState state) 
-	{
+
+	public void setState(BlockPos pos, BlockState state) {
 		PosInfo info = blocks.get(pos);
 		if (info != null) {
 			info.setState(state);
@@ -65,9 +61,8 @@ public class PosInfo implements Comparable<PosInfo>
 		}
 		return info.getState();
 	}
-	
-	public BlockState getState(Direction dir, int distance) 
-	{
+
+	public BlockState getState(Direction dir, int distance) {
 		PosInfo info = blocks.get(pos.offset(dir, distance));
 		if (info == null) {
 			return AIR;

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_stone_furnaces",
+  "pattern": [
+    "###",
+    "# #",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:azure_jadestone"
+    }
+  },
+  "result": {
+    "item": "betterendforge:azure_jadestone_furnace"
+  }
+}

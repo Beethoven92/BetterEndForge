@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "hanging=false,waterlogged=false": {
+      "model": "betterendforge:block/azure_jadestone_lantern_floor"
+    },
+    "hanging=true,waterlogged=false": {
+      "model": "betterendforge:block/azure_jadestone_lantern_ceil"
+    },
+    "hanging=false,waterlogged=true": {
+      "model": "betterendforge:block/azure_jadestone_lantern_floor"
+    },
+    "hanging=true,waterlogged=true": {
+      "model": "betterendforge:block/azure_jadestone_lantern_ceil"
+    }
+  }
+}

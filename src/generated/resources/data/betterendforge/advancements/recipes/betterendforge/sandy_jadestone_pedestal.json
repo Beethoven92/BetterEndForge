@@ -1,0 +1,43 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "betterendforge:sandy_jadestone_pedestal"
+    ]
+  },
+  "criteria": {
+    "has_sandy_jadestone_slab": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:sandy_jadestone_slab"
+          }
+        ]
+      }
+    },
+    "has_sandy_jadestone_pillar": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "betterendforge:sandy_jadestone_pillar"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "betterendforge:sandy_jadestone_pedestal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sandy_jadestone_slab",
+      "has_sandy_jadestone_pillar",
+      "has_the_recipe"
+    ]
+  ]
+}

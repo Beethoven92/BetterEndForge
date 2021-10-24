@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "betterendforge:block/umbralith_pillar_side",
+    "end": "betterendforge:block/umbralith_pillar_top"
+  }
+}

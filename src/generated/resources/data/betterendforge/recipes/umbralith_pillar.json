@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_pillar",
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:umbralith_slab"
+    }
+  },
+  "result": {
+    "item": "betterendforge:umbralith_pillar"
+  }
+}

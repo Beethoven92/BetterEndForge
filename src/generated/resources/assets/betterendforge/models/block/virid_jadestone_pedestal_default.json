@@ -1,0 +1,9 @@
+{
+  "parent": "betterendforge:block/pedestal_default",
+  "textures": {
+    "top": "betterendforge:block/virid_jadestone_polished",
+    "base": "betterendforge:block/virid_jadestone_polished",
+    "pillar": "betterendforge:block/virid_jadestone_pillar_side",
+    "bottom": "betterendforge:block/virid_jadestone_polished"
+  }
+}

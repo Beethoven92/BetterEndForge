@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "side": "betterendforge:block/virid_jadestone_pillar_side",
+    "end": "betterendforge:block/virid_jadestone_pillar_top"
+  }
+}

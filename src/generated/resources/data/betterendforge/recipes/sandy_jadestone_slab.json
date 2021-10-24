@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_stone_slabs",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:sandy_jadestone"
+    }
+  },
+  "result": {
+    "item": "betterendforge:sandy_jadestone_slab",
+    "count": 6
+  }
+}

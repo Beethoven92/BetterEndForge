@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "#",
+    "S"
+  ],
+  "key": {
+    "S": {
+      "item": "betterendforge:umbralith_slab"
+    },
+    "#": {
+      "item": "betterendforge:crystal_shards"
+    }
+  },
+  "result": {
+    "item": "betterendforge:umbralith_lantern"
+  }
+}

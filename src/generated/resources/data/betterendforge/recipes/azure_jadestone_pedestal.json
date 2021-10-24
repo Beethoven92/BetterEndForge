@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "#",
+    "S"
+  ],
+  "key": {
+    "S": {
+      "item": "betterendforge:azure_jadestone_slab"
+    },
+    "#": {
+      "item": "betterendforge:azure_jadestone_pillar"
+    }
+  },
+  "result": {
+    "item": "betterendforge:azure_jadestone_pedestal",
+    "count": 2
+  }
+}

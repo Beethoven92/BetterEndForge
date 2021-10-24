@@ -15,7 +15,7 @@ loaderVersion="[36,)" #mandatory This is typically bumped every Minecraft versio
 license="MIT License"
 
 # A URL to refer people to when problems occur with this mod
-issueTrackerURL="https://github.com/Beethoven92/BetterEndForge/issues" #optional
+issueTrackerURL="https://github.com/Someone-Else-Was-Taken/BetterEndForge-Reforked/issues" #optional
 
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
@@ -24,7 +24,7 @@ issueTrackerURL="https://github.com/Beethoven92/BetterEndForge/issues" #optional
 modId="betterendforge" #mandatory
 
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="1.16.5-1.7" #mandatory
+version="1.16.5-2.0" #mandatory
 
 # A display name for the mod
 displayName="BetterEnd Forge" #mandatory
@@ -33,7 +33,7 @@ displayName="BetterEnd Forge" #mandatory
 #updateJSONURL="http://myurl.me/" #optional
 
 # A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL="https://www.curseforge.com/minecraft/mc-mods/betterend-forge-port#c35" #optional
+displayURL="https://www.curseforge.com/minecraft/mc-mods/betterend-re-forked" #optional
 
 # A file name (in the root of the mod JAR) containing a logo for display
 logoFile="icon.png" #optional
@@ -42,11 +42,11 @@ logoFile="icon.png" #optional
 credits="All the artistic rights and credits, except for Forge-specific portions of code, go to the original authors of the BetterEnd mod for the Fabric mod loader" #optional
 
 # A text field displayed in the mod UI
-authors="Authors of the port: Beethoven92, Vemerion" #optional
+authors="Main Author: SomeoneElse - Former Authors of the port: Beethoven92, Vemerion" #optional
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-This mod adds new content to the end dimension that vastly improves and expands your end game.
+This mod adds new content to the end dimension that vastly improves and expands your end game. Now in parity with Fabric
 '''
 
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "end_tile",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "betterendforge:virid_jadestone_bricks"
+    }
+  },
+  "result": {
+    "item": "betterendforge:virid_jadestone_polished",
+    "count": 4
+  }
+}

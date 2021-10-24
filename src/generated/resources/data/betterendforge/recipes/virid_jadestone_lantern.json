@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "#",
+    "S"
+  ],
+  "key": {
+    "S": {
+      "item": "betterendforge:virid_jadestone_slab"
+    },
+    "#": {
+      "item": "betterendforge:crystal_shards"
+    }
+  },
+  "result": {
+    "item": "betterendforge:virid_jadestone_lantern"
+  }
+}
