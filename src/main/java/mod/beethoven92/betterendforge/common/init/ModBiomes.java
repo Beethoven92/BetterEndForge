@@ -16,11 +16,7 @@ import com.google.gson.JsonObject;
 import mod.beethoven92.betterendforge.common.util.FeatureHelper;
 import mod.beethoven92.betterendforge.common.util.JsonFactory;
 import mod.beethoven92.betterendforge.common.world.biome.*;
-import mod.beethoven92.betterendforge.common.world.biome.cave.EmptyAuroraCaveBiome;
-import mod.beethoven92.betterendforge.common.world.biome.cave.EmptyEndCaveBiome;
-import mod.beethoven92.betterendforge.common.world.biome.cave.EmptySmaragdantCaveBiome;
-import mod.beethoven92.betterendforge.common.world.biome.cave.LushAuroraCaveBiome;
-import mod.beethoven92.betterendforge.common.world.biome.cave.LushSmaragdantCaveBiome;
+import mod.beethoven92.betterendforge.common.world.biome.cave.*;
 import mod.beethoven92.betterendforge.common.world.generator.BiomeMap;
 import mod.beethoven92.betterendforge.common.world.generator.BiomePicker;
 import mod.beethoven92.betterendforge.common.world.generator.EndBiomeType;
@@ -92,6 +88,8 @@ public class ModBiomes
 	public static final BetterEndCaveBiome LUSH_SMARAGDANT_CAVE = registerCaveBiome(new LushSmaragdantCaveBiome());
 	public static final BetterEndCaveBiome EMPTY_AURORA_CAVE = registerCaveBiome(new EmptyAuroraCaveBiome());
 	public static final BetterEndCaveBiome LUSH_AURORA_CAVE = registerCaveBiome(new LushAuroraCaveBiome());
+	public static final BetterEndCaveBiome END_CAVE = registerCaveBiome(new EndCaveBiome());
+	public static final BetterEndCaveBiome JADE_CAVE = registerCaveBiome(new JadeCaveBiome());
 
 	public static void register() {}
 
