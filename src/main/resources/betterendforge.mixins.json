@@ -39,7 +39,6 @@
 	      "SoundVolumeAccessor",
 	      "MusicTickerMixin",
 	      "MinecraftMixin",
-	      "ModelBakeryMixin",
 	      "AnvilScreenMixin"
 	],
 	"injectors": {

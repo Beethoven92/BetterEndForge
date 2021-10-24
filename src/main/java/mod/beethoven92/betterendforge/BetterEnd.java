@@ -102,7 +102,7 @@ public class BetterEnd
     		ModEntityTypes.registerEntitySpawns();
     	    BiomeNBTStructures.loadStructures();
     	});    
-    }    
+    }
     
     @Mod.EventBusSubscriber(modid = BetterEnd.MOD_ID, bus = Bus.MOD)
     public static class WorldGenRegistryEvents

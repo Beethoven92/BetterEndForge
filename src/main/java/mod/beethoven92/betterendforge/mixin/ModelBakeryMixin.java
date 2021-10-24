@@ -22,4 +22,11 @@ public class ModelBakeryMixin
 		}
 		return id;
 	}
+
+	private boolean be_changeModel(ResourceLocation id) {
+		return id.getNamespace().equals("minecraft")
+				&& id.getPath().startsWith("blockstates/")
+				&& id.getPath().contains("chorus")
+				&& !id.getPath().contains("custom_");
+	}
 }
