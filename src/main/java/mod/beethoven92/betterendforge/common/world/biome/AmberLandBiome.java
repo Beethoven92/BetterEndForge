@@ -19,6 +19,7 @@ public class AmberLandBiome extends BetterEndBiome {
 				.setGrassColor(219, 115, 38)
 				.setWaterFogColor(145, 108, 72)
 				.setMusic(ModSoundEvents.MUSIC_FOREST.get())
+				.setAmbientSound(ModSoundEvents.AMBIENT_AMBER_LAND.get())
 				.setParticles(ModParticleTypes.AMBER_SPHERE.get(), 0.001F)
 				.setSurface(ModBlocks.AMBER_MOSS.get())
 				.addFeature(Decoration.UNDERGROUND_ORES, ModConfiguredFeatures.AMBER_ORE)

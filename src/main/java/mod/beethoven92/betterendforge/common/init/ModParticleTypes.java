@@ -43,4 +43,8 @@ public class ModParticleTypes
 	
 	public static final RegistryObject<BasicParticleType> FIREFLY = PARTICLE_TYPES.register("firefly",
 			() -> new BasicParticleType(false));
+
+	//public static final RegistryObject<BasicParticleType> SMARAGDANT = PARTICLE_TYPES.register("smaragdant_particle",
+	//		() -> new BasicParticleType(false));
+
 }

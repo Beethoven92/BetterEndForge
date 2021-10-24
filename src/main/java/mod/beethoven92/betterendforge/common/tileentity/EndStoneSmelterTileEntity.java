@@ -13,6 +13,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectIterator;
 import mod.beethoven92.betterendforge.common.block.EndStoneSmelter;
+import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.inventory.EndStoneSmelterContainer;
 import mod.beethoven92.betterendforge.common.recipes.AlloyingRecipe;

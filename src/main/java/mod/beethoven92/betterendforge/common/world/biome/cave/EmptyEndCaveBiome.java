@@ -11,7 +11,8 @@ public class EmptyEndCaveBiome extends BetterEndCaveBiome
 	{
 		super(new BiomeTemplate("empty_end_cave")
 				.setFogDensity(2.0F)
-				.setMusic(ModSoundEvents.MUSIC_FOREST.get()));
+				.setMusic(ModSoundEvents.MUSIC_CAVES.get())
+				.setAmbientSound(ModSoundEvents.AMBIENT_CAVES.get()));
 		
 		this.addFloorFeature(ModFeatures.END_STONE_STALAGMITE, 1);
 		this.addCeilFeature(ModFeatures.END_STONE_STALACTITE, 1);

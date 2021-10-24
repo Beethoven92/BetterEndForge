@@ -684,6 +684,8 @@ public class ModBlocks
 					                                             doesNotBlockMovement().
 					                                             tickRandomly().
 					                                             sound(SoundType.PLANT)));
+
+
 	
 	public static final RegistryObject<Block> BLOSSOM_BERRY = registerBlockWithDefaultItem("blossom_berry_seed", 
 			() -> new EndCropBlock(AbstractBlock.Properties.create(Material.PLANTS).
@@ -716,7 +718,9 @@ public class ModBlocks
 //                                                            tickRandomly().
 //                                                            sound(SoundType.PLANT),
 //                                                            END_MOSS.get(), END_MYCELIUM.get()));
-	
+
+
+
 	// WALL PLANTS
 	public static final RegistryObject<Block> PURPLE_POLYPORE = registerBlockWithDefaultItem("purple_polypore", 
 			() -> new WallMushroomBlock(AbstractBlock.Properties.create(Material.PLANTS).

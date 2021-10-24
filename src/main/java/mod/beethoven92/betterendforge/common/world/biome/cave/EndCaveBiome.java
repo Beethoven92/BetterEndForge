@@ -11,7 +11,8 @@ public class EndCaveBiome extends BetterEndCaveBiome {
 	{
 		super(new BiomeTemplate("end_cave")
 				.setFogDensity(2.0F)
-				.setMusic(ModSoundEvents.MUSIC_FOREST.get()));
+				.setMusic(ModSoundEvents.MUSIC_CAVES.get())
+				.setAmbientSound(ModSoundEvents.AMBIENT_CAVES.get()));
 
 	}
 

@@ -22,7 +22,8 @@ public class LushAuroraCaveBiome extends BetterEndCaveBiome
 				.setGrassColor(108, 25, 46)
 				.setWaterColor(186, 77, 237)
 				.setWaterFogColor(186, 77, 237)
-				.setMusic(ModSoundEvents.MUSIC_FOREST.get())
+				.setMusic(ModSoundEvents.MUSIC_CAVES.get())
+				.setAmbientSound(ModSoundEvents.AMBIENT_CAVES.get())
 				.setParticles(ModParticleTypes.GLOWING_SPHERE.get(), 0.001F)
 				.setSurface(ModBlocks.CAVE_MOSS.get()));
 		

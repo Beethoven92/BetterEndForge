@@ -21,8 +21,13 @@ public class ModSoundEvents
 			registerSoundEvent("betterendforge.music.dark");
 	public static final RegistryObject<SoundEvent> MUSIC_OPENSPACE = 
 			registerSoundEvent("betterendforge.music.openspace");
+	public static final RegistryObject<SoundEvent> MUSIC_CAVES =
+			registerSoundEvent("betterendforge.music.caves");
+
 	
 	// AMBIENT SOUNDS
+	public static final RegistryObject<SoundEvent> AMBIENT_AMBER_LAND =
+			registerSoundEvent("betterendforge.ambient.amber_land");
 	public static final RegistryObject<SoundEvent> AMBIENT_FOGGY_MUSHROOMLAND = 
 			registerSoundEvent("betterendforge.ambient.foggy_mushroomland");
 	public static final RegistryObject<SoundEvent> AMBIENT_CHORUS_FOREST = 
@@ -43,6 +48,8 @@ public class ModSoundEvents
 			registerSoundEvent("betterendforge.ambient.glowing_grasslands");
 	public static final RegistryObject<SoundEvent> AMBIENT_UMBRA_VALLEY =
 			registerSoundEvent("betterendforge.ambient.umbra_valley");
+	public static final RegistryObject<SoundEvent> AMBIENT_CAVES =
+			registerSoundEvent("betterendforge.ambient.caves");
 	
 	// ENTITY SOUNDS
 	public static final RegistryObject<SoundEvent> ENTITY_DRAGONFLY = 

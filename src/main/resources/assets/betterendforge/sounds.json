@@ -184,6 +184,35 @@
 			}
 		]
 	},
+	"betterendforge.ambient.caves": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/caves",
+				"volume": 0.5,
+				"stream": true
+			}
+		]
+	},
+	"betterendforge.ambient.amber_land": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/amber_land",
+				"stream": true
+			}
+		]
+	},
+	"betterendforge.ambient.umbra_valley": {
+		"category": "ambient",
+		"sounds": [
+			{
+				"name": "betterend:ambient/umbra_valley",
+				"stream": true
+			}
+		]
+	},
+	
 	"betterendforge.entity.dragonfly": {
 		"category": "entity",
 		"sounds": [
@@ -229,6 +258,32 @@
 			{
 				"name": "betterendforge:entity/shadow_walker/shadow_walker_death",
 				"stream": false
+			}
+		]
+	},
+
+	"betterendforge.music.caves": {
+		"category": "music",
+		"sounds": [
+			{
+				"name": "betterend:music/godmode-future_rennaisance",
+				"volume": 0.1,
+				"stream": true
+			},
+			{
+				"name": "betterend:music/futuremono-moonrise",
+				"volume": 0.1,
+				"stream": true
+			},
+			{
+				"name": "betterend:music/emmit_fenn-wander",
+				"volume": 0.1,
+				"stream": true
+			},
+			{
+				"name": "betterend:music/corbyn_kites-orbit",
+				"volume": 0.1,
+				"stream": true
 			}
 		]
 	},

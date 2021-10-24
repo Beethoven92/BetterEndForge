@@ -34,5 +34,6 @@ public class ParticleFactoryRegistration
 		mc.particles.registerFactory(ModParticleTypes.SNOWFLAKE_PARTICLE.get(), (sprite) -> new SnowflakeParticle.Factory(sprite));
 		mc.particles.registerFactory(ModParticleTypes.JUNGLE_SPORE.get(), (sprite) -> new JungleSporeParticle.Factory(sprite));
 		mc.particles.registerFactory(ModParticleTypes.FIREFLY.get(), (sprite) -> new JungleSporeParticle.Factory(sprite));
+		//mc.particles.registerFactory(ModParticleTypes.SMARAGDANT.get(), (sprite) -> new GlowingSphereParticle.Factory(sprite));
 	}
 }
