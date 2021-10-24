@@ -7,6 +7,7 @@
 		{ "nbt": "ruins_5", "offsetY": 0, "terrainMerge": "surface" },
 		{ "nbt": "ruins_6", "offsetY": 0, "terrainMerge": "surface" },
 		{ "nbt": "ruins_7", "offsetY": 0, "terrainMerge": "surface" },
-		{ "nbt": "ruins_8", "offsetY": 0, "terrainMerge": "surface" }
+		{ "nbt": "ruins_8", "offsetY": 0, "terrainMerge": "surface" },
+		{ "nbt": "house", "offsetY": 0, "terrainMerge": "surface" }
 	]
 }
