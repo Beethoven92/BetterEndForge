@@ -79,6 +79,7 @@ public class BetterEnd
     	ModContainerTypes.CONTAINER_TYPES.register(modEventBus);
     	ModSoundEvents.SOUND_EVENTS.register(modEventBus);
     	ModRecipeSerializers.RECIPE_SERIALIZERS.register(modEventBus);
+    	ModAttributes.ATTRIBUTES.register(modEventBus);
 
 		ModStructurePieces.registerAllPieces();
         
