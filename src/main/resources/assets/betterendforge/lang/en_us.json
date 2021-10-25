@@ -1,4 +1,5 @@
 {
+  "attribute.name.generic.blindness_resistance": "Blindness Resistance",
     "gui.jei.category.alloying": "Alloying",
     "gui.jei.category.alloying.experience": "%s XP",
 	"gui.jei.category.alloying.time.seconds": "%ss",
