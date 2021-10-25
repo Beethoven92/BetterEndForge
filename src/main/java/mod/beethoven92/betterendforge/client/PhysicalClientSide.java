@@ -186,7 +186,12 @@ public class PhysicalClientSide implements IPhysicalSide
 		RenderTypeLookup.setRenderLayer(ModBlocks.ORANGO.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.LUTEBUS.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.NEON_CACTUS.get(), RenderType.getCutout());
-		
+
+		RenderTypeLookup.setRenderLayer(ModBlocks.PALLIDIUM_FULL.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.PALLIDIUM_HEAVY.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.PALLIDIUM_THIN.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.PALLIDIUM_TINY.get(), RenderType.getCutout());
+
 		// SKY PLANTS
 		RenderTypeLookup.setRenderLayer(ModBlocks.FILALUX_WINGS.get(), RenderType.getCutout());
 		

@@ -18,7 +18,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.IServerWorld;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorld;
 
 public abstract class SDF 
@@ -45,7 +45,7 @@ public abstract class SDF
 		return this;
 	}
 
-	public void fillRecursive(IServerWorld world, BlockPos start)
+	public void fillRecursive(IWorld world, BlockPos start)
 	{
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
@@ -115,7 +115,7 @@ public abstract class SDF
 		}
 	}
 	
-	public void fillArea(IServerWorld world, BlockPos center, AxisAlignedBB box)
+	public void fillArea(IWorld world, BlockPos center, AxisAlignedBB box)
 	{
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
@@ -165,7 +165,7 @@ public abstract class SDF
 		}
 	}
 	
-	public void fillRecursiveIgnore(IServerWorld world, BlockPos start, Function<BlockState, Boolean> ignore)
+	public void fillRecursiveIgnore(IWorld world, BlockPos start, Function<BlockState, Boolean> ignore)
 	{
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
@@ -300,7 +300,7 @@ public abstract class SDF
 	}
 
 
-	public Set<BlockPos> getPositions(IServerWorld world, BlockPos start) {
+	public Set<BlockPos> getPositions(IWorld world, BlockPos start) {
 		Set<BlockPos> blocks = Sets.newHashSet();
 		Set<BlockPos> ends = Sets.newHashSet();
 		Set<BlockPos> add = Sets.newHashSet();

@@ -412,6 +412,15 @@ public class ModBlockLootTables extends BlockLootTables {
 		registerLootTable(ModBlocks.UMBRELLA_TREE_MEMBRANE.get(), (block) -> {
 			return umbrellaTreeMembraneDrop();
 		});
+		registerDropSelfLootTable(ModBlocks.PALLIDIUM_FULL.get());
+		registerDropSelfLootTable(ModBlocks.PALLIDIUM_HEAVY.get());
+		registerDropSelfLootTable(ModBlocks.PALLIDIUM_THIN.get());
+		registerDropSelfLootTable(ModBlocks.PALLIDIUM_TINY.get());
+
+		registerDropSelfLootTable(ModBlocks.FLAMMALIX.get());
+		registerDropSelfLootTable(ModBlocks.INFLEXIA.get());
+
+		registerDropSelfLootTable(ModBlocks.CHARCOAL_BLOCK.get());
 
 		registerDropSelfLootTable(ModBlocks.JELLYSHROOM_CAP_PURPLE.get());
 

@@ -112,7 +112,7 @@ public class ShadowWalkerEntity extends MonsterEntity
 		return ModMathHelper.randRange(0.75F, 1.25F, rand);
 	}
 	
-	public static boolean canSpawn(EntityType<ShadowWalkerEntity> type, IServerWorld world, SpawnReason spawnReason, 
+	public static boolean canSpawn(EntityType<ShadowWalkerEntity> type, IServerWorld world, SpawnReason spawnReason,
 			BlockPos pos, Random random) 
 	{
 		if (MonsterEntity.canMonsterSpawnInLight(type, world, spawnReason, pos, random)) 

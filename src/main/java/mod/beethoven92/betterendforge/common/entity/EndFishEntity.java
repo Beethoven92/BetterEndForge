@@ -151,7 +151,7 @@ public class EndFishEntity extends AbstractGroupFishEntity
 		return this.dataManager.get(SCALE) / 32F + 0.75F;
 	}
 
-	public static boolean canSpawn(EntityType<EndFishEntity> type, IServerWorld world, SpawnReason spawnReason, 
+	public static boolean canSpawn(EntityType<EndFishEntity> type, IServerWorld world, SpawnReason spawnReason,
 			BlockPos pos, Random random) 
 	{
 		AxisAlignedBB box = new AxisAlignedBB(pos).grow(16);

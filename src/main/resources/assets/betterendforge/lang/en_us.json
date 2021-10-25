@@ -819,5 +819,7 @@
 	"block.betterendforge.pallidium_heavy": "Heavy Pallidium Cover",
 	"block.betterendforge.pallidium_thin": "Thin Pallidium Cover",
 	"block.betterendforge.pallidium_tiny": "Tiny Pallidium Cover",
-	"block.betterendforge.flammalix": "Flammalix"
+	"block.betterendforge.flammalix": "Flammalix",
+
+	"block.betterendforge.charcoal_block": "Charcoal Block"
 }

@@ -378,6 +378,7 @@ public class ModBlocks
 
 	public static final RegistryObject<Block> CHARCOAL_BLOCK = registerBlockWithNoItem("charcoal_block",
 			() -> new CharcoalBlock(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.BLACK).
+					hardnessAndResistance(3.0F, 5.0F).
 					sound(SoundType.STONE)));
 	
 	public static final RegistryObject<Block> CAVE_GRASS = registerBlockWithDefaultItem("cave_grass", 

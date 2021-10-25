@@ -133,7 +133,7 @@ public class DragonflyEntity extends AnimalEntity implements IFlyingAnimal
 		return ModEntityTypes.DRAGONFLY.get().create(world);
 	}
 	
-	public static boolean canSpawn(EntityType<DragonflyEntity> type, IServerWorld world, SpawnReason spawnReason, 
+	public static boolean canSpawn(EntityType<DragonflyEntity> type, IServerWorld world, SpawnReason spawnReason,
 			BlockPos pos, Random random)
 	{
 		AxisAlignedBB box = new AxisAlignedBB(pos).grow(16);

@@ -10,6 +10,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 //import ru.betterend.config.Configs;
 
 public class GeneratorOptions {
+	public static boolean vanillaEndIntegration;
 	private static int biomeSizeLand;
 	private static int biomeSizeVoid;
 	private static int biomeSizeCaves;
@@ -37,6 +38,7 @@ public class GeneratorOptions {
 	private static boolean directSpikeHeight;
 
 	public static void init() {
+
 		biomeSizeLand = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeLand", 256);
 		biomeSizeVoid = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeVoid", 256);
 		biomeSizeCaves = Configs.GENERATOR_CONFIG.getInt("biomeMap", "biomeSizeCaves", 32);
@@ -50,6 +52,7 @@ public class GeneratorOptions {
 			"removeChorusFromVanillaBiomes",
 			false
 		);
+		vanillaEndIntegration = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "vanillaEndIntegration", true);
 		newGenerator = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "useNewGenerator", true);
 		noRingVoid = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "noRingVoid", false);
 		generateCentralIsland = Configs.GENERATOR_CONFIG.getBoolean("customGenerator", "generateCentralIsland", true);
@@ -185,6 +188,11 @@ public class GeneratorOptions {
 
 	public static void setDirectSpikeHeight() {
 		directSpikeHeight = true;
+	}
+
+	public static boolean isVanillaEndIntegrationEnabled()
+	{
+		return vanillaEndIntegration;
 	}
 
 	public static boolean isDirectSpikeHeight() {

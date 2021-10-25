@@ -39,7 +39,7 @@ public class MinecraftServerMixin
 	}
 	
 	@Shadow
-	private static void func_240786_a_(ServerWorld p_240786_0_, IServerWorldInfo p_240786_1_, 
+	private static void func_240786_a_(ServerWorld p_240786_0_, IServerWorldInfo p_240786_1_,
 			boolean hasBonusChest, boolean p_240786_3_, boolean p_240786_4_)
 	{		
 	}
@@ -78,7 +78,7 @@ public class MinecraftServerMixin
 	}
 	
 	@Inject(method = "func_240786_a_", at = @At(value = "HEAD"), cancellable = true)
-	private static void be_SetupSpawn(ServerWorld world, IServerWorldInfo serverWorldProperties, 
+	private static void be_SetupSpawn(ServerWorld world, IServerWorldInfo serverWorldProperties,
 			boolean bonusChest, boolean debugWorld, boolean bl, CallbackInfo info) 
 	{
 //		if (CommonConfig.swapOverworldWithEnd() && world.getDimensionKey() == World.OVERWORLD) 

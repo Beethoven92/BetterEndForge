@@ -21,9 +21,8 @@ public class Configs {
 	public static final JsonIdConfig BIOME_CONFIG = new JsonEntryConfig(BetterEnd.MOD_ID, "biomes");
 	public static final JsonPathConfig GENERATOR_CONFIG = new JsonPathConfig(BetterEnd.MOD_ID, "generator", false);
 	public static final JsonPathConfig RECIPE_CONFIG = new JsonPathConfig(BetterEnd.MOD_ID, "recipes");
-	
-	@OnlyIn(value = Dist.CLIENT)
-	public static final JsonPathConfig CLENT_CONFIG = new JsonPathConfig(BetterEnd.MOD_ID, "client", false);
+
+	public static final JsonPathConfig CLIENT_CONFIG = new JsonPathConfig(BetterEnd.MOD_ID, "client", false);
 	
 	public static void saveConfigs() {
 		ENTITY_CONFIG.saveChanges();
@@ -32,9 +31,9 @@ public class Configs {
 		ITEM_CONFIG.saveChanges();
 		GENERATOR_CONFIG.saveChanges();
 		RECIPE_CONFIG.saveChanges();
-		
+
 		if (BetterEnd.isClient()) {
-			CLENT_CONFIG.saveChanges();
+			CLIENT_CONFIG.saveChanges();
 		}
 	}
 }

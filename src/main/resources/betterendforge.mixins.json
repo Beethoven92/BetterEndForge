@@ -22,13 +22,11 @@
 	      "EndSpikeFeatureMixin",
 	      "EndCityStructureMixin",
 	      "RecipeManagerMixin",
-	      "EndBiomeProviderMixin",
 	      "AnvilBlockMixin",
 	      "PlayerListMixin",
 	      "MinecraftServerMixin",
 	      "BiomeContainerMixin",
 		  "ServerPlayerEntityMixin",
-		  "ServerLevelMixin",
 		  "EndSpikeMixin"
 	],
   "client": [

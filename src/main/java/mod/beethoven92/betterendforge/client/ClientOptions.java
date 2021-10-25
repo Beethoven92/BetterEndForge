@@ -1,7 +1,10 @@
 package mod.beethoven92.betterendforge.client;
 
 import mod.beethoven92.betterendforge.config.Configs;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 //import ru.betterend.config.Configs;
+
 
 public class ClientOptions {
 	private static boolean customSky;
@@ -10,11 +13,11 @@ public class ClientOptions {
 	private static boolean sulfurWaterColor;
 	
 	public static void init() {
-		customSky = Configs.CLENT_CONFIG.getBooleanRoot("customSky", true);
-		useFogDensity = Configs.CLENT_CONFIG.getBooleanRoot("useFogDensity", true);
-		blendBiomeMusic = Configs.CLENT_CONFIG.getBooleanRoot("blendBiomeMusic", true);
-		sulfurWaterColor = Configs.CLENT_CONFIG.getBooleanRoot("sulfurWaterColor", true);
-		Configs.CLENT_CONFIG.saveChanges();
+		customSky = Configs.CLIENT_CONFIG.getBooleanRoot("customSky", true);
+		useFogDensity = Configs.CLIENT_CONFIG.getBooleanRoot("useFogDensity", true);
+		blendBiomeMusic = Configs.CLIENT_CONFIG.getBooleanRoot("blendBiomeMusic", true);
+		sulfurWaterColor = Configs.CLIENT_CONFIG.getBooleanRoot("sulfurWaterColor", true);
+		Configs.CLIENT_CONFIG.saveChanges();
 	}
 	
 	public static boolean isCustomSky() {

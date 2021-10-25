@@ -23,7 +23,7 @@ public class MonsterEntityMixin
 {
 	// Reduces endermen spawn number
 	@Inject(method = "canMonsterSpawnInLight", at = @At(value = "RETURN"), cancellable = true)
-	private static void endermenCheck(EntityType<? extends MonsterEntity> type, IServerWorld world, 
+	private static void endermenCheck(EntityType<? extends MonsterEntity> type, IServerWorld world,
 			SpawnReason spawnReason, BlockPos pos, Random random, CallbackInfoReturnable<Boolean> info) 
 	{
 		boolean canSpawn = info.getReturnValue();
