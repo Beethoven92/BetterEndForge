@@ -92,9 +92,6 @@ public class BetterEnd
 
     	EndPortals.loadPortals();
 
-		IEventBus forgeBus = MinecraftForge.EVENT_BUS;
-		forgeBus.addListener(EventPriority.HIGH, this::biomeModification);
-
     }
 
     private void setupCommon(final FMLCommonSetupEvent event)
@@ -155,14 +152,4 @@ public class BetterEnd
 		return new ResourceLocation(MOD_ID, path);
 	}
 
-	public void biomeModification(final BiomeLoadingEvent event) {
-		Biome.Category category = event.getCategory();
-		switch (category) {
-			case THEEND:
-				event.getGeneration().getFeatures(GenerationStage.Decoration.LOCAL_MODIFICATIONS).add(() -> ModConfiguredFeatures.TUNEL_CAVE);
-			default:
-				break;
-		}
-
-	}
 }

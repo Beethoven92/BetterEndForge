@@ -54,9 +54,9 @@ public class WorldLoadHandler
 					DimensionStructuresSettings.field_236191_b_.get(ModStructures.GIANT_MOSSY_GLOWSHROOM));
 			tempMap.put(ModStructures.PAINTED_MOUNTAIN, 
 					DimensionStructuresSettings.field_236191_b_.get(ModStructures.PAINTED_MOUNTAIN));
-			tempMap.put(ModStructures.ETERNAL_PORTAL, 
+			tempMap.put(ModStructures.ETERNAL_PORTAL,
 					DimensionStructuresSettings.field_236191_b_.get(ModStructures.ETERNAL_PORTAL));
-			tempMap.put(ModStructures.GIANT_ICE_STAR, 
+			tempMap.put(ModStructures.GIANT_ICE_STAR,
 					DimensionStructuresSettings.field_236191_b_.get(ModStructures.GIANT_ICE_STAR));
 			serverWorld.getChunkProvider().getChunkGenerator().func_235957_b_().field_236193_d_ = tempMap;
 		}

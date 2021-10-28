@@ -60,8 +60,6 @@ public class IslandLayer
 	}
 	
 	public void updatePositions(double x, double z) {
-
-
 		int ix = ModMathHelper.floor(x / options.distance);
 		int iz = ModMathHelper.floor(z / options.distance);
 		if (lastX != ix || lastZ != iz)
@@ -102,7 +100,7 @@ public class IslandLayer
 						n--;
 					}
 				}
-				if (GeneratorOptions.hasCentralIsland()) {
+				if (options.hasCentralIsland) {
 					positions.add(new BlockPos(0, 64, 0));
 				}
 			}

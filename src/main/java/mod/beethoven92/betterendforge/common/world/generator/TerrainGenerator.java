@@ -14,8 +14,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.provider.BiomeProvider;
 
-public class TerrainGenerator 
-{
+public class TerrainGenerator {
 	private static final Map<Point, TerrainBoolCache> TERRAIN_BOOL_CACHE_MAP = Maps.newHashMap();
 	private static final ReentrantLock LOCKER = new ReentrantLock();
 	private static final Point POS = new Point();
@@ -23,16 +22,14 @@ public class TerrainGenerator
 	private static final double SCALE_Y = 4.0;
 	private static final float[] COEF;
 	private static final Point[] OFFS;
-	private static final int CENTER = ModMathHelper.floor(500 / SCALE_XZ);
-	
+
 	private static IslandLayer largeIslands;
 	private static IslandLayer mediumIslands;
 	private static IslandLayer smallIslands;
 	private static OpenSimplexNoise noise1;
 	private static OpenSimplexNoise noise2;
 
-	public static void initNoise(long seed) 
-	{
+	public static void initNoise(long seed) {
 		Random random = new Random(seed);
 		largeIslands = new IslandLayer(random.nextInt(), GeneratorOptions.bigOptions);
 		mediumIslands = new IslandLayer(random.nextInt(), GeneratorOptions.mediumOptions);
@@ -42,8 +39,7 @@ public class TerrainGenerator
 		TERRAIN_BOOL_CACHE_MAP.clear();
 	}
 	
-	public static void fillTerrainDensity(double[] buffer, int x, int z, BiomeProvider biomeSource)
-	{
+	public static void fillTerrainDensity(double[] buffer, int x, int z, BiomeProvider biomeSource) {
 		LOCKER.lock();
 
 		largeIslands.clearCache();

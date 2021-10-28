@@ -37,7 +37,7 @@ public class BiomeModification
 			    event.getGeneration().getStructures().add(() -> ModConfiguredStructures.ETERNAL_PORTAL);
 			}
 			event.getGeneration().getFeatures(Decoration.SURFACE_STRUCTURES).add(() -> ModConfiguredFeatures.CRASHED_SHIP);
-			
+			event.getGeneration().getFeatures(Decoration.LOCAL_MODIFICATIONS).add(() -> ModConfiguredFeatures.TUNEL_CAVE);
 			// Add ores to all biomes
 			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES).add(() -> ModConfiguredFeatures.THALLASIUM_ORE);
 			event.getGeneration().getFeatures(Decoration.UNDERGROUND_ORES).add(() -> ModConfiguredFeatures.ENDER_ORE);
