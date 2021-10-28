@@ -17,8 +17,6 @@ public class ModConfiguredStructures
     public static final StructureFeature<?, ?> PAINTED_MOUNTAIN = ModStructures.PAINTED_MOUNTAIN.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
     public static final StructureFeature<?, ?> ETERNAL_PORTAL = ModStructures.ETERNAL_PORTAL.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
     public static final StructureFeature<?, ?> GIANT_ICE_STAR = ModStructures.GIANT_ICE_STAR.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
-    public static final StructureFeature<?, ?> CAVE = ModStructures.CAVE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
-
     public static void registerConfiguredStructures() 
 	{
         Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
