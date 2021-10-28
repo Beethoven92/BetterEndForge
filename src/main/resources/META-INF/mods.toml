@@ -24,7 +24,7 @@ issueTrackerURL="https://github.com/Someone-Else-Was-Taken/BetterEndForge-Refork
 modId="betterendforge" #mandatory
 
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
-version="1.16.5-2.0" #mandatory
+version="1.16.5-2.3" #mandatory
 
 # A display name for the mod
 displayName="BetterEnd Forge" #mandatory
