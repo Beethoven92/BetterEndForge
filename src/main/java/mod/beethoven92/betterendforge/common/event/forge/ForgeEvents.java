@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.event.forge;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.capability.EndData;
 import mod.beethoven92.betterendforge.common.init.ModAttributes;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
@@ -33,8 +34,10 @@ public class ForgeEvents {
 
 	@SubscribeEvent
 	public static void removeBlindness(PotionApplicableEvent event) {
+		LivingEntity entity = event.getEntityLiving();
 		if (event.getPotionEffect().getPotion() == Effects.BLINDNESS
-				&& event.getEntityLiving().getAttributeValue(ModAttributes.BLINDNESS_RESISTANCE.get()) > 0)
+				&& entity.getAttributeManager().hasAttributeInstance(ModAttributes.BLINDNESS_RESISTANCE.get())
+				&& entity.getAttributeValue(ModAttributes.BLINDNESS_RESISTANCE.get()) > 0)
 			event.setResult(Result.DENY);
 	}
 
