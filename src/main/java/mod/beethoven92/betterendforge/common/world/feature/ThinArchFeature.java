@@ -35,8 +35,6 @@ public class ThinArchFeature extends Feature<NoFeatureConfig> {
         this.block = block;
     }
 
-
-
     public static AxisAlignedBB ofSize(Vector3d vec3, double d, double e, double f) {
         return new AxisAlignedBB (vec3.x - d / 2.0D, vec3.y - e / 2.0D, vec3.z - f / 2.0D, vec3.x + d / 2.0D, vec3.y + e / 2.0D, vec3.z + f / 2.0D);
     }
@@ -76,7 +74,7 @@ public class ThinArchFeature extends Feature<NoFeatureConfig> {
             float dx = (float) noise.eval(vec.getY() * 0.02, vec.getZ() * 0.02);
             float dy = (float) noise.eval(vec.getX() * 0.02, vec.getZ() * 0.02);
             float dz = (float) noise.eval(vec.getX() * 0.02, vec.getY() * 0.02);
-            vec.add(dx * 10, dy * 10, dz * 10);
+            vec.set(vec.getX() + dx * 10, vec.getY() + dy * 10, vec.getZ() + dz * 10);
         }).setSource(sdf);
         sdf = new SDFDisplacement().setFunction(vec -> {
             float offset = vec.getY() / bigRadius - 0.5F;
@@ -88,7 +86,7 @@ public class ThinArchFeature extends Feature<NoFeatureConfig> {
             side = 47;
         }
 
-        sdf.fillArea(world, pos, AABBAcc.ofSize(Vector3d.copyCentered(pos), side, side, side));
+        sdf.fillArea(world, pos, ofSize(atCenterOf(pos), side, side, side));
         return true;
 
     }
