@@ -1,6 +1,7 @@
 package mod.beethoven92.betterendforge.common.world.feature;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
+import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.FeatureHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.util.sdf.SDF;
@@ -10,7 +11,7 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFRotation;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFUnion;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFTorus;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import mod.beethoven92.betterendforge.data.AABBMixin;
+import mod.beethoven92.betterendforge.data.AABBAcc;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -31,6 +32,7 @@ public class ThinArchFeature extends Feature<NoFeatureConfig> {
     public ThinArchFeature(Block block)
     {
         super(NoFeatureConfig.field_236558_a_);
+        this.block = block;
     }
 
 
@@ -50,7 +52,10 @@ public class ThinArchFeature extends Feature<NoFeatureConfig> {
         final ISeedReader world = level;
 
         BlockPos pos = FeatureHelper.getPosOnSurface(world, new BlockPos((origin.getX() & 0xFFFFFFF0) | 7, 0, (origin.getZ() & 0xFFFFFFF0) | 7));
-    
+        if (!world.getBlockState(pos.down(5)).isIn(ModTags.GEN_TERRAIN)) {
+            return false;
+        }
+
         SDF sdf = null;
         float bigRadius = ModMathHelper.randRange(15F, 20F, random);
         float variation = bigRadius * 0.3F;
@@ -58,7 +63,7 @@ public class ThinArchFeature extends Feature<NoFeatureConfig> {
         
         for (int i = 0; i < count; i++) {
             float smallRadius = ModMathHelper.randRange(0.6F, 1.3F, random);
-            SDF arch = new SDFTorus().setBigRadius(bigRadius - random.nextFloat() * variation).setSmallRadius(smallRadius).setBlock(ModBlocks.UMBRALITH.stone.get());
+            SDF arch = new SDFTorus().setBigRadius(bigRadius - random.nextFloat() * variation).setSmallRadius(smallRadius).setBlock(block);
             float angle = (i - count * 0.5F) * 0.3F + random.nextFloat() * 0.05F + (float) Math.PI * 0.5F;
             arch = new SDFRotation().setRotation(Vector3f.XP, angle).setSource(arch);
             sdf = sdf == null ? arch : new SDFUnion().setSourceA(sdf).setSourceB(arch);
@@ -83,7 +88,7 @@ public class ThinArchFeature extends Feature<NoFeatureConfig> {
             side = 47;
         }
 
-        sdf.fillArea(world, pos, AABBMixin.ofSize(Vector3d.copyCentered(pos), side, side, side));
+        sdf.fillArea(world, pos, AABBAcc.ofSize(Vector3d.copyCentered(pos), side, side, side));
         return true;
 
     }

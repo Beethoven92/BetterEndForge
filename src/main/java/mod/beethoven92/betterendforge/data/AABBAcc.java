@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 
 
 
-public class AABBMixin {
+public class AABBAcc {
 
 
 

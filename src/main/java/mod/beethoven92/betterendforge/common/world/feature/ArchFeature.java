@@ -10,7 +10,7 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFDisplacement;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFRotation;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFTorus;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import mod.beethoven92.betterendforge.data.AABBMixin;
+import mod.beethoven92.betterendforge.data.AABBAcc;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
@@ -82,7 +82,7 @@ public class ArchFeature extends Feature<NoFeatureConfig> {
 		if (side > 47) {
 			side = 47;
 		}
-		arch.fillArea(world, pos, AABBMixin.ofSize(Vector3d.copyCentered(pos), side, side, side));
+		arch.fillArea(world, pos, AABBAcc.ofSize(Vector3d.copyCentered(pos), side, side, side));
 		
 		return true;
 	}
