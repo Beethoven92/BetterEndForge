@@ -188,7 +188,7 @@
 		"category": "ambient",
 		"sounds": [
 			{
-				"name": "betterend:ambient/caves",
+				"name": "betterendforge:ambient/caves",
 				"volume": 0.5,
 				"stream": true
 			}
@@ -198,7 +198,7 @@
 		"category": "ambient",
 		"sounds": [
 			{
-				"name": "betterend:ambient/amber_land",
+				"name": "betterendforge:ambient/amber_land",
 				"stream": true
 			}
 		]
@@ -207,7 +207,7 @@
 		"category": "ambient",
 		"sounds": [
 			{
-				"name": "betterend:ambient/umbra_valley",
+				"name": "betterendforge:ambient/umbra_valley",
 				"stream": true
 			}
 		]
@@ -266,22 +266,22 @@
 		"category": "music",
 		"sounds": [
 			{
-				"name": "betterend:music/godmode-future_rennaisance",
+				"name": "betterendforge:music/godmode-future_rennaisance",
 				"volume": 0.1,
 				"stream": true
 			},
 			{
-				"name": "betterend:music/futuremono-moonrise",
+				"name": "betterendforge:music/futuremono-moonrise",
 				"volume": 0.1,
 				"stream": true
 			},
 			{
-				"name": "betterend:music/emmit_fenn-wander",
+				"name": "betterendforge:music/emmit_fenn-wander",
 				"volume": 0.1,
 				"stream": true
 			},
 			{
-				"name": "betterend:music/corbyn_kites-orbit",
+				"name": "betterendforge:music/corbyn_kites-orbit",
 				"volume": 0.1,
 				"stream": true
 			}
