@@ -12,7 +12,6 @@
 	      "DimensionTypeMixin",
 	      "EndermanEntityMixin",
 	      "EntityMixin",
-	      "MonsterEntityMixin",
 	      "RepairContainerMixin",
 	      "PlayerEntityMixin",
 	      "ServerPlayerEntityMixin",
@@ -27,7 +26,8 @@
 	      "MinecraftServerMixin",
 	      "BiomeContainerMixin",
 		  "ServerPlayerEntityMixin",
-		  "EndSpikeMixin"
+		  "EndSpikeMixin",
+		  "EndDragonFightMixin"
 	],
   "client": [
 	      "BiomeColorsMixin",
