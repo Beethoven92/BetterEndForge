@@ -1,11 +1,9 @@
 MIT License
 
-Copyright (c) 2020 Original Author is paulevsGitch://github.com/paulevsGitch
+Copyright (c) 2020 Original Author is paulevsGitch: https://github.com/paulevsGitch
 - Authors of the port:
   - Beethoven92: https://www.curseforge.com/members/Beethoven92, https://github.com/Beethoven92
   - Vemerion: https://www.curseforge.com/members/vemerion, https://github.com/vemerion
-
-paulevsGitch
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
