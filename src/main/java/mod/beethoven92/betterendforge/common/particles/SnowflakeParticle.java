@@ -27,19 +27,19 @@ public class SnowflakeParticle extends SpriteTexturedParticle
 	{
 		super(world, x, y, z, vx, vy, vz);
 		
-		this.selectSpriteWithAge(spriteWithAge);
+		this.setSpriteFromAge(spriteWithAge);
 		
-		this.maxAge = ModMathHelper.randRange(150, 300, rand);
-		this.particleScale = ModMathHelper.randRange(0.05F, 0.2F, rand);
-		this.particleAlpha = 0F;
+		this.lifetime = ModMathHelper.randRange(150, 300, random);
+		this.quadSize = ModMathHelper.randRange(0.05F, 0.2F, random);
+		this.alpha = 0F;
 		
-		preVX = rand.nextGaussian() * 0.015;
-		preVY = rand.nextGaussian() * 0.015;
-		preVZ = rand.nextGaussian() * 0.015;
+		preVX = random.nextGaussian() * 0.015;
+		preVY = random.nextGaussian() * 0.015;
+		preVZ = random.nextGaussian() * 0.015;
 		
-		nextVX = rand.nextGaussian() * 0.015;
-		nextVY = rand.nextGaussian() * 0.015;
-		nextVZ = rand.nextGaussian() * 0.015;
+		nextVX = random.nextGaussian() * 0.015;
+		nextVY = random.nextGaussian() * 0.015;
+		nextVZ = random.nextGaussian() * 0.015;
 	}
 
 	@Override
@@ -57,10 +57,10 @@ public class SnowflakeParticle extends SpriteTexturedParticle
 			preVX = nextVX;
 			preVY = nextVY;
 			preVZ = nextVZ;
-			nextVX = rand.nextGaussian() * 0.015;
-			nextVY = rand.nextGaussian() * 0.015;
-			nextVZ = rand.nextGaussian() * 0.015;
-			if (rand.nextInt(4) == 0) 
+			nextVX = random.nextGaussian() * 0.015;
+			nextVY = random.nextGaussian() * 0.015;
+			nextVZ = random.nextGaussian() * 0.015;
+			if (random.nextInt(4) == 0) 
 			{
 				nextVY = Math.abs(nextVY);
 			}
@@ -69,19 +69,19 @@ public class SnowflakeParticle extends SpriteTexturedParticle
 		double delta = (double) ticks / 200.0;
 		
 		if (this.age <= 40) {
-			this.setAlphaF(this.age / 40F);
+			this.setAlpha(this.age / 40F);
 		}
-		else if (this.age >= this.maxAge - 40) {
-			this.setAlphaF((this.maxAge - this.age) / 40F);
-		}
-		
-		if (this.age >= this.maxAge) {
-			this.setExpired();
+		else if (this.age >= this.lifetime - 40) {
+			this.setAlpha((this.lifetime - this.age) / 40F);
 		}
 		
-		this.motionX = MathHelper.lerp(delta, preVX, nextVX);
-		this.motionY = MathHelper.lerp(delta, preVY, nextVY);
-		this.motionZ = MathHelper.lerp(delta, preVZ, nextVZ);
+		if (this.age >= this.lifetime) {
+			this.remove();
+		}
+		
+		this.xd = MathHelper.lerp(delta, preVX, nextVX);
+		this.yd = MathHelper.lerp(delta, preVY, nextVY);
+		this.zd = MathHelper.lerp(delta, preVZ, nextVZ);
 		
 		super.tick();
 	}
@@ -97,7 +97,7 @@ public class SnowflakeParticle extends SpriteTexturedParticle
 	    }
 	    
 	    @Override
-	    public Particle makeParticle(BasicParticleType type, ClientWorld worldIn, double x, double y, double z,
+	    public Particle createParticle(BasicParticleType type, ClientWorld worldIn, double x, double y, double z,
 	    		double xSpeed, double ySpeed, double zSpeed) 
 	    {
 	    	return new SnowflakeParticle(worldIn, x, y, z, 1, 1, 1, sprite);

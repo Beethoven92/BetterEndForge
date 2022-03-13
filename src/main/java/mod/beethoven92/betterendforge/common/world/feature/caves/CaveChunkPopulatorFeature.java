@@ -26,12 +26,12 @@ public class CaveChunkPopulatorFeature extends Feature<NoFeatureConfig>
 
 	public CaveChunkPopulatorFeature()
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 
 
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random random,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random random,
 							BlockPos pos, NoFeatureConfig config)
 	{
 
@@ -39,11 +39,11 @@ public class CaveChunkPopulatorFeature extends Feature<NoFeatureConfig>
 		Set<BlockPos> ceilPositions = Sets.newHashSet();
 		int sx = (pos.getX() >> 4) << 4;
 		int sz = (pos.getZ() >> 4) << 4;
-		BlockPos.Mutable min = new BlockPos.Mutable().setPos(pos);
-		BlockPos.Mutable max = new BlockPos.Mutable().setPos(pos);
+		BlockPos.Mutable min = new BlockPos.Mutable().set(pos);
+		BlockPos.Mutable max = new BlockPos.Mutable().set(pos);
 		fillSets(sx, sz, world.getChunk(pos), floorPositions, ceilPositions, min, max);
 		BetterEndCaveBiome biome = supplier.get();
-		BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTop();
+		BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 		placeFloor(world, biome, floorPositions, random, surfaceBlock);
 		placeCeil(world, biome, ceilPositions, random);
 		BlockHelper.fixBlocks(world, min, max);
@@ -61,19 +61,19 @@ public class CaveChunkPopulatorFeature extends Feature<NoFeatureConfig>
 				mut.setZ(z);
 				mut2.setZ(z);
 				mut2.setY(0);
-				for (int y = 1; y < chunk.getHeight(); y++) {
+				for (int y = 1; y < chunk.getMaxBuildHeight(); y++) {
 					mut.setY(y);
 					BlockState top = chunk.getBlockState(mut);
 					BlockState bottom = chunk.getBlockState(mut2);
-					if (top.isAir() && (bottom.isIn(ModTags.GEN_TERRAIN) || bottom.isIn(Blocks.STONE))) {
-						mut3.setPos(mut2).move(sx, 0, sz);
-						floorPositions.add(mut3.toImmutable());
+					if (top.isAir() && (bottom.is(ModTags.GEN_TERRAIN) || bottom.is(Blocks.STONE))) {
+						mut3.set(mut2).move(sx, 0, sz);
+						floorPositions.add(mut3.immutable());
 						updateMin(mut3, min);
 						updateMax(mut3, max);
 					}
-					else if (bottom.isAir() && (top.isIn(ModTags.GEN_TERRAIN) || top.isIn(Blocks.STONE))) {
-						mut3.setPos(mut).move(sx, 0, sz);
-						ceilPositions.add(mut3.toImmutable());
+					else if (bottom.isAir() && (top.is(ModTags.GEN_TERRAIN) || top.is(Blocks.STONE))) {
+						mut3.set(mut).move(sx, 0, sz);
+						ceilPositions.add(mut3.immutable());
 						updateMin(mut3, min);
 						updateMax(mut3, max);
 					}
@@ -114,7 +114,7 @@ public class CaveChunkPopulatorFeature extends Feature<NoFeatureConfig>
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {
-					feature.generate(world, null, random, pos.up(), null);
+					feature.place(world, null, random, pos.above(), null);
 				}
 			}
 		});
@@ -130,7 +130,7 @@ public class CaveChunkPopulatorFeature extends Feature<NoFeatureConfig>
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getCeilFeature(random);
 				if (feature != null) {
-					feature.generate(world, null, random, pos.down(), null);
+					feature.place(world, null, random, pos.below(), null);
 				}
 			}
 		});

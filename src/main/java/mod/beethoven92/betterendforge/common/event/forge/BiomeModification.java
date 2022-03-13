@@ -60,7 +60,7 @@ public class BiomeModification
 			// instead of vanilla phantoms
 			if (event.getName().equals(ModBiomes.SHADOW_FOREST.getID()))
 			{
-				MobSpawnInfo.Spawners phantom = new MobSpawnInfo.Spawners(EntityType.byKey("deadlyendphantoms:specter").orElse(EntityType.PHANTOM), 10, 1, 2);
+				MobSpawnInfo.Spawners phantom = new MobSpawnInfo.Spawners(EntityType.byString("deadlyendphantoms:specter").orElse(EntityType.PHANTOM), 10, 1, 2);
 				event.getSpawns().getSpawner(EntityClassification.MONSTER).add(phantom);
 			}
 		}
@@ -83,9 +83,9 @@ public class BiomeModification
 						ConfiguredFeature<?, ?> feature = supplier.get();
 						
 						// Retrieve the original feature
-						while(feature.getFeature() instanceof DecoratedFeature)
+						while(feature.feature() instanceof DecoratedFeature)
 						{
-							feature = ((DecoratedFeatureConfig)feature.getConfig()).feature.get();
+							feature = ((DecoratedFeatureConfig)feature.config()).feature.get();
 						}
 						
 			            if (feature.feature instanceof ChorusPlantFeature) 

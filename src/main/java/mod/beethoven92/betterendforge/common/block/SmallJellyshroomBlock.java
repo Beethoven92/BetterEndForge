@@ -23,18 +23,20 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class SmallJellyshroomBlock extends AttachedBlock implements IGrowable
 {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	
 	static 
 	{
-		BOUNDING_SHAPES.put(Direction.UP, Block.makeCuboidShape(3, 0, 3, 13, 16, 13));
-		BOUNDING_SHAPES.put(Direction.DOWN, Block.makeCuboidShape(3, 0, 3, 13, 16, 13));
-		BOUNDING_SHAPES.put(Direction.NORTH, VoxelShapes.create(0.0, 0.0, 0.5, 1.0, 1.0, 1.0));
-		BOUNDING_SHAPES.put(Direction.SOUTH, VoxelShapes.create(0.0, 0.0, 0.0, 1.0, 1.0, 0.5));
-		BOUNDING_SHAPES.put(Direction.WEST, VoxelShapes.create(0.5, 0.0, 0.0, 1.0, 1.0, 1.0));
-		BOUNDING_SHAPES.put(Direction.EAST, VoxelShapes.create(0.0, 0.0, 0.0, 0.5, 1.0, 1.0));
+		BOUNDING_SHAPES.put(Direction.UP, Block.box(3, 0, 3, 13, 16, 13));
+		BOUNDING_SHAPES.put(Direction.DOWN, Block.box(3, 0, 3, 13, 16, 13));
+		BOUNDING_SHAPES.put(Direction.NORTH, VoxelShapes.box(0.0, 0.0, 0.5, 1.0, 1.0, 1.0));
+		BOUNDING_SHAPES.put(Direction.SOUTH, VoxelShapes.box(0.0, 0.0, 0.0, 1.0, 1.0, 0.5));
+		BOUNDING_SHAPES.put(Direction.WEST, VoxelShapes.box(0.5, 0.0, 0.0, 1.0, 1.0, 1.0));
+		BOUNDING_SHAPES.put(Direction.EAST, VoxelShapes.box(0.0, 0.0, 0.0, 0.5, 1.0, 1.0));
 	}
 	
 	public SmallJellyshroomBlock(Properties properties) 
@@ -45,37 +47,37 @@ public class SmallJellyshroomBlock extends AttachedBlock implements IGrowable
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
 	{
-		return BOUNDING_SHAPES.get(state.get(FACING));
+		return BOUNDING_SHAPES.get(state.getValue(FACING));
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		Direction direction = state.get(FACING);
-		BlockPos blockPos = pos.offset(direction.getOpposite());
+		Direction direction = state.getValue(FACING);
+		BlockPos blockPos = pos.relative(direction.getOpposite());
 		BlockState support = worldIn.getBlockState(blockPos);
-		return hasEnoughSolidSide(worldIn, blockPos, direction) && support.isSolid() && support.getLightValue() == 0;
+		return canSupportCenter(worldIn, blockPos, direction) && support.canOcclude() && support.getLightEmission() == 0;
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
-		return state.get(FACING) == Direction.UP && worldIn.getBlockState(pos.down()).isIn(ModTags.END_GROUND);
+		return state.getValue(FACING) == Direction.UP && worldIn.getBlockState(pos.below()).is(ModTags.END_GROUND);
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
-		return state.get(FACING) == Direction.UP && worldIn.getBlockState(pos.down()).isIn(ModTags.END_GROUND);
+		return state.getValue(FACING) == Direction.UP && worldIn.getBlockState(pos.below()).is(ModTags.END_GROUND);
 	}
 
 	@Override
-	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
+	public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		if(rand.nextInt(16) == 0)
 		{
 			BlockHelper.setWithUpdate(worldIn, pos, Blocks.AIR);
-			ModFeatures.JELLYSHROOM.generate(worldIn, null, rand, pos, null);
+			ModFeatures.JELLYSHROOM.place(worldIn, null, rand, pos, null);
 		}
 	}
 

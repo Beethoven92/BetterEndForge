@@ -34,19 +34,19 @@ public class EndFeature {
         ResourceLocation id = BetterEnd.makeID(name);
         this.featureStep = GenerationStage.Decoration.VEGETAL_DECORATION;
         this.feature = Registry.register(Registry.FEATURE, id, feature);
-        this.featureConfigured = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, id, feature.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.CHANCE.configure(new ChanceConfig(100))));
+        this.featureConfigured = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, id, feature.configured(IFeatureConfig.NONE).decorated(Placement.CHANCE.configured(new ChanceConfig(100))));
     }
 
     public EndFeature(String name, Feature<NoFeatureConfig> feature, int density) {
         ResourceLocation id = BetterEnd.makeID(name);
         this.featureStep = GenerationStage.Decoration.VEGETAL_DECORATION;
         this.feature = Registry.register(Registry.FEATURE, id, feature);
-        this.featureConfigured = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, id, feature.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(density));
+        this.featureConfigured = Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, id, feature.configured(IFeatureConfig.NONE).decorated(Features.Placements.HEIGHTMAP_SQUARE).chance(density));
     }
 
 
     public static EndFeature makeChunkFeature(String name, Feature<NoFeatureConfig> feature) {
-        ConfiguredFeature<?, ?> configured = feature.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG).withPlacement(Placement.COUNT.configure(new FeatureSpreadConfig(1)));
+        ConfiguredFeature<?, ?> configured = feature.configured(IFeatureConfig.NONE).decorated(Placement.COUNT.configured(new FeatureSpreadConfig(1)));
         return new EndFeature(name, feature, GenerationStage.Decoration.LOCAL_MODIFICATIONS, configured);
     }
 }

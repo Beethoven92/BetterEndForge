@@ -23,30 +23,30 @@ public class StripableBarkBlockTemplate extends BarkBlockTemplate
 	
 	public StripableBarkBlockTemplate(MaterialColor color, Block striped) 
 	{
-		super(AbstractBlock.Properties.from(striped));
+		super(AbstractBlock.Properties.copy(striped));
 		this.striped = striped;
 		this.color = color;
 	}
 
 	@Override
-	public MaterialColor getMaterialColor() 
+	public MaterialColor defaultMaterialColor() 
 	{
 		return color;
 	}
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) 
 	{
-		if (player.getHeldItemMainhand().getItem() instanceof AxeItem) 
+		if (player.getMainHandItem().getItem() instanceof AxeItem) 
 		{
-			worldIn.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			if (!worldIn.isRemote()) 
+			worldIn.playSound(player, pos, SoundEvents.AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			if (!worldIn.isClientSide()) 
 			{
-				worldIn.setBlockState(pos, striped.getDefaultState().with(RotatedPillarBlock.AXIS, state.get(RotatedPillarBlock.AXIS)), 11);
+				worldIn.setBlock(pos, striped.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
 				if (player != null && !player.isCreative()) 
 				{
-					player.getHeldItemMainhand().attemptDamageItem(1, worldIn.rand, (ServerPlayerEntity) player);
+					player.getMainHandItem().hurt(1, worldIn.random, (ServerPlayerEntity) player);
 				}
 			}
 			return ActionResultType.SUCCESS;

@@ -18,7 +18,7 @@ public class ShadowWalkerEntityRenderer extends BipedRenderer<ShadowWalkerEntity
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(ShadowWalkerEntity entity) 
+	public ResourceLocation getTextureLocation(ShadowWalkerEntity entity) 
 	{
 		return TEXTURE;
 	}

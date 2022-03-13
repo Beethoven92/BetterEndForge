@@ -18,44 +18,44 @@ import net.minecraft.world.IWorldReader;
 
 public class LumecornBlock extends Block {
 	public static final EnumProperty<LumecornShape> SHAPE = EnumProperty.create("shape", LumecornShape.class);
-	private static final VoxelShape SHAPE_BOTTOM = Block.makeCuboidShape(6, 0, 6, 10, 16, 10);
-	private static final VoxelShape SHAPE_TOP = Block.makeCuboidShape(6, 0, 6, 10, 8, 10);
+	private static final VoxelShape SHAPE_BOTTOM = Block.box(6, 0, 6, 10, 16, 10);
+	private static final VoxelShape SHAPE_TOP = Block.box(6, 0, 6, 10, 8, 10);
 	
 	public LumecornBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> stateManager) {
+	protected void createBlockStateDefinition(Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE);
 	}
 
 	
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) { 
-		return state.get(SHAPE) == LumecornShape.LIGHT_TOP ? SHAPE_TOP : SHAPE_BOTTOM;
+		return state.getValue(SHAPE) == LumecornShape.LIGHT_TOP ? SHAPE_TOP : SHAPE_BOTTOM;
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) { 
-		LumecornShape shape = state.get(SHAPE);
+	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) { 
+		LumecornShape shape = state.getValue(SHAPE);
 		if (shape == LumecornShape.BOTTOM_BIG || shape == LumecornShape.BOTTOM_SMALL) {
-			return world.getBlockState(pos.down()).isIn(ModTags.END_GROUND);
+			return world.getBlockState(pos.below()).is(ModTags.END_GROUND);
 		}
 		else if (shape == LumecornShape.LIGHT_TOP) {
-			return world.getBlockState(pos.down()).isIn(this);
+			return world.getBlockState(pos.below()).is(this);
 		}
 		else {
-			return world.getBlockState(pos.down()).isIn(this) && world.getBlockState(pos.up()).isIn(this);
+			return world.getBlockState(pos.below()).is(this) && world.getBlockState(pos.above()).is(this);
 		}
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos)) {
-			return Blocks.AIR.getDefaultState();
+		if (!canSurvive(stateIn, worldIn, currentPos)) {
+			return Blocks.AIR.defaultBlockState();
 		}
 		else {
 			return stateIn;

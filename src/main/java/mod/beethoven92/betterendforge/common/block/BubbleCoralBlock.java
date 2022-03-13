@@ -12,9 +12,12 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.OffsetType;
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BubbleCoralBlock extends UnderwaterPlantBlock
 {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(0, 0, 0, 16, 14, 16);
+	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 14, 16);
 	
 	public BubbleCoralBlock(Properties properties) 
 	{

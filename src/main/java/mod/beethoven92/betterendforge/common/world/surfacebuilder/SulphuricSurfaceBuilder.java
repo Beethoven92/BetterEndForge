@@ -17,29 +17,29 @@ public class SulphuricSurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig
 	
 	public SulphuricSurfaceBuilder() 
 	{
-		super(SurfaceBuilderConfig.field_237203_a_);
+		super(SurfaceBuilderConfig.CODEC);
 	}
 	
 	@Override
-	public void buildSurface(Random random, IChunk chunk, Biome biome, int x, int z, int height, double noise,
+	public void apply(Random random, IChunk chunk, Biome biome, int x, int z, int height, double noise,
 			BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed, SurfaceBuilderConfig config) 
 	{	
 		double value = NOISE.eval(x * 0.03, z * 0.03) + NOISE.eval(x * 0.1, z * 0.1) * 0.3 + ModMathHelper.randRange(-0.1, 0.1, ModMathHelper.RANDOM);
 		if (value < -0.6) 
 		{
-			SurfaceBuilder.DEFAULT.buildSurface(random, chunk, biome, x, z, height, noise, defaultBlock, defaultFluid, seaLevel, seed, ModSurfaceBuilders.Configs.DEFAULT_END_CONFIG);
+			SurfaceBuilder.DEFAULT.apply(random, chunk, biome, x, z, height, noise, defaultBlock, defaultFluid, seaLevel, seed, ModSurfaceBuilders.Configs.DEFAULT_END_CONFIG);
 		}
 		else if (value < -0.3) 
 		{
-			SurfaceBuilder.DEFAULT.buildSurface(random, chunk, biome, x, z, height, noise, defaultBlock, defaultFluid, seaLevel, seed, ModSurfaceBuilders.Configs.FLAVOLITE_CONFIG);
+			SurfaceBuilder.DEFAULT.apply(random, chunk, biome, x, z, height, noise, defaultBlock, defaultFluid, seaLevel, seed, ModSurfaceBuilders.Configs.FLAVOLITE_CONFIG);
 		}
 		else if (value < 0.5)
 		{
-			SurfaceBuilder.DEFAULT.buildSurface(random, chunk, biome, x, z, height, noise, defaultBlock, defaultFluid, seaLevel, seed, ModSurfaceBuilders.Configs.SULFURIC_ROCK_CONFIG);
+			SurfaceBuilder.DEFAULT.apply(random, chunk, biome, x, z, height, noise, defaultBlock, defaultFluid, seaLevel, seed, ModSurfaceBuilders.Configs.SULFURIC_ROCK_CONFIG);
 		}
 		else
 		{
-			SurfaceBuilder.DEFAULT.buildSurface(random, chunk, biome, x, z, height, noise, defaultBlock, defaultFluid, seaLevel, seed, ModSurfaceBuilders.Configs.BRIMSTONE_CONFIG);
+			SurfaceBuilder.DEFAULT.apply(random, chunk, biome, x, z, height, noise, defaultBlock, defaultFluid, seaLevel, seed, ModSurfaceBuilders.Configs.BRIMSTONE_CONFIG);
 		}
 	}
 }

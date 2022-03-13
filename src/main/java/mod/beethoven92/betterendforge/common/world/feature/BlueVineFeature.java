@@ -24,7 +24,7 @@ public class BlueVineFeature extends ScatterFeature
 	{
 		float d = ModMathHelper.length(center.getX() - blockPos.getX(), center.getZ() - blockPos.getZ()) / radius * 0.6F + random.nextFloat() * 0.4F;
 		small = d > 0.5F;
-		return ModBlocks.BLUE_VINE_SEED.get().isValidPosition(Blocks.AIR.getDefaultState(), world, blockPos);
+		return ModBlocks.BLUE_VINE_SEED.get().canSurvive(Blocks.AIR.defaultBlockState(), world, blockPos);
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class BlueVineFeature extends ScatterFeature
 	{
 		if (small) 
 		{
-			BlockHelper.setWithoutUpdate(world, blockPos, ModBlocks.BLUE_VINE_SEED.get().getDefaultState().with(PlantBlockWithAge.AGE, random.nextInt(4)));
+			BlockHelper.setWithoutUpdate(world, blockPos, ModBlocks.BLUE_VINE_SEED.get().defaultBlockState().setValue(PlantBlockWithAge.AGE, random.nextInt(4)));
 		}
 		else 
 		{

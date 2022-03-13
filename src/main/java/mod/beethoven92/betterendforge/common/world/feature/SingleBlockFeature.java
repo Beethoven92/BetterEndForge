@@ -19,24 +19,24 @@ public class SingleBlockFeature extends Feature<NoFeatureConfig>
 	
 	public SingleBlockFeature(Block block) 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 		this.block = block;
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config) 
 	{
-		if (!world.getBlockState(pos.down()).isIn(ModTags.GEN_TERRAIN)) 
+		if (!world.getBlockState(pos.below()).is(ModTags.GEN_TERRAIN)) 
 		{
 			return false;
 		}
 		
-		BlockState state = block.getDefaultState();
-		if (block.getStateContainer().getProperty("waterlogged") != null) 
+		BlockState state = block.defaultBlockState();
+		if (block.getStateDefinition().getProperty("waterlogged") != null) 
 		{
 			boolean waterlogged = !world.getFluidState(pos).isEmpty();
-			state = state.with(BlockStateProperties.WATERLOGGED, waterlogged);
+			state = state.setValue(BlockStateProperties.WATERLOGGED, waterlogged);
 		}
 		BlockHelper.setWithoutUpdate(world, pos, state);
 		

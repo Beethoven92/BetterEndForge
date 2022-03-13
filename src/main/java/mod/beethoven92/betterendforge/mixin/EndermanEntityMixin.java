@@ -18,9 +18,9 @@ public abstract class EndermanEntityMixin
 	@Inject(at = @At("HEAD"), method = "shouldAttackPlayer", cancellable = true)
 	private void shouldAttackPlayer(PlayerEntity player, CallbackInfoReturnable<Boolean> info) 
 	{
-		if (player.isCreative() || player.isPotionActive(ModEffects.END_VEIL.get()) ||
-				EnchantmentHelper.getEnchantmentLevel(ModEnchantments.END_VEIL.get(), 
-						player.getItemStackFromSlot(EquipmentSlotType.HEAD)) > 0) 
+		if (player.isCreative() || player.hasEffect(ModEffects.END_VEIL.get()) ||
+				EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.END_VEIL.get(), 
+						player.getItemBySlot(EquipmentSlotType.HEAD)) > 0) 
 		{
 			info.setReturnValue(false);
 			info.cancel();

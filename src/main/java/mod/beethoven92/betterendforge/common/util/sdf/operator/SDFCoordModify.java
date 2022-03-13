@@ -20,7 +20,7 @@ public class SDFCoordModify extends SDFUnary
 	{
 		POS.set(x, y, z);
 		function.accept(POS);
-		return this.source.getDistance(POS.getX(), POS.getY(), POS.getZ());
+		return this.source.getDistance(POS.x(), POS.y(), POS.z());
 	}
 
 }

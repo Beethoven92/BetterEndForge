@@ -81,13 +81,13 @@ public class WoodenMaterial
 		logBlockTag = ModTags.makeModBlockTag(name + "_logs");
 		logItemTag = ModTags.makeModItemTag(name + "_logs");
 
-		AbstractBlock.Properties materialPlanks = AbstractBlock.Properties.create(Material.WOOD, planksColor).
-				                                                           hardnessAndResistance(2.0F, 3.0F).
+		AbstractBlock.Properties materialPlanks = AbstractBlock.Properties.of(Material.WOOD, planksColor).
+				                                                           strength(2.0F, 3.0F).
 				                                                           sound(SoundType.WOOD);
-		AbstractBlock.Properties materialPlanksNotSolid = AbstractBlock.Properties.create(Material.WOOD, planksColor).
-                hardnessAndResistance(2.0F, 3.0F).
+		AbstractBlock.Properties materialPlanksNotSolid = AbstractBlock.Properties.of(Material.WOOD, planksColor).
+                strength(2.0F, 3.0F).
                 sound(SoundType.WOOD).
-                notSolid();
+                noOcclusion();
 		
 		log_stripped = ModBlocks.registerBlockWithDefaultItem(name + "_stripped_log", 
 				() -> new PillarBlockTemplate(materialPlanks));
@@ -102,7 +102,7 @@ public class WoodenMaterial
 		planks = ModBlocks.registerBlockWithDefaultItem(name + "_planks", 
 				() -> new Block(materialPlanks));
 		stairs = ModBlocks.registerBlockWithDefaultItem(name + "_stairs", 
-				() -> new StairsBlock(() -> planks.get().getDefaultState(), materialPlanks));
+				() -> new StairsBlock(() -> planks.get().defaultBlockState(), materialPlanks));
 		slab = ModBlocks.registerBlockWithDefaultItem(name + "_slab", 
 				() -> new SlabBlock(materialPlanks));
 		fence = ModBlocks.registerBlockWithDefaultItem(name + "_fence", 
@@ -132,17 +132,17 @@ public class WoodenMaterial
 					};
 				});
 		ModItems.ITEMS.register(name + "_chest", () -> new BlockItem(chest.get(), new Item.Properties()
-				.group(ModCreativeTabs.CREATIVE_TAB).setISTER(() -> ChestItemTileEntityRenderer::new)) {
+				.tab(ModCreativeTabs.CREATIVE_TAB).setISTER(() -> ChestItemTileEntityRenderer::new)) {
 			public int getBurnTime(net.minecraft.item.ItemStack itemStack) {
 				return 300;
 			};
 		});
 
 		sign = registerBlockWithBurnItem(name + "_sign", 
-				() -> new EndSignBlock(AbstractBlock.Properties.create(Material.WOOD, planksColor).
-		                hardnessAndResistance(2.0F, 3.0F).
+				() -> new EndSignBlock(AbstractBlock.Properties.of(Material.WOOD, planksColor).
+		                strength(2.0F, 3.0F).
 		                sound(SoundType.WOOD).
-		                notSolid().doesNotBlockMovement()), 200);
+		                noOcclusion().noCollission()), 200);
 		barrel = registerBlockWithBurnItem(name + "_barrel",
 				() -> new EndBarrelBlock(materialPlanksNotSolid), 300);
 		shelf = registerBlockWithBurnItem(name + "_bookshelf",
@@ -167,7 +167,7 @@ public class WoodenMaterial
 			Supplier<? extends T> blockSupplier, int burnTime) {
 		RegistryObject<T> block = ModBlocks.BLOCKS.register(name, blockSupplier);
 		ModItems.ITEMS.register(name,
-				() -> new BlockItem(block.get(), new Item.Properties().group(ModCreativeTabs.CREATIVE_TAB)) {
+				() -> new BlockItem(block.get(), new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB)) {
 					public int getBurnTime(net.minecraft.item.ItemStack itemStack) {
 						return burnTime;
 					};

@@ -14,6 +14,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public class EndAnvilItem extends BlockItem {
 
 	public EndAnvilItem(Block blockIn, Properties builder) {
@@ -21,22 +23,22 @@ public class EndAnvilItem extends BlockItem {
 	}
 
 	@Override
-	protected BlockState getStateForPlacement(BlockItemUseContext context) {
-		BlockState blockState = super.getStateForPlacement(context);
+	protected BlockState getPlacementState(BlockItemUseContext context) {
+		BlockState blockState = super.getPlacementState(context);
 		if (blockState == null)
 			return null;
-		ItemStack stack = context.getItem();
+		ItemStack stack = context.getItemInHand();
 		int level = stack.getOrCreateTag().getInt("level");
-		blockState = blockState.with(((EndAnvilBlock) blockState.getBlock()).getDestructionProperty(), level);
+		blockState = blockState.setValue(((EndAnvilBlock) blockState.getBlock()).getDestructionProperty(), level);
 		return blockState;
 	}
 
 	@Override
-	public void addInformation(ItemStack itemStack, World level, List<ITextComponent> list, ITooltipFlag tooltipFlag) {
-		super.addInformation(itemStack, level, list, tooltipFlag);
+	public void appendHoverText(ItemStack itemStack, World level, List<ITextComponent> list, ITooltipFlag tooltipFlag) {
+		super.appendHoverText(itemStack, level, list, tooltipFlag);
 		int l = itemStack.getOrCreateTag().getInt("level");
 		if (l > 0) {
-			list.add(new TranslationTextComponent("message." + BetterEnd.MOD_ID + ".anvil_damage").appendString(": " + l));
+			list.add(new TranslationTextComponent("message." + BetterEnd.MOD_ID + ".anvil_damage").append(": " + l));
 		}
 	}
 }

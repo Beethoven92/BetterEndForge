@@ -18,6 +18,8 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
+import net.minecraft.world.gen.feature.structure.Structure.IStartFactory;
+
 public abstract class SDFStructure extends Structure<NoFeatureConfig>
 {
 	public SDFStructure(Codec<NoFeatureConfig> p_i231997_1_) 
@@ -27,7 +29,7 @@ public abstract class SDFStructure extends Structure<NoFeatureConfig>
 	
 	/*public SDFStructure() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}*/
 
 	protected abstract SDF getSDF(BlockPos pos, Random random);
@@ -47,20 +49,20 @@ public abstract class SDFStructure extends Structure<NoFeatureConfig>
 		}
 
 		@Override
-		public void func_230364_a_(DynamicRegistries p_230364_1_, ChunkGenerator chunkGenerator,
+		public void generatePieces(DynamicRegistries p_230364_1_, ChunkGenerator chunkGenerator,
 				TemplateManager p_230364_3_, int chunkX, int chunkZ, Biome p_230364_6_,
 				NoFeatureConfig p_230364_7_) 
 		{
-			int x = (chunkX << 4) | MathHelper.nextInt(rand, 4, 12);
-			int z = (chunkZ << 4) | MathHelper.nextInt(rand, 4, 12);
-			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
+			int x = (chunkX << 4) | MathHelper.nextInt(random, 4, 12);
+			int z = (chunkZ << 4) | MathHelper.nextInt(random, 4, 12);
+			int y = chunkGenerator.getBaseHeight(x, z, Type.WORLD_SURFACE_WG);
 			if (y > 5) 
 			{
 				BlockPos start = new BlockPos(x, y, z);
-				VoxelPiece piece = new VoxelPiece((world) -> { ((SDFStructure) this.getStructure()).getSDF(start, this.rand).fillRecursive(world, start); }, rand.nextInt());
-				this.components.add(piece);
+				VoxelPiece piece = new VoxelPiece((world) -> { ((SDFStructure) this.getFeature()).getSDF(start, this.random).fillRecursive(world, start); }, random.nextInt());
+				this.pieces.add(piece);
 			}
-			this.recalculateStructureSize();
+			this.calculateBoundingBox();
 		}
 
 	}

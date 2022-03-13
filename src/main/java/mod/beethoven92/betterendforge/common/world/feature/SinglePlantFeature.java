@@ -55,7 +55,7 @@ public class SinglePlantFeature extends ScatterFeature
 	@Override
 	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) 
 	{
-		return plant.isValidPosition(plant.getDefaultState(), world, blockPos);
+		return plant.canSurvive(plant.defaultBlockState(), world, blockPos);
 	}
 
 	@Override
@@ -64,19 +64,19 @@ public class SinglePlantFeature extends ScatterFeature
 		if (plant instanceof DoublePlantBlock) 
 		{
 			int rot = random.nextInt(4);
-			BlockState state = plant.getDefaultState().with(DoublePlantBlock.ROTATION, rot);
+			BlockState state = plant.defaultBlockState().setValue(DoublePlantBlock.ROTATION, rot);
 			BlockHelper.setWithoutUpdate(world, blockPos, state);
-			BlockHelper.setWithoutUpdate(world, blockPos.up(), state.with(DoublePlantBlock.TOP, true));
+			BlockHelper.setWithoutUpdate(world, blockPos.above(), state.setValue(DoublePlantBlock.TOP, true));
 		}
 		else if (plant instanceof EndCropBlock) 
 		{
-			BlockState state = plant.getDefaultState().with(EndCropBlock.AGE, 3);
+			BlockState state = plant.defaultBlockState().setValue(EndCropBlock.AGE, 3);
 			BlockHelper.setWithoutUpdate(world, blockPos, state);
 		}
 		else if (plant instanceof PlantBlockWithAge) 
 		{
 			int age = random.nextInt(4);
-			BlockState state = plant.getDefaultState().with(PlantBlockWithAge.AGE, age);
+			BlockState state = plant.defaultBlockState().setValue(PlantBlockWithAge.AGE, age);
 			BlockHelper.setWithoutUpdate(world, blockPos, state);
 		}
 		else 

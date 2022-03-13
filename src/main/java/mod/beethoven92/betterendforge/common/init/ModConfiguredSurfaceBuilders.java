@@ -27,7 +27,7 @@ public class ModConfiguredSurfaceBuilders
 	
 	private static RegistryKey<ConfiguredSurfaceBuilder<?>> makeKey(final String name) 
 	{
-		return RegistryKey.getOrCreateKey(Registry.CONFIGURED_SURFACE_BUILDER_KEY, 
+		return RegistryKey.create(Registry.CONFIGURED_SURFACE_BUILDER_REGISTRY, 
 				new ResourceLocation(BetterEnd.MOD_ID, name));
 	}
 	
@@ -55,7 +55,7 @@ public class ModConfiguredSurfaceBuilders
 		private static void register(final RegistryKey<ConfiguredSurfaceBuilder<?>> key, 
 				final ConfiguredSurfaceBuilder<?> configuredSurfaceBuilder) 
 		{
-			Registry.register(WorldGenRegistries.CONFIGURED_SURFACE_BUILDER, key.getLocation(), configuredSurfaceBuilder);
+			Registry.register(WorldGenRegistries.CONFIGURED_SURFACE_BUILDER, key.location(), configuredSurfaceBuilder);
 		}
 	}
 }

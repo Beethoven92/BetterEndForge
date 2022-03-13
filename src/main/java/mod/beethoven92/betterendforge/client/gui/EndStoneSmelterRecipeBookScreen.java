@@ -27,7 +27,7 @@ public class EndStoneSmelterRecipeBookScreen extends BlastFurnaceRecipeGui
 	private float frameTime;
 	
 	@Override
-	protected Set<Item> func_212958_h()
+	protected Set<Item> getFuelItems()
 	{
 		return EndStoneSmelterTileEntity.getAvailableFuels().keySet();
 	}	
@@ -36,7 +36,7 @@ public class EndStoneSmelterRecipeBookScreen extends BlastFurnaceRecipeGui
 	public void slotClicked(Slot slotIn) 
 	{
 		super.slotClicked(slotIn);
-		if (slotIn != null && slotIn.slotNumber < this.field_201522_g.getSize()) 
+		if (slotIn != null && slotIn.index < this.menu.getSize()) 
 		{
 			this.fuelSlot = null;
 		}
@@ -46,9 +46,9 @@ public class EndStoneSmelterRecipeBookScreen extends BlastFurnaceRecipeGui
 	public void setupGhostRecipe(IRecipe<?> recipe, List<Slot> slots) 
 	{
 		this.ghostRecipe.clear();;
-		ItemStack result = recipe.getRecipeOutput();
+		ItemStack result = recipe.getResultItem();
 		this.ghostRecipe.setRecipe(recipe);
-		this.ghostRecipe.addIngredient(Ingredient.fromStacks(result), (slots.get(3)).xPos, (slots.get(3)).yPos);
+		this.ghostRecipe.addIngredient(Ingredient.of(result), (slots.get(3)).x, (slots.get(3)).y);
 		NonNullList<Ingredient> inputs = recipe.getIngredients();
 		Iterator<Ingredient> iterator = inputs.iterator();
 		for(int i = 0; i < 2; i++) 
@@ -58,16 +58,16 @@ public class EndStoneSmelterRecipeBookScreen extends BlastFurnaceRecipeGui
 				return;
 			}
 			Ingredient ingredient = iterator.next();
-			if (!ingredient.hasNoMatchingItems()) 
+			if (!ingredient.isEmpty()) 
 			{
 				Slot slot = slots.get(i);
-				this.ghostRecipe.addIngredient(ingredient, slot.xPos, slot.yPos);
+				this.ghostRecipe.addIngredient(ingredient, slot.x, slot.y);
 			}
 		}
 		this.fuelSlot = slots.get(2);
 		if (this.fuels == null) 
 		{
-			this.fuels = this.func_212958_h();
+			this.fuels = this.getFuelItems();
 		}
 
 		this.fuelIterator = this.fuels.iterator();
@@ -75,9 +75,9 @@ public class EndStoneSmelterRecipeBookScreen extends BlastFurnaceRecipeGui
 	}
 	
 	@Override
-	public void func_230477_a_(MatrixStack matrixStack, int x, int y, boolean bl, float f) 
+	public void renderGhostRecipe(MatrixStack matrixStack, int x, int y, boolean bl, float f) 
 	{
-		this.ghostRecipe.func_238922_a_(matrixStack, this.mc, x, y, bl, f);
+		this.ghostRecipe.render(matrixStack, this.minecraft, x, y, bl, f);
 		if (fuelSlot != null) 
 		{
 			if (!Screen.hasControlDown())
@@ -85,10 +85,10 @@ public class EndStoneSmelterRecipeBookScreen extends BlastFurnaceRecipeGui
 				this.frameTime += f;
 			}
 
-			int slotX = this.fuelSlot.xPos + x;
-			int slotY = this.fuelSlot.yPos + y;
+			int slotX = this.fuelSlot.x + x;
+			int slotY = this.fuelSlot.y + y;
 			AbstractGui.fill(matrixStack, slotX, slotY, slotX + 16, slotY + 16, 822018048);
-			this.mc.getItemRenderer().renderItemAndEffectIntoGUI(mc.player, this.getItem().getDefaultInstance(), slotX, slotY);
+			this.minecraft.getItemRenderer().renderAndDecorateItem(minecraft.player, this.getItem().getDefaultInstance(), slotX, slotY);
 			RenderSystem.depthFunc(516);
 			AbstractGui.fill(matrixStack, slotX, slotY, slotX + 16, slotY + 16, 822083583);
 			RenderSystem.depthFunc(515);
@@ -104,7 +104,7 @@ public class EndStoneSmelterRecipeBookScreen extends BlastFurnaceRecipeGui
 			{
 				if (this.fuels == null) 
 				{
-					this.fuels = this.func_212958_h();
+					this.fuels = this.getFuelItems();
 				}
 				this.fuelIterator = this.fuels.iterator();
 			}

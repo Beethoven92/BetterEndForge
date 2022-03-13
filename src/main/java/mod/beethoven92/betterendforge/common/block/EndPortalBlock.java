@@ -30,6 +30,8 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class EndPortalBlock extends NetherPortalBlock
 {
 	public static final IntegerProperty PORTAL = BlockProperties.PORTAL;
@@ -45,14 +47,14 @@ public class EndPortalBlock extends NetherPortalBlock
 	{
 		if (rand.nextInt(100) == 0) 
 		{
-			worldIn.playSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, SoundEvents.BLOCK_PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
+			worldIn.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, SoundEvents.PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
 		}
 
 		double x = pos.getX() + rand.nextDouble();
 		double y = pos.getY() + rand.nextDouble();
 		double z = pos.getZ() + rand.nextDouble();
 		int k = rand.nextInt(2) * 2 - 1;
-		if (!worldIn.getBlockState(pos.west()).isIn(this) && !worldIn.getBlockState(pos.east()).isIn(this)) 
+		if (!worldIn.getBlockState(pos.west()).is(this) && !worldIn.getBlockState(pos.east()).is(this)) 
 		{
 			x = pos.getX() + 0.5D + 0.25D * k;
 		} else {
@@ -68,28 +70,28 @@ public class EndPortalBlock extends NetherPortalBlock
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
 		return stateIn;
 	}
 	
 	@Override
-	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) 
+	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) 
 	{
-		if (worldIn instanceof ServerWorld && !entityIn.isPassenger() && !entityIn.isBeingRidden() 
-				&& entityIn.isNonBoss()) 
+		if (worldIn instanceof ServerWorld && !entityIn.isPassenger() && !entityIn.isVehicle() 
+				&& entityIn.canChangeDimensions()) 
 		{
 			TeleportingEntity teleEntity = TeleportingEntity.class.cast(entityIn);
 			
 			//if (teleEntity.hasCooldown()) return;
 			// Checks if entity has nether portal cooldown
-			if (entityIn.func_242280_ah()) return;
+			if (entityIn.isOnPortalCooldown()) return;
 
 			
-			boolean isOverworld = worldIn.getDimensionKey().equals(World.OVERWORLD);
+			boolean isOverworld = worldIn.dimension().equals(World.OVERWORLD);
 			MinecraftServer server = ((ServerWorld) worldIn).getServer();
-			ServerWorld destination = isOverworld ? server.getWorld(World.THE_END) : EndPortals.getWorld(server, state.get(PORTAL));
+			ServerWorld destination = isOverworld ? server.getLevel(World.END) : EndPortals.getWorld(server, state.getValue(PORTAL));
 			//ServerWorld destination = ((ServerWorld) worldIn).getServer().getWorld(isOverworld ? World.THE_END : World.OVERWORLD);
 	        
 			if (destination == null) 
@@ -111,7 +113,7 @@ public class EndPortalBlock extends NetherPortalBlock
 				player.changeDimension(destination, new BetterEndTeleporter(exitPos));
 		        //teleEntity.beSetCooldown(player.isCreative() ? 50 : 300);
 				// Resets nether portal cooldown
-		        player.func_242279_ag();
+		        player.setPortalCooldown();
 			} 
 			else 
 			{
@@ -120,7 +122,7 @@ public class EndPortalBlock extends NetherPortalBlock
 				if (entityIn != null) 
 				{
 					// Resets nether portal cooldown
-					entityIn.func_242279_ag();
+					entityIn.setPortalCooldown();
 				}
 				//teleEntity.beSetCooldown(300);
 			}
@@ -129,25 +131,25 @@ public class EndPortalBlock extends NetherPortalBlock
 	
 	private BlockPos findExitPos(ServerWorld world, BlockPos pos, Entity entity) 
 	{
-		DimensionType type = world.getDimensionType();
+		DimensionType type = world.dimensionType();
 
-		double mult = type.getCoordinateScale();
+		double mult = type.coordinateScale();
 		
 		BlockPos.Mutable basePos;
 		
-		if (!world.getDimensionKey().equals(World.THE_END))
+		if (!world.dimension().equals(World.END))
 		//if (world.getDimensionKey().equals(World.OVERWORLD)) 
 		{
-			basePos = pos.toMutable().setPos(pos.getX() / mult, pos.getY(), pos.getZ() / mult);
+			basePos = pos.mutable().set(pos.getX() / mult, pos.getY(), pos.getZ() / mult);
 		} 
 		else 
 		{
-			basePos = pos.toMutable().setPos(pos.getX() * mult, pos.getY(), pos.getZ() * mult);
+			basePos = pos.mutable().set(pos.getX() * mult, pos.getY(), pos.getZ() * mult);
 		}
 		
 		Direction direction = Direction.EAST;
 		
-		BlockPos.Mutable checkPos = basePos.toMutable();
+		BlockPos.Mutable checkPos = basePos.mutable();
 
 		for (int step = 1; step < 128; step++)
 		{
@@ -157,20 +159,20 @@ public class EndPortalBlock extends NetherPortalBlock
 				
 				if (chunk != null) 
 				{
-					int ceil = chunk.getTopBlockY(Heightmap.Type.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15);
+					int ceil = chunk.getHeight(Heightmap.Type.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15);
 					if (ceil > 5) 
 					{
 						checkPos.setY(ceil);
 						while (checkPos.getY() > 5) 
 						{
 							BlockState state = world.getBlockState(checkPos);
-							if (state.isIn(this))
+							if (state.is(this))
 							{
-								Axis axis = state.get(AXIS);
+								Axis axis = state.getValue(AXIS);
 								checkPos = this.findCenter(world, checkPos, axis);
 
-								Direction frontDir = Direction.getFacingFromAxisDirection(axis, AxisDirection.POSITIVE).rotateY();
-								Direction entityDir = entity.getHorizontalFacing();
+								Direction frontDir = Direction.fromAxisAndDirection(axis, AxisDirection.POSITIVE).getClockWise();
+								Direction entityDir = entity.getDirection();
 								if (entityDir.getAxis().isVertical()) 
 								{				
 									entityDir = frontDir;
@@ -178,13 +180,13 @@ public class EndPortalBlock extends NetherPortalBlock
 
 								if (frontDir == entityDir || frontDir.getOpposite() == entityDir) 
 								{
-									return checkPos.offset(entityDir);
+									return checkPos.relative(entityDir);
 								}
 								else 
 								{
-									entity.getRotatedYaw(Rotation.CLOCKWISE_90);
-									entityDir = entityDir.rotateY();
-									return checkPos.offset(entityDir);
+									entity.rotate(Rotation.CLOCKWISE_90);
+									entityDir = entityDir.getClockWise();
+									return checkPos.relative(entityDir);
 								}
 							}
 							checkPos.move(Direction.DOWN);
@@ -193,7 +195,7 @@ public class EndPortalBlock extends NetherPortalBlock
 				}
 				checkPos.move(direction);
 			}
-			direction = direction.rotateY();
+			direction = direction.getClockWise();
 		}
 		return null;
 	}
@@ -210,26 +212,26 @@ public class EndPortalBlock extends NetherPortalBlock
 		BlockState right, left;
 		Direction rightDir, leftDir;
 		
-		rightDir = Direction.getFacingFromAxisDirection(axis, AxisDirection.POSITIVE);
+		rightDir = Direction.fromAxisAndDirection(axis, AxisDirection.POSITIVE);
 		leftDir = rightDir.getOpposite();
-		right = world.getBlockState(pos.offset(rightDir));
-		left = world.getBlockState(pos.offset(leftDir));
+		right = world.getBlockState(pos.relative(rightDir));
+		left = world.getBlockState(pos.relative(leftDir));
 		
-		BlockState down = world.getBlockState(pos.down());
+		BlockState down = world.getBlockState(pos.below());
 		
-		if (down.isIn(this)) 
+		if (down.is(this)) 
 		{
 			return findCenter(world, pos.move(Direction.DOWN), axis, step);
 		} 
-		else if (right.isIn(this) && left.isIn(this)) 
+		else if (right.is(this) && left.is(this)) 
 		{
 			return pos;
 		} 
-		else if (right.isIn(this)) 
+		else if (right.is(this)) 
 		{
 			return findCenter(world, pos.move(rightDir), axis, ++step);
 		} 
-		else if (left.isIn(this)) 
+		else if (left.is(this)) 
 		{
 			return findCenter(world, pos.move(leftDir), axis, ++step);
 		}
@@ -237,9 +239,9 @@ public class EndPortalBlock extends NetherPortalBlock
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
-		super.fillStateContainer(builder);
+		super.createBlockStateDefinition(builder);
 		builder.add(PORTAL);
 	}
 }

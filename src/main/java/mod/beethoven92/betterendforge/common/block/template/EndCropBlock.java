@@ -14,9 +14,12 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock.OffsetType;
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class EndCropBlock extends PlantBlock
 {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(2, 0, 2, 14, 14, 14);
+	private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 14, 14);
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 3);
 	
 	private final Block[] terrain;
@@ -25,7 +28,7 @@ public class EndCropBlock extends PlantBlock
 	{
 		super(properties);
 		this.terrain = terrain;
-		this.setDefaultState(getDefaultState().with(AGE, 0));
+		this.registerDefaultState(defaultBlockState().setValue(AGE, 0));
 	}
 
 	@Override
@@ -45,7 +48,7 @@ public class EndCropBlock extends PlantBlock
 	{
 		for (Block block: terrain) 
 		{
-			if (state.isIn(block)) 
+			if (state.is(block)) 
 			{
 				return true;
 			}
@@ -54,26 +57,26 @@ public class EndCropBlock extends PlantBlock
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient)
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient)
 	{
-		return state.get(AGE) < 3;
+		return state.getValue(AGE) < 3;
 	}
 	
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
-		return state.get(AGE) < 3;
+		return state.getValue(AGE) < 3;
 	}
 	
 	@Override
-	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state)
+	public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state)
 	{
 		if (rand.nextInt(8) == 0)
 		{
-			int age = state.get(AGE);
+			int age = state.getValue(AGE);
 			if (age < 3) 
 		    {
-				BlockHelper.setWithUpdate(worldIn, pos, state.with(AGE, age + 1));
+				BlockHelper.setWithUpdate(worldIn, pos, state.setValue(AGE, age + 1));
 			}
 		}
 	}
@@ -82,11 +85,11 @@ public class EndCropBlock extends PlantBlock
 	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) 
 	{
 		//super.randomTick(state, worldIn, pos, random);
-		grow(worldIn, random, pos, state);
+		performBonemeal(worldIn, random, pos, state);
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(AGE);
 	}

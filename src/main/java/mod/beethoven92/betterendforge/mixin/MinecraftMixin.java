@@ -39,15 +39,15 @@ public class MinecraftMixin
 	{
 		if (!(this.currentScreen instanceof WinGameScreen) && this.player != null) 
 		{
-			if (this.player.world.getDimensionKey() == World.THE_END) 
+			if (this.player.level.dimension() == World.END) 
 			{
-				if (this.ingameGUI.getBossOverlay().shouldPlayEndBossMusic() && ModMathHelper.lengthSqr(this.player.getPosX(), this.player.getPosZ()) < 250000)
+				if (this.ingameGUI.getBossOverlay().shouldPlayMusic() && ModMathHelper.lengthSqr(this.player.getX(), this.player.getZ()) < 250000)
 				{
-					info.setReturnValue(BackgroundMusicTracks.DRAGON_FIGHT_MUSIC);
+					info.setReturnValue(BackgroundMusicTracks.END_BOSS);
 				}
 				else 
 				{
-					BackgroundMusicSelector sound = (BackgroundMusicSelector) this.world.getBiomeManager().getBiomeAtPosition(this.player.getPosition()).getBackgroundMusic().orElse(BackgroundMusicTracks.END_MUSIC);
+					BackgroundMusicSelector sound = (BackgroundMusicSelector) this.world.getBiomeManager().getNoiseBiomeAtPosition(this.player.blockPosition()).getBackgroundMusic().orElse(BackgroundMusicTracks.END);
 					info.setReturnValue(sound);
 				}
 				info.cancel();

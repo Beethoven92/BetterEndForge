@@ -21,6 +21,6 @@ public class EChestTileEntity extends ChestTileEntity {
 	}
 	
 	public boolean hasChest() {
-		return !chest.getDefaultState().isAir();
+		return !chest.defaultBlockState().isAir();
 	}
 }

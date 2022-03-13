@@ -20,7 +20,7 @@ public abstract class ScatterFeature extends Feature<NoFeatureConfig>
 	
 	public ScatterFeature(int radius) 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 		
 		this.radius = radius;
 	}
@@ -41,7 +41,7 @@ public abstract class ScatterFeature extends Feature<NoFeatureConfig>
 		{
 			return false;
 		}
-		else if (!world.getBlockState(pos.down()).isIn(ModTags.END_GROUND)) 
+		else if (!world.getBlockState(pos.below()).is(ModTags.END_GROUND)) 
 		{
 			return false;
 		}
@@ -71,7 +71,7 @@ public abstract class ScatterFeature extends Feature<NoFeatureConfig>
 	}
 	
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand,
 			BlockPos pos, NoFeatureConfig config) 
 	{
 		pos = getCenterGround(world, pos);
@@ -90,7 +90,7 @@ public abstract class ScatterFeature extends Feature<NoFeatureConfig>
 			float x = pr * (float) Math.cos(theta);
 			float z = pr * (float) Math.sin(theta);
 
-			POS.setPos(pos.getX() + x, pos.getY() + getYOffset(), pos.getZ() + z);
+			POS.set(pos.getX() + x, pos.getY() + getYOffset(), pos.getZ() + z);
 			if (getGroundPlant(world, POS) && canGenerate(world, rand, pos, POS, r) 
 					&& (getChance() < 2 || rand.nextInt(getChance()) == 0))
 			{

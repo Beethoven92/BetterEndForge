@@ -35,13 +35,13 @@ public class VoxelPiece extends StructurePiece
 	}
 
 	@Override
-	protected void readAdditional(CompoundNBT tagCompound) 
+	protected void addAdditionalSaveData(CompoundNBT tagCompound) 
 	{
 		tagCompound.put("world", world.toNBT());
 	}
 
 	@Override
-	public boolean func_230383_a_(ISeedReader worldIn, StructureManager p_230383_2_, ChunkGenerator p_230383_3_,
+	public boolean postProcess(ISeedReader worldIn, StructureManager p_230383_2_, ChunkGenerator p_230383_3_,
 			Random p_230383_4_, MutableBoundingBox p_230383_5_, ChunkPos chunkPos, BlockPos p_230383_7_) 
 	{
 		this.world.placeChunk(worldIn, chunkPos);

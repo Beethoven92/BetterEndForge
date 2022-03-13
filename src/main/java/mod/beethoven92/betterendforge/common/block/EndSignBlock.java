@@ -37,44 +37,44 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 public class EndSignBlock extends AbstractSignBlock {
-	public static final IntegerProperty ROTATION = BlockStateProperties.ROTATION_0_15;
+	public static final IntegerProperty ROTATION = BlockStateProperties.ROTATION_16;
 	public static final BooleanProperty FLOOR = BooleanProperty.create("floor");
 	private static final VoxelShape[] WALL_SHAPES = new VoxelShape[] {
-			Block.makeCuboidShape(0.0D, 4.5D, 14.0D, 16.0D, 12.5D, 16.0D),
-			Block.makeCuboidShape(0.0D, 4.5D, 0.0D, 2.0D, 12.5D, 16.0D),
-			Block.makeCuboidShape(0.0D, 4.5D, 0.0D, 16.0D, 12.5D, 2.0D),
-			Block.makeCuboidShape(14.0D, 4.5D, 0.0D, 16.0D, 12.5D, 16.0D) };
+			Block.box(0.0D, 4.5D, 14.0D, 16.0D, 12.5D, 16.0D),
+			Block.box(0.0D, 4.5D, 0.0D, 2.0D, 12.5D, 16.0D),
+			Block.box(0.0D, 4.5D, 0.0D, 16.0D, 12.5D, 2.0D),
+			Block.box(14.0D, 4.5D, 0.0D, 16.0D, 12.5D, 16.0D) };
 
 	public EndSignBlock(AbstractBlock.Properties builder) {
 		super(builder, WoodType.OAK);
-		this.setDefaultState(
-				this.stateContainer.getBaseState().with(ROTATION, 0).with(FLOOR, true).with(WATERLOGGED, false));
+		this.registerDefaultState(
+				this.stateDefinition.any().setValue(ROTATION, 0).setValue(FLOOR, true).setValue(WATERLOGGED, false));
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(ROTATION, FLOOR, WATERLOGGED);
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader view, BlockPos pos, ISelectionContext ePos) {
-		return state.get(FLOOR) ? SHAPE : WALL_SHAPES[state.get(ROTATION) >> 2];
+		return state.getValue(FLOOR) ? SHAPE : WALL_SHAPES[state.getValue(ROTATION) >> 2];
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(IBlockReader worldIn) {
+	public TileEntity newBlockEntity(IBlockReader worldIn) {
 		return new ESignTileEntity();
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player,
 			Hand hand, BlockRayTraceResult hit) {
-		ItemStack itemStack = player.getHeldItem(hand);
-		boolean bl = itemStack.getItem() instanceof DyeItem && player.abilities.allowEdit;
-		if (world.isRemote) {
+		ItemStack itemStack = player.getItemInHand(hand);
+		boolean bl = itemStack.getItem() instanceof DyeItem && player.abilities.mayBuild;
+		if (world.isClientSide) {
 			return bl ? ActionResultType.SUCCESS : ActionResultType.CONSUME;
 		} else {
-			TileEntity blockEntity = world.getTileEntity(pos);
+			TileEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof ESignTileEntity) {
 				ESignTileEntity signBlockEntity = (ESignTileEntity) blockEntity;
 				if (bl) {
@@ -91,39 +91,39 @@ public class EndSignBlock extends AbstractSignBlock {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (placer != null && placer instanceof PlayerEntity) {
-			ESignTileEntity sign = (ESignTileEntity) world.getTileEntity(pos);
-			if (!world.isRemote) {
+			ESignTileEntity sign = (ESignTileEntity) world.getBlockEntity(pos);
+			if (!world.isClientSide) {
 				sign.setEditor((PlayerEntity) placer);
-				((ServerPlayerEntity) placer).connection.sendPacket(new SOpenSignMenuPacket(pos));
+				((ServerPlayerEntity) placer).connection.send(new SOpenSignMenuPacket(pos));
 			} else
 				sign.setEditable(true);
 		}
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState neighborState,
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState,
 			IWorld world, BlockPos pos, BlockPos neighborPos) {
-		if ((Boolean) state.get(WATERLOGGED)) {
-			world.getPendingFluidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+		if ((Boolean) state.getValue(WATERLOGGED)) {
+			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
 
-		return super.updatePostPlacement(state, facing, neighborState, world, pos, neighborPos);
+		return super.updateShape(state, facing, neighborState, world, pos, neighborPos);
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
-		if (ctx.getFace() == Direction.UP) {
-			FluidState fluidState = ctx.getWorld().getFluidState(ctx.getPos());
-			return this.getDefaultState().with(FLOOR, true)
-					.with(ROTATION, MathHelper.floor((180.0 + ctx.getPlacementYaw() * 16.0 / 360.0) + 0.5 - 12) & 15)
-					.with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
-		} else if (ctx.getFace() != Direction.DOWN) {
-			BlockState blockState = this.getDefaultState();
-			FluidState fluidState = ctx.getWorld().getFluidState(ctx.getPos());
-			IWorld worldView = ctx.getWorld();
-			BlockPos blockPos = ctx.getPos();
+		if (ctx.getClickedFace() == Direction.UP) {
+			FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+			return this.defaultBlockState().setValue(FLOOR, true)
+					.setValue(ROTATION, MathHelper.floor((180.0 + ctx.getRotation() * 16.0 / 360.0) + 0.5 - 12) & 15)
+					.setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
+		} else if (ctx.getClickedFace() != Direction.DOWN) {
+			BlockState blockState = this.defaultBlockState();
+			FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+			IWorld worldView = ctx.getLevel();
+			BlockPos blockPos = ctx.getClickedPos();
 			Direction[] directions = ctx.getNearestLookingDirections();
 			Direction[] var7 = directions;
 			int var8 = directions.length;
@@ -132,10 +132,10 @@ public class EndSignBlock extends AbstractSignBlock {
 				Direction direction = var7[var9];
 				if (direction.getAxis().isHorizontal()) {
 					Direction direction2 = direction.getOpposite();
-					int rot = MathHelper.floor((180.0 + direction2.getHorizontalAngle() * 16.0 / 360.0) + 0.5 + 4) & 15;
-					blockState = blockState.with(ROTATION, rot);
-					if (blockState.isValidPosition(worldView, blockPos)) {
-						return blockState.with(FLOOR, false).with(WATERLOGGED, fluidState.getFluid() == Fluids.WATER);
+					int rot = MathHelper.floor((180.0 + direction2.toYRot() * 16.0 / 360.0) + 0.5 + 4) & 15;
+					blockState = blockState.setValue(ROTATION, rot);
+					if (blockState.canSurvive(worldView, blockPos)) {
+						return blockState.setValue(FLOOR, false).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
 					}
 				}
 			}
@@ -146,11 +146,11 @@ public class EndSignBlock extends AbstractSignBlock {
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rotation) {
-		return (BlockState) state.with(ROTATION, rotation.rotate((Integer) state.get(ROTATION), 16));
+		return (BlockState) state.setValue(ROTATION, rotation.rotate((Integer) state.getValue(ROTATION), 16));
 	}
 
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirror) {
-		return (BlockState) state.with(ROTATION, mirror.mirrorRotation((Integer) state.get(ROTATION), 16));
+		return (BlockState) state.setValue(ROTATION, mirror.mirror((Integer) state.getValue(ROTATION), 16));
 	}
 }

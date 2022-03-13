@@ -41,7 +41,7 @@ public class RoundCaveFeature extends Feature<NoFeatureConfig>
 	
 	public RoundCaveFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 	
 	@Override

@@ -19,25 +19,25 @@ public class SmaragdantCrystalFeature extends Feature<NoFeatureConfig>
 {
 	public SmaragdantCrystalFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config) 
 	{
-		if (!world.getBlockState(pos.down()).isIn(ModTags.GEN_TERRAIN)) 
+		if (!world.getBlockState(pos.below()).is(ModTags.GEN_TERRAIN)) 
 		{
 			return false;
 		}
 		
 		Mutable mut = new Mutable();
 		int count = ModMathHelper.randRange(15, 30, rand);
-		BlockState crystal = ModBlocks.SMARAGDANT_CRYSTAL.get().getDefaultState();
-		BlockState shard = ModBlocks.SMARAGDANT_CRYSTAL_SHARD.get().getDefaultState();
+		BlockState crystal = ModBlocks.SMARAGDANT_CRYSTAL.get().defaultBlockState();
+		BlockState shard = ModBlocks.SMARAGDANT_CRYSTAL_SHARD.get().defaultBlockState();
 		for (int i = 0; i < count; i++) 
 		{
-			mut.setPos(pos).move(ModMathHelper.floor(rand.nextGaussian() * 2 + 0.5), 5, ModMathHelper.floor(rand.nextGaussian() * 2 + 0.5));
+			mut.set(pos).move(ModMathHelper.floor(rand.nextGaussian() * 2 + 0.5), 5, ModMathHelper.floor(rand.nextGaussian() * 2 + 0.5));
 			int dist = ModMathHelper.floor(1.5F - ModMathHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + rand.nextInt(3);
 			if (dist > 0) 
 			{
@@ -47,7 +47,7 @@ public class SmaragdantCrystalFeature extends Feature<NoFeatureConfig>
 					mut.setY(mut.getY() - 1);
 					state = world.getBlockState(mut);
 				}
-				if (state.isIn(ModTags.GEN_TERRAIN) && !world.getBlockState(mut.up()).isIn(crystal.getBlock())) 
+				if (state.is(ModTags.GEN_TERRAIN) && !world.getBlockState(mut.above()).is(crystal.getBlock())) 
 				{
 					for (int j = 0; j <= dist; j++) 
 					{
@@ -55,7 +55,7 @@ public class SmaragdantCrystalFeature extends Feature<NoFeatureConfig>
 						mut.setY(mut.getY() + 1);
 					}
 					boolean waterlogged = !world.getFluidState(mut).isEmpty();
-					BlockHelper.setWithoutUpdate(world, mut, shard.with(BlockStateProperties.WATERLOGGED, waterlogged));
+					BlockHelper.setWithoutUpdate(world, mut, shard.setValue(BlockStateProperties.WATERLOGGED, waterlogged));
 				}
 			}
 		}

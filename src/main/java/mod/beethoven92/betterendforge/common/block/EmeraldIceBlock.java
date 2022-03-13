@@ -16,6 +16,8 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class EmeraldIceBlock extends BreakableBlock
 {
 	public EmeraldIceBlock(Properties properties) 
@@ -24,22 +26,22 @@ public class EmeraldIceBlock extends BreakableBlock
 	}
 
 	@Override
-	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te,
+	public void playerDestroy(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te,
 			ItemStack stack) 
 	{
-		super.harvestBlock(worldIn, player, pos, state, te, stack);
-	    if (EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, stack) == 0) 
+		super.playerDestroy(worldIn, player, pos, state, te, stack);
+	    if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, stack) == 0) 
 	    {
-	    	if (worldIn.getDimensionType().isUltrawarm()) 
+	    	if (worldIn.dimensionType().ultraWarm()) 
 	    	{
 	    		worldIn.removeBlock(pos, false);
 	            return;
 	        }
 
-	    	Material material = worldIn.getBlockState(pos.down()).getMaterial();
-	        if (material.blocksMovement() || material.isLiquid())
+	    	Material material = worldIn.getBlockState(pos.below()).getMaterial();
+	        if (material.blocksMotion() || material.isLiquid())
 	        {
-	        	worldIn.setBlockState(pos, Blocks.WATER.getDefaultState());
+	        	worldIn.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
 	        }
 	    }
 	}
@@ -47,7 +49,7 @@ public class EmeraldIceBlock extends BreakableBlock
 	@Override
 	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) 
 	{
-		if (worldIn.getLightFor(LightType.BLOCK, pos) > 11 - state.getOpacity(worldIn, pos)) 
+		if (worldIn.getBrightness(LightType.BLOCK, pos) > 11 - state.getLightBlock(worldIn, pos)) 
 		{
 			this.melt(state, worldIn, pos);
 		}
@@ -55,13 +57,13 @@ public class EmeraldIceBlock extends BreakableBlock
 	
 	protected void melt(BlockState state, World world, BlockPos pos)
 	{
-		if (world.getDimensionType().isUltrawarm()) 
+		if (world.dimensionType().ultraWarm()) 
 		{
 			world.removeBlock(pos, false);
 		}
 		else 
 		{
-			world.setBlockState(pos, Blocks.WATER.getDefaultState());
+			world.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
 			world.neighborChanged(pos, Blocks.WATER, pos);
 		}
 	}

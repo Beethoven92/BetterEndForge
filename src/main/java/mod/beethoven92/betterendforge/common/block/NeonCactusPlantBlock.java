@@ -59,30 +59,30 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 	private static final int MAX_LENGTH = 12;
 
 	public NeonCactusPlantBlock() {
-		super(AbstractBlock.Properties.from(Blocks.CACTUS).setLightLevel(s -> 15).tickRandomly());
-		setDefaultState(
-				getDefaultState().with(WATERLOGGED, false).with(FACING, Direction.UP).with(SHAPE, TripleShape.TOP));
+		super(AbstractBlock.Properties.copy(Blocks.CACTUS).lightLevel(s -> 15).randomTicks());
+		registerDefaultState(
+				defaultBlockState().setValue(WATERLOGGED, false).setValue(FACING, Direction.UP).setValue(SHAPE, TripleShape.TOP));
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> stateManager) {
+	protected void createBlockStateDefinition(Builder<Block, BlockState> stateManager) {
 		stateManager.add(SHAPE, CACTUS_BOTTOM, WATERLOGGED, FACING);
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
-		World world = ctx.getWorld();
-		BlockPos pos = ctx.getPos();
-		Direction dir = ctx.getFace();
-		BlockState down = world.getBlockState(pos.offset(dir.getOpposite()));
-		BlockState state = this.getDefaultState().with(WATERLOGGED, world.getFluidState(pos).getFluid() == Fluids.WATER)
-				.with(FACING, ctx.getFace());
-		if (down.isIn(Blocks.END_STONE) || down.isIn(ModBlocks.ENDSTONE_DUST.get())) {
-			state = state.with(CACTUS_BOTTOM, CactusBottom.SAND);
-		} else if (down.isIn(ModBlocks.END_MOSS.get())) {
-			state = state.with(CACTUS_BOTTOM, CactusBottom.MOSS);
+		World world = ctx.getLevel();
+		BlockPos pos = ctx.getClickedPos();
+		Direction dir = ctx.getClickedFace();
+		BlockState down = world.getBlockState(pos.relative(dir.getOpposite()));
+		BlockState state = this.defaultBlockState().setValue(WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER)
+				.setValue(FACING, ctx.getClickedFace());
+		if (down.is(Blocks.END_STONE) || down.is(ModBlocks.ENDSTONE_DUST.get())) {
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.SAND);
+		} else if (down.is(ModBlocks.END_MOSS.get())) {
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.MOSS);
 		} else {
-			state = state.with(CACTUS_BOTTOM, CactusBottom.EMPTY);
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.EMPTY);
 		}
 		return state;
 	}
@@ -99,41 +99,41 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return (Boolean) state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+		return (Boolean) state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world,
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world,
 			BlockPos pos, BlockPos facingPos) {
-		world.getPendingBlockTicks().scheduleTick(pos, this, 2);
-		if ((Boolean) state.get(WATERLOGGED)) {
-			world.getPendingFluidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+		world.getBlockTicks().scheduleTick(pos, this, 2);
+		if ((Boolean) state.getValue(WATERLOGGED)) {
+			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
-		Direction dir = state.get(FACING);
-		BlockState downState = world.getBlockState(pos.offset(dir.getOpposite()));
-		if (downState.isIn(Blocks.END_STONE) || downState.isIn(ModBlocks.ENDSTONE_DUST.get())) {
-			state = state.with(CACTUS_BOTTOM, CactusBottom.SAND);
-		} else if (downState.isIn(ModBlocks.END_MOSS.get())) {
-			state = state.with(CACTUS_BOTTOM, CactusBottom.MOSS);
+		Direction dir = state.getValue(FACING);
+		BlockState downState = world.getBlockState(pos.relative(dir.getOpposite()));
+		if (downState.is(Blocks.END_STONE) || downState.is(ModBlocks.ENDSTONE_DUST.get())) {
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.SAND);
+		} else if (downState.is(ModBlocks.END_MOSS.get())) {
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.MOSS);
 		} else {
-			state = state.with(CACTUS_BOTTOM, CactusBottom.EMPTY);
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.EMPTY);
 		}
 		return state;
 	}
 
 	@Override
 	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
-		if (!state.isValidPosition(worldIn, pos)) {
+		if (!state.canSurvive(worldIn, pos)) {
 			worldIn.destroyBlock(pos, true, null, 1);
 		}
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader view, BlockPos pos, ISelectionContext context) {
-		TripleShape shape = state.get(SHAPE);
-		Direction dir = state.get(FACING);
-		BlockState next = view.getBlockState(pos.offset(dir));
-		if (next.isIn(this)) {
+		TripleShape shape = state.getValue(SHAPE);
+		Direction dir = state.getValue(FACING);
+		BlockState next = view.getBlockState(pos.relative(dir));
+		if (next.is(this)) {
 			Axis axis = dir.getAxis();
 			if (shape == TripleShape.BOTTOM) {
 				return BIG_SHAPES.get(axis);
@@ -148,20 +148,20 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-		Direction dir = state.get(FACING);
-		BlockPos supportPos = pos.offset(dir.getOpposite());
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+		Direction dir = state.getValue(FACING);
+		BlockPos supportPos = pos.relative(dir.getOpposite());
 		BlockState support = worldIn.getBlockState(supportPos);
-		return support.isIn(this) || support.isSolidSide(worldIn, supportPos, dir);
+		return support.is(this) || support.isFaceSturdy(worldIn, supportPos, dir);
 	}
 
 	@Override
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		if (!this.isValidPosition(state, world, pos) || random.nextInt(8) > 0) {
+		if (!this.canSurvive(state, world, pos) || random.nextInt(8) > 0) {
 			return;
 		}
-		Direction dir = state.get(FACING);
-		if (!world.isAirBlock(pos.offset(dir))) {
+		Direction dir = state.getValue(FACING);
+		if (!world.isEmptyBlock(pos.relative(dir))) {
 			return;
 		}
 		int length = getLength(state, world, pos, MAX_LENGTH);
@@ -172,22 +172,22 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 			int horizontal = getHorizontal(state, world, pos, 2);
 			if (horizontal > random.nextInt(2)) {
 				dir = Direction.UP;
-				if (!world.getBlockState(pos.up()).isAir()) {
+				if (!world.getBlockState(pos.above()).isAir()) {
 					return;
 				}
 			}
-		} else if (length > 1 && world.getBlockState(pos.offset(dir.getOpposite())).isIn(this)) {
+		} else if (length > 1 && world.getBlockState(pos.relative(dir.getOpposite())).is(this)) {
 			Direction side = getSideDirection(world, pos, state, dir, random);
-			BlockPos sidePos = pos.offset(side);
-			if (world.isAirBlock(sidePos)) {
-				BlockState placement = state.with(SHAPE, TripleShape.TOP).with(CACTUS_BOTTOM, CactusBottom.EMPTY)
-						.with(WATERLOGGED, false).with(FACING, side);
+			BlockPos sidePos = pos.relative(side);
+			if (world.isEmptyBlock(sidePos)) {
+				BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY)
+						.setValue(WATERLOGGED, false).setValue(FACING, side);
 				BlockHelper.setWithoutUpdate(world, sidePos, placement);
 			}
 		}
-		BlockState placement = state.with(SHAPE, TripleShape.TOP).with(CACTUS_BOTTOM, CactusBottom.EMPTY)
-				.with(WATERLOGGED, false).with(FACING, dir);
-		BlockHelper.setWithoutUpdate(world, pos.offset(dir), placement);
+		BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY)
+				.setValue(WATERLOGGED, false).setValue(FACING, dir);
+		BlockHelper.setWithoutUpdate(world, pos.relative(dir), placement);
 		mutateStem(placement, world, pos, MAX_LENGTH);
 	}
 
@@ -196,17 +196,17 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 	}
 
 	public void growPlant(ISeedReader world, BlockPos pos, Random random, int iterations) {
-		BlockState state = getDefaultState();
-		BlockState downState = world.getBlockState(pos.down());
-		if (downState.isIn(Blocks.END_STONE) || downState.isIn(ModBlocks.ENDSTONE_DUST.get())) {
-			state = state.with(CACTUS_BOTTOM, CactusBottom.SAND);
-		} else if (downState.isIn(ModBlocks.END_MOSS.get())) {
-			state = state.with(CACTUS_BOTTOM, CactusBottom.MOSS);
+		BlockState state = defaultBlockState();
+		BlockState downState = world.getBlockState(pos.below());
+		if (downState.is(Blocks.END_STONE) || downState.is(ModBlocks.ENDSTONE_DUST.get())) {
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.SAND);
+		} else if (downState.is(ModBlocks.END_MOSS.get())) {
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.MOSS);
 		} else {
-			state = state.with(CACTUS_BOTTOM, CactusBottom.EMPTY);
+			state = state.setValue(CACTUS_BOTTOM, CactusBottom.EMPTY);
 		}
 		BlockHelper.setWithoutUpdate(world, pos, state);
-		List<Mutable> ends = Lists.newArrayList(pos.toMutable());
+		List<Mutable> ends = Lists.newArrayList(pos.mutable());
 		for (int i = 0; i < iterations; i++) {
 			int count = ends.size();
 			for (int n = 0; n < count; n++) {
@@ -221,34 +221,34 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 
 	private boolean growIteration(ISeedReader world, Mutable pos, Random random, List<Mutable> ends, int length) {
 		BlockState state = world.getBlockState(pos);
-		if (!state.isIn(this)) {
+		if (!state.is(this)) {
 			return false;
 		}
-		Direction dir = state.get(FACING);
-		if (!world.isAirBlock(pos.offset(dir))) {
+		Direction dir = state.getValue(FACING);
+		if (!world.isEmptyBlock(pos.relative(dir))) {
 			return false;
 		}
 		if (dir.getAxis().isHorizontal()) {
 			int horizontal = getHorizontal(state, world, pos, 2);
 			if (horizontal > random.nextInt(2)) {
 				dir = Direction.UP;
-				if (!world.getBlockState(pos.up()).isAir()) {
+				if (!world.getBlockState(pos.above()).isAir()) {
 					return false;
 				}
 			}
-		} else if (length > 1 && world.getBlockState(pos.down()).isIn(this)) {
+		} else if (length > 1 && world.getBlockState(pos.below()).is(this)) {
 			Direction side = getSideDirection(world, pos, state, dir, random);
-			BlockPos sidePos = pos.offset(side);
-			if (world.isAirBlock(sidePos)) {
-				BlockState placement = state.with(SHAPE, TripleShape.TOP).with(CACTUS_BOTTOM, CactusBottom.EMPTY)
-						.with(WATERLOGGED, false).with(FACING, side);
+			BlockPos sidePos = pos.relative(side);
+			if (world.isEmptyBlock(sidePos)) {
+				BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY)
+						.setValue(WATERLOGGED, false).setValue(FACING, side);
 				BlockHelper.setWithoutUpdate(world, sidePos, placement);
-				ends.add(sidePos.toMutable());
+				ends.add(sidePos.mutable());
 			}
 		}
-		BlockState placement = state.with(SHAPE, TripleShape.TOP).with(CACTUS_BOTTOM, CactusBottom.EMPTY)
-				.with(WATERLOGGED, false).with(FACING, dir);
-		BlockHelper.setWithoutUpdate(world, pos.offset(dir), placement);
+		BlockState placement = state.setValue(SHAPE, TripleShape.TOP).setValue(CACTUS_BOTTOM, CactusBottom.EMPTY)
+				.setValue(WATERLOGGED, false).setValue(FACING, dir);
+		BlockHelper.setWithoutUpdate(world, pos.relative(dir), placement);
 		mutateStem(placement, world, pos, MAX_LENGTH);
 		pos.move(dir);
 		return true;
@@ -256,16 +256,16 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 
 	private Direction getSideDirection(ISeedReader world, BlockPos pos, BlockState iterState, Direction dir,
 			Random random) {
-		Mutable iterPos = pos.toMutable();
+		Mutable iterPos = pos.mutable();
 		Direction startDir = dir;
 		Direction lastDir = null;
-		while (iterState.isIn(this) && startDir.getAxis().isVertical()) {
-			startDir = iterState.get(FACING);
+		while (iterState.is(this) && startDir.getAxis().isVertical()) {
+			startDir = iterState.getValue(FACING);
 			if (lastDir == null) {
 				for (Direction side : BlockHelper.HORIZONTAL_DIRECTIONS) {
-					BlockState sideState = world.getBlockState(iterPos.offset(side));
-					if (sideState.isIn(this)) {
-						Direction sideDir = sideState.get(FACING);
+					BlockState sideState = world.getBlockState(iterPos.relative(side));
+					if (sideState.is(this)) {
+						Direction sideDir = sideState.getValue(FACING);
 						if (sideDir != side) {
 							continue;
 						}
@@ -277,7 +277,7 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 			iterState = world.getBlockState(iterPos);
 		}
 
-		Direction side = lastDir == null ? BlockHelper.randomHorizontal(random) : lastDir.rotateY();
+		Direction side = lastDir == null ? BlockHelper.randomHorizontal(random) : lastDir.getClockWise();
 		if (side.getOpposite() == startDir) {
 			side = side.getOpposite();
 		}
@@ -285,29 +285,29 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
+	public boolean isPathfindable(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
 		return false;
 	}
 
 	@Override
-	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
-		entityIn.attackEntityFrom(DamageSource.CACTUS, 1.0F);
+	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+		entityIn.hurt(DamageSource.CACTUS, 1.0F);
 	}
 
 	private int getLength(BlockState state, ServerWorld world, BlockPos pos, int max) {
 		int length = 0;
-		Direction dir = state.get(FACING).getOpposite();
-		Mutable mut = new Mutable().setPos(pos);
+		Direction dir = state.getValue(FACING).getOpposite();
+		Mutable mut = new Mutable().set(pos);
 		for (int i = 0; i < max; i++) {
 			mut.move(dir);
 			state = world.getBlockState(mut);
-			if (!state.isIn(this)) {
-				if (!state.isIn(ModTags.END_GROUND)) {
+			if (!state.is(this)) {
+				if (!state.is(ModTags.END_GROUND)) {
 					length = -1;
 				}
 				break;
 			}
-			dir = state.get(FACING).getOpposite();
+			dir = state.getValue(FACING).getOpposite();
 			length++;
 		}
 		return length;
@@ -315,16 +315,16 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 
 	private int getHorizontal(BlockState state, ISeedReader world, BlockPos pos, int max) {
 		int count = 0;
-		Direction dir = state.get(FACING).getOpposite();
-		Mutable mut = new Mutable().setPos(pos);
+		Direction dir = state.getValue(FACING).getOpposite();
+		Mutable mut = new Mutable().set(pos);
 		for (int i = 0; i < max; i++) {
 			mut.move(dir);
 			state = world.getBlockState(mut);
-			if (!state.isIn(this)) {
+			if (!state.is(this)) {
 				break;
 			}
-			dir = state.get(FACING).getOpposite();
-			if (dir.getYOffset() != 0) {
+			dir = state.getValue(FACING).getOpposite();
+			if (dir.getStepY() != 0) {
 				break;
 			}
 			count++;
@@ -333,56 +333,56 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 	}
 
 	private void mutateStem(BlockState state, ISeedReader world, BlockPos pos, int max) {
-		Direction dir = state.get(FACING).getOpposite();
-		Mutable mut = new Mutable().setPos(pos);
+		Direction dir = state.getValue(FACING).getOpposite();
+		Mutable mut = new Mutable().set(pos);
 		for (int i = 0; i < max; i++) {
 			mut.move(dir);
 			state = world.getBlockState(mut);
-			if (!state.isIn(this)) {
+			if (!state.is(this)) {
 				return;
 			}
 			int size = (i + 2) * 3 / max;
-			int src = state.get(SHAPE).getIndex();
-			dir = state.get(FACING).getOpposite();
+			int src = state.getValue(SHAPE).getIndex();
+			dir = state.getValue(FACING).getOpposite();
 			if (src < size) {
 				TripleShape shape = TripleShape.fromIndex(size);
-				BlockHelper.setWithoutUpdate(world, mut, state.with(SHAPE, shape));
+				BlockHelper.setWithoutUpdate(world, mut, state.setValue(SHAPE, shape));
 			}
 		}
 	}
 
 	static {
-		BIG_SHAPES.put(Axis.X, Block.makeCuboidShape(0, 2, 2, 16, 14, 14));
-		BIG_SHAPES.put(Axis.Y, Block.makeCuboidShape(2, 0, 2, 14, 16, 14));
-		BIG_SHAPES.put(Axis.Z, Block.makeCuboidShape(2, 2, 0, 14, 14, 16));
+		BIG_SHAPES.put(Axis.X, Block.box(0, 2, 2, 16, 14, 14));
+		BIG_SHAPES.put(Axis.Y, Block.box(2, 0, 2, 14, 16, 14));
+		BIG_SHAPES.put(Axis.Z, Block.box(2, 2, 0, 14, 14, 16));
 
-		MEDIUM_SHAPES.put(Axis.X, Block.makeCuboidShape(0, 3, 3, 16, 13, 13));
-		MEDIUM_SHAPES.put(Axis.Y, Block.makeCuboidShape(3, 0, 3, 13, 16, 13));
-		MEDIUM_SHAPES.put(Axis.Z, Block.makeCuboidShape(3, 3, 0, 13, 13, 16));
+		MEDIUM_SHAPES.put(Axis.X, Block.box(0, 3, 3, 16, 13, 13));
+		MEDIUM_SHAPES.put(Axis.Y, Block.box(3, 0, 3, 13, 16, 13));
+		MEDIUM_SHAPES.put(Axis.Z, Block.box(3, 3, 0, 13, 13, 16));
 
-		SMALL_SHAPES.put(Axis.X, Block.makeCuboidShape(0, 4, 4, 16, 12, 12));
-		SMALL_SHAPES.put(Axis.Y, Block.makeCuboidShape(4, 0, 4, 12, 16, 12));
-		SMALL_SHAPES.put(Axis.Z, Block.makeCuboidShape(4, 4, 0, 12, 12, 16));
+		SMALL_SHAPES.put(Axis.X, Block.box(0, 4, 4, 16, 12, 12));
+		SMALL_SHAPES.put(Axis.Y, Block.box(4, 0, 4, 12, 16, 12));
+		SMALL_SHAPES.put(Axis.Z, Block.box(4, 4, 0, 12, 12, 16));
 
-		BIG_SHAPES_OPEN.put(Direction.UP, Block.makeCuboidShape(2, 0, 2, 14, 14, 14));
-		BIG_SHAPES_OPEN.put(Direction.DOWN, Block.makeCuboidShape(2, 2, 2, 14, 16, 14));
-		BIG_SHAPES_OPEN.put(Direction.NORTH, Block.makeCuboidShape(2, 2, 2, 14, 14, 16));
-		BIG_SHAPES_OPEN.put(Direction.SOUTH, Block.makeCuboidShape(2, 2, 0, 14, 14, 14));
-		BIG_SHAPES_OPEN.put(Direction.WEST, Block.makeCuboidShape(2, 2, 2, 16, 14, 14));
-		BIG_SHAPES_OPEN.put(Direction.EAST, Block.makeCuboidShape(0, 2, 2, 14, 14, 14));
+		BIG_SHAPES_OPEN.put(Direction.UP, Block.box(2, 0, 2, 14, 14, 14));
+		BIG_SHAPES_OPEN.put(Direction.DOWN, Block.box(2, 2, 2, 14, 16, 14));
+		BIG_SHAPES_OPEN.put(Direction.NORTH, Block.box(2, 2, 2, 14, 14, 16));
+		BIG_SHAPES_OPEN.put(Direction.SOUTH, Block.box(2, 2, 0, 14, 14, 14));
+		BIG_SHAPES_OPEN.put(Direction.WEST, Block.box(2, 2, 2, 16, 14, 14));
+		BIG_SHAPES_OPEN.put(Direction.EAST, Block.box(0, 2, 2, 14, 14, 14));
 
-		MEDIUM_SHAPES_OPEN.put(Direction.UP, Block.makeCuboidShape(3, 0, 3, 13, 13, 13));
-		MEDIUM_SHAPES_OPEN.put(Direction.DOWN, Block.makeCuboidShape(3, 3, 3, 13, 16, 13));
-		MEDIUM_SHAPES_OPEN.put(Direction.NORTH, Block.makeCuboidShape(3, 3, 3, 13, 13, 16));
-		MEDIUM_SHAPES_OPEN.put(Direction.SOUTH, Block.makeCuboidShape(3, 3, 0, 13, 13, 13));
-		MEDIUM_SHAPES_OPEN.put(Direction.WEST, Block.makeCuboidShape(3, 3, 3, 16, 13, 13));
-		MEDIUM_SHAPES_OPEN.put(Direction.EAST, Block.makeCuboidShape(0, 3, 3, 13, 13, 13));
+		MEDIUM_SHAPES_OPEN.put(Direction.UP, Block.box(3, 0, 3, 13, 13, 13));
+		MEDIUM_SHAPES_OPEN.put(Direction.DOWN, Block.box(3, 3, 3, 13, 16, 13));
+		MEDIUM_SHAPES_OPEN.put(Direction.NORTH, Block.box(3, 3, 3, 13, 13, 16));
+		MEDIUM_SHAPES_OPEN.put(Direction.SOUTH, Block.box(3, 3, 0, 13, 13, 13));
+		MEDIUM_SHAPES_OPEN.put(Direction.WEST, Block.box(3, 3, 3, 16, 13, 13));
+		MEDIUM_SHAPES_OPEN.put(Direction.EAST, Block.box(0, 3, 3, 13, 13, 13));
 
-		SMALL_SHAPES_OPEN.put(Direction.UP, Block.makeCuboidShape(4, 0, 4, 12, 12, 12));
-		SMALL_SHAPES_OPEN.put(Direction.DOWN, Block.makeCuboidShape(4, 4, 4, 12, 16, 12));
-		SMALL_SHAPES_OPEN.put(Direction.NORTH, Block.makeCuboidShape(4, 4, 4, 12, 12, 16));
-		SMALL_SHAPES_OPEN.put(Direction.SOUTH, Block.makeCuboidShape(4, 4, 0, 12, 12, 12));
-		SMALL_SHAPES_OPEN.put(Direction.WEST, Block.makeCuboidShape(4, 4, 4, 16, 12, 12));
-		SMALL_SHAPES_OPEN.put(Direction.EAST, Block.makeCuboidShape(0, 4, 4, 12, 12, 12));
+		SMALL_SHAPES_OPEN.put(Direction.UP, Block.box(4, 0, 4, 12, 12, 12));
+		SMALL_SHAPES_OPEN.put(Direction.DOWN, Block.box(4, 4, 4, 12, 16, 12));
+		SMALL_SHAPES_OPEN.put(Direction.NORTH, Block.box(4, 4, 4, 12, 12, 16));
+		SMALL_SHAPES_OPEN.put(Direction.SOUTH, Block.box(4, 4, 0, 12, 12, 12));
+		SMALL_SHAPES_OPEN.put(Direction.WEST, Block.box(4, 4, 4, 16, 12, 12));
+		SMALL_SHAPES_OPEN.put(Direction.EAST, Block.box(0, 4, 4, 12, 12, 12));
 	}
 }

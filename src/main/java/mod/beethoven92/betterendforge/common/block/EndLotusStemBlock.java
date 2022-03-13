@@ -27,6 +27,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class EndLotusStemBlock extends Block implements IWaterLoggable
 {
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -37,20 +39,20 @@ public class EndLotusStemBlock extends Block implements IWaterLoggable
 	
 	static 
 	{
-		SHAPES.put(Axis.X, Block.makeCuboidShape(0, 6, 6, 16, 10, 10));
-		SHAPES.put(Axis.Y, Block.makeCuboidShape(6, 0, 6, 10, 16, 10));
-		SHAPES.put(Axis.Z, Block.makeCuboidShape(6, 6, 0, 10, 10, 16));
+		SHAPES.put(Axis.X, Block.box(0, 6, 6, 16, 10, 10));
+		SHAPES.put(Axis.Y, Block.box(6, 0, 6, 10, 16, 10));
+		SHAPES.put(Axis.Z, Block.box(6, 6, 0, 10, 10, 16));
 	}
 	
 	public EndLotusStemBlock(Properties properties) 
 	{
 		super(properties);
-		this.setDefaultState(getDefaultState().with(WATERLOGGED, false).with(SHAPE, TripleShape.MIDDLE).
-				with(LEAF, false).with(FACING, Direction.UP));
+		this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(SHAPE, TripleShape.MIDDLE).
+				setValue(LEAF, false).setValue(FACING, Direction.UP));
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(FACING, LEAF, WATERLOGGED, SHAPE);
 	}
@@ -58,31 +60,31 @@ public class EndLotusStemBlock extends Block implements IWaterLoggable
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
 	{
-		return state.get(LEAF) ? SHAPES.get(Axis.Y) : SHAPES.get(state.get(FACING).getAxis());
+		return state.getValue(LEAF) ? SHAPES.get(Axis.Y) : SHAPES.get(state.getValue(FACING).getAxis());
 	}
 	
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) 
 	{
-		World world = context.getWorld();
-		BlockPos pos = context.getPos();
-		return this.getDefaultState().with(WATERLOGGED, world.getFluidState(pos).getFluid() == Fluids.WATER).
-				with(FACING, context.getFace());
+		World world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
+		return this.defaultBlockState().setValue(WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER).
+				setValue(FACING, context.getClickedFace());
 	}
 	
 	@Override
 	public FluidState getFluidState(BlockState state) 
 	{
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (stateIn.get(WATERLOGGED)) 
+		if (stateIn.getValue(WATERLOGGED)) 
 		{
-			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+			worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
 	    }
 		
 		return stateIn;
@@ -91,12 +93,12 @@ public class EndLotusStemBlock extends Block implements IWaterLoggable
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot)
 	{
-		return state.with(FACING, rot.rotate(state.get(FACING)));
+		return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
 	}
 	
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn) 
 	{
-		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
 	}
 }

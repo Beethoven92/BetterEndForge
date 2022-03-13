@@ -30,6 +30,6 @@ public class BetterEndTeleporter implements net.minecraftforge.common.util.ITele
 	public PortalInfo getPortalInfo(Entity entity, ServerWorld destWorld,
 			Function<ServerWorld, PortalInfo> defaultPortalInfo) 
 	{
-		return new PortalInfo(new Vector3d(exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D), entity.getMotion(), entity.rotationYaw, entity.rotationPitch);
+		return new PortalInfo(new Vector3d(exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D), entity.getDeltaMovement(), entity.yRot, entity.xRot);
 	}	
 }

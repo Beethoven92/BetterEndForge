@@ -13,9 +13,11 @@ import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.IBlockReader;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class ModLanternBlock extends LanternBlock {
-	private static final VoxelShape SHAPE_CEIL = Block.makeCuboidShape(3, 1, 3, 13, 16, 13);
-	private static final VoxelShape SHAPE_FLOOR = Block.makeCuboidShape(3, 0, 3, 13, 15, 13);
+	private static final VoxelShape SHAPE_CEIL = Block.box(3, 1, 3, 13, 16, 13);
+	private static final VoxelShape SHAPE_FLOOR = Block.box(3, 0, 3, 13, 15, 13);
 	private static final Vector3i[] COLORS = AuroraCrystalBlock.COLORS;
 
 	public ModLanternBlock(Properties properties) {
@@ -24,7 +26,7 @@ public class ModLanternBlock extends LanternBlock {
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return state.get(LanternBlock.HANGING) ? SHAPE_CEIL : SHAPE_FLOOR;
+		return state.getValue(LanternBlock.HANGING) ? SHAPE_CEIL : SHAPE_FLOOR;
 	}
 
 	public static int getBlockColor(BlockState state, IBlockDisplayReader world, BlockPos pos, int tintIndex) {

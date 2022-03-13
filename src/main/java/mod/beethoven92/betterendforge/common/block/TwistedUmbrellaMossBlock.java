@@ -12,6 +12,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class TwistedUmbrellaMossBlock extends PlantBlock
 {
 	public TwistedUmbrellaMossBlock(Properties properties) 
@@ -20,7 +22,7 @@ public class TwistedUmbrellaMossBlock extends PlantBlock
 	}
 	
 	@Override
-	public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) 
+	public float getShadeBrightness(BlockState state, IBlockReader worldIn, BlockPos pos) 
 	{
 		return 1F;
 	}
@@ -33,23 +35,23 @@ public class TwistedUmbrellaMossBlock extends PlantBlock
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
-		return worldIn.getBlockState(pos.up()).isAir();
+		return worldIn.getBlockState(pos.above()).isAir();
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}
 	
 	@Override
-	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
+	public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
-    	int rot = worldIn.rand.nextInt(4);
-		BlockState bs = ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get().getDefaultState().with(DoublePlantBlock.ROTATION, rot);
+    	int rot = worldIn.random.nextInt(4);
+		BlockState bs = ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get().defaultBlockState().setValue(DoublePlantBlock.ROTATION, rot);
 		BlockHelper.setWithoutUpdate(worldIn, pos, bs);
-		BlockHelper.setWithoutUpdate(worldIn, pos.up(), bs.with(DoublePlantBlock.TOP, true));
+		BlockHelper.setWithoutUpdate(worldIn, pos.above(), bs.setValue(DoublePlantBlock.TOP, true));
 	}
 }

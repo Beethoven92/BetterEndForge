@@ -14,20 +14,20 @@ import net.minecraft.util.SoundEvents;
 public enum ModArmorMaterial implements IArmorMaterial
 {
 	THALLASIUM(BetterEnd.MOD_ID + ":thallasium", 17, new int[] { 1, 4, 5, 2 }, 12, 
-			SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F, () -> {
-				return Ingredient.fromItems(ModBlocks.THALLASIUM.ingot.get());}, 0.0F),
+			SoundEvents.ARMOR_EQUIP_IRON, 0.0F, () -> {
+				return Ingredient.of(ModBlocks.THALLASIUM.ingot.get());}, 0.0F),
 	
 	TERMINITE(BetterEnd.MOD_ID + ":terminite", 26, new int[] {3, 6, 7, 3}, 14, 
-			SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1.0F, () -> {
-				return Ingredient.fromItems(ModBlocks.TERMINITE.ingot.get());}, 0.05F),
+			SoundEvents.ARMOR_EQUIP_IRON, 1.0F, () -> {
+				return Ingredient.of(ModBlocks.TERMINITE.ingot.get());}, 0.05F),
 	
 	AETERNIUM(BetterEnd.MOD_ID + ":aeternium", 40, new int[] { 4, 7, 9, 4 }, 18, 
-			SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 3.5F, () -> {
-				return Ingredient.fromItems(ModItems.AETERNIUM_INGOT.get());}, 0.2F),
+			SoundEvents.ARMOR_EQUIP_NETHERITE, 3.5F, () -> {
+				return Ingredient.of(ModItems.AETERNIUM_INGOT.get());}, 0.2F),
 	
 	CRYSTALITE(BetterEnd.MOD_ID + ":crystalite", 30, new int[] { 3, 6, 8, 3 }, 24, 
-			SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 1.2F, () -> {
-				return Ingredient.fromItems(ModBlocks.TERMINITE.ingot.get());}, 0.1F);
+			SoundEvents.ARMOR_EQUIP_DIAMOND, 1.2F, () -> {
+				return Ingredient.of(ModBlocks.TERMINITE.ingot.get());}, 0.1F);
 
 
 	private static final int[] MAX_DAMAGE_ARRAY = { 11, 16, 15, 13 };
@@ -54,31 +54,31 @@ public enum ModArmorMaterial implements IArmorMaterial
 	}
 	
 	@Override
-	public int getDurability(EquipmentSlotType slotIn) 
+	public int getDurabilityForSlot(EquipmentSlotType slotIn) 
 	{
 		return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
 	}
 
 	@Override
-	public int getDamageReductionAmount(EquipmentSlotType slotIn) 
+	public int getDefenseForSlot(EquipmentSlotType slotIn) 
 	{
 		return damageReductionAmountArray[slotIn.getIndex()];
 	}
 
 	@Override
-	public int getEnchantability() 
+	public int getEnchantmentValue() 
 	{
 		return enchantability;
 	}
 
 	@Override
-	public SoundEvent getSoundEvent() 
+	public SoundEvent getEquipSound() 
 	{
 		return soundEvent;
 	}
 
 	@Override
-	public Ingredient getRepairMaterial() 
+	public Ingredient getRepairIngredient() 
 	{
 		return repairMaterial.get();
 	}

@@ -34,29 +34,29 @@ public abstract class BoneMealItemMixin
 	@Inject(method = "onItemUse", at = @At("HEAD"), cancellable = true)
 	private void onItemUse(ItemUseContext context, CallbackInfoReturnable<ActionResultType> info) 
 	{
-		World world = context.getWorld();
-		BlockPos blockPos = context.getPos();
+		World world = context.getLevel();
+		BlockPos blockPos = context.getClickedPos();
 		
 		// FIX underwater seeds not being able to grow when using bonemeal on them
-		if (BoneMealItem.applyBonemeal(context.getItem(), world, blockPos, context.getPlayer())) 
+		if (BoneMealItem.applyBonemeal(context.getItemInHand(), world, blockPos, context.getPlayer())) 
 		{
-	          if (!world.isRemote) 
+	          if (!world.isClientSide) 
 	          {
-	             world.playEvent(2005, blockPos, 0);
+	             world.levelEvent(2005, blockPos, 0);
 	          }
 
-	          info.setReturnValue(ActionResultType.func_233537_a_(world.isRemote));
+	          info.setReturnValue(ActionResultType.sidedSuccess(world.isClientSide));
 	          info.cancel();
 		}
-		else if (!world.isRemote()) 
+		else if (!world.isClientSide()) 
 		{
-			BlockPos offseted = blockPos.offset(context.getFace());
-			boolean endBiome = world.getBiome(offseted).getCategory() == Category.THEEND;
+			BlockPos offseted = blockPos.relative(context.getClickedFace());
+			boolean endBiome = world.getBiome(offseted).getBiomeCategory() == Category.THEEND;
 			
-			if (world.getBlockState(blockPos).isIn(ModTags.END_GROUND)) 
+			if (world.getBlockState(blockPos).is(ModTags.END_GROUND)) 
 			{
 				boolean consume = false;
-				if (world.getBlockState(blockPos).isIn(Blocks.END_STONE)) 
+				if (world.getBlockState(blockPos).is(Blocks.END_STONE)) 
 				{
 					BlockState nylium = getNylium(world, blockPos);
 					if (nylium != null)
@@ -76,7 +76,7 @@ public abstract class BoneMealItemMixin
 					if (!world.getFluidState(offseted).isEmpty() && endBiome) 
 					{
 						// FIX being able to use bone meal underwater on a block where plants already grew
-						if (world.getBlockState(offseted).isIn(Blocks.WATER)) consume = growWaterGrass(world, blockPos);
+						if (world.getBlockState(offseted).is(Blocks.WATER)) consume = growWaterGrass(world, blockPos);
 					}
 					else if (world.getBlockState(offseted).isAir()) // FIX being able to use bone meal on a block where plants already grew
 					{
@@ -85,8 +85,8 @@ public abstract class BoneMealItemMixin
 				}
 				if (consume) 
 				{
-					if (!context.getPlayer().isCreative()) context.getItem().shrink(1);
-					world.playEvent(2005, blockPos, 0);
+					if (!context.getPlayer().isCreative()) context.getItemInHand().shrink(1);
+					world.levelEvent(2005, blockPos, 0);
 					info.setReturnValue(ActionResultType.SUCCESS);
 					info.cancel();
 				}
@@ -107,15 +107,15 @@ public abstract class BoneMealItemMixin
 		boolean result = false;
 		for (int i = 0; i < 64; i++) 
 		{
-			int x = (int) (pos.getX() + world.rand.nextGaussian() * 2);
-			int z = (int) (pos.getZ() + world.rand.nextGaussian() * 2);
+			int x = (int) (pos.getX() + world.random.nextGaussian() * 2);
+			int z = (int) (pos.getZ() + world.random.nextGaussian() * 2);
 			POS.setX(x);
 			POS.setZ(z);
 			for (int y = y1; y >= y2; y--) 
 			{
 				POS.setY(y);
-				BlockPos down = POS.down();
-				if (world.isAirBlock(POS) && !world.isAirBlock(down)) 
+				BlockPos down = POS.below();
+				if (world.isEmptyBlock(POS) && !world.isEmptyBlock(down)) 
 				{
 					BlockState grass = getGrassState(world, down);
 					if (grass != null) 
@@ -137,15 +137,15 @@ public abstract class BoneMealItemMixin
 		boolean result = false;
 		for (int i = 0; i < 64; i++) 
 		{
-			int x = (int) (pos.getX() + world.rand.nextGaussian() * 2);
-			int z = (int) (pos.getZ() + world.rand.nextGaussian() * 2);
+			int x = (int) (pos.getX() + world.random.nextGaussian() * 2);
+			int z = (int) (pos.getZ() + world.random.nextGaussian() * 2);
 			POS.setX(x);
 			POS.setZ(z);
 			for (int y = y1; y >= y2; y--) 
 			{
 				POS.setY(y);
-				BlockPos down = POS.down();
-				if (world.getBlockState(POS).isIn(Blocks.WATER) && world.getBlockState(down).isIn(ModTags.END_GROUND)) 
+				BlockPos down = POS.below();
+				if (world.getBlockState(POS).is(Blocks.WATER) && world.getBlockState(down).is(ModTags.END_GROUND)) 
 				{
 					BlockState grass = getWaterGrassState(world, down);
 					if (grass != null) 
@@ -174,45 +174,45 @@ public abstract class BoneMealItemMixin
 		{				
 			if (world.getBiome(pos).getRegistryName().equals(ModBiomes.GLOWING_GRASSLANDS.getID())) {
 				Block[] grasses = glowingGrasslandsGrass();
-				return grasses[world.rand.nextInt(grasses.length)].getDefaultState();
+				return grasses[world.random.nextInt(grasses.length)].defaultBlockState();
 			} else {
-				return world.rand.nextBoolean() ? ModBlocks.CREEPING_MOSS.get().getDefaultState() : ModBlocks.UMBRELLA_MOSS.get().getDefaultState();
+				return world.random.nextBoolean() ? ModBlocks.CREEPING_MOSS.get().defaultBlockState() : ModBlocks.UMBRELLA_MOSS.get().defaultBlockState();
 			}
 		}
 		else if (block == ModBlocks.CAVE_MOSS.get()) 
 		{
-			return ModBlocks.CAVE_GRASS.get().getDefaultState();
+			return ModBlocks.CAVE_GRASS.get().defaultBlockState();
 		}
 		else if (block == ModBlocks.CHORUS_NYLIUM.get()) 
 		{
-			return ModBlocks.CHORUS_GRASS.get().getDefaultState();
+			return ModBlocks.CHORUS_GRASS.get().defaultBlockState();
 		}
 		else if (block == ModBlocks.CRYSTAL_MOSS.get())
 		{
-			return ModBlocks.CRYSTAL_GRASS.get().getDefaultState();
+			return ModBlocks.CRYSTAL_GRASS.get().defaultBlockState();
 		}
 		else if (block == ModBlocks.AMBER_MOSS.get())
 		{
-			return ModBlocks.AMBER_GRASS.get().getDefaultState();
+			return ModBlocks.AMBER_GRASS.get().defaultBlockState();
 		}
 		else if (block == ModBlocks.SHADOW_GRASS.get()) 
 		{
-			return ModBlocks.SHADOW_PLANT.get().getDefaultState();
+			return ModBlocks.SHADOW_PLANT.get().defaultBlockState();
 		}
 		else if (block == ModBlocks.PINK_MOSS.get()) 
 		{
-			return ModBlocks.BUSHY_GRASS.get().getDefaultState();
+			return ModBlocks.BUSHY_GRASS.get().defaultBlockState();
 		}
 		else if (block == ModBlocks.JUNGLE_MOSS.get())
 		{
-			return getRandomGrassState(world.rand, ModBlocks.TWISTED_UMBRELLA_MOSS.get().getDefaultState(),
-					ModBlocks.SMALL_JELLYSHROOM.get().getDefaultState(), ModBlocks.JUNGLE_GRASS.get().getDefaultState());
+			return getRandomGrassState(world.random, ModBlocks.TWISTED_UMBRELLA_MOSS.get().defaultBlockState(),
+					ModBlocks.SMALL_JELLYSHROOM.get().defaultBlockState(), ModBlocks.JUNGLE_GRASS.get().defaultBlockState());
 		} else if (block == ModBlocks.SANGNUM.get() || block == ModBlocks.MOSSY_DRAGON_BONE.get() || block == ModBlocks.MOSSY_OBSIDIAN.get()) {
-			return getRandomGrassState(world.rand, ModBlocks.GLOBULAGUS.get().getDefaultState(),
-					ModBlocks.CLAWFERN.get().getDefaultState(), ModBlocks.SMALL_AMARANITA_MUSHROOM.get().getDefaultState());			
+			return getRandomGrassState(world.random, ModBlocks.GLOBULAGUS.get().defaultBlockState(),
+					ModBlocks.CLAWFERN.get().defaultBlockState(), ModBlocks.SMALL_AMARANITA_MUSHROOM.get().defaultBlockState());			
 		} else if (block == ModBlocks.RUTISCUS.get()) {
-			return getRandomGrassState(world.rand, ModBlocks.AERIDIUM.get().getDefaultState(),
-					ModBlocks.LAMELLARIUM.get().getDefaultState(), ModBlocks.BOLUX_MUSHROOM.get().getDefaultState(), ModBlocks.ORANGO.get().getDefaultState(), ModBlocks.LUTEBUS.get().getDefaultState());			
+			return getRandomGrassState(world.random, ModBlocks.AERIDIUM.get().defaultBlockState(),
+					ModBlocks.LAMELLARIUM.get().defaultBlockState(), ModBlocks.BOLUX_MUSHROOM.get().defaultBlockState(), ModBlocks.ORANGO.get().defaultBlockState(), ModBlocks.LUTEBUS.get().defaultBlockState());			
 		}
 		return null;
 	}
@@ -221,37 +221,37 @@ public abstract class BoneMealItemMixin
 	{
 		BetterEndBiome biome = ModBiomes.getFromBiome(world.getBiome(pos));
 
-		if (world.rand.nextInt(16) == 0) 
+		if (world.random.nextInt(16) == 0) 
 		{
-			return ModBlocks.CHARNIA_RED.get().getDefaultState();
+			return ModBlocks.CHARNIA_RED.get().defaultBlockState();
 		}
 		else if (biome == ModBiomes.FOGGY_MUSHROOMLAND || biome == ModBiomes.MEGALAKE || biome == ModBiomes.MEGALAKE_GROVE) 
 		{
-			return world.rand.nextBoolean() ? ModBlocks.CHARNIA_CYAN.get().getDefaultState() : ModBlocks.CHARNIA_LIGHT_BLUE.get().getDefaultState();
+			return world.random.nextBoolean() ? ModBlocks.CHARNIA_CYAN.get().defaultBlockState() : ModBlocks.CHARNIA_LIGHT_BLUE.get().defaultBlockState();
 		}
 		else if (biome == ModBiomes.AMBER_LAND) 
 		{
-			return world.rand.nextBoolean() ? ModBlocks.CHARNIA_ORANGE.get().getDefaultState() : ModBlocks.CHARNIA_RED.get().getDefaultState();
+			return world.random.nextBoolean() ? ModBlocks.CHARNIA_ORANGE.get().defaultBlockState() : ModBlocks.CHARNIA_RED.get().defaultBlockState();
 		}
 		else if (biome == ModBiomes.CHORUS_FOREST || biome == ModBiomes.SHADOW_FOREST) 
 		{
-			return ModBlocks.CHARNIA_PURPLE.get().getDefaultState();
+			return ModBlocks.CHARNIA_PURPLE.get().defaultBlockState();
 		}
 		else if (biome == ModBiomes.SULPHUR_SPRINGS)
 		{
-			return world.rand.nextBoolean() ? ModBlocks.CHARNIA_ORANGE.get().getDefaultState() : ModBlocks.CHARNIA_GREEN.get().getDefaultState();
+			return world.random.nextBoolean() ? ModBlocks.CHARNIA_ORANGE.get().defaultBlockState() : ModBlocks.CHARNIA_GREEN.get().defaultBlockState();
 		}
 		else if (biome == ModBiomes.UMBRELLA_JUNGLE)
 		{
-			return getRandomGrassState(world.rand, ModBlocks.CHARNIA_CYAN.get().getDefaultState(), 
-					ModBlocks.CHARNIA_GREEN.get().getDefaultState(), ModBlocks.CHARNIA_LIGHT_BLUE.get().getDefaultState());
+			return getRandomGrassState(world.random, ModBlocks.CHARNIA_CYAN.get().defaultBlockState(), 
+					ModBlocks.CHARNIA_GREEN.get().defaultBlockState(), ModBlocks.CHARNIA_LIGHT_BLUE.get().defaultBlockState());
 		}
 		else if (biome == ModBiomes.GLOWING_GRASSLANDS)
 		{
-			return getRandomGrassState(world.rand, ModBlocks.CHARNIA_CYAN.get().getDefaultState(), 
-					ModBlocks.CHARNIA_GREEN.get().getDefaultState(), ModBlocks.CHARNIA_LIGHT_BLUE.get().getDefaultState());
+			return getRandomGrassState(world.random, ModBlocks.CHARNIA_CYAN.get().defaultBlockState(), 
+					ModBlocks.CHARNIA_GREEN.get().defaultBlockState(), ModBlocks.CHARNIA_LIGHT_BLUE.get().defaultBlockState());
 		}
-		return ModBlocks.CHARNIA_RED.get().getDefaultState();
+		return ModBlocks.CHARNIA_RED.get().defaultBlockState();
 		//return null;
 	}
 
@@ -273,10 +273,10 @@ public abstract class BoneMealItemMixin
 
 	private BlockState getNylium(World world, BlockPos pos) 
 	{
-		shuffle(world.rand);
+		shuffle(world.random);
 		for (Direction dir : DIR)
 		{
-			BlockState state = world.getBlockState(pos.offset(dir));
+			BlockState state = world.getBlockState(pos.relative(dir));
 			if (BlockHelper.isEndNylium(state))
 				return state;
 		}

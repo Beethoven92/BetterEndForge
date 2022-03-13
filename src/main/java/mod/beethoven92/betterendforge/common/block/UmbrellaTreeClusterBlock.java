@@ -18,6 +18,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class UmbrellaTreeClusterBlock extends Block
 {
 	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
@@ -25,20 +27,20 @@ public class UmbrellaTreeClusterBlock extends Block
 	public UmbrellaTreeClusterBlock(Properties properties) 
 	{
 		super(properties);
-		setDefaultState(stateContainer.getBaseState().with(NATURAL, false));
+		registerDefaultState(stateDefinition.any().setValue(NATURAL, false));
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
 	{
 		builder.add(NATURAL);
 	}
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) 
 	{
-		ItemStack stack = player.getHeldItemMainhand();
+		ItemStack stack = player.getMainHandItem();
 		if (stack.getItem() == Items.GLASS_BOTTLE) 
 		{
 			if (!player.isCreative()) 
@@ -46,9 +48,9 @@ public class UmbrellaTreeClusterBlock extends Block
 				stack.shrink(1);
 			}
 			stack = new ItemStack(ModItems.UMBRELLA_CLUSTER_JUICE.get());
-			player.addItemStackToInventory(stack);
-			worldIn.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.ITEM_BOTTLE_FILL, SoundCategory.BLOCKS, 1, 1, false);
-			BlockHelper.setWithUpdate(worldIn, pos, ModBlocks.UMBRELLA_TREE_CLUSTER_EMPTY.get().getDefaultState().with(NATURAL, state.get(NATURAL)));
+			player.addItem(stack);
+			worldIn.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, SoundEvents.BOTTLE_FILL, SoundCategory.BLOCKS, 1, 1, false);
+			BlockHelper.setWithUpdate(worldIn, pos, ModBlocks.UMBRELLA_TREE_CLUSTER_EMPTY.get().defaultBlockState().setValue(NATURAL, state.getValue(NATURAL)));
 			return ActionResultType.SUCCESS;
 		}
 		return ActionResultType.FAIL;

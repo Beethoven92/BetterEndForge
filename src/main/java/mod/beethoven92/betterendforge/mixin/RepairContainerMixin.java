@@ -32,7 +32,7 @@ import net.minecraft.world.World;
 @Mixin(RepairContainer.class)
 public abstract class RepairContainerMixin extends AbstractRepairContainer implements ExtendedRepairContainer
 {
-	private final World world = this.field_234645_f_.world;
+	private final World world = this.player.level;
 	private final RecipeManager recipeManager = this.world.getRecipeManager();
 	
 	private List<AnvilSmithingRecipe> be_recipes = Collections.emptyList();
@@ -47,7 +47,7 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	public void be_initAnvilLevel(int id, PlayerInventory inventory, IWorldPosCallable worldPosCallable, CallbackInfo info)
 	{
-		int anvLevel = worldPosCallable.applyOrElse((world, blockPos) -> {
+		int anvLevel = worldPosCallable.evaluate((world, blockPos) -> {
 			Block anvilBlock = world.getBlockState(blockPos).getBlock();
 			if (anvilBlock instanceof EndAnvilBlock) 
 			{
@@ -56,53 +56,53 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 			return 1;
 		}, 1);
 		
-		IntReferenceHolder anvilLevel = IntReferenceHolder.single();
+		IntReferenceHolder anvilLevel = IntReferenceHolder.standalone();
 		anvilLevel.set(anvLevel);
-		this.anvilLevel = trackInt(anvilLevel);
+		this.anvilLevel = addDataSlot(anvilLevel);
 	}
 	
 	@Shadow
-	public abstract void updateRepairOutput();
+	public abstract void createResult();
 	
-	@Inject(method = "func_230303_b_", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "mayPickup", at = @At("HEAD"), cancellable = true)
 	protected void be_canTakeOutput(PlayerEntity player, boolean present, CallbackInfoReturnable<Boolean> info) 
 	{
 		if (be_currentRecipe != null) 
 		{
-			info.setReturnValue(be_currentRecipe.checkHammerDurability(this.field_234643_d_, player));
+			info.setReturnValue(be_currentRecipe.checkHammerDurability(this.inputSlots, player));
 		}
 	}
 	
-	@Inject(method = "func_230301_a_", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "onTake", at = @At("HEAD"), cancellable = true)
 	protected void be_onTakeOutput(PlayerEntity player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) 
 	{
 		if (be_currentRecipe != null)
 		{
-			this.field_234643_d_.getStackInSlot(1).shrink(be_currentRecipe.inputCount);
+			this.inputSlots.getItem(1).shrink(be_currentRecipe.inputCount);
 			
-			stack = be_currentRecipe.craft(this.field_234643_d_, player);
+			stack = be_currentRecipe.craft(this.inputSlots, player);
 			
-			this.onCraftMatrixChanged(field_234643_d_);
+			this.slotsChanged(inputSlots);
 
-			this.field_234644_e_.consume((world, blockPos) -> {
+			this.access.execute((world, blockPos) -> {
 				BlockState anvilState = world.getBlockState(blockPos);
-				if (!player.abilities.isCreativeMode && anvilState.isIn(BlockTags.ANVIL) && player.getRNG().nextFloat() < 0.12F)
+				if (!player.abilities.instabuild && anvilState.is(BlockTags.ANVIL) && player.getRandom().nextFloat() < 0.12F)
 				{
 					BlockState landingState = AnvilBlock.damage(anvilState);
 					if (landingState == null) 
 					{
 						world.removeBlock(blockPos, false);
-						world.playEvent(1029, blockPos, 0);
+						world.levelEvent(1029, blockPos, 0);
 					} 
 					else 
 					{
-						world.setBlockState(blockPos, landingState, 2);
-						world.playEvent(1030, blockPos, 0);
+						world.setBlock(blockPos, landingState, 2);
+						world.levelEvent(1030, blockPos, 0);
 					}
 				} 
 				else 
 				{
-					world.playEvent(1030, blockPos, 0);
+					world.levelEvent(1030, blockPos, 0);
 				}
 
 			});
@@ -113,7 +113,7 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 	@Inject(method = "updateRepairOutput", at = @At("HEAD"), cancellable = true)
 	public void updateRepairOutput(CallbackInfo info) 
 	{
-		be_recipes = this.recipeManager.getRecipes(AnvilSmithingRecipe.TYPE, this.field_234643_d_, world);
+		be_recipes = this.recipeManager.getRecipesFor(AnvilSmithingRecipe.TYPE, this.inputSlots, world);
 
 		if (be_recipes.size() > 0) 
 		{
@@ -146,7 +146,7 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 	}
 	
 	@Override
-	public boolean enchantItem(PlayerEntity playerIn, int id) 
+	public boolean clickMenuButton(PlayerEntity playerIn, int id) 
 	{
 		if (id == 0) 
 		{
@@ -158,14 +158,14 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 			this.be_nextRecipe();
 			return true;
 		}
-		return super.enchantItem(playerIn, id);
+		return super.clickMenuButton(playerIn, id);
 	}
 	
 	private void be_updateResult() 
 	{
 		if (be_currentRecipe == null) return;
-		this.field_234642_c_.setInventorySlotContents(0, be_currentRecipe.getCraftingResult(this.field_234643_d_));
-		this.detectAndSendChanges();
+		this.resultSlots.setItem(0, be_currentRecipe.assemble(this.inputSlots));
+		this.broadcastChanges();
 	}
 	
 	@Override

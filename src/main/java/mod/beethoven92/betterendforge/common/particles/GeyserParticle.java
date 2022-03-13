@@ -23,14 +23,14 @@ public class GeyserParticle extends SpriteTexturedParticle
 	{
 		super(world, x, y, z, vx, vy, vz);
 		
-		this.selectSpriteWithAge(spriteWithAge);
+		this.setSpriteFromAge(spriteWithAge);
 		
-		this.maxAge = ModMathHelper.randRange(400, 800, rand);
-		this.particleScale = ModMathHelper.randRange(0.5F, 1.0F, rand);
+		this.lifetime = ModMathHelper.randRange(400, 800, random);
+		this.quadSize = ModMathHelper.randRange(0.5F, 1.0F, random);
 		
-		this.motionX = vx;
-		this.motionZ = vz;
-		this.prevPosY = y - 0.125;
+		this.xd = vx;
+		this.zd = vz;
+		this.yo = y - 0.125;
 	}
 
 	@Override
@@ -42,32 +42,32 @@ public class GeyserParticle extends SpriteTexturedParticle
 	@Override
 	public void tick() 
 	{
-		if (this.prevPosY == this.posY || this.age > this.maxAge) 
+		if (this.yo == this.y || this.age > this.lifetime) 
 		{
-			this.setExpired();
+			this.remove();
 		}
 		else 
 		{
-			if (this.age >= this.maxAge - 200) 
+			if (this.age >= this.lifetime - 200) 
 			{
-				this.setAlphaF((this.maxAge - this.age) / 200F);
+				this.setAlpha((this.lifetime - this.age) / 200F);
 			}
 			
-			this.particleScale += 0.005F;
-			this.motionY = 0.125;
+			this.quadSize += 0.005F;
+			this.yd = 0.125;
 			
 			if (changeDir) 
 			{
 				changeDir = false;
 				check = false;
-				this.motionX += ModMathHelper.randRange(-0.2, 0.2, rand);
-				this.motionZ += ModMathHelper.randRange(-0.2, 0.2, rand);
+				this.xd += ModMathHelper.randRange(-0.2, 0.2, random);
+				this.zd += ModMathHelper.randRange(-0.2, 0.2, random);
 			}
 			else if (check) 
 			{
-				changeDir = world.getBlockState(mut.setPos(posX, posY, posZ)).getFluidState().isEmpty();
-				this.motionX = 0;
-				this.motionZ = 0;
+				changeDir = level.getBlockState(mut.set(x, y, z)).getFluidState().isEmpty();
+				this.xd = 0;
+				this.zd = 0;
 			}
 		}
 		super.tick();
@@ -84,7 +84,7 @@ public class GeyserParticle extends SpriteTexturedParticle
 	    }
 	    
 	    @Override
-	    public Particle makeParticle(BasicParticleType type, ClientWorld worldIn, double x, double y, double z,
+	    public Particle createParticle(BasicParticleType type, ClientWorld worldIn, double x, double y, double z,
 	    		double xSpeed, double ySpeed, double zSpeed) 
 	    {
 	    	return new GeyserParticle(worldIn, x, y, z, 0, 0.125, 0, sprite);

@@ -20,20 +20,20 @@ public class FilaluxWingsBlock extends AttachedBlock {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	
 	public FilaluxWingsBlock() {
-		super(AbstractBlock.Properties.create(Material.PLANTS).sound(SoundType.WET_GRASS).doesNotBlockMovement());
+		super(AbstractBlock.Properties.of(Material.PLANT).sound(SoundType.WET_GRASS).noCollission());
 	}
 	
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader view, BlockPos pos, ISelectionContext ePos) {
-		return BOUNDING_SHAPES.get(state.get(FACING));
+		return BOUNDING_SHAPES.get(state.getValue(FACING));
 	}
 	
 	static {
-		BOUNDING_SHAPES.put(Direction.UP, VoxelShapes.create(0.0, 0.0, 0.0, 1.0, 0.5, 1.0));
-		BOUNDING_SHAPES.put(Direction.DOWN, VoxelShapes.create(0.0, 0.5, 0.0, 1.0, 1.0, 1.0));
-		BOUNDING_SHAPES.put(Direction.NORTH, VoxelShapes.create(0.0, 0.0, 0.5, 1.0, 1.0, 1.0));
-		BOUNDING_SHAPES.put(Direction.SOUTH, VoxelShapes.create(0.0, 0.0, 0.0, 1.0, 1.0, 0.5));
-		BOUNDING_SHAPES.put(Direction.WEST, VoxelShapes.create(0.5, 0.0, 0.0, 1.0, 1.0, 1.0));
-		BOUNDING_SHAPES.put(Direction.EAST, VoxelShapes.create(0.0, 0.0, 0.0, 0.5, 1.0, 1.0));
+		BOUNDING_SHAPES.put(Direction.UP, VoxelShapes.box(0.0, 0.0, 0.0, 1.0, 0.5, 1.0));
+		BOUNDING_SHAPES.put(Direction.DOWN, VoxelShapes.box(0.0, 0.5, 0.0, 1.0, 1.0, 1.0));
+		BOUNDING_SHAPES.put(Direction.NORTH, VoxelShapes.box(0.0, 0.0, 0.5, 1.0, 1.0, 1.0));
+		BOUNDING_SHAPES.put(Direction.SOUTH, VoxelShapes.box(0.0, 0.0, 0.0, 1.0, 1.0, 0.5));
+		BOUNDING_SHAPES.put(Direction.WEST, VoxelShapes.box(0.5, 0.0, 0.0, 1.0, 1.0, 1.0));
+		BOUNDING_SHAPES.put(Direction.EAST, VoxelShapes.box(0.0, 0.0, 0.0, 0.5, 1.0, 1.0));
 	}
 }

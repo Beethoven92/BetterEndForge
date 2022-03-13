@@ -102,7 +102,7 @@ public abstract class WorldRendererMixin
 			time2 = time * 2;
 			time3 = time * 3;
 			
-			FogRenderer.resetFog();
+			FogRenderer.setupNoFog();
 			RenderSystem.enableTexture();
 			
 			//if (directOpenGL)
@@ -125,42 +125,42 @@ public abstract class WorldRendererMixin
 			
 			if (blindA > 0) 
 			{
-				matrices.push();
-				matrices.getLast().getMatrix().mul(new Quaternion(0, time, 0, false));
-				textureManager.bindTexture(HORIZON);
+				matrices.pushPose();
+				matrices.last().pose().multiply(new Quaternion(0, time, 0, false));
+				textureManager.bind(HORIZON);
 				renderBuffer(matrices, horizon, DefaultVertexFormats.POSITION_TEX, 0.77F, 0.31F, 0.73F, 0.7F * blindA);
-				matrices.pop();
+				matrices.popPose();
 				
-				matrices.push();
-				matrices.getLast().getMatrix().mul(new Quaternion(0, -time, 0, false));
-				textureManager.bindTexture(NEBULA_1);
+				matrices.pushPose();
+				matrices.last().pose().multiply(new Quaternion(0, -time, 0, false));
+				textureManager.bind(NEBULA_1);
 				renderBuffer(matrices, nebulas1, DefaultVertexFormats.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind02);
-				matrices.pop();
+				matrices.popPose();
 				
-				matrices.push();
-				matrices.getLast().getMatrix().mul(new Quaternion(0, time2, 0, false));
-				textureManager.bindTexture(NEBULA_2);
+				matrices.pushPose();
+				matrices.last().pose().multiply(new Quaternion(0, time2, 0, false));
+				textureManager.bind(NEBULA_2);
 				renderBuffer(matrices, nebulas2, DefaultVertexFormats.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind02);
-				matrices.pop();
+				matrices.popPose();
 				
-				textureManager.bindTexture(STARS);
+				textureManager.bind(STARS);
 
-				matrices.push();
-				matrices.getLast().getMatrix().mul(axis3.rotation(time));
+				matrices.pushPose();
+				matrices.last().pose().multiply(axis3.rotation(time));
 				renderBuffer(matrices, stars3, DefaultVertexFormats.POSITION_TEX, 0.77F, 0.31F, 0.73F, blind06);
-				matrices.pop();
+				matrices.popPose();
 
-				matrices.push();
-				matrices.getLast().getMatrix().mul(axis4.rotation(time2));
+				matrices.pushPose();
+				matrices.last().pose().multiply(axis4.rotation(time2));
 				renderBuffer(matrices, stars4, DefaultVertexFormats.POSITION_TEX, 1F, 1F, 1F, blind06);
-				matrices.pop();
+				matrices.popPose();
 			}
 			
 			float a = (BackgroundInfo.fog - 1F);
 			if (a > 0)
 			{
 				if (a > 1) a = 1;
-				textureManager.bindTexture(FOG);
+				textureManager.bind(FOG);
 				renderBuffer(matrices, fog, DefaultVertexFormats.POSITION_TEX, BackgroundInfo.red, BackgroundInfo.green, BackgroundInfo.blue, a);
 			}
 
@@ -168,15 +168,15 @@ public abstract class WorldRendererMixin
 			
 			if (blindA > 0) 
 			{
-				matrices.push();
-				matrices.getLast().getMatrix().mul(axis1.rotation(time3));
+				matrices.pushPose();
+				matrices.last().pose().multiply(axis1.rotation(time3));
 				renderBuffer(matrices, stars1, DefaultVertexFormats.POSITION, 1, 1, 1, blind06);
-				matrices.pop();
+				matrices.popPose();
 				
-				matrices.push();
-				matrices.getLast().getMatrix().mul(axis2.rotation(time2));
+				matrices.pushPose();
+				matrices.last().pose().multiply(axis2.rotation(time2));
 				renderBuffer(matrices, stars2, DefaultVertexFormats.POSITION, 0.95F, 0.64F, 0.93F, blind06);
-				matrices.pop();
+				matrices.popPose();
 			}
 			
 			RenderSystem.enableTexture();
@@ -189,16 +189,16 @@ public abstract class WorldRendererMixin
 	private void renderBuffer(MatrixStack matrixStackIn, VertexBuffer buffer, VertexFormat format, float r, float g, float b, float a) 
 	{
 		RenderSystem.color4f(r, g, b, a);
-		buffer.bindBuffer();;
+		buffer.bind();;
 		format.setupBufferState(0L);
-        buffer.draw(matrixStackIn.getLast().getMatrix(), 7);
-        VertexBuffer.unbindBuffer();
+        buffer.draw(matrixStackIn.last().pose(), 7);
+        VertexBuffer.unbind();
         format.clearBufferState();
 	}
 	
 	private void initStars() 
 	{
-		BufferBuilder buffer = Tessellator.getInstance().getBuffer();
+		BufferBuilder buffer = Tessellator.getInstance().getBuilder();
 		stars1 = buildBufferStars(buffer, stars1, 0.1, 0.30, 3500, 41315);
 		stars2 = buildBufferStars(buffer, stars2, 0.1, 0.35, 2000, 35151);
 		stars3 = buildBufferUVStars(buffer, stars3, 0.4, 1.2, 1000, 61354);
@@ -218,7 +218,7 @@ public abstract class WorldRendererMixin
 
 		buffer = new VertexBuffer(DefaultVertexFormats.POSITION);
 		makeStars(bufferBuilder, minSize, maxSize, count, seed);
-		bufferBuilder.finishDrawing();
+		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
 
 		return buffer;
@@ -233,7 +233,7 @@ public abstract class WorldRendererMixin
 
 		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_TEX);
 		makeUVStars(bufferBuilder, minSize, maxSize, count, seed);
-		bufferBuilder.finishDrawing();
+		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
 
 		return buffer;
@@ -248,7 +248,7 @@ public abstract class WorldRendererMixin
 
 		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_TEX);
 		makeFarFog(bufferBuilder, minSize, maxSize, count, seed);
-		bufferBuilder.finishDrawing();
+		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
 
 		return buffer;
@@ -263,7 +263,7 @@ public abstract class WorldRendererMixin
 
 		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_TEX);
 		makeCylinder(bufferBuilder, 16, 50, 100);
-		bufferBuilder.finishDrawing();
+		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
 
 		return buffer;
@@ -277,7 +277,7 @@ public abstract class WorldRendererMixin
 
 		buffer = new VertexBuffer(DefaultVertexFormats.POSITION_TEX);
 		makeCylinder(bufferBuilder, 16, 50, 70);
-		bufferBuilder.finishDrawing();
+		bufferBuilder.end();
 		buffer.upload(bufferBuilder);
 
 		return buffer;
@@ -321,7 +321,7 @@ public abstract class WorldRendererMixin
 					double ae = 0.0 * q - aa * r;
 					double af = ae * n - ab * o;
 					double ah = ab * n + ae * o;
-					buffer.pos(j + af, k + ad, l + ah).endVertex();
+					buffer.vertex(j + af, k + ad, l + ah).endVertex();
 				}
 			}
 		}
@@ -373,7 +373,7 @@ public abstract class WorldRendererMixin
 					float texU = (pos >> 1) & 1;
 					float texV = (((pos + 1) >> 1) & 1) / 4F + minV;
 					pos ++;
-					buffer.pos(j + af, k + ad, l + ah).tex(texU, texV).endVertex();
+					buffer.vertex(j + af, k + ad, l + ah).uv(texU, texV).endVertex();
 				}
 			}
 		}
@@ -425,7 +425,7 @@ public abstract class WorldRendererMixin
 					float texU = (pos >> 1) & 1;
 					float texV = ((pos + 1) >> 1) & 1;
 					pos ++;
-					buffer.pos(j + af, k + ad, l + ah).tex(texU, texV).endVertex();
+					buffer.vertex(j + af, k + ad, l + ah).uv(texU, texV).endVertex();
 				}
 			}
 		}
@@ -446,10 +446,10 @@ public abstract class WorldRendererMixin
 			float u0 = (float) i / (float) segments;
 			float u1 = (float) (i + 1) / (float) segments;
 			
-			buffer.pos(px1, -height, pz1).tex(u0, 0).endVertex();
-			buffer.pos(px1, height, pz1).tex(u0, 1).endVertex();
-			buffer.pos(px2, height, pz2).tex(u1, 1).endVertex();
-			buffer.pos(px2, -height, pz2).tex(u1, 0).endVertex();
+			buffer.vertex(px1, -height, pz1).uv(u0, 0).endVertex();
+			buffer.vertex(px1, height, pz1).uv(u0, 1).endVertex();
+			buffer.vertex(px2, height, pz2).uv(u1, 1).endVertex();
+			buffer.vertex(px2, -height, pz2).uv(u1, 0).endVertex();
 		}
 	}
 }

@@ -112,7 +112,7 @@ public class ModBiomes
 		Map<String, JsonObject> configs = Maps.newHashMap();
 		
 		biomeRegistry.forEach((biome) -> {
-			if (biome.getCategory() == Category.THEEND) 
+			if (biome.getBiomeCategory() == Category.THEEND) 
 			{
 				ResourceLocation id = biomeRegistry.getKey(biome);
 				
@@ -193,7 +193,7 @@ public class ModBiomes
 	{
 		if (biomeRegistry == null) 
 		{
-			biomeRegistry = server.func_244267_aX().getRegistry(Registry.BIOME_KEY);
+			biomeRegistry = server.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY);
 		}
 	}
 	
@@ -310,7 +310,7 @@ public class ModBiomes
 		if (endBiome == null) 
 		{
 			Minecraft minecraft = Minecraft.getInstance();
-			ResourceLocation id = minecraft.world.func_241828_r().getRegistry(Registry.BIOME_KEY).getKey(biome);
+			ResourceLocation id = minecraft.level.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).getKey(biome);
 			endBiome = id == null ? END : ID_MAP.getOrDefault(id, END);
 			CLIENT.put(biome, endBiome);
 		}

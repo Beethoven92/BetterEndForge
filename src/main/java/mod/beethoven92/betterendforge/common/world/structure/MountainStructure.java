@@ -17,6 +17,8 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
+import net.minecraft.world.gen.feature.structure.Structure.IStartFactory;
+
 public class MountainStructure extends Structure<NoFeatureConfig>
 {
 	public MountainStructure(Codec<NoFeatureConfig> p_i231997_1_) 
@@ -25,13 +27,13 @@ public class MountainStructure extends Structure<NoFeatureConfig>
 	}
 	
 	@Override
-	public Decoration getDecorationStage() 
+	public Decoration step() 
 	{
 		return Decoration.RAW_GENERATION;
 	}
 	
 	@Override
-	public String getStructureName() 
+	public String getFeatureName() 
 	{
 		return BetterEnd.MOD_ID + ":mountain_structure";
 	}
@@ -51,21 +53,21 @@ public class MountainStructure extends Structure<NoFeatureConfig>
 		}
 
 		@Override
-		public void func_230364_a_(DynamicRegistries registry, ChunkGenerator chunkGenerator,
+		public void generatePieces(DynamicRegistries registry, ChunkGenerator chunkGenerator,
 				TemplateManager manager, int chunkX, int chunkZ, Biome biome,
 				NoFeatureConfig config) 
 		{
-			int x = (chunkX << 4) | MathHelper.nextInt(this.rand, 4, 12);
-			int z = (chunkZ << 4) | MathHelper.nextInt(this.rand, 4, 12);
-			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
+			int x = (chunkX << 4) | MathHelper.nextInt(this.random, 4, 12);
+			int z = (chunkZ << 4) | MathHelper.nextInt(this.random, 4, 12);
+			int y = chunkGenerator.getBaseHeight(x, z, Type.WORLD_SURFACE_WG);
 			if (y > 5) 
 			{
-				float radius = MathHelper.nextInt(this.rand, 50, 100);
-				float height = radius * MathHelper.nextFloat(this.rand, 0.8F, 1.2F);
-				MountainPiece piece = new MountainPiece(new BlockPos(x, y, z), radius, height, rand, biome);
-				this.components.add(piece);
+				float radius = MathHelper.nextInt(this.random, 50, 100);
+				float height = radius * MathHelper.nextFloat(this.random, 0.8F, 1.2F);
+				MountainPiece piece = new MountainPiece(new BlockPos(x, y, z), radius, height, random, biome);
+				this.pieces.add(piece);
 			}
-			this.recalculateStructureSize();
+			this.calculateBoundingBox();
 		}
 	}
 }

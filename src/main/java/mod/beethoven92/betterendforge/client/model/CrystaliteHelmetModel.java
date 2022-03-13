@@ -12,19 +12,19 @@ import net.minecraft.entity.LivingEntity;
 public class CrystaliteHelmetModel extends BipedModel<LivingEntity> {
 
 	public CrystaliteHelmetModel(float scale) {
-		super(RenderType::getEntityTranslucent, scale, 0.0F, 64, 48);
-		this.bipedHead = new ModelRenderer(this, 0, 0);
-		this.bipedHead.addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, scale + 0.5F);
-		this.bipedHead.setRotationPoint(0.0F, 0.0F, 0.0F);
+		super(RenderType::entityTranslucent, scale, 0.0F, 64, 48);
+		this.head = new ModelRenderer(this, 0, 0);
+		this.head.addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, scale + 0.5F);
+		this.head.setPos(0.0F, 0.0F, 0.0F);
 	}
 	
 	@Override
-	protected Iterable<ModelRenderer> getHeadParts() {
+	protected Iterable<ModelRenderer> headParts() {
 		return Collections::emptyIterator;
 	}
 	
 	@Override
-	protected Iterable<ModelRenderer> getBodyParts() {
-		return Lists.newArrayList(bipedHead);
+	protected Iterable<ModelRenderer> bodyParts() {
+		return Lists.newArrayList(head);
 	}
 }

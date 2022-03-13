@@ -27,20 +27,20 @@ public class SulphurParticle extends SpriteTexturedParticle
 	{
 		super(world, x, y, z, r, g, b);
 		
-		this.selectSpriteWithAge(spriteWithAge);
+		this.setSpriteFromAge(spriteWithAge);
 		
-		this.maxAge = ModMathHelper.randRange(150, 300, rand);
-		this.particleScale = ModMathHelper.randRange(0.05F, 0.15F, rand);
+		this.lifetime = ModMathHelper.randRange(150, 300, random);
+		this.quadSize = ModMathHelper.randRange(0.05F, 0.15F, random);
 		this.setColor(1, 1, 1);
-		this.particleAlpha = 0;
+		this.alpha = 0;
 		
-		preVX = rand.nextGaussian() * 0.015;
-		preVY = rand.nextGaussian() * 0.015;
-		preVZ = rand.nextGaussian() * 0.015;
+		preVX = random.nextGaussian() * 0.015;
+		preVY = random.nextGaussian() * 0.015;
+		preVZ = random.nextGaussian() * 0.015;
 		
-		nextVX = rand.nextGaussian() * 0.015;
-		nextVY = rand.nextGaussian() * 0.015;
-		nextVZ = rand.nextGaussian() * 0.015;
+		nextVX = random.nextGaussian() * 0.015;
+		nextVY = random.nextGaussian() * 0.015;
+		nextVZ = random.nextGaussian() * 0.015;
 	}
 
 	@Override
@@ -58,10 +58,10 @@ public class SulphurParticle extends SpriteTexturedParticle
 			preVX = nextVX;
 			preVY = nextVY;
 			preVZ = nextVZ;
-			nextVX = rand.nextGaussian() * 0.015;
-			nextVY = rand.nextGaussian() * 0.015;
-			nextVZ = rand.nextGaussian() * 0.015;
-			if (rand.nextInt(4) == 0) 
+			nextVX = random.nextGaussian() * 0.015;
+			nextVY = random.nextGaussian() * 0.015;
+			nextVZ = random.nextGaussian() * 0.015;
+			if (random.nextInt(4) == 0) 
 			{
 				nextVY = Math.abs(nextVY);
 			}
@@ -71,21 +71,21 @@ public class SulphurParticle extends SpriteTexturedParticle
 		
 		if (this.age <= 40) 
 		{
-			this.setAlphaF(this.age / 40F);
+			this.setAlpha(this.age / 40F);
 		}
-		else if (this.age >= this.maxAge - 40) 
+		else if (this.age >= this.lifetime - 40) 
 		{
-			this.setAlphaF((this.maxAge - this.age) / 40F);
+			this.setAlpha((this.lifetime - this.age) / 40F);
 		}
 		
-		if (this.age >= this.maxAge) 
+		if (this.age >= this.lifetime) 
 		{
-			this.setExpired();
+			this.remove();
 		}
 		
-		this.motionX = MathHelper.lerp(delta, preVX, nextVX);
-		this.motionY = MathHelper.lerp(delta, preVY, nextVY);
-		this.motionZ = MathHelper.lerp(delta, preVZ, nextVZ);
+		this.xd = MathHelper.lerp(delta, preVX, nextVX);
+		this.yd = MathHelper.lerp(delta, preVY, nextVY);
+		this.zd = MathHelper.lerp(delta, preVZ, nextVZ);
 		
 		super.tick();
 	}
@@ -101,7 +101,7 @@ public class SulphurParticle extends SpriteTexturedParticle
 	    }
 	    
 	    @Override
-	    public Particle makeParticle(BasicParticleType type, ClientWorld worldIn, double x, double y, double z,
+	    public Particle createParticle(BasicParticleType type, ClientWorld worldIn, double x, double y, double z,
 	    		double xSpeed, double ySpeed, double zSpeed) 
 	    {
 	    	return new SulphurParticle(worldIn, x, y, z, 1, 1, 1, sprite);

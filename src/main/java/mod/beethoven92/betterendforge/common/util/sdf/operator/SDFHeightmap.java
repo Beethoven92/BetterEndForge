@@ -17,8 +17,8 @@ public class SDFHeightmap extends SDFDisplacement {
             if (map == null) {
                 return 0F;
             }
-            float px = MathHelper.clamp(pos.getX() * scale + offsetX, 0, map.getWidth() - 2);
-            float pz = MathHelper.clamp(pos.getZ() * scale + offsetZ, 0, map.getHeight() - 2);
+            float px = MathHelper.clamp(pos.x() * scale + offsetX, 0, map.getWidth() - 2);
+            float pz = MathHelper.clamp(pos.z() * scale + offsetZ, 0, map.getHeight() - 2);
             float dx = (px * cos - pz * sin);
             float dz = (pz * cos + px * sin);
             int x1 = MathHelper.floor(dx);

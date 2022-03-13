@@ -8,11 +8,11 @@ import net.minecraft.block.material.Material;
 
 public class FilaluxBlock extends EndVineBlock {
 	public FilaluxBlock() {
-		super(AbstractBlock.Properties.create(Material.PLANTS).
-                zeroHardnessAndResistance().
-                doesNotBlockMovement().
-                setLightLevel((state) -> {return state.get(EndVineBlock.SHAPE) == TripleShape.BOTTOM ? 15 : 0;}).
-                sound(SoundType.PLANT));
+		super(AbstractBlock.Properties.of(Material.PLANT).
+                instabreak().
+                noCollission().
+                lightLevel((state) -> {return state.getValue(EndVineBlock.SHAPE) == TripleShape.BOTTOM ? 15 : 0;}).
+                sound(SoundType.GRASS));
 	}
 	
 	@Override

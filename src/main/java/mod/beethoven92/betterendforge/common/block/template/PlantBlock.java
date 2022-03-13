@@ -19,9 +19,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IForgeShearable;
 
+import net.minecraft.block.AbstractBlock.OffsetType;
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class PlantBlock extends Block implements IGrowable, IForgeShearable
 {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 14, 12);
+	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 14, 12);
 
 
 
@@ -35,7 +38,7 @@ public class PlantBlock extends Block implements IGrowable, IForgeShearable
 			ISelectionContext context) 
 	{
 		Vector3d vec = state.getOffset(worldIn, pos);
-		return SHAPE.withOffset(vec.x, vec.y, vec.z);
+		return SHAPE.move(vec.x, vec.y, vec.z);
 	}
 
 	@Override
@@ -45,24 +48,24 @@ public class PlantBlock extends Block implements IGrowable, IForgeShearable
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		BlockState down = worldIn.getBlockState(pos.down());
+		BlockState down = worldIn.getBlockState(pos.below());
 		return isTerrain(down);
 	}
 	
 	protected boolean isTerrain(BlockState state) 
 	{
-		return state.isIn(ModTags.END_GROUND);
+		return state.is(ModTags.END_GROUND);
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos)) 
+		if (!canSurvive(stateIn, worldIn, currentPos)) 
 		{
-			return Blocks.AIR.getDefaultState();
+			return Blocks.AIR.defaultBlockState();
 		}
 		else {
 			return stateIn;
@@ -70,19 +73,19 @@ public class PlantBlock extends Block implements IGrowable, IForgeShearable
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return false;
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return false;
 	}
 
 	@Override
-	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
+	public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 	}
 }

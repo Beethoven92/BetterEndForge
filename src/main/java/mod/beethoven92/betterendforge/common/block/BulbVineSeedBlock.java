@@ -15,6 +15,8 @@ import net.minecraft.world.ISeedReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BulbVineSeedBlock extends PlantBlockWithAge
 {
 	public BulbVineSeedBlock(Properties properties) 
@@ -23,10 +25,10 @@ public class BulbVineSeedBlock extends PlantBlockWithAge
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos)
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos)
 	{
-		BlockState up = worldIn.getBlockState(pos.up());
-		return up.isIn(ModTags.GEN_TERRAIN) || up.isIn(BlockTags.LOGS) || up.isIn(BlockTags.LEAVES);
+		BlockState up = worldIn.getBlockState(pos.above());
+		return up.is(ModTags.GEN_TERRAIN) || up.is(BlockTags.LOGS) || up.is(BlockTags.LEAVES);
 	}
 	
 	@Override
@@ -35,23 +37,23 @@ public class BulbVineSeedBlock extends PlantBlockWithAge
 		int h = BlockHelper.downRay(world, pos, random.nextInt(24)) - 1;
 		if (h > 2) 
 		{
-			BlockHelper.setWithoutUpdate(world, pos, ModBlocks.BULB_VINE.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
+			BlockHelper.setWithoutUpdate(world, pos, ModBlocks.BULB_VINE.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
 			for (int i = 1; i < h; i++)
 			{
-				BlockHelper.setWithoutUpdate(world, pos.down(i), ModBlocks.BULB_VINE.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
+				BlockHelper.setWithoutUpdate(world, pos.below(i), ModBlocks.BULB_VINE.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
 			}
-			BlockHelper.setWithoutUpdate(world, pos.down(h), ModBlocks.BULB_VINE.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
+			BlockHelper.setWithoutUpdate(world, pos.below(h), ModBlocks.BULB_VINE.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 		}
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return true;
 	}
 	
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}

@@ -110,7 +110,7 @@ public class StructureWorld
 	{
 		if (minX == Integer.MAX_VALUE || maxX == Integer.MIN_VALUE || minZ == Integer.MAX_VALUE || maxZ == Integer.MIN_VALUE)
 		{
-			return MutableBoundingBox.getNewBoundingBox();
+			return MutableBoundingBox.getUnknownBox();
 			//return new MutableBoundingBox(0 ,0, 0, 0, 0, 0);
 		}
 		return new MutableBoundingBox(minX << 4, minY, minZ << 4, (maxX << 4) | 15, maxY, (maxZ << 4) | 15);
@@ -136,7 +136,7 @@ public class StructureWorld
 				CompoundNBT block = (CompoundNBT) element;
 				BlockPos pos = NBTUtil.readBlockPos(block.getCompound("pos"));
 				int stateID = block.getInt("state");
-				BlockState state = stateID < states.length ? states[stateID] : Block.getStateById(stateID);
+				BlockState state = stateID < states.length ? states[stateID] : Block.stateById(stateID);
 				blocks.put(pos, state);
 			});
 		}

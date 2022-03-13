@@ -32,6 +32,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import net.minecraft.item.Item.Properties;
+
 public class CrystaliteArmor extends ArmorItem {
 
 	private static final UUID[] UUIDS = new UUID[] { UUID.fromString("38c9722b-d905-4b84-940d-551c803100af"),
@@ -57,7 +59,7 @@ public class CrystaliteArmor extends ArmorItem {
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot,
 			ItemStack stack) {
-		Multimap<Attribute, AttributeModifier> modifiers = super.getAttributeModifiers(equipmentSlot);
+		Multimap<Attribute, AttributeModifier> modifiers = super.getDefaultAttributeModifiers(equipmentSlot);
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 		builder.putAll(modifiers);
 		Item item = stack.getItem();
@@ -72,21 +74,21 @@ public class CrystaliteArmor extends ArmorItem {
 
 	@Override
 	public void onArmorTick(ItemStack stack, World world, PlayerEntity player) {
-		if (player.ticksExisted % 60 == 0) {
+		if (player.tickCount % 60 == 0) {
 			Item item = stack.getItem();
 
 			if (item == ModItems.CRYSTALITE_BOOTS.get())
-				player.addPotionEffect(new EffectInstance(Effects.SPEED, 80, 0, true, false, true));
+				player.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 80, 0, true, false, true));
 			else if (item == ModItems.CRYSTALITE_CHESTPLATE.get())
-				player.addPotionEffect(new EffectInstance(Effects.HASTE, 80, 0, true, false, true));
+				player.addEffect(new EffectInstance(Effects.DIG_SPEED, 80, 0, true, false, true));
 
 			if (hasFullSet(player))
-				player.addPotionEffect(new EffectInstance(Effects.REGENERATION, 80, 0, true, false, true));
+				player.addEffect(new EffectInstance(Effects.REGENERATION, 80, 0, true, false, true));
 		}
 	}
 
 	private boolean hasFullSet(PlayerEntity player) {
-		for (ItemStack armorStack : player.getArmorInventoryList()) {
+		for (ItemStack armorStack : player.getArmorSlots()) {
 			if (!(armorStack.getItem() instanceof CrystaliteArmor)) {
 				return false;
 			}
@@ -119,7 +121,7 @@ public class CrystaliteArmor extends ArmorItem {
 		}
 		case CHEST: {
 			if (entityLiving instanceof AbstractClientPlayerEntity
-					&& ((AbstractClientPlayerEntity) entityLiving).getSkinType().equals("slim")) {
+					&& ((AbstractClientPlayerEntity) entityLiving).getModelName().equals("slim")) {
 				return (A) slimChestplateModel;
 			}
 			return (A) chestplateModel;

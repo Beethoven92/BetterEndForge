@@ -39,12 +39,12 @@ public class MinecraftServerMixin
 	}
 	
 	@Shadow
-	private static void func_240786_a_(ServerWorld p_240786_0_, IServerWorldInfo p_240786_1_,
+	private static void setInitialSpawn(ServerWorld p_240786_0_, IServerWorldInfo p_240786_1_,
 			boolean hasBonusChest, boolean p_240786_3_, boolean p_240786_4_)
 	{		
 	}
 	
-	@Inject(method = "func_241755_D_", at = @At(value = "HEAD"), cancellable = true)
+	@Inject(method = "overworld", at = @At(value = "HEAD"), cancellable = true)
 	private final void be_GetOverworld(CallbackInfoReturnable<ServerWorld> info) 
 	{
 //		if (CommonConfig.swapOverworldWithEnd()) 
@@ -59,7 +59,7 @@ public class MinecraftServerMixin
 //		}
 	}
 	
-	@Inject(method = "func_240787_a_", at = @At(value = "TAIL"))
+	@Inject(method = "createLevels", at = @At(value = "TAIL"))
 	private final void be_CreateWorlds(IChunkStatusListener worldGenerationProgressListener, CallbackInfo info) 
 	{
 //		if (CommonConfig.swapOverworldWithEnd()) 
@@ -69,15 +69,15 @@ public class MinecraftServerMixin
 //			{
 //				world = worlds.get(World.OVERWORLD);
 //			}
-//			this.getPlayerList().func_212504_a(world);
+//			this.getPlayerList().setLevel(world);
 //		    IServerWorldInfo iServerWorldInfo = this.serverConfig.getServerWorldInfo();
 //		    DimensionGeneratorSettings dimensionGeneratorSettings = this.serverConfig.getDimensionGeneratorSettings();
-//			boolean bl = dimensionGeneratorSettings.func_236227_h_();
-//			func_240786_a_(world, iServerWorldInfo, dimensionGeneratorSettings.hasBonusChest(), bl, true);
+//			boolean bl = dimensionGeneratorSettings.isDebug();
+//			setInitialSpawn(world, iServerWorldInfo, dimensionGeneratorSettings.hasBonusChest(), bl, true);
 //		}
 	}
 	
-	@Inject(method = "func_240786_a_", at = @At(value = "HEAD"), cancellable = true)
+	@Inject(method = "setInitialSpawn", at = @At(value = "HEAD"), cancellable = true)
 	private static void be_SetupSpawn(ServerWorld world, IServerWorldInfo serverWorldProperties,
 			boolean bonusChest, boolean debugWorld, boolean bl, CallbackInfo info) 
 	{

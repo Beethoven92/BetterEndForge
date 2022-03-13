@@ -26,8 +26,8 @@ public class VineFeature extends InvertedScatterFeature
 	@Override
 	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) 
 	{
-		return world.isAirBlock(blockPos) && vineBlock.isValidPosition(Blocks.AIR.getDefaultState(), world, blockPos)
-				&& !world.getBlockState(blockPos.up()).isIn(vineBlock); // Attempt to fix vines generating below other vines
+		return world.isEmptyBlock(blockPos) && vineBlock.canSurvive(Blocks.AIR.defaultBlockState(), world, blockPos)
+				&& !world.getBlockState(blockPos.above()).is(vineBlock); // Attempt to fix vines generating below other vines
 	}
 
 	@Override
@@ -36,12 +36,12 @@ public class VineFeature extends InvertedScatterFeature
 		int h = BlockHelper.downRay(world, blockPos, random.nextInt(maxLength)) - 1;
 		if (h > 2) 
 		{
-			BlockHelper.setWithoutUpdate(world, blockPos, vineBlock.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
+			BlockHelper.setWithoutUpdate(world, blockPos, vineBlock.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
 			for (int i = 1; i < h; i++) 
 			{
-				BlockHelper.setWithoutUpdate(world, blockPos.down(i), vineBlock.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
+				BlockHelper.setWithoutUpdate(world, blockPos.below(i), vineBlock.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
 			}
-			BlockHelper.setWithoutUpdate(world, blockPos.down(h), vineBlock.getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
+			BlockHelper.setWithoutUpdate(world, blockPos.below(h), vineBlock.defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 		}
 	}
 }

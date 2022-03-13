@@ -22,11 +22,11 @@ public class BigAuroraCrystalFeature extends Feature<NoFeatureConfig>
 
 	public BigAuroraCrystalFeature()
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config) 
 	{
 		int maxY = pos.getY() + BlockHelper.upRay(world, pos, 16);
@@ -46,8 +46,8 @@ public class BigAuroraCrystalFeature extends Feature<NoFeatureConfig>
 		prism = new SDFRotation().setRotation(vec, rand.nextFloat()).setSource(prism);
 		prism.setReplaceFunction((bState) -> {
 			return bState.getMaterial().isReplaceable()
-					|| bState.isIn(ModTags.GEN_TERRAIN)
-					|| bState.getMaterial().equals(Material.PLANTS)
+					|| bState.is(ModTags.GEN_TERRAIN)
+					|| bState.getMaterial().equals(Material.PLANT)
 					|| bState.getMaterial().equals(Material.LEAVES);
 		});
 		prism.fillRecursive(world, pos);

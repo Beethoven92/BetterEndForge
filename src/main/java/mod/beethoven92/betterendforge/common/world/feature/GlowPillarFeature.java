@@ -15,7 +15,7 @@ public class GlowPillarFeature extends ScatterFeature {
 
 	@Override
 	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) {
-		return ModBlocks.GLOWING_PILLAR_SEED.get().isValidPosition(Blocks.AIR.getDefaultState(), world, blockPos);
+		return ModBlocks.GLOWING_PILLAR_SEED.get().canSurvive(Blocks.AIR.defaultBlockState(), world, blockPos);
 	}
 
 	@Override

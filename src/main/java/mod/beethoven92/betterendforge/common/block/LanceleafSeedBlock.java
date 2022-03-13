@@ -15,6 +15,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class LanceleafSeedBlock extends PlantBlockWithAge {
 	public LanceleafSeedBlock(Properties properties) {
 		super(properties);
@@ -28,30 +30,30 @@ public class LanceleafSeedBlock extends PlantBlockWithAge {
 			return;
 		}
 		int rotation = random.nextInt(4);
-		Mutable mut = new Mutable().setPos(pos);
-		BlockState plant = ModBlocks.LANCELEAF.get().getDefaultState().with(BlockProperties.ROTATION, rotation);
-		BlockHelper.setWithoutUpdate(world, mut, plant.with(BlockProperties.PENTA_SHAPE, PentaShape.BOTTOM));
-		BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.with(BlockProperties.PENTA_SHAPE, PentaShape.PRE_BOTTOM));
+		Mutable mut = new Mutable().set(pos);
+		BlockState plant = ModBlocks.LANCELEAF.get().defaultBlockState().setValue(BlockProperties.ROTATION, rotation);
+		BlockHelper.setWithoutUpdate(world, mut, plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.BOTTOM));
+		BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.PRE_BOTTOM));
 		for (int i = 2; i < height - 2; i++) {
-			BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.with(BlockProperties.PENTA_SHAPE, PentaShape.MIDDLE));
+			BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.MIDDLE));
 		}
-		BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.with(BlockProperties.PENTA_SHAPE, PentaShape.PRE_TOP));
-		BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.with(BlockProperties.PENTA_SHAPE, PentaShape.TOP));
+		BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.PRE_TOP));
+		BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), plant.setValue(BlockProperties.PENTA_SHAPE, PentaShape.TOP));
 	}
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(ModBlocks.AMBER_MOSS.get());
+		return state.is(ModBlocks.AMBER_MOSS.get());
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return true;
 	}
 	
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}

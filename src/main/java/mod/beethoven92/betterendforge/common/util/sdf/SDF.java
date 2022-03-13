@@ -63,8 +63,8 @@ public abstract class SDF
 			{
 				for (Direction dir: Direction.values()) 
 				{
-					bPos.setPos(center).move(dir);
-					BlockPos wpos = bPos.add(start);
+					bPos.set(center).move(dir);
+					BlockPos wpos = bPos.offset(start);
 					
 					if (!blocks.contains(bPos) && canReplace.apply(world.getBlockState(wpos))) 
 					{
@@ -72,7 +72,7 @@ public abstract class SDF
 						{
 							BlockState state = getBlockState(wpos);
 							PosInfo.create(mapWorld, addInfo, wpos).setState(state);
-							add.add(bPos.toImmutable());
+							add.add(bPos.immutable());
 						}
 					}
 				}
@@ -130,7 +130,7 @@ public abstract class SDF
 					if (canReplace.apply(world.getBlockState(mut))) {
 						BlockPos fpos = mut.subtract(center);
 						if (this.getDistance(fpos.getX(), fpos.getY(), fpos.getZ()) < 0) {
-							PosInfo.create(mapWorld, addInfo, mut.toImmutable()).setState(getBlockState(mut));
+							PosInfo.create(mapWorld, addInfo, mut.immutable()).setState(getBlockState(mut));
 						}
 					}
 				}
@@ -183,8 +183,8 @@ public abstract class SDF
 			{
 				for (Direction dir: Direction.values()) 
 				{
-					bPos.setPos(center).move(dir);
-					BlockPos wpos = bPos.add(start);
+					bPos.set(center).move(dir);
+					BlockPos wpos = bPos.offset(start);
 					BlockState state = world.getBlockState(wpos);
 					boolean ign = ignore.apply(state);
 					if (!blocks.contains(bPos) && (ign || canReplace.apply(state))) 
@@ -192,7 +192,7 @@ public abstract class SDF
 						if (this.getDistance(bPos.getX(), bPos.getY(), bPos.getZ()) < 0) 
 						{
 							PosInfo.create(mapWorld, addInfo, wpos).setState(ign ? state : getBlockState(bPos));
-							add.add(bPos.toImmutable());
+							add.add(bPos.immutable());
 						}
 					}
 				}
@@ -253,15 +253,15 @@ public abstract class SDF
 			{
 				for (Direction dir: Direction.values()) 
 				{
-					bPos.setPos(center).move(dir);
-					BlockPos wpos = bPos.add(start);
+					bPos.set(center).move(dir);
+					BlockPos wpos = bPos.offset(start);
 					
 					if (!blocks.contains(bPos)) {
 						if (this.getDistance(bPos.getX(), bPos.getY(), bPos.getZ()) < 0) 
 						{
 							BlockState state = getBlockState(wpos);
 							PosInfo.create(mapWorld, addInfo, wpos).setState(state);
-							add.add(bPos.toImmutable());
+							add.add(bPos.immutable());
 						}
 					}
 				}
@@ -312,18 +312,18 @@ public abstract class SDF
 		while (run) {
 			for (BlockPos center : ends) {
 				for (Direction dir : Direction.values()) {
-					bPos.setPos(center).move(dir);
-					BlockPos wpos = bPos.add(start);
+					bPos.set(center).move(dir);
+					BlockPos wpos = bPos.offset(start);
 					BlockState state = world.getBlockState(wpos);
 					if (!blocks.contains(wpos) && canReplace.apply(state)) {
 						if (this.getDistance(bPos.getX(), bPos.getY(), bPos.getZ()) < 0) {
-							add.add(bPos.toImmutable());
+							add.add(bPos.immutable());
 						}
 					}
 				}
 			}
 
-			ends.forEach((end) -> blocks.add(end.add(start)));
+			ends.forEach((end) -> blocks.add(end.offset(start)));
 			ends.clear();
 			ends.addAll(add);
 			add.clear();

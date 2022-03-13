@@ -37,9 +37,9 @@ public class EndBarrelTileEntity extends LockableLootTileEntity {
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT tag) {
-		super.write(tag);
-		if (!this.checkLootAndWrite(tag)) {
+	public CompoundNBT save(CompoundNBT tag) {
+		super.save(tag);
+		if (!this.trySaveLootTable(tag)) {
 			ItemStackHelper.saveAllItems(tag, this.inventory);
 		}
 
@@ -47,17 +47,17 @@ public class EndBarrelTileEntity extends LockableLootTileEntity {
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT tag) {
-		super.read(state, tag);
-		this.inventory = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-		if (!this.checkLootAndRead(tag)) {
+	public void load(BlockState state, CompoundNBT tag) {
+		super.load(state, tag);
+		this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+		if (!this.tryLoadLootTable(tag)) {
 			ItemStackHelper.loadAllItems(tag, this.inventory);
 		}
 
 	}
 
 	@Override
-	public int getSizeInventory() {
+	public int getContainerSize() {
 		return 27;
 	}
 
@@ -78,11 +78,11 @@ public class EndBarrelTileEntity extends LockableLootTileEntity {
 
 	@Override
 	protected Container createMenu(int syncId, PlayerInventory playerInventory) {
-		return ChestContainer.createGeneric9X3(syncId, playerInventory, this);
+		return ChestContainer.threeRows(syncId, playerInventory, this);
 	}
 
 	@Override
-	public void openInventory(PlayerEntity player) {
+	public void startOpen(PlayerEntity player) {
 		if (!player.isSpectator()) {
 			if (this.viewerCount < 0) {
 				this.viewerCount = 0;
@@ -90,9 +90,9 @@ public class EndBarrelTileEntity extends LockableLootTileEntity {
 
 			++this.viewerCount;
 			BlockState blockState = this.getBlockState();
-			boolean bl = (Boolean) blockState.get(BarrelBlock.PROPERTY_OPEN);
+			boolean bl = (Boolean) blockState.getValue(BarrelBlock.OPEN);
 			if (!bl) {
-				this.playSound(blockState, SoundEvents.BLOCK_BARREL_OPEN);
+				this.playSound(blockState, SoundEvents.BARREL_OPEN);
 				this.setOpen(blockState, true);
 			}
 
@@ -102,26 +102,26 @@ public class EndBarrelTileEntity extends LockableLootTileEntity {
 	}
 
 	private void scheduleTick() {
-		this.world.getPendingBlockTicks().scheduleTick(this.getPos(), this.getBlockState().getBlock(), 5);
+		this.level.getBlockTicks().scheduleTick(this.getBlockPos(), this.getBlockState().getBlock(), 5);
 	}
 
 	public void tick() {
-		int i = this.pos.getX();
-		int j = this.pos.getY();
-		int k = this.pos.getZ();
-		this.viewerCount = ChestTileEntity.calculatePlayersUsing(this.world, this, i, j, k);
+		int i = this.worldPosition.getX();
+		int j = this.worldPosition.getY();
+		int k = this.worldPosition.getZ();
+		this.viewerCount = ChestTileEntity.getOpenCount(this.level, this, i, j, k);
 		if (this.viewerCount > 0) {
 			this.scheduleTick();
 		} else {
 			BlockState blockState = this.getBlockState();
 			if (!(blockState.getBlock() instanceof EndBarrelBlock)) {
-				this.remove();
+				this.setRemoved();
 				return;
 			}
 
-			boolean bl = (Boolean) blockState.get(BarrelBlock.PROPERTY_OPEN);
+			boolean bl = (Boolean) blockState.getValue(BarrelBlock.OPEN);
 			if (bl) {
-				this.playSound(blockState, SoundEvents.BLOCK_BARREL_CLOSE);
+				this.playSound(blockState, SoundEvents.BARREL_CLOSE);
 				this.setOpen(blockState, false);
 			}
 		}
@@ -129,7 +129,7 @@ public class EndBarrelTileEntity extends LockableLootTileEntity {
 	}
 
 	@Override
-	public void closeInventory(PlayerEntity player) {
+	public void stopOpen(PlayerEntity player) {
 		if (!player.isSpectator()) {
 			--this.viewerCount;
 		}
@@ -137,15 +137,15 @@ public class EndBarrelTileEntity extends LockableLootTileEntity {
 	}
 
 	private void setOpen(BlockState state, boolean open) {
-		this.world.setBlockState(this.getPos(), (BlockState) state.with(BarrelBlock.PROPERTY_OPEN, open), 3);
+		this.level.setBlock(this.getBlockPos(), (BlockState) state.setValue(BarrelBlock.OPEN, open), 3);
 	}
 
 	private void playSound(BlockState blockState, SoundEvent soundEvent) {
-		Vector3i vec3i = ((Direction) blockState.get(BarrelBlock.PROPERTY_FACING)).getDirectionVec();
-		double d = (double) this.pos.getX() + 0.5D + (double) vec3i.getX() / 2.0D;
-		double e = (double) this.pos.getY() + 0.5D + (double) vec3i.getY() / 2.0D;
-		double f = (double) this.pos.getZ() + 0.5D + (double) vec3i.getZ() / 2.0D;
-		this.world.playSound((PlayerEntity) null, d, e, f, soundEvent, SoundCategory.BLOCKS, 0.5F,
-				this.world.rand.nextFloat() * 0.1F + 0.9F);
+		Vector3i vec3i = ((Direction) blockState.getValue(BarrelBlock.FACING)).getNormal();
+		double d = (double) this.worldPosition.getX() + 0.5D + (double) vec3i.getX() / 2.0D;
+		double e = (double) this.worldPosition.getY() + 0.5D + (double) vec3i.getY() / 2.0D;
+		double f = (double) this.worldPosition.getZ() + 0.5D + (double) vec3i.getZ() / 2.0D;
+		this.level.playSound((PlayerEntity) null, d, e, f, soundEvent, SoundCategory.BLOCKS, 0.5F,
+				this.level.random.nextFloat() * 0.1F + 0.9F);
 	}
 }

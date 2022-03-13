@@ -8,11 +8,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.DyeColor;
 import net.minecraftforge.common.ToolType;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class HydraluxPetalBlockColored extends HydraluxPetalBlock implements IDyedBlock
 {
 	public HydraluxPetalBlockColored() 
 	{
-		super(AbstractBlock.Properties.from(ModBlocks.HYDRALUX_PETAL_BLOCK.get()));
+		super(AbstractBlock.Properties.copy(ModBlocks.HYDRALUX_PETAL_BLOCK.get()));
 	}
 	
 	public HydraluxPetalBlockColored(Properties properties) 
@@ -23,9 +25,9 @@ public class HydraluxPetalBlockColored extends HydraluxPetalBlock implements IDy
 	@Override
 	public Block createFromColor(DyeColor color) 
 	{
-		return new HydraluxPetalBlockColored(AbstractBlock.Properties.create(Material.PLANTS, color).
-					                                                  sound(SoundType.WART).
-					                                                  hardnessAndResistance(1F).
+		return new HydraluxPetalBlockColored(AbstractBlock.Properties.of(Material.PLANT, color).
+					                                                  sound(SoundType.WART_BLOCK).
+					                                                  strength(1F).
 					                                                  harvestTool(ToolType.AXE));
 	}
 }

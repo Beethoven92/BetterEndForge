@@ -37,7 +37,7 @@ public class OreLayerFeature extends Feature<NoFeatureConfig>
 		body = new SDFScale3D().setScale(1, 0.2F, 1).setSource(body);
 		body = NOISE.setSource(body);
 		body.setReplaceFunction((state) -> {
-			return state.isIn(Blocks.END_STONE);
+			return state.is(Blocks.END_STONE);
 		});
 		
 		FUNCTION = body;
@@ -45,7 +45,7 @@ public class OreLayerFeature extends Feature<NoFeatureConfig>
 	
 	public OreLayerFeature(BlockState state, float radius, int minY, int maxY)
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 		this.state = state;
 		this.radius = radius;
 		this.minY = minY;
@@ -53,7 +53,7 @@ public class OreLayerFeature extends Feature<NoFeatureConfig>
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
+	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
 			BlockPos blockPos, NoFeatureConfig config) 
 	{
 		float radius = this.radius * 0.5F;
@@ -69,10 +69,10 @@ public class OreLayerFeature extends Feature<NoFeatureConfig>
 		
 		SPHERE.setRadius(radius).setBlock(state);
 		NOISE.setFunction((vec) -> {
-			double x = (vec.getX() + blockPos.getX()) * 0.1;
-			double z = (vec.getZ() + blockPos.getZ()) * 0.1;
+			double x = (vec.x() + blockPos.getX()) * 0.1;
+			double z = (vec.z() + blockPos.getZ()) * 0.1;
 			double offset = noise.eval(x, z);
-			vec.set(vec.getX(), vec.getY() + (float) offset * 8, vec.getZ());
+			vec.set(vec.x(), vec.y() + (float) offset * 8, vec.z());
 		});
 		FUNCTION.fillRecursive(world, new BlockPos(posX, posY, posZ));
 		return true;

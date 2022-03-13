@@ -10,11 +10,11 @@ import net.minecraft.world.IBlockReader;
 
 public class PathBlock extends Block
 {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(0, 0, 0, 16, 15, 16);
+	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 15, 16);
 	
 	public PathBlock(Block block)
 	{
-		super(AbstractBlock.Properties.from(block).setAllowsSpawn((state, world, pos, type) -> { return false; }));
+		super(AbstractBlock.Properties.copy(block).isValidSpawn((state, world, pos, type) -> { return false; }));
 		if (block instanceof TerrainBlock)
 		{
 			TerrainBlock terrain = (TerrainBlock)block;

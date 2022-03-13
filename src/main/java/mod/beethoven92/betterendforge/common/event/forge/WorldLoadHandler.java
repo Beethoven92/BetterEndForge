@@ -32,33 +32,33 @@ public class WorldLoadHandler
 			ModBiomes.initRegistry(serverWorld.getServer());
 			
 			BetterEnd.LOGGER.debug("BETTER_END_FORGE: registering structure separation settings for dimension " +
-					serverWorld.getDimensionKey().getLocation());
+					serverWorld.dimension().location());
 			
 			// Prevent spawning of structures in Vanilla's superflat world
-			if(serverWorld.getChunkProvider().getChunkGenerator() instanceof FlatChunkGenerator &&
-					serverWorld.getDimensionKey().equals(World.OVERWORLD))
+			if(serverWorld.getChunkSource().getGenerator() instanceof FlatChunkGenerator &&
+					serverWorld.dimension().equals(World.OVERWORLD))
 			{
 				return;
 			}
 
 			// Need temp map as some mods use custom chunk generators with immutable maps in themselves.
 			Map<Structure<?>, StructureSeparationSettings> tempMap = 
-					new HashMap<>(serverWorld.getChunkProvider().getChunkGenerator().func_235957_b_().func_236195_a_());
+					new HashMap<>(serverWorld.getChunkSource().getGenerator().getSettings().structureConfig());
 			tempMap.put(ModStructures.MOUNTAIN, 
-					DimensionStructuresSettings.field_236191_b_.get(ModStructures.MOUNTAIN));
+					DimensionStructuresSettings.DEFAULTS.get(ModStructures.MOUNTAIN));
 			tempMap.put(ModStructures.MEGALAKE,
-					DimensionStructuresSettings.field_236191_b_.get(ModStructures.MEGALAKE));
+					DimensionStructuresSettings.DEFAULTS.get(ModStructures.MEGALAKE));
 			tempMap.put(ModStructures.MEGALAKE_SMALL,
-					DimensionStructuresSettings.field_236191_b_.get(ModStructures.MEGALAKE_SMALL));
+					DimensionStructuresSettings.DEFAULTS.get(ModStructures.MEGALAKE_SMALL));
 			tempMap.put(ModStructures.GIANT_MOSSY_GLOWSHROOM,
-					DimensionStructuresSettings.field_236191_b_.get(ModStructures.GIANT_MOSSY_GLOWSHROOM));
+					DimensionStructuresSettings.DEFAULTS.get(ModStructures.GIANT_MOSSY_GLOWSHROOM));
 			tempMap.put(ModStructures.PAINTED_MOUNTAIN, 
-					DimensionStructuresSettings.field_236191_b_.get(ModStructures.PAINTED_MOUNTAIN));
+					DimensionStructuresSettings.DEFAULTS.get(ModStructures.PAINTED_MOUNTAIN));
 			tempMap.put(ModStructures.ETERNAL_PORTAL,
-					DimensionStructuresSettings.field_236191_b_.get(ModStructures.ETERNAL_PORTAL));
+					DimensionStructuresSettings.DEFAULTS.get(ModStructures.ETERNAL_PORTAL));
 			tempMap.put(ModStructures.GIANT_ICE_STAR,
-					DimensionStructuresSettings.field_236191_b_.get(ModStructures.GIANT_ICE_STAR));
-			serverWorld.getChunkProvider().getChunkGenerator().func_235957_b_().field_236193_d_ = tempMap;
+					DimensionStructuresSettings.DEFAULTS.get(ModStructures.GIANT_ICE_STAR));
+			serverWorld.getChunkSource().getGenerator().getSettings().structureConfig = tempMap;
 		}
 	}
 }

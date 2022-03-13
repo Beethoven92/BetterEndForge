@@ -11,6 +11,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlueVineLanternBlock extends Block
 {
 	public static final BooleanProperty NATURAL = BooleanProperty.create("natural");
@@ -18,22 +20,22 @@ public class BlueVineLanternBlock extends Block
 	public BlueVineLanternBlock(Properties properties) 
 	{
 		super(properties);
-		this.setDefaultState(this.getDefaultState().with(NATURAL, false));
+		this.registerDefaultState(this.defaultBlockState().setValue(NATURAL, false));
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		return state.get(NATURAL) ? worldIn.getBlockState(pos.down()).getBlock() == ModBlocks.BLUE_VINE.get() : true;
+		return state.getValue(NATURAL) ? worldIn.getBlockState(pos.below()).getBlock() == ModBlocks.BLUE_VINE.get() : true;
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos)) 
+		if (!canSurvive(stateIn, worldIn, currentPos)) 
 		{
-			return Blocks.AIR.getDefaultState();
+			return Blocks.AIR.defaultBlockState();
 		}
 		else {
 			return stateIn;
@@ -41,7 +43,7 @@ public class BlueVineLanternBlock extends Block
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(NATURAL);
 	}

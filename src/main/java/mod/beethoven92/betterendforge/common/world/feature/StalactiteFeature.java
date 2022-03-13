@@ -24,22 +24,22 @@ public class StalactiteFeature extends Feature<NoFeatureConfig>
 	
 	public StalactiteFeature(boolean ceiling, Block block, Block... ground) 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 		this.ceiling = ceiling;
 		this.ground = ground;
 		this.block = block;
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config) 
 	{
-		if (!isGround(world.getBlockState(ceiling ? pos.up() : pos.down()).getBlock()))
+		if (!isGround(world.getBlockState(ceiling ? pos.above() : pos.below()).getBlock()))
 		{
 			return false;
 		}
 		
-		Mutable mut = new Mutable().setPos(pos);
+		Mutable mut = new Mutable().set(pos);
 		int height = rand.nextInt(16);
 		int dir = ceiling ? -1 : 1;
 		boolean stalagnate = false;
@@ -50,7 +50,7 @@ public class StalactiteFeature extends Feature<NoFeatureConfig>
 			BlockState state = world.getBlockState(mut);
 			if (!state.getMaterial().isReplaceable())
 			{
-				stalagnate = state.isIn(ModTags.GEN_TERRAIN);
+				stalagnate = state.is(ModTags.GEN_TERRAIN);
 				height = i;
 				break;
 			}
@@ -67,8 +67,8 @@ public class StalactiteFeature extends Feature<NoFeatureConfig>
 			mut.setY(pos.getY() + i * dir);
 			int size = stalagnate ? MathHelper.clamp((int) (MathHelper.abs(i - center) + 1), 1, 7) : height - i - 1;
 			boolean waterlogged = !world.getFluidState(mut).isEmpty();
-			BlockState base = block.getDefaultState().with(StalactiteBlock.SIZE, size).with(BlockStateProperties.WATERLOGGED, waterlogged);
-			BlockState state = stalagnate ? base.with(StalactiteBlock.IS_FLOOR, dir > 0 ? i < center : i > center) : base.with(StalactiteBlock.IS_FLOOR, dir > 0);
+			BlockState base = block.defaultBlockState().setValue(StalactiteBlock.SIZE, size).setValue(BlockStateProperties.WATERLOGGED, waterlogged);
+			BlockState state = stalagnate ? base.setValue(StalactiteBlock.IS_FLOOR, dir > 0 ? i < center : i > center) : base.setValue(StalactiteBlock.IS_FLOOR, dir > 0);
 			BlockHelper.setWithoutUpdate(world, mut, state);
 		}
 		

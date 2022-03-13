@@ -15,26 +15,26 @@ import net.minecraft.world.server.ServerWorld;
 
 public class MossyObsidianBlock extends Block {
 	public MossyObsidianBlock() {
-		super(AbstractBlock.Properties.from(Blocks.OBSIDIAN).hardnessAndResistance(3).tickRandomly());
+		super(AbstractBlock.Properties.copy(Blocks.OBSIDIAN).strength(3).randomTicks());
 	}
 
 	@Override
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		if (random.nextInt(16) == 0 && !canSurvive(state, world, pos)) {
-			world.setBlockState(pos, Blocks.OBSIDIAN.getDefaultState());
+			world.setBlockAndUpdate(pos, Blocks.OBSIDIAN.defaultBlockState());
 		}
 	}
 
 	public static boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
-		BlockPos blockPos = pos.up();
+		BlockPos blockPos = pos.above();
 		BlockState blockState = world.getBlockState(blockPos);
-		if (blockState.isIn(Blocks.SNOW) && (Integer) blockState.get(SnowBlock.LAYERS) == 1) {
+		if (blockState.is(Blocks.SNOW) && (Integer) blockState.getValue(SnowBlock.LAYERS) == 1) {
 			return true;
-		} else if (blockState.getFluidState().getLevel() == 8) {
+		} else if (blockState.getFluidState().getAmount() == 8) {
 			return false;
 		} else {
-			int i = LightEngine.func_215613_a(world, state, pos, blockState, blockPos, Direction.UP,
-					state.getOpacity(world, blockPos));
+			int i = LightEngine.getLightBlockInto(world, state, pos, blockState, blockPos, Direction.UP,
+					state.getLightBlock(world, blockPos));
 			return i < 5;
 		}
 	}

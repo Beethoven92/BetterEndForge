@@ -25,7 +25,7 @@ public class EternalCrystalRenderer
 	
 	static 
 	{
-		RENDER_LAYER = RenderType.getBeaconBeam(CRYSTAL_TEXTURE, true);
+		RENDER_LAYER = RenderType.beaconBeam(CRYSTAL_TEXTURE, true);
 		SHARDS = new ModelRenderer[4];
 		SHARDS[0] = new ModelRenderer(16, 16, 2, 4).addBox(-5.0F, 1.0F, -3.0F, 2.0F, 8.0F, 2.0F);
 		SHARDS[1] = new ModelRenderer(16, 16, 2, 4).addBox(3.0F, -1.0F, -1.0F, 2.0F, 8.0F, 2.0F);
@@ -40,21 +40,21 @@ public class EternalCrystalRenderer
 		IVertexBuilder iVertexBuilder = bufferIn.getBuffer(RENDER_LAYER);
 		float[] colors = colors(age);
 		float rotation = (age + tickDelta) / 25.0F + 6.0F;
-		matrices.push();
+		matrices.pushPose();
 		matrices.scale(0.6F, 0.6F, 0.6F);
-		matrices.rotate(Vector3f.YP.rotation(rotation));
+		matrices.mulPose(Vector3f.YP.rotation(rotation));
 		CORE.render(matrices, iVertexBuilder, light, OverlayTexture.NO_OVERLAY, colors[0], colors[1], colors[2], colors[3]);
 
 		for (int i = 0; i < 4; i++) 
 		{
-			matrices.push();
+			matrices.pushPose();
 			float offset = MathHelper.sin(rotation * 2 + i) * 0.15F;
 			matrices.translate(0, offset, 0);
 			SHARDS[i].render(matrices, iVertexBuilder, light, OverlayTexture.NO_OVERLAY, colors[0], colors[1], colors[2], colors[3]);
-			matrices.pop();
+			matrices.popPose();
 		}
 		
-		matrices.pop();
+		matrices.popPose();
 	}
 	
 	public static float[] colors(int age) 

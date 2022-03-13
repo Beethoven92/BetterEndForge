@@ -25,7 +25,7 @@ public class JellyshroomCapBlock extends SlimeBlock
 	
 	public JellyshroomCapBlock(int r1, int g1, int b1, int r2, int g2, int b2) 
 	{
-		super(AbstractBlock.Properties.from(Blocks.SLIME_BLOCK));
+		super(AbstractBlock.Properties.copy(Blocks.SLIME_BLOCK));
 		colorStart = new Vector3i(r1, g1, b1);
 		colorEnd = new Vector3i(r2, g2, b2);
 		coloritem = ModMathHelper.color((r1 + r2) >> 1, (g1 + g2) >> 1, (b1 + b2) >> 1);
@@ -34,22 +34,22 @@ public class JellyshroomCapBlock extends SlimeBlock
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) 
 	{
-		double px = context.getPos().getX() * 0.1;
-		double py = context.getPos().getY() * 0.1;
-		double pz = context.getPos().getZ() * 0.1;
+		double px = context.getClickedPos().getX() * 0.1;
+		double py = context.getClickedPos().getY() * 0.1;
+		double pz = context.getClickedPos().getZ() * 0.1;
 		
-		return this.getDefaultState().with(COLOR, ModMathHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
+		return this.defaultBlockState().setValue(COLOR, ModMathHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(COLOR);
 	}
 
 	public int getBlockColor(BlockState state) 
 	{
-		float delta = (float) state.get(COLOR) / 7F;
+		float delta = (float) state.getValue(COLOR) / 7F;
 	    int r = MathHelper.floor(MathHelper.lerp(delta, colorStart.getX() / 255F, colorEnd.getX() / 255F) * 255F);
 	    int g = MathHelper.floor(MathHelper.lerp(delta, colorStart.getY() / 255F, colorEnd.getY() / 255F) * 255F);
 		int b = MathHelper.floor(MathHelper.lerp(delta, colorStart.getZ() / 255F, colorEnd.getZ() / 255F) * 255F);

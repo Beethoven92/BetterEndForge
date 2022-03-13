@@ -127,7 +127,7 @@ public final class JsonConfigKeeper
 		@Override
 		public Boolean fromJson() 
 		{
-			return JSONUtils.getBoolean(location, key, defaultValue);
+			return JSONUtils.getAsBoolean(location, key, defaultValue);
 		}
 
 		@Override
@@ -147,7 +147,7 @@ public final class JsonConfigKeeper
 		@Override
 		public Float fromJson() 
 		{
-			return JSONUtils.getFloat(location, key, defaultValue);
+			return JSONUtils.getAsFloat(location, key, defaultValue);
 		}
 
 		@Override
@@ -167,7 +167,7 @@ public final class JsonConfigKeeper
 		@Override
 		public Float fromJson() 
 		{
-			return JSONUtils.getFloat(location, key, defaultValue);
+			return JSONUtils.getAsFloat(location, key, defaultValue);
 		}
 
 		@Override
@@ -193,7 +193,7 @@ public final class JsonConfigKeeper
 		@Override
 		public Integer fromJson() 
 		{
-			return JSONUtils.getInt(location, key, defaultValue);
+			return JSONUtils.getAsInt(location, key, defaultValue);
 		}
 
 		@Override
@@ -213,7 +213,7 @@ public final class JsonConfigKeeper
 		@Override
 		public Integer fromJson() 
 		{
-			return JSONUtils.getInt(location, key, defaultValue);
+			return JSONUtils.getAsInt(location, key, defaultValue);
 		}
 
 		@Override
@@ -233,7 +233,7 @@ public final class JsonConfigKeeper
 		@Override
 		public String fromJson()
 		{
-			return JSONUtils.getString(location, key, defaultValue);
+			return JSONUtils.getAsString(location, key, defaultValue);
 		}
 
 		@Override

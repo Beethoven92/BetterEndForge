@@ -35,8 +35,8 @@ public class ForgeEvents {
 	@SubscribeEvent
 	public static void removeBlindness(PotionApplicableEvent event) {
 		LivingEntity entity = event.getEntityLiving();
-		if (event.getPotionEffect().getPotion() == Effects.BLINDNESS
-				&& entity.getAttributeManager().hasAttributeInstance(ModAttributes.BLINDNESS_RESISTANCE.get())
+		if (event.getPotionEffect().getEffect() == Effects.BLINDNESS
+				&& entity.getAttributes().hasAttribute(ModAttributes.BLINDNESS_RESISTANCE.get())
 				&& entity.getAttributeValue(ModAttributes.BLINDNESS_RESISTANCE.get()) > 0)
 			event.setResult(Result.DENY);
 	}

@@ -30,45 +30,45 @@ public class GlowingPillarSeedBlock extends PlantBlockWithAge {
 			return;
 		}
 
-		Mutable mut = new Mutable().setPos(pos);
-		BlockState roots = ModBlocks.GLOWING_PILLAR_ROOTS.get().getDefaultState();
+		Mutable mut = new Mutable().set(pos);
+		BlockState roots = ModBlocks.GLOWING_PILLAR_ROOTS.get().defaultBlockState();
 		if (height < 2) {
-			BlockHelper.setWithUpdate(world, mut, roots.with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
+			BlockHelper.setWithUpdate(world, mut, roots.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
 			mut.move(Direction.UP);
 		} else {
-			BlockHelper.setWithUpdate(world, mut, roots.with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
+			BlockHelper.setWithUpdate(world, mut, roots.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 			mut.move(Direction.UP);
-			BlockHelper.setWithUpdate(world, mut, roots.with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
+			BlockHelper.setWithUpdate(world, mut, roots.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
 			mut.move(Direction.UP);
 		}
 		BlockHelper.setWithUpdate(world, mut,
-				ModBlocks.GLOWING_PILLAR_LUMINOPHOR.get().getDefaultState().with(BlueVineLanternBlock.NATURAL, true));
+				ModBlocks.GLOWING_PILLAR_LUMINOPHOR.get().defaultBlockState().setValue(BlueVineLanternBlock.NATURAL, true));
 		for (Direction dir : BlockHelper.DIRECTIONS) {
-			pos = mut.offset(dir);
-			if (world.isAirBlock(pos)) {
+			pos = mut.relative(dir);
+			if (world.isEmptyBlock(pos)) {
 				BlockHelper.setWithUpdate(world, pos,
-						ModBlocks.GLOWING_PILLAR_LEAVES.get().getDefaultState().with(BlockStateProperties.FACING, dir));
+						ModBlocks.GLOWING_PILLAR_LEAVES.get().defaultBlockState().setValue(BlockStateProperties.FACING, dir));
 			}
 		}
 		mut.move(Direction.UP);
-		if (world.isAirBlock(mut)) {
-			BlockHelper.setWithUpdate(world, mut, ModBlocks.GLOWING_PILLAR_LEAVES.get().getDefaultState()
-					.with(BlockStateProperties.FACING, Direction.UP));
+		if (world.isEmptyBlock(mut)) {
+			BlockHelper.setWithUpdate(world, mut, ModBlocks.GLOWING_PILLAR_LEAVES.get().defaultBlockState()
+					.setValue(BlockStateProperties.FACING, Direction.UP));
 		}
 	}
 
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(ModBlocks.AMBER_MOSS.get());
+		return state.is(ModBlocks.AMBER_MOSS.get());
 	}
 
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
 		return true;
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) {
 		return true;
 	}
 }

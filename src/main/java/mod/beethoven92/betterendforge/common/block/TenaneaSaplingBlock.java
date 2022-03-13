@@ -8,6 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.gen.feature.Feature;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class TenaneaSaplingBlock extends EndSaplingBlock
 {
 	public TenaneaSaplingBlock(Properties properties) 
@@ -16,9 +18,9 @@ public class TenaneaSaplingBlock extends EndSaplingBlock
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		return worldIn.getBlockState(pos.down()).isIn(ModBlocks.PINK_MOSS.get());
+		return worldIn.getBlockState(pos.below()).is(ModBlocks.PINK_MOSS.get());
 	}
 	
 	@Override

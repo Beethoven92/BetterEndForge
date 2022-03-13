@@ -15,7 +15,7 @@ public class SilkMothEntityRenderer extends MobRenderer<SilkMothEntity, SilkMoth
     }
  
     @Override
-    public ResourceLocation getEntityTexture(SilkMothEntity entity) {
+    public ResourceLocation getTextureLocation(SilkMothEntity entity) {
         return TEXTURE;
     }
 }

@@ -28,7 +28,7 @@ public abstract class SDFPrimitive extends SDF
 	public SDFPrimitive setBlock(Block block) 
 	{
 		this.placerFunction = (pos) -> {
-			return block.getDefaultState();
+			return block.defaultBlockState();
 		};
 		return this;
 	}

@@ -17,6 +17,8 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
+import net.minecraft.world.gen.feature.structure.Structure.IStartFactory;
+
 public class MegaLakeSmallStructure extends Structure<NoFeatureConfig>
 {
 
@@ -26,13 +28,13 @@ public class MegaLakeSmallStructure extends Structure<NoFeatureConfig>
 	}
 	
 	@Override
-	public Decoration getDecorationStage() 
+	public Decoration step() 
 	{
 		return Decoration.RAW_GENERATION;
 	}
 	
 	@Override
-	public String getStructureName() 
+	public String getFeatureName() 
 	{
 		return BetterEnd.MOD_ID + ":megalake_small_structure";
 	}
@@ -52,21 +54,21 @@ public class MegaLakeSmallStructure extends Structure<NoFeatureConfig>
 		}
 
 		@Override
-		public void func_230364_a_(DynamicRegistries registry, ChunkGenerator chunkGenerator,
+		public void generatePieces(DynamicRegistries registry, ChunkGenerator chunkGenerator,
 				TemplateManager manager, int chunkX, int chunkZ, Biome biome,
 				NoFeatureConfig config) 
 		{
-			int x = (chunkX << 4) | ModMathHelper.randRange(4, 12, rand);
-			int z = (chunkZ << 4) | ModMathHelper.randRange(4, 12, rand);
-			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
+			int x = (chunkX << 4) | ModMathHelper.randRange(4, 12, random);
+			int z = (chunkZ << 4) | ModMathHelper.randRange(4, 12, random);
+			int y = chunkGenerator.getBaseHeight(x, z, Type.WORLD_SURFACE_WG);
 			if (y > 5) 
 			{
-				float radius = ModMathHelper.randRange(20, 40, rand);
-				float depth = ModMathHelper.randRange(5, 10, rand);
-				LakePiece piece = new LakePiece(new BlockPos(x, y, z), radius, depth, rand, biome);
-				this.components.add(piece);
+				float radius = ModMathHelper.randRange(20, 40, random);
+				float depth = ModMathHelper.randRange(5, 10, random);
+				LakePiece piece = new LakePiece(new BlockPos(x, y, z), radius, depth, random, biome);
+				this.pieces.add(piece);
 			}
-			this.recalculateStructureSize();
+			this.calculateBoundingBox();
 		}
 	}
 }

@@ -19,7 +19,7 @@ public abstract class FullHeightScatterFeature extends Feature<NoFeatureConfig>
 	
 	public FullHeightScatterFeature(int radius) 
 	{	
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 		this.radius = radius;
 	}
 	
@@ -28,15 +28,15 @@ public abstract class FullHeightScatterFeature extends Feature<NoFeatureConfig>
 	public abstract void generate(ISeedReader world, Random random, BlockPos blockPos);
 	
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
+	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
 			BlockPos center, NoFeatureConfig config)
 	{
 		int maxY = world.getHeight(Heightmap.Type.WORLD_SURFACE_WG, center.getX(), center.getZ());
 		int minY = BlockHelper.upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
 		for (int y = maxY; y > minY; y--) 
 		{
-			POS.setPos(center.getX(), y, center.getZ());
-			if (world.getBlockState(POS).isAir() && !world.getBlockState(POS.down()).isAir()) 
+			POS.set(center.getX(), y, center.getZ());
+			if (world.getBlockState(POS).isAir() && !world.getBlockState(POS.below()).isAir()) 
 			{
 				float r = ModMathHelper.randRange(radius * 0.5F, radius, random);
 				int count = ModMathHelper.floor(r * r * ModMathHelper.randRange(1.5F, 3F, random));
@@ -47,7 +47,7 @@ public abstract class FullHeightScatterFeature extends Feature<NoFeatureConfig>
 					float x = pr * (float) Math.cos(theta);
 					float z = pr * (float) Math.sin(theta);
 					
-					POS.setPos(center.getX() + x, y + 5, center.getZ() + z);
+					POS.set(center.getX() + x, y + 5, center.getZ() + z);
 					int down = BlockHelper.downRay(world, POS, 16);
 					if (down > 10) continue;
 					POS.setY(POS.getY() - down);

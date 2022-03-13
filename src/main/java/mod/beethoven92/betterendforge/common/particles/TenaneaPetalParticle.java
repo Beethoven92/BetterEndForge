@@ -28,25 +28,25 @@ public class TenaneaPetalParticle extends SpriteTexturedParticle
 	{
 		super(world, x, y, z, r, g, b);
 		
-		this.selectSpriteWithAge(spriteWithAge);
+		this.setSpriteFromAge(spriteWithAge);
 		
 		int color = TenaneaFlowersBlock.getBlockColor(new BlockPos(x, y, z));
 		
-		this.particleRed = ((color >> 16) & 255) / 255F;
-		this.particleGreen = ((color >> 8) & 255) / 255F;
-		this.particleBlue = ((color) & 255) / 255F;
+		this.rCol = ((color >> 16) & 255) / 255F;
+		this.gCol = ((color >> 8) & 255) / 255F;
+		this.bCol = ((color) & 255) / 255F;
 		
-		this.maxAge = ModMathHelper.randRange(120, 200, rand);
-		this.particleScale = ModMathHelper.randRange(0.05F, 0.15F, rand);
-		this.particleAlpha = 0;
+		this.lifetime = ModMathHelper.randRange(120, 200, random);
+		this.quadSize = ModMathHelper.randRange(0.05F, 0.15F, random);
+		this.alpha = 0;
 		
 		preVX = 0;
 		preVY = 0;
 		preVZ = 0;
 		
-		nextVX = rand.nextGaussian() * 0.02;
-		nextVY = -rand.nextDouble() * 0.02 - 0.02;
-		nextVZ = rand.nextGaussian() * 0.02;
+		nextVX = random.nextGaussian() * 0.02;
+		nextVY = -random.nextDouble() * 0.02 - 0.02;
+		nextVZ = random.nextGaussian() * 0.02;
 	}
 
 	@Override
@@ -64,30 +64,30 @@ public class TenaneaPetalParticle extends SpriteTexturedParticle
 			preVX = nextVX;
 			preVY = nextVY;
 			preVZ = nextVZ;
-			nextVX = rand.nextGaussian() * 0.02;
-			nextVY = -rand.nextDouble() * 0.02 - 0.02;
-			nextVZ = rand.nextGaussian() * 0.02;
+			nextVX = random.nextGaussian() * 0.02;
+			nextVY = -random.nextDouble() * 0.02 - 0.02;
+			nextVZ = random.nextGaussian() * 0.02;
 		}
 		
 		double delta = (double) ticks / 63.0;
 		
 		if (this.age <= 40) 
 		{
-			this.setAlphaF(this.age / 40F);
+			this.setAlpha(this.age / 40F);
 		}
-		else if (this.age >= this.maxAge - 40) 
+		else if (this.age >= this.lifetime - 40) 
 		{
-			this.setAlphaF((this.maxAge - this.age) / 40F);
+			this.setAlpha((this.lifetime - this.age) / 40F);
 		}
 		
-		if (this.age >= this.maxAge) 
+		if (this.age >= this.lifetime) 
 		{
-			this.setExpired();
+			this.remove();
 		}
 		
-		this.motionX = MathHelper.lerp(delta, preVX, nextVX);
-		this.motionY = MathHelper.lerp(delta, preVY, nextVY);
-		this.motionZ = MathHelper.lerp(delta, preVZ, nextVZ);
+		this.xd = MathHelper.lerp(delta, preVX, nextVX);
+		this.yd = MathHelper.lerp(delta, preVY, nextVY);
+		this.zd = MathHelper.lerp(delta, preVZ, nextVZ);
 		
 		super.tick();
 	}
@@ -103,7 +103,7 @@ public class TenaneaPetalParticle extends SpriteTexturedParticle
 	    }
 	    
 	    @Override
-	    public Particle makeParticle(BasicParticleType type, ClientWorld worldIn, double x, double y, double z,
+	    public Particle createParticle(BasicParticleType type, ClientWorld worldIn, double x, double y, double z,
 	    		double xSpeed, double ySpeed, double zSpeed) 
 	    {
 	    	return new TenaneaPetalParticle(worldIn, x, y, z, 1, 1, 1, sprite);

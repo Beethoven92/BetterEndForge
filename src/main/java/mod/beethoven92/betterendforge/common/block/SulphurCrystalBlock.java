@@ -24,6 +24,8 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class SulphurCrystalBlock extends AttachedBlock implements IWaterLoggable
 {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
@@ -32,12 +34,12 @@ public class SulphurCrystalBlock extends AttachedBlock implements IWaterLoggable
 	
 	static 
 	{
-		BOUNDING_SHAPES.put(Direction.UP, VoxelShapes.create(0.125, 0.0, 0.125, 0.875F, 0.5, 0.875F));
-		BOUNDING_SHAPES.put(Direction.DOWN, VoxelShapes.create(0.125, 0.5, 0.125, 0.875F, 1.0, 0.875F));
-		BOUNDING_SHAPES.put(Direction.NORTH, VoxelShapes.create(0.125, 0.125, 0.5, 0.875F, 0.875F, 1.0));
-		BOUNDING_SHAPES.put(Direction.SOUTH, VoxelShapes.create(0.125, 0.125, 0.0, 0.875F, 0.875F, 0.5));
-		BOUNDING_SHAPES.put(Direction.WEST, VoxelShapes.create(0.5, 0.125, 0.125, 1.0, 0.875F, 0.875F));
-		BOUNDING_SHAPES.put(Direction.EAST, VoxelShapes.create(0.0, 0.125, 0.125, 0.5, 0.875F, 0.875F));
+		BOUNDING_SHAPES.put(Direction.UP, VoxelShapes.box(0.125, 0.0, 0.125, 0.875F, 0.5, 0.875F));
+		BOUNDING_SHAPES.put(Direction.DOWN, VoxelShapes.box(0.125, 0.5, 0.125, 0.875F, 1.0, 0.875F));
+		BOUNDING_SHAPES.put(Direction.NORTH, VoxelShapes.box(0.125, 0.125, 0.5, 0.875F, 0.875F, 1.0));
+		BOUNDING_SHAPES.put(Direction.SOUTH, VoxelShapes.box(0.125, 0.125, 0.0, 0.875F, 0.875F, 0.5));
+		BOUNDING_SHAPES.put(Direction.WEST, VoxelShapes.box(0.5, 0.125, 0.125, 1.0, 0.875F, 0.875F));
+		BOUNDING_SHAPES.put(Direction.EAST, VoxelShapes.box(0.0, 0.125, 0.125, 0.5, 0.875F, 0.875F));
 	}
 	
 	public SulphurCrystalBlock(Properties properties) 
@@ -48,15 +50,15 @@ public class SulphurCrystalBlock extends AttachedBlock implements IWaterLoggable
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
 	{
-		return BOUNDING_SHAPES.get(state.get(FACING));
+		return BOUNDING_SHAPES.get(state.getValue(FACING));
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		Direction direction = (Direction) state.get(FACING);
-		BlockPos blockPos = pos.offset(direction.getOpposite());
-		return worldIn.getBlockState(blockPos).isIn(ModBlocks.BRIMSTONE.get());
+		Direction direction = (Direction) state.getValue(FACING);
+		BlockPos blockPos = pos.relative(direction.getOpposite());
+		return worldIn.getBlockState(blockPos).is(ModBlocks.BRIMSTONE.get());
 	}
 	
 	@Override
@@ -65,10 +67,10 @@ public class SulphurCrystalBlock extends AttachedBlock implements IWaterLoggable
 		BlockState state = super.getStateForPlacement(context);
 		if (state != null)
 		{
-			IWorldReader worldView = context.getWorld();
-			BlockPos blockPos = context.getPos();
-			boolean water = worldView.getFluidState(blockPos).getFluid() == Fluids.WATER;
-			return state.with(WATERLOGGED, water);
+			IWorldReader worldView = context.getLevel();
+			BlockPos blockPos = context.getClickedPos();
+			boolean water = worldView.getFluidState(blockPos).getType() == Fluids.WATER;
+			return state.setValue(WATERLOGGED, water);
 		}
 		return null;
 	}
@@ -76,13 +78,13 @@ public class SulphurCrystalBlock extends AttachedBlock implements IWaterLoggable
 	@Override
 	public FluidState getFluidState(BlockState state) 
 	{
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : Fluids.EMPTY.getDefaultState();
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
-		super.fillStateContainer(builder);
+		super.createBlockStateDefinition(builder);
 		builder.add(AGE, WATERLOGGED);
 	}
 }

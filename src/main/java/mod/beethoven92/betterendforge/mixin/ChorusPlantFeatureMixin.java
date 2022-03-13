@@ -32,14 +32,14 @@ public abstract class ChorusPlantFeatureMixin
 	{
 
 		final ISeedReader structureWorldAccess = worldIn;
-		if (structureWorldAccess.isAirBlock(blockPos) && structureWorldAccess.getBlockState(blockPos.down()).isIn(ModBlocks.CHORUS_NYLIUM.get())) {
+		if (structureWorldAccess.isEmptyBlock(blockPos) && structureWorldAccess.getBlockState(blockPos.below()).is(ModBlocks.CHORUS_NYLIUM.get())) {
 			ChorusFlowerBlock.generatePlant(structureWorldAccess, blockPos, random, ModMathHelper.randRange(8, 16, random));
 			BlockState bottom = structureWorldAccess.getBlockState(blockPos);
-			if (bottom.isIn(Blocks.CHORUS_PLANT)) {
+			if (bottom.is(Blocks.CHORUS_PLANT)) {
 				BlockHelper.setWithoutUpdate(
 						structureWorldAccess,
 						blockPos,
-						bottom.with(SixWayBlock.DOWN, true)
+						bottom.setValue(SixWayBlock.DOWN, true)
 				);
 			}
 			info.setReturnValue(true);

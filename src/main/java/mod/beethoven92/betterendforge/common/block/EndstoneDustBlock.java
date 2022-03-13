@@ -6,6 +6,8 @@ import net.minecraft.block.FallingBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class EndstoneDustBlock extends FallingBlock
 {
 	private static final int COLOR = ModMathHelper.color(226, 239, 168);

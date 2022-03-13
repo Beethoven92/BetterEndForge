@@ -13,15 +13,15 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 public class FlamaeaBlock extends PlantBlock {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(0, 0, 0, 16, 1, 16);
+	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);
 
 	public FlamaeaBlock() {
-		super(AbstractBlock.Properties.create(Material.PLANTS).sound(SoundType.WET_GRASS).zeroHardnessAndResistance());
+		super(AbstractBlock.Properties.of(Material.PLANT).sound(SoundType.WET_GRASS).instabreak());
 	}
 
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(Blocks.WATER);
+		return state.is(Blocks.WATER);
 	}
 
 	@Override

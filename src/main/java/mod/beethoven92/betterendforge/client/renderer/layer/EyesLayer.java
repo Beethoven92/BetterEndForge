@@ -17,7 +17,7 @@ public class EyesLayer<T extends Entity, M extends EntityModel<T>> extends Abstr
 	}
 
 	@Override
-	public RenderType getRenderType() 
+	public RenderType renderType() 
 	{
 		return null;
 	}

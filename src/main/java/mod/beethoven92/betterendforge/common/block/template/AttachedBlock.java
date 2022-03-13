@@ -15,6 +15,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class AttachedBlock extends Block
 {
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -22,22 +24,22 @@ public class AttachedBlock extends Block
 	public AttachedBlock(Properties properties) 
 	{
 		super(properties);
-		this.setDefaultState(this.getDefaultState().with(FACING, Direction.UP));
+		this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.UP));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) 
 	{
-		BlockState blockState = this.getDefaultState();
-		IWorldReader worldView = context.getWorld();
-		BlockPos blockPos = context.getPos();
+		BlockState blockState = this.defaultBlockState();
+		IWorldReader worldView = context.getLevel();
+		BlockPos blockPos = context.getClickedPos();
 		Direction[] directions = context.getNearestLookingDirections();
 		for (int i = 0; i < directions.length; ++i) 
 		{
 			Direction direction = directions[i];
 			Direction direction2 = direction.getOpposite();
-			blockState = (BlockState) blockState.with(FACING, direction2);
-			if (blockState.isValidPosition(worldView, blockPos)) 
+			blockState = (BlockState) blockState.setValue(FACING, direction2);
+			if (blockState.canSurvive(worldView, blockPos)) 
 			{
 				return blockState;
 			}
@@ -46,12 +48,12 @@ public class AttachedBlock extends Block
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos)) 
+		if (!canSurvive(stateIn, worldIn, currentPos)) 
 		{
-			return Blocks.AIR.getDefaultState();
+			return Blocks.AIR.defaultBlockState();
 		}
 		else 
 		{
@@ -60,26 +62,26 @@ public class AttachedBlock extends Block
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos)
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos)
 	{
-		Direction direction = (Direction) state.get(FACING);
-		BlockPos blockPos = pos.offset(direction.getOpposite());
-		return hasEnoughSolidSide(worldIn, blockPos, direction) || worldIn.getBlockState(blockPos).isIn(BlockTags.LEAVES);
+		Direction direction = (Direction) state.getValue(FACING);
+		BlockPos blockPos = pos.relative(direction.getOpposite());
+		return canSupportCenter(worldIn, blockPos, direction) || worldIn.getBlockState(blockPos).is(BlockTags.LEAVES);
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(FACING);
 	}
 	
 	public BlockState rotate(BlockState state, Rotation rot) 
 	{
-		return state.with(FACING, rot.rotate(state.get(FACING)));
+		return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
 
 	public BlockState mirror(BlockState state, Mirror mirrorIn) 
 	{
-		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
 	}
 }

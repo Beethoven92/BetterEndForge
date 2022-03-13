@@ -30,13 +30,13 @@ public class ArchFeature extends Feature<NoFeatureConfig> {
 	private Block block;
 	
 	public ArchFeature(Block block, Function<BlockPos, BlockState> surfaceFunction) {
-        super(NoFeatureConfig.field_236558_a_);
+        super(NoFeatureConfig.CODEC);
         this.surfaceFunction = surfaceFunction;
 		this.block = block;
 	}
 	
 	@Override
-	public boolean generate(ISeedReader level, ChunkGenerator generator, Random random, BlockPos origin,
+	public boolean place(ISeedReader level, ChunkGenerator generator, Random random, BlockPos origin,
                             NoFeatureConfig config) {
 		final ISeedReader world = level;
 
@@ -45,7 +45,7 @@ public class ArchFeature extends Feature<NoFeatureConfig> {
 			world,
 			new BlockPos((origin.getX() & 0xFFFFFFF0) | 7, 0, (origin.getZ() & 0xFFFFFFF0) | 7)
 		);
-		if (!world.getBlockState(pos.down(5)).isIn(ModTags.GEN_TERRAIN)) {
+		if (!world.getBlockState(pos.below(5)).is(ModTags.GEN_TERRAIN)) {
 			return false;
 		}
 		
@@ -60,14 +60,14 @@ public class ArchFeature extends Feature<NoFeatureConfig> {
 		final float smallRadiusF = smallRadius;
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		arch = new SDFDisplacement().setFunction((vec) -> {
-			return (float) (Math.abs(noise.eval(vec.getX() * 0.1,
-				vec.getY() * 0.1,
-				vec.getZ() * 0.1
+			return (float) (Math.abs(noise.eval(vec.x() * 0.1,
+				vec.y() * 0.1,
+				vec.z() * 0.1
 			)) * 3F + Math.abs(noise.eval(
-				vec.getX() * 0.3,
-				vec.getY() * 0.3 + 100,
-				vec.getZ() * 0.3
-			)) * 1.3F) - smallRadiusF * Math.abs(1 - vec.getY() / bigRadius);
+				vec.x() * 0.3,
+				vec.y() * 0.3 + 100,
+				vec.z() * 0.3
+			)) * 1.3F) - smallRadiusF * Math.abs(1 - vec.y() / bigRadius);
 		}).setSource(arch);
 		
 		List<BlockPos> surface = Lists.newArrayList();
@@ -82,7 +82,7 @@ public class ArchFeature extends Feature<NoFeatureConfig> {
 		if (side > 47) {
 			side = 47;
 		}
-		arch.fillArea(world, pos, AABBAcc.ofSize(Vector3d.copyCentered(pos), side, side, side));
+		arch.fillArea(world, pos, AABBAcc.ofSize(Vector3d.atCenterOf(pos), side, side, side));
 		
 		return true;
 	}

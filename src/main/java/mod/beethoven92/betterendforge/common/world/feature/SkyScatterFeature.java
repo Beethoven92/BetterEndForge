@@ -21,12 +21,12 @@ public abstract class SkyScatterFeature extends ScatterFeature {
 
 	@Override
 	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) {
-		if (!world.isAirBlock(blockPos)) {
+		if (!world.isEmptyBlock(blockPos)) {
 			return false;
 		}
 		
 		for (Direction dir: BlockHelper.HORIZONTAL_DIRECTIONS) {
-			if (!world.isAirBlock(blockPos.offset(dir))) {
+			if (!world.isEmptyBlock(blockPos.relative(dir))) {
 				return false;
 			}
 		}

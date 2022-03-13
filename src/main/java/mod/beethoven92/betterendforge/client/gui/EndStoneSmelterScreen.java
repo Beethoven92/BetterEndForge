@@ -38,15 +38,15 @@ public class EndStoneSmelterScreen extends ContainerScreen<EndStoneSmelterContai
 	{
 		super.init();
 		this.narrow = this.width < 379;
-		this.recipeBook.init(width, height, minecraft, narrow, container);
-		this.guiLeft = this.recipeBook.updateScreenPosition(narrow, width, xSize);
-		this.addButton(new ImageButton(this.guiLeft + 20, height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE, (buttonWidget) -> {
-			this.recipeBook.initSearchBar(narrow);
+		this.recipeBook.init(width, height, minecraft, narrow, menu);
+		this.leftPos = this.recipeBook.updateScreenPosition(narrow, width, imageWidth);
+		this.addButton(new ImageButton(this.leftPos + 20, height / 2 - 49, 20, 18, 0, 0, 19, RECIPE_BUTTON_TEXTURE, (buttonWidget) -> {
+			this.recipeBook.initVisuals(narrow);
 			this.recipeBook.toggleVisibility();
-			this.guiLeft = this.recipeBook.updateScreenPosition(narrow, width, xSize);
-			((ImageButton) buttonWidget).setPosition(this.guiLeft + 20, height / 2 - 49);
+			this.leftPos = this.recipeBook.updateScreenPosition(narrow, width, imageWidth);
+			((ImageButton) buttonWidget).setPosition(this.leftPos + 20, height / 2 - 49);
 		}));
-		this.titleX = (this.xSize - this.font.getStringPropertyWidth(this.title)) / 2;
+		this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
 	}
 	
 	@Override
@@ -62,35 +62,35 @@ public class EndStoneSmelterScreen extends ContainerScreen<EndStoneSmelterContai
 		this.renderBackground(matrixStack);
 		if (this.recipeBook.isVisible() && this.narrow) 
 		{
-			this.drawGuiContainerBackgroundLayer(matrixStack, partialTicks, mouseX, mouseY);
+			this.renderBg(matrixStack, partialTicks, mouseX, mouseY);
 			this.recipeBook.render(matrixStack, mouseX, mouseY, partialTicks);
 		} 
 		else 
 		{
 			this.recipeBook.render(matrixStack, mouseX, mouseY, partialTicks);
 			super.render(matrixStack, mouseX, mouseY, partialTicks);
-			this.recipeBook.func_230477_a_(matrixStack, guiLeft, guiTop, true, partialTicks);
+			this.recipeBook.renderGhostRecipe(matrixStack, leftPos, topPos, true, partialTicks);
 		}
 
-		this.renderHoveredTooltip(matrixStack, mouseX, mouseY);
-		this.recipeBook.func_238924_c_(matrixStack, guiLeft, guiTop, mouseX, mouseY);
+		this.renderTooltip(matrixStack, mouseX, mouseY);
+		this.recipeBook.renderTooltip(matrixStack, leftPos, topPos, mouseX, mouseY);
 	}
 	
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) 
+	protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) 
 	{		
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindTexture(BACKGROUND_TEXTURE);
-	    int i = this.guiLeft;
-	    int j = this.guiTop;
-		this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
+		this.minecraft.getTextureManager().bind(BACKGROUND_TEXTURE);
+	    int i = this.leftPos;
+	    int j = this.topPos;
+		this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
 		int p;
-		if (this.container.isBurning()) 
+		if (this.menu.isBurning()) 
 		{
-			p = this.container.getFuelProgress();
+			p = this.menu.getFuelProgress();
 			this.blit(matrixStack, i + 56, j + 36 + 12 - p, 176, 12 - p, 14, p + 1);
 		}
-		p = this.container.getSmeltProgress();
+		p = this.menu.getSmeltProgress();
 		this.blit(matrixStack, i + 92, j + 34, 176, 14, p + 1, 16);
 	}
 
@@ -108,9 +108,9 @@ public class EndStoneSmelterScreen extends ContainerScreen<EndStoneSmelterContai
 	}
 	
 	@Override
-	protected void handleMouseClick(Slot slotIn, int slotId, int mouseButton, ClickType type) 
+	protected void slotClicked(Slot slotIn, int slotId, int mouseButton, ClickType type) 
 	{
-		super.handleMouseClick(slotIn, slotId, mouseButton, type);
+		super.slotClicked(slotIn, slotId, mouseButton, type);
 		this.recipeBook.slotClicked(slotIn);
 	}
 	
@@ -123,8 +123,8 @@ public class EndStoneSmelterScreen extends ContainerScreen<EndStoneSmelterContai
 	@Override
 	protected boolean hasClickedOutside(double mouseX, double mouseY, int guiLeftIn, int guiTopIn, int mouseButton) 
 	{
-		boolean isMouseOut = mouseX < (double)guiLeftIn || mouseY < (double)guiTopIn || mouseX >= (double)(guiLeftIn + this.xSize) || mouseY >= (double)(guiTopIn + this.ySize);
-		return this.recipeBook.func_195604_a(mouseX, mouseY, this.guiLeft, this.guiTop, this.xSize, this.ySize, mouseButton) && isMouseOut;
+		boolean isMouseOut = mouseX < (double)guiLeftIn || mouseY < (double)guiTopIn || mouseX >= (double)(guiLeftIn + this.imageWidth) || mouseY >= (double)(guiTopIn + this.imageHeight);
+		return this.recipeBook.hasClickedOutside(mouseX, mouseY, this.leftPos, this.topPos, this.imageWidth, this.imageHeight, mouseButton) && isMouseOut;
 	}
 	
 	@Override
@@ -140,15 +140,15 @@ public class EndStoneSmelterScreen extends ContainerScreen<EndStoneSmelterContai
 	}
 
 	@Override
-	public RecipeBookGui getRecipeGui() 
+	public RecipeBookGui getRecipeBookComponent() 
 	{
 		return this.recipeBook;
 	}
 	
 	@Override
-	public void onClose() 
+	public void removed() 
 	{
 	      this.recipeBook.removed();
-	      super.onClose();
+	      super.removed();
 	}
 }

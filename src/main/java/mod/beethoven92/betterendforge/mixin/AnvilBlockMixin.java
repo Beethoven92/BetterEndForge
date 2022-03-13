@@ -19,10 +19,10 @@ public class AnvilBlockMixin
 		if (fallingState.getBlock() instanceof EndAnvilBlock) 
 		{
 			IntegerProperty destructionProperty = ((EndAnvilBlock) fallingState.getBlock()).getDestructionProperty();
-			int destruction = fallingState.get(destructionProperty);
+			int destruction = fallingState.getValue(destructionProperty);
 			try 
 			{
-				BlockState state = fallingState.with(destructionProperty, destruction + 1);
+				BlockState state = fallingState.setValue(destructionProperty, destruction + 1);
 				info.setReturnValue(state);
 				info.cancel();
 			} 

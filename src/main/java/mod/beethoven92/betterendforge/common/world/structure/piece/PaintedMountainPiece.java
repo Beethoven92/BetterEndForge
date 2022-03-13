@@ -82,7 +82,7 @@ public class PaintedMountainPiece extends StructurePiece
 	}
 
 	@Override
-	protected void readAdditional(CompoundNBT tagCompound)
+	protected void addAdditionalSaveData(CompoundNBT tagCompound)
 	{	
 		tagCompound.putInt("centerX", this.center.getX());
 	    tagCompound.putInt("centerY", this.center.getY());
@@ -111,15 +111,15 @@ public class PaintedMountainPiece extends StructurePiece
 	}
 	
 	@Override
-	public boolean func_230383_a_(ISeedReader world, StructureManager manager, ChunkGenerator chunkGenerator,
+	public boolean postProcess(ISeedReader world, StructureManager manager, ChunkGenerator chunkGenerator,
 			Random random, MutableBoundingBox box, ChunkPos chunkPos, BlockPos blockPos) 
 	{
-		int sx = chunkPos.getXStart();
-		int sz = chunkPos.getZStart();
+		int sx = chunkPos.getMinBlockX();
+		int sz = chunkPos.getMinBlockZ();
 		Mutable pos = new Mutable();
 		IChunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
-		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE);
-		Heightmap map2 = chunk.getHeightmap(Type.WORLD_SURFACE_WG);
+		Heightmap map = chunk.getOrCreateHeightmapUnprimed(Type.WORLD_SURFACE);
+		Heightmap map2 = chunk.getOrCreateHeightmapUnprimed(Type.WORLD_SURFACE_WG);
 		for (int x = 0; x < 16; x++) 
 		{
 			int px = x + sx;
@@ -135,14 +135,14 @@ public class PaintedMountainPiece extends StructurePiece
 				if (dist < r2) {
 					pos.setZ(z);
 					dist = 1 - dist / r2;
-					int minY = map.getHeight(x, z);
+					int minY = map.getFirstAvailable(x, z);
 					pos.setY(minY - 1);
 					while (chunk.getBlockState(pos).isAir() && pos.getY() > 50) 
 					{
 						pos.setY(minY --);
 					}
 					minY = pos.getY();
-					minY = Math.max(minY, map2.getHeight(x, z));
+					minY = Math.max(minY, map2.getFirstAvailable(x, z));
 					if (minY > 56)
 					{
 						float maxY = dist * height * getHeightClamp(world, 8, px, pz);

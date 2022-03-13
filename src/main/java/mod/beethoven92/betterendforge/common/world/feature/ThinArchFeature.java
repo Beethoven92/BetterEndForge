@@ -31,7 +31,7 @@ public class ThinArchFeature extends Feature<NoFeatureConfig> {
 
     public ThinArchFeature(Block block)
     {
-        super(NoFeatureConfig.field_236558_a_);
+        super(NoFeatureConfig.CODEC);
         this.block = block;
     }
 
@@ -44,13 +44,13 @@ public class ThinArchFeature extends Feature<NoFeatureConfig> {
     }
 
     @Override
-    public boolean generate(ISeedReader level, ChunkGenerator generator, Random random, BlockPos origin,
+    public boolean place(ISeedReader level, ChunkGenerator generator, Random random, BlockPos origin,
                             NoFeatureConfig config)
     {
         final ISeedReader world = level;
 
         BlockPos pos = FeatureHelper.getPosOnSurface(world, new BlockPos((origin.getX() & 0xFFFFFFF0) | 7, 0, (origin.getZ() & 0xFFFFFFF0) | 7));
-        if (!world.getBlockState(pos.down(5)).isIn(ModTags.GEN_TERRAIN)) {
+        if (!world.getBlockState(pos.below(5)).is(ModTags.GEN_TERRAIN)) {
             return false;
         }
 
@@ -71,13 +71,13 @@ public class ThinArchFeature extends Feature<NoFeatureConfig> {
 
         OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
         sdf = new SDFCoordModify().setFunction(vec -> {
-            float dx = (float) noise.eval(vec.getY() * 0.02, vec.getZ() * 0.02);
-            float dy = (float) noise.eval(vec.getX() * 0.02, vec.getZ() * 0.02);
-            float dz = (float) noise.eval(vec.getX() * 0.02, vec.getY() * 0.02);
-            vec.set(vec.getX() + dx * 10, vec.getY() + dy * 10, vec.getZ() + dz * 10);
+            float dx = (float) noise.eval(vec.y() * 0.02, vec.z() * 0.02);
+            float dy = (float) noise.eval(vec.x() * 0.02, vec.z() * 0.02);
+            float dz = (float) noise.eval(vec.x() * 0.02, vec.y() * 0.02);
+            vec.set(vec.x() + dx * 10, vec.y() + dy * 10, vec.z() + dz * 10);
         }).setSource(sdf);
         sdf = new SDFDisplacement().setFunction(vec -> {
-            float offset = vec.getY() / bigRadius - 0.5F;
+            float offset = vec.y() / bigRadius - 0.5F;
             return MathHelper.clamp(offset * 3, -10F, 0F);
         }).setSource(sdf);
 

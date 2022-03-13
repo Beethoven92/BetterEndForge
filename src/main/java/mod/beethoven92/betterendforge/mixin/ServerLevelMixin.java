@@ -42,26 +42,26 @@ public abstract class ServerLevelMixin extends World {
 	
 	@Inject(method = "<init>*", at = @At("TAIL"))
 	private void be_onServerWorldInit(MinecraftServer server, Executor workerExecutor, SaveFormat.LevelSave session, IServerWorldInfo properties, RegistryKey<World> registryKey, DimensionType dimensionType, IChunkStatusListener worldGenerationProgressListener, ChunkGenerator chunkGenerator, boolean debugWorld, long l, List<ISpecialSpawner> list, boolean bl, CallbackInfo info) {
-		if (be_lastWorld != null && be_lastWorld.equals(session.getSaveName())) {
+		if (be_lastWorld != null && be_lastWorld.equals(session.getLevelId())) {
 			return;
 		}
 		
-		be_lastWorld = session.getSaveName();
+		be_lastWorld = session.getLevelId();
 		ServerWorld world = ServerWorld.class.cast(this);
-		ModBiomes.onWorldLoad(world.getSeed(), world.func_241828_r().getRegistry(Registry.BIOME_KEY));
+		ModBiomes.onWorldLoad(world.getSeed(), world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY));
 	}
 	
 	@Inject(method = "getSpawnPoint", at = @At("HEAD"), cancellable = true)
 	private void be_getSharedSpawnPos(CallbackInfoReturnable<BlockPos> info) {
 		if (GeneratorOptions.changeSpawn()) {
-			if (ServerWorld.class.cast(this).getDimensionKey() == World.THE_END) {
+			if (ServerWorld.class.cast(this).dimension() == World.END) {
 				BlockPos pos = GeneratorOptions.getSpawn();
 				info.setReturnValue(pos);
 			}
 		}
 	}
 	
-	@Inject(method = "func_241121_a_", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "makeObsidianPlatform", at = @At("HEAD"), cancellable = true)
 	private static void be_createObsidianPlatform(ServerWorld serverLevel, CallbackInfo info) {
 		if (!GeneratorOptions.generateObsidianPlatform()) {
 			info.cancel();
@@ -71,11 +71,11 @@ public abstract class ServerLevelMixin extends World {
 			int i = blockPos.getX();
 			int j = blockPos.getY() - 2;
 			int k = blockPos.getZ();
-			BlockPos.getAllInBoxMutable(i - 2, j + 1, k - 2, i + 2, j + 3, k + 2).forEach((blockPosx) -> {
-				serverLevel.setBlockState(blockPosx, Blocks.AIR.getDefaultState());
+			BlockPos.betweenClosed(i - 2, j + 1, k - 2, i + 2, j + 3, k + 2).forEach((blockPosx) -> {
+				serverLevel.setBlockAndUpdate(blockPosx, Blocks.AIR.defaultBlockState());
 			});
-			BlockPos.getAllInBoxMutable(i - 2, j, k - 2, i + 2, j, k + 2).forEach((blockPosx) -> {
-				serverLevel.setBlockState(blockPosx, Blocks.OBSIDIAN.getDefaultState());
+			BlockPos.betweenClosed(i - 2, j, k - 2, i + 2, j, k + 2).forEach((blockPosx) -> {
+				serverLevel.setBlockAndUpdate(blockPosx, Blocks.OBSIDIAN.defaultBlockState());
 			});
 			info.cancel();
 		}
@@ -83,10 +83,10 @@ public abstract class ServerLevelMixin extends World {
 	
 	@ModifyArg(method = "tickEnvironment", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/server/ServerWorld;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)Z"))
 	private BlockState be_modifyTickState(BlockPos pos, BlockState state) {
-		if (state.isIn(Blocks.ICE)) {
+		if (state.is(Blocks.ICE)) {
 			ResourceLocation biome = ModBiomes.getBiomeID(getBiome(pos));
 			if (biome.getNamespace().equals(BetterEnd.MOD_ID)) {
-				state = ModBlocks.EMERALD_ICE.get().getDefaultState();
+				state = ModBlocks.EMERALD_ICE.get().defaultBlockState();
 			}
 		}
 		return state;

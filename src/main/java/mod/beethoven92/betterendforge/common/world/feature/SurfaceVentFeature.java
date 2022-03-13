@@ -20,26 +20,26 @@ public class SurfaceVentFeature extends Feature<NoFeatureConfig>
 {
 	public SurfaceVentFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config) 
 	{
 		pos = FeatureHelper.getPosOnSurface(world, new BlockPos(pos.getX() + rand.nextInt(16), pos.getY(), pos.getZ() + rand.nextInt(16)));
 
-		if (!world.getBlockState(pos.down(3)).isIn(ModTags.GEN_TERRAIN))
+		if (!world.getBlockState(pos.below(3)).is(ModTags.GEN_TERRAIN))
 		{
 			return false;
 		}
 		
 		Mutable mut = new Mutable();
 		int count = ModMathHelper.randRange(15, 30, rand);
-		BlockState vent = ModBlocks.HYDROTHERMAL_VENT.get().getDefaultState().with(HydrothermalVentBlock.WATERLOGGED, false);
+		BlockState vent = ModBlocks.HYDROTHERMAL_VENT.get().defaultBlockState().setValue(HydrothermalVentBlock.WATERLOGGED, false);
 		for (int i = 0; i < count; i++) 
 		{
-			mut.setPos(pos).move(ModMathHelper.floor(rand.nextGaussian() * 2 + 0.5), 5, ModMathHelper.floor(rand.nextGaussian() * 2 + 0.5));
+			mut.set(pos).move(ModMathHelper.floor(rand.nextGaussian() * 2 + 0.5), 5, ModMathHelper.floor(rand.nextGaussian() * 2 + 0.5));
 			int dist = ModMathHelper.floor(2 - ModMathHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ())) + rand.nextInt(2);
 			if (dist > 0) 
 			{
@@ -49,7 +49,7 @@ public class SurfaceVentFeature extends Feature<NoFeatureConfig>
 					mut.setY(mut.getY() - 1);
 					state = world.getBlockState(mut);
 				}
-				if (state.isIn(ModTags.GEN_TERRAIN) && !world.getBlockState(mut.up()).isIn(ModBlocks.HYDROTHERMAL_VENT.get())) 
+				if (state.is(ModTags.GEN_TERRAIN) && !world.getBlockState(mut.above()).is(ModBlocks.HYDROTHERMAL_VENT.get())) 
 				{
 					for (int j = 0; j <= dist; j++) 
 					{

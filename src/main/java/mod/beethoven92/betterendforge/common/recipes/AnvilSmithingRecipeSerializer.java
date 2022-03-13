@@ -13,27 +13,27 @@ import net.minecraft.util.registry.Registry;
 public class AnvilSmithingRecipeSerializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AnvilSmithingRecipe>
 {
 	@Override
-	public AnvilSmithingRecipe read(ResourceLocation id, JsonObject json)
+	public AnvilSmithingRecipe fromJson(ResourceLocation id, JsonObject json)
 	{
-		Ingredient input = Ingredient.deserialize(json.get("input"));
-		String resultStr = JSONUtils.getString(json, "result");
+		Ingredient input = Ingredient.fromJson(json.get("input"));
+		String resultStr = JSONUtils.getAsString(json, "result");
 		ResourceLocation resultId = new ResourceLocation(resultStr);
 		ItemStack output = new ItemStack(Registry.ITEM.getOptional(resultId).orElseThrow(() -> {
 			return new IllegalStateException("Item: " + resultStr + " does not exists!");
 		}));
-		int inputCount = JSONUtils.getInt(json, "inputCount", 1);
-		int level = JSONUtils.getInt(json, "level", 1);
-		int damage = JSONUtils.getInt(json, "damage", 1);
-		int anvilLevel = JSONUtils.getInt(json, "anvilLevel", 1);
+		int inputCount = JSONUtils.getAsInt(json, "inputCount", 1);
+		int level = JSONUtils.getAsInt(json, "level", 1);
+		int damage = JSONUtils.getAsInt(json, "damage", 1);
+		int anvilLevel = JSONUtils.getAsInt(json, "anvilLevel", 1);
 		
 		return new AnvilSmithingRecipe(id, input, output, inputCount, level, damage, anvilLevel);
 	}
 
 	@Override
-	public AnvilSmithingRecipe read(ResourceLocation id, PacketBuffer buffer) 
+	public AnvilSmithingRecipe fromNetwork(ResourceLocation id, PacketBuffer buffer) 
 	{
-		Ingredient input = Ingredient.read(buffer);
-		ItemStack output = buffer.readItemStack();
+		Ingredient input = Ingredient.fromNetwork(buffer);
+		ItemStack output = buffer.readItem();
 		int inputCount = buffer.readVarInt();
 		int level = buffer.readVarInt();
 		int damage = buffer.readVarInt();
@@ -43,10 +43,10 @@ public class AnvilSmithingRecipeSerializer extends net.minecraftforge.registries
 	}
 
 	@Override
-	public void write(PacketBuffer buffer, AnvilSmithingRecipe recipe) 
+	public void toNetwork(PacketBuffer buffer, AnvilSmithingRecipe recipe) 
 	{	
-		recipe.input.write(buffer);
-		buffer.writeItemStack(recipe.output);
+		recipe.input.toNetwork(buffer);
+		buffer.writeItem(recipe.output);
 		buffer.writeVarInt(recipe.inputCount);
 		buffer.writeVarInt(recipe.level);
 		buffer.writeVarInt(recipe.damage);

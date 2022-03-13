@@ -43,7 +43,7 @@ public class JellyshroomFeature extends Feature<NoFeatureConfig>
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 		
 		REPLACE = (state) -> {
-			if (state.isIn(ModTags.END_GROUND) || state.getMaterial().equals(Material.PLANTS)) 
+			if (state.is(ModTags.END_GROUND) || state.getMaterial().equals(Material.PLANT)) 
 			{
 				return true;
 			}
@@ -53,17 +53,17 @@ public class JellyshroomFeature extends Feature<NoFeatureConfig>
 	
 	public JellyshroomFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config) 
 	{
-		if (!world.getBlockState(pos.down()).getBlock().isIn(ModTags.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND)) return false;
 		
-		BlockState bark = ModBlocks.JELLYSHROOM.bark.get().getDefaultState();
-		BlockState membrane = ModBlocks.JELLYSHROOM_CAP_PURPLE.get().getDefaultState();
+		BlockState bark = ModBlocks.JELLYSHROOM.bark.get().defaultBlockState();
+		BlockState membrane = ModBlocks.JELLYSHROOM_CAP_PURPLE.get().defaultBlockState();
 		
 		int height = ModMathHelper.randRange(5, 8, rand);
 		float radius = height * ModMathHelper.randRange(0.15F, 0.25F, rand);
@@ -81,28 +81,28 @@ public class JellyshroomFeature extends Feature<NoFeatureConfig>
 		final float membraneRadius = radius;
 		SDF cap = makeCap(membraneRadius, rand, membrane);
 		final Vector3f last = spline.get(spline.size() - 1);
-		cap = new SDFTranslate().setTranslate(last.getX(), last.getY(), last.getZ()).setSource(cap);
+		cap = new SDFTranslate().setTranslate(last.x(), last.y(), last.z()).setSource(cap);
 		sdf = new SDFSmoothUnion().setRadius(3F).setSourceA(sdf).setSourceB(cap);
 		sdf.setReplaceFunction(REPLACE).addPostProcess((info) -> {
 			if (ModBlocks.JELLYSHROOM.isTreeLog(info.getState())) 
 			{
 				if (ModBlocks.JELLYSHROOM.isTreeLog(info.getStateUp()) && ModBlocks.JELLYSHROOM.isTreeLog(info.getStateDown()))
 				{
-					return ModBlocks.JELLYSHROOM.log.get().getDefaultState();
+					return ModBlocks.JELLYSHROOM.log.get().defaultBlockState();
 				}
 			}
-			else if (info.getState().isIn(ModBlocks.JELLYSHROOM_CAP_PURPLE.get()))
+			else if (info.getState().is(ModBlocks.JELLYSHROOM_CAP_PURPLE.get()))
 			{
-				float dx = info.getPos().getX() - pos.getX() - last.getX();
-				float dz = info.getPos().getZ() - pos.getZ() - last.getZ();
+				float dx = info.getPos().getX() - pos.getX() - last.x();
+				float dz = info.getPos().getZ() - pos.getZ() - last.z();
 				float distance = ModMathHelper.length(dx, dz) / membraneRadius * 7F;
 				int color = MathHelper.clamp(ModMathHelper.floor(distance), 0, 7);
-				return info.getState().with(JellyshroomCapBlock.COLOR, color);
+				return info.getState().setValue(JellyshroomCapBlock.COLOR, color);
 			}
 			return info.getState();
 		}).fillRecursive(world, pos);
 		radius = height * 0.5F;
-		makeRoots(world, pos.add(0, 2, 0), radius, rand, bark);
+		makeRoots(world, pos.offset(0, 2, 0), radius, rand, bark);
 		
 		return true;
 	}
@@ -119,7 +119,7 @@ public class JellyshroomFeature extends Feature<NoFeatureConfig>
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.add(last.getX(), last.getY(), last.getZ())).isIn(ModTags.GEN_TERRAIN)) 
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(ModTags.GEN_TERRAIN)) 
 			{
 				SplineHelper.fillSpline(branch, world, wood, pos, REPLACE);
 			}

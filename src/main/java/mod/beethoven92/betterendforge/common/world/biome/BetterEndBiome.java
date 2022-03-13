@@ -176,7 +176,7 @@ public class BetterEndBiome
 		if (edge != null && edge != this) {
 			edge.updateActualBiomes(biomeRegistry);
 		}
-		this.actualBiome = biomeRegistry.getOrDefault(id);
+		this.actualBiome = biomeRegistry.get(id);
 	}
 	
 	public boolean hasCaves() 

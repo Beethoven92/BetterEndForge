@@ -35,76 +35,76 @@ import net.minecraft.world.World;
 
 public class CubozoaEntity extends AbstractGroupFishEntity {
 	public static final int VARIANTS = 2;
-	private static final DataParameter<Byte> VARIANT = EntityDataManager.createKey(CubozoaEntity.class, DataSerializers.BYTE);
-	private static final DataParameter<Byte> SCALE = EntityDataManager.createKey(CubozoaEntity.class, DataSerializers.BYTE);
+	private static final DataParameter<Byte> VARIANT = EntityDataManager.defineId(CubozoaEntity.class, DataSerializers.BYTE);
+	private static final DataParameter<Byte> SCALE = EntityDataManager.defineId(CubozoaEntity.class, DataSerializers.BYTE);
 
 	public CubozoaEntity(EntityType<CubozoaEntity> entityType, World world) {
 		super(entityType, world);
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason spawnReason, ILivingEntityData entityData, CompoundNBT entityTag) {
-		ILivingEntityData data = super.onInitialSpawn(world, difficulty, spawnReason, entityData, entityTag);
+	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason spawnReason, ILivingEntityData entityData, CompoundNBT entityTag) {
+		ILivingEntityData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
 		
-		if (ModBiomes.getFromBiome(world.getBiome(getPosition())) == ModBiomes.SULPHUR_SPRINGS) 
+		if (ModBiomes.getFromBiome(world.getBiome(blockPosition())) == ModBiomes.SULPHUR_SPRINGS) 
 		{
-			this.dataManager.set(VARIANT, (byte) 1);
+			this.entityData.set(VARIANT, (byte) 1);
 		}
 		
 		if (entityTag != null) {
 			if (entityTag.contains("variant"))
-				this.dataManager.set(VARIANT, entityTag.getByte("variant"));
+				this.entityData.set(VARIANT, entityTag.getByte("variant"));
 			if (entityTag.contains("scale"))
-				this.dataManager.set(SCALE, entityTag.getByte("scale"));
+				this.entityData.set(SCALE, entityTag.getByte("scale"));
 		}
 		
-		this.recalculateSize();
+		this.refreshDimensions();
 		return data;
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(VARIANT, (byte) 0);
-		this.dataManager.register(SCALE, (byte) this.getRNG().nextInt(16));
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(VARIANT, (byte) 0);
+		this.entityData.define(SCALE, (byte) this.getRandom().nextInt(16));
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT tag) {
-		super.writeAdditional(tag);
+	public void addAdditionalSaveData(CompoundNBT tag) {
+		super.addAdditionalSaveData(tag);
 		tag.putByte("Variant", (byte) getVariant());
-		tag.putByte("Scale", dataManager.get(SCALE));
+		tag.putByte("Scale", entityData.get(SCALE));
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT tag) {
-		super.readAdditional(tag);
+	public void readAdditionalSaveData(CompoundNBT tag) {
+		super.readAdditionalSaveData(tag);
 		if (tag.contains("Variant")) {
-			this.dataManager.set(VARIANT, tag.getByte("Variant"));
+			this.entityData.set(VARIANT, tag.getByte("Variant"));
 		}
 		if (tag.contains("Scale")) {
-			this.dataManager.set(SCALE, tag.getByte("Scale"));
+			this.entityData.set(SCALE, tag.getByte("Scale"));
 		}
 	}
 
 	public static AttributeModifierMap.MutableAttribute registerAttributes() {
-		return LivingEntity.registerAttributes()
-				.createMutableAttribute(Attributes.MAX_HEALTH, 2.0)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.5);
+		return LivingEntity.createLivingAttributes()
+				.add(Attributes.MAX_HEALTH, 2.0)
+				.add(Attributes.FOLLOW_RANGE, 16.0)
+				.add(Attributes.MOVEMENT_SPEED, 0.5);
 	}
 
 	public int getVariant() {
-		return (int) this.dataManager.get(VARIANT);
+		return (int) this.entityData.get(VARIANT);
 	}
 
 	public float getScale() {
-		return this.dataManager.get(SCALE) / 32F + 0.75F;
+		return this.entityData.get(SCALE) / 32F + 0.75F;
 	}
 
 	public static boolean canSpawn(EntityType<CubozoaEntity> type, IServerWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		AxisAlignedBB box = new AxisAlignedBB(pos).grow(16);
-		List<CubozoaEntity> list = world.getEntitiesWithinAABB(CubozoaEntity.class, box, (entity) -> {
+		AxisAlignedBB box = new AxisAlignedBB(pos).inflate(16);
+		List<CubozoaEntity> list = world.getEntitiesOfClass(CubozoaEntity.class, box, (entity) -> {
 			return true;
 		});
 		return list.size() < 9;
@@ -125,27 +125,27 @@ public class CubozoaEntity extends AbstractGroupFishEntity {
 	}*/
 
 	@Override
-	protected ItemStack getFishBucket() {
+	protected ItemStack getBucketItemStack() {
 		ItemStack bucket = ModItems.BUCKET_CUBOZOA.get().getDefaultInstance();
 		CompoundNBT tag = bucket.getOrCreateTag();
-		tag.putByte("variant", dataManager.get(VARIANT));
-		tag.putByte("scale", dataManager.get(SCALE));
+		tag.putByte("variant", entityData.get(VARIANT));
+		tag.putByte("scale", entityData.get(SCALE));
 		return bucket;
 	}
 
 	@Override
 	protected SoundEvent getFlopSound() {
-		return SoundEvents.ENTITY_SALMON_FLOP;
+		return SoundEvents.SALMON_FLOP;
 	}
 	
 	@Override
-	public void onCollideWithPlayer(PlayerEntity player) {
-		if (player instanceof ServerPlayerEntity && player.attackEntityFrom(DamageSource.causeMobDamage(this), 0.5F)) {
+	public void playerTouch(PlayerEntity player) {
+		if (player instanceof ServerPlayerEntity && player.hurt(DamageSource.mobAttack(this), 0.5F)) {
 			if (!this.isSilent()) {
-				((ServerPlayerEntity) player).connection.sendPacket(new SChangeGameStatePacket(SChangeGameStatePacket.field_241773_j_, 0.0F));
+				((ServerPlayerEntity) player).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.PUFFER_FISH_STING, 0.0F));
 			}
-			if (rand.nextBoolean()) {
-				player.addPotionEffect(new EffectInstance(Effects.POISON, 20, 0));
+			if (random.nextBoolean()) {
+				player.addEffect(new EffectInstance(Effects.POISON, 20, 0));
 			}
 		}
 	}

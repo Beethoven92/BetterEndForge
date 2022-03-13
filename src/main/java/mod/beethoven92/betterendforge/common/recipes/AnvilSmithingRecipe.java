@@ -43,23 +43,23 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 	@Override
 	public boolean matches(IInventory inv, World worldIn) 
 	{
-		ItemStack hammer = inv.getStackInSlot(0);
+		ItemStack hammer = inv.getItem(0);
 		if (hammer.isEmpty() || !ModTags.HAMMERS.contains(hammer.getItem())) 
 		{
 			return false;
 		}
-		ItemStack material = inv.getStackInSlot(1);
+		ItemStack material = inv.getItem(1);
 		int materialCount = material.getCount();
 		
-		int level = ((ToolItem)hammer.getItem()).getTier().getHarvestLevel();
-		return level >= this.level && this.input.test(inv.getStackInSlot(1)) && materialCount >= this.inputCount;
+		int level = ((ToolItem)hammer.getItem()).getTier().getLevel();
+		return level >= this.level && this.input.test(inv.getItem(1)) && materialCount >= this.inputCount;
 	}
 	
 	public boolean checkHammerDurability(IInventory craftingInventory, PlayerEntity player) 
 	{
 		if (player.isCreative()) return true;
-		ItemStack hammer = craftingInventory.getStackInSlot(0);
-		int damage = hammer.getDamage() + this.damage;
+		ItemStack hammer = craftingInventory.getItem(0);
+		int damage = hammer.getDamageValue() + this.damage;
 		return damage < hammer.getMaxDamage();
 	}
 	
@@ -68,19 +68,19 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 	{
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
 
-		defaultedList.add(Ingredient.fromStacks(ModTags.HAMMERS.getAllElements().stream().filter(hammer -> {
-			return ((ToolItem) hammer).getTier().getHarvestLevel() >= level;
+		defaultedList.add(Ingredient.of(ModTags.HAMMERS.getValues().stream().filter(hammer -> {
+			return ((ToolItem) hammer).getTier().getLevel() >= level;
 		}).map(ItemStack::new)));
 
 		// Needed for JEI to display the amount of input items required by this recipe
-		ItemStack amount = new ItemStack(input.getMatchingStacks()[0].getItem(), inputCount);
-		defaultedList.add(Ingredient.fromStacks(amount));
+		ItemStack amount = new ItemStack(input.getItems()[0].getItem(), inputCount);
+		defaultedList.add(Ingredient.of(amount));
 
 		return defaultedList;
 	}
 	
 	@Override
-	public ItemStack getCraftingResult(IInventory inv) 
+	public ItemStack assemble(IInventory inv) 
 	{
 		return this.output.copy();
 	}
@@ -91,22 +91,22 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 		{
 			if (!checkHammerDurability(craftingInventory, player)) return ItemStack.EMPTY;
 			
-			ItemStack hammer = craftingInventory.getStackInSlot(0);
-			hammer.damageItem(this.damage, player, entity -> {
-				entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+			ItemStack hammer = craftingInventory.getItem(0);
+			hammer.hurtAndBreak(this.damage, player, entity -> {
+				entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
 			});
 		}
-		return this.getCraftingResult(craftingInventory);
+		return this.assemble(craftingInventory);
 	}
 	
 	@Override
-	public boolean canFit(int width, int height) 
+	public boolean canCraftInDimensions(int width, int height) 
 	{
 		return true;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() 
+	public ItemStack getResultItem() 
 	{
 		return this.output;
 	}
@@ -130,7 +130,7 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 	}
 	
 	@Override
-	public boolean isDynamic() 
+	public boolean isSpecial() 
 	{
 		return true;
 	}

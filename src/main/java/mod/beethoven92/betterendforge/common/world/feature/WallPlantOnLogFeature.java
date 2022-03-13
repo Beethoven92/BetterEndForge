@@ -19,8 +19,8 @@ public class WallPlantOnLogFeature extends WallPlantFeature
 	@Override
 	public boolean canGenerate(ISeedReader world, Random random, BlockPos pos, Direction dir)
 	{
-		BlockPos blockPos = pos.offset(dir.getOpposite());
+		BlockPos blockPos = pos.relative(dir.getOpposite());
 		BlockState blockState = world.getBlockState(blockPos);
-		return blockState.isIn(BlockTags.LOGS);
+		return blockState.is(BlockTags.LOGS);
 	}
 }

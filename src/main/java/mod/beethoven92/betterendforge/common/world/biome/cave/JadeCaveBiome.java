@@ -26,9 +26,9 @@ public class JadeCaveBiome extends BetterEndCaveBiome {
 				.setAmbientSound(ModSoundEvents.AMBIENT_CAVES.get())
 				.setWaterFogColor(95, 223, 255));
 
-		JADE[0] = ModBlocks.VIRID_JADESTONE.stone.get().getDefaultState();
-		JADE[1] = ModBlocks.AZURE_JADESTONE.stone.get().getDefaultState();
-		JADE[2] = ModBlocks.SANDY_JADESTONE.stone.get().getDefaultState();
+		JADE[0] = ModBlocks.VIRID_JADESTONE.stone.get().defaultBlockState();
+		JADE[1] = ModBlocks.AZURE_JADESTONE.stone.get().defaultBlockState();
+		JADE[2] = ModBlocks.SANDY_JADESTONE.stone.get().defaultBlockState();
 	}
 	
 	@Override

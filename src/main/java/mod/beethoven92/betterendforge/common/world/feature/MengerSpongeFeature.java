@@ -17,7 +17,7 @@ public class MengerSpongeFeature extends UnderwaterPlantScatter
 	static 
 	{
 		REPLACE = (state) -> {
-			if (state.isIn(ModBlocks.END_LOTUS_STEM.get())) 
+			if (state.is(ModBlocks.END_LOTUS_STEM.get())) 
 			{
 				return false;
 			}
@@ -42,7 +42,7 @@ public class MengerSpongeFeature extends UnderwaterPlantScatter
 		{
 			for (Direction dir: BlockHelper.DIRECTIONS) 
 			{
-				BlockPos pos = blockPos.offset(dir);
+				BlockPos pos = blockPos.relative(dir);
 				if (REPLACE.apply(world.getBlockState(pos))) 
 				{
 					BlockHelper.setWithoutUpdate(world, pos, ModBlocks.MENGER_SPONGE_WET.get());

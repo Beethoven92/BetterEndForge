@@ -18,6 +18,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.ModList;
 import vazkii.patchouli.api.PatchouliAPI;
 
+import net.minecraft.item.Item.Properties;
+
 public class GuideBookItem extends Item
 {
 	private final static ResourceLocation BOOK_ID = new ResourceLocation(BetterEnd.MOD_ID, "guidebook");
@@ -28,28 +30,28 @@ public class GuideBookItem extends Item
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) 
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) 
 	{
-    	if (!worldIn.isRemote && playerIn instanceof ServerPlayerEntity)
+    	if (!worldIn.isClientSide && playerIn instanceof ServerPlayerEntity)
     	{
     		if (ModList.get().isLoaded("patchouli"))
     		{
     			PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
-    			return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+    			return ActionResult.success(playerIn.getItemInHand(handIn));
     		}
     		else
     		{
-    			playerIn.sendStatusMessage(new TranslationTextComponent("message.betterendforge.patchouli_missing"), true);
-    			return ActionResult.resultFail(playerIn.getHeldItem(handIn));
+    			playerIn.displayClientMessage(new TranslationTextComponent("message.betterendforge.patchouli_missing"), true);
+    			return ActionResult.fail(playerIn.getItemInHand(handIn));
     		}
         }
-        return ActionResult.resultConsume(playerIn.getHeldItem(handIn));
+        return ActionResult.consume(playerIn.getItemInHand(handIn));
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) 
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) 
 	{
 		tooltip.add(new TranslationTextComponent(String.format("%s.%s", "book.betterendforge", "subtitle")).
-				mergeStyle(TextFormatting.DARK_PURPLE, TextFormatting.ITALIC));
+				withStyle(TextFormatting.DARK_PURPLE, TextFormatting.ITALIC));
 	}
 }

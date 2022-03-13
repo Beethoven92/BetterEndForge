@@ -40,30 +40,30 @@ public class ESignTileEntity extends TileEntity {
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT tag) {
-		super.write(tag);
+	public CompoundNBT save(CompoundNBT tag) {
+		super.save(tag);
 
 		for (int i = 0; i < 4; ++i) {
 			String string = ITextComponent.Serializer.toJson(this.text[i]);
 			tag.putString("Text" + (i + 1), string);
 		}
 
-		tag.putString("Color", this.textColor.getTranslationKey());
+		tag.putString("Color", this.textColor.getName());
 		return tag;
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT tag) {
+	public void load(BlockState state, CompoundNBT tag) {
 		this.editable = false;
-		super.read(state, tag);
-		this.textColor = DyeColor.byTranslationKey(tag.getString("Color"), DyeColor.BLACK);
+		super.load(state, tag);
+		this.textColor = DyeColor.byName(tag.getString("Color"), DyeColor.BLACK);
 
 		for (int i = 0; i < 4; ++i) {
 			String string = tag.getString("Text" + (i + 1));
-			ITextComponent text = ITextComponent.Serializer.getComponentFromJson(string.isEmpty() ? "\"\"" : string);
-			if (this.world instanceof ServerWorld) {
+			ITextComponent text = ITextComponent.Serializer.fromJson(string.isEmpty() ? "\"\"" : string);
+			if (this.level instanceof ServerWorld) {
 				try {
-					this.text[i] = TextComponentUtils.func_240645_a_(this.getCommandSource((ServerPlayerEntity) null),
+					this.text[i] = TextComponentUtils.updateForEntity(this.getCommandSource((ServerPlayerEntity) null),
 							text, (Entity) null, 0);
 				} catch (CommandSyntaxException var7) {
 					this.text[i] = text;
@@ -93,16 +93,16 @@ public class ESignTileEntity extends TileEntity {
 
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket() {
-		return new SUpdateTileEntityPacket(this.pos, 9, this.getUpdateTag());
+		return new SUpdateTileEntityPacket(this.worldPosition, 9, this.getUpdateTag());
 	}
 
 	@Override
 	public CompoundNBT getUpdateTag() {
-		return this.write(new CompoundNBT());
+		return this.save(new CompoundNBT());
 	}
 
 	@Override
-	public boolean onlyOpsCanSetNbt() {
+	public boolean onlyOpCanSetNbt() {
 		return true;
 	}
 
@@ -137,8 +137,8 @@ public class ESignTileEntity extends TileEntity {
 			if (style != null && style.getClickEvent() != null) {
 				ClickEvent clickEvent = style.getClickEvent();
 				if (clickEvent.getAction() == ClickEvent.Action.RUN_COMMAND) {
-					player.getServer().getCommandManager()
-							.handleCommand(this.getCommandSource((ServerPlayerEntity) player), clickEvent.getValue());
+					player.getServer().getCommands()
+							.performCommand(this.getCommandSource((ServerPlayerEntity) player), clickEvent.getValue());
 				}
 			}
 		}
@@ -149,8 +149,8 @@ public class ESignTileEntity extends TileEntity {
 	public CommandSource getCommandSource(ServerPlayerEntity player) {
 		String string = player == null ? "Sign" : player.getName().getString();
 		ITextComponent text = player == null ? new StringTextComponent("Sign") : player.getDisplayName();
-		return new CommandSource(ICommandSource.DUMMY, Vector3d.copyCentered(this.pos), Vector2f.ZERO,
-				(ServerWorld) this.world, 2, string, (ITextComponent) text, this.world.getServer(), player);
+		return new CommandSource(ICommandSource.NULL, Vector3d.atCenterOf(this.worldPosition), Vector2f.ZERO,
+				(ServerWorld) this.level, 2, string, (ITextComponent) text, this.level.getServer(), player);
 	}
 
 	public DyeColor getTextColor() {
@@ -160,8 +160,8 @@ public class ESignTileEntity extends TileEntity {
 	public boolean setTextColor(DyeColor value) {
 		if (value != this.getTextColor()) {
 			this.textColor = value;
-			this.markDirty();
-			this.world.notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
+			this.setChanged();
+			this.level.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
 			return true;
 		} else {
 			return false;

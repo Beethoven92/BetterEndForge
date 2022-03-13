@@ -22,7 +22,7 @@ public class UnderwaterPlantFeature extends UnderwaterPlantScatter
 	@Override
 	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) 
 	{
-		return super.canSpawn(world, blockPos) && plant.isValidPosition(plant.getDefaultState(), world, blockPos);
+		return super.canSpawn(world, blockPos) && plant.canSurvive(plant.defaultBlockState(), world, blockPos);
 	}
 	
 	@Override
@@ -31,13 +31,13 @@ public class UnderwaterPlantFeature extends UnderwaterPlantScatter
 		if (plant instanceof DoublePlantBlock) 
 		{
 			int rot = random.nextInt(4);
-			BlockState state = plant.getDefaultState().with(DoublePlantBlock.ROTATION, rot);
+			BlockState state = plant.defaultBlockState().setValue(DoublePlantBlock.ROTATION, rot);
 			BlockHelper.setWithoutUpdate(world, blockPos, state);
-			BlockHelper.setWithoutUpdate(world, blockPos.up(), state.with(DoublePlantBlock.TOP, true));
+			BlockHelper.setWithoutUpdate(world, blockPos.above(), state.setValue(DoublePlantBlock.TOP, true));
 		}
 		else 
 		{
-			BlockHelper.setWithoutUpdate(world, blockPos, plant.getDefaultState());
+			BlockHelper.setWithoutUpdate(world, blockPos, plant.defaultBlockState());
 		}
 	}
 

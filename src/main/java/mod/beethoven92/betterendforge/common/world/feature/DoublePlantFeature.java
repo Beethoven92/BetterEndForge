@@ -28,7 +28,7 @@ public class DoublePlantFeature extends ScatterFeature
 	{
 		float d = ModMathHelper.length(center.getX() - blockPos.getX(), center.getZ() - blockPos.getZ()) / radius * 0.6F + random.nextFloat() * 0.4F;
 		plant = d < 0.5F ? largePlant : smallPlant;
-		return plant.isValidPosition(plant.getDefaultState(), world, blockPos);
+		return plant.canSurvive(plant.defaultBlockState(), world, blockPos);
 	}
 
 	@Override
@@ -37,9 +37,9 @@ public class DoublePlantFeature extends ScatterFeature
 		if (plant instanceof DoublePlantBlock) 
 		{
 			int rot = random.nextInt(4);
-			BlockState state = plant.getDefaultState().with(DoublePlantBlock.ROTATION, rot);
+			BlockState state = plant.defaultBlockState().setValue(DoublePlantBlock.ROTATION, rot);
 			BlockHelper.setWithoutUpdate(world, blockPos, state);
-			BlockHelper.setWithoutUpdate(world, blockPos.up(), state.with(DoublePlantBlock.TOP, true));
+			BlockHelper.setWithoutUpdate(world, blockPos.above(), state.setValue(DoublePlantBlock.TOP, true));
 		}
 		else 
 		{

@@ -20,7 +20,7 @@ public class CavePlantFeature extends FullHeightScatterFeature
 	@Override
 	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) 
 	{
-		return plant.isValidPosition(world.getBlockState(blockPos), world, blockPos);
+		return plant.canSurvive(world.getBlockState(blockPos), world, blockPos);
 	}
 	@Override
 	public void generate(ISeedReader world, Random random, BlockPos blockPos) 

@@ -57,57 +57,57 @@ public class EndChestTileEntityRenderer extends TileEntityRenderer<EChestTileEnt
 		this.partC.addBox(1.0F, 0.0F, 1.0F, 14.0F, 9.0F, 14.0F, 0.0F);
 		this.partA = new ModelRenderer(64, 64, 0, 0);
 		this.partA.addBox(1.0F, 0.0F, 0.0F, 14.0F, 5.0F, 14.0F, 0.0F);
-		this.partA.rotationPointY = 9.0F;
-		this.partA.rotationPointZ = 1.0F;
+		this.partA.y = 9.0F;
+		this.partA.z = 1.0F;
 		this.partB = new ModelRenderer(64, 64, 0, 0);
 		this.partB.addBox(7.0F, -1.0F, 15.0F, 2.0F, 4.0F, 1.0F, 0.0F);
-		this.partB.rotationPointY = 8.0F;
+		this.partB.y = 8.0F;
 		this.partRightC = new ModelRenderer(64, 64, 0, 19);
 		this.partRightC.addBox(1.0F, 0.0F, 1.0F, 15.0F, 9.0F, 14.0F, 0.0F);
 		this.partRightA = new ModelRenderer(64, 64, 0, 0);
 		this.partRightA.addBox(1.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
-		this.partRightA.rotationPointY = 9.0F;
-		this.partRightA.rotationPointZ = 1.0F;
+		this.partRightA.y = 9.0F;
+		this.partRightA.z = 1.0F;
 		this.partRightB = new ModelRenderer(64, 64, 0, 0);
 		this.partRightB.addBox(15.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
-		this.partRightB.rotationPointY = 8.0F;
+		this.partRightB.y = 8.0F;
 		this.partLeftC = new ModelRenderer(64, 64, 0, 19);
 		this.partLeftC.addBox(0.0F, 0.0F, 1.0F, 15.0F, 9.0F, 14.0F, 0.0F);
 		this.partLeftA = new ModelRenderer(64, 64, 0, 0);
 		this.partLeftA.addBox(0.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
-		this.partLeftA.rotationPointY = 9.0F;
-		this.partLeftA.rotationPointZ = 1.0F;
+		this.partLeftA.y = 9.0F;
+		this.partLeftA.z = 1.0F;
 		this.partLeftB = new ModelRenderer(64, 64, 0, 0);
 		this.partLeftB.addBox(0.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
-		this.partLeftB.rotationPointY = 8.0F;
+		this.partLeftB.y = 8.0F;
 	}
 
 	public void render(EChestTileEntity entity, float tickDelta, MatrixStack matrices, IRenderTypeBuffer vertexConsumers, int light, int overlay) {
-		World world = entity.getWorld();
+		World world = entity.getLevel();
 		boolean worldExists = world != null;
-		BlockState blockState = worldExists ? entity.getBlockState() : (BlockState) Blocks.CHEST.getDefaultState().with(ChestBlock.FACING, Direction.SOUTH);
-		ChestType chestType = blockState.hasProperty(ChestBlock.TYPE) ? (ChestType) blockState.get(ChestBlock.TYPE) : ChestType.SINGLE;
+		BlockState blockState = worldExists ? entity.getBlockState() : (BlockState) Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
+		ChestType chestType = blockState.hasProperty(ChestBlock.TYPE) ? (ChestType) blockState.getValue(ChestBlock.TYPE) : ChestType.SINGLE;
 		Block block = blockState.getBlock();
 		if (entity.hasChest())
 			block = entity.getChest();
 		if (block instanceof AbstractChestBlock) {
 			AbstractChestBlock<?> abstractChestBlock = (AbstractChestBlock<?>) block;
 			boolean isDouble = chestType != ChestType.SINGLE;
-			float f = ((Direction) blockState.get(ChestBlock.FACING)).getHorizontalAngle();
+			float f = ((Direction) blockState.getValue(ChestBlock.FACING)).toYRot();
 			TileEntityMerger.ICallbackWrapper<? extends ChestTileEntity> propertySource;
 
-			matrices.push();
+			matrices.pushPose();
 			matrices.translate(0.5D, 0.5D, 0.5D);
-			matrices.rotate(Vector3f.YP.rotationDegrees(-f));
+			matrices.mulPose(Vector3f.YP.rotationDegrees(-f));
 			matrices.translate(-0.5D, -0.5D, -0.5D);
 
 			if (worldExists) {
-				propertySource = abstractChestBlock.combine(blockState, world, entity.getPos(), true);
+				propertySource = abstractChestBlock.combine(blockState, world, entity.getBlockPos(), true);
 			} else {
-				propertySource = TileEntityMerger.ICallback::func_225537_b_;
+				propertySource = TileEntityMerger.ICallback::acceptNone;
 			}
 
-			float pitch = ((Float2FloatFunction) propertySource.apply(ChestBlock.getLidRotationCallback((IChestLid) entity))).get(tickDelta);
+			float pitch = ((Float2FloatFunction) propertySource.apply(ChestBlock.opennessCombiner((IChestLid) entity))).get(tickDelta);
 			pitch = 1.0F - pitch;
 			pitch = 1.0F - pitch * pitch * pitch;
 			@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -125,13 +125,13 @@ public class EndChestTileEntityRenderer extends TileEntityRenderer<EChestTileEnt
 				renderParts(matrices, vertexConsumer, this.partA, this.partB, this.partC, pitch, blockLight, overlay);
 			}
 
-			matrices.pop();
+			matrices.popPose();
 		}
 	}
 
 	private void renderParts(MatrixStack matrices, IVertexBuilder vertices, ModelRenderer modelPart, ModelRenderer modelPart2, ModelRenderer modelPart3, float pitch, int light, int overlay) {
-		modelPart.rotateAngleX = -(pitch * 1.5707964F);
-		modelPart2.rotateAngleX = modelPart.rotateAngleX;
+		modelPart.xRot = -(pitch * 1.5707964F);
+		modelPart2.xRot = modelPart.xRot;
 		modelPart.render(matrices, vertices, light, overlay);
 		modelPart2.render(matrices, vertices, light, overlay);
 		modelPart3.render(matrices, vertices, light, overlay);
@@ -156,9 +156,9 @@ public class EndChestTileEntityRenderer extends TileEntityRenderer<EChestTileEnt
 
 	static {
 		defaultLayer = new RenderType[] {
-				RenderType.getEntityCutout(new ResourceLocation("textures/entity/chest/normal.png")),
-				RenderType.getEntityCutout(new ResourceLocation("textures/entity/chest/normal_left.png")),
-				RenderType.getEntityCutout(new ResourceLocation("textures/entity/chest/normal_right.png"))
+				RenderType.entityCutout(new ResourceLocation("textures/entity/chest/normal.png")),
+				RenderType.entityCutout(new ResourceLocation("textures/entity/chest/normal_left.png")),
+				RenderType.entityCutout(new ResourceLocation("textures/entity/chest/normal_right.png"))
 		};
 		
 		ModItems.ITEMS.getEntries().forEach((item) -> {
@@ -167,9 +167,9 @@ public class EndChestTileEntityRenderer extends TileEntityRenderer<EChestTileEnt
 				if (block instanceof ChestBlock) {
 					String name = block.getRegistryName().getPath();
 					LAYERS.put(block, new RenderType[] {
-							RenderType.getEntityCutout(new ResourceLocation(BetterEnd.MOD_ID, "textures/entity/chest/" + name + ".png")),
-							RenderType.getEntityCutout(new ResourceLocation(BetterEnd.MOD_ID, "textures/entity/chest/" + name + "_left.png")),
-							RenderType.getEntityCutout(new ResourceLocation(BetterEnd.MOD_ID, "textures/entity/chest/" + name + "_right.png"))
+							RenderType.entityCutout(new ResourceLocation(BetterEnd.MOD_ID, "textures/entity/chest/" + name + ".png")),
+							RenderType.entityCutout(new ResourceLocation(BetterEnd.MOD_ID, "textures/entity/chest/" + name + "_left.png")),
+							RenderType.entityCutout(new ResourceLocation(BetterEnd.MOD_ID, "textures/entity/chest/" + name + "_right.png"))
 					});
 				}
 			}

@@ -27,6 +27,8 @@ import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
+import net.minecraft.world.gen.feature.structure.Structure.IStartFactory;
+
 public class EternalPortalStructure extends Structure<NoFeatureConfig>
 {
 	private static final ResourceLocation STRUCTURE_ID = new ResourceLocation(BetterEnd.MOD_ID, "portal/eternal_portal");
@@ -38,19 +40,19 @@ public class EternalPortalStructure extends Structure<NoFeatureConfig>
 	}
 	
 	@Override
-	public Decoration getDecorationStage() 
+	public Decoration step() 
 	{
 		return Decoration.SURFACE_STRUCTURES;
 	}
 	
 	@Override
-	public String getStructureName() 
+	public String getFeatureName() 
 	{
 		return BetterEnd.MOD_ID + ":eternal_portal_structure";
 	}
 	
 	@Override
-	protected boolean func_230363_a_(ChunkGenerator chunkGenerator, BiomeProvider provider, long seed,
+	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeProvider provider, long seed,
 			SharedSeedRandom sharedSeedRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos,
 			NoFeatureConfig config) 
 	{
@@ -61,7 +63,7 @@ public class EternalPortalStructure extends Structure<NoFeatureConfig>
 		{
 			return false;
 		}
-		if (chunkGenerator.getHeight((chunkX << 4) | 8, (chunkZ << 4) | 8, Type.WORLD_SURFACE_WG) < 58) 
+		if (chunkGenerator.getBaseHeight((chunkX << 4) | 8, (chunkZ << 4) | 8, Type.WORLD_SURFACE_WG) < 58) 
 		{
 			return false;
 		}
@@ -71,7 +73,7 @@ public class EternalPortalStructure extends Structure<NoFeatureConfig>
 	private static int getGenerationHeight(int chunkX, int chunkZ, ChunkGenerator chunkGenerator) 
 	{
 		Random random = new Random((long) (chunkX + chunkZ * 10387313));
-		Rotation blockRotation = Rotation.randomRotation(random);
+		Rotation blockRotation = Rotation.getRandom(random);
 		int i = 5;
 		int j = 5;
 		if (blockRotation == Rotation.CLOCKWISE_90) 
@@ -90,10 +92,10 @@ public class EternalPortalStructure extends Structure<NoFeatureConfig>
 
 		int k = (chunkX << 4) + 7;
 		int l = (chunkZ << 4) + 7;
-		int m = chunkGenerator.getHeight(k, l, Heightmap.Type.WORLD_SURFACE_WG);
-		int n = chunkGenerator.getHeight(k, l + j, Heightmap.Type.WORLD_SURFACE_WG);
-		int o = chunkGenerator.getHeight(k + i, l, Heightmap.Type.WORLD_SURFACE_WG);
-		int p = chunkGenerator.getHeight(k + i, l + j, Heightmap.Type.WORLD_SURFACE_WG);
+		int m = chunkGenerator.getBaseHeight(k, l, Heightmap.Type.WORLD_SURFACE_WG);
+		int n = chunkGenerator.getBaseHeight(k, l + j, Heightmap.Type.WORLD_SURFACE_WG);
+		int o = chunkGenerator.getBaseHeight(k + i, l, Heightmap.Type.WORLD_SURFACE_WG);
+		int p = chunkGenerator.getBaseHeight(k + i, l + j, Heightmap.Type.WORLD_SURFACE_WG);
 		return Math.min(Math.min(m, n), Math.min(o, p));
 	}
 	
@@ -112,18 +114,18 @@ public class EternalPortalStructure extends Structure<NoFeatureConfig>
 		}
 
 		@Override
-		public void func_230364_a_(DynamicRegistries registry, ChunkGenerator chunkGenerator,
+		public void generatePieces(DynamicRegistries registry, ChunkGenerator chunkGenerator,
 				TemplateManager manager, int chunkX, int chunkZ, Biome biome,
 				NoFeatureConfig config)
 		{
-			int x = (chunkX << 4) | ModMathHelper.randRange(4, 12, rand);
-			int z = (chunkZ << 4) | ModMathHelper.randRange(4, 12, rand);
-			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
+			int x = (chunkX << 4) | ModMathHelper.randRange(4, 12, random);
+			int z = (chunkZ << 4) | ModMathHelper.randRange(4, 12, random);
+			int y = chunkGenerator.getBaseHeight(x, z, Type.WORLD_SURFACE_WG);
 			if (y > 10) 
 			{
-				this.components.add(new NBTPiece(STRUCTURE_ID, STRUCTURE, new BlockPos(x, y - 4, z), rand.nextInt(5), true, rand));
+				this.pieces.add(new NBTPiece(STRUCTURE_ID, STRUCTURE, new BlockPos(x, y - 4, z), random.nextInt(5), true, random));
 			}
-			this.recalculateStructureSize();	
+			this.calculateBoundingBox();	
 		}		
 	}
 }

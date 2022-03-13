@@ -18,14 +18,14 @@ public class InfusionParticle extends SpriteTexturedParticle
 	{
 		super(clientWorld, x, y, z, 0.0, 0.0, 0.0);
 		this.spriteWithAge = spriteWithAge;
-		this.selectSpriteWithAge(spriteWithAge);
+		this.setSpriteFromAge(spriteWithAge);
 		this.setColor(palette[0], palette[1], palette[2]);
-		this.particleAlpha = palette[3];
-		this.motionX = velocityX * 0.1D;
-		this.motionY = velocityY * 0.1D;
-		this.motionZ = velocityZ * 0.1D;
-		this.maxAge = (int) (3.0F / (this.rand.nextFloat() * 0.9F + 0.1F));
-		this.particleScale *= 0.9F;
+		this.alpha = palette[3];
+		this.xd = velocityX * 0.1D;
+		this.yd = velocityY * 0.1D;
+		this.zd = velocityZ * 0.1D;
+		this.lifetime = (int) (3.0F / (this.random.nextFloat() * 0.9F + 0.1F));
+		this.quadSize *= 0.9F;
 	}
 
 	@Override
@@ -37,19 +37,19 @@ public class InfusionParticle extends SpriteTexturedParticle
 	@Override
 	public void tick() 
 	{
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
-		if (this.age++ >= this.maxAge) 
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
+		if (this.age++ >= this.lifetime) 
 		{
-			this.setExpired();
+			this.remove();
 		}
 		else 
 		{
-			this.selectSpriteWithAge(this.spriteWithAge);
-			double velocityX = 2.0D * this.motionX * this.rand.nextDouble();
-			double velocityY = 3.0D * this.motionY * this.rand.nextDouble();
-			double velocityZ = 2.0D * this.motionZ * this.rand.nextDouble();
+			this.setSpriteFromAge(this.spriteWithAge);
+			double velocityX = 2.0D * this.xd * this.random.nextDouble();
+			double velocityY = 3.0D * this.yd * this.random.nextDouble();
+			double velocityZ = 2.0D * this.zd * this.random.nextDouble();
 			this.move(velocityX, velocityY, velocityZ);
 		}
 	}
@@ -65,7 +65,7 @@ public class InfusionParticle extends SpriteTexturedParticle
 	    }
 	    
 	    @Override
-	    public Particle makeParticle(InfusionParticleData data, ClientWorld worldIn, double x, double y, double z,
+	    public Particle createParticle(InfusionParticleData data, ClientWorld worldIn, double x, double y, double z,
 	    		double xSpeed, double ySpeed, double zSpeed) 
 	    {
 	    	return new InfusionParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, data.getPalette(), this.sprite);

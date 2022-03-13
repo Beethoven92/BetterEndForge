@@ -20,21 +20,21 @@ public class HydrothermalVentTileEntity extends TileEntity implements ITickableT
 	@Override
 	public void tick() 
 	{
-		if (world.rand.nextInt(20) == 0) 
+		if (level.random.nextInt(20) == 0) 
 		{
-			double x = pos.getX() + world.rand.nextDouble();
-			double y = pos.getY() + 0.9 + world.rand.nextDouble() * 0.3;
-			double z = pos.getZ() + world.rand.nextDouble();
+			double x = worldPosition.getX() + level.random.nextDouble();
+			double y = worldPosition.getY() + 0.9 + level.random.nextDouble() * 0.3;
+			double z = worldPosition.getZ() + level.random.nextDouble();
 			BlockState state = this.getBlockState(); 
-			if (state.isIn(ModBlocks.HYDROTHERMAL_VENT.get()) && state.get(HydrothermalVentBlock.ACTIVATED))
+			if (state.is(ModBlocks.HYDROTHERMAL_VENT.get()) && state.getValue(HydrothermalVentBlock.ACTIVATED))
 			{
-				if (state.get(HydrothermalVentBlock.WATERLOGGED)) 
+				if (state.getValue(HydrothermalVentBlock.WATERLOGGED)) 
 				{
-					world.addParticle(ModParticleTypes.GEYSER_PARTICLE.get(), x, y, z, 0, 0, 0);
+					level.addParticle(ModParticleTypes.GEYSER_PARTICLE.get(), x, y, z, 0, 0, 0);
 				}
 				else 
 				{
-					world.addParticle(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
+					level.addParticle(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
 				}
 			}
 		}

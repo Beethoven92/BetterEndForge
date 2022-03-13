@@ -19,6 +19,8 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class TripleTerrainBlock extends TerrainBlock
 {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
@@ -26,17 +28,17 @@ public class TripleTerrainBlock extends TerrainBlock
 	public TripleTerrainBlock(Properties properties) 
 	{
 		super(properties);
-		this.setDefaultState(this.getDefaultState().with(SHAPE, TripleShape.BOTTOM));
+		this.registerDefaultState(this.defaultBlockState().setValue(SHAPE, TripleShape.BOTTOM));
 	}
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) 
 	{
-		TripleShape shape = state.get(SHAPE);
+		TripleShape shape = state.getValue(SHAPE);
 		if (shape == TripleShape.BOTTOM) 
 		{
-			return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+			return super.use(state, worldIn, pos, player, handIn, hit);
 		}
 		return ActionResultType.FAIL;
 	}
@@ -44,15 +46,15 @@ public class TripleTerrainBlock extends TerrainBlock
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) 
 	{
-		Direction dir = context.getFace();
+		Direction dir = context.getClickedFace();
 		TripleShape shape = dir == Direction.UP ? TripleShape.BOTTOM : dir == Direction.DOWN ? TripleShape.TOP : TripleShape.MIDDLE;
-		return this.getDefaultState().with(SHAPE, shape);
+		return this.defaultBlockState().setValue(SHAPE, shape);
 	}
 	
 	@Override
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) 
 	{
-		TripleShape shape = state.get(SHAPE);
+		TripleShape shape = state.getValue(SHAPE);
 		if (shape == TripleShape.BOTTOM) 
 		{
 			super.randomTick(state, world, pos, random);
@@ -65,23 +67,23 @@ public class TripleTerrainBlock extends TerrainBlock
 			{
 				if (!bottom) 
 				{
-					world.setBlockState(pos, Blocks.END_STONE.getDefaultState());
+					world.setBlockAndUpdate(pos, Blocks.END_STONE.defaultBlockState());
 				}
 			}
 			else 
 			{
-				boolean top = canSurvive(state, world, pos) || isMiddle(world.getBlockState(pos.up()));
+				boolean top = canSurvive(state, world, pos) || isMiddle(world.getBlockState(pos.above()));
 				if (!top && !bottom)
 				{
-					world.setBlockState(pos, Blocks.END_STONE.getDefaultState());
+					world.setBlockAndUpdate(pos, Blocks.END_STONE.defaultBlockState());
 				}
 				else if (top && !bottom)
 				{
-					world.setBlockState(pos, state.with(SHAPE, TripleShape.BOTTOM));
+					world.setBlockAndUpdate(pos, state.setValue(SHAPE, TripleShape.BOTTOM));
 				}
 				else if (!top && bottom) 
 				{
-					world.setBlockState(pos, state.with(SHAPE, TripleShape.TOP));
+					world.setBlockAndUpdate(pos, state.setValue(SHAPE, TripleShape.TOP));
 				}
 			}
 		}
@@ -89,29 +91,29 @@ public class TripleTerrainBlock extends TerrainBlock
 	
 	protected boolean canSurviveBottom(IWorld world, BlockPos pos) 
 	{
-		BlockPos blockPos = pos.down();
+		BlockPos blockPos = pos.below();
 		BlockState blockState = world.getBlockState(blockPos);
 		if (isMiddle(blockState))
 		{
 			return true;
 		}
-		else if (blockState.getFluidState().getLevel() == 8)
+		else if (blockState.getFluidState().getAmount() == 8)
 		{
 			return false;
 		}
 		else 
 		{
-			return !blockState.isSolidSide(world, blockPos, Direction.UP);
+			return !blockState.isFaceSturdy(world, blockPos, Direction.UP);
 		}
 	}
 	
 	protected boolean isMiddle(BlockState state) 
 	{
-		return state.isIn(this) && state.get(SHAPE) == TripleShape.MIDDLE;
+		return state.is(this) && state.getValue(SHAPE) == TripleShape.MIDDLE;
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(SHAPE);
 	}

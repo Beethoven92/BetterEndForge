@@ -4,6 +4,8 @@ import mod.beethoven92.betterendforge.common.block.template.DoublePlantBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import net.minecraft.block.BlockState;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class UmbrellaMossTallBlock extends DoublePlantBlock
 {
 	public UmbrellaMossTallBlock(Properties properties) 

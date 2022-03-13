@@ -43,7 +43,7 @@ public class TenaneaFeature extends Feature<NoFeatureConfig>
 	static 
 	{
 		REPLACE = (state) -> {
-			if (state.isIn(ModTags.END_GROUND)) 
+			if (state.is(ModTags.END_GROUND)) 
 			{
 				return true;
 			}
@@ -51,7 +51,7 @@ public class TenaneaFeature extends Feature<NoFeatureConfig>
 			{
 				return true;
 			}
-			if (state.getMaterial().equals(Material.PLANTS)) 
+			if (state.getMaterial().equals(Material.PLANT)) 
 			{
 				return true;
 			}
@@ -74,14 +74,14 @@ public class TenaneaFeature extends Feature<NoFeatureConfig>
 	
 	public TenaneaFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config) 
 	{
-		if (!world.getBlockState(pos.down()).getBlock().isIn(ModTags.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND)) return false;
 		
 		float size = ModMathHelper.randRange(7, 10, rand);
 		int count = (int) (size * 0.45F);
@@ -94,11 +94,11 @@ public class TenaneaFeature extends Feature<NoFeatureConfig>
 			SplineHelper.rotateSpline(spline, angle);
 			SplineHelper.scale(spline, size + ModMathHelper.randRange(0, size * 0.5F, rand));
 			SplineHelper.offsetParts(spline, rand, 1F, 0, 1F);
-			SplineHelper.fillSpline(spline, world, ModBlocks.TENANEA.bark.get().getDefaultState(), pos, REPLACE);
+			SplineHelper.fillSpline(spline, world, ModBlocks.TENANEA.bark.get().defaultBlockState(), pos, REPLACE);
 			Vector3f last = spline.get(spline.size() - 1);
 			float leavesRadius = (size * 0.3F + ModMathHelper.randRange(0.8F, 1.5F, rand)) * 1.4F;
 			OpenSimplexNoise noise = new OpenSimplexNoise(rand.nextLong());
-			leavesBall(world, pos.add(last.getX(), last.getY(), last.getZ()), leavesRadius, rand, noise);
+			leavesBall(world, pos.offset(last.x(), last.y(), last.z()), leavesRadius, rand, noise);
 		}
 		
 		return true;
@@ -106,36 +106,36 @@ public class TenaneaFeature extends Feature<NoFeatureConfig>
 	
 	private void leavesBall(ISeedReader world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) 
 	{
-		SDF sphere = new SDFSphere().setRadius(radius).setBlock(ModBlocks.TENANEA_LEAVES.get().getDefaultState().with(LeavesBlock.DISTANCE, 6));
+		SDF sphere = new SDFSphere().setRadius(radius).setBlock(ModBlocks.TENANEA_LEAVES.get().defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
 		SDF sub = new SDFScale().setScale(5).setSource(sphere);
 		sub = new SDFTranslate().setTranslate(0, -radius * 5, 0).setSource(sub);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(sub);
 		sphere = new SDFScale3D().setScale(1, 0.75F, 1).setSource(sphere);
-		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 2F; }).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 2F; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return ModMathHelper.randRange(-1.5F, 1.5F, random); }).setSource(sphere);
 		
 		Mutable mut = new Mutable();
 		for (Direction d1: BlockHelper.HORIZONTAL_DIRECTIONS) 
 		{
-			BlockPos p = mut.setPos(pos).move(Direction.UP).move(d1).toImmutable();
-			BlockHelper.setWithoutUpdate(world, p, ModBlocks.TENANEA.bark.get().getDefaultState());
+			BlockPos p = mut.set(pos).move(Direction.UP).move(d1).immutable();
+			BlockHelper.setWithoutUpdate(world, p, ModBlocks.TENANEA.bark.get().defaultBlockState());
 			for (Direction d2: BlockHelper.HORIZONTAL_DIRECTIONS) 
 			{
-				mut.setPos(p).move(Direction.UP).move(d2);
-				BlockHelper.setWithoutUpdate(world, p, ModBlocks.TENANEA.bark.get().getDefaultState());
+				mut.set(p).move(Direction.UP).move(d2);
+				BlockHelper.setWithoutUpdate(world, p, ModBlocks.TENANEA.bark.get().defaultBlockState());
 			}
 		}
 		
-		BlockState top = ModBlocks.TENANEA_FLOWERS.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
-		BlockState middle = ModBlocks.TENANEA_FLOWERS.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE);
-		BlockState bottom = ModBlocks.TENANEA_FLOWERS.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM);
-		BlockState outer = ModBlocks.TENANEA_OUTER_LEAVES.get().getDefaultState();
+		BlockState top = ModBlocks.TENANEA_FLOWERS.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
+		BlockState middle = ModBlocks.TENANEA_FLOWERS.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE);
+		BlockState bottom = ModBlocks.TENANEA_FLOWERS.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM);
+		BlockState outer = ModBlocks.TENANEA_OUTER_LEAVES.get().defaultBlockState();
 		
 		List<BlockPos> support = Lists.newArrayList();
 		sphere.addPostProcess((info) -> {
 			if (random.nextInt(6) == 0 && info.getStateDown().isAir()) 
 			{
-				BlockPos d = info.getPos().down();
+				BlockPos d = info.getPos().below();
 				support.add(d);
 			}
 			if (random.nextInt(5) == 0) 
@@ -146,7 +146,7 @@ public class TenaneaFeature extends Feature<NoFeatureConfig>
 						return info.getState();
 					}
 				}
-				info.setState(ModBlocks.TENANEA.bark.get().getDefaultState());
+				info.setState(ModBlocks.TENANEA.bark.get().defaultBlockState());
 			}
 			
 			ModMathHelper.shuffle(DIRECTIONS, random);
@@ -154,7 +154,7 @@ public class TenaneaFeature extends Feature<NoFeatureConfig>
 			{
 				if (info.getState(d).isAir()) 
 				{
-					info.setBlockPos(info.getPos().offset(d), outer.with(FurBlock.FACING, d));
+					info.setBlockPos(info.getPos().relative(d), outer.setValue(FurBlock.FACING, d));
 				}
 			}
 			
@@ -178,10 +178,10 @@ public class TenaneaFeature extends Feature<NoFeatureConfig>
 								BlockState state = info.getState(mut);
 								if (state.getBlock() instanceof LeavesBlock) 
 								{
-									int distance = state.get(LeavesBlock.DISTANCE);
+									int distance = state.getValue(LeavesBlock.DISTANCE);
 									if (d < distance) 
 									{
-										info.setState(mut, state.with(LeavesBlock.DISTANCE, d));
+										info.setState(mut, state.setValue(LeavesBlock.DISTANCE, d));
 									}
 								}
 							}
@@ -196,17 +196,17 @@ public class TenaneaFeature extends Feature<NoFeatureConfig>
 		
 		support.forEach((bpos) -> {
 			BlockState state = world.getBlockState(bpos);
-			if (state.isAir() || state.isIn(ModBlocks.TENANEA_OUTER_LEAVES.get())) 
+			if (state.isAir() || state.is(ModBlocks.TENANEA_OUTER_LEAVES.get())) 
 			{
 				int count = ModMathHelper.randRange(3, 8, random);
-				mut.setPos(bpos);
-				if (world.getBlockState(mut.up()).isIn(ModBlocks.TENANEA_LEAVES.get())) 
+				mut.set(bpos);
+				if (world.getBlockState(mut.above()).is(ModBlocks.TENANEA_LEAVES.get())) 
 				{
 					BlockHelper.setWithoutUpdate(world, mut, top);
 					for (int i = 1; i < count; i++) 
 					{
 						mut.setY(mut.getY() - 1);
-						if (world.isAirBlock(mut.down())) 
+						if (world.isEmptyBlock(mut.below())) 
 						{
 							BlockHelper.setWithoutUpdate(world, mut, middle);
 						}

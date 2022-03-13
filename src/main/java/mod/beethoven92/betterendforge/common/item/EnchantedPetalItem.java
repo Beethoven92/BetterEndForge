@@ -3,6 +3,8 @@ package mod.beethoven92.betterendforge.common.item;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import net.minecraft.item.Item.Properties;
+
 public class EnchantedPetalItem extends Item
 {
 	public EnchantedPetalItem(Properties properties) 
@@ -11,7 +13,7 @@ public class EnchantedPetalItem extends Item
 	}
 	
 	@Override
-	public boolean hasEffect(ItemStack stack)
+	public boolean isFoil(ItemStack stack)
 	{
 		return true;
 	}

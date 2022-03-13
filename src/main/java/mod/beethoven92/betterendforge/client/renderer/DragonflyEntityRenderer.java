@@ -13,7 +13,7 @@ public class DragonflyEntityRenderer extends MobRenderer<DragonflyEntity, Dragon
 {
 	private static final ResourceLocation TEXTURE = new ResourceLocation(BetterEnd.MOD_ID, 
 			"textures/entity/dragonfly.png");
-	private static final RenderType GLOW = RenderType.getEyes(new ResourceLocation(BetterEnd.MOD_ID, 
+	private static final RenderType GLOW = RenderType.eyes(new ResourceLocation(BetterEnd.MOD_ID, 
 			"textures/entity/dragonfly_glow.png"));
 	
 	public DragonflyEntityRenderer(EntityRendererManager renderManagerIn) 
@@ -23,7 +23,7 @@ public class DragonflyEntityRenderer extends MobRenderer<DragonflyEntity, Dragon
 		this.addLayer(new EyesLayer<DragonflyEntity, DragonflyEntityModel>(this) 
 	    {
 			@Override
-			public RenderType getRenderType() 
+			public RenderType renderType() 
 			{
 				return GLOW;
 			}
@@ -31,7 +31,7 @@ public class DragonflyEntityRenderer extends MobRenderer<DragonflyEntity, Dragon
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(DragonflyEntity entity) 
+	public ResourceLocation getTextureLocation(DragonflyEntity entity) 
 	{
 		return TEXTURE;
 	}

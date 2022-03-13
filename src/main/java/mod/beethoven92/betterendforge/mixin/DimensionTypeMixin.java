@@ -23,7 +23,7 @@ public abstract class DimensionTypeMixin
     {
     	info.setReturnValue(new NoiseChunkGenerator(
     			new BetterEndBiomeProvider(registry, seed), seed, 
-    			() -> settings.getOrThrow(DimensionSettings.field_242737_f)));
+    			() -> settings.getOrThrow(DimensionSettings.END)));
     }
 	
     @Inject(method = "doesHasDragonFight", at = @At("HEAD"), cancellable = true)

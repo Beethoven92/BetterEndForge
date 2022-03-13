@@ -38,13 +38,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
 public class EndSlimeEntity extends SlimeEntity {
-	private static final DataParameter<Byte> VARIANT = EntityDataManager.createKey(EndSlimeEntity.class,
+	private static final DataParameter<Byte> VARIANT = EntityDataManager.defineId(EndSlimeEntity.class,
 			DataSerializers.BYTE);
 	private static final Mutable POS = new Mutable();
 
 	public EndSlimeEntity(EntityType<EndSlimeEntity> entityType, World world) {
 		super(entityType, world);
-		this.moveController = new EndSlimeMoveControl(this);
+		this.moveControl = new EndSlimeMoveControl(this);
 	}
 
 	@Override
@@ -55,24 +55,24 @@ public class EndSlimeEntity extends SlimeEntity {
 		this.goalSelector.addGoal(5, new MoveGoal());
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true,
 				false, (livingEntity) -> {
-					return Math.abs(livingEntity.getPosY() - this.getPosY()) <= 4.0D;
+					return Math.abs(livingEntity.getY() - this.getY()) <= 4.0D;
 				}));
 		this.targetSelector.addGoal(3,
 				new NearestAttackableTargetGoal<IronGolemEntity>(this, IronGolemEntity.class, true));
 	}
 
 	public static AttributeModifierMap.MutableAttribute registerAttributes() {
-		return LivingEntity.registerAttributes().createMutableAttribute(Attributes.MAX_HEALTH, 1.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 1.0D)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.15D);
+		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 1.0D)
+				.add(Attributes.ATTACK_DAMAGE, 1.0D)
+				.add(Attributes.FOLLOW_RANGE, 16.0D)
+				.add(Attributes.MOVEMENT_SPEED, 0.15D);
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason spawnReason,
+	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason spawnReason,
 			ILivingEntityData entityData, CompoundNBT entityTag) {
-		ILivingEntityData data = super.onInitialSpawn(world, difficulty, spawnReason, entityData, entityTag);
-		BetterEndBiome biome = ModBiomes.getFromBiome(world.getBiome(getPosition()));
+		ILivingEntityData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
+		BetterEndBiome biome = ModBiomes.getFromBiome(world.getBiome(blockPosition()));
 		if (biome == ModBiomes.FOGGY_MUSHROOMLAND) {
 			this.setMossy();
 		}
@@ -82,27 +82,27 @@ public class EndSlimeEntity extends SlimeEntity {
 		else if (biome == ModBiomes.AMBER_LAND) {
 			this.setAmber(true);
 		}
-		this.recalculateSize();
+		this.refreshDimensions();
 		return data;
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		this.dataManager.register(VARIANT, (byte) 0);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		this.entityData.define(VARIANT, (byte) 0);
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putByte("Variant", (byte) getSlimeType());
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
 		if (compound.contains("Variant")) {
-			this.dataManager.set(VARIANT, compound.getByte("Variant"));
+			this.entityData.set(VARIANT, compound.getByte("Variant"));
 		}
 	}
 
@@ -112,32 +112,32 @@ public class EndSlimeEntity extends SlimeEntity {
 
 	@Override
 	public void remove(boolean keepData) {
-		int i = this.getSlimeSize();
-		if (!this.world.isRemote && i > 1 && getShouldBeDead()) {
+		int i = this.getSize();
+		if (!this.level.isClientSide && i > 1 && isDeadOrDying()) {
 			ITextComponent text = this.getCustomName();
-			boolean bl = this.isAIDisabled();
+			boolean bl = this.isNoAi();
 			float f = (float) i / 4.0F;
 			int j = i / 2;
-			int k = 2 + this.rand.nextInt(3);
+			int k = 2 + this.random.nextInt(3);
 			int type = this.getSlimeType();
 
 			for (int l = 0; l < k; ++l) {
 				float g = ((float) (l % 2) - 0.5F) * f;
 				float h = ((float) (l / 2) - 0.5F) * f;
-				EndSlimeEntity slimeEntity = (EndSlimeEntity) this.getType().create(this.world);
-				if (this.isNoDespawnRequired()) {
-					slimeEntity.enablePersistence();
+				EndSlimeEntity slimeEntity = (EndSlimeEntity) this.getType().create(this.level);
+				if (this.isPersistenceRequired()) {
+					slimeEntity.setPersistenceRequired();
 				}
 
 				slimeEntity.setSlimeType(type);
 				slimeEntity.setCustomName(text);
-				slimeEntity.setNoAI(bl);
+				slimeEntity.setNoAi(bl);
 				slimeEntity.setInvulnerable(this.isInvulnerable());
-				slimeEntity.setSlimeSize(j, true);
-				slimeEntity.recalculateSize();
-				slimeEntity.setLocationAndAngles(this.getPosX() + (double) g, this.getPosY() + 0.5D,
-						this.getPosZ() + (double) h, this.rand.nextFloat() * 360.0F, 0.0F);
-				this.world.addEntity(slimeEntity);
+				slimeEntity.setSize(j, true);
+				slimeEntity.refreshDimensions();
+				slimeEntity.moveTo(this.getX() + (double) g, this.getY() + 0.5D,
+						this.getZ() + (double) h, this.random.nextFloat() * 360.0F, 0.0F);
+				this.level.addFreshEntity(slimeEntity);
 			}
 		}
 		this.removed = true;
@@ -157,11 +157,11 @@ public class EndSlimeEntity extends SlimeEntity {
 	 */
 
 	public int getSlimeType() {
-		return this.dataManager.get(VARIANT).intValue();
+		return this.entityData.get(VARIANT).intValue();
 	}
 
 	public void setSlimeType(int value) {
-		this.dataManager.set(VARIANT, (byte) value);
+		this.entityData.set(VARIANT, (byte) value);
 	}
 
 	protected void setMossy() {
@@ -181,15 +181,15 @@ public class EndSlimeEntity extends SlimeEntity {
 	}
 
 	protected void setAmber(boolean mossy) {
-		this.dataManager.set(VARIANT, (byte) 3);
+		this.entityData.set(VARIANT, (byte) 3);
 	}
 
 	public boolean isAmber() {
-		return this.dataManager.get(VARIANT) == 3;
+		return this.entityData.get(VARIANT) == 3;
 	}
 
 	public boolean isChorus() {
-		return this.dataManager.get(VARIANT) == 0;
+		return this.entityData.get(VARIANT) == 0;
 	}
 
 	public static boolean canSpawn(EntityType<EndSlimeEntity> type, IServerWorld world, SpawnReason spawnReason,
@@ -203,8 +203,8 @@ public class EndSlimeEntity extends SlimeEntity {
 	}
 
 	private static boolean notManyEntities(IServerWorld world, BlockPos pos, int radius, int maxCount) {
-		AxisAlignedBB box = new AxisAlignedBB(pos).grow(radius);
-		List<EndSlimeEntity> list = world.getEntitiesWithinAABB(EndSlimeEntity.class, box, (entity) -> {
+		AxisAlignedBB box = new AxisAlignedBB(pos).inflate(radius);
+		List<EndSlimeEntity> list = world.getEntitiesOfClass(EndSlimeEntity.class, box, (entity) -> {
 			return true;
 		});
 		return list.size() <= maxCount;
@@ -228,22 +228,22 @@ public class EndSlimeEntity extends SlimeEntity {
 
 	class MoveGoal extends Goal {
 		public MoveGoal() {
-			this.setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
+			this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
 		}
 
 		@Override
-		public boolean shouldExecute() {
+		public boolean canUse() {
 			if (EndSlimeEntity.this.isPassenger()) {
 				return false;
 			}
 
-			float yaw = EndSlimeEntity.this.getRotationYawHead();
-			float speed = EndSlimeEntity.this.getAIMoveSpeed();
+			float yaw = EndSlimeEntity.this.getYHeadRot();
+			float speed = EndSlimeEntity.this.getSpeed();
 			if (speed > 0.1) {
 				float dx = MathHelper.sin(-yaw * 0.017453292F - 3.1415927F);
 				float dz = MathHelper.cos(-yaw * 0.017453292F - 3.1415927F);
-				BlockPos pos = EndSlimeEntity.this.getPosition().add(dx * speed * 4, 0, dz * speed * 4);
-				int down = BlockHelper.downRay(EndSlimeEntity.this.world, pos, 16);
+				BlockPos pos = EndSlimeEntity.this.blockPosition().offset(dx * speed * 4, 0, dz * speed * 4);
+				int down = BlockHelper.downRay(EndSlimeEntity.this.level, pos, 16);
 				return down < 5;
 			}
 
@@ -252,30 +252,30 @@ public class EndSlimeEntity extends SlimeEntity {
 
 		@Override
 		public void tick() {
-			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveHelper()).move(1.0D);
+			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).move(1.0D);
 		}
 	}
 
 	class SwimmingGoal extends Goal {
 		public SwimmingGoal() {
-			this.setMutexFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
-			EndSlimeEntity.this.getNavigator().setCanSwim(true);
+			this.setFlags(EnumSet.of(Goal.Flag.JUMP, Goal.Flag.MOVE));
+			EndSlimeEntity.this.getNavigation().setCanFloat(true);
 		}
 
 		@Override
-		public boolean shouldExecute() {
+		public boolean canUse() {
 			return (EndSlimeEntity.this.isInWater() || EndSlimeEntity.this.isInLava())
-					&& EndSlimeEntity.this.getMoveHelper() instanceof EndSlimeMoveControl;
+					&& EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 		}
 
 		@Override
 		public void tick() {
-			if (EndSlimeEntity.this.getRNG().nextFloat() < 0.8F) {
-				EndSlimeEntity.this.getJumpController().setJumping();
+			if (EndSlimeEntity.this.getRandom().nextFloat() < 0.8F) {
+				EndSlimeEntity.this.getJumpControl().jump();
 				;
 			}
 
-			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveHelper()).move(1.2D);
+			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).move(1.2D);
 		}
 	}
 
@@ -284,25 +284,25 @@ public class EndSlimeEntity extends SlimeEntity {
 		private int timer;
 
 		public RandomLookGoal() {
-			this.setMutexFlags(EnumSet.of(Goal.Flag.LOOK));
+			this.setFlags(EnumSet.of(Goal.Flag.LOOK));
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			return EndSlimeEntity.this.getAttackTarget() == null
+		public boolean canUse() {
+			return EndSlimeEntity.this.getTarget() == null
 					&& (EndSlimeEntity.this.onGround || EndSlimeEntity.this.isInWater()
-							|| EndSlimeEntity.this.isInLava() || EndSlimeEntity.this.isPotionActive(Effects.LEVITATION))
-					&& EndSlimeEntity.this.getMoveHelper() instanceof EndSlimeMoveControl;
+							|| EndSlimeEntity.this.isInLava() || EndSlimeEntity.this.hasEffect(Effects.LEVITATION))
+					&& EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 		}
 
 		@Override
 		public void tick() {
 			if (--this.timer <= 0) {
-				this.timer = 40 + EndSlimeEntity.this.getRNG().nextInt(60);
-				this.targetYaw = (float) EndSlimeEntity.this.getRNG().nextInt(360);
+				this.timer = 40 + EndSlimeEntity.this.getRandom().nextInt(60);
+				this.targetYaw = (float) EndSlimeEntity.this.getRandom().nextInt(360);
 			}
 
-			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveHelper()).look(this.targetYaw, false);
+			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).look(this.targetYaw, false);
 		}
 	}
 
@@ -310,37 +310,37 @@ public class EndSlimeEntity extends SlimeEntity {
 		private int ticksLeft;
 
 		public FaceTowardTargetGoal() {
-			this.setMutexFlags(EnumSet.of(Goal.Flag.LOOK));
+			this.setFlags(EnumSet.of(Goal.Flag.LOOK));
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			LivingEntity livingEntity = EndSlimeEntity.this.getAttackTarget();
+		public boolean canUse() {
+			LivingEntity livingEntity = EndSlimeEntity.this.getTarget();
 			if (livingEntity == null) {
 				return false;
 			} else if (!livingEntity.isAlive()) {
 				return false;
 			} else {
-				return livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.disableDamage
+				return livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.invulnerable
 						? false
-						: EndSlimeEntity.this.getMoveHelper() instanceof EndSlimeMoveControl;
+						: EndSlimeEntity.this.getMoveControl() instanceof EndSlimeMoveControl;
 			}
 		}
 
 		@Override
-		public void startExecuting() {
+		public void start() {
 			this.ticksLeft = 300;
-			super.startExecuting();
+			super.start();
 		}
 
 		@Override
-		public boolean shouldContinueExecuting() {
-			LivingEntity livingEntity = EndSlimeEntity.this.getAttackTarget();
+		public boolean canContinueToUse() {
+			LivingEntity livingEntity = EndSlimeEntity.this.getTarget();
 			if (livingEntity == null) {
 				return false;
 			} else if (!livingEntity.isAlive()) {
 				return false;
-			} else if (livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.disableDamage) {
+			} else if (livingEntity instanceof PlayerEntity && ((PlayerEntity) livingEntity).abilities.invulnerable) {
 				return false;
 			} else {
 				return --this.ticksLeft > 0;
@@ -349,9 +349,9 @@ public class EndSlimeEntity extends SlimeEntity {
 
 		@Override
 		public void tick() {
-			EndSlimeEntity.this.faceEntity(EndSlimeEntity.this.getAttackTarget(), 10.0F, 10.0F);
-			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveHelper()).look(EndSlimeEntity.this.rotationYaw,
-					EndSlimeEntity.this.canDamagePlayer());
+			EndSlimeEntity.this.lookAt(EndSlimeEntity.this.getTarget(), 10.0F, 10.0F);
+			((EndSlimeMoveControl) EndSlimeEntity.this.getMoveControl()).look(EndSlimeEntity.this.yRot,
+					EndSlimeEntity.this.isDealsDamage());
 		}
 	}
 
@@ -362,7 +362,7 @@ public class EndSlimeEntity extends SlimeEntity {
 
 		public EndSlimeMoveControl(EndSlimeEntity slime) {
 			super(slime);
-			this.targetYaw = 180.0F * slime.rotationYaw / 3.1415927F;
+			this.targetYaw = 180.0F * slime.yRot / 3.1415927F;
 		}
 
 		public void look(float targetYaw, boolean jumpOften) {
@@ -371,49 +371,49 @@ public class EndSlimeEntity extends SlimeEntity {
 		}
 
 		public void move(double speed) {
-			this.speed = speed;
-			this.action = MovementController.Action.MOVE_TO;
+			this.speedModifier = speed;
+			this.operation = MovementController.Action.MOVE_TO;
 		}
 
 		@Override
 		public void tick() {
-			this.mob.rotationYaw = this.limitAngle(this.mob.rotationYaw, this.targetYaw, 90.0F);
-			this.mob.rotationYawHead = this.mob.rotationYaw;
-			this.mob.renderYawOffset = this.mob.rotationYaw;
-			if (this.action != MovementController.Action.MOVE_TO) {
-				this.mob.setMoveForward(0.0F);
+			this.mob.yRot = this.rotlerp(this.mob.yRot, this.targetYaw, 90.0F);
+			this.mob.yHeadRot = this.mob.yRot;
+			this.mob.yBodyRot = this.mob.yRot;
+			if (this.operation != MovementController.Action.MOVE_TO) {
+				this.mob.setZza(0.0F);
 			} else {
-				this.action = MovementController.Action.WAIT;
+				this.operation = MovementController.Action.WAIT;
 				if (this.mob.isOnGround()) {
-					this.mob.setAIMoveSpeed(
-							(float) (this.speed * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
+					this.mob.setSpeed(
+							(float) (this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
 					if (this.ticksUntilJump-- <= 0) {
 						this.ticksUntilJump = EndSlimeEntity.this.getJumpDelay();
 						if (this.jumpOften) {
 							this.ticksUntilJump /= 3;
 						}
 
-						EndSlimeEntity.this.getJumpController().setJumping();
-						if (EndSlimeEntity.this.makesSoundOnJump()) {
+						EndSlimeEntity.this.getJumpControl().jump();
+						if (EndSlimeEntity.this.doPlayJumpSound()) {
 							EndSlimeEntity.this.playSound(EndSlimeEntity.this.getJumpSound(),
 									EndSlimeEntity.this.getSoundVolume(), getJumpSoundPitch());
 						}
 					} else {
-						EndSlimeEntity.this.moveStrafing = 0.0F;
-						EndSlimeEntity.this.moveForward = 0.0F;
-						this.mob.setAIMoveSpeed(0.0F);
+						EndSlimeEntity.this.xxa = 0.0F;
+						EndSlimeEntity.this.zza = 0.0F;
+						this.mob.setSpeed(0.0F);
 					}
 				} else {
-					this.mob.setAIMoveSpeed(
-							(float) (this.speed * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
+					this.mob.setSpeed(
+							(float) (this.speedModifier * this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
 				}
 
 			}
 		}
 
 		private float getJumpSoundPitch() {
-			float f = EndSlimeEntity.this.isSmallSlime() ? 1.4F : 0.8F;
-			return ((EndSlimeEntity.this.rand.nextFloat() - EndSlimeEntity.this.rand.nextFloat()) * 0.2F + 1.0F) * f;
+			float f = EndSlimeEntity.this.isTiny() ? 1.4F : 0.8F;
+			return ((EndSlimeEntity.this.random.nextFloat() - EndSlimeEntity.this.random.nextFloat()) * 0.2F + 1.0F) * f;
 		}
 	}
 }

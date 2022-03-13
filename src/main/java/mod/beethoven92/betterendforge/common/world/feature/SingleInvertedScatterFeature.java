@@ -24,25 +24,25 @@ public class SingleInvertedScatterFeature extends InvertedScatterFeature
 	@Override
 	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) 
 	{
-		if (!world.isAirBlock(blockPos)) 
+		if (!world.isEmptyBlock(blockPos)) 
 		{
 			return false;
 		}
-		BlockState state = block.getDefaultState();
+		BlockState state = block.defaultBlockState();
 		if (block instanceof AttachedBlock) 
 		{
-			state = state.with(BlockStateProperties.FACING, Direction.DOWN);
+			state = state.setValue(BlockStateProperties.FACING, Direction.DOWN);
 		}
-		return state.isValidPosition(world, blockPos);
+		return state.canSurvive(world, blockPos);
 	}
 
 	@Override
 	public void generate(ISeedReader world, Random random, BlockPos blockPos) 
 	{
-		BlockState state = block.getDefaultState();
+		BlockState state = block.defaultBlockState();
 		if (block instanceof AttachedBlock) 
 		{
-			state = state.with(BlockStateProperties.FACING, Direction.DOWN);
+			state = state.setValue(BlockStateProperties.FACING, Direction.DOWN);
 		}
 		BlockHelper.setWithoutUpdate(world, blockPos, state);
 	}

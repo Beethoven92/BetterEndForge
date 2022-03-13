@@ -13,6 +13,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class EndLilySeedBlock extends UnderwaterPlantBlockWithAge
 {
 	public EndLilySeedBlock(Properties properties) 
@@ -25,35 +27,35 @@ public class EndLilySeedBlock extends UnderwaterPlantBlockWithAge
 	{	
 		if (searchForAirAbove(world, pos)) 
 		{
-			BlockHelper.setWithoutUpdate(world, pos, ModBlocks.END_LILY.get().getDefaultState().with(EndLilyBlock.SHAPE, TripleShape.BOTTOM));
-			BlockPos up = pos.up();
+			BlockHelper.setWithoutUpdate(world, pos, ModBlocks.END_LILY.get().defaultBlockState().setValue(EndLilyBlock.SHAPE, TripleShape.BOTTOM));
+			BlockPos up = pos.above();
 			while (world.getFluidState(up).isSource()) 
 			{
-				BlockHelper.setWithoutUpdate(world, up, ModBlocks.END_LILY.get().getDefaultState().with(EndLilyBlock.SHAPE, TripleShape.MIDDLE));
-				up = up.up();
+				BlockHelper.setWithoutUpdate(world, up, ModBlocks.END_LILY.get().defaultBlockState().setValue(EndLilyBlock.SHAPE, TripleShape.MIDDLE));
+				up = up.above();
 			}
-			BlockHelper.setWithoutUpdate(world, up, ModBlocks.END_LILY.get().getDefaultState().with(EndLilyBlock.SHAPE, TripleShape.TOP));
+			BlockHelper.setWithoutUpdate(world, up, ModBlocks.END_LILY.get().defaultBlockState().setValue(EndLilyBlock.SHAPE, TripleShape.TOP));
 		}
 	}
 	
 	private boolean searchForAirAbove(ISeedReader world, BlockPos pos)
 	{
-		BlockPos up = pos.up();
-		while (world.getBlockState(up).getFluidState().getFluid().equals(Fluids.WATER.getStillFluid())) 
+		BlockPos up = pos.above();
+		while (world.getBlockState(up).getFluidState().getType().equals(Fluids.WATER.getSource())) 
 		{
-			up = up.up();
+			up = up.above();
 		}
-		return world.isAirBlock(up);
+		return world.isEmptyBlock(up);
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return true;
 	}
 	
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}

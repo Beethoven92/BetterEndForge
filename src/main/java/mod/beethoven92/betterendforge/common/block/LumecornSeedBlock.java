@@ -12,6 +12,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class LumecornSeedBlock extends PlantBlockWithAge {
 	
 	public LumecornSeedBlock(Properties properties) {
@@ -20,12 +22,12 @@ public class LumecornSeedBlock extends PlantBlockWithAge {
 
 	@Override
 	public void growAdult(ISeedReader world, Random random, BlockPos pos) {
-		ModFeatures.LUMECORN.generate(world, null, random, pos, null);
+		ModFeatures.LUMECORN.place(world, null, random, pos, null);
 	}
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(ModBlocks.END_MOSS.get());
+		return state.is(ModBlocks.END_MOSS.get());
 	}
 	
 	@Override
@@ -34,13 +36,13 @@ public class LumecornSeedBlock extends PlantBlockWithAge {
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return true;
 	}
 	
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}

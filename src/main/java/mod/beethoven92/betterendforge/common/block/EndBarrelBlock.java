@@ -29,21 +29,21 @@ public class EndBarrelBlock extends BarrelBlock {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(IBlockReader worldIn) {
+	public TileEntity newBlockEntity(IBlockReader worldIn) {
 		return new EndBarrelTileEntity();
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) {
-		if (world.isRemote) {
+		if (world.isClientSide) {
 			return ActionResultType.SUCCESS;
 		} else {
-			TileEntity blockEntity = world.getTileEntity(pos);
+			TileEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof EndBarrelTileEntity) {
-				player.openContainer((EndBarrelTileEntity) blockEntity);
-				player.addStat(Stats.OPEN_BARREL);
-				PiglinTasks.func_234478_a_(player, true);
+				player.openMenu((EndBarrelTileEntity) blockEntity);
+				player.awardStat(Stats.OPEN_BARREL);
+				PiglinTasks.angerNearbyPiglins(player, true);
 			}
 
 			return ActionResultType.CONSUME;
@@ -52,24 +52,24 @@ public class EndBarrelBlock extends BarrelBlock {
 
 	@Override
 	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-		TileEntity blockEntity = world.getTileEntity(pos);
+		TileEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof EndBarrelTileEntity) {
 			((EndBarrelTileEntity) blockEntity).tick();
 		}
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state) {
+	public BlockRenderType getRenderShape(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer,
+	public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer,
 			ItemStack stack) {
-		if (stack.hasDisplayName()) {
-			TileEntity blockEntity = world.getTileEntity(pos);
+		if (stack.hasCustomHoverName()) {
+			TileEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof EndBarrelTileEntity) {
-				((EndBarrelTileEntity) blockEntity).setCustomName(stack.getDisplayName());
+				((EndBarrelTileEntity) blockEntity).setCustomName(stack.getHoverName());
 			}
 		}
 	}

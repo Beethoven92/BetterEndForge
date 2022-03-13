@@ -57,13 +57,13 @@ public class BiomeNBTStructures extends NBTFeature
 		
 		int cx = pos.getX() >> 4;
 		int cz = pos.getZ() >> 4;
-		return ((cx + cz) & 1) == 0 && pos.getY() > 58 && world.getBlockState(pos.down()).isIn(ModTags.GEN_TERRAIN);
+		return ((cx + cz) & 1) == 0 && pos.getY() > 58 && world.getBlockState(pos.below()).is(ModTags.GEN_TERRAIN);
 	}
 
 	@Override
 	protected Rotation getRotation(ISeedReader world, BlockPos pos, Random random) 
 	{
-		return Rotation.randomRotation(random);
+		return Rotation.getRandom(random);
 	}
 
 	@Override

@@ -36,38 +36,38 @@ public class SilkMothNestBlock extends Block {
 	public static final BooleanProperty ACTIVE = BlockProperties.ACTIVATED;
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final IntegerProperty FULLNESS = BlockProperties.FULLNESS;
-	private static final VoxelShape TOP = makeCuboidShape(6, 0, 6, 10, 16, 10);
-	private static final VoxelShape BOTTOM = makeCuboidShape(0, 0, 0, 16, 16, 16);
+	private static final VoxelShape TOP = box(6, 0, 6, 10, 16, 10);
+	private static final VoxelShape BOTTOM = box(0, 0, 0, 16, 16, 16);
 
 	public SilkMothNestBlock(AbstractBlock.Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(ACTIVE, FACING, FULLNESS);
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return state.get(ACTIVE) ? BOTTOM : TOP;
+		return state.getValue(ACTIVE) ? BOTTOM : TOP;
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
-		Direction dir = ctx.getPlacementHorizontalFacing().getOpposite();
-		return this.getDefaultState().with(FACING, dir);
+		Direction dir = ctx.getHorizontalDirection().getOpposite();
+		return this.defaultBlockState().setValue(FACING, dir);
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState neighborState, IWorld world,
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, IWorld world,
 			BlockPos pos, BlockPos neighborPos) {
-		if (!state.get(ACTIVE)) {
-			if (hasEnoughSolidSide(world, pos.up(), Direction.DOWN)
-					|| world.getBlockState(pos.up()).isIn(BlockTags.LEAVES)) {
+		if (!state.getValue(ACTIVE)) {
+			if (canSupportCenter(world, pos.above(), Direction.DOWN)
+					|| world.getBlockState(pos.above()).is(BlockTags.LEAVES)) {
 				return state;
 			} else {
-				return Blocks.AIR.getDefaultState();
+				return Blocks.AIR.defaultBlockState();
 			}
 		}
 		return state;
@@ -84,43 +84,43 @@ public class SilkMothNestBlock extends Block {
 	}
 
 	@Override
-	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		if (!state.get(ACTIVE) && player.isCreative()) {
-			BlockHelper.setWithUpdate(world, pos.down(), Blocks.AIR);
+	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+		if (!state.getValue(ACTIVE) && player.isCreative()) {
+			BlockHelper.setWithUpdate(world, pos.below(), Blocks.AIR);
 		}
-		BlockState up = world.getBlockState(pos.up());
-		if (up.isIn(this) && !up.get(ACTIVE)) {
-			BlockHelper.setWithUpdate(world, pos.up(), Blocks.AIR);
+		BlockState up = world.getBlockState(pos.above());
+		if (up.is(this) && !up.getValue(ACTIVE)) {
+			BlockHelper.setWithUpdate(world, pos.above(), Blocks.AIR);
 		}
-		super.onBlockHarvested(world, pos, state, player);
+		super.playerWillDestroy(world, pos, state, player);
 	}
 
 	@Override
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-		if (!state.get(ACTIVE)) {
+		if (!state.getValue(ACTIVE)) {
 			return;
 		}
 		if (random.nextBoolean()) {
 			return;
 		}
-		Direction dir = state.get(FACING);
-		BlockPos spawn = pos.offset(dir);
+		Direction dir = state.getValue(FACING);
+		BlockPos spawn = pos.relative(dir);
 		if (!world.getBlockState(spawn).isAir()) {
 			return;
 		}
 		int count = world
-				.getEntitiesWithinAABB(ModEntityTypes.SILK_MOTH.get(), new AxisAlignedBB(pos).grow(16), (entity) -> {
+				.getEntities(ModEntityTypes.SILK_MOTH.get(), new AxisAlignedBB(pos).inflate(16), (entity) -> {
 					return true;
 				}).size();
 		if (count > 8) {
 			return;
 		}
 		SilkMothEntity moth = new SilkMothEntity(ModEntityTypes.SILK_MOTH.get(), world);
-		moth.setLocationAndAngles(spawn.getX() + 0.5, spawn.getY() + 0.5, spawn.getZ() + 0.5, dir.getHorizontalAngle(),
+		moth.moveTo(spawn.getX() + 0.5, spawn.getY() + 0.5, spawn.getZ() + 0.5, dir.toYRot(),
 				0);
-		moth.setMotion(new Vector3d(dir.getXOffset() * 0.4, 0, dir.getZOffset() * 0.4));
+		moth.setDeltaMovement(new Vector3d(dir.getStepX() * 0.4, 0, dir.getStepZ() * 0.4));
 		moth.setHive(world, pos);
-		world.addEntity(moth);
-		world.playSound(null, pos, SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.BLOCKS, 1, 1);
+		world.addFreshEntity(moth);
+		world.playSound(null, pos, SoundEvents.BEEHIVE_EXIT, SoundCategory.BLOCKS, 1, 1);
 	}
 }

@@ -4,6 +4,8 @@ import mod.beethoven92.betterendforge.common.block.template.EndSaplingBlock;
 import mod.beethoven92.betterendforge.common.init.ModFeatures;
 import net.minecraft.world.gen.feature.Feature;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class HelixTreeSaplingBlock extends EndSaplingBlock {
 	public HelixTreeSaplingBlock(Properties properties) {
 		super(properties);

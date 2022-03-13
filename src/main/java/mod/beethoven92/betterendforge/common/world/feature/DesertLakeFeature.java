@@ -20,16 +20,16 @@ import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 public class DesertLakeFeature extends Feature<NoFeatureConfig> {
-	private static final BlockState END_STONE = Blocks.END_STONE.getDefaultState();
+	private static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
 	private static final Mutable POS = new Mutable();
 
 	public DesertLakeFeature() {
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 	
 	public static BlockPos getPosOnSurfaceWG(ISeedReader world, BlockPos pos) {
-		return world.getHeight(Type.WORLD_SURFACE_WG, pos);
+		return world.getHeightmapPos(Type.WORLD_SURFACE_WG, pos);
 	}
 	
 	public static BlockPos getPosOnSurfaceRaycast(ISeedReader world, BlockPos pos) {
@@ -38,11 +38,11 @@ public class DesertLakeFeature extends Feature<NoFeatureConfig> {
 	
 	public static BlockPos getPosOnSurfaceRaycast(ISeedReader world, BlockPos pos, int dist) {
 		int h = BlockHelper.downRay(world, pos, dist);
-		return pos.down(h);
+		return pos.below(h);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator_, Random random, BlockPos blockPos,
+	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator_, Random random, BlockPos blockPos,
 			NoFeatureConfig config) {
 		double radius = ModMathHelper.randRange(8.0, 15.0, random);
 		double depth = radius * 0.5 * ModMathHelper.randRange(0.8, 1.2, random);
@@ -56,22 +56,22 @@ public class DesertLakeFeature extends Feature<NoFeatureConfig> {
 
 		int waterLevel = blockPos.getY();
 
-		BlockPos pos = getPosOnSurfaceRaycast(world, blockPos.north(dist).up(10), 20);
+		BlockPos pos = getPosOnSurfaceRaycast(world, blockPos.north(dist).above(10), 20);
 		if (Math.abs(blockPos.getY() - pos.getY()) > 5)
 			return false;
 		waterLevel = ModMathHelper.min(pos.getY(), waterLevel);
 
-		pos = getPosOnSurfaceRaycast(world, blockPos.south(dist).up(10), 20);
+		pos = getPosOnSurfaceRaycast(world, blockPos.south(dist).above(10), 20);
 		if (Math.abs(blockPos.getY() - pos.getY()) > 5)
 			return false;
 		waterLevel = ModMathHelper.min(pos.getY(), waterLevel);
 
-		pos = getPosOnSurfaceRaycast(world, blockPos.east(dist).up(10), 20);
+		pos = getPosOnSurfaceRaycast(world, blockPos.east(dist).above(10), 20);
 		if (Math.abs(blockPos.getY() - pos.getY()) > 5)
 			return false;
 		waterLevel = ModMathHelper.min(pos.getY(), waterLevel);
 
-		pos = getPosOnSurfaceRaycast(world, blockPos.west(dist).up(10), 20);
+		pos = getPosOnSurfaceRaycast(world, blockPos.west(dist).above(10), 20);
 		if (Math.abs(blockPos.getY() - pos.getY()) > 5)
 			return false;
 		waterLevel = ModMathHelper.min(pos.getY(), waterLevel);
@@ -135,21 +135,21 @@ public class DesertLakeFeature extends Feature<NoFeatureConfig> {
 							r *= r;
 							if (x2 + z2 <= r) {
 								state = world.getBlockState(POS);
-								if (state.isIn(ModTags.GEN_TERRAIN)) {
-									BlockHelper.setWithoutUpdate(world, POS, Blocks.AIR.getDefaultState());
+								if (state.is(ModTags.GEN_TERRAIN)) {
+									BlockHelper.setWithoutUpdate(world, POS, Blocks.AIR.defaultBlockState());
 								}
-								pos = POS.down();
-								if (world.getBlockState(pos).isIn(ModTags.GEN_TERRAIN)) {
+								pos = POS.below();
+								if (world.getBlockState(pos).is(ModTags.GEN_TERRAIN)) {
 									state = world.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig()
-											.getTop();
+											.getTopMaterial();
 									if (y > waterLevel + 1)
 										BlockHelper.setWithoutUpdate(world, pos, state);
 									else if (y > waterLevel)
 										BlockHelper.setWithoutUpdate(world, pos, random.nextBoolean() ? state
-												: ModBlocks.ENDSTONE_DUST.get().getDefaultState());
+												: ModBlocks.ENDSTONE_DUST.get().defaultBlockState());
 									else
 										BlockHelper.setWithoutUpdate(world, pos,
-												ModBlocks.ENDSTONE_DUST.get().getDefaultState());
+												ModBlocks.ENDSTONE_DUST.get().defaultBlockState());
 								}
 							}
 						} else {
@@ -184,37 +184,37 @@ public class DesertLakeFeature extends Feature<NoFeatureConfig> {
 						if (y2 + x2 + z2 <= r) {
 							state = world.getBlockState(POS);
 							if (canReplace(state)) {
-								state = world.getBlockState(POS.up());
-								state = canReplace(state) ? (y < waterLevel ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState()) : state;
+								state = world.getBlockState(POS.above());
+								state = canReplace(state) ? (y < waterLevel ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState()) : state;
 								BlockHelper.setWithoutUpdate(world, POS, state);
 							}
-							pos = POS.down();
-							if (world.getBlockState(pos).getBlock().isIn(ModTags.GEN_TERRAIN)) {
-								BlockHelper.setWithoutUpdate(world, pos, ModBlocks.ENDSTONE_DUST.get().getDefaultState());
+							pos = POS.below();
+							if (world.getBlockState(pos).getBlock().is(ModTags.GEN_TERRAIN)) {
+								BlockHelper.setWithoutUpdate(world, pos, ModBlocks.ENDSTONE_DUST.get().defaultBlockState());
 							}
-							pos = POS.up();
+							pos = POS.above();
 							while (canReplace(state = world.getBlockState(pos)) && !state.isAir()
 									&& state.getFluidState().isEmpty()) {
-								BlockHelper.setWithoutUpdate(world, pos, pos.getY() < waterLevel ? Blocks.WATER.getDefaultState() : Blocks.AIR.getDefaultState());
-								pos = pos.up();
+								BlockHelper.setWithoutUpdate(world, pos, pos.getY() < waterLevel ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState());
+								pos = pos.above();
 							}
 						}
 						// Make border
 						else if (y2 + x2 + z2 <= rb) {
 							state = world.getBlockState(POS);
-							if (state.isIn(ModTags.GEN_TERRAIN) && world.isAirBlock(POS.up())) {
+							if (state.is(ModTags.GEN_TERRAIN) && world.isEmptyBlock(POS.above())) {
 								BlockHelper.setWithoutUpdate(world, POS, ModBlocks.END_MOSS.get());
 							} else if (y < waterLevel) {
-								if (world.isAirBlock(POS.up())) {
+								if (world.isEmptyBlock(POS.above())) {
 									state = world.getBiome(POS).getGenerationSettings().getSurfaceBuilderConfig()
-											.getTop();
+											.getTopMaterial();
 									BlockHelper.setWithoutUpdate(world, POS,
-											random.nextBoolean() ? state : ModBlocks.ENDSTONE_DUST.get().getDefaultState());
-									BlockHelper.setWithoutUpdate(world, POS.down(), END_STONE);
+											random.nextBoolean() ? state : ModBlocks.ENDSTONE_DUST.get().defaultBlockState());
+									BlockHelper.setWithoutUpdate(world, POS.below(), END_STONE);
 								} else {
 									BlockHelper.setWithoutUpdate(world, POS,
-											ModBlocks.ENDSTONE_DUST.get().getDefaultState());
-									BlockHelper.setWithoutUpdate(world, POS.down(), END_STONE);
+											ModBlocks.ENDSTONE_DUST.get().defaultBlockState());
+									BlockHelper.setWithoutUpdate(world, POS.below(), END_STONE);
 								}
 							}
 						}
@@ -230,8 +230,8 @@ public class DesertLakeFeature extends Feature<NoFeatureConfig> {
 	}
 
 	private boolean canReplace(BlockState state) {
-		return state.getMaterial().isReplaceable() || state.isIn(ModTags.GEN_TERRAIN) || state.isIn(ModBlocks.ENDSTONE_DUST.get())
-				|| state.getMaterial().equals(Material.PLANTS) || state.getMaterial().equals(Material.OCEAN_PLANT)
+		return state.getMaterial().isReplaceable() || state.is(ModTags.GEN_TERRAIN) || state.is(ModBlocks.ENDSTONE_DUST.get())
+				|| state.getMaterial().equals(Material.PLANT) || state.getMaterial().equals(Material.WATER_PLANT)
 				|| state.getMaterial().equals(Material.CORAL);
 	}
 }

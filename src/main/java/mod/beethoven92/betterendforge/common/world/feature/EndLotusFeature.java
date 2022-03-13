@@ -24,7 +24,7 @@ public class EndLotusFeature extends ScatterFeature
 		POS.setX(pos.getX());
 		POS.setZ(pos.getZ());
 		POS.setY(0);
-		return getGround(world, POS).toImmutable();
+		return getGround(world, POS).immutable();
 	}
 	
 	@Override
@@ -63,7 +63,7 @@ public class EndLotusFeature extends ScatterFeature
 	@Override
 	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) 
 	{
-		return world.getBlockState(blockPos).isIn(Blocks.WATER);
+		return world.getBlockState(blockPos).is(Blocks.WATER);
 	}
 
 	@Override

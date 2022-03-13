@@ -23,7 +23,7 @@ public class ModCreativeTabs
 		}
 
 		@Override
-		public ItemStack createIcon() 
+		public ItemStack makeIcon() 
 		{
 			return icon.get();
 		}

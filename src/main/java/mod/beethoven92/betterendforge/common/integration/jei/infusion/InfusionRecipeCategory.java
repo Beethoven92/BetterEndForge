@@ -76,7 +76,7 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe>
 	public void setIngredients(InfusionRecipe recipe, IIngredients ingredients) 
 	{
 		ingredients.setInputIngredients(recipe.getIngredients());
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+		ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
 	}
 
 	@Override
@@ -107,9 +107,9 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe>
 		{
 			TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category.infusion.time", infusionTime);
 			Minecraft minecraft = Minecraft.getInstance();
-			FontRenderer fontRenderer = minecraft.fontRenderer;
-			int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
-			fontRenderer.func_243248_b(matrixStack, timeString, background.getWidth() - stringWidth, y, 0xFF808080);
+			FontRenderer fontRenderer = minecraft.font;
+			int stringWidth = fontRenderer.width(timeString);
+			fontRenderer.draw(matrixStack, timeString, background.getWidth() - stringWidth, y, 0xFF808080);
 		}
 	}
 	

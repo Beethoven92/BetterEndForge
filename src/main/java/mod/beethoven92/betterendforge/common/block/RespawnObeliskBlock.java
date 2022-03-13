@@ -32,9 +32,11 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class RespawnObeliskBlock extends Block {
-	private static final VoxelShape VOXEL_SHAPE_BOTTOM = Block.makeCuboidShape(1, 0, 1, 15, 16, 15);
-	private static final VoxelShape VOXEL_SHAPE_MIDDLE_TOP = Block.makeCuboidShape(2, 0, 2, 14, 16, 14);
+	private static final VoxelShape VOXEL_SHAPE_BOTTOM = Block.box(1, 0, 1, 15, 16, 15);
+	private static final VoxelShape VOXEL_SHAPE_MIDDLE_TOP = Block.box(2, 0, 2, 14, 16, 14);
 
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 
@@ -48,18 +50,18 @@ public class RespawnObeliskBlock extends Block {
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader view, BlockPos pos, ISelectionContext ePos) {
-		return (state.get(SHAPE) == TripleShape.BOTTOM) ? VOXEL_SHAPE_BOTTOM : VOXEL_SHAPE_MIDDLE_TOP;
+		return (state.getValue(SHAPE) == TripleShape.BOTTOM) ? VOXEL_SHAPE_BOTTOM : VOXEL_SHAPE_MIDDLE_TOP;
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(SHAPE);
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
+	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
 		for (int i = 0; i < 3; i++) {
-			if (!world.getBlockState(pos.up(i)).getMaterial().isReplaceable()) {
+			if (!world.getBlockState(pos.above(i)).getMaterial().isReplaceable()) {
 				return false;
 			}
 		}
@@ -67,50 +69,50 @@ public class RespawnObeliskBlock extends Block {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer,
+	public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer,
 			ItemStack stack) {
-		state = this.getDefaultState();
-		BlockHelper.setWithUpdate(world, pos, state.with(SHAPE, TripleShape.BOTTOM));
-		BlockHelper.setWithUpdate(world, pos.up(), state.with(SHAPE, TripleShape.MIDDLE));
-		BlockHelper.setWithUpdate(world, pos.up(2), state.with(SHAPE, TripleShape.TOP));
+		state = this.defaultBlockState();
+		BlockHelper.setWithUpdate(world, pos, state.setValue(SHAPE, TripleShape.BOTTOM));
+		BlockHelper.setWithUpdate(world, pos.above(), state.setValue(SHAPE, TripleShape.MIDDLE));
+		BlockHelper.setWithUpdate(world, pos.above(2), state.setValue(SHAPE, TripleShape.TOP));
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world,
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world,
 			BlockPos pos, BlockPos facingPos) {
-		TripleShape shape = state.get(SHAPE);
+		TripleShape shape = state.getValue(SHAPE);
 		if (shape == TripleShape.BOTTOM) {
-			if (world.getBlockState(pos.up()).isIn(this)) {
+			if (world.getBlockState(pos.above()).is(this)) {
 				return state;
 			} else {
-				return Blocks.AIR.getDefaultState();
+				return Blocks.AIR.defaultBlockState();
 			}
 		} else if (shape == TripleShape.MIDDLE) {
-			if (world.getBlockState(pos.up()).isIn(this) && world.getBlockState(pos.down()).isIn(this)) {
+			if (world.getBlockState(pos.above()).is(this) && world.getBlockState(pos.below()).is(this)) {
 				return state;
 			} else {
-				return Blocks.AIR.getDefaultState();
+				return Blocks.AIR.defaultBlockState();
 			}
 		} else {
-			if (world.getBlockState(pos.down()).isIn(this)) {
+			if (world.getBlockState(pos.below()).is(this)) {
 				return state;
 			} else {
-				return Blocks.AIR.getDefaultState();
+				return Blocks.AIR.defaultBlockState();
 			}
 		}
 	}
 
 	@Override
-	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		if (player.isCreative()) {
-			TripleShape shape = state.get(SHAPE);
+			TripleShape shape = state.getValue(SHAPE);
 			if (shape == TripleShape.MIDDLE) {
-				BlockHelper.setWithUpdate(world, pos.down(), Blocks.AIR);
+				BlockHelper.setWithUpdate(world, pos.below(), Blocks.AIR);
 			} else if (shape == TripleShape.TOP) {
-				BlockHelper.setWithUpdate(world, pos.down(2), Blocks.AIR);
+				BlockHelper.setWithUpdate(world, pos.below(2), Blocks.AIR);
 			}
 		}
-		super.onBlockHarvested(world, pos, state, player);
+		super.playerWillDestroy(world, pos, state, player);
 	}
 
 	/*@Override
@@ -123,20 +125,20 @@ public class RespawnObeliskBlock extends Block {
 	}*/
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player,
 			Hand hand, BlockRayTraceResult hit) {
-		ItemStack itemStack = player.getHeldItem(hand);
+		ItemStack itemStack = player.getItemInHand(hand);
 		boolean canActivate = itemStack.getItem() == ModItems.AMBER_GEM.get() && itemStack.getCount() > 5;
 		if (hand != Hand.MAIN_HAND || !canActivate) {
-			if (!world.isRemote && !(itemStack.getItem() instanceof BlockItem) && !player.isCreative()) {
+			if (!world.isClientSide && !(itemStack.getItem() instanceof BlockItem) && !player.isCreative()) {
 				ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
-				serverPlayerEntity.sendStatusMessage(new TranslationTextComponent("message.betterendforge.fail_spawn"), true);
+				serverPlayerEntity.displayClientMessage(new TranslationTextComponent("message.betterendforge.fail_spawn"), true);
 			}
 			return ActionResultType.FAIL;
-		} else if (!world.isRemote) {
+		} else if (!world.isClientSide) {
 			ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) player;
-			serverPlayerEntity.func_242111_a(world.getDimensionKey(), pos, 0.0F, false, false);
-			serverPlayerEntity.sendStatusMessage(new TranslationTextComponent("message.betterendforge.set_spawn"), true);
+			serverPlayerEntity.setRespawnPosition(world.dimension(), pos, 0.0F, false, false);
+			serverPlayerEntity.displayClientMessage(new TranslationTextComponent("message.betterendforge.set_spawn"), true);
 			double px = pos.getX() + 0.5;
 			double py = pos.getY() + 0.5;
 			double pz = pos.getZ() + 0.5;
@@ -144,23 +146,23 @@ public class RespawnObeliskBlock extends Block {
 			if (world instanceof ServerWorld) {
 				double py1 = py;
 				double py2 = py - 0.2;
-				if (state.get(SHAPE) == TripleShape.BOTTOM) {
+				if (state.getValue(SHAPE) == TripleShape.BOTTOM) {
 					py1 += 1;
 					py2 += 2;
-				} else if (state.get(SHAPE) == TripleShape.MIDDLE) {
+				} else if (state.getValue(SHAPE) == TripleShape.MIDDLE) {
 					py1 += 0;
 					py2 += 1;
 				} else {
 					py1 -= 2;
 				}
-				((ServerWorld) world).spawnParticle(particle, px, py1, pz, 20, 0.14, 0.5, 0.14, 0.1);
-				((ServerWorld) world).spawnParticle(particle, px, py2, pz, 20, 0.14, 0.3, 0.14, 0.1);
+				((ServerWorld) world).sendParticles(particle, px, py1, pz, 20, 0.14, 0.5, 0.14, 0.1);
+				((ServerWorld) world).sendParticles(particle, px, py2, pz, 20, 0.14, 0.3, 0.14, 0.1);
 			}
-			world.playSound(null, px, py, py, SoundEvents.BLOCK_RESPAWN_ANCHOR_SET_SPAWN, SoundCategory.BLOCKS, 1F, 1F);
+			world.playSound(null, px, py, py, SoundEvents.RESPAWN_ANCHOR_SET_SPAWN, SoundCategory.BLOCKS, 1F, 1F);
 			if (!player.isCreative()) {
 				itemStack.shrink(6);
 			}
 		}
-		return player.isCreative() ? ActionResultType.PASS : ActionResultType.func_233537_a_(world.isRemote);
+		return player.isCreative() ? ActionResultType.PASS : ActionResultType.sidedSuccess(world.isClientSide);
 	}
 }

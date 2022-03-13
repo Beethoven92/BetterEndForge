@@ -30,16 +30,18 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class HydrothermalVentBlock extends Block implements IWaterLoggable
 {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVATED;
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(1, 1, 1, 15, 16, 15);
+	private static final VoxelShape SHAPE = Block.box(1, 1, 1, 15, 16, 15);
 	
 	public HydrothermalVentBlock(Properties properties) 
 	{
 		super(properties);
-		this.setDefaultState(getDefaultState().with(WATERLOGGED, true).with(ACTIVATED, false));
+		this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, true).setValue(ACTIVATED, false));
 	}
 	
 	@Override
@@ -61,40 +63,40 @@ public class HydrothermalVentBlock extends Block implements IWaterLoggable
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
+	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack)
 	{
-		if (worldIn instanceof ServerWorld && state.get(WATERLOGGED) && worldIn.getBlockState(pos.up()).isIn(Blocks.WATER))
+		if (worldIn instanceof ServerWorld && state.getValue(WATERLOGGED) && worldIn.getBlockState(pos.above()).is(Blocks.WATER))
 		{
-			randomTick(state,(ServerWorld) worldIn, pos, worldIn.rand);
+			randomTick(state,(ServerWorld) worldIn, pos, worldIn.random);
 		}
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		state = worldIn.getBlockState(pos.down());
-		return state.isIn(ModBlocks.SULPHURIC_ROCK.stone.get());
+		state = worldIn.getBlockState(pos.below());
+		return state.is(ModBlocks.SULPHURIC_ROCK.stone.get());
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) 
 	{
-		World world = context.getWorld();
-		BlockPos blockPos = context.getPos();
-		return this.getDefaultState().with(WATERLOGGED, world.getFluidState(blockPos).getFluid() == Fluids.WATER);
+		World world = context.getLevel();
+		BlockPos blockPos = context.getClickedPos();
+		return this.defaultBlockState().setValue(WATERLOGGED, world.getFluidState(blockPos).getType() == Fluids.WATER);
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos)) 
+		if (!canSurvive(stateIn, worldIn, currentPos)) 
 		{
-			return Blocks.WATER.getDefaultState();
+			return Blocks.WATER.defaultBlockState();
 		}
-		else if (stateIn.get(WATERLOGGED) && facing == Direction.UP && facingState.isIn(Blocks.WATER)) 
+		else if (stateIn.getValue(WATERLOGGED) && facing == Direction.UP && facingState.is(Blocks.WATER)) 
 		{
-			worldIn.getPendingBlockTicks().scheduleTick(currentPos, this, 20);
+			worldIn.getBlockTicks().scheduleTick(currentPos, this, 20);
 		}
 		return stateIn;
 	}
@@ -102,12 +104,12 @@ public class HydrothermalVentBlock extends Block implements IWaterLoggable
 	@Override
 	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) 
 	{
-		if (!stateIn.get(ACTIVATED) && rand.nextBoolean()) 
+		if (!stateIn.getValue(ACTIVATED) && rand.nextBoolean()) 
 		{
 			double x = pos.getX() + rand.nextDouble();
 			double y = pos.getY() + 0.9 + rand.nextDouble() * 0.3;
 			double z = pos.getZ() + rand.nextDouble();
-			if (stateIn.get(WATERLOGGED)) 
+			if (stateIn.getValue(WATERLOGGED)) 
 			{
 				worldIn.addParticle(ModParticleTypes.GEYSER_PARTICLE.get(), x, y, z, 0, 0, 0);
 			}
@@ -121,22 +123,22 @@ public class HydrothermalVentBlock extends Block implements IWaterLoggable
 	@Override
 	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) 
 	{
-		BlockPos up = pos.up();
-		if (worldIn.getBlockState(up).isIn(Blocks.WATER)) 
+		BlockPos up = pos.above();
+		if (worldIn.getBlockState(up).is(Blocks.WATER)) 
 		{
 			BlockHelper.setWithoutUpdate(worldIn, up, ModBlocks.VENT_BUBBLE_COLUMN.get());
-			worldIn.getPendingBlockTicks().scheduleTick(up, ModBlocks.VENT_BUBBLE_COLUMN.get(), 5);
+			worldIn.getBlockTicks().scheduleTick(up, ModBlocks.VENT_BUBBLE_COLUMN.get(), 5);
 		}
 	}
 	
 	@Override
 	public FluidState getFluidState(BlockState state) 
 	{
-		return (Boolean) state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : Fluids.EMPTY.getDefaultState();
+		return (Boolean) state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(WATERLOGGED, ACTIVATED);
 	}

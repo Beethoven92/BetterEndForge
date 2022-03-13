@@ -31,7 +31,7 @@ public class ColoredMaterial
 
 		for (DyeColor color: DyeColor.values()) 
 		{
-			String coloredName = name + "_" + color.getString();
+			String coloredName = name + "_" + color.getSerializedName();
 
 			RegistryObject<Block> block = ModBlocks.registerBlockWithDefaultItem(coloredName, () -> source.get().createFromColor(color));
 			

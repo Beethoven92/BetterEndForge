@@ -4,6 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.IBlockReader;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class HydraluxPetalBlock extends Block
 {
 	public HydraluxPetalBlock(Properties properties) 
@@ -12,7 +14,7 @@ public class HydraluxPetalBlock extends Block
 	}
 
 	@Override
-	public void onLanded(IBlockReader worldIn, Entity entityIn) 
+	public void updateEntityAfterFallOn(IBlockReader worldIn, Entity entityIn) 
 	{
 	}
 }

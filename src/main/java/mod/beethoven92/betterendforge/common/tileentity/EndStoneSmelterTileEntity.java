@@ -108,7 +108,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 		 		}
 		 	}
 
-		 	public int size() {
+		 	public int getCount() {
 		 		return 4;
 		 	}
 		 };
@@ -117,9 +117,9 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	}
 	
 	@Override
-	public CompoundNBT write(CompoundNBT compound)
+	public CompoundNBT save(CompoundNBT compound)
 	{
-		super.write(compound);
+		super.save(compound);
 		compound.putShort("BurnTime", (short) burnTime);
 		compound.putShort("FuelTime", (short) fuelTime);
 		compound.putShort("SmeltTime", (short) smeltTime);
@@ -135,17 +135,17 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT nbt)
+	public void load(BlockState state, CompoundNBT nbt)
 	{	
-		super.read(state, nbt);
-		this.items = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+		super.load(state, nbt);
+		this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 		ItemStackHelper.loadAllItems(nbt, items);
 		this.burnTime = nbt.getShort("BurnTime");
 		this.fuelTime = nbt.getShort("FuelTime");
 		this.smeltTime = nbt.getShort("SmeltTime");
 		this.smeltTimeTotal = nbt.getShort("SmeltTimeTotal");
 		CompoundNBT compound = nbt.getCompound("RecipesUsed");
-		Iterator<String> recipes = compound.keySet().iterator();
+		Iterator<String> recipes = compound.getAllKeys().iterator();
 		while(recipes.hasNext()) 
 		{
 			String id = recipes.next();
@@ -172,20 +172,20 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 		while(usedRecipes.hasNext()) 
 		{
 			Entry<ResourceLocation> entry = usedRecipes.next();
-			world.getRecipeManager().getRecipe(entry.getKey()).ifPresent((recipe) -> {
+			level.getRecipeManager().byKey(entry.getKey()).ifPresent((recipe) -> {
 				list.add(recipe);
 				if (recipe instanceof AlloyingRecipe) 
 				{
 					AlloyingRecipe alloying = (AlloyingRecipe) recipe;
-					this.dropExperience(player.world, player.getPositionVec(), entry.getIntValue(), alloying.getExperience());
+					this.dropExperience(player.level, player.position(), entry.getIntValue(), alloying.getExperience());
 				} else 
 				{
 					BlastingRecipe blasting = (BlastingRecipe) recipe;
-					this.dropExperience(player.world, player.getPositionVec(), entry.getIntValue(), blasting.getExperience());
+					this.dropExperience(player.level, player.position(), entry.getIntValue(), blasting.getExperience());
 				}
 			});
 		}
-		player.unlockRecipes(list);
+		player.awardRecipes(list);
 		this.recipesUsed.clear();
 	}
 	
@@ -199,9 +199,9 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 
 		while(j > 0) 
 		{
-			int k = ExperienceOrbEntity.getXPSplit(j);
+			int k = ExperienceOrbEntity.getExperienceValue(j);
 			j -= k;
-			world.addEntity(new ExperienceOrbEntity(world, vec3d.x, vec3d.y, vec3d.z, k));
+			world.addFreshEntity(new ExperienceOrbEntity(world, vec3d.x, vec3d.y, vec3d.z, k));
 		}
 	}
 	
@@ -215,7 +215,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 		}
 		
 		boolean burning = this.isBurning();
-		if (!this.world.isRemote) 
+		if (!this.level.isClientSide) 
 		{
 			ItemStack fuel = this.items.get(2);
 			if (!burning && (fuel.isEmpty() || items.get(0).isEmpty() && items.get(1).isEmpty())) 
@@ -227,10 +227,10 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 			} 
 			else 
 			{
-				IRecipe<?> recipe = this.world.getRecipeManager().getRecipe(AlloyingRecipe.TYPE, this, world).orElse(null);
+				IRecipe<?> recipe = this.level.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, this, level).orElse(null);
 				if (recipe == null) 
 				{
-					recipe = this.world.getRecipeManager().getRecipe(IRecipeType.BLASTING, this, world).orElse(null);
+					recipe = this.level.getRecipeManager().getRecipeFor(IRecipeType.BLASTING, this, level).orElse(null);
 				}
 				boolean accepted = this.canAcceptRecipeOutput(recipe);
 				if (!burning && accepted) 
@@ -246,11 +246,11 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 							fuel.shrink(1);
 							if (fuel.isEmpty()) 
 							{
-								Item remainFuel = item.getContainerItem();
+								Item remainFuel = item.getCraftingRemainingItem();
 								this.items.set(2, remainFuel == null ? ItemStack.EMPTY : new ItemStack(remainFuel));
 							}
 						}
-						this.markDirty();
+						this.setChanged();
 					}
 				}
 
@@ -262,7 +262,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 						this.smeltTime = 0;
 						this.smeltTimeTotal = this.getSmeltTime();
 						this.craftRecipe(recipe);
-						this.markDirty();
+						this.setChanged();
 					}
 				} 
 				else 
@@ -273,8 +273,8 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 
 			if (initialBurning != burning) 
 			{
-				this.world.setBlockState(pos, world.getBlockState(pos).with(EndStoneSmelter.LIT, burning), 3);
-				this.markDirty();
+				this.level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(EndStoneSmelter.LIT, burning), 3);
+				this.setChanged();
 			}
 		}
 	}
@@ -295,7 +295,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 		}
 		if (validInput) 
 		{
-			ItemStack result = recipe.getRecipeOutput();
+			ItemStack result = recipe.getResultItem();
 			if (result.isEmpty()) 
 			{
 				return false;
@@ -309,13 +309,13 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 				{
 					return true;
 				} 
-				else if (!output.isItemEqualIgnoreDurability(result)) 
+				else if (!output.sameItemStackIgnoreDurability(result)) 
 				{
 					return false;
 				} 
-				else if (outCount < this.getInventoryStackLimit() && outCount < output.getMaxStackSize()) 
+				else if (outCount < this.getMaxStackSize() && outCount < output.getMaxStackSize()) 
 				{
-					return this.getInventoryStackLimit() >= total;
+					return this.getMaxStackSize() >= total;
 				} 
 				else 
 				{
@@ -331,7 +331,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	{
 		if (recipe == null || !canAcceptRecipeOutput(recipe)) return;
 		
-		ItemStack result = recipe.getRecipeOutput();
+		ItemStack result = recipe.getResultItem();
 		ItemStack output = this.items.get(3);
 		if (output.isEmpty())
 		{
@@ -342,7 +342,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 			output.grow(result.getCount());
 		}
 
-		if (!this.world.isRemote)
+		if (!this.level.isClientSide)
 		{
 			this.setRecipeUsed(recipe);
 		}
@@ -366,7 +366,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	}
 	
 	@Override
-	public int getSizeInventory()
+	public int getContainerSize()
 	{
 		return this.items.size();
 	}
@@ -385,49 +385,49 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int index) 
+	public ItemStack getItem(int index) 
 	{
 		return this.items.get(index);
 	}
 
 	@Override
-	public ItemStack decrStackSize(int index, int count) 
+	public ItemStack removeItem(int index, int count) 
 	{
-		return ItemStackHelper.getAndSplit(this.items, index, count);
+		return ItemStackHelper.removeItem(this.items, index, count);
 	}
 
 	@Override
-	public ItemStack removeStackFromSlot(int index)
+	public ItemStack removeItemNoUpdate(int index)
 	{
-		return ItemStackHelper.getAndRemove(this.items, index);
+		return ItemStackHelper.takeItem(this.items, index);
 	}
 
 	@Override
-	public void setInventorySlotContents(int index, ItemStack stack) 
+	public void setItem(int index, ItemStack stack) 
 	{	
 		ItemStack itemStack = this.items.get(index);
-		boolean stackValid = !stack.isEmpty() && stack.isItemEqualIgnoreDurability(itemStack) && ItemStack.areItemStackTagsEqual(stack, itemStack);
+		boolean stackValid = !stack.isEmpty() && stack.sameItemStackIgnoreDurability(itemStack) && ItemStack.tagMatches(stack, itemStack);
 		this.items.set(index, stack);
-		if (stack.getCount() > this.getInventoryStackLimit()) 
+		if (stack.getCount() > this.getMaxStackSize()) 
 		{
-			stack.setCount(this.getInventoryStackLimit());
+			stack.setCount(this.getMaxStackSize());
 		}
 		if ((index == 0 || index == 1) && !stackValid) 
 		{
 			this.smeltTimeTotal = this.getSmeltTime();
 			this.smeltTime = 0;
-			this.markDirty();
+			this.setChanged();
 		}
 	}
 	
 	protected int getSmeltTime()
 	{
-		int smeltTime = this.world.getRecipeManager().getRecipe(AlloyingRecipe.TYPE, this, world)
+		int smeltTime = this.level.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, this, level)
 				.map(AlloyingRecipe::getSmeltTime).orElse(0);
 		if (smeltTime == 0) 
 		{
-			smeltTime = this.world.getRecipeManager().getRecipe(IRecipeType.BLASTING, this, world)
-				.map(BlastingRecipe::getCookTime).orElse(200);
+			smeltTime = this.level.getRecipeManager().getRecipeFor(IRecipeType.BLASTING, this, level)
+				.map(BlastingRecipe::getCookingTime).orElse(200);
 			smeltTime /= 1.5;
 		}
 		return smeltTime;
@@ -447,13 +447,13 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	}
 
 	@Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, Direction direction) 
+	public boolean canPlaceItemThroughFace(int index, ItemStack itemStackIn, Direction direction) 
 	{
-		return this.isItemValidForSlot(index, itemStackIn);
+		return this.canPlaceItem(index, itemStackIn);
 	}
 
 	@Override
-	public boolean canExtractItem(int index, ItemStack stack, Direction direction) 
+	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) 
 	{
 		if (direction == Direction.DOWN && index == 2) 
 		{
@@ -466,20 +466,20 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	}
 	
 	@Override
-	public boolean isUsableByPlayer(PlayerEntity player) 
+	public boolean stillValid(PlayerEntity player) 
 	{
-		if (this.world.getTileEntity(this.pos) != this) 
+		if (this.level.getBlockEntity(this.worldPosition) != this) 
 		{
 			return false;
 		} 
 		else 
 		{
-			return player.getDistanceSq(this.pos.getX() + 0.5D, this.pos.getY() + 0.5D, this.pos.getZ() + 0.5D) <= 64.0D;
+			return player.distanceToSqr(this.worldPosition.getX() + 0.5D, this.worldPosition.getY() + 0.5D, this.worldPosition.getZ() + 0.5D) <= 64.0D;
 		}
 	}
 
 	@Override
-	public void clear()
+	public void clearContent()
 	{
 		this.items.clear();
 	}
@@ -523,7 +523,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	}
 	
 	@Override
-	public boolean isItemValidForSlot(int index, ItemStack stack) 
+	public boolean canPlaceItem(int index, ItemStack stack) 
 	{
 		if (index == 3) 
 		{
@@ -572,7 +572,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	
 	public static void registerFuel(ITag<Item> tag, int time)
 	{
-		Iterator<Item> tagItems = tag.getAllElements().iterator();
+		Iterator<Item> tagItems = tag.getValues().iterator();
 		tagItems.forEachRemaining(item -> registerFuel(item, time));
 	}
 	
@@ -587,7 +587,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	@Override
     public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction facing)
 	{
-		if (!this.removed && facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+		if (!this.remove && facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 		{
 			if (facing == Direction.UP) return handlers[0].cast();
 			else if (facing == Direction.DOWN) return handlers[1].cast();

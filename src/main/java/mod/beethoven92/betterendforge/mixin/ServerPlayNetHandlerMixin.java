@@ -30,13 +30,13 @@ public class ServerPlayNetHandlerMixin {
 
 	@Inject(method = "processUpdateSign", at = @At(value = "HEAD"), cancellable = true)
 	private void be_signUpdate(CUpdateSignPacket packet, CallbackInfo info) {
-		PacketThreadUtil.checkThreadAndEnqueue(packet, ServerPlayNetHandler.class.cast(this), this.player.getServerWorld());
-		this.player.markPlayerActive();
-		ServerWorld serverWorld = this.player.getServerWorld();
-		BlockPos blockPos = packet.getPosition();
-		if (serverWorld.isBlockLoaded(blockPos)) {
+		PacketThreadUtil.ensureRunningOnSameThread(packet, ServerPlayNetHandler.class.cast(this), this.player.getLevel());
+		this.player.resetLastActionTime();
+		ServerWorld serverWorld = this.player.getLevel();
+		BlockPos blockPos = packet.getPos();
+		if (serverWorld.hasChunkAt(blockPos)) {
 			BlockState blockState = serverWorld.getBlockState(blockPos);
-			TileEntity blockEntity = serverWorld.getTileEntity(blockPos);
+			TileEntity blockEntity = serverWorld.getBlockEntity(blockPos);
 			if (blockEntity instanceof ESignTileEntity) {
 				ESignTileEntity signBlockEntity = (ESignTileEntity) blockEntity;
 				if (!signBlockEntity.isEditable() || signBlockEntity.getEditor() != this.player) {
@@ -47,11 +47,11 @@ public class ServerPlayNetHandlerMixin {
 				String[] strings = packet.getLines();
 
 				for (int i = 0; i < strings.length; ++i) {
-					signBlockEntity.setTextOnRow(i, new StringTextComponent(TextFormatting.getTextWithoutFormattingCodes(strings[i])));
+					signBlockEntity.setTextOnRow(i, new StringTextComponent(TextFormatting.stripFormatting(strings[i])));
 				}
 
-				signBlockEntity.markDirty();
-				serverWorld.notifyBlockUpdate(blockPos, blockState, blockState, 3);
+				signBlockEntity.setChanged();
+				serverWorld.sendBlockUpdated(blockPos, blockState, blockState, 3);
 
 				info.cancel();
 			}

@@ -40,9 +40,9 @@ public class CrashedShipFeature extends NBTFeature
 					PlacementSettings structurePlacementData, Template template) 
 			{
 				BlockState state = structureBlockInfo2.state;
-				if (state.isIn(Blocks.SPAWNER) || state.getMaterial().equals(Material.WOOL)) 
+				if (state.is(Blocks.SPAWNER) || state.getMaterial().equals(Material.WOOL)) 
 				{
-					return new Template.BlockInfo(structureBlockInfo2.pos, Blocks.AIR.getDefaultState(), null);
+					return new Template.BlockInfo(structureBlockInfo2.pos, Blocks.AIR.defaultBlockState(), null);
 				}
 				return structureBlockInfo2;
 			}
@@ -60,7 +60,7 @@ public class CrashedShipFeature extends NBTFeature
 	{
 		if (structure == null) 
 		{
-			structure = world.getWorld().getStructureTemplateManager().getTemplate(new ResourceLocation("end_city/ship"));
+			structure = world.getLevel().getStructureManager().get(new ResourceLocation("end_city/ship"));
 			if (structure == null) 
 			{
 				structure = StructureHelper.readStructure(STRUCTURE_PATH);
@@ -72,13 +72,13 @@ public class CrashedShipFeature extends NBTFeature
 	@Override
 	protected boolean canSpawn(ISeedReader world, BlockPos pos, Random random)
 	{
-		return pos.getY() > 58 && world.getBlockState(pos.down()).isIn(ModTags.GEN_TERRAIN);
+		return pos.getY() > 58 && world.getBlockState(pos.below()).is(ModTags.GEN_TERRAIN);
 	}
 
 	@Override
 	protected Rotation getRotation(ISeedReader world, BlockPos pos, Random random) 
 	{
-		return Rotation.randomRotation(random);
+		return Rotation.getRandom(random);
 	}
 
 	@Override
@@ -104,11 +104,11 @@ public class CrashedShipFeature extends NBTFeature
 	@Override
 	protected void addStructureData(PlacementSettings data) 
 	{
-		data.addProcessor(BlockIgnoreStructureProcessor.AIR_AND_STRUCTURE_BLOCK).addProcessor(REPLACER).setIgnoreEntities(true);
+		data.addProcessor(BlockIgnoreStructureProcessor.STRUCTURE_AND_AIR).addProcessor(REPLACER).setIgnoreEntities(true);
 	}
 	
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos center,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos center,
 			NoFeatureConfig config) 
 	{
 		center = new BlockPos(((center.getX() >> 4) << 4) | 8, 128, ((center.getZ() >> 4) << 4) | 8);
@@ -123,19 +123,19 @@ public class CrashedShipFeature extends NBTFeature
 		Template structure = getStructure(world, center, rand);
 		Rotation rotation = getRotation(world, center, rand);
 		Mirror mirror = getMirror(world, center, rand);
-		BlockPos offset = Template.getTransformedPos(structure.getSize(), mirror, rotation, BlockPos.ZERO);
-		center = center.add(0, getYOffset(structure, world, center, rand) + 0.5, 0);
+		BlockPos offset = Template.transform(structure.getSize(), mirror, rotation, BlockPos.ZERO);
+		center = center.offset(0, getYOffset(structure, world, center, rand) + 0.5, 0);
 		PlacementSettings placementData = new PlacementSettings().setRotation(rotation).setMirror(mirror);
-		center = center.add(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
+		center = center.offset(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
 		
-		MutableBoundingBox structB = structure.getMutableBoundingBox(placementData, center);
+		MutableBoundingBox structB = structure.getBoundingBox(placementData, center);
 		bounds = StructureHelper.intersectBoxes(bounds, structB);
 		
 		addStructureData(placementData);
-		structure.func_237152_b_(world, center, placementData.setBoundingBox(bounds), rand);
+		structure.placeInWorld(world, center, placementData.setBoundingBox(bounds), rand);
 		
 		StructureHelper.erodeIntense(world, bounds, rand);
-		BlockHelper.fixBlocks(world, new BlockPos(bounds.minX, bounds.minY, bounds.minZ), new BlockPos(bounds.maxX, bounds.maxY, bounds.maxZ));
+		BlockHelper.fixBlocks(world, new BlockPos(bounds.x0, bounds.y0, bounds.z0), new BlockPos(bounds.x1, bounds.y1, bounds.z1));
 		
 		return true;
 	}

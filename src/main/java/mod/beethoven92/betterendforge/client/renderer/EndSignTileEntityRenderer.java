@@ -43,60 +43,60 @@ public class EndSignTileEntityRenderer extends TileEntityRenderer<ESignTileEntit
 	public void render(ESignTileEntity signBlockEntity, float tickDelta, MatrixStack matrixStack,
 			IRenderTypeBuffer provider, int light, int overlay) {
 		BlockState state = signBlockEntity.getBlockState();
-		matrixStack.push();
+		matrixStack.pushPose();
 
 		matrixStack.translate(0.5D, 0.5D, 0.5D);
-		float angle = -((float) ((Integer) state.get(StandingSignBlock.ROTATION) * 360) / 16.0F);
+		float angle = -((float) ((Integer) state.getValue(StandingSignBlock.ROTATION) * 360) / 16.0F);
 
 		BlockState blockState = signBlockEntity.getBlockState();
-		if (blockState.get(EndSignBlock.FLOOR)) {
-			matrixStack.rotate(Vector3f.YP.rotationDegrees(angle));
-			this.model.signStick.showModel = true;
+		if (blockState.getValue(EndSignBlock.FLOOR)) {
+			matrixStack.mulPose(Vector3f.YP.rotationDegrees(angle));
+			this.model.stick.visible = true;
 		} else {
-			matrixStack.rotate(Vector3f.YP.rotationDegrees(angle + 180));
+			matrixStack.mulPose(Vector3f.YP.rotationDegrees(angle + 180));
 			matrixStack.translate(0.0D, -0.3125D, -0.4375D);
-			this.model.signStick.showModel = false;
+			this.model.stick.visible = false;
 		}
 
-		matrixStack.push();
+		matrixStack.pushPose();
 		matrixStack.scale(0.6666667F, -0.6666667F, -0.6666667F);
 		IVertexBuilder vertexConsumer = getConsumer(provider, state.getBlock());
-		model.signBoard.render(matrixStack, vertexConsumer, light, overlay);
-		model.signStick.render(matrixStack, vertexConsumer, light, overlay);
-		matrixStack.pop();
-		FontRenderer textRenderer = renderDispatcher.getFontRenderer();
+		model.sign.render(matrixStack, vertexConsumer, light, overlay);
+		model.stick.render(matrixStack, vertexConsumer, light, overlay);
+		matrixStack.popPose();
+		FontRenderer textRenderer = renderer.getFont();
 		matrixStack.translate(0.0D, 0.3333333432674408D, 0.046666666865348816D);
 		matrixStack.scale(0.010416667F, -0.010416667F, 0.010416667F);
 		int m = signBlockEntity.getTextColor().getTextColor();
-		int n = (int) (NativeImage.getRed(m) * 0.4D);
-		int o = (int) (NativeImage.getGreen(m) * 0.4D);
-		int p = (int) (NativeImage.getBlue(m) * 0.4D);
-		int q = NativeImage.getCombined(0, p, o, n);
+		int n = (int) (NativeImage.getR(m) * 0.4D);
+		int o = (int) (NativeImage.getG(m) * 0.4D);
+		int p = (int) (NativeImage.getB(m) * 0.4D);
+		int q = NativeImage.combine(0, p, o, n);
 
 		for (int s = 0; s < 4; ++s) {
 			IReorderingProcessor orderedText = signBlockEntity.getTextBeingEditedOnRow(s, (text) -> {
-				List<IReorderingProcessor> list = textRenderer.trimStringToWidth(text, 90);
-				return list.isEmpty() ? IReorderingProcessor.field_242232_a : (IReorderingProcessor) list.get(0);
+				List<IReorderingProcessor> list = textRenderer.split(text, 90);
+				return list.isEmpty() ? IReorderingProcessor.EMPTY : (IReorderingProcessor) list.get(0);
 			});
 			if (orderedText != null) {
-				float t = (float) (-textRenderer.func_243245_a(orderedText) / 2);
-				textRenderer.func_238416_a_((IReorderingProcessor) orderedText, t, (float) (s * 10 - 20), q, false,
-						matrixStack.getLast().getMatrix(), provider, false, 0, light);
+				float t = (float) (-textRenderer.width(orderedText) / 2);
+				textRenderer.drawInBatch((IReorderingProcessor) orderedText, t, (float) (s * 10 - 20), q, false,
+						matrixStack.last().pose(), provider, false, 0, light);
 			}
 		}
 
-		matrixStack.pop();
+		matrixStack.popPose();
 	}
 
 	public static RenderMaterial getModelTexture(Block block) {
 		WoodType signType2;
 		if (block instanceof AbstractSignBlock) {
-			signType2 = ((AbstractSignBlock) block).getWoodType();
+			signType2 = ((AbstractSignBlock) block).type();
 		} else {
 			signType2 = WoodType.OAK;
 		}
 
-		return Atlases.getSignMaterial(signType2);
+		return Atlases.signTexture(signType2);
 	}
 
 	public static IVertexBuilder getConsumer(IRenderTypeBuffer provider, Block block) {
@@ -104,14 +104,14 @@ public class EndSignTileEntityRenderer extends TileEntityRenderer<ESignTileEntit
 	}
 
 	static {
-		defaultLayer = RenderType.getEntitySolid(new ResourceLocation("textures/entity/sign/oak.png"));
+		defaultLayer = RenderType.entitySolid(new ResourceLocation("textures/entity/sign/oak.png"));
 
 		ModItems.ITEMS.getEntries().forEach((item) -> {
 			if (item.get() instanceof BlockItem) {
 				Block block = ((BlockItem) item.get()).getBlock();
 				if (block instanceof EndSignBlock) {
 					String name = block.getRegistryName().getPath();
-					RenderType layer = RenderType.getEntitySolid(
+					RenderType layer = RenderType.entitySolid(
 							new ResourceLocation(BetterEnd.MOD_ID, "textures/entity/sign/" + name + ".png"));
 					LAYERS.put(block, layer);
 				}

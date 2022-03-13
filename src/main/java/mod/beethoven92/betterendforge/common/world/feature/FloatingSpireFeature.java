@@ -23,7 +23,7 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 public class FloatingSpireFeature extends SpireFeature
 {
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
 		NoFeatureConfig config) 
 	{
 		int minY = world.getHeight(Type.WORLD_SURFACE, pos.getX(), pos.getZ());
@@ -46,20 +46,20 @@ public class FloatingSpireFeature extends SpireFeature
 		
 		OpenSimplexNoise noise = new OpenSimplexNoise(rand.nextLong());
 		sdf = new SDFDisplacement().setFunction((vec) -> {
-			return (float) (Math.abs(noise.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1)) * 3F + Math.abs(noise.eval(vec.getX() * 0.3, vec.getY() * 0.3 + 100, vec.getZ() * 0.3)) * 1.3F);
+			return (float) (Math.abs(noise.eval(vec.x() * 0.1, vec.y() * 0.1, vec.z() * 0.1)) * 3F + Math.abs(noise.eval(vec.x() * 0.3, vec.y() * 0.3 + 100, vec.z() * 0.3)) * 1.3F);
 		}).setSource(sdf);
 		final BlockPos center = pos;
 		List<BlockPos> support = Lists.newArrayList();
 		sdf.setReplaceFunction(REPLACE).addPostProcess((info) -> {
 			if (info.getStateUp().isAir()) {
 				if (rand.nextInt(16) == 0) {
-					support.add(info.getPos().up());
+					support.add(info.getPos().above());
 				}
-				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTop();
+				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 			}
 			else if (info.getState(Direction.UP, 3).isAir())
 			{
-				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getUnder();
+				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getUnderMaterial();
 			}
 			return info.getState();
 		});
@@ -68,7 +68,7 @@ public class FloatingSpireFeature extends SpireFeature
 		support.forEach((bpos) -> {
 			if (ModBiomes.getFromBiome(world.getBiome(bpos)) == ModBiomes.BLOSSOMING_SPIRES) 
 			{
-				ModFeatures.TENANEA_BUSH.generate(world, generator, rand, bpos, null);
+				ModFeatures.TENANEA_BUSH.place(world, generator, rand, bpos, null);
 			}
 		});
 		

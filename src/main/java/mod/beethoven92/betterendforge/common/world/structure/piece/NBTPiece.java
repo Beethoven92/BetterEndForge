@@ -36,7 +36,7 @@ public class NBTPiece extends StructurePiece
 		super(ModStructurePieces.NBT_PIECE, 0);
 		this.structureID = structureID;
 		this.structure = structure;
-		this.rotation = Rotation.randomRotation(random);
+		this.rotation = Rotation.getRandom(random);
 		this.mirror = Mirror.values()[random.nextInt(3)];
 		this.pos = StructureHelper.offsetPos(pos, structure, rotation, mirror);
 		this.erosion = erosion;
@@ -59,7 +59,7 @@ public class NBTPiece extends StructurePiece
 	}
 
 	@Override
-	protected void readAdditional(CompoundNBT tagCompound) 
+	protected void addAdditionalSaveData(CompoundNBT tagCompound) 
 	{
 		tagCompound.putString("Template", structureID.toString());
 		tagCompound.putInt("rotation", rotation.ordinal());
@@ -75,20 +75,20 @@ public class NBTPiece extends StructurePiece
 	}
 	
 	@Override
-	public boolean func_230383_a_(ISeedReader world, StructureManager manager, ChunkGenerator chunkGenerator,
+	public boolean postProcess(ISeedReader world, StructureManager manager, ChunkGenerator chunkGenerator,
 			Random random, MutableBoundingBox box, ChunkPos chunkPos, BlockPos blockPos) 
 	{
 	    MutableBoundingBox bounds = new MutableBoundingBox(box);
-		bounds.maxY = this.boundingBox.maxY;
-		bounds.minY = this.boundingBox.minY;
+		bounds.y1 = this.boundingBox.y1;
+		bounds.y0 = this.boundingBox.y0;
 		PlacementSettings placementData = new PlacementSettings().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
-		structure.func_237152_b_(world, pos, placementData, random);
+		structure.placeInWorld(world, pos, placementData, random);
 		if (erosion > 0) 
 		{
-			bounds.maxX = ModMathHelper.min(bounds.maxX, boundingBox.maxX);
-			bounds.minX = ModMathHelper.max(bounds.minX, boundingBox.minX);
-			bounds.maxZ = ModMathHelper.min(bounds.maxZ, boundingBox.maxZ);
-			bounds.minZ = ModMathHelper.max(bounds.minZ, boundingBox.minZ);
+			bounds.x1 = ModMathHelper.min(bounds.x1, boundingBox.x1);
+			bounds.x0 = ModMathHelper.max(bounds.x0, boundingBox.x0);
+			bounds.z1 = ModMathHelper.min(bounds.z1, boundingBox.z1);
+			bounds.z0 = ModMathHelper.max(bounds.z0, boundingBox.z0);
 			StructureHelper.erode(world, bounds, erosion, random);
 		}
 		if (cover) 

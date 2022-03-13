@@ -19,6 +19,6 @@ public class SDFRotation extends SDFUnary
 	{
 		POS.set(x, y, z);
 		POS.transform(rotation);
-		return source.getDistance(POS.getX(), POS.getY(), POS.getZ());
+		return source.getDistance(POS.x(), POS.y(), POS.z());
 	}
 }

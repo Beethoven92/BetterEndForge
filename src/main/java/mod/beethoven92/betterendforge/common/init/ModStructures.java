@@ -19,13 +19,13 @@ import java.util.function.Supplier;
 public class ModStructures 
 {
 
-	public static final Structure<NoFeatureConfig> MOUNTAIN = new MountainStructure(NoFeatureConfig.field_236558_a_);
-	public static final Structure<NoFeatureConfig> MEGALAKE = new MegaLakeStructure(NoFeatureConfig.field_236558_a_);
-	public static final Structure<NoFeatureConfig> MEGALAKE_SMALL = new MegaLakeStructure(NoFeatureConfig.field_236558_a_);
-	public static final Structure<NoFeatureConfig> GIANT_MOSSY_GLOWSHROOM = new GiantMossyGlowshroomStructure(NoFeatureConfig.field_236558_a_);
-	public static final Structure<NoFeatureConfig> PAINTED_MOUNTAIN = new PaintedMountainStructure(NoFeatureConfig.field_236558_a_);
-	public static final Structure<NoFeatureConfig> ETERNAL_PORTAL = new EternalPortalStructure(NoFeatureConfig.field_236558_a_);
-	public static final Structure<NoFeatureConfig> GIANT_ICE_STAR = new GiantIceStarStructure(NoFeatureConfig.field_236558_a_);
+	public static final Structure<NoFeatureConfig> MOUNTAIN = new MountainStructure(NoFeatureConfig.CODEC);
+	public static final Structure<NoFeatureConfig> MEGALAKE = new MegaLakeStructure(NoFeatureConfig.CODEC);
+	public static final Structure<NoFeatureConfig> MEGALAKE_SMALL = new MegaLakeStructure(NoFeatureConfig.CODEC);
+	public static final Structure<NoFeatureConfig> GIANT_MOSSY_GLOWSHROOM = new GiantMossyGlowshroomStructure(NoFeatureConfig.CODEC);
+	public static final Structure<NoFeatureConfig> PAINTED_MOUNTAIN = new PaintedMountainStructure(NoFeatureConfig.CODEC);
+	public static final Structure<NoFeatureConfig> ETERNAL_PORTAL = new EternalPortalStructure(NoFeatureConfig.CODEC);
+	public static final Structure<NoFeatureConfig> GIANT_ICE_STAR = new GiantIceStarStructure(NoFeatureConfig.CODEC);
 
 	public static void registerStructures(Register<Structure<?>> event)
     {
@@ -51,11 +51,11 @@ public class ModStructures
     public static <F extends Structure<?>> void setupStructure(F structure,
     		StructureSeparationSettings structureSeparationSettings)
     {
-        Structure.NAME_STRUCTURE_BIMAP.put(structure.getRegistryName().toString(), structure);
+        Structure.STRUCTURES_REGISTRY.put(structure.getRegistryName().toString(), structure);
 
-        DimensionStructuresSettings.field_236191_b_ =
+        DimensionStructuresSettings.DEFAULTS =
                 ImmutableMap.<Structure<?>, StructureSeparationSettings>builder()
-                        .putAll(DimensionStructuresSettings.field_236191_b_)
+                        .putAll(DimensionStructuresSettings.DEFAULTS)
                         .put(structure, structureSeparationSettings)
                         .build();
     }

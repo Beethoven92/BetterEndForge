@@ -44,13 +44,13 @@ public class CavePiece extends BasePiece {
 
 
     @Override
-	public boolean func_230383_a_(ISeedReader world, StructureManager arg, ChunkGenerator chunkGenerator, Random random, MutableBoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
-		int x1 = ModMathHelper.max(this.getBoundingBox().minX, blockBox.minX);
-		int z1 = ModMathHelper.max(this.getBoundingBox().minZ, blockBox.minZ);
-		int x2 = ModMathHelper.min(this.getBoundingBox().maxX, blockBox.maxX);
-		int z2 = ModMathHelper.min(this.getBoundingBox().maxZ, blockBox.maxZ);
-		int y1 = this.getBoundingBox().minY;
-		int y2 = this.getBoundingBox().maxY;
+	public boolean postProcess(ISeedReader world, StructureManager arg, ChunkGenerator chunkGenerator, Random random, MutableBoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+		int x1 = ModMathHelper.max(this.getBoundingBox().x0, blockBox.x0);
+		int z1 = ModMathHelper.max(this.getBoundingBox().z0, blockBox.z0);
+		int x2 = ModMathHelper.min(this.getBoundingBox().x1, blockBox.x1);
+		int z2 = ModMathHelper.min(this.getBoundingBox().z1, blockBox.z1);
+		int y1 = this.getBoundingBox().y0;
+		int y2 = this.getBoundingBox().y1;
 		
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
@@ -72,7 +72,7 @@ public class CavePiece extends BasePiece {
 					double r2 = r - 4.5;
 					double dist = xsq + ysq + zsq;
 					if (dist < r2 * r2) {
-						if (world.getBlockState(pos).isIn(ModTags.END_GROUND)) {
+						if (world.getBlockState(pos).is(ModTags.END_GROUND)) {
 							BlockHelper.setWithoutUpdate(world, pos, CAVE_AIR);
 						}
 					}
@@ -90,7 +90,7 @@ public class CavePiece extends BasePiece {
 
 	
 	@Override
-	protected void readAdditional(CompoundNBT tag) {
+	protected void addAdditionalSaveData(CompoundNBT tag) {
 		center = NBTUtil.readBlockPos(tag.getCompound("center"));
 		radius = tag.getFloat("radius");
 	}

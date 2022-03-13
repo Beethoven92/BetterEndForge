@@ -238,10 +238,10 @@ public class BiomeTemplate
 	
 	public BiomeTemplate setSurface(Block block) 
 	{
-		setSurface(() -> SurfaceBuilder.DEFAULT.func_242929_a(new SurfaceBuilderConfig(
-				block.getDefaultState(),
-				Blocks.END_STONE.getDefaultState(),
-				Blocks.END_STONE.getDefaultState()
+		setSurface(() -> SurfaceBuilder.DEFAULT.configured(new SurfaceBuilderConfig(
+				block.defaultBlockState(),
+				Blocks.END_STONE.defaultBlockState(),
+				Blocks.END_STONE.defaultBlockState()
 		)));
 		return this;
 	}
@@ -285,72 +285,72 @@ public class BiomeTemplate
 		// Set mob spawns
 		for (SpawnInfo info : mobs)
 		{
-			spawnSettings.withSpawner(info.type, 
+			spawnSettings.addSpawn(info.type, 
 					new MobSpawnInfo.Spawners(info.entity, info.weight, info.minGroupSize, info.maxGroupSize));
 		}
 		
 		spawns.forEach((entry) -> {
-			spawnSettings.withSpawner(entry.type.getClassification(), entry);
+			spawnSettings.addSpawn(entry.type.getCategory(), entry);
 		});
 		
 		// Set biome general features
 		if (surface != null)
 		{
-			generationSettings.withSurfaceBuilder(surface);
+			generationSettings.surfaceBuilder(surface);
 		}
 		else
 		{
-			generationSettings.withSurfaceBuilder(ConfiguredSurfaceBuilders.field_244173_e);
+			generationSettings.surfaceBuilder(ConfiguredSurfaceBuilders.END);
 		}
 		
 		for (CarverInfo info : carvers)
 		{
-			generationSettings.withCarver(info.carverStep, info.carver);
+			generationSettings.addCarver(info.carverStep, info.carver);
 		}
 		for(FeatureInfo info : features)
 		{
-			generationSettings.withFeature(info.stage, info.feature);
+			generationSettings.addFeature(info.stage, info.feature);
 		}
 		for(StructureFeature<?,?> structure : structures)
 		{
-			generationSettings.withStructure(structure);
+			generationSettings.addStructureStart(structure);
 		}
 		
 		// Set effects
-		effects.withSkyColor(0).
-		        setWaterFogColor(waterFogColor).
-		        setWaterColor(waterColor).
-		        setFogColor(fogColor).
-		        withFoliageColor(foliageColor).
-		        withGrassColor(grassColor);
+		effects.skyColor(0).
+		        waterFogColor(waterFogColor).
+		        waterColor(waterColor).
+		        fogColor(fogColor).
+		        foliageColorOverride(foliageColor).
+		        grassColorOverride(grassColor);
 		
 		// Set sound effects
-		if (ambient != null) effects.setAmbientSound(ambient);
-		if (mood != null) effects.setMoodSound(mood);
-		if (additions != null) effects.setAdditionsSound(additions);
+		if (ambient != null) effects.ambientLoopSound(ambient);
+		if (mood != null) effects.ambientMoodSound(mood);
+		if (additions != null) effects.ambientAdditionsSound(additions);
 		if (music != null)
 		{
-			effects.setMusic(new BackgroundMusicSelector(music, 600, 2400, true));
+			effects.backgroundMusic(new BackgroundMusicSelector(music, 600, 2400, true));
 		}
 		else
 		{
-			effects.setMusic(BackgroundMusicTracks.END_MUSIC);
+			effects.backgroundMusic(BackgroundMusicTracks.END);
 		}
 		
 		// Set particles
-		if (particle != null) effects.setParticle(particle);
+		if (particle != null) effects.ambientParticle(particle);
 		
 		return new Biome.Builder().
-				         category(isCaveBiome ? Category.NONE : Category.THEEND).
+				         biomeCategory(isCaveBiome ? Category.NONE : Category.THEEND).
 				         precipitation(RainType.NONE).
 				         depth(this.depth).
 				         scale(this.scale).
 				         temperature(this.temperature).
-				         withTemperatureModifier(TemperatureModifier.NONE).
+				         temperatureAdjustment(TemperatureModifier.NONE).
 				         downfall(this.downfall).
-				         setEffects(effects.build()).
-				         withGenerationSettings(generationSettings.build()).
-				         withMobSpawnSettings(spawnSettings.copy()).
+				         specialEffects(effects.build()).
+				         generationSettings(generationSettings.build()).
+				         mobSpawnSettings(spawnSettings.build()).
 				         build();
 	}
 	

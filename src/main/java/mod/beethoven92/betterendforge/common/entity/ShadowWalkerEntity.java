@@ -48,33 +48,33 @@ public class ShadowWalkerEntity extends MonsterEntity
 	
 	public static AttributeModifierMap.MutableAttribute registerAttributes() 
 	{
-		return MonsterEntity.func_234295_eP_().
+		return MonsterEntity.createMonsterAttributes().
 				//createMutableAttribute(Attributes.MAX_HEALTH, 8.0).
-				createMutableAttribute(Attributes.FOLLOW_RANGE, 35.0).
-				createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.15).
-				createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.5).
-				createMutableAttribute(Attributes.ARMOR, 2.0).
-				createMutableAttribute(Attributes.ZOMBIE_SPAWN_REINFORCEMENTS);
+				add(Attributes.FOLLOW_RANGE, 35.0).
+				add(Attributes.MOVEMENT_SPEED, 0.15).
+				add(Attributes.ATTACK_DAMAGE, 4.5).
+				add(Attributes.ARMOR, 2.0).
+				add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
 	}
 	
 	@Override
 	public void tick() 
 	{
 		super.tick();
-		world.addParticle(ParticleTypes.ASH,
-				getPosX() + rand.nextGaussian() * 0.2,
-				getPosY() + rand.nextGaussian() * 0.5 + 1,
-				getPosZ() + rand.nextGaussian() * 0.2,
+		level.addParticle(ParticleTypes.ASH,
+				getX() + random.nextGaussian() * 0.2,
+				getY() + random.nextGaussian() * 0.5 + 1,
+				getZ() + random.nextGaussian() * 0.2,
 				0, 0, 0);
-		world.addParticle(ParticleTypes.SMOKE,
-				getPosX() + rand.nextGaussian() * 0.2,
-				getPosY() + rand.nextGaussian() * 0.5 + 1,
-				getPosZ() + rand.nextGaussian() * 0.2,
+		level.addParticle(ParticleTypes.SMOKE,
+				getX() + random.nextGaussian() * 0.2,
+				getY() + random.nextGaussian() * 0.5 + 1,
+				getZ() + random.nextGaussian() * 0.2,
 				0, 0, 0);
-		world.addParticle(ParticleTypes.ENTITY_EFFECT,
-				getPosX() + rand.nextGaussian() * 0.2,
-				getPosY() + rand.nextGaussian() * 0.5 + 1,
-				getPosZ() + rand.nextGaussian() * 0.2,
+		level.addParticle(ParticleTypes.ENTITY_EFFECT,
+				getX() + random.nextGaussian() * 0.2,
+				getY() + random.nextGaussian() * 0.5 + 1,
+				getZ() + random.nextGaussian() * 0.2,
 				0, 0, 0);
 	}
 	
@@ -103,37 +103,37 @@ public class ShadowWalkerEntity extends MonsterEntity
 	@Override
 	protected float getSoundVolume() 
 	{
-		return ModMathHelper.randRange(0.25F, 0.5F, rand);
+		return ModMathHelper.randRange(0.25F, 0.5F, random);
 	}
 	
 	@Override
-	protected float getSoundPitch() 
+	protected float getVoicePitch() 
 	{
-		return ModMathHelper.randRange(0.75F, 1.25F, rand);
+		return ModMathHelper.randRange(0.75F, 1.25F, random);
 	}
 	
 	public static boolean canSpawn(EntityType<ShadowWalkerEntity> type, IServerWorld world, SpawnReason spawnReason,
 			BlockPos pos, Random random) 
 	{
-		if (MonsterEntity.canMonsterSpawnInLight(type, world, spawnReason, pos, random)) 
+		if (MonsterEntity.checkMonsterSpawnRules(type, world, spawnReason, pos, random)) 
 		{
-			AxisAlignedBB box = new AxisAlignedBB(pos).grow(16);
-			List<ShadowWalkerEntity> entities = world.getEntitiesWithinAABB(ShadowWalkerEntity.class, box, (entity) -> { return true; });
+			AxisAlignedBB box = new AxisAlignedBB(pos).inflate(16);
+			List<ShadowWalkerEntity> entities = world.getEntitiesOfClass(ShadowWalkerEntity.class, box, (entity) -> { return true; });
 			return entities.size() < 6;
 		}
 		return false;
 	}
 	
 	@Override
-	public boolean attackEntityAsMob(Entity entityIn) 
+	public boolean doHurtTarget(Entity entityIn) 
 	{
-		boolean attack = super.attackEntityAsMob(entityIn);
+		boolean attack = super.doHurtTarget(entityIn);
 		if (attack && entityIn instanceof LivingEntity) 
 		{
 			LivingEntity living = (LivingEntity) entityIn;
-			if (!(living.isPotionActive(Effects.BLINDNESS))) 
+			if (!(living.hasEffect(Effects.BLINDNESS))) 
 			{
-				living.addPotionEffect(new EffectInstance(Effects.BLINDNESS, 60));
+				living.addEffect(new EffectInstance(Effects.BLINDNESS, 60));
 			}
 		}
 		return attack;
@@ -151,17 +151,17 @@ public class ShadowWalkerEntity extends MonsterEntity
 		}
 
 		@Override
-		public void startExecuting()
+		public void start()
 		{
-			super.startExecuting();
+			super.start();
 			this.ticks = 0;
 		}
 		
 		@Override
-		public void resetTask() 
+		public void stop() 
 		{
-			super.resetTask();
-			this.walker.setAggroed(false);
+			super.stop();
+			this.walker.setAggressive(false);
 		}
 
 		@Override
@@ -169,13 +169,13 @@ public class ShadowWalkerEntity extends MonsterEntity
 		{
 			super.tick();
 			++this.ticks;
-			if (this.ticks >= 5 && this.func_234041_j_() < this.func_234042_k_() / 2) 
+			if (this.ticks >= 5 && this.getTicksUntilNextAttack() < this.getAttackInterval() / 2) 
 			{
-				this.walker.setAggroed(true);
+				this.walker.setAggressive(true);
 			}
 			else 
 			{
-				this.walker.setAggroed(false);
+				this.walker.setAggressive(false);
 			}
 		}
 	}

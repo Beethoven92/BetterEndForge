@@ -23,7 +23,7 @@ import net.minecraft.world.gen.SimplexNoiseGenerator;
 public class BetterEndBiomeProvider extends BiomeProvider
 {
 	public static final Codec<BetterEndBiomeProvider> BETTER_END_CODEC = RecordCodecBuilder.create(
-			(builder) -> {return builder.group(RegistryLookupCodec.getLookUpCodec(Registry.BIOME_KEY).forGetter(
+			(builder) -> {return builder.group(RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter(
 					(provider) -> {return provider.lookupRegistry;}), Codec.LONG.fieldOf("seed").stable().forGetter(
 							(provider) -> {return provider.seed;})).
 					apply(builder, builder.stable(BetterEndBiomeProvider::new));
@@ -51,7 +51,7 @@ public class BetterEndBiomeProvider extends BiomeProvider
 		this.seed = seed;
 
 		SharedSeedRandom sharedseedrandom = new SharedSeedRandom(seed);
-	    sharedseedrandom.skip(17292);
+	    sharedseedrandom.consumeCount(17292);
 	    this.generator = new SimplexNoiseGenerator(sharedseedrandom);
 	    
 	    ModBiomes.mutateRegistry(lookupRegistry);
@@ -101,7 +101,7 @@ public class BetterEndBiomeProvider extends BiomeProvider
 		}
 		else 
 		{
-			float height = EndBiomeProvider.getRandomNoise(generator, (x >> 1) + 1, (z >> 1) + 1) + (float) SMALL_NOISE.eval(x, z) * 5;
+			float height = EndBiomeProvider.getHeightValue(generator, (x >> 1) + 1, (z >> 1) + 1) + (float) SMALL_NOISE.eval(x, z) * 5;
 	
 			if (height > -20F && height < -5F) 
 			{
@@ -114,20 +114,20 @@ public class BetterEndBiomeProvider extends BiomeProvider
 	}
 
 	@Override
-	protected Codec<? extends BiomeProvider> getBiomeProviderCodec() 
+	protected Codec<? extends BiomeProvider> codec() 
 	{
 		return BETTER_END_CODEC;
 	}
 
 	@Override
-	public BiomeProvider getBiomeProvider(long seed) 
+	public BiomeProvider withSeed(long seed) 
 	{
 		return new BetterEndBiomeProvider(this.lookupRegistry, seed);
 	}
 	
 	public static void register()
 	{
-		Registry.register(Registry.BIOME_PROVIDER_CODEC, 
+		Registry.register(Registry.BIOME_SOURCE, 
 				new ResourceLocation(BetterEnd.MOD_ID, "betterend_biome_provider"), BETTER_END_CODEC);
 	}
 }

@@ -37,9 +37,9 @@ import net.minecraft.world.gen.feature.template.TemplateManager;
 
 public class LakePiece extends StructurePiece
 {
-	private static final BlockState ENDSTONE = Blocks.END_STONE.getDefaultState();
-	private static final BlockState AIR = Blocks.AIR.getDefaultState();
-	private static final BlockState WATER = Blocks.WATER.getDefaultState();
+	private static final BlockState ENDSTONE = Blocks.END_STONE.defaultBlockState();
+	private static final BlockState AIR = Blocks.AIR.defaultBlockState();
+	private static final BlockState WATER = Blocks.WATER.defaultBlockState();
 	
 	private Map<Integer, Byte> heightmap = Maps.newHashMap();
 	
@@ -81,7 +81,7 @@ public class LakePiece extends StructurePiece
 	}
 
 	@Override
-	protected void readAdditional(CompoundNBT tagCompound) 
+	protected void addAdditionalSaveData(CompoundNBT tagCompound) 
 	{
 		tagCompound.putInt("centerX", this.center.getX());
 	    tagCompound.putInt("centerY", this.center.getY());
@@ -104,11 +104,11 @@ public class LakePiece extends StructurePiece
 	}
 	
 	@Override
-	public boolean func_230383_a_(ISeedReader world, StructureManager manager, ChunkGenerator chunkGenerator,
+	public boolean postProcess(ISeedReader world, StructureManager manager, ChunkGenerator chunkGenerator,
 			Random random, MutableBoundingBox box, ChunkPos chunkPos, BlockPos blockPos) 
 	{
-		int minY = this.boundingBox.minY;
-		int maxY = this.boundingBox.maxY;
+		int minY = this.boundingBox.y0;
+		int maxY = this.boundingBox.y1;
 		int sx = chunkPos.x << 4;
 		int sz = chunkPos.z << 4;
 		Mutable mut = new Mutable();
@@ -148,23 +148,23 @@ public class LakePiece extends StructurePiece
 						{
 							state = mut.getY() < center.getY() ? WATER : AIR;
 							chunk.setBlockState(mut, state, false);
-							removePlant(chunk, mut.toImmutable().up());
+							removePlant(chunk, mut.immutable().above());
 						}
 					}
 					else if (dist <= r3 && mut.getY() < center.getY()) 
 					{
 						BlockState state = chunk.getBlockState(mut);
-						BlockPos worldPos = mut.add(sx, 0, sz);
-						if (!state.isNormalCube(world, worldPos) && !state.isOpaqueCube(world, worldPos)) 
+						BlockPos worldPos = mut.offset(sx, 0, sz);
+						if (!state.isRedstoneConductor(world, worldPos) && !state.isSolidRender(world, worldPos)) 
 						{
-							state = chunk.getBlockState(mut.up());
+							state = chunk.getBlockState(mut.above());
 							if (state.isAir()) 
 							{
-								state = random.nextBoolean() ? ENDSTONE : world.getBiome(worldPos).getGenerationSettings().getSurfaceBuilderConfig().getTop();
+								state = random.nextBoolean() ? ENDSTONE : world.getBiome(worldPos).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 							}
 							else 
 							{
-								state = state.getFluidState().isEmpty() ? ENDSTONE : ModBlocks.ENDSTONE_DUST.get().getDefaultState();
+								state = state.getFluidState().isEmpty() ? ENDSTONE : ModBlocks.ENDSTONE_DUST.get().defaultBlockState();
 							}
 							chunk.setBlockState(mut, state, false);
 						}
@@ -178,7 +178,7 @@ public class LakePiece extends StructurePiece
 	}
 	
 	private boolean canReplace(IChunk chunk, BlockPos pos, BlockState state) {
-		if (state.isIn(ModTags.GEN_TERRAIN) || state.isAir())
+		if (state.is(ModTags.GEN_TERRAIN) || state.isAir())
 			return true;
 		Block b = state.getBlock();
 		if (b instanceof PlantBlock && !(b instanceof IWaterLoggable)) {
@@ -192,19 +192,19 @@ public class LakePiece extends StructurePiece
 		BlockPos p = new BlockPos(pos);
 		while (chunk.getBlockState(p).getBlock() instanceof PlantBlock) {
 			chunk.setBlockState(p, AIR, false);
-			p = p.up();
+			p = p.above();
 		}
-		p = new BlockPos(pos).down();
+		p = new BlockPos(pos).below();
 		while (chunk.getBlockState(p).getBlock() instanceof PlantBlock) {
 			chunk.setBlockState(p, AIR, false);
-			p = p.down();
+			p = p.below();
 		}
 	}
 
 	private void fixWater(ISeedReader world, IChunk chunk, Mutable mut, Random random, int sx, int sz) 
 	{
-		int minY = this.boundingBox.minY;
-		int maxY = this.boundingBox.maxY;
+		int minY = this.boundingBox.y0;
+		int maxY = this.boundingBox.y1;
 		for (int x = 0; x < 16; x++) 
 		{
 			mut.setX(x);
@@ -225,11 +225,11 @@ public class LakePiece extends StructurePiece
 							BlockState bState = chunk.getBlockState(mut);
 							if (bState.isAir()) 
 							{
-								bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.add(sx, 0, sz)).getGenerationSettings().getSurfaceBuilderConfig().getTop();
+								bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz)).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 							}
 							else 
 							{
-								bState = bState.getFluidState().isEmpty() ? ENDSTONE : ModBlocks.ENDSTONE_DUST.get().getDefaultState();
+								bState = bState.getFluidState().isEmpty() ? ENDSTONE : ModBlocks.ENDSTONE_DUST.get().defaultBlockState();
 							}
 							
 							mut.setY(y);
@@ -241,17 +241,17 @@ public class LakePiece extends StructurePiece
 							mut.setY(y);
 							for (Direction dir: BlockHelper.HORIZONTAL_DIRECTIONS) 
 							{
-								BlockPos wPos = mut.add(dir.getXOffset(), 0, dir.getZOffset());
+								BlockPos wPos = mut.offset(dir.getStepX(), 0, dir.getStepZ());
 								if (chunk.getBlockState(wPos).isAir()) 
 								{
 									mut.setY(y + 1);
 									BlockState bState = chunk.getBlockState(mut);
 									if (bState.isAir()) 
 									{
-										bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.add(sx, 0, sz)).getGenerationSettings().getSurfaceBuilderConfig().getTop();
+										bState = random.nextBoolean() ? ENDSTONE : world.getBiome(mut.offset(sx, 0, sz)).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 									}
 									else {
-										bState = bState.getFluidState().isEmpty() ? ENDSTONE : ModBlocks.ENDSTONE_DUST.get().getDefaultState();
+										bState = bState.getFluidState().isEmpty() ? ENDSTONE : ModBlocks.ENDSTONE_DUST.get().defaultBlockState();
 									}
 									mut.setY(y);
 									makeEndstonePillar(chunk, mut, bState);
@@ -261,7 +261,7 @@ public class LakePiece extends StructurePiece
 						}
 						else if (chunk.getBlockState(mut.move(Direction.UP)).isAir()) 
 						{
-							chunk.getFluidsToBeTicked().scheduleTick(mut.move(Direction.DOWN), state.getFluid(), 0);
+							chunk.getLiquidTicks().scheduleTick(mut.move(Direction.DOWN), state.getType(), 0);
 						}
 					}
 				}

@@ -26,7 +26,7 @@ public abstract class NoiseChunkGeneratorMixin extends ChunkGenerator
 {
 	@Final
 	@Shadow
-	protected Supplier<DimensionSettings> field_236080_h_;
+	protected Supplier<DimensionSettings> settings;
 
 	public NoiseChunkGeneratorMixin(BiomeProvider populationSource, BiomeProvider biomeSource, DimensionStructuresSettings structuresConfig, long worldSeed) {
 		super(populationSource, biomeSource, structuresConfig, worldSeed);
@@ -41,10 +41,10 @@ public abstract class NoiseChunkGeneratorMixin extends ChunkGenerator
 	@Inject(method = "fillNoiseColumn([DII)V", at = @At("HEAD"), cancellable = true, allow = 2)
 	private void beFillNoiseColumn(double[] buffer, int x, int z, CallbackInfo info)
 	{
-		if (GeneratorOptions.useNewGenerator() && field_236080_h_.get().func_242744_a(DimensionSettings.field_242737_f)) // End settings
+		if (GeneratorOptions.useNewGenerator() && settings.get().stable(DimensionSettings.END)) // End settings
 		{
 
-			TerrainGenerator.fillTerrainDensity(buffer, x, z, getBiomeProvider());
+			TerrainGenerator.fillTerrainDensity(buffer, x, z, getBiomeSource());
 			info.cancel();
 
 		}

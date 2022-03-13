@@ -51,8 +51,8 @@ public abstract class EndPodiumFeatureMixin
 			BlockPos blockPos = be_updatePos(origin, world);
 			Template structure = StructureHelper.readStructure(BetterEnd.makeID(activePortal ? "portal/end_portal_active" : "portal/end_portal_inactive"));
 			Vector3i size = structure.getSize();
-			blockPos = blockPos.add(-(size.getX() >> 1), -1, -(size.getZ() >> 1));
-			structure.func_237146_a_(world, blockPos, blockPos, new PlacementSettings(), random, 2);
+			blockPos = blockPos.offset(-(size.getX() >> 1), -1, -(size.getZ() >> 1));
+			structure.placeInWorld(world, blockPos, blockPos, new PlacementSettings(), random, 2);
 			info.setReturnValue(true);
 			info.cancel();
 		}
@@ -63,7 +63,7 @@ public abstract class EndPodiumFeatureMixin
 		if (GeneratorOptions.useNewGenerator()) {
 			BlockPos pos = GeneratorOptions.getPortalPos();
 			if (pos.equals(BlockPos.ZERO)) {
-				int y = world.getChunk(0, 0, ChunkStatus.FULL).getTopBlockY(Heightmap.Type.WORLD_SURFACE, blockPos.getX(), blockPos.getZ());
+				int y = world.getChunk(0, 0, ChunkStatus.FULL).getHeight(Heightmap.Type.WORLD_SURFACE, blockPos.getX(), blockPos.getZ());
 				if (y < 1) {
 					y = 65;
 				}

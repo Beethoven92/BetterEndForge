@@ -10,6 +10,8 @@ import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class HydraluxBlock extends UnderwaterPlantBlock
 {
 	public static final EnumProperty<HydraluxShape> SHAPE = BlockProperties.HYDRALUX_SHAPE;
@@ -20,26 +22,26 @@ public class HydraluxBlock extends UnderwaterPlantBlock
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		BlockState down = worldIn.getBlockState(pos.down());
-		HydraluxShape shape = state.get(SHAPE);
+		BlockState down = worldIn.getBlockState(pos.below());
+		HydraluxShape shape = state.getValue(SHAPE);
 		if (shape == HydraluxShape.FLOWER_BIG_TOP || shape == HydraluxShape.FLOWER_SMALL_TOP) 
 		{
-			return down.isIn(this);
+			return down.is(this);
 		}
 		else if (shape == HydraluxShape.ROOTS) 
 		{
-			return down.isIn(ModBlocks.SULPHURIC_ROCK.stone.get()) && worldIn.getBlockState(pos.up()).isIn(this);
+			return down.is(ModBlocks.SULPHURIC_ROCK.stone.get()) && worldIn.getBlockState(pos.above()).is(this);
 		}
 		else 
 		{
-			return down.isIn(this) && worldIn.getBlockState(pos.up()).isIn(this);
+			return down.is(this) && worldIn.getBlockState(pos.above()).is(this);
 		}
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(SHAPE);
 	}

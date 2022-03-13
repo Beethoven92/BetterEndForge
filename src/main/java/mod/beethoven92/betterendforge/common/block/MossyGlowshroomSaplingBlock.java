@@ -8,6 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.gen.feature.Feature;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class MossyGlowshroomSaplingBlock extends EndSaplingBlock
 {	
 	public MossyGlowshroomSaplingBlock(Properties properties) 
@@ -16,10 +18,10 @@ public class MossyGlowshroomSaplingBlock extends EndSaplingBlock
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		return worldIn.getBlockState(pos.down()).isIn(ModBlocks.END_MOSS.get()) || 
-				worldIn.getBlockState(pos.down()).isIn(ModBlocks.END_MYCELIUM.get());
+		return worldIn.getBlockState(pos.below()).is(ModBlocks.END_MOSS.get()) || 
+				worldIn.getBlockState(pos.below()).is(ModBlocks.END_MYCELIUM.get());
 	}
 
 	@Override

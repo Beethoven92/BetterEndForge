@@ -20,7 +20,7 @@ public abstract class WallScatterFeature extends Feature<NoFeatureConfig>
 	
 	public WallScatterFeature(int radius) 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 		this.radius = radius;
 	}
 	
@@ -29,7 +29,7 @@ public abstract class WallScatterFeature extends Feature<NoFeatureConfig>
 	public abstract void generate(ISeedReader world, Random random, BlockPos pos, Direction dir);
 	
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
+	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
 			BlockPos center, NoFeatureConfig config) 
 	{
 		int maxY = world.getHeight(Heightmap.Type.WORLD_SURFACE, center.getX(), center.getZ());
@@ -50,7 +50,7 @@ public abstract class WallScatterFeature extends Feature<NoFeatureConfig>
 				for (int z = -radius; z <= radius; z++) 
 				{
 					mut.setZ(center.getZ() + z);
-					if (random.nextInt(4) == 0 && world.isAirBlock(mut)) 
+					if (random.nextInt(4) == 0 && world.isEmptyBlock(mut)) 
 					{
 						shuffle(random);
 						for (Direction dir: DIR) 

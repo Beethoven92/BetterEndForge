@@ -12,10 +12,13 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 
+import net.minecraft.block.AbstractBlock.OffsetType;
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class EndLotusFlowerBlock extends Block
 {
-	private static final VoxelShape SHAPE_OUTLINE = Block.makeCuboidShape(2, 0, 2, 14, 14, 14);
-	private static final VoxelShape SHAPE_COLLISION = Block.makeCuboidShape(0, 0, 0, 16, 2, 16);
+	private static final VoxelShape SHAPE_OUTLINE = Block.box(2, 0, 2, 14, 14, 14);
+	private static final VoxelShape SHAPE_COLLISION = Block.box(0, 0, 0, 16, 2, 16);
 	
 	public EndLotusFlowerBlock(Properties properties) 
 	{
@@ -42,19 +45,19 @@ public class EndLotusFlowerBlock extends Block
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		BlockState down = worldIn.getBlockState(pos.down());
-		return down.isIn(ModBlocks.END_LOTUS_STEM.get());
+		BlockState down = worldIn.getBlockState(pos.below());
+		return down.is(ModBlocks.END_LOTUS_STEM.get());
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos)) 
+		if (!canSurvive(stateIn, worldIn, currentPos)) 
 		{
-			return Blocks.AIR.getDefaultState();
+			return Blocks.AIR.defaultBlockState();
 		}
 		else 
 		{

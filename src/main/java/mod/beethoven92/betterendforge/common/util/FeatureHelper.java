@@ -12,8 +12,8 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 public class FeatureHelper
 {
-	protected static final BlockState AIR = Blocks.AIR.getDefaultState();
-	protected static final BlockState WATER = Blocks.WATER.getDefaultState();
+	protected static final BlockState AIR = Blocks.AIR.defaultBlockState();
+	protected static final BlockState WATER = Blocks.WATER.defaultBlockState();
 
 	public static int getYOnSurface(ISeedReader world, int x, int z)
 	{
@@ -27,12 +27,12 @@ public class FeatureHelper
 	
 	public static BlockPos getPosOnSurface(ISeedReader world, BlockPos pos)
 	{
-		return world.getHeight(Type.WORLD_SURFACE, pos);
+		return world.getHeightmapPos(Type.WORLD_SURFACE, pos);
 	}
 	
 	public static BlockPos getPosOnSurfaceWG(ISeedReader world, BlockPos pos)
 	{
-		return world.getHeight(Type.WORLD_SURFACE_WG, pos);
+		return world.getHeightmapPos(Type.WORLD_SURFACE_WG, pos);
 	}
 	
 	public static BlockPos getPosOnSurfaceRaycast(ISeedReader world, BlockPos pos)
@@ -43,6 +43,6 @@ public class FeatureHelper
 	public static BlockPos getPosOnSurfaceRaycast(ISeedReader world, BlockPos pos, int dist)
 	{
 		int h = BlockHelper.downRay(world, pos, dist);
-		return pos.down(h);
+		return pos.below(h);
 	}
 }

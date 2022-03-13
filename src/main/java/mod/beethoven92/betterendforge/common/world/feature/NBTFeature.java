@@ -33,7 +33,7 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 {
 	public NBTFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 	
 	//protected static final DestructionStructureProcessor DESTRUCTION = new DestructionStructureProcessor();
@@ -87,7 +87,7 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 	}
 	
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos center,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos center,
 			NoFeatureConfig config) 
 	{
 		center = new BlockPos(((center.getX() >> 4) << 4) | 8, 128, ((center.getZ() >> 4) << 4) | 8);
@@ -103,14 +103,14 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 		Template structure = getStructure(world, center, rand);
 		Rotation rotation = getRotation(world, center, rand);
 		Mirror mirror = getMirror(world, center, rand);
-		BlockPos offset = Template.getTransformedPos(structure.getSize(), mirror, rotation, BlockPos.ZERO);
-		center = center.add(0, getYOffset(structure, world, center, rand) + 0.5, 0);
+		BlockPos offset = Template.transform(structure.getSize(), mirror, rotation, BlockPos.ZERO);
+		center = center.offset(0, getYOffset(structure, world, center, rand) + 0.5, 0);
 		
 		MutableBoundingBox bounds = makeBox(center);
 		PlacementSettings placementData = new PlacementSettings().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
 		addStructureData(placementData);
-		center = center.add(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
-		structure.func_237152_b_(world, center, placementData, rand);
+		center = center.offset(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
+		structure.placeInWorld(world, center, placementData, rand);
 		
 		TerrainMerge merge = getTerrainMerge(world, center, rand);
 		int x1 = center.getX();
@@ -144,19 +144,19 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 					mut.setZ(z);
 					mut.setY(surfMax);
 					BlockState state = world.getBlockState(mut);
-					if (!state.isIn(ModTags.GEN_TERRAIN) && state.isSolidSide(world, mut, Direction.DOWN)) 
+					if (!state.is(ModTags.GEN_TERRAIN) && state.isFaceSturdy(world, mut, Direction.DOWN)) 
 					{
 						for (int i = 0; i < 10; i++) 
 						{
 							mut.setY(mut.getY() - 1);
 							BlockState stateSt = world.getBlockState(mut);
-							if (!stateSt.isIn(ModTags.GEN_TERRAIN)) 
+							if (!stateSt.is(ModTags.GEN_TERRAIN)) 
 							{
 								if (merge == TerrainMerge.SURFACE) 
 								{
 									ISurfaceBuilderConfig surfaceConfig = world.getBiome(mut).getGenerationSettings().getSurfaceBuilderConfig();
-									boolean isTop = mut.getY() == surfMax && state.getMaterial().isOpaque();
-									BlockState top = isTop ? surfaceConfig.getTop() : surfaceConfig.getUnder();
+									boolean isTop = mut.getY() == surfMax && state.getMaterial().isSolidBlocking();
+									BlockState top = isTop ? surfaceConfig.getTopMaterial() : surfaceConfig.getUnderMaterial();
 									BlockHelper.setWithoutUpdate(world, mut, top);
 								}
 								else 
@@ -166,12 +166,12 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 							}
 							else 
 							{
-								if (stateSt.isIn(ModTags.END_GROUND) && state.getMaterial().isOpaque()) 
+								if (stateSt.is(ModTags.END_GROUND) && state.getMaterial().isSolidBlocking()) 
 								{
 									if (merge == TerrainMerge.SURFACE)
 									{
 										ISurfaceBuilderConfig surfaceConfig = world.getBiome(mut).getGenerationSettings().getSurfaceBuilderConfig();
-										BlockHelper.setWithoutUpdate(world, mut, surfaceConfig.getUnder());
+										BlockHelper.setWithoutUpdate(world, mut, surfaceConfig.getUnderMaterial());
 									}
 									else 
 									{
@@ -238,7 +238,7 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 		NbtModIdReplacer.readAndReplace(nbttagcompound, replacePath);
 		
 		Template template = new Template();
-		template.read(nbttagcompound);
+		template.load(nbttagcompound);
 		
 		return template;
 	}

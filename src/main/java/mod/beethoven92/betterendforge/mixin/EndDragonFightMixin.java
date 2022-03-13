@@ -80,18 +80,18 @@ public class EndDragonFightMixin {
 			}
 			
 			List<EnderCrystalEntity> crystals = Lists.newArrayList();
-			BlockPos center = GeneratorOptions.getPortalPos().up(5);
+			BlockPos center = GeneratorOptions.getPortalPos().above(5);
 			for (Direction dir : BlockHelper.HORIZONTAL_DIRECTIONS) {
-				BlockPos central = center.offset(dir, 4);
-				List<EnderCrystalEntity> crystalList = world.getEntitiesWithinAABB(
+				BlockPos central = center.relative(dir, 4);
+				List<EnderCrystalEntity> crystalList = world.getEntitiesOfClass(
 					EnderCrystalEntity.class,
-					new AxisAlignedBB(central.down(255).south().west(), central.up(255).north().east())
+					new AxisAlignedBB(central.below(255).south().west(), central.above(255).north().east())
 				);
 				
 				int count = crystalList.size();
 				for (int n = 0; n < count; n++) {
 					EnderCrystalEntity crystal = crystalList.get(n);
-					if (!world.getBlockState(crystal.getPosition().down()).isIn(Blocks.BEDROCK)) {
+					if (!world.getBlockState(crystal.blockPosition().below()).is(Blocks.BEDROCK)) {
 						crystalList.remove(n);
 						count--;
 						n--;

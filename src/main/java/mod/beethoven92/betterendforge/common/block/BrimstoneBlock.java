@@ -13,6 +13,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BrimstoneBlock extends Block
 {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVATED;
@@ -20,7 +22,7 @@ public class BrimstoneBlock extends Block
 	public BrimstoneBlock(Properties properties)
 	{
 		super(properties);
-		this.setDefaultState(getDefaultState().with(ACTIVATED, false));
+		this.registerDefaultState(defaultBlockState().setValue(ACTIVATED, false));
 	}
 
 	@Override
@@ -29,49 +31,49 @@ public class BrimstoneBlock extends Block
 		boolean deactivate = true;
 		for (Direction dir: BlockHelper.DIRECTIONS) 
 		{
-			if (worldIn.getFluidState(pos.offset(dir)).getFluid().equals(Fluids.WATER)) 
+			if (worldIn.getFluidState(pos.relative(dir)).getType().equals(Fluids.WATER)) 
 			{
 				deactivate = false;
 				break;
 			}
 		}
-		if (state.get(ACTIVATED)) 
+		if (state.getValue(ACTIVATED)) 
 		{
 			if (deactivate) 
 			{
-				worldIn.setBlockState(pos, getDefaultState().with(ACTIVATED, false));
+				worldIn.setBlockAndUpdate(pos, defaultBlockState().setValue(ACTIVATED, false));
 			}
-			else if (state.get(ACTIVATED) && random.nextInt(16) == 0) 
+			else if (state.getValue(ACTIVATED) && random.nextInt(16) == 0) 
 			{
 				Direction dir = BlockHelper.randomDirection(random);
-				BlockPos side = pos.offset(dir);
+				BlockPos side = pos.relative(dir);
 				BlockState sideState = worldIn.getBlockState(side);
 				if (sideState.getBlock() instanceof SulphurCrystalBlock)
 				{
-					if (sideState.get(SulphurCrystalBlock.AGE) < 2 && sideState.get(SulphurCrystalBlock.WATERLOGGED)) 
+					if (sideState.getValue(SulphurCrystalBlock.AGE) < 2 && sideState.getValue(SulphurCrystalBlock.WATERLOGGED)) 
 					{
-						int age = sideState.get(SulphurCrystalBlock.AGE) + 1;
-						worldIn.setBlockState(side, sideState.with(SulphurCrystalBlock.AGE, age));
+						int age = sideState.getValue(SulphurCrystalBlock.AGE) + 1;
+						worldIn.setBlockAndUpdate(side, sideState.setValue(SulphurCrystalBlock.AGE, age));
 					}
 				}
-				else if (sideState.getFluidState().getFluid() == Fluids.WATER) 
+				else if (sideState.getFluidState().getType() == Fluids.WATER) 
 				{
-					BlockState crystal = ModBlocks.SULPHUR_CRYSTAL.get().getDefaultState()
-							.with(SulphurCrystalBlock.FACING, dir)
-							.with(SulphurCrystalBlock.WATERLOGGED, true)
-							.with(SulphurCrystalBlock.AGE, 0);
-					worldIn.setBlockState(side, crystal);
+					BlockState crystal = ModBlocks.SULPHUR_CRYSTAL.get().defaultBlockState()
+							.setValue(SulphurCrystalBlock.FACING, dir)
+							.setValue(SulphurCrystalBlock.WATERLOGGED, true)
+							.setValue(SulphurCrystalBlock.AGE, 0);
+					worldIn.setBlockAndUpdate(side, crystal);
 				}
 			}
 		}
-		else if (!deactivate && !state.get(ACTIVATED)) 
+		else if (!deactivate && !state.getValue(ACTIVATED)) 
 		{
-			worldIn.setBlockState(pos, getDefaultState().with(ACTIVATED, true));
+			worldIn.setBlockAndUpdate(pos, defaultBlockState().setValue(ACTIVATED, true));
 		}
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
 	{
 		builder.add(ACTIVATED);
 	}

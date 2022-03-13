@@ -58,7 +58,7 @@ public class EndPortals
 	{
 		if (state >= portals.length) 
 		{
-			return server.func_241755_D_(); // Get overworld
+			return server.overworld(); // Get overworld
 		}
 		return portals[state].getWorld(server);
 	}
@@ -138,17 +138,17 @@ public class EndPortals
 			{
 				return world;
 			}
-			Iterator<ServerWorld> iterator = server.getWorlds().iterator();
+			Iterator<ServerWorld> iterator = server.getAllLevels().iterator();
 			while (iterator.hasNext()) 
 			{
 				ServerWorld world = iterator.next();
-				if (world.getDimensionKey().getLocation().equals(dimension)) 
+				if (world.dimension().location().equals(dimension)) 
 				{
 					this.world = world;
 					return world;
 				}
 			}
-			return server.func_241755_D_(); // Get Overworld
+			return server.overworld(); // Get Overworld
 		}
 		
 		JsonObject toJson() 

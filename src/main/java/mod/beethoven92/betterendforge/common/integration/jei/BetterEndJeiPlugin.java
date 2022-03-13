@@ -67,15 +67,15 @@ public class BetterEndJeiPlugin implements IModPlugin
 	{
 		// TO DO: move the recipes lists in a separate utility class
 		Minecraft mc = Minecraft.getInstance();
-		ClientWorld world = Objects.requireNonNull(mc.world);
+		ClientWorld world = Objects.requireNonNull(mc.level);
 		
-		Set<AlloyingRecipe> alloyingRecipes = ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(AlloyingRecipe.TYPE));
+		Set<AlloyingRecipe> alloyingRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(AlloyingRecipe.TYPE));
 		registration.addRecipes(alloyingRecipes, AlloyingRecipeCategory.UID);
 		
-		Set<InfusionRecipe> infusionRecipes = ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(InfusionRecipe.TYPE));
+		Set<InfusionRecipe> infusionRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(InfusionRecipe.TYPE));
 		registration.addRecipes(infusionRecipes, InfusionRecipeCategory.UID);
 		
-		Set<AnvilSmithingRecipe> anvilSmithingRecipes = ImmutableSet.copyOf(world.getRecipeManager().getRecipesForType(AnvilSmithingRecipe.TYPE));
+		Set<AnvilSmithingRecipe> anvilSmithingRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(AnvilSmithingRecipe.TYPE));
 		registration.addRecipes(anvilSmithingRecipes, AnvilSmithingRecipeCategory.UID);
 	}
 

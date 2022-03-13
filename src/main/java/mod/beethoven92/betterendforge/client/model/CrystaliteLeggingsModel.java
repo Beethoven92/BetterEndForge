@@ -12,25 +12,25 @@ import net.minecraft.entity.LivingEntity;
 public class CrystaliteLeggingsModel extends BipedModel<LivingEntity> {
 
 	public CrystaliteLeggingsModel(float scale) {
-		super(RenderType::getEntityTranslucent, scale, 0.0F, 64, 48);
-		this.bipedBody = new ModelRenderer(this, 16, 16);
-		this.bipedBody.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale);
-		this.bipedBody.setRotationPoint(0.0F, 0.0F, 0.0F);
-		this.bipedLeftLeg = new ModelRenderer(this, 0, 32);
-		this.bipedLeftLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale);
-		this.bipedLeftLeg.setRotationPoint(1.9F, 12.0F, 0.0F);
-		this.bipedRightLeg = new ModelRenderer(this, 0, 16);
-		this.bipedRightLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale);
-		this.bipedRightLeg.setRotationPoint(-1.9F, 12.0F, 0.0F);
+		super(RenderType::entityTranslucent, scale, 0.0F, 64, 48);
+		this.body = new ModelRenderer(this, 16, 16);
+		this.body.addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, scale);
+		this.body.setPos(0.0F, 0.0F, 0.0F);
+		this.leftLeg = new ModelRenderer(this, 0, 32);
+		this.leftLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale);
+		this.leftLeg.setPos(1.9F, 12.0F, 0.0F);
+		this.rightLeg = new ModelRenderer(this, 0, 16);
+		this.rightLeg.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale);
+		this.rightLeg.setPos(-1.9F, 12.0F, 0.0F);
 	}
 
 	@Override
-	protected Iterable<ModelRenderer> getHeadParts() {
+	protected Iterable<ModelRenderer> headParts() {
 		return Collections::emptyIterator;
 	}
 	
 	@Override
-	protected Iterable<ModelRenderer> getBodyParts() {
-		return Lists.newArrayList(bipedBody, bipedLeftLeg, bipedRightLeg);
+	protected Iterable<ModelRenderer> bodyParts() {
+		return Lists.newArrayList(body, leftLeg, rightLeg);
 	}
 }

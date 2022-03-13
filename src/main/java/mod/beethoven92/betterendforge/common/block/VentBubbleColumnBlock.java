@@ -27,6 +27,8 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class VentBubbleColumnBlock extends Block implements IBucketPickupHandler
 {
 	public VentBubbleColumnBlock(Properties properties) 
@@ -41,53 +43,53 @@ public class VentBubbleColumnBlock extends Block implements IBucketPickupHandler
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		BlockState blockState = worldIn.getBlockState(pos.down());
-		return blockState.isIn(this) || blockState.isIn(ModBlocks.HYDROTHERMAL_VENT.get());
+		BlockState blockState = worldIn.getBlockState(pos.below());
+		return blockState.is(this) || blockState.is(ModBlocks.HYDROTHERMAL_VENT.get());
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!stateIn.isValidPosition(worldIn, currentPos)) 
+		if (!stateIn.canSurvive(worldIn, currentPos)) 
 		{
-			return Blocks.WATER.getDefaultState();
+			return Blocks.WATER.defaultBlockState();
 		}
 		else 
 		{
-			BlockPos up = currentPos.up();
-			if (worldIn.getBlockState(up).isIn(Blocks.WATER)) 
+			BlockPos up = currentPos.above();
+			if (worldIn.getBlockState(up).is(Blocks.WATER)) 
 			{
 				BlockHelper.setWithoutUpdate(worldIn, up, this);
-				worldIn.getPendingBlockTicks().scheduleTick(up, this, 5);
+				worldIn.getBlockTicks().scheduleTick(up, this, 5);
 			}
 		}
 		return stateIn;
 	}
 	
 	@Override
-	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
+	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
 	{
-		BlockState blockState = worldIn.getBlockState(pos.up());
+		BlockState blockState = worldIn.getBlockState(pos.above());
 		if (blockState.isAir())
 		{
-			entityIn.onEnterBubbleColumnWithAirAbove(false);
-			if (!worldIn.isRemote()) 
+			entityIn.onAboveBubbleCol(false);
+			if (!worldIn.isClientSide()) 
 			{
 				ServerWorld serverWorld = (ServerWorld) worldIn;
 
 				for (int i = 0; i < 2; ++i) 
 				{
-					serverWorld.spawnParticle(ParticleTypes.SPLASH, (double) pos.getX() + worldIn.rand.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ() + worldIn.rand.nextDouble(), 1, 0.0D, 0.0D, 0.0D, 1.0D);
-					serverWorld.spawnParticle(ParticleTypes.BUBBLE, (double) pos.getX() + worldIn.rand.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ() + worldIn.rand.nextDouble(), 1, 0.0D, 0.01D, 0.0D, 0.2D);
+					serverWorld.sendParticles(ParticleTypes.SPLASH, (double) pos.getX() + worldIn.random.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ() + worldIn.random.nextDouble(), 1, 0.0D, 0.0D, 0.0D, 1.0D);
+					serverWorld.sendParticles(ParticleTypes.BUBBLE, (double) pos.getX() + worldIn.random.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ() + worldIn.random.nextDouble(), 1, 0.0D, 0.01D, 0.0D, 0.2D);
 				}
 			}
 		}
 		else 
 		{
-			entityIn.onEnterBubbleColumn(false);
+			entityIn.onInsideBubbleColumn(false);
 		}
 	}
 	
@@ -99,17 +101,17 @@ public class VentBubbleColumnBlock extends Block implements IBucketPickupHandler
 			double px = pos.getX() + rand.nextDouble();
 			double py = pos.getY() + rand.nextDouble();
 			double pz = pos.getZ() + rand.nextDouble();
-			worldIn.addOptionalParticle(ParticleTypes.BUBBLE_COLUMN_UP, px, py, pz, 0, 0.04, 0);
+			worldIn.addAlwaysVisibleParticle(ParticleTypes.BUBBLE_COLUMN_UP, px, py, pz, 0, 0.04, 0);
 		}
 		if (rand.nextInt(200) == 0) 
 		{
-			worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT, 
+			worldIn.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT, 
 					SoundCategory.BLOCKS, 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
 		}
 	}
 	
 	@Override
-	public BlockRenderType getRenderType(BlockState state) 
+	public BlockRenderType getRenderShape(BlockState state) 
 	{
 		return BlockRenderType.INVISIBLE;
 	}
@@ -117,13 +119,13 @@ public class VentBubbleColumnBlock extends Block implements IBucketPickupHandler
 	@Override
 	public FluidState getFluidState(BlockState state) 
 	{
-		return Fluids.WATER.getStillFluidState(false);
+		return Fluids.WATER.getSource(false);
 	}
 
 	@Override
-	public Fluid pickupFluid(IWorld worldIn, BlockPos pos, BlockState state) 
+	public Fluid takeLiquid(IWorld worldIn, BlockPos pos, BlockState state) 
 	{
-		worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
+		worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
 		return Fluids.WATER;
 	}
 }

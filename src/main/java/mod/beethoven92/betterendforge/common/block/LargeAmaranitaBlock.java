@@ -20,42 +20,44 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.OffsetType;
+
 public class LargeAmaranitaBlock extends PlantBlock {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
-	private static final VoxelShape SHAPE_BOTTOM = Block.makeCuboidShape(4, 0, 4, 12, 14, 12);
-	private static final VoxelShape SHAPE_TOP = VoxelShapes.or(Block.makeCuboidShape(1, 3, 1, 15, 16, 15),
+	private static final VoxelShape SHAPE_BOTTOM = Block.box(4, 0, 4, 12, 14, 12);
+	private static final VoxelShape SHAPE_TOP = VoxelShapes.or(Block.box(1, 3, 1, 15, 16, 15),
 			SHAPE_BOTTOM);
 
 	public LargeAmaranitaBlock() {
-		super(AbstractBlock.Properties.create(Material.PLANTS)
-				.setLightLevel((state) -> (state.get(SHAPE) == TripleShape.TOP) ? 15 : 0).sound(SoundType.PLANT)
-				.zeroHardnessAndResistance());
+		super(AbstractBlock.Properties.of(Material.PLANT)
+				.lightLevel((state) -> (state.getValue(SHAPE) == TripleShape.TOP) ? 15 : 0).sound(SoundType.GRASS)
+				.instabreak());
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return state.get(SHAPE) == TripleShape.TOP ? SHAPE_TOP : SHAPE_BOTTOM;
+		return state.getValue(SHAPE) == TripleShape.TOP ? SHAPE_TOP : SHAPE_BOTTOM;
 	}
 
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(ModBlocks.SANGNUM.get()) || state.isIn(ModBlocks.MOSSY_OBSIDIAN.get()) || state.isIn(ModBlocks.MOSSY_DRAGON_BONE.get());
+		return state.is(ModBlocks.SANGNUM.get()) || state.is(ModBlocks.MOSSY_OBSIDIAN.get()) || state.is(ModBlocks.MOSSY_DRAGON_BONE.get());
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(SHAPE);
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
-		TripleShape shape = state.get(SHAPE);
+	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+		TripleShape shape = state.getValue(SHAPE);
 		if (shape == TripleShape.BOTTOM) {
-			return isTerrain(world.getBlockState(pos.down())) && world.getBlockState(pos.up()).isIn(this);
+			return isTerrain(world.getBlockState(pos.below())) && world.getBlockState(pos.above()).is(this);
 		} else if (shape == TripleShape.TOP) {
-			return world.getBlockState(pos.down()).isIn(this);
+			return world.getBlockState(pos.below()).is(this);
 		} else {
-			return world.getBlockState(pos.down()).isIn(this) && world.getBlockState(pos.up()).isIn(this);
+			return world.getBlockState(pos.below()).is(this) && world.getBlockState(pos.above()).is(this);
 		}
 	}
 
@@ -65,12 +67,12 @@ public class LargeAmaranitaBlock extends PlantBlock {
 	}
 
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
 		return false;
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) {
 		return false;
 	}
 }

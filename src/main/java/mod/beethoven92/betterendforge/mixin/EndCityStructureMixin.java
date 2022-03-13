@@ -19,7 +19,7 @@ import net.minecraft.world.gen.feature.structure.EndCityStructure;
 @Mixin(EndCityStructure.class)
 public abstract class EndCityStructureMixin 
 {
-	@Inject(method = "func_230363_a_", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "isFeatureChunk", at = @At("HEAD"), cancellable = true)
 	private void be_shouldStartAt(ChunkGenerator chunkGenerator, BiomeProvider biomeSource, long l, 
 			SharedSeedRandom chunkRandom, int i, int j, Biome biome, ChunkPos chunkPos,
 			NoFeatureConfig config, CallbackInfoReturnable<Boolean> info) 

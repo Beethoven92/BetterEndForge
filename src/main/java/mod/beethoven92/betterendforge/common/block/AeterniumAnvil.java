@@ -7,13 +7,15 @@ import net.minecraft.block.BlockState;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer.Builder;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class AeterniumAnvil extends EndAnvilBlock
 {
 	private static final IntegerProperty DESTRUCTION = BlockProperties.DESTRUCTION_LONG;
 	
 	public AeterniumAnvil(Properties properties) 
 	{
-		super(properties, ModItemTier.AETERNIUM.getHarvestLevel());
+		super(properties, ModItemTier.AETERNIUM.getLevel());
 	}
 	
 	@Override
@@ -23,7 +25,7 @@ public class AeterniumAnvil extends EndAnvilBlock
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
 	{
 		builder.add(DESTRUCTION);
 		builder.add(FACING);

@@ -24,6 +24,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class EternalPedestal extends PedestalBlock
 {
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVATED;
@@ -31,22 +33,22 @@ public class EternalPedestal extends PedestalBlock
 	public EternalPedestal(Properties properties) 
 	{
 		super(properties);
-		this.setDefaultState(this.getDefaultState().with(ACTIVATED, false));
+		this.registerDefaultState(this.defaultBlockState().setValue(ACTIVATED, false));
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit)
 	{
-		ActionResultType result = super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+		ActionResultType result = super.use(state, worldIn, pos, player, handIn, hit);
 		if (result.equals(ActionResultType.SUCCESS)) 
 		{
-			TileEntity blockEntity = worldIn.getTileEntity(pos);
+			TileEntity blockEntity = worldIn.getBlockEntity(pos);
 			if (blockEntity instanceof EternalPedestalTileEntity) 
 			{
 				EternalPedestalTileEntity pedestal = (EternalPedestalTileEntity) blockEntity;
 				BlockState updatedState = worldIn.getBlockState(pos);
-				if (pedestal.isEmpty() && updatedState.get(ACTIVATED)) 
+				if (pedestal.isEmpty() && updatedState.getValue(ACTIVATED)) 
 				{
 					if (pedestal.hasRitual()) 
 					{
@@ -57,7 +59,7 @@ public class EternalPedestal extends PedestalBlock
 						/////
 						ritual.removePortal(dim);
 					}
-					worldIn.setBlockState(pos, updatedState.with(ACTIVATED, false));
+					worldIn.setBlockAndUpdate(pos, updatedState.setValue(ACTIVATED, false));
 				} 
 				else 
 				{
@@ -67,7 +69,7 @@ public class EternalPedestal extends PedestalBlock
 					//if (itemStack.getItem() == ModItems.ETERNAL_CRYSTAL.get()) 
 					if (EndPortals.isAvailableItem(id))
 					{
-						worldIn.setBlockState(pos, updatedState.with(ACTIVATED, true));
+						worldIn.setBlockAndUpdate(pos, updatedState.setValue(ACTIVATED, true));
 						if (pedestal.hasRitual()) 
 						{
 							pedestal.getRitual().checkStructure();
@@ -85,22 +87,22 @@ public class EternalPedestal extends PedestalBlock
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		BlockState updated = super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
-		if (!updated.isIn(this)) return updated;
+		BlockState updated = super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		if (!updated.is(this)) return updated;
 		if (!this.isPlaceable(updated)) 
 		{
-			return updated.with(ACTIVATED, false);
+			return updated.setValue(ACTIVATED, false);
 		}
 		return updated;
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
-		super.fillStateContainer(builder);
+		super.createBlockStateDefinition(builder);
 		builder.add(ACTIVATED);
 	}
 	

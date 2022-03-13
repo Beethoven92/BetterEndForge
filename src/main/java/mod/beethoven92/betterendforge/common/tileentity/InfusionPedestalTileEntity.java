@@ -17,9 +17,9 @@ public class InfusionPedestalTileEntity extends PedestalTileEntity
 	}
 	
 	@Override
-	public void setWorldAndPos(World world, BlockPos pos) 
+	public void setLevelAndPosition(World world, BlockPos pos) 
 	{
-		super.setWorldAndPos(world, pos);
+		super.setLevelAndPosition(world, pos);
 		if (hasRitual()) 
 		{
 			this.linkedRitual.setLocation(world, pos);
@@ -52,9 +52,9 @@ public class InfusionPedestalTileEntity extends PedestalTileEntity
 	}
 	
 	@Override
-	public CompoundNBT write(CompoundNBT compound) 
+	public CompoundNBT save(CompoundNBT compound) 
 	{
-		super.write(compound);
+		super.save(compound);
 		if (hasRitual()) 
 		{
 			compound.put("ritual", linkedRitual.write(new CompoundNBT()));
@@ -63,12 +63,12 @@ public class InfusionPedestalTileEntity extends PedestalTileEntity
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT nbt) 
+	public void load(BlockState state, CompoundNBT nbt) 
 	{
-		super.read(state, nbt);
+		super.load(state, nbt);
 		if (nbt.contains("ritual")) 
 		{
-			this.linkedRitual = new InfusionRitual(world, pos);
+			this.linkedRitual = new InfusionRitual(level, worldPosition);
 			this.linkedRitual.read(nbt.getCompound("ritual"));
 		}
 	}

@@ -62,24 +62,24 @@ public class AlloyingRecipe implements IRecipe<IInventory>
 	@Override
 	public boolean matches(IInventory inv, World worldIn) 
 	{
-		return this.primaryInput.test(inv.getStackInSlot(0)) && this.secondaryInput.test(inv.getStackInSlot(1)) ||
-				this.primaryInput.test(inv.getStackInSlot(1)) && this.secondaryInput.test(inv.getStackInSlot(0));
+		return this.primaryInput.test(inv.getItem(0)) && this.secondaryInput.test(inv.getItem(1)) ||
+				this.primaryInput.test(inv.getItem(1)) && this.secondaryInput.test(inv.getItem(0));
 	}
 
 	@Override
-	public ItemStack getCraftingResult(IInventory inv) 
+	public ItemStack assemble(IInventory inv) 
 	{
 		return this.output.copy();
 	}
 
 	@Override
-	public boolean canFit(int width, int height)
+	public boolean canCraftInDimensions(int width, int height)
 	{
 		return true;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() 
+	public ItemStack getResultItem() 
 	{
 		return this.output;
 	}
@@ -109,7 +109,7 @@ public class AlloyingRecipe implements IRecipe<IInventory>
 	}
 	
 	@Override
-	public ItemStack getIcon() 
+	public ItemStack getToastSymbol() 
 	{
 		return new ItemStack(ModBlocks.END_STONE_SMELTER.get());
 	}

@@ -7,6 +7,8 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer.Builder;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class MossyGlowshroomCapBlock extends Block
 {
 	public static final BooleanProperty TRANSITION = BooleanProperty.create("transition");
@@ -14,18 +16,18 @@ public class MossyGlowshroomCapBlock extends Block
 	public MossyGlowshroomCapBlock(Properties properties) 
 	{
 		super(properties);
-		this.setDefaultState(this.getDefaultState().with(TRANSITION, false));
+		this.registerDefaultState(this.defaultBlockState().setValue(TRANSITION, false));
 	}
 	
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) 
 	{
-		return this.getDefaultState().with(TRANSITION, 
-				ModBlocks.MOSSY_GLOWSHROOM.isTreeLog(context.getWorld().getBlockState(context.getPos().down())));
+		return this.defaultBlockState().setValue(TRANSITION, 
+				ModBlocks.MOSSY_GLOWSHROOM.isTreeLog(context.getLevel().getBlockState(context.getClickedPos().below())));
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
 	{
 		builder.add(TRANSITION);
 	}

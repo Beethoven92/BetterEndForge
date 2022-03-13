@@ -11,8 +11,8 @@ public class TerrainPlantBlock extends PlantBlock {
 	private final Block[] ground;
 
 	public TerrainPlantBlock(Block... ground) {
-		super(AbstractBlock.Properties.create(Material.TALL_PLANTS).zeroHardnessAndResistance().doesNotBlockMovement()
-				.sound(SoundType.PLANT));
+		super(AbstractBlock.Properties.of(Material.REPLACEABLE_PLANT).instabreak().noCollission()
+				.sound(SoundType.GRASS));
 
 		this.ground = ground;
 	}
@@ -20,7 +20,7 @@ public class TerrainPlantBlock extends PlantBlock {
 	@Override
 	protected boolean isTerrain(BlockState state) {
 		for (Block block : ground) {
-			if (state.isIn(block)) {
+			if (state.is(block)) {
 				return true;
 			}
 		}

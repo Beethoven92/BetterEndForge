@@ -63,13 +63,13 @@ public abstract class EndSpikeFeatureMixin
 			CompoundNBT pillar = WorldDataAPI.getCompoundTag(BetterEnd.MOD_ID, "pillars");
 			boolean haveValue = pillar.contains(pillarID);
 			minY = haveValue ? pillar.getInt(pillarID) : world.getChunk(x >> 4, z >> 4)
-					.getTopBlockY(Heightmap.Type.WORLD_SURFACE, x & 15, z);
+					.getHeight(Heightmap.Type.WORLD_SURFACE, x & 15, z);
 			if (!haveValue) {
 				pillar.putInt(pillarID, minY);
 			}
 		}
 		else {
-			minY = world.getChunk(x >> 4, z >> 4).getTopBlockY(Type.WORLD_SURFACE, x & 15, z);
+			minY = world.getChunk(x >> 4, z >> 4).getHeight(Type.WORLD_SURFACE, x & 15, z);
 		}
 
 		GeneratorOptions.setDirectSpikeHeight();
@@ -88,8 +88,8 @@ public abstract class EndSpikeFeatureMixin
 			maxY = pos2.getY();
 
 			PlacementSettings data = new PlacementSettings();
-			base.func_237146_a_(world, pos1, pos1, data, random, 2);
-			top.func_237146_a_(world, pos2, pos2, data, random, 2);
+			base.placeInWorld(world, pos1, pos1, data, random, 2);
+			top.placeInWorld(world, pos2, pos2, data, random, 2);
 
 			int r2 = radius * radius + 1;
 			BlockPos.Mutable mut = new BlockPos.Mutable();
@@ -142,11 +142,11 @@ public abstract class EndSpikeFeatureMixin
 			mut.setY(maxY);
 			BlockHelper.setWithoutUpdate(world, mut, Blocks.BEDROCK);
 
-			EnderCrystalEntity crystal = EntityType.END_CRYSTAL.create(world.getWorld());
+			EnderCrystalEntity crystal = EntityType.END_CRYSTAL.create(world.getLevel());
 			crystal.setBeamTarget(config.getCrystalBeamTarget());
 			crystal.setInvulnerable(config.isCrystalInvulnerable());
-			crystal.setLocationAndAngles(x + 0.5D, maxY + 1, z + 0.5D, random.nextFloat() * 360.0F, 0.0F);
-			world.addEntity(crystal);
+			crystal.moveTo(x + 0.5D, maxY + 1, z + 0.5D, random.nextFloat() * 360.0F, 0.0F);
+			world.addFreshEntity(crystal);
 
 			if (spike.isGuarded()) {
 				for (int px = -2; px <= 2; ++px) {
@@ -159,17 +159,17 @@ public abstract class EndSpikeFeatureMixin
 								boolean bl4 = px == -2 || px == 2 || bl3;
 								boolean bl5 = pz == -2 || pz == 2 || bl3;
 								BlockState blockState = (BlockState) ((BlockState) ((BlockState) ((BlockState) Blocks.IRON_BARS
-										.getDefaultState()
-										.with(PaneBlock.NORTH, bl4 && pz != -2)).with(
+										.defaultBlockState()
+										.setValue(PaneBlock.NORTH, bl4 && pz != -2)).setValue(
 										PaneBlock.SOUTH,
 										bl4 && pz != 2
-								)).with(PaneBlock.WEST, bl5 && px != -2)).with(
+								)).setValue(PaneBlock.WEST, bl5 && px != -2)).setValue(
 										PaneBlock.EAST,
 										bl5 && px != 2
 								);
 								BlockHelper.setWithoutUpdate(
 										world,
-										mut.setPos(spike.getCenterX() + px, maxY + py, spike.getCenterZ() + pz),
+										mut.set(spike.getCenterX() + px, maxY + py, spike.getCenterZ() + pz),
 										blockState
 								);
 							}

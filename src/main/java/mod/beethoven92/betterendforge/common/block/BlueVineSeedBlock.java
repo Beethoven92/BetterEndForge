@@ -15,6 +15,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlueVineSeedBlock extends PlantBlockWithAge
 {
 	public BlueVineSeedBlock(Properties properties) 
@@ -31,29 +33,29 @@ public class BlueVineSeedBlock extends PlantBlockWithAge
 		{
 			return;
 		}
-		BlockHelper.setWithoutUpdate(world, pos, ModBlocks.BLUE_VINE.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
+		BlockHelper.setWithoutUpdate(world, pos, ModBlocks.BLUE_VINE.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 		for (int i = 1; i < height; i++) 
 		{
-			BlockHelper.setWithoutUpdate(world, pos.up(i), ModBlocks.BLUE_VINE.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
+			BlockHelper.setWithoutUpdate(world, pos.above(i), ModBlocks.BLUE_VINE.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
 		}
-		BlockHelper.setWithoutUpdate(world, pos.up(height), ModBlocks.BLUE_VINE.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
-		placeLantern(world, pos.up(height + 1));
+		BlockHelper.setWithoutUpdate(world, pos.above(height), ModBlocks.BLUE_VINE.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
+		placeLantern(world, pos.above(height + 1));
 	}
 	
 	private void placeLantern(ISeedReader world, BlockPos pos) 
 	{
-		BlockHelper.setWithoutUpdate(world, pos, ModBlocks.BLUE_VINE_LANTERN.get().getDefaultState().with(BlueVineLanternBlock.NATURAL, true));
+		BlockHelper.setWithoutUpdate(world, pos, ModBlocks.BLUE_VINE_LANTERN.get().defaultBlockState().setValue(BlueVineLanternBlock.NATURAL, true));
 		for (Direction dir: BlockHelper.HORIZONTAL_DIRECTIONS) 
 		{
-			BlockPos p = pos.offset(dir);
-			if (world.isAirBlock(p)) 
+			BlockPos p = pos.relative(dir);
+			if (world.isEmptyBlock(p)) 
 			{
-				BlockHelper.setWithoutUpdate(world, p, ModBlocks.BLUE_VINE_FUR.get().getDefaultState().with(FurBlock.FACING, dir));
+				BlockHelper.setWithoutUpdate(world, p, ModBlocks.BLUE_VINE_FUR.get().defaultBlockState().setValue(FurBlock.FACING, dir));
 			}
 		}
-		if (world.isAirBlock(pos.up())) 
+		if (world.isEmptyBlock(pos.above())) 
 		{
-			BlockHelper.setWithoutUpdate(world, pos.up(), ModBlocks.BLUE_VINE_FUR.get().getDefaultState().with(FurBlock.FACING, Direction.UP));
+			BlockHelper.setWithoutUpdate(world, pos.above(), ModBlocks.BLUE_VINE_FUR.get().defaultBlockState().setValue(FurBlock.FACING, Direction.UP));
 		}
 	}
 	
@@ -64,13 +66,13 @@ public class BlueVineSeedBlock extends PlantBlockWithAge
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return true;
 	}
 	
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}

@@ -18,14 +18,14 @@ public class SmelterFuelSlot extends Slot
 	}
 
 	@Override
-	public boolean isItemValid(ItemStack stack)
+	public boolean mayPlace(ItemStack stack)
 	{
 		return this.handler.isFuel(stack) || FurnaceFuelSlot.isBucket(stack);
 	}
 	
 	@Override
-	public int getItemStackLimit(ItemStack stack)
+	public int getMaxStackSize(ItemStack stack)
 	{
-		return FurnaceFuelSlot.isBucket(stack) ? 1 : super.getItemStackLimit(stack);
+		return FurnaceFuelSlot.isBucket(stack) ? 1 : super.getMaxStackSize(stack);
 	}
 }

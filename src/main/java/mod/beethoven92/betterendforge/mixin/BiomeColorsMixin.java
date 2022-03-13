@@ -31,13 +31,13 @@ public class BiomeColorsMixin {
 	@Inject(method = "getWaterColor", at = @At("RETURN"), cancellable = true)
 	private static void be_getWaterColor(IBlockDisplayReader world, BlockPos blockPos, CallbackInfoReturnable<Integer> info) {
 		if (ClientOptions.useSulfurWaterColor()) {
-			IBlockDisplayReader view = HAS_MAGNESIUM ? Minecraft.getInstance().world : world;
+			IBlockDisplayReader view = HAS_MAGNESIUM ? Minecraft.getInstance().level : world;
 			Mutable mut = new Mutable();
 			mut.setY(blockPos.getY());
 			for (int i = 0; i < OFFSETS.length; i++) {
 				mut.setX(blockPos.getX() + OFFSETS[i].x);
 				mut.setZ(blockPos.getZ() + OFFSETS[i].y);
-				if ((view.getBlockState(mut).isIn(ModBlocks.BRIMSTONE.get()))) {
+				if ((view.getBlockState(mut).is(ModBlocks.BRIMSTONE.get()))) {
 					info.setReturnValue(i < 4 ? POISON_COLOR : STREAM_COLOR);
 					return;
 				}

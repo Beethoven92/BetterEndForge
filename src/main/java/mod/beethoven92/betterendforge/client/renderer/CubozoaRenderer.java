@@ -22,27 +22,27 @@ public class CubozoaRenderer extends MobRenderer<CubozoaEntity, CubozoaModel> {
 		super(entityRenderDispatcher, new CubozoaModel(), 0.5f);
 		this.addLayer(new AbstractEyesLayer<CubozoaEntity, CubozoaModel>(this) {
 			@Override
-			public RenderType getRenderType() {
+			public RenderType renderType() {
 				return GLOW[0];
 			}
 
 			@Override
 			public void render(MatrixStack matrices, IRenderTypeBuffer vertexConsumers, int light, CubozoaEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
 				IVertexBuilder ivertexbuilder = vertexConsumers.getBuffer(GLOW[entity.getVariant()]);
-				this.getEntityModel().render(matrices, ivertexbuilder, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+				this.getParentModel().renderToBuffer(matrices, ivertexbuilder, 15728640, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 			}
         });
 	}
 
 	@Override
-	protected void preRenderCallback(CubozoaEntity entity, MatrixStack matrixStack, float f) {
+	protected void scale(CubozoaEntity entity, MatrixStack matrixStack, float f) {
 		float scale = entity.getScale();
 		matrixStack.scale(scale, scale, scale);
 	}
 	
 
 	@Override
-	public ResourceLocation getEntityTexture(CubozoaEntity entity) {
+	public ResourceLocation getTextureLocation(CubozoaEntity entity) {
 		return TEXTURE[entity.getVariant()];
 	}
 	
@@ -50,7 +50,7 @@ public class CubozoaRenderer extends MobRenderer<CubozoaEntity, CubozoaModel> {
 		TEXTURE[0] = new ResourceLocation(BetterEnd.MOD_ID, ("textures/entity/cubozoa/cubozoa.png"));
 		TEXTURE[1] = new ResourceLocation(BetterEnd.MOD_ID, ("textures/entity/cubozoa/cubozoa_sulphur.png"));
 		
-		GLOW[0] = RenderType.getEyes(new ResourceLocation(BetterEnd.MOD_ID, ("textures/entity/cubozoa/cubozoa_glow.png")));
-		GLOW[1] = RenderType.getEyes(new ResourceLocation(BetterEnd.MOD_ID, ("textures/entity/cubozoa/cubozoa_sulphur_glow.png")));
+		GLOW[0] = RenderType.eyes(new ResourceLocation(BetterEnd.MOD_ID, ("textures/entity/cubozoa/cubozoa_glow.png")));
+		GLOW[1] = RenderType.eyes(new ResourceLocation(BetterEnd.MOD_ID, ("textures/entity/cubozoa/cubozoa_sulphur_glow.png")));
 	}
 }

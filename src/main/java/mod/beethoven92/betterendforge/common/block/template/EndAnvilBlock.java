@@ -12,6 +12,8 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.fml.ModList;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class EndAnvilBlock extends AnvilBlock
 {
 	public static final IntegerProperty DESTRUCTION = BlockProperties.DESTRUCTION;
@@ -54,9 +56,9 @@ public class EndAnvilBlock extends AnvilBlock
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
-		super.fillStateContainer(builder);
+		super.createBlockStateDefinition(builder);
 		builder.add(DESTRUCTION);
 	}
 }

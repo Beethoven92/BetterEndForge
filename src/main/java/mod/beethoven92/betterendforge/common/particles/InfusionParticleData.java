@@ -21,17 +21,17 @@ public class InfusionParticleData implements IParticleData
 	public static final IParticleData.IDeserializer<InfusionParticleData> DESERIALIZER = 
 			new IParticleData.IDeserializer<InfusionParticleData>()
 	{
-		public InfusionParticleData deserialize(ParticleType<InfusionParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException
+		public InfusionParticleData fromCommand(ParticleType<InfusionParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException
 		{
 			reader.expect(' ');
 		    ItemParser itemparser = (new ItemParser(reader, false)).parse();
-		    ItemStack itemstack = (new ItemInput(itemparser.getItem(), itemparser.getNbt())).createStack(1, false);
+		    ItemStack itemstack = (new ItemInput(itemparser.getItem(), itemparser.getNbt())).createItemStack(1, false);
 		    return new InfusionParticleData(itemstack);
 		}
 
-		public InfusionParticleData read(ParticleType<InfusionParticleData> particleTypeIn, PacketBuffer buffer) 
+		public InfusionParticleData fromNetwork(ParticleType<InfusionParticleData> particleTypeIn, PacketBuffer buffer) 
 		{
-			return new InfusionParticleData(buffer.readItemStack());
+			return new InfusionParticleData(buffer.readItem());
 		}
 	};
 
@@ -64,13 +64,13 @@ public class InfusionParticleData implements IParticleData
 	}
 
 	@Override
-	public void write(PacketBuffer buffer) 
+	public void writeToNetwork(PacketBuffer buffer) 
 	{
-		buffer.writeItemStack(itemStack);
+		buffer.writeItem(itemStack);
 	}
 
 	@Override
-	public String getParameters() 
+	public String writeToString() 
 	{
 		return Registry.PARTICLE_TYPE.getKey(this.getType()).toString();
 	}

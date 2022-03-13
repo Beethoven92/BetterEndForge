@@ -15,11 +15,11 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class PondAnemoneBlock extends UnderwaterPlantBlock {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(2, 0, 2, 14, 14, 14);
+	private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 14, 14);
 
 	public PondAnemoneBlock() {
-		super(AbstractBlock.Properties.create(Material.OCEAN_PLANT).doesNotBlockMovement().zeroHardnessAndResistance()
-				.setLightLevel(s -> 13));
+		super(AbstractBlock.Properties.of(Material.WATER_PLANT).noCollission().instabreak()
+				.lightLevel(s -> 13));
 	}
 
 	@Override
@@ -41,12 +41,12 @@ public class PondAnemoneBlock extends UnderwaterPlantBlock {
 	}
 
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
 		return false;
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) {
 		return false;
 	}
 }

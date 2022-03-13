@@ -44,7 +44,7 @@ public class BlockProperties
 		}
 		
 		@Override
-		public String getString() 
+		public String getSerializedName() 
 		{
 			return name;
 		}
@@ -87,7 +87,7 @@ public class BlockProperties
 		}
 
 		@Override
-		public String getString() 
+		public String getSerializedName() 
 		{
 			return name;
 		}
@@ -112,7 +112,7 @@ public class BlockProperties
 		}
 
 		@Override
-		public String getString() 
+		public String getSerializedName() 
 		{
 			return name;
 		}
@@ -143,7 +143,7 @@ public class BlockProperties
 		}
 
 		@Override
-		public String getString() {
+		public String getSerializedName() {
 			return name;
 		}
 		
@@ -171,7 +171,7 @@ public class BlockProperties
 		}
 
 		@Override
-		public String getString() {
+		public String getSerializedName() {
 			return name;
 		}
 		
@@ -197,7 +197,7 @@ public class BlockProperties
 		}
 
 		@Override
-		public String getString() {
+		public String getSerializedName() {
 			return name;
 		}
 		

@@ -44,11 +44,11 @@ public class DragonflyEntity extends AnimalEntity implements IFlyingAnimal
 	public DragonflyEntity(EntityType<? extends AnimalEntity> type, World worldIn) 
 	{
 		super(type, worldIn);
-		this.moveController = new FlyingMovementController(this, 20, true);
-		this.lookController = new DragonflyLookControl(this);
-	    this.setPathPriority(PathNodeType.WATER, -1.0F);
-	    this.setPathPriority(PathNodeType.DANGER_FIRE, -1.0F);
-		this.experienceValue = 1;
+		this.moveControl = new FlyingMovementController(this, 20, true);
+		this.lookControl = new DragonflyLookControl(this);
+	    this.setPathfindingMalus(PathNodeType.WATER, -1.0F);
+	    this.setPathfindingMalus(PathNodeType.DANGER_FIRE, -1.0F);
+		this.xpReward = 1;
 	}
 	
 	@Override
@@ -62,28 +62,28 @@ public class DragonflyEntity extends AnimalEntity implements IFlyingAnimal
 
 	public static AttributeModifierMap.MutableAttribute registerAttributes() 
 	{
-		return LivingEntity.registerAttributes().createMutableAttribute(Attributes.MAX_HEALTH, 8.0).
-				createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0).
-				createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.1).
-				createMutableAttribute(Attributes.FLYING_SPEED, 1.0);
+		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 8.0).
+				add(Attributes.FOLLOW_RANGE, 16.0).
+				add(Attributes.MOVEMENT_SPEED, 0.1).
+				add(Attributes.FLYING_SPEED, 1.0);
 	}
 
 	@Override
-	public float getBlockPathWeight(BlockPos pos, IWorldReader worldIn) 
+	public float getWalkTargetValue(BlockPos pos, IWorldReader worldIn) 
 	{
 		return worldIn.getBlockState(pos).isAir() ? 10.0F : 0.0F;
 	}
 	
 	@Override
-	protected PathNavigator createNavigator(World worldIn) 
+	protected PathNavigator createNavigation(World worldIn) 
 	{
 		FlyingPathNavigator flyingNavigator = new FlyingPathNavigator(this, worldIn) 
 		{
 			@Override
-	         public boolean canEntityStandOnPos(BlockPos pos) 
+	         public boolean isStableDestination(BlockPos pos) 
 	         {
-				BlockState state = this.world.getBlockState(pos);
-				return state.isAir() || !state.getMaterial().blocksMovement();
+				BlockState state = this.level.getBlockState(pos);
+				return state.isAir() || !state.getMaterial().blocksMotion();
 	         }
 
 			 @Override
@@ -92,26 +92,26 @@ public class DragonflyEntity extends AnimalEntity implements IFlyingAnimal
 	               super.tick();
 	         }
 	    };
-	    flyingNavigator.setCanEnterDoors(false);
-	    flyingNavigator.setCanSwim(false);
+	    flyingNavigator.setCanPassDoors(false);
+	    flyingNavigator.setCanFloat(false);
 	    flyingNavigator.setCanOpenDoors(false);
 	    return flyingNavigator;
 	}
 	
 	@Override
-	public boolean canBePushed() 
+	public boolean isPushable() 
 	{
 		return false;
 	}
 
 	@Override
-	public boolean hasNoGravity() 
+	public boolean isNoGravity() 
 	{
 		return true;
 	}
 	
 	 @Override
-	public boolean onLivingFall(float distance, float damageMultiplier) 
+	public boolean causeFallDamage(float distance, float damageMultiplier) 
 	{
 		return false;
 	}
@@ -124,21 +124,21 @@ public class DragonflyEntity extends AnimalEntity implements IFlyingAnimal
 	@Override
 	protected float getSoundVolume() 
 	{
-		return ModMathHelper.randRange(0.25F, 0.5F, rand);
+		return ModMathHelper.randRange(0.25F, 0.5F, random);
 	}
 		
 	@Override
-	public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) 
+	public AgeableEntity getBreedOffspring(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) 
 	{
-		return ModEntityTypes.DRAGONFLY.get().create(world);
+		return ModEntityTypes.DRAGONFLY.get().create(level);
 	}
 	
 	public static boolean canSpawn(EntityType<DragonflyEntity> type, IServerWorld world, SpawnReason spawnReason,
 			BlockPos pos, Random random)
 	{
-		AxisAlignedBB box = new AxisAlignedBB(pos).grow(16);
-		List<DragonflyEntity> list = world.getEntitiesWithinAABB(DragonflyEntity.class, box, (entity) -> { return true; });
-		int y = world.getChunk(pos).getTopBlockY(Type.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
+		AxisAlignedBB box = new AxisAlignedBB(pos).inflate(16);
+		List<DragonflyEntity> list = world.getEntitiesOfClass(DragonflyEntity.class, box, (entity) -> { return true; });
+		int y = world.getChunk(pos).getHeight(Type.WORLD_SURFACE, pos.getX() & 15, pos.getY() & 15);
 		
 		// FIX dragonfly spawning too much and preventing other entities to spawn
 		return y > 0 && pos.getY() >= y && list.size() < 9;
@@ -152,7 +152,7 @@ public class DragonflyEntity extends AnimalEntity implements IFlyingAnimal
 		}
 		
 		@Override
-		protected boolean shouldResetPitch() 
+		protected boolean resetXRotOnTick() 
 		{
 			return true;
 		}
@@ -162,48 +162,48 @@ public class DragonflyEntity extends AnimalEntity implements IFlyingAnimal
 	{
 		WanderAroundGoal() 
 		{
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
 
 		@Override
-		public boolean shouldExecute() 
+		public boolean canUse() 
 		{
-			return DragonflyEntity.this.navigator.noPath() && DragonflyEntity.this.rand.nextInt(10) == 0;
+			return DragonflyEntity.this.navigation.isDone() && DragonflyEntity.this.random.nextInt(10) == 0;
 		}
 		
 		@Override
-		public boolean shouldContinueExecuting() 
+		public boolean canContinueToUse() 
 		{
-			return DragonflyEntity.this.navigator.hasPath();
+			return DragonflyEntity.this.navigation.isInProgress();
 		}
 		
 		@Override
-		public void startExecuting()
+		public void start()
 		{
 			Vector3d vec3d = this.getRandomLocation();
 			
 			if (vec3d != null) 
 			{
 				BlockPos pos = new BlockPos(vec3d);
-				if (!pos.equals(DragonflyEntity.this.getPosition()))
+				if (!pos.equals(DragonflyEntity.this.blockPosition()))
 				{
-					Path path = DragonflyEntity.this.navigator.getPathToPos(new BlockPos(vec3d), 1);
+					Path path = DragonflyEntity.this.navigation.createPath(new BlockPos(vec3d), 1);
 					if (path != null) 
 					{
-						DragonflyEntity.this.navigator.setPath(path, 1.0D);
+						DragonflyEntity.this.navigation.moveTo(path, 1.0D);
 					}
 				}
 			}
-			super.startExecuting();
+			super.start();
 		}
 		
 		private Vector3d getRandomLocation() 
 		{
-			int h = BlockHelper.downRay(DragonflyEntity.this.world, DragonflyEntity.this.getPosition(), 16);
+			int h = BlockHelper.downRay(DragonflyEntity.this.level, DragonflyEntity.this.blockPosition(), 16);
 
-			Vector3d rotation = DragonflyEntity.this.getLook(0.0F);
+			Vector3d rotation = DragonflyEntity.this.getViewVector(0.0F);
 			
-			Vector3d airPos = RandomPositionGenerator.findAirTarget(DragonflyEntity.this, 8, 7, 
+			Vector3d airPos = RandomPositionGenerator.getAboveLandPos(DragonflyEntity.this, 8, 7, 
 					rotation, 1.5707964F, 2, 1);
 			
 			if (airPos != null) 
@@ -212,7 +212,7 @@ public class DragonflyEntity extends AnimalEntity implements IFlyingAnimal
 				{
 					for (int i = 0; i < 8; i++) 
 					{
-						airPos = RandomPositionGenerator.findAirTarget(DragonflyEntity.this, 16, 7, rotation, (ModMathHelper.PI2), 2, 1);
+						airPos = RandomPositionGenerator.getAboveLandPos(DragonflyEntity.this, 16, 7, rotation, (ModMathHelper.PI2), 2, 1);
 						if (airPos != null && !isInVoid(airPos)) 
 						{
 							return airPos;
@@ -220,18 +220,18 @@ public class DragonflyEntity extends AnimalEntity implements IFlyingAnimal
 					}
 					return null;
 				}
-				if (h > 5 && airPos.getY() >= DragonflyEntity.this.getPosition().getY()) 
+				if (h > 5 && airPos.y() >= DragonflyEntity.this.blockPosition().getY()) 
 				{
 					airPos = new Vector3d(airPos.x, airPos.y - h * 0.5, airPos.z);
 				}
 				return airPos;
 			}
-			return RandomPositionGenerator.findGroundTarget(DragonflyEntity.this, 8, 4, -2, rotation, 1.5707963705062866D);
+			return RandomPositionGenerator.getAirPos(DragonflyEntity.this, 8, 4, -2, rotation, 1.5707963705062866D);
 		}
 		
 		private boolean isInVoid(Vector3d pos) 
 		{
-			int h = BlockHelper.downRay(DragonflyEntity.this.world, new BlockPos(pos), 128);
+			int h = BlockHelper.downRay(DragonflyEntity.this.level, new BlockPos(pos), 128);
 			return h > 100;
 		}
 	}

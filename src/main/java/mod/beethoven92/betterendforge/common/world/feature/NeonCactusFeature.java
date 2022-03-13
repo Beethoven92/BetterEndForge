@@ -14,14 +14,14 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 public class NeonCactusFeature extends Feature<NoFeatureConfig> {
 
 	public NeonCactusFeature() {
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config) 
-	{		BlockState ground = world.getBlockState(pos.down());
-		if (!ground.isIn(ModBlocks.ENDSTONE_DUST.get()) && !ground.isIn(ModBlocks.END_MOSS.get())) {
+	{		BlockState ground = world.getBlockState(pos.below());
+		if (!ground.is(ModBlocks.ENDSTONE_DUST.get()) && !ground.is(ModBlocks.END_MOSS.get())) {
 			return false;
 		}
 

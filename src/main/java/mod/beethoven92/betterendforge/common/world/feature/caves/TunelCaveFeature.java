@@ -57,7 +57,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 			BlockPos.Mutable pos = new BlockPos.Mutable();
 			int x = index & 15;
 			int z = index >> 4;
-			int wheight = chunk.getTopBlockY(Heightmap.Type.WORLD_SURFACE_WG, x, z);
+			int wheight = chunk.getHeight(Heightmap.Type.WORLD_SURFACE_WG, x, z);
 			float dx = x / 16F;
 			float dz = z / 16F;
 			pos.setX(x + x1);
@@ -79,8 +79,8 @@ public class TunelCaveFeature extends EndCaveFeature {
 					) * 20) * 0.1F) * 0.9F;
 					float dist = (float) noiseD.eval(pos.getX() * 0.1, y * 0.1, pos.getZ() * 0.1) * 0.12F;
 					val = (val + vert * vert + dist) + density + gradient;
-					if (val < 0.15 && world.getBlockState(pos).isIn(ModTags.GEN_TERRAIN) && noWaterNear(world, pos)) {
-						positions.add(pos.toImmutable());
+					if (val < 0.15 && world.getBlockState(pos).is(ModTags.GEN_TERRAIN) && noWaterNear(world, pos)) {
+						positions.add(pos.immutable());
 					}
 				}
 			}
@@ -91,16 +91,16 @@ public class TunelCaveFeature extends EndCaveFeature {
 	}
 
 	private boolean noWaterNear(ISeedReader world, BlockPos pos) {
-		BlockPos above1 = pos.up();
-		BlockPos above2 = pos.up(2);
+		BlockPos above1 = pos.above();
+		BlockPos above2 = pos.above(2);
 		if (!world.getFluidState(above1).isEmpty() || !world.getFluidState(above2).isEmpty()) {
 			return false;
 		}
 		for (Direction dir : BlockHelper.HORIZONTAL_DIRECTIONS) {
-			if (!world.getFluidState(above1.offset(dir)).isEmpty()) {
+			if (!world.getFluidState(above1.relative(dir)).isEmpty()) {
 				return false;
 			}
-			if (!world.getFluidState(above2.offset(dir)).isEmpty()) {
+			if (!world.getFluidState(above2.relative(dir)).isEmpty()) {
 				return false;
 			}
 		}
@@ -108,7 +108,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random random,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random random,
 						 BlockPos pos, NoFeatureConfig config) {
 		if (pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 2500) {
 			return false;
@@ -128,7 +128,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 		BlockPos.Mutable mut = new BlockPos.Mutable();
 		Set<BlockPos> remove = Sets.newHashSet();
 		caveBlocks.forEach((bpos) -> {
-			mut.setPos(bpos);
+			mut.set(bpos);
 			BetterEndCaveBiome bio = ModBiomes.getCaveBiome(random);
 			int height = world.getHeight(Heightmap.Type.WORLD_SURFACE, bpos.getX(), bpos.getZ());
 			if (mut.getY() >= height) {
@@ -136,22 +136,22 @@ public class TunelCaveFeature extends EndCaveFeature {
 			}
 			else if (world.getBlockState(mut).getMaterial().isReplaceable()) {
 				mut.setY(bpos.getY() - 1);
-				if (world.getBlockState(mut).isIn(ModTags.GEN_TERRAIN)) {
+				if (world.getBlockState(mut).is(ModTags.GEN_TERRAIN)) {
 					Set<BlockPos> floorPositions = floorSets.get(bio);
 					if (floorPositions == null) {
 						floorPositions = Sets.newHashSet();
 						floorSets.put(bio, floorPositions);
 					}
-					floorPositions.add(mut.toImmutable());
+					floorPositions.add(mut.immutable());
 				}
 				mut.setY(bpos.getY() + 1);
-				if (world.getBlockState(mut).isIn(ModTags.GEN_TERRAIN)) {
+				if (world.getBlockState(mut).is(ModTags.GEN_TERRAIN)) {
 					Set<BlockPos> ceilPositions = ceilSets.get(bio);
 					if (ceilPositions == null) {
 						ceilPositions = Sets.newHashSet();
 						ceilSets.put(bio, ceilPositions);
 					}
-					ceilPositions.add(mut.toImmutable());
+					ceilPositions.add(mut.immutable());
 				}
 				setBiome(world, bpos, bio);
 			}
@@ -166,7 +166,7 @@ public class TunelCaveFeature extends EndCaveFeature {
 			BlockState surfaceBlock = biome.getBiome()
 					.getGenerationSettings()
 					.getSurfaceBuilderConfig()
-					.getTop();
+					.getTopMaterial();
 			placeFloor(world, biome, floorPositions, random, surfaceBlock);
 		});
 		ceilSets.forEach((biome, ceilPositions) -> {
@@ -188,13 +188,13 @@ public class TunelCaveFeature extends EndCaveFeature {
 	protected void placeFloor(ISeedReader world, BetterEndCaveBiome biome, Set<BlockPos> floorPositions, Random random, BlockState surfaceBlock) {
 		float density = biome.getFloorDensity() * 0.2F;
 		floorPositions.forEach((pos) -> {
-			if (!surfaceBlock.isIn(Blocks.END_STONE)) {
+			if (!surfaceBlock.is(Blocks.END_STONE)) {
 				BlockHelper.setWithoutUpdate(world, pos, surfaceBlock);
 			}
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) {
-					feature.generate(world, null, random, pos.up(), null);
+					feature.place(world, null, random, pos.above(), null);
 				}
 			}
 		});
@@ -211,17 +211,17 @@ public class TunelCaveFeature extends EndCaveFeature {
 			if (density > 0 && random.nextFloat() <= density) {
 				Feature<?> feature = biome.getCeilFeature(random);
 				if (feature != null) {
-					feature.generate(world, null, random, pos.down(), null);
+					feature.place(world, null, random, pos.below(), null);
 				}
 			}
 		});
 	}
 
 	protected boolean hasCaves(ISeedReader world, BlockPos pos) {
-		return hasCavesInBiome(world, pos.add(-8, 0, -8)) &&
-				hasCavesInBiome(world, pos.add(8, 0, -8)) &&
-				hasCavesInBiome(world, pos.add(-8, 0, 8)) &&
-				hasCavesInBiome(world, pos.add(8, 0, 8));
+		return hasCavesInBiome(world, pos.offset(-8, 0, -8)) &&
+				hasCavesInBiome(world, pos.offset(8, 0, -8)) &&
+				hasCavesInBiome(world, pos.offset(-8, 0, 8)) &&
+				hasCavesInBiome(world, pos.offset(8, 0, 8));
 	}
 
 	protected boolean hasCavesInBiome(ISeedReader world, BlockPos pos) {

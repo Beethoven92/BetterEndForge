@@ -19,7 +19,7 @@ public abstract class InvertedScatterFeature extends Feature<NoFeatureConfig>
 	
 	public InvertedScatterFeature(int radius) 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 		this.radius = radius;
 	}
 	
@@ -28,7 +28,7 @@ public abstract class InvertedScatterFeature extends Feature<NoFeatureConfig>
 	public abstract void generate(ISeedReader world, Random random, BlockPos blockPos);
 	
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
+	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
 			BlockPos pos, NoFeatureConfig config) 
 	{
 		int maxY = world.getHeight(Heightmap.Type.WORLD_SURFACE, pos.getX(), pos.getZ());
@@ -36,9 +36,9 @@ public abstract class InvertedScatterFeature extends Feature<NoFeatureConfig>
 
 		for (int y = maxY; y > minY; y--) 
 		{
-			POS.setPos(pos.getX(), y, pos.getZ());
+			POS.set(pos.getX(), y, pos.getZ());
 			
-			if (world.getBlockState(POS).isAir() && !world.getBlockState(POS.up()).isAir()) 
+			if (world.getBlockState(POS).isAir() && !world.getBlockState(POS.above()).isAir()) 
 			{
 				float r = ModMathHelper.randRange(radius * 0.5F, radius, random);
 				int count = ModMathHelper.floor(r * r * ModMathHelper.randRange(0.5F, 1.5F, random));
@@ -57,7 +57,7 @@ public abstract class InvertedScatterFeature extends Feature<NoFeatureConfig>
 					
 					POS.setY(POS.getY() + up);*/
 					
-					POS.setPos(pos.getX() + x, POS.getY(), pos.getZ() + z);
+					POS.set(pos.getX() + x, POS.getY(), pos.getZ() + z);
 					
 					if (canGenerate(world, random, pos, POS, r)) 
 					{

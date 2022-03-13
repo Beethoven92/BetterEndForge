@@ -14,6 +14,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class LanceleafBlock extends PlantBlock {
 	public static final EnumProperty<PentaShape> SHAPE = BlockProperties.PENTA_SHAPE;
 	public static final IntegerProperty ROTATION = BlockProperties.ROTATION;
@@ -23,28 +25,28 @@ public class LanceleafBlock extends PlantBlock {
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(SHAPE, ROTATION);
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
-		PentaShape shape = state.get(SHAPE);
+	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+		PentaShape shape = state.getValue(SHAPE);
 		if (shape == PentaShape.TOP) {
-			return world.getBlockState(pos.down()).isIn(this);
+			return world.getBlockState(pos.below()).is(this);
 		} else if (shape == PentaShape.BOTTOM) {
-			return world.getBlockState(pos.down()).isIn(ModBlocks.AMBER_MOSS.get())
-					&& world.getBlockState(pos.up()).isIn(this);
+			return world.getBlockState(pos.below()).is(ModBlocks.AMBER_MOSS.get())
+					&& world.getBlockState(pos.above()).is(this);
 		} else {
-			return world.getBlockState(pos.down()).isIn(this) && world.getBlockState(pos.up()).isIn(this);
+			return world.getBlockState(pos.below()).is(this) && world.getBlockState(pos.above()).is(this);
 		}
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world,
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world,
 			BlockPos pos, BlockPos facingPos) {
-		if (!isValidPosition(state, world, pos)) {
-			return Blocks.AIR.getDefaultState();
+		if (!canSurvive(state, world, pos)) {
+			return Blocks.AIR.defaultBlockState();
 		}
 		else {
 			return state;

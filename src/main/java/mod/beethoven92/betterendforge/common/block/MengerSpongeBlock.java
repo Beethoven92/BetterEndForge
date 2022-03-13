@@ -21,6 +21,8 @@ import net.minecraft.util.Tuple;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class MengerSpongeBlock extends SpongeBlock
 {
 	public MengerSpongeBlock(Properties properties) 
@@ -29,12 +31,12 @@ public class MengerSpongeBlock extends SpongeBlock
 	}
 	
 	@Override
-	protected void tryAbsorb(World worldIn, BlockPos pos) 
+	protected void tryAbsorbWater(World worldIn, BlockPos pos) 
 	{
 		if (this.absorb(worldIn, pos)) 
 		{
-			worldIn.setBlockState(pos, ModBlocks.MENGER_SPONGE_WET.get().getDefaultState(), 2);
-	        worldIn.playEvent(2001, pos, Block.getStateId(Blocks.WATER.getDefaultState()));
+			worldIn.setBlock(pos, ModBlocks.MENGER_SPONGE_WET.get().defaultBlockState(), 2);
+	        worldIn.levelEvent(2001, pos, Block.getId(Blocks.WATER.defaultBlockState()));
 	    }
 	}
 	
@@ -52,13 +54,13 @@ public class MengerSpongeBlock extends SpongeBlock
 
 		    for(Direction direction : Direction.values()) 
 		    {
-		    	BlockPos blockpos1 = blockpos.offset(direction);
+		    	BlockPos blockpos1 = blockpos.relative(direction);
 		        BlockState blockstate = worldIn.getBlockState(blockpos1);
 		        FluidState fluidstate = worldIn.getFluidState(blockpos1);
 		        Material material = blockstate.getMaterial();
-		        if (fluidstate.isTagged(FluidTags.WATER)) 
+		        if (fluidstate.is(FluidTags.WATER)) 
 		        {
-		        	if (blockstate.getBlock() instanceof IBucketPickupHandler && ((IBucketPickupHandler)blockstate.getBlock()).pickupFluid(worldIn, blockpos1, blockstate) != Fluids.EMPTY) 
+		        	if (blockstate.getBlock() instanceof IBucketPickupHandler && ((IBucketPickupHandler)blockstate.getBlock()).takeLiquid(worldIn, blockpos1, blockstate) != Fluids.EMPTY) 
 		        	{
 		        		++i;
 		                if (j < 6) 
@@ -68,18 +70,18 @@ public class MengerSpongeBlock extends SpongeBlock
 		            } 
 		        	else if (blockstate.getBlock() instanceof FlowingFluidBlock) 
 		        	{
-		        		worldIn.setBlockState(blockpos1, Blocks.AIR.getDefaultState(), 3);
+		        		worldIn.setBlock(blockpos1, Blocks.AIR.defaultBlockState(), 3);
 		                ++i;
 		                if (j < 6) 
 		                {
 		                	queue.add(new Tuple<>(blockpos1, j + 1));
 		                }
 		            } 
-		        	else if (material == Material.OCEAN_PLANT || material == Material.SEA_GRASS) 
+		        	else if (material == Material.WATER_PLANT || material == Material.REPLACEABLE_WATER_PLANT) 
 		        	{
-		        		TileEntity tileentity = blockstate.hasTileEntity() ? worldIn.getTileEntity(blockpos1) : null;
-		                spawnDrops(blockstate, worldIn, blockpos1, tileentity);
-		                worldIn.setBlockState(blockpos1, Blocks.AIR.getDefaultState(), 3);
+		        		TileEntity tileentity = blockstate.hasTileEntity() ? worldIn.getBlockEntity(blockpos1) : null;
+		                dropResources(blockstate, worldIn, blockpos1, tileentity);
+		                worldIn.setBlock(blockpos1, Blocks.AIR.defaultBlockState(), 3);
 		                ++i;
 		                if (j < 6) 
 		                {

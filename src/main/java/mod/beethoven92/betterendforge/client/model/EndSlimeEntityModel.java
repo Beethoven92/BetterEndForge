@@ -19,7 +19,7 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends SegmentedMode
 	private final ModelRenderer mouth;
 	
 	public EndSlimeEntityModel(boolean onlyShell) {
-		super(RenderType::getEntityCutout);
+		super(RenderType::entityCutout);
 		
 		this.innerCube = new ModelRenderer(this, 0, 16);
 		this.rightEye = new ModelRenderer(this, 32, 0);
@@ -29,7 +29,7 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends SegmentedMode
 		this.crop = new ModelRenderer(this);
 
 		if (onlyShell) {
-			this.innerCube.setTextureOffset(0, 0);
+			this.innerCube.texOffs(0, 0);
 			this.innerCube.addBox(-4.0F, 16.0F, -4.0F, 8.0F, 8.0F, 8.0F);
 		}
 		else {
@@ -40,10 +40,10 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends SegmentedMode
 			
 			for (int i = 0; i < 4; i++) {
 				ModelRenderer petalRot = new ModelRenderer(this);
-				petalRot.rotateAngleY = ModMathHelper.degreesToRadians(i * 45F);
+				petalRot.yRot = ModMathHelper.degreesToRadians(i * 45F);
 				
 				ModelRenderer petal = new ModelRenderer(this, 40, 0);
-				petal.setRotationPoint(-4, 8, 0);
+				petal.setPos(-4, 8, 0);
 				petal.addBox(0.0F, 0.0F, 0.0F, 8.0F, 8.0F, 0.0F, 0.0F);
 				
 				this.flower.addChild(petalRot);
@@ -52,10 +52,10 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends SegmentedMode
 			
 			for (int i = 0; i < 2; i++) {
 				ModelRenderer petalRot = new ModelRenderer(this);
-				petalRot.rotateAngleY = ModMathHelper.degreesToRadians(i * 90F + 45F);
+				petalRot.yRot = ModMathHelper.degreesToRadians(i * 90F + 45F);
 				
 				ModelRenderer petal = new ModelRenderer(this, 40, 0);
-				petal.setRotationPoint(-4, 8, 0);
+				petal.setPos(-4, 8, 0);
 				petal.addBox(0.0F, 0.0F, 0.0F, 8.0F, 8.0F, 0.0F, 0.0F);
 				
 				this.crop.addChild(petalRot);
@@ -65,7 +65,7 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends SegmentedMode
 	}
 	
 	@Override
-	public void setRotationAngles(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {}
+	public void setupAnim(T entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {}
 	
 	public void renderFlower(MatrixStack matrices, IVertexBuilder vertices, int light, int overlay) {
 		flower.render(matrices, vertices, light, overlay);
@@ -76,7 +76,7 @@ public class EndSlimeEntityModel<T extends EndSlimeEntity> extends SegmentedMode
 	}
 
 	@Override
-	public Iterable<ModelRenderer> getParts() {
+	public Iterable<ModelRenderer> parts() {
 		return ImmutableList.of(this.innerCube, this.rightEye, this.leftEye, this.mouth);
 	}
 }

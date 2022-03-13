@@ -28,7 +28,7 @@ public class IceStarFeature extends Feature<NoFeatureConfig>
 	
 	public IceStarFeature(float minSize, float maxSize, int minCount, int maxCount)
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 		
 		this.minSize = minSize;
 		this.maxSize = maxSize;
@@ -37,7 +37,7 @@ public class IceStarFeature extends Feature<NoFeatureConfig>
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config) 
 	{
 		float size = ModMathHelper.randRange(minSize, maxSize, rand);
@@ -73,9 +73,9 @@ public class IceStarFeature extends Feature<NoFeatureConfig>
 		final float randScale = size * 0.3F;
 		
 		final BlockPos center = pos;
-		final BlockState ice = ModBlocks.EMERALD_ICE.get().getDefaultState();
-		final BlockState dense = ModBlocks.DENSE_EMERALD_ICE.get().getDefaultState();
-		final BlockState ancient = ModBlocks.ANCIENT_EMERALD_ICE.get().getDefaultState();
+		final BlockState ice = ModBlocks.EMERALD_ICE.get().defaultBlockState();
+		final BlockState dense = ModBlocks.DENSE_EMERALD_ICE.get().defaultBlockState();
+		final BlockState ancient = ModBlocks.ANCIENT_EMERALD_ICE.get().defaultBlockState();
 		final SDF sdfCopy = sdf;
 		
 		sdf.addPostProcess((info) -> {

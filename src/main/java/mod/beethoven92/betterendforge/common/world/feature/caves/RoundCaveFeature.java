@@ -61,7 +61,7 @@ public class RoundCaveFeature extends EndCaveFeature
 						if (isReplaceable(state)) 
 						{
 							BlockHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
-							blocks.add(bpos.toImmutable());
+							blocks.add(bpos.immutable());
 
 							while (state.getMaterial().equals(Material.LEAVES)) 
 							{
@@ -88,11 +88,11 @@ public class RoundCaveFeature extends EndCaveFeature
 	
 	private boolean isReplaceable(BlockState state) 
 	{
-		return state.isIn(ModTags.GEN_TERRAIN)
+		return state.is(ModTags.GEN_TERRAIN)
 				|| state.getMaterial().isReplaceable()
-				|| state.getMaterial().equals(Material.PLANTS)
+				|| state.getMaterial().equals(Material.PLANT)
 				|| state.getMaterial().equals(Material.LEAVES)
-				|| state.isIn(Tags.Blocks.ORES) // Handles floating ores
-				|| state.isIn(Tags.Blocks.END_STONES); // Handles other blocks that could be left floating
+				|| state.is(Tags.Blocks.ORES) // Handles floating ores
+				|| state.is(Tags.Blocks.END_STONES); // Handles other blocks that could be left floating
 	}
 }

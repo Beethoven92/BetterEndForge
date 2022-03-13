@@ -13,6 +13,8 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class AncientEmeraldIceBlock extends Block
 {
 	public AncientEmeraldIceBlock(Properties properties) 
@@ -30,30 +32,30 @@ public class AncientEmeraldIceBlock extends Block
 			int x = ModMathHelper.randRange(-2, 2, random);
 			int y = ModMathHelper.randRange(-2, 2, random);
 			int z = ModMathHelper.randRange(-2, 2, random);
-			BlockPos p = pos.add(x, y, z);
-			if (worldIn.getBlockState(p).isIn(Blocks.WATER)) 
+			BlockPos p = pos.offset(x, y, z);
+			if (worldIn.getBlockState(p).is(Blocks.WATER)) 
 			{
-				worldIn.setBlockState(p, ModBlocks.EMERALD_ICE.get().getDefaultState());
+				worldIn.setBlockAndUpdate(p, ModBlocks.EMERALD_ICE.get().defaultBlockState());
 				makeParticles(worldIn, p, random);
 			}
 		}
 		
-		pos = pos.offset(dir);
+		pos = pos.relative(dir);
 		state = worldIn.getBlockState(pos);
-		if (state.isIn(Blocks.WATER)) 
+		if (state.is(Blocks.WATER)) 
 		{
-			worldIn.setBlockState(pos, ModBlocks.EMERALD_ICE.get().getDefaultState());
+			worldIn.setBlockAndUpdate(pos, ModBlocks.EMERALD_ICE.get().defaultBlockState());
 			makeParticles(worldIn, pos, random);
 		}
-		else if (state.isIn(ModBlocks.EMERALD_ICE.get())) 
+		else if (state.is(ModBlocks.EMERALD_ICE.get())) 
 		{
-			worldIn.setBlockState(pos, ModBlocks.DENSE_EMERALD_ICE.get().getDefaultState());
+			worldIn.setBlockAndUpdate(pos, ModBlocks.DENSE_EMERALD_ICE.get().defaultBlockState());
 			makeParticles(worldIn, pos, random);
 		}
 	}
 	
 	private void makeParticles(ServerWorld world, BlockPos pos, Random random) 
 	{
-		world.spawnParticle(ModParticleTypes.SNOWFLAKE_PARTICLE.get(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, 0.5, 0.5, 0.5, 0);
+		world.sendParticles(ModParticleTypes.SNOWFLAKE_PARTICLE.get(), pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 20, 0.5, 0.5, 0.5, 0);
 	}
 }

@@ -18,9 +18,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public abstract class EndSaplingBlock extends Block implements IGrowable
 {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 14, 12);
+	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 14, 12);
 	
 	public EndSaplingBlock(Properties properties) 
 	{
@@ -30,17 +32,17 @@ public abstract class EndSaplingBlock extends Block implements IGrowable
 	protected abstract Feature<?> getFeature();
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		return worldIn.getBlockState(pos.down()).isIn(ModTags.END_GROUND);
+		return worldIn.getBlockState(pos.below()).is(ModTags.END_GROUND);
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos))
-			return Blocks.AIR.getDefaultState();
+		if (!canSurvive(stateIn, worldIn, currentPos))
+			return Blocks.AIR.defaultBlockState();
 		else
 			return stateIn;
 	}
@@ -48,7 +50,7 @@ public abstract class EndSaplingBlock extends Block implements IGrowable
 	@Override
 	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) 
 	{
-		grow(worldIn, random, pos, state);
+		performBonemeal(worldIn, random, pos, state);
 	}
 	
 	@Override
@@ -58,23 +60,23 @@ public abstract class EndSaplingBlock extends Block implements IGrowable
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient)
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient)
 	{
 		return true;
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state)
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state)
 	{
 		return true;
 	}
 
 	@Override
-	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state)
+	public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state)
 	{
 		if (rand.nextInt(16) == 0)
 		{
-			getFeature().generate(worldIn, worldIn.getChunkProvider().getChunkGenerator(), rand, pos, null);
+			getFeature().place(worldIn, worldIn.getChunkSource().getGenerator(), rand, pos, null);
 		}
 	}		
 }

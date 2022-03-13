@@ -34,8 +34,8 @@ public class EndFishEntity extends AbstractGroupFishEntity
 	public static final int VARIANTS_SULPHUR = 3;
 	public static final int VARIANTS = VARIANTS_NORMAL + VARIANTS_SULPHUR;
 	
-	private static final DataParameter<Byte> VARIANT = EntityDataManager.createKey(EndFishEntity.class, DataSerializers.BYTE);
-	private static final DataParameter<Byte> SCALE = EntityDataManager.createKey(EndFishEntity.class, DataSerializers.BYTE);
+	private static final DataParameter<Byte> VARIANT = EntityDataManager.defineId(EndFishEntity.class, DataSerializers.BYTE);
+	private static final DataParameter<Byte> SCALE = EntityDataManager.defineId(EndFishEntity.class, DataSerializers.BYTE);
 	
 	public EndFishEntity(EntityType<? extends AbstractGroupFishEntity> type, World worldIn) 
 	{
@@ -43,119 +43,119 @@ public class EndFishEntity extends AbstractGroupFishEntity
 	}
 
 	@Override
-	public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
+	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
 			ILivingEntityData spawnDataIn, CompoundNBT dataTag) 
 	{
-		ILivingEntityData data = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		ILivingEntityData data = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 		
-		if (ModBiomes.getFromBiome(world.getBiome(getPosition())) == ModBiomes.SULPHUR_SPRINGS) {
-			this.dataManager.set(VARIANT, (byte) (rand.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
+		if (ModBiomes.getFromBiome(level.getBiome(blockPosition())) == ModBiomes.SULPHUR_SPRINGS) {
+			this.entityData.set(VARIANT, (byte) (random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
 		}
 
 		if (dataTag != null) {
 			if (dataTag.contains("variant"))
-				this.dataManager.set(VARIANT, dataTag.getByte("variant"));
+				this.entityData.set(VARIANT, dataTag.getByte("variant"));
 			if (dataTag.contains("scale"))
-				this.dataManager.set(SCALE, dataTag.getByte("scale"));
+				this.entityData.set(SCALE, dataTag.getByte("scale"));
 		}
 		
-		this.recalculateSize();
+		this.refreshDimensions();
 		return data;
 	}
 	
 	@Override
-	protected void registerData() 
+	protected void defineSynchedData() 
 	{
-		super.registerData();
-		this.dataManager.register(VARIANT, (byte)this.rand.nextInt(VARIANTS));
-		this.dataManager.register(SCALE, (byte)this.rand.nextInt(16));
+		super.defineSynchedData();
+		this.entityData.define(VARIANT, (byte)this.random.nextInt(VARIANTS));
+		this.entityData.define(SCALE, (byte)this.random.nextInt(16));
 	}
 	
 	@Override
-	public void writeAdditional(CompoundNBT compound) 
+	public void addAdditionalSaveData(CompoundNBT compound) 
 	{
-		super.writeAdditional(compound);
+		super.addAdditionalSaveData(compound);
 		compound.putByte("Variant", (byte)this.getVariant());
-		compound.putByte("Scale", dataManager.get(SCALE));
+		compound.putByte("Scale", entityData.get(SCALE));
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) 
+	public void readAdditionalSaveData(CompoundNBT compound) 
 	{
-		super.readAdditional(compound);
+		super.readAdditionalSaveData(compound);
 		if (compound.contains("Variant")) 
 		{
-			this.dataManager.set(VARIANT, compound.getByte("Variant"));
+			this.entityData.set(VARIANT, compound.getByte("Variant"));
 		}
 		if (compound.contains("Scale")) 
 		{
-			this.dataManager.set(SCALE, compound.getByte("Scale"));
+			this.entityData.set(SCALE, compound.getByte("Scale"));
 		}
 	}
 	
 	@Override
-	protected ItemStack getFishBucket() 
+	protected ItemStack getBucketItemStack() 
 	{
 		ItemStack bucket = ModItems.BUCKET_END_FISH.get().getDefaultInstance();
 		CompoundNBT tag = bucket.getOrCreateTag();
-		tag.putByte("variant", dataManager.get(VARIANT));
-		tag.putByte("scale", dataManager.get(SCALE));
+		tag.putByte("variant", entityData.get(VARIANT));
+		tag.putByte("scale", entityData.get(SCALE));
 		return bucket;
 	}
 
 	@Override
 	protected SoundEvent getFlopSound() 
 	{
-		return SoundEvents.ENTITY_TROPICAL_FISH_FLOP;
+		return SoundEvents.TROPICAL_FISH_FLOP;
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() 
 	{
-		return SoundEvents.ENTITY_SALMON_DEATH;
+		return SoundEvents.SALMON_DEATH;
 	}
 	
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) 
 	{
-		return SoundEvents.ENTITY_SALMON_HURT;
+		return SoundEvents.SALMON_HURT;
 	}
 	
 	@Override
 	public void tick() 
 	{
 		super.tick();
-		if (rand.nextInt(8) == 0 && getBlockState().isIn(Blocks.WATER)) 
+		if (random.nextInt(8) == 0 && getFeetBlockState().is(Blocks.WATER)) 
 		{
-			double x = this.getPosX() + rand.nextGaussian() * 0.2;
-			double y = this.getPosY() + rand.nextGaussian() * 0.2;
-			double z = this.getPosZ() + rand.nextGaussian() * 0.2;
-			world.addParticle(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
+			double x = this.getX() + random.nextGaussian() * 0.2;
+			double y = this.getY() + random.nextGaussian() * 0.2;
+			double z = this.getZ() + random.nextGaussian() * 0.2;
+			level.addParticle(ParticleTypes.BUBBLE, x, y, z, 0, 0, 0);
 		}
 	}
 
 	public static AttributeModifierMap.MutableAttribute registerAttributes() 
 	{
-		return LivingEntity.registerAttributes().createMutableAttribute(Attributes.MAX_HEALTH, 2.0).
-				createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0).
-				createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.75);
+		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 2.0).
+				add(Attributes.FOLLOW_RANGE, 16.0).
+				add(Attributes.MOVEMENT_SPEED, 0.75);
 	}
 	
 	public int getVariant() 
 	{
-		return (int) this.dataManager.get(VARIANT);
+		return (int) this.entityData.get(VARIANT);
 	}
 	
 	public float getScale() 
 	{
-		return this.dataManager.get(SCALE) / 32F + 0.75F;
+		return this.entityData.get(SCALE) / 32F + 0.75F;
 	}
 
 	public static boolean canSpawn(EntityType<EndFishEntity> type, IServerWorld world, SpawnReason spawnReason,
 			BlockPos pos, Random random) 
 	{
-		AxisAlignedBB box = new AxisAlignedBB(pos).grow(16);
-		List<EndFishEntity> list = world.getEntitiesWithinAABB(EndFishEntity.class, box, (entity) -> { return true; });
+		AxisAlignedBB box = new AxisAlignedBB(pos).inflate(16);
+		List<EndFishEntity> list = world.getEntitiesOfClass(EndFishEntity.class, box, (entity) -> { return true; });
 		return list.size() < 9;
 	}
 }

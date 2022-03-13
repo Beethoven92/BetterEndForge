@@ -17,13 +17,13 @@ public class UmbraSurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
 
     public UmbraSurfaceBuilder()
     {
-        super(SurfaceBuilderConfig.field_237203_a_);
+        super(SurfaceBuilderConfig.CODEC);
     }
 
 
 	
 	public static BlockState getSurfaceState(BlockPos pos) {
-		return getConfig(pos.getX(), pos.getZ(), ModMathHelper.RANDOM).getTop();
+		return getConfig(pos.getX(), pos.getZ(), ModMathHelper.RANDOM).getTopMaterial();
 	}
 	
 	private static SurfaceBuilderConfig getConfig(int x, int z, Random random) {
@@ -47,9 +47,9 @@ public class UmbraSurfaceBuilder extends SurfaceBuilder<SurfaceBuilderConfig> {
 
 
 	@Override
-	public void buildSurface(Random random, IChunk chunkIn, Biome biomeIn, int x, int z, int startHeight, double noise, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed, SurfaceBuilderConfig config) {
+	public void apply(Random random, IChunk chunkIn, Biome biomeIn, int x, int z, int startHeight, double noise, BlockState defaultBlock, BlockState defaultFluid, int seaLevel, long seed, SurfaceBuilderConfig config) {
 		int depth = (int) (NOISE.eval(x * 0.1, z * 0.1) * 20 + NOISE.eval(x * 0.5, z * 0.5) * 10 + 60);
 		config = getConfig(x, z, random);
-		SurfaceBuilder.DEFAULT.buildSurface(random, chunkIn, biomeIn, x, z, startHeight, noise + depth, defaultBlock, defaultFluid, seaLevel, seed, config);
+		SurfaceBuilder.DEFAULT.apply(random, chunkIn, biomeIn, x, z, startHeight, noise + depth, defaultBlock, defaultFluid, seaLevel, seed, config);
 	}
 }

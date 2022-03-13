@@ -24,6 +24,8 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
+import net.minecraft.item.Item.Properties;
+
 @EventBusSubscriber(modid = BetterEnd.MOD_ID, bus = Bus.MOD)
 public class ModSpawnEggItem extends SpawnEggItem {
 
@@ -32,10 +34,10 @@ public class ModSpawnEggItem extends SpawnEggItem {
 	private static final Map<Supplier<EntityType<?>>, SpawnEggItem> MOD_EGGS = new HashMap<>();
 
 	private static final DefaultDispenseItemBehavior SPAWN_EGG_BEHAVIOR = new DefaultDispenseItemBehavior() {
-		public ItemStack dispenseStack(IBlockSource source, ItemStack stack) {
-			Direction direction = source.getBlockState().get(DispenserBlock.FACING);
-			((SpawnEggItem) stack.getItem()).getType(stack.getTag()).spawn(source.getWorld(), stack, null,
-					source.getBlockPos().offset(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
+		public ItemStack execute(IBlockSource source, ItemStack stack) {
+			Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+			((SpawnEggItem) stack.getItem()).getType(stack.getTag()).spawn(source.getLevel(), stack, null,
+					source.getPos().relative(direction), SpawnReason.DISPENSER, direction != Direction.UP, false);
 			stack.shrink(1);
 			return stack;
 		}
@@ -47,7 +49,7 @@ public class ModSpawnEggItem extends SpawnEggItem {
 			Properties builder) {
 		super(null, primaryColorIn, secondaryColorIn, builder);
 		this.type = typeIn;
-		DispenserBlock.registerDispenseBehavior(this, SPAWN_EGG_BEHAVIOR);
+		DispenserBlock.registerBehavior(this, SPAWN_EGG_BEHAVIOR);
 		MOD_EGGS.put(typeIn, this);
 	}
 
@@ -56,7 +58,7 @@ public class ModSpawnEggItem extends SpawnEggItem {
 		if (nbt != null && nbt.contains("EntityTag", 10)) {
 			CompoundNBT compoundnbt = nbt.getCompound("EntityTag");
 			if (compoundnbt.contains("id", 8)) {
-				return EntityType.byKey(compoundnbt.getString("id")).orElse(type.get());
+				return EntityType.byString(compoundnbt.getString("id")).orElse(type.get());
 			}
 		}
 		return type.get();
@@ -68,7 +70,7 @@ public class ModSpawnEggItem extends SpawnEggItem {
 		event.enqueueWork(() -> {
 			try {
 			Map<EntityType<?>, SpawnEggItem> eggs = ObfuscationReflectionHelper.getPrivateValue(SpawnEggItem.class,
-					null, "field_195987_b");
+					null, "BY_ID");
 			for (Entry<Supplier<EntityType<?>>, SpawnEggItem> entry : MOD_EGGS.entrySet())
 				eggs.put(entry.getKey().get(), entry.getValue());
 			} catch (Exception e) {

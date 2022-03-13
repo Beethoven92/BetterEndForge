@@ -15,7 +15,7 @@ import net.minecraft.world.server.ServerWorld;
 
 public class MossyDragonBoneBlock extends RotatedPillarBlock {
 	public MossyDragonBoneBlock() {
-		super(AbstractBlock.Properties.from(Blocks.BONE_BLOCK).hardnessAndResistance(0.5f).tickRandomly());
+		super(AbstractBlock.Properties.copy(Blocks.BONE_BLOCK).strength(0.5f).randomTicks());
 	}
 	
 
@@ -23,20 +23,20 @@ public class MossyDragonBoneBlock extends RotatedPillarBlock {
 	@Override
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 		if (random.nextInt(16) == 0 && !canSurvive(state, world, pos)) {
-			world.setBlockState(pos, Blocks.BONE_BLOCK.getDefaultState().with(AXIS, state.get(AXIS)));
+			world.setBlockAndUpdate(pos, Blocks.BONE_BLOCK.defaultBlockState().setValue(AXIS, state.getValue(AXIS)));
 		}
 	}
 	
 	public static boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
-		BlockPos blockPos = pos.up();
+		BlockPos blockPos = pos.above();
 		BlockState blockState = world.getBlockState(blockPos);
-		if (blockState.isIn(Blocks.SNOW) && (Integer) blockState.get(SnowBlock.LAYERS) == 1) {
+		if (blockState.is(Blocks.SNOW) && (Integer) blockState.getValue(SnowBlock.LAYERS) == 1) {
 			return true;
-		} else if (blockState.getFluidState().getLevel() == 8) {
+		} else if (blockState.getFluidState().getAmount() == 8) {
 			return false;
 		} else {
-			int i = LightEngine.func_215613_a(world, state, pos, blockState, blockPos, Direction.UP,
-					state.getOpacity(world, blockPos));
+			int i = LightEngine.getLightBlockInto(world, state, pos, blockState, blockPos, Direction.UP,
+					state.getLightBlock(world, blockPos));
 			return i < 5;
 		}
 	}

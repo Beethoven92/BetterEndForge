@@ -15,7 +15,7 @@ public class LanceleafFeature extends ScatterFeature {
 
 	@Override
 	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) {
-		return ModBlocks.LANCELEAF_SEED.get().isValidPosition(Blocks.AIR.getDefaultState(), world, blockPos);
+		return ModBlocks.LANCELEAF_SEED.get().canSurvive(Blocks.AIR.defaultBlockState(), world, blockPos);
 	}
 
 	@Override

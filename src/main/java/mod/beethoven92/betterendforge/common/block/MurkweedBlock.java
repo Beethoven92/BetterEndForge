@@ -15,6 +15,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class MurkweedBlock extends PlantBlock
 {
 	public MurkweedBlock(Properties properties)
@@ -33,22 +35,22 @@ public class MurkweedBlock extends PlantBlock
 	}
 	
 	@Override
-	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) 
+	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) 
 	{
-		if (entityIn instanceof LivingEntity && !((LivingEntity) entityIn).isPotionActive(Effects.BLINDNESS)) 
+		if (entityIn instanceof LivingEntity && !((LivingEntity) entityIn).hasEffect(Effects.BLINDNESS)) 
 		{
-			((LivingEntity) entityIn).addPotionEffect(new EffectInstance(Effects.BLINDNESS, 50));
+			((LivingEntity) entityIn).addEffect(new EffectInstance(Effects.BLINDNESS, 50));
 		}
 	}
 	
 	@Override
 	protected boolean isTerrain(BlockState state) 
 	{
-		return state.isIn(ModBlocks.SHADOW_GRASS.get());
+		return state.is(ModBlocks.SHADOW_GRASS.get());
 	}
 	
 	@Override
-	public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) 
+	public boolean isPathfindable(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) 
 	{
 		return false;
 	}

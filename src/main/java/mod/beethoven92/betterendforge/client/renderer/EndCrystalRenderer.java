@@ -28,8 +28,8 @@ public class EndCrystalRenderer
 	
 	static 
 	{
-		END_CRYSTAL = RenderType.getEntityCutoutNoCull(CRYSTAL_TEXTURE);
-		CRYSTAL_BEAM_LAYER = RenderType.getEntitySmoothCutout(CRYSTAL_BEAM_TEXTURE);
+		END_CRYSTAL = RenderType.entityCutoutNoCull(CRYSTAL_TEXTURE);
+		CRYSTAL_BEAM_LAYER = RenderType.entitySmoothCutout(CRYSTAL_BEAM_TEXTURE);
 		SINE_45_DEGREES = (float) Math.sin(0.7853981633974483D);
 		FRAME = new ModelRenderer(64, 32, 0, 0);
 		FRAME.addBox(-4.0F, -4.0F, -4.0F, 8.0F, 8.0F, 8.0F);
@@ -43,22 +43,22 @@ public class EndCrystalRenderer
 		float k = (float) AGE_CYCLE / maxAge;
 		float rotation = (age * k + tickDelta) * 3.0F;
 		IVertexBuilder iVertexBuilder = bufferIn.getBuffer(END_CRYSTAL);
-		matrices.push();
+		matrices.pushPose();
 		matrices.scale(0.8F, 0.8F, 0.8F);
 		matrices.translate(0.0D, -0.5D, 0.0D);
-		matrices.rotate(Vector3f.YP.rotationDegrees(rotation));
+		matrices.mulPose(Vector3f.YP.rotationDegrees(rotation));
 		matrices.translate(0.0D, 0.8F, 0.0D);
-		matrices.rotate(new Quaternion(new Vector3f(SINE_45_DEGREES, 0.0F, SINE_45_DEGREES), 60.0F, true));
+		matrices.mulPose(new Quaternion(new Vector3f(SINE_45_DEGREES, 0.0F, SINE_45_DEGREES), 60.0F, true));
 		FRAME.render(matrices, iVertexBuilder, light, OverlayTexture.NO_OVERLAY);
 		matrices.scale(0.875F, 0.875F, 0.875F);
-		matrices.rotate(new Quaternion(new Vector3f(SINE_45_DEGREES, 0.0F, SINE_45_DEGREES), 60.0F, true));
-		matrices.rotate(Vector3f.YP.rotationDegrees(rotation));
+		matrices.mulPose(new Quaternion(new Vector3f(SINE_45_DEGREES, 0.0F, SINE_45_DEGREES), 60.0F, true));
+		matrices.mulPose(Vector3f.YP.rotationDegrees(rotation));
 		FRAME.render(matrices, iVertexBuilder, light, OverlayTexture.NO_OVERLAY);
 		matrices.scale(0.875F, 0.875F, 0.875F);
-		matrices.rotate(new Quaternion(new Vector3f(SINE_45_DEGREES, 0.0F, SINE_45_DEGREES), 60.0F, true));
-		matrices.rotate(Vector3f.YP.rotationDegrees(rotation));
+		matrices.mulPose(new Quaternion(new Vector3f(SINE_45_DEGREES, 0.0F, SINE_45_DEGREES), 60.0F, true));
+		matrices.mulPose(Vector3f.YP.rotationDegrees(rotation));
 		CORE.render(matrices, iVertexBuilder, light, OverlayTexture.NO_OVERLAY);
-		matrices.pop();
+		matrices.popPose();
 	}
 	
 	public static void renderBeam(BlockPos start, BlockPos end, float tickDelta, int age, MatrixStack matrices, 
@@ -69,34 +69,34 @@ public class EndCrystalRenderer
 		float dz = start.getZ() - end.getZ() + 1.0F;
 		float f = MathHelper.sqrt(dx * dx + dz * dz);
 		float g = MathHelper.sqrt(dx * dx + dy * dy + dz * dz);
-		matrices.push();
+		matrices.pushPose();
 		matrices.translate(0.0D, 2.0D, 0.0D);
-		matrices.rotate(Vector3f.YP.rotation((float)(-Math.atan2((double) dz, (double) dx)) - 1.5707964F));
-		matrices.rotate(Vector3f.XP.rotation((float)(-Math.atan2((double) f, (double) dy)) - 1.5707964F));
+		matrices.mulPose(Vector3f.YP.rotation((float)(-Math.atan2((double) dz, (double) dx)) - 1.5707964F));
+		matrices.mulPose(Vector3f.XP.rotation((float)(-Math.atan2((double) f, (double) dy)) - 1.5707964F));
 		IVertexBuilder iVertexBuilder = bufferIn.getBuffer(CRYSTAL_BEAM_LAYER);
 		float h = 0.0F - ((float) age + tickDelta) * 0.01F;
 		float i = MathHelper.sqrt(dx * dx + dy * dy + dz * dz) / 32.0F - ((float) age + tickDelta) * 0.01F;
 		float k = 0.0F;
 		float l = 0.75F;
 		float m = 0.0F;
-		MatrixStack.Entry entry = matrices.getLast();
-		Matrix4f matrix4f = entry.getMatrix();
-		Matrix3f matrix3f = entry.getNormal();
+		MatrixStack.Entry entry = matrices.last();
+		Matrix4f matrix4f = entry.pose();
+		Matrix3f matrix3f = entry.normal();
 
 		for(int n = 1; n <= 8; ++n) 
 		{
 		   float o = MathHelper.sin((float) n * 6.2831855F / 8.0F) * 0.75F;
 		   float p = MathHelper.cos((float) n * 6.2831855F / 8.0F) * 0.75F;
 		   float q = (float) n / 8.0F;
-		   iVertexBuilder.pos(matrix4f, k * 0.2F, l * 0.2F, 0.0F).color(0, 0, 0, 255).tex(m, h).overlay(OverlayTexture.NO_OVERLAY).lightmap(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).endVertex();
-		   iVertexBuilder.pos(matrix4f, k, l, g).color(255, 255, 255, 255).tex(m, i).overlay(OverlayTexture.NO_OVERLAY).lightmap(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).endVertex();
-		   iVertexBuilder.pos(matrix4f, o, p, g).color(255, 255, 255, 255).tex(q, i).overlay(OverlayTexture.NO_OVERLAY).lightmap(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).endVertex();
-		   iVertexBuilder.pos(matrix4f, o * 0.2F, p * 0.2F, 0.0F).color(0, 0, 0, 255).tex(q, h).overlay(OverlayTexture.NO_OVERLAY).lightmap(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).endVertex();
+		   iVertexBuilder.vertex(matrix4f, k * 0.2F, l * 0.2F, 0.0F).color(0, 0, 0, 255).uv(m, h).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).endVertex();
+		   iVertexBuilder.vertex(matrix4f, k, l, g).color(255, 255, 255, 255).uv(m, i).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).endVertex();
+		   iVertexBuilder.vertex(matrix4f, o, p, g).color(255, 255, 255, 255).uv(q, i).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).endVertex();
+		   iVertexBuilder.vertex(matrix4f, o * 0.2F, p * 0.2F, 0.0F).color(0, 0, 0, 255).uv(q, h).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(light).normal(matrix3f, 0.0F, -1.0F, 0.0F).endVertex();
 		   k = o;
 		   l = p;
 		   m = q;
 		}
 
-		matrices.pop();
+		matrices.popPose();
 	}
 }

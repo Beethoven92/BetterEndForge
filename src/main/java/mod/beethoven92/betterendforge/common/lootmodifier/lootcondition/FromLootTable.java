@@ -25,7 +25,7 @@ public class FromLootTable implements ILootCondition {
 	}
 
 	@Override
-	public LootConditionType func_230419_b_() {
+	public LootConditionType getType() {
 		return LootConditions.FROM_LOOT_TABLE;
 	}
 
@@ -35,7 +35,7 @@ public class FromLootTable implements ILootCondition {
 		}
 
 		public FromLootTable deserialize(JsonObject json, JsonDeserializationContext context) {
-			ResourceLocation table = new ResourceLocation(JSONUtils.getString(json, "loot_table"));
+			ResourceLocation table = new ResourceLocation(JSONUtils.getAsString(json, "loot_table"));
 			return new FromLootTable(table);
 		}
 	}

@@ -49,15 +49,15 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 	static 
 	{
 		REPLACE1 = (state) -> {
-			return state.isAir() || (state.isIn(ModTags.GEN_TERRAIN));
+			return state.isAir() || (state.is(ModTags.GEN_TERRAIN));
 		};
 		
 		REPLACE2 = (state) -> {
-			if (state.isIn(ModTags.GEN_TERRAIN) || state.isIn(ModBlocks.HYDROTHERMAL_VENT.get()) || state.isIn(ModBlocks.SULPHUR_CRYSTAL.get()))
+			if (state.is(ModTags.GEN_TERRAIN) || state.is(ModBlocks.HYDROTHERMAL_VENT.get()) || state.is(ModBlocks.SULPHUR_CRYSTAL.get()))
 			{
 				return true;
 			}
-			if (state.getMaterial().equals(Material.PLANTS)) 
+			if (state.getMaterial().equals(Material.PLANT)) 
 			{
 				return true;
 			}
@@ -65,17 +65,17 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 		};
 		
 		IGNORE = (state) -> {
-			return state.isIn(Blocks.WATER) || state.isIn(Blocks.CAVE_AIR) || state.isIn(ModBlocks.SULPHURIC_ROCK.stone.get()) || state.isIn(ModBlocks.BRIMSTONE.get());
+			return state.is(Blocks.WATER) || state.is(Blocks.CAVE_AIR) || state.is(ModBlocks.SULPHURIC_ROCK.stone.get()) || state.is(ModBlocks.BRIMSTONE.get());
 		};
 	}
 	
 	public GeyserFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config) 
 	{
 		pos = FeatureHelper.getPosOnSurfaceWG(world, pos);
@@ -85,10 +85,10 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 			return false;
 		}
 		
-		Mutable bpos = new Mutable().setPos(pos);
+		Mutable bpos = new Mutable().set(pos);
 		bpos.setY(bpos.getY() - 1);
 		BlockState state = world.getBlockState(bpos);
-		while (state.isIn(ModTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) 
+		while (state.is(ModTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) 
 		{
 			bpos.setY(bpos.getY() - 1);
 			state = world.getBlockState(bpos);
@@ -128,9 +128,9 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 			final OpenSimplexNoise noise2 = new OpenSimplexNoise(rand.nextLong());
 
 			bowl = new SDFCoordModify().setFunction((vec) -> {
-				float dx = (float) noise1.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1);
-				float dz = (float) noise2.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1);
-				vec.set(vec.getX() + dx, vec.getY(), vec.getZ() + dz);
+				float dx = (float) noise1.eval(vec.x() * 0.1, vec.y() * 0.1, vec.z() * 0.1);
+				float dz = (float) noise2.eval(vec.x() * 0.1, vec.y() * 0.1, vec.z() * 0.1);
+				vec.set(vec.x() + dx, vec.y(), vec.z() + dz);
 			}).setSource(bowl);
 
 			SDF cut = new SDFFlatland().setBlock(Blocks.AIR);
@@ -157,13 +157,13 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 		obj1 = new SDFCappedCone().setHeight(halfHeight + 5).setRadius1(radius1 * 0.5F).setRadius2(radius2);
 		sdf = new SDFTranslate().setTranslate(0, halfHeight - 13, 0).setSource(obj1);
 		sdf = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.getX() * 0.3F, vec.getY() * 0.3F, vec.getZ() * 0.3F) * 0.5F;
+			return (float) noise.eval(vec.x() * 0.3F, vec.y() * 0.3F, vec.z() * 0.3F) * 0.5F;
 		}).setSource(sdf);
 
 		obj2 = new SDFSphere().setRadius(radius1);
 		SDF cave = new SDFScale3D().setScale(1.5F, 1, 1.5F).setSource(obj2);
 		cave = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.getX() * 0.1F, vec.getY() * 0.1F, vec.getZ() * 0.1F) * 2F;
+			return (float) noise.eval(vec.x() * 0.1F, vec.y() * 0.1F, vec.z() * 0.1F) * 2F;
 		}).setSource(cave);
 		cave = new SDFTranslate().setTranslate(0, -halfHeight - 10, 0).setSource(cave);
 
@@ -193,32 +193,32 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 		}).setSource(cave).setReplaceFunction(REPLACE1).fillRecursiveIgnore(world, pos, IGNORE);
 
 		BlockHelper.setWithoutUpdate(world, pos, Blocks.WATER);
-		Mutable mut = new Mutable().setPos(pos);
+		Mutable mut = new Mutable().set(pos);
 		count = FeatureHelper.getYOnSurface(world, pos.getX(), pos.getZ()) - pos.getY();
 		for (int i = 0; i < count; i++) 
 		{
 			BlockHelper.setWithoutUpdate(world, mut, Blocks.WATER);
 			for (Direction dir : BlockHelper.HORIZONTAL_DIRECTIONS) 
 			{
-				BlockHelper.setWithoutUpdate(world, mut.offset(dir), Blocks.WATER);
+				BlockHelper.setWithoutUpdate(world, mut.relative(dir), Blocks.WATER);
 			}
 			mut.setY(mut.getY() + 1);
 		}
 
 		for (int i = 0; i < 150; i++) 
 		{
-			mut.setPos(pos).move(ModMathHelper.floor(rand.nextGaussian() * 4 + 0.5), -halfHeight - 10, ModMathHelper.floor(rand.nextGaussian() * 4 + 0.5));
+			mut.set(pos).move(ModMathHelper.floor(rand.nextGaussian() * 4 + 0.5), -halfHeight - 10, ModMathHelper.floor(rand.nextGaussian() * 4 + 0.5));
 			float distRaw = ModMathHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ());
 			int dist = ModMathHelper.floor(6 - distRaw) + rand.nextInt(2);
 			if (dist >= 0) 
 			{
 				state = world.getBlockState(mut);
-				while (!state.getFluidState().isEmpty() || state.getMaterial().equals(Material.OCEAN_PLANT)) 
+				while (!state.getFluidState().isEmpty() || state.getMaterial().equals(Material.WATER_PLANT)) 
 				{
 					mut.setY(mut.getY() - 1);
 					state = world.getBlockState(mut);
 				}
-				if (state.isIn(ModTags.GEN_TERRAIN) && !world.getBlockState(mut.up()).isIn(ModBlocks.HYDROTHERMAL_VENT.get())) 
+				if (state.is(ModTags.GEN_TERRAIN) && !world.getBlockState(mut.above()).is(ModBlocks.HYDROTHERMAL_VENT.get())) 
 				{
 					for (int j = 0; j <= dist; j++) 
 					{
@@ -226,21 +226,21 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 						ModMathHelper.shuffle(HORIZONTAL, rand);
 						for (Direction dir : HORIZONTAL) 
 						{
-							BlockPos p = mut.offset(dir);
-							if (rand.nextBoolean() && world.getBlockState(p).isIn(Blocks.WATER)) 
+							BlockPos p = mut.relative(dir);
+							if (rand.nextBoolean() && world.getBlockState(p).is(Blocks.WATER)) 
 							{
-								BlockHelper.setWithoutUpdate(world, p, ModBlocks.TUBE_WORM.get().getDefaultState().with(HorizontalBlock.HORIZONTAL_FACING, dir));
+								BlockHelper.setWithoutUpdate(world, p, ModBlocks.TUBE_WORM.get().defaultBlockState().setValue(HorizontalBlock.FACING, dir));
 							}
 						}
 						mut.setY(mut.getY() + 1);
 					}
-					state = ModBlocks.HYDROTHERMAL_VENT.get().getDefaultState().with(HydrothermalVentBlock.ACTIVATED, distRaw < 2);
+					state = ModBlocks.HYDROTHERMAL_VENT.get().defaultBlockState().setValue(HydrothermalVentBlock.ACTIVATED, distRaw < 2);
 					BlockHelper.setWithoutUpdate(world, mut, state);
 					mut.setY(mut.getY() + 1);
 					state = world.getBlockState(mut);
-					while (state.isIn(Blocks.WATER)) 
+					while (state.is(Blocks.WATER)) 
 					{
-						BlockHelper.setWithoutUpdate(world, mut, ModBlocks.VENT_BUBBLE_COLUMN.get().getDefaultState());
+						BlockHelper.setWithoutUpdate(world, mut, ModBlocks.VENT_BUBBLE_COLUMN.get().defaultBlockState());
 						mut.setY(mut.getY() + 1);
 						state = world.getBlockState(mut);
 					}
@@ -250,31 +250,31 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 
 		for (int i = 0; i < 10; i++) 
 		{
-			mut.setPos(pos).move(ModMathHelper.floor(rand.nextGaussian() * 0.7 + 0.5), -halfHeight - 10, ModMathHelper.floor(rand.nextGaussian() * 0.7 + 0.5));
+			mut.set(pos).move(ModMathHelper.floor(rand.nextGaussian() * 0.7 + 0.5), -halfHeight - 10, ModMathHelper.floor(rand.nextGaussian() * 0.7 + 0.5));
 			float distRaw = ModMathHelper.length(mut.getX() - pos.getX(), mut.getZ() - pos.getZ());
 			int dist = ModMathHelper.floor(6 - distRaw) + rand.nextInt(2);
 			if (dist >= 0) 
 			{
 				state = world.getBlockState(mut);
-				while (state.isIn(Blocks.WATER)) 
+				while (state.is(Blocks.WATER)) 
 				{
 					mut.setY(mut.getY() - 1);
 					state = world.getBlockState(mut);
 				}
-				if (state.isIn(ModTags.GEN_TERRAIN)) 
+				if (state.is(ModTags.GEN_TERRAIN)) 
 				{
 					for (int j = 0; j <= dist; j++) 
 					{
 						BlockHelper.setWithoutUpdate(world, mut, ModBlocks.SULPHURIC_ROCK.stone.get());
 						mut.setY(mut.getY() + 1);
 					}
-					state = ModBlocks.HYDROTHERMAL_VENT.get().getDefaultState().with(HydrothermalVentBlock.ACTIVATED, distRaw < 2);
+					state = ModBlocks.HYDROTHERMAL_VENT.get().defaultBlockState().setValue(HydrothermalVentBlock.ACTIVATED, distRaw < 2);
 					BlockHelper.setWithoutUpdate(world, mut, state);
 					mut.setY(mut.getY() + 1);
 					state = world.getBlockState(mut);
-					while (state.isIn(Blocks.WATER)) 
+					while (state.is(Blocks.WATER)) 
 					{
-						BlockHelper.setWithoutUpdate(world, mut, ModBlocks.VENT_BUBBLE_COLUMN.get().getDefaultState());
+						BlockHelper.setWithoutUpdate(world, mut, ModBlocks.VENT_BUBBLE_COLUMN.get().defaultBlockState());
 						mut.setY(mut.getY() + 1);
 						state = world.getBlockState(mut);
 					}
@@ -282,11 +282,11 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 			}
 		}
 
-		ModFeatures.SULPHURIC_LAKE.generate(world, generator, rand, pos, null);
+		ModFeatures.SULPHURIC_LAKE.place(world, generator, rand, pos, null);
 
 		double distance = radius1 * 1.7;
-		BlockPos start = pos.add(-distance, -halfHeight - 15 - distance, -distance);
-		BlockPos end = pos.add(distance, -halfHeight - 5 + distance, distance);
+		BlockPos start = pos.offset(-distance, -halfHeight - 15 - distance, -distance);
+		BlockPos end = pos.offset(distance, -halfHeight - 5 + distance, distance);
 		BlockHelper.fixBlocks(world, start, end);
 
 		return true;

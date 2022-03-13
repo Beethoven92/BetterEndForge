@@ -29,7 +29,7 @@ public class EndFishEntityRenderer extends MobRenderer<EndFishEntity, EndFishEnt
 		this.addLayer(new EyesLayer<EndFishEntity, EndFishEntityModel>(this) 
 	    {
 			@Override
-			public RenderType getRenderType() 
+			public RenderType renderType() 
 			{
 				return GLOW[0];
 			}
@@ -41,21 +41,21 @@ public class EndFishEntityRenderer extends MobRenderer<EndFishEntity, EndFishEnt
 			{
 				IVertexBuilder iVertexBuilder = bufferIn.getBuffer(GLOW[entityIn.getVariant()]);
 
-				this.getEntityModel().render(matrixStackIn, iVertexBuilder, packedLightIn, 
+				this.getParentModel().renderToBuffer(matrixStackIn, iVertexBuilder, packedLightIn, 
 						OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 			}
 	    });
 	}
 
 	@Override
-	protected void preRenderCallback(EndFishEntity entity, MatrixStack matrixStack, float f) 
+	protected void scale(EndFishEntity entity, MatrixStack matrixStack, float f) 
 	{
 		float scale = entity.getScale();
 		matrixStack.scale(scale, scale, scale);
 	}
 	
 	@Override
-	public ResourceLocation getEntityTexture(EndFishEntity entity) 
+	public ResourceLocation getTextureLocation(EndFishEntity entity) 
 	{
 		return TEXTURE[entity.getVariant()];
 	}
@@ -65,7 +65,7 @@ public class EndFishEntityRenderer extends MobRenderer<EndFishEntity, EndFishEnt
     	for (int i = 0; i < EndFishEntity.VARIANTS; i++) 
     	{
     		TEXTURE[i] = new ResourceLocation(BetterEnd.MOD_ID, "textures/entity/end_fish/end_fish_" + i + ".png");
-    		GLOW[i] = RenderType.getEyes(new ResourceLocation(BetterEnd.MOD_ID, "textures/entity/end_fish/end_fish_" + i + "_glow.png"));
+    		GLOW[i] = RenderType.eyes(new ResourceLocation(BetterEnd.MOD_ID, "textures/entity/end_fish/end_fish_" + i + "_glow.png"));
     	}
     }
 }

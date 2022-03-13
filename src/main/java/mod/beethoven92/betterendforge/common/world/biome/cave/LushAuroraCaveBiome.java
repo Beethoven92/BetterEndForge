@@ -51,6 +51,6 @@ public class LushAuroraCaveBiome extends BetterEndCaveBiome
 	@Override
 	public BlockState getCeil(BlockPos pos) 
 	{
-		return ModBlocks.CAVE_MOSS.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
+		return ModBlocks.CAVE_MOSS.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
 	}
 }

@@ -20,6 +20,8 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class TerrainBlock extends Block
 {
 	private Block pathBlock;
@@ -35,18 +37,18 @@ public class TerrainBlock extends Block
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) 
 	{
-		if (pathBlock != null && player.getHeldItemMainhand().getItem() instanceof ShovelItem) 
+		if (pathBlock != null && player.getMainHandItem().getItem() instanceof ShovelItem) 
 		{
-			worldIn.playSound(player, pos, SoundEvents.ITEM_SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			if (!worldIn.isRemote()) 
+			worldIn.playSound(player, pos, SoundEvents.SHOVEL_FLATTEN, SoundCategory.BLOCKS, 1.0F, 1.0F);
+			if (!worldIn.isClientSide()) 
 			{
-				worldIn.setBlockState(pos, pathBlock.getDefaultState());
+				worldIn.setBlockAndUpdate(pos, pathBlock.defaultBlockState());
 				if (player != null && !player.isCreative()) 
 				{
-					player.getHeldItemMainhand().attemptDamageItem(1, worldIn.rand, (ServerPlayerEntity) player);
+					player.getMainHandItem().hurt(1, worldIn.random, (ServerPlayerEntity) player);
 				}
 			}
 			return ActionResultType.SUCCESS;
@@ -59,19 +61,19 @@ public class TerrainBlock extends Block
 	{
 		if (random.nextInt(16) == 0 && !canSurvive(state, worldIn, pos)) 
 		{
-			worldIn.setBlockState(pos, Blocks.END_STONE.getDefaultState());
+			worldIn.setBlockAndUpdate(pos, Blocks.END_STONE.defaultBlockState());
 		}
 	}
 	
 	public static boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) 
 	{
-	      BlockPos blockPos = pos.up();
+	      BlockPos blockPos = pos.above();
 	      BlockState blockState = world.getBlockState(blockPos);
-	      if (blockState.isIn(Blocks.SNOW) && (Integer)blockState.get(SnowBlock.LAYERS) == 1) 
+	      if (blockState.is(Blocks.SNOW) && (Integer)blockState.getValue(SnowBlock.LAYERS) == 1) 
 	      {
 	         return true;
 	      } 
-	      else if (blockState.getFluidState().getLevel() == 8) 
+	      else if (blockState.getFluidState().getAmount() == 8) 
 	      {
 	         return false;
 	      } 

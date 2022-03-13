@@ -11,6 +11,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class EndFurnaceBlock extends FurnaceBlock
 {
 	public EndFurnaceBlock(Properties builder) 
@@ -31,13 +33,13 @@ public class EndFurnaceBlock extends FurnaceBlock
 	}
 	
 	@Override
-	protected void interactWith(World worldIn, BlockPos pos, PlayerEntity player) 
+	protected void openContainer(World worldIn, BlockPos pos, PlayerEntity player) 
 	{
-		TileEntity tileentity = worldIn.getTileEntity(pos);
+		TileEntity tileentity = worldIn.getBlockEntity(pos);
 	    if (tileentity instanceof EndFurnaceTileEntity) 
 	    {
-	    	player.openContainer((INamedContainerProvider)tileentity);
-	        player.addStat(Stats.INTERACT_WITH_FURNACE);
+	    	player.openMenu((INamedContainerProvider)tileentity);
+	        player.awardStat(Stats.INTERACT_WITH_FURNACE);
 	    }
 	}
 }

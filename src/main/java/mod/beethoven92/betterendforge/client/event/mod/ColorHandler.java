@@ -57,7 +57,7 @@ public class ColorHandler
 						 getLanterns());
 		
 		event.getBlockColors().register((state, reader, pos, color) ->
-                         {return EndPortals.getColor(state.get(EndPortalBlock.PORTAL));}, 
+                         {return EndPortals.getColor(state.getValue(EndPortalBlock.PORTAL));}, 
                          ModBlocks.END_PORTAL_BLOCK.get());
 	}
 	
@@ -99,14 +99,14 @@ public class ColorHandler
 	private static void registerColoredMaterialBlocks(ColorHandlerEvent.Block event, ColoredMaterial material)
 	{
 		event.getBlockColors().register((state, reader, pos, color) -> 
-		                  {return state.getBlock().getMaterialColor().colorValue;}, 
+		                  {return state.getBlock().defaultMaterialColor().col;}, 
                           material.getBlocks());
 	}
 	
 	private static void registerColoredMaterialItems(ColorHandlerEvent.Item event, ColoredMaterial material)
 	{
 		event.getItemColors().register((stack, tintIndex) -> 
-                         {return ((BlockItem)stack.getItem()).getBlock().getMaterialColor().colorValue;}, 
+                         {return ((BlockItem)stack.getItem()).getBlock().defaultMaterialColor().col;}, 
                          material.getBlocks());
 	}
 	

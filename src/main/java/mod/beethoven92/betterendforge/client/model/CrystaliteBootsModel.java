@@ -17,30 +17,30 @@ public class CrystaliteBootsModel extends BipedModel<LivingEntity> {
 	public ModelRenderer rightBoot;
 	
 	public CrystaliteBootsModel(float scale) {
-		super(RenderType::getEntityTranslucent, scale, 0.0F, 64, 48);
+		super(RenderType::entityTranslucent, scale, 0.0F, 64, 48);
 		this.leftBoot = new ModelRenderer(this, 0, 32);
 		this.leftBoot.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.25F);
-		this.leftBoot.setRotationPoint(1.9F, 12.0F, 0.0F);
+		this.leftBoot.setPos(1.9F, 12.0F, 0.0F);
 		this.rightBoot = new ModelRenderer(this, 0, 16);
 		this.rightBoot.addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, scale + 0.25F);
-		this.rightBoot.setRotationPoint(-1.9F, 12.0F, 0.0F);
+		this.rightBoot.setPos(-1.9F, 12.0F, 0.0F);
 	}
 	
 	@Override
-	public void render(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn,
+	public void renderToBuffer(MatrixStack matrixStackIn, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn,
 			float red, float green, float blue, float alpha) {
-		this.leftBoot.copyModelAngles(bipedLeftLeg);
-		this.rightBoot.copyModelAngles(bipedRightLeg);
-		super.render(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
+		this.leftBoot.copyFrom(leftLeg);
+		this.rightBoot.copyFrom(rightLeg);
+		super.renderToBuffer(matrixStackIn, bufferIn, packedLightIn, packedOverlayIn, red, green, blue, alpha);
 	}
 
 	@Override
-	protected Iterable<ModelRenderer> getHeadParts() {
+	protected Iterable<ModelRenderer> headParts() {
 		return Collections::emptyIterator;
 	}
 	
 	@Override
-	protected Iterable<ModelRenderer> getBodyParts() {
+	protected Iterable<ModelRenderer> bodyParts() {
 		return Lists.newArrayList(leftBoot, rightBoot);
 	}
 }

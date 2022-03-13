@@ -21,40 +21,40 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 public class Lumecorn extends Feature<NoFeatureConfig> {
 	public Lumecorn() {
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator_, Random random,
+	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator_, Random random,
 			BlockPos pos, NoFeatureConfig config) {
-		if (!world.getBlockState(pos.down()).getBlock().isIn(ModTags.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND)) return false;
 		
 		int height = ModMathHelper.randRange(4, 7, random);
-		Mutable mut = new Mutable().setPos(pos);
+		Mutable mut = new Mutable().set(pos);
 		for (int i = 1; i < height; i++) {
 			mut.move(Direction.UP);
-			if (!world.isAirBlock(mut)) {
+			if (!world.isEmptyBlock(mut)) {
 				return false;
 			}
 		}
-		mut.setPos(pos);
-		BlockState topMiddle = ModBlocks.LUMECORN.get().getDefaultState().with(LumecornBlock.SHAPE, LumecornShape.LIGHT_TOP_MIDDLE);
-		BlockState middle = ModBlocks.LUMECORN.get().getDefaultState().with(LumecornBlock.SHAPE, LumecornShape.LIGHT_MIDDLE);
-		BlockState bottom = ModBlocks.LUMECORN.get().getDefaultState().with(LumecornBlock.SHAPE, LumecornShape.LIGHT_BOTTOM);
-		BlockState top = ModBlocks.LUMECORN.get().getDefaultState().with(LumecornBlock.SHAPE, LumecornShape.LIGHT_TOP);
+		mut.set(pos);
+		BlockState topMiddle = ModBlocks.LUMECORN.get().defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.LIGHT_TOP_MIDDLE);
+		BlockState middle = ModBlocks.LUMECORN.get().defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.LIGHT_MIDDLE);
+		BlockState bottom = ModBlocks.LUMECORN.get().defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.LIGHT_BOTTOM);
+		BlockState top = ModBlocks.LUMECORN.get().defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.LIGHT_TOP);
 		if (height == 4) {
-			BlockHelper.setWithoutUpdate(world, mut, ModBlocks.LUMECORN.get().getDefaultState().with(LumecornBlock.SHAPE, LumecornShape.BOTTOM_SMALL));
+			BlockHelper.setWithoutUpdate(world, mut, ModBlocks.LUMECORN.get().defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.BOTTOM_SMALL));
 			BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), bottom);
 			BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), topMiddle);
 			BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), top);
 			return true;
 		}
 		if (random.nextBoolean()) {
-			BlockHelper.setWithoutUpdate(world, mut, ModBlocks.LUMECORN.get().getDefaultState().with(LumecornBlock.SHAPE, LumecornShape.BOTTOM_SMALL));
+			BlockHelper.setWithoutUpdate(world, mut, ModBlocks.LUMECORN.get().defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.BOTTOM_SMALL));
 		}
 		else {
-			BlockHelper.setWithoutUpdate(world, mut, ModBlocks.LUMECORN.get().getDefaultState().with(LumecornBlock.SHAPE, LumecornShape.BOTTOM_BIG));
-			BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), ModBlocks.LUMECORN.get().getDefaultState().with(LumecornBlock.SHAPE, LumecornShape.MIDDLE));
+			BlockHelper.setWithoutUpdate(world, mut, ModBlocks.LUMECORN.get().defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.BOTTOM_BIG));
+			BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), ModBlocks.LUMECORN.get().defaultBlockState().setValue(LumecornBlock.SHAPE, LumecornShape.MIDDLE));
 			height --;
 		}
 		BlockHelper.setWithoutUpdate(world, mut.move(Direction.UP), bottom);

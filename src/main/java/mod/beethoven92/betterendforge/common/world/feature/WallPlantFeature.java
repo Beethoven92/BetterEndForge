@@ -27,28 +27,28 @@ public class WallPlantFeature extends WallScatterFeature
 	{
 		if (block instanceof WallPlantBlock) 
 		{
-			BlockState state = block.getDefaultState().with(WallPlantBlock.FACING, dir);
-			return block.isValidPosition(state, world, pos);
+			BlockState state = block.defaultBlockState().setValue(WallPlantBlock.FACING, dir);
+			return block.canSurvive(state, world, pos);
 		}
 		else if (block instanceof AttachedBlock) 
 		{
-			BlockState state = block.getDefaultState().with(BlockStateProperties.FACING, dir);
-			return block.isValidPosition(state, world, pos);
+			BlockState state = block.defaultBlockState().setValue(BlockStateProperties.FACING, dir);
+			return block.canSurvive(state, world, pos);
 		}
-		return block.isValidPosition(block.getDefaultState(), world, pos);
+		return block.canSurvive(block.defaultBlockState(), world, pos);
 	}
 
 	@Override
 	public void generate(ISeedReader world, Random random, BlockPos pos, Direction dir) 
 	{
-		BlockState state = block.getDefaultState();
+		BlockState state = block.defaultBlockState();
 		if (block instanceof WallPlantBlock)
 		{
-			state = state.with(WallPlantBlock.FACING, dir);
+			state = state.setValue(WallPlantBlock.FACING, dir);
 		}
 		else if (block instanceof AttachedBlock)
 		{
-			state = state.with(BlockStateProperties.FACING, dir);
+			state = state.setValue(BlockStateProperties.FACING, dir);
 		}
 		BlockHelper.setWithoutUpdate(world, pos, state);
 	}

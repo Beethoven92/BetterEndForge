@@ -19,12 +19,12 @@ public class HelixTreeLeavesBlock extends Block {
 	}
 
 	@Override
-	   protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	   protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(COLOR);
 	}
 
 	public static int getBlockColor(BlockState state) {
-		return ModMathHelper.color(237, getGreen(state.get(COLOR)), 20);
+		return ModMathHelper.color(237, getGreen(state.getValue(COLOR)), 20);
 	}
 
 	public static int getItemColor() {
@@ -33,10 +33,10 @@ public class HelixTreeLeavesBlock extends Block {
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
-		double px = ctx.getPos().getX() * 0.1;
-		double py = ctx.getPos().getY() * 0.1;
-		double pz = ctx.getPos().getZ() * 0.1;
-		return this.getDefaultState().with(COLOR, ModMathHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
+		double px = ctx.getClickedPos().getX() * 0.1;
+		double py = ctx.getClickedPos().getY() * 0.1;
+		double pz = ctx.getClickedPos().getZ() * 0.1;
+		return this.defaultBlockState().setValue(COLOR, ModMathHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
 	}
 
 	private static int getGreen(int color) {

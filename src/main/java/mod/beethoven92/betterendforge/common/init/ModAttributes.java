@@ -11,6 +11,6 @@ public class ModAttributes {
 			BetterEnd.MOD_ID);
 
 	public static final RegistryObject<Attribute> BLINDNESS_RESISTANCE = ATTRIBUTES.register("blindness_resistance",
-			() -> new RangedAttribute("attribute.name.generic.blindness_resistance", 0, 0, 1).setShouldWatch(true));
+			() -> new RangedAttribute("attribute.name.generic.blindness_resistance", 0, 0, 1).setSyncable(true));
 
 }

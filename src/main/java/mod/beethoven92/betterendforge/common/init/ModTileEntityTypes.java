@@ -34,47 +34,47 @@ public class ModTileEntityTypes
 
 	public static final RegistryObject<TileEntityType<PedestalTileEntity>> PEDESTAL =
 			TILE_ENTITY_TYPES.register("pedestal_tile_entity", 
-					() -> TileEntityType.Builder.create(PedestalTileEntity::new, 
+					() -> TileEntityType.Builder.of(PedestalTileEntity::new, 
 							getPedestals()).build(null));
 	
 	public static final RegistryObject<TileEntityType<EternalPedestalTileEntity>> ETERNAL_PEDESTAL =
 			TILE_ENTITY_TYPES.register("eternal_pedestal_tile_entity", 
-					() -> TileEntityType.Builder.create(EternalPedestalTileEntity::new, 
+					() -> TileEntityType.Builder.of(EternalPedestalTileEntity::new, 
 							ModBlocks.ETERNAL_PEDESTAL.get()).build(null));
 	
 	public static final RegistryObject<TileEntityType<InfusionPedestalTileEntity>> INFUSION_PEDESTAL =
 			TILE_ENTITY_TYPES.register("infusion_pedestal_tile_entity", 
-					() -> TileEntityType.Builder.create(InfusionPedestalTileEntity::new, 
+					() -> TileEntityType.Builder.of(InfusionPedestalTileEntity::new, 
 							ModBlocks.INFUSION_PEDESTAL.get()).build(null));
 	
 	public static final RegistryObject<TileEntityType<EndStoneSmelterTileEntity>> END_STONE_SMELTER =
 			TILE_ENTITY_TYPES.register("end_stone_smelter_tile_entity", 
-					() -> TileEntityType.Builder.create(EndStoneSmelterTileEntity::new, 
+					() -> TileEntityType.Builder.of(EndStoneSmelterTileEntity::new, 
 							ModBlocks.END_STONE_SMELTER.get()).build(null));
 	
 	public static final RegistryObject<TileEntityType<HydrothermalVentTileEntity>> HYDROTHERMAL_VENT =
 			TILE_ENTITY_TYPES.register("hydrothermal_vent_tile_entity", 
-					() -> TileEntityType.Builder.create(HydrothermalVentTileEntity::new, 
+					() -> TileEntityType.Builder.of(HydrothermalVentTileEntity::new, 
 							ModBlocks.HYDROTHERMAL_VENT.get()).build(null));
 	
 	public static final RegistryObject<TileEntityType<EChestTileEntity>> CHEST =
 			TILE_ENTITY_TYPES.register("chest", 
-					() -> TileEntityType.Builder.create(EChestTileEntity::new, 
+					() -> TileEntityType.Builder.of(EChestTileEntity::new, 
 							getChests()).build(null));
 	
 	public static final RegistryObject<TileEntityType<ESignTileEntity>> SIGN =
 			TILE_ENTITY_TYPES.register("sign", 
-					() -> TileEntityType.Builder.create(ESignTileEntity::new, 
+					() -> TileEntityType.Builder.of(ESignTileEntity::new, 
 							getSigns()).build(null));
 	
 	public static final RegistryObject<TileEntityType<EndBarrelTileEntity>> BARREL =
 			TILE_ENTITY_TYPES.register("barrel", 
-					() -> TileEntityType.Builder.create(EndBarrelTileEntity::new, 
+					() -> TileEntityType.Builder.of(EndBarrelTileEntity::new, 
 							getBarrels()).build(null));
 	
 	public static final RegistryObject<TileEntityType<EndFurnaceTileEntity>> FURNACE =
 			TILE_ENTITY_TYPES.register("furnace", 
-					() -> TileEntityType.Builder.create(EndFurnaceTileEntity::new, 
+					() -> TileEntityType.Builder.of(EndFurnaceTileEntity::new, 
 							getFurnaces()).build(null));
 	
 	static Block[] getPedestals() 

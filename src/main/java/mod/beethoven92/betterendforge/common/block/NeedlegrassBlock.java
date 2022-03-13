@@ -11,6 +11,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class NeedlegrassBlock extends PlantBlock
 {
 	public NeedlegrassBlock(Properties properties) 
@@ -19,22 +21,22 @@ public class NeedlegrassBlock extends PlantBlock
 	}
 	
 	@Override
-	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) 
+	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) 
 	{
 		if (entityIn instanceof LivingEntity)
 		{
-			entityIn.attackEntityFrom(DamageSource.CACTUS, 0.1F);
+			entityIn.hurt(DamageSource.CACTUS, 0.1F);
 		}
 	}
 	
 	@Override
 	protected boolean isTerrain(BlockState state) 
 	{
-		return state.isIn(ModBlocks.SHADOW_GRASS.get());
+		return state.is(ModBlocks.SHADOW_GRASS.get());
 	}
 	
 	@Override
-	public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) 
+	public boolean isPathfindable(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) 
 	{
 		return false;
 	}

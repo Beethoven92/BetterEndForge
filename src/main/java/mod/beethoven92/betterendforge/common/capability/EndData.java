@@ -52,20 +52,20 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 	}
 
 	private void login(ServerPlayerEntity player) {
-		if (players.contains(player.getUniqueID()))
+		if (players.contains(player.getUUID()))
 			return;
-		players.add(player.getUniqueID());
+		players.add(player.getUUID());
 
 		teleportToSpawn(player);
 	}
 
 	private void teleportToSpawn(ServerPlayerEntity player) {
 		// If custom spawn point is set or config not set, get out of here
-		if (player.func_241140_K_() != null || !GeneratorOptions.swapOverworldToEnd())
+		if (player.getRespawnPosition() != null || !GeneratorOptions.swapOverworldToEnd())
 			return;
 
-		ServerWorld world = player.getServerWorld();
-		ServerWorld end = world.getServer().getWorld(World.THE_END);
+		ServerWorld world = player.getLevel();
+		ServerWorld end = world.getServer().getLevel(World.END);
 		if (end == null)
 			return;
 
@@ -75,7 +75,7 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 			return;
 
 		if (world == end) {
-			player.setPosition(spawn.getX(), spawn.getY(), spawn.getZ());
+			player.setPos(spawn.getX(), spawn.getY(), spawn.getZ());
 		} else {
 			player.changeDimension(end, new ITeleporter() {
 
@@ -88,8 +88,8 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 				@Override
 				public PortalInfo getPortalInfo(Entity entity, ServerWorld destWorld,
 						Function<ServerWorld, PortalInfo> defaultPortalInfo) {
-					return new PortalInfo(Vector3d.copy(spawn), Vector3d.ZERO, entity.rotationYaw,
-							entity.rotationPitch);
+					return new PortalInfo(Vector3d.atLowerCornerOf(spawn), Vector3d.ZERO, entity.yRot,
+							entity.xRot);
 				}
 			});
 		}
@@ -104,16 +104,16 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 				ModBiomes.MEGALAKE.getActualBiome(), ModBiomes.SULPHUR_SPRINGS.getActualBiome(),
 				ModBiomes.UMBRELLA_JUNGLE.getActualBiome());
 		for (Biome biome : biomes) {
-			BlockPos pos = end.func_241116_a_(biome, BlockPos.ZERO.add(0, 40, 0), 6400, 8);
+			BlockPos pos = end.findNearestBiome(biome, BlockPos.ZERO.offset(0, 40, 0), 6400, 8);
 			if (pos == null)
 				continue;
 
 			for (int i = 0; i < 40; i++) {
-				BlockPos p = pos.add(end.getRandom().nextInt(40) - 20, 0, end.getRandom().nextInt(40) - 20);
+				BlockPos p = pos.offset(end.getRandom().nextInt(40) - 20, 0, end.getRandom().nextInt(40) - 20);
 				for (int k = 0; k < 150; k++) {
-					if (!end.isAirBlock(p.add(0, k, 0)) && end.isAirBlock(p.add(0, k + 1, 0))
-							&& end.isAirBlock(p.add(0, k + 2, 0)))
-						return p.add(0, k + 1, 0);
+					if (!end.isEmptyBlock(p.offset(0, k, 0)) && end.isEmptyBlock(p.offset(0, k + 1, 0))
+							&& end.isEmptyBlock(p.offset(0, k + 2, 0)))
+						return p.offset(0, k + 1, 0);
 				}
 			}
 		}
@@ -121,14 +121,14 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 	}
 
 	public static void playerLogin(ServerPlayerEntity player) {
-		World end = player.getServer().getWorld(World.THE_END);
+		World end = player.getServer().getLevel(World.END);
 		if (end == null)
 			return;
 		end.getCapability(CAPABILITY).ifPresent(c -> c.login(player));
 	}
 
 	public static void playerRespawn(ServerPlayerEntity player) {
-		World end = player.getServer().getWorld(World.THE_END);
+		World end = player.getServer().getLevel(World.END);
 		if (end == null)
 			return;
 		end.getCapability(CAPABILITY).ifPresent(c -> c.teleportToSpawn(player));
@@ -141,7 +141,7 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 			nbt.put("spawn", NBTUtil.writeBlockPos(spawn));
 		ListNBT list = new ListNBT();
 		for (UUID id : players)
-			list.add(NBTUtil.func_240626_a_(id));
+			list.add(NBTUtil.createUUID(id));
 		nbt.put("players", list);
 		return nbt;
 	}
@@ -153,7 +153,7 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 
 		ListNBT list = nbt.getList("players", Constants.NBT.TAG_INT_ARRAY);
 		for (int i = 0; i < list.size(); i++)
-			players.add(NBTUtil.readUniqueId(list.get(i)));
+			players.add(NBTUtil.loadUUID(list.get(i)));
 	}
 
 	@EventBusSubscriber(modid = BetterEnd.MOD_ID, bus = EventBusSubscriber.Bus.FORGE)
@@ -183,7 +183,7 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 
 		@SubscribeEvent
 		public static void attachCapability(AttachCapabilitiesEvent<World> event) {
-			if (event.getObject().getDimensionKey() == World.THE_END)
+			if (event.getObject().dimension() == World.END)
 				event.addCapability(LOCATION, new Provider());
 		}
 	}

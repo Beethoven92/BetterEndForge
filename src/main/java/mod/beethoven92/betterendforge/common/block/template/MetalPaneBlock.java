@@ -4,6 +4,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.PaneBlock;
 import net.minecraft.util.Direction;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class MetalPaneBlock extends PaneBlock
 {
 	public MetalPaneBlock(Properties builder)
@@ -12,12 +14,12 @@ public class MetalPaneBlock extends PaneBlock
 	}
 	
 	@Override
-	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) 
+	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) 
 	{
 		if (side.getAxis().isVertical() && adjacentBlockState.getBlock().equals(this) && !adjacentBlockState.equals(state)) 
 		{
 			return false;
 		}
-		return super.isSideInvisible(state, adjacentBlockState, side);
+		return super.skipRendering(state, adjacentBlockState, side);
 	}
 }

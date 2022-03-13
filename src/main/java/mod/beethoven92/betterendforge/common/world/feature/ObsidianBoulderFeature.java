@@ -23,20 +23,20 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 public class ObsidianBoulderFeature extends Feature<NoFeatureConfig> {
 	
 	public ObsidianBoulderFeature() {
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
+	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
 			BlockPos pos, NoFeatureConfig config) {
-		pos = world.getHeight(Heightmap.Type.WORLD_SURFACE, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
-		if (!world.getBlockState(pos.down()).isIn(ModTags.END_GROUND)) {
+		pos = world.getHeightmapPos(Heightmap.Type.WORLD_SURFACE, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
+		if (!world.getBlockState(pos.below()).is(ModTags.END_GROUND)) {
 			return false;
 		}
 		
 		int count = ModMathHelper.randRange(1, 5, random);
 		for (int i = 0; i < count; i++) {
-			BlockPos p = world.getHeight(Heightmap.Type.WORLD_SURFACE, new BlockPos(pos.getX() + random.nextInt(16) - 8, pos.getY(), pos.getZ() + random.nextInt(16) - 8));
+			BlockPos p = world.getHeightmapPos(Heightmap.Type.WORLD_SURFACE, new BlockPos(pos.getX() + random.nextInt(16) - 8, pos.getY(), pos.getZ() + random.nextInt(16) - 8));
 			makeBoulder(world, p, random);
 		}
 		
@@ -44,7 +44,7 @@ public class ObsidianBoulderFeature extends Feature<NoFeatureConfig> {
 	}
 	
 	private void makeBoulder(ISeedReader world, BlockPos pos, Random random) {
-		if (!world.getBlockState(pos.down()).isIn(ModTags.END_GROUND)) {
+		if (!world.getBlockState(pos.below()).is(ModTags.END_GROUND)) {
 			return;
 		}
 		
@@ -56,17 +56,17 @@ public class ObsidianBoulderFeature extends Feature<NoFeatureConfig> {
 		sphere = new SDFScale3D().setScale(sx, sy, sz).setSource(sphere);
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		sphere = new SDFDisplacement().setFunction((vec) -> {
-			return (float) (noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 1.5F);
+			return (float) (noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 1.5F);
 		}).setSource(sphere);
 		
-		BlockState mossy = ModBlocks.MOSSY_OBSIDIAN.get().getDefaultState();
+		BlockState mossy = ModBlocks.MOSSY_OBSIDIAN.get().defaultBlockState();
 		sphere.addPostProcess((info) -> {
 			if (info.getStateUp().isAir() && random.nextFloat() > 0.1F) {
 				return mossy;
 			}
 			return info.getState();
 		}).setReplaceFunction((state) -> {
-			return state.getMaterial().isReplaceable() || state.isIn(ModTags.GEN_TERRAIN) || state.getMaterial().equals(Material.PLANTS);
+			return state.getMaterial().isReplaceable() || state.is(ModTags.GEN_TERRAIN) || state.getMaterial().equals(Material.PLANT);
 		}).fillRecursive(world, pos);
 	}
 }

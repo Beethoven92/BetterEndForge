@@ -8,6 +8,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer.Builder;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlueVineBlock extends UpDownPlantBlock
 {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
@@ -24,7 +26,7 @@ public class BlueVineBlock extends UpDownPlantBlock
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(SHAPE);
 	}

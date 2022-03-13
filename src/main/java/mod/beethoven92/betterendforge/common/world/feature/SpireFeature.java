@@ -33,7 +33,7 @@ public class SpireFeature extends Feature<NoFeatureConfig>
 	
 	static {
 		REPLACE = (state) -> {
-			if (state.isIn(ModTags.END_GROUND)) 
+			if (state.is(ModTags.END_GROUND)) 
 			{
 				return true;
 			}
@@ -41,7 +41,7 @@ public class SpireFeature extends Feature<NoFeatureConfig>
 			{
 				return true;
 			}
-			if (state.getMaterial().equals(Material.PLANTS)) 
+			if (state.getMaterial().equals(Material.PLANT)) 
 			{
 				return true;
 			}
@@ -51,17 +51,17 @@ public class SpireFeature extends Feature<NoFeatureConfig>
 	
 	public SpireFeature()
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config)
 	{
 		pos = FeatureHelper.getPosOnSurfaceWG(world, pos);
 		
-		if (pos.getY() < 10 || !world.getBlockState(pos.down(3)).isIn(ModTags.GEN_TERRAIN) || 
-				!world.getBlockState(pos.down(6)).isIn(ModTags.GEN_TERRAIN)) 
+		if (pos.getY() < 10 || !world.getBlockState(pos.below(3)).is(ModTags.GEN_TERRAIN) || 
+				!world.getBlockState(pos.below(6)).is(ModTags.GEN_TERRAIN)) 
 		{
 			return false;
 		}
@@ -75,7 +75,7 @@ public class SpireFeature extends Feature<NoFeatureConfig>
 		}
 		OpenSimplexNoise noise = new OpenSimplexNoise(rand.nextLong());
 		sdf = new SDFDisplacement().setFunction((vec) -> {
-			return (float) (Math.abs(noise.eval(vec.getX() * 0.1, vec.getY() * 0.1, vec.getZ() * 0.1)) * 3F + Math.abs(noise.eval(vec.getX() * 0.3, vec.getY() * 0.3 + 100, vec.getZ() * 0.3)) * 1.3F);
+			return (float) (Math.abs(noise.eval(vec.x() * 0.1, vec.y() * 0.1, vec.z() * 0.1)) * 3F + Math.abs(noise.eval(vec.x() * 0.3, vec.y() * 0.3 + 100, vec.z() * 0.3)) * 1.3F);
 		}).setSource(sdf);
 		final BlockPos center = pos;
 		List<BlockPos> support = Lists.newArrayList();
@@ -84,13 +84,13 @@ public class SpireFeature extends Feature<NoFeatureConfig>
 			{
 				if (rand.nextInt(16) == 0) 
 				{
-					support.add(info.getPos().up());
+					support.add(info.getPos().above());
 				}
-				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTop();
+				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 			}
 			else if (info.getState(Direction.UP, 3).isAir()) 
 			{
-				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getUnder();
+				return world.getBiome(info.getPos()).getGenerationSettings().getSurfaceBuilderConfig().getUnderMaterial();
 			}
 			return info.getState();
 		}).fillRecursive(world, center);
@@ -98,7 +98,7 @@ public class SpireFeature extends Feature<NoFeatureConfig>
 		support.forEach((bpos) -> {
 			if (ModBiomes.getFromBiome(world.getBiome(bpos)) == ModBiomes.BLOSSOMING_SPIRES) 
 			{
-				ModFeatures.TENANEA_BUSH.generate(world, generator, rand, bpos, null);
+				ModFeatures.TENANEA_BUSH.place(world, generator, rand, bpos, null);
 			}
 		});
 

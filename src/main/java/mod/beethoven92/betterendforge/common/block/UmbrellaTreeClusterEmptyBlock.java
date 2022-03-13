@@ -11,6 +11,8 @@ import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class UmbrellaTreeClusterEmptyBlock extends Block
 {
 	public static final BooleanProperty NATURAL = BlockProperties.NATURAL;
@@ -18,11 +20,11 @@ public class UmbrellaTreeClusterEmptyBlock extends Block
 	public UmbrellaTreeClusterEmptyBlock(Properties properties) 
 	{
 		super(properties);
-		setDefaultState(stateContainer.getBaseState().with(NATURAL, false));
+		registerDefaultState(stateDefinition.any().setValue(NATURAL, false));
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder)
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder)
 	{
 		builder.add(NATURAL);
 	}
@@ -30,9 +32,9 @@ public class UmbrellaTreeClusterEmptyBlock extends Block
 	@Override
 	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random)
 	{
-		if (state.get(NATURAL) && random.nextInt(16) == 0) 
+		if (state.getValue(NATURAL) && random.nextInt(16) == 0) 
 		{
-			BlockHelper.setWithUpdate(worldIn, pos, ModBlocks.UMBRELLA_TREE_CLUSTER.get().getDefaultState().with(UmbrellaTreeClusterBlock.NATURAL, true));
+			BlockHelper.setWithUpdate(worldIn, pos, ModBlocks.UMBRELLA_TREE_CLUSTER.get().defaultBlockState().setValue(UmbrellaTreeClusterBlock.NATURAL, true));
 		}
 	}
 }

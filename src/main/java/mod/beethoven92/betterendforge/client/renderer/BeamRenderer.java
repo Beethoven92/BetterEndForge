@@ -31,23 +31,23 @@ public class BeamRenderer
 		float maxV = (float) maxY * (0.5F / beamIn) + minV;
 		float rotation = (age + tick) / 25.0F + 6.0F;
 		
-		IVertexBuilder iVertexBuilder = bufferIn.getBuffer(RenderType.getBeaconBeam(BEAM_TEXTURE, true));
+		IVertexBuilder iVertexBuilder = bufferIn.getBuffer(RenderType.beaconBeam(BEAM_TEXTURE, true));
 		
-		matrices.push();
-		matrices.rotate(Vector3f.YP.rotation(-rotation));
+		matrices.pushPose();
+		matrices.mulPose(Vector3f.YP.rotation(-rotation));
 		renderBeam(matrices, iVertexBuilder, red, green, blue, alpha, minY, maxBY, beamIn, 0.0F, 0.0F, beamIn, 0.0F, xIn, xIn, 0.0F, 0.0F, 1.0F, minV, maxV);
 		
 		float xOut = -beamOut;
 		maxV = (float) maxY + minV;
 		renderBeam(matrices, iVertexBuilder, red, green, blue, alpha, minY, maxBY, xOut, xOut, beamOut, xOut, xOut, beamOut, beamOut, beamOut, 0.0F, 1.0F, minV, maxV);
-		matrices.pop();
+		matrices.popPose();
 	}
 
 	private static void renderBeam(MatrixStack matrices, IVertexBuilder vertexBuilder, float red, float green, float blue, float alpha, int minY, int maxY, float x1, float d1, float x2, float d2, float x3, float d3, float x4, float d4, float minU, float maxU, float minV, float maxV)
 	{
-		MatrixStack.Entry entry = matrices.getLast();
-		Matrix4f matrix4f = entry.getMatrix();
-		Matrix3f matrix3f = entry.getNormal();		
+		MatrixStack.Entry entry = matrices.last();
+		Matrix4f matrix4f = entry.pose();
+		Matrix3f matrix3f = entry.normal();		
 		renderBeam(matrix4f, matrix3f, vertexBuilder, red, green, blue, alpha, maxY, minY, x1, d1, x2, d2, minU, maxU, minV, maxV);
 		renderBeam(matrix4f, matrix3f, vertexBuilder, red, green, blue, alpha, maxY, minY, x4, d4, x3, d3, minU, maxU, minV, maxV);
 		renderBeam(matrix4f, matrix3f, vertexBuilder, red, green, blue, alpha, maxY, minY, x2, d2, x4, d4, minU, maxU, minV, maxV);
@@ -64,6 +64,6 @@ public class BeamRenderer
 
 	private static void addVertex(Matrix4f matrix4f, Matrix3f matrix3f, IVertexBuilder vertexBuilder, float red, float green, float blue, float alpha, float x, float y, float d, float u, float v) 
 	{
-		vertexBuilder.pos(matrix4f, x, y, d).color(red, green, blue, alpha).tex(u, v).overlay(OverlayTexture.NO_OVERLAY).lightmap(15728880).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
+		vertexBuilder.vertex(matrix4f, x, y, d).color(red, green, blue, alpha).uv(u, v).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(15728880).normal(matrix3f, 0.0F, 1.0F, 0.0F).endVertex();
 	}
 }

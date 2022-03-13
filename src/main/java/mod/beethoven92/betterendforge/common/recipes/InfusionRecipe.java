@@ -60,27 +60,27 @@ public class InfusionRecipe implements IRecipe<InfusionRitual> {
 
 	@Override
 	public boolean matches(InfusionRitual inv, World worldIn) {
-		boolean valid = this.input.test(inv.getStackInSlot(0));
+		boolean valid = this.input.test(inv.getItem(0));
 		if (!valid)
 			return false;
 		for (int i = 0; i < 8; i++) {
-			valid &= this.catalysts[i].test(inv.getStackInSlot(i + 1));
+			valid &= this.catalysts[i].test(inv.getItem(i + 1));
 		}
 		return valid;
 	}
 
 	@Override
-	public ItemStack getCraftingResult(InfusionRitual inv) {
+	public ItemStack assemble(InfusionRitual inv) {
 		return this.output.copy();
 	}
 
 	@Override
-	public boolean canFit(int width, int height) {
+	public boolean canCraftInDimensions(int width, int height) {
 		return true;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return this.output;
 	}
 
@@ -115,7 +115,7 @@ public class InfusionRecipe implements IRecipe<InfusionRitual> {
 		}
 
 		public Builder setInput(IItemProvider input) {
-			this.input = Ingredient.fromItems(input);
+			this.input = Ingredient.of(input);
 			return this;
 		}
 
@@ -143,7 +143,7 @@ public class InfusionRecipe implements IRecipe<InfusionRitual> {
 		public Builder addCatalyst(int slot, IItemProvider... items) {
 			if (slot > 7)
 				return this;
-			this.catalysts[slot] = Ingredient.fromItems(items);
+			this.catalysts[slot] = Ingredient.of(items);
 			return this;
 		}
 
@@ -159,7 +159,7 @@ public class InfusionRecipe implements IRecipe<InfusionRitual> {
 				Illegal("Output for Infusion recipe can't be null, recipe %s", id);
 			int empty = 0;
 			for (int i = 0; i < catalysts.length; i++) {
-				if (catalysts[i].hasNoMatchingItems())
+				if (catalysts[i].isEmpty())
 					empty++;
 			}
 			if (empty == catalysts.length) {
@@ -187,8 +187,8 @@ public class InfusionRecipe implements IRecipe<InfusionRitual> {
 			}
 
 			@Override
-			public void serialize(JsonObject json) {
-				json.add("input", input.serialize());
+			public void serializeRecipeData(JsonObject json) {
+				json.add("input", input.toJson());
 				json.add("output", ItemStack.CODEC.encodeStart(JsonOps.INSTANCE, output).result().get());
 				json.addProperty("time", time);
 				JsonArray jsonCatalysts = new JsonArray();
@@ -196,7 +196,7 @@ public class InfusionRecipe implements IRecipe<InfusionRitual> {
 					if (catalysts[i] == Ingredient.EMPTY)
 						continue;
 					JsonObject catalyst = new JsonObject();
-					catalyst.add("item", catalysts[i].serialize());
+					catalyst.add("item", catalysts[i].toJson());
 					catalyst.addProperty("index", i);
 					jsonCatalysts.add(catalyst);
 				}
@@ -204,22 +204,22 @@ public class InfusionRecipe implements IRecipe<InfusionRitual> {
 			}
 
 			@Override
-			public ResourceLocation getID() {
+			public ResourceLocation getId() {
 				return id;
 			}
 
 			@Override
-			public IRecipeSerializer<?> getSerializer() {
+			public IRecipeSerializer<?> getType() {
 				return ModRecipeSerializers.INFUSION.get();
 			}
 
 			@Override
-			public JsonObject getAdvancementJson() {
+			public JsonObject serializeAdvancement() {
 				return null;
 			}
 
 			@Override
-			public ResourceLocation getAdvancementID() {
+			public ResourceLocation getAdvancementId() {
 				return null;
 			}
 

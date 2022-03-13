@@ -24,9 +24,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IForgeShearable;
 
+import net.minecraft.block.AbstractBlock.OffsetType;
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class UnderwaterPlantBlock extends Block implements IGrowable, ILiquidContainer, IForgeShearable
 {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 14, 12);
+	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 14, 12);
 	
 	public UnderwaterPlantBlock(Properties properties)
 	{
@@ -37,7 +40,7 @@ public class UnderwaterPlantBlock extends Block implements IGrowable, ILiquidCon
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
 	{
 		Vector3d vec3d = state.getOffset(worldIn, pos);
-		return SHAPE.withOffset(vec3d.x, vec3d.y, vec3d.z);
+		return SHAPE.move(vec3d.x, vec3d.y, vec3d.z);
 	}
 	
 	@Override
@@ -47,42 +50,42 @@ public class UnderwaterPlantBlock extends Block implements IGrowable, ILiquidCon
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		BlockState down = worldIn.getBlockState(pos.down());
+		BlockState down = worldIn.getBlockState(pos.below());
 		state = worldIn.getBlockState(pos);
-		return isTerrain(down) && state.getFluidState().getFluid().equals(Fluids.WATER.getStillFluid());
+		return isTerrain(down) && state.getFluidState().getType().equals(Fluids.WATER.getSource());
 	}
 	
 	protected boolean isTerrain(BlockState state) 
 	{		
-		return state.isIn(ModTags.END_GROUND) || state.getBlock() == ModBlocks.ENDSTONE_DUST.get();
+		return state.is(ModTags.END_GROUND) || state.getBlock() == ModBlocks.ENDSTONE_DUST.get();
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos)) 
+		if (!canSurvive(stateIn, worldIn, currentPos)) 
 		{
 			worldIn.destroyBlock(currentPos, true);
-			return Blocks.WATER.getDefaultState();
+			return Blocks.WATER.defaultBlockState();
 		}
 		else 
 		{
-			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+			worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
 			return stateIn;
 		}
 	}
 	
 	@Override
-	public boolean canContainFluid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluidIn) 
+	public boolean canPlaceLiquid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluidIn) 
 	{
 		return false;
 	}
 
 	@Override
-	public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) 
+	public boolean placeLiquid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) 
 	{
 		return false;
 	}
@@ -90,23 +93,23 @@ public class UnderwaterPlantBlock extends Block implements IGrowable, ILiquidCon
 	@Override
 	public FluidState getFluidState(BlockState state) 
 	{
-		return Fluids.WATER.getStillFluidState(false);
+		return Fluids.WATER.getSource(false);
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return false;
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return false;
 	}
 
 	@Override
-	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
+	public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
 	{	
 	}
 

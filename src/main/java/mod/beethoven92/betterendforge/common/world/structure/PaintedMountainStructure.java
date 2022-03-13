@@ -20,6 +20,8 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
+import net.minecraft.world.gen.feature.structure.Structure.IStartFactory;
+
 public class PaintedMountainStructure extends Structure<NoFeatureConfig>
 {
 	private static final BlockState[] VARIANTS;
@@ -27,9 +29,9 @@ public class PaintedMountainStructure extends Structure<NoFeatureConfig>
 	static 
 	{
 		VARIANTS = new BlockState[] {
-				Blocks.END_STONE.getDefaultState(),
-				ModBlocks.FLAVOLITE.stone.get().getDefaultState(),
-				ModBlocks.VIOLECITE.stone.get().getDefaultState(),
+				Blocks.END_STONE.defaultBlockState(),
+				ModBlocks.FLAVOLITE.stone.get().defaultBlockState(),
+				ModBlocks.VIOLECITE.stone.get().defaultBlockState(),
 		};
 	}
 	
@@ -39,13 +41,13 @@ public class PaintedMountainStructure extends Structure<NoFeatureConfig>
 	}
 
 	@Override
-	public Decoration getDecorationStage() 
+	public Decoration step() 
 	{
 		return Decoration.RAW_GENERATION;
 	}
 	
 	@Override
-	public String getStructureName() 
+	public String getFeatureName() 
 	{
 		return BetterEnd.MOD_ID + ":painted_mountain_structure";
 	}
@@ -65,26 +67,26 @@ public class PaintedMountainStructure extends Structure<NoFeatureConfig>
 		}
 
 		@Override
-		public void func_230364_a_(DynamicRegistries registry, ChunkGenerator chunkGenerator,
+		public void generatePieces(DynamicRegistries registry, ChunkGenerator chunkGenerator,
 				TemplateManager manager, int chunkX, int chunkZ, Biome biome,
 				NoFeatureConfig config) 
 		{
-			int x = (chunkX << 4) | ModMathHelper.randRange(4, 12, rand);
-			int z = (chunkZ << 4) | ModMathHelper.randRange(4, 12, rand);
-			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
+			int x = (chunkX << 4) | ModMathHelper.randRange(4, 12, random);
+			int z = (chunkZ << 4) | ModMathHelper.randRange(4, 12, random);
+			int y = chunkGenerator.getBaseHeight(x, z, Type.WORLD_SURFACE_WG);
 			if (y > 50) 
 			{
-				float radius = ModMathHelper.randRange(50, 100, rand);
-				float height = radius * ModMathHelper.randRange(0.4F, 0.6F, rand);
-				int count = ModMathHelper.floor(height * ModMathHelper.randRange(0.1F, 0.35F, rand) + 1);
+				float radius = ModMathHelper.randRange(50, 100, random);
+				float height = radius * ModMathHelper.randRange(0.4F, 0.6F, random);
+				int count = ModMathHelper.floor(height * ModMathHelper.randRange(0.1F, 0.35F, random) + 1);
 				BlockState[] slises = new BlockState[count];
 				for (int i = 0; i < count; i++) 
 				{
-					slises[i] = VARIANTS[rand.nextInt(VARIANTS.length)];
+					slises[i] = VARIANTS[random.nextInt(VARIANTS.length)];
 				}
-				this.components.add(new PaintedMountainPiece(new BlockPos(x, y, z), radius, height, rand, biome, slises));
+				this.pieces.add(new PaintedMountainPiece(new BlockPos(x, y, z), radius, height, random, biome, slises));
 			}
-			this.recalculateStructureSize();
+			this.calculateBoundingBox();
 		}		
 	}
 }

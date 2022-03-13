@@ -20,8 +20,8 @@ public class SDFRadialNoiseMap extends SDFDisplacement {
             if (intensity == 0) {
                 return 0F;
             }
-            float px = pos.getX() / radius;
-            float pz = pos.getZ() / radius;
+            float px = pos.x() / radius;
+            float pz = pos.z() / radius;
             float distance = ModMathHelper.lengthSqr(px, pz);
             if (distance > 1) {
                 return 0F;

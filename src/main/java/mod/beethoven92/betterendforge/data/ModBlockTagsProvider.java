@@ -28,55 +28,55 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 	}
 
 	@Override
-	protected void registerTags() 
+	protected void addTags() 
 	{
 		ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach((block) -> {
 			if (block instanceof TerrainBlock)
 			{
-				getOrCreateBuilder(BlockTags.NYLIUM).add(block);
-				getOrCreateBuilder(Tags.Blocks.END_STONES).add(block);
+				tag(BlockTags.NYLIUM).add(block);
+				tag(Tags.Blocks.END_STONES).add(block);
 			}
 			if (block instanceof LeavesBlock)
 			{
-				getOrCreateBuilder(BlockTags.LEAVES).add(block);
+				tag(BlockTags.LEAVES).add(block);
 			}
 			if (block instanceof EndVineBlock)
 			{
-				getOrCreateBuilder(BlockTags.CLIMBABLE).add(block);
+				tag(BlockTags.CLIMBABLE).add(block);
 			}
 			if (block instanceof EndSaplingBlock)
 			{
-				getOrCreateBuilder(BlockTags.SAPLINGS).add(block);
+				tag(BlockTags.SAPLINGS).add(block);
 			}
 			if (block instanceof FlowerPotBlock)
 			{
-				getOrCreateBuilder(BlockTags.FLOWER_POTS).add(block);
+				tag(BlockTags.FLOWER_POTS).add(block);
 			}
 		});
 				
 		// Misc Forge tags
-		getOrCreateBuilder(Tags.Blocks.ORES).add(ModBlocks.ENDER_ORE.get());
-		getOrCreateBuilder(Tags.Blocks.ORES).add(ModBlocks.AMBER_ORE.get());
+		tag(Tags.Blocks.ORES).add(ModBlocks.ENDER_ORE.get());
+		tag(Tags.Blocks.ORES).add(ModBlocks.AMBER_ORE.get());
 		
-		getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get());
-		getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.AMBER_BLOCK.get());
+		tag(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get());
+		tag(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.AMBER_BLOCK.get());
 		
 		// Misc Minecraft tags
-		getOrCreateBuilder(BlockTags.BEACON_BASE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get());
+		tag(BlockTags.BEACON_BASE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get());
 		
-		getOrCreateBuilder(BlockTags.ICE).add(ModBlocks.EMERALD_ICE.get());
-		getOrCreateBuilder(BlockTags.ICE).add(ModBlocks.DENSE_EMERALD_ICE.get());
-		getOrCreateBuilder(BlockTags.ICE).add(ModBlocks.ANCIENT_EMERALD_ICE.get());
+		tag(BlockTags.ICE).add(ModBlocks.EMERALD_ICE.get());
+		tag(BlockTags.ICE).add(ModBlocks.DENSE_EMERALD_ICE.get());
+		tag(BlockTags.ICE).add(ModBlocks.ANCIENT_EMERALD_ICE.get());
 		
-		getOrCreateBuilder(BlockTags.ANVIL).add(ModBlocks.AETERNIUM_ANVIL.get());
+		tag(BlockTags.ANVIL).add(ModBlocks.AETERNIUM_ANVIL.get());
 		
-		getOrCreateBuilder(BlockTags.SLABS).add(ModBlocks.DRAGON_BONE_SLAB.get());
-		getOrCreateBuilder(BlockTags.SLABS).add(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get());
-		getOrCreateBuilder(BlockTags.WOODEN_SLABS).add(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get());
+		tag(BlockTags.SLABS).add(ModBlocks.DRAGON_BONE_SLAB.get());
+		tag(BlockTags.SLABS).add(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get());
+		tag(BlockTags.WOODEN_SLABS).add(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get());
 
-		getOrCreateBuilder(BlockTags.STAIRS).add(ModBlocks.DRAGON_BONE_STAIRS.get());
-		getOrCreateBuilder(BlockTags.STAIRS).add(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get());
-		getOrCreateBuilder(BlockTags.WOODEN_STAIRS).add(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get());
+		tag(BlockTags.STAIRS).add(ModBlocks.DRAGON_BONE_STAIRS.get());
+		tag(BlockTags.STAIRS).add(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get());
+		tag(BlockTags.WOODEN_STAIRS).add(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get());
 		
 		// WOODEN MATERIALS
 		registerWoodenMaterialTags(ModBlocks.MOSSY_GLOWSHROOM);
@@ -106,58 +106,58 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 	
 	private void registerWoodenMaterialTags(WoodenMaterial material)
 	{
-		getOrCreateBuilder(material.logBlockTag).add(material.log.get(), material.bark.get(), material.log_stripped.get(), material.bark_stripped.get());
+		tag(material.logBlockTag).add(material.log.get(), material.bark.get(), material.log_stripped.get(), material.bark_stripped.get());
 		
-		getOrCreateBuilder(BlockTags.PLANKS).add(material.planks.get());
+		tag(BlockTags.PLANKS).add(material.planks.get());
 		
-		getOrCreateBuilder(BlockTags.LOGS).add(material.log.get(), material.bark.get(), material.log_stripped.get(), material.bark_stripped.get());
+		tag(BlockTags.LOGS).add(material.log.get(), material.bark.get(), material.log_stripped.get(), material.bark_stripped.get());
 		
-		getOrCreateBuilder(BlockTags.LOGS_THAT_BURN).add(material.log.get(), material.bark.get(), material.log_stripped.get(), material.bark_stripped.get());
+		tag(BlockTags.LOGS_THAT_BURN).add(material.log.get(), material.bark.get(), material.log_stripped.get(), material.bark_stripped.get());
 		
-		getOrCreateBuilder(BlockTags.BUTTONS).add(material.button.get());
-		getOrCreateBuilder(BlockTags.WOODEN_BUTTONS).add(material.button.get());
+		tag(BlockTags.BUTTONS).add(material.button.get());
+		tag(BlockTags.WOODEN_BUTTONS).add(material.button.get());
 		
-		getOrCreateBuilder(BlockTags.PRESSURE_PLATES).add(material.pressurePlate.get());
-		getOrCreateBuilder(BlockTags.WOODEN_PRESSURE_PLATES).add(material.pressurePlate.get());
+		tag(BlockTags.PRESSURE_PLATES).add(material.pressurePlate.get());
+		tag(BlockTags.WOODEN_PRESSURE_PLATES).add(material.pressurePlate.get());
 		
-		getOrCreateBuilder(BlockTags.DOORS).add(material.door.get());
-		getOrCreateBuilder(BlockTags.WOODEN_DOORS).add(material.door.get());
+		tag(BlockTags.DOORS).add(material.door.get());
+		tag(BlockTags.WOODEN_DOORS).add(material.door.get());
 		
-		getOrCreateBuilder(BlockTags.FENCES).add(material.fence.get());
-		getOrCreateBuilder(BlockTags.WOODEN_FENCES).add(material.fence.get());
+		tag(BlockTags.FENCES).add(material.fence.get());
+		tag(BlockTags.WOODEN_FENCES).add(material.fence.get());
 		
-		getOrCreateBuilder(BlockTags.SLABS).add(material.slab.get());
-		getOrCreateBuilder(BlockTags.WOODEN_SLABS).add(material.slab.get());
+		tag(BlockTags.SLABS).add(material.slab.get());
+		tag(BlockTags.WOODEN_SLABS).add(material.slab.get());
 		
-		getOrCreateBuilder(BlockTags.STAIRS).add(material.stairs.get());
-		getOrCreateBuilder(BlockTags.WOODEN_STAIRS).add(material.stairs.get());
+		tag(BlockTags.STAIRS).add(material.stairs.get());
+		tag(BlockTags.WOODEN_STAIRS).add(material.stairs.get());
 
-		getOrCreateBuilder(BlockTags.TRAPDOORS).add(material.trapdoor.get());
-		getOrCreateBuilder(BlockTags.WOODEN_TRAPDOORS).add(material.trapdoor.get());
+		tag(BlockTags.TRAPDOORS).add(material.trapdoor.get());
+		tag(BlockTags.WOODEN_TRAPDOORS).add(material.trapdoor.get());
 		
-		getOrCreateBuilder(BlockTags.SIGNS).add(material.sign.get());
+		tag(BlockTags.SIGNS).add(material.sign.get());
 		
-		getOrCreateBuilder(BlockTags.CLIMBABLE).add(material.ladder.get());
+		tag(BlockTags.CLIMBABLE).add(material.ladder.get());
 		
-		getOrCreateBuilder(BlockTags.GUARDED_BY_PIGLINS).add(material.chest.get());	
-		getOrCreateBuilder(BlockTags.GUARDED_BY_PIGLINS).add(material.barrel.get());
+		tag(BlockTags.GUARDED_BY_PIGLINS).add(material.chest.get());	
+		tag(BlockTags.GUARDED_BY_PIGLINS).add(material.barrel.get());
 		
 		// Forge Tags
-		getOrCreateBuilder(Tags.Blocks.FENCES).add(material.fence.get());
-		getOrCreateBuilder(Tags.Blocks.FENCES_WOODEN).add(material.fence.get());
+		tag(Tags.Blocks.FENCES).add(material.fence.get());
+		tag(Tags.Blocks.FENCES_WOODEN).add(material.fence.get());
 
-		getOrCreateBuilder(Tags.Blocks.FENCE_GATES).add(material.gate.get());
-		getOrCreateBuilder(Tags.Blocks.FENCE_GATES_WOODEN).add(material.gate.get());
+		tag(Tags.Blocks.FENCE_GATES).add(material.gate.get());
+		tag(Tags.Blocks.FENCE_GATES_WOODEN).add(material.gate.get());
 		
-		getOrCreateBuilder(Tags.Blocks.CHESTS).add(material.chest.get());
-		getOrCreateBuilder(Tags.Blocks.CHESTS_WOODEN).add(material.chest.get());
+		tag(Tags.Blocks.CHESTS).add(material.chest.get());
+		tag(Tags.Blocks.CHESTS_WOODEN).add(material.chest.get());
 		
-		getOrCreateBuilder(Tags.Blocks.CHESTS_WOODEN).add(material.chest.get());
+		tag(Tags.Blocks.CHESTS_WOODEN).add(material.chest.get());
 		
-		getOrCreateBuilder(BlockTags.createOptional(frl("workbench"))).add(material.craftingTable.get());
+		tag(BlockTags.createOptional(frl("workbench"))).add(material.craftingTable.get());
 		
 		// Used by the Metal Barrels mod
-		getOrCreateBuilder(ModTags.BLOCK_BARRELS).add(material.barrel.get());
+		tag(ModTags.BLOCK_BARRELS).add(material.barrel.get());
 	}
 	
 	private ResourceLocation frl(String tag) {
@@ -166,46 +166,46 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 	
 	private void registerStoneMaterialTags(StoneMaterial material)
 	{
-		getOrCreateBuilder(BlockTags.STONE_BRICKS).add(material.bricks.get());
+		tag(BlockTags.STONE_BRICKS).add(material.bricks.get());
 		
-		getOrCreateBuilder(BlockTags.WALLS).add(material.wall.get());
-		getOrCreateBuilder(BlockTags.WALLS).add(material.brick_wall.get());
+		tag(BlockTags.WALLS).add(material.wall.get());
+		tag(BlockTags.WALLS).add(material.brick_wall.get());
 		
-		getOrCreateBuilder(BlockTags.SLABS).add(material.slab.get());
-		getOrCreateBuilder(BlockTags.SLABS).add(material.brick_slab.get());
+		tag(BlockTags.SLABS).add(material.slab.get());
+		tag(BlockTags.SLABS).add(material.brick_slab.get());
 		
-		getOrCreateBuilder(BlockTags.STAIRS).add(material.stairs.get());
-		getOrCreateBuilder(BlockTags.STAIRS).add(material.brick_stairs.get());
+		tag(BlockTags.STAIRS).add(material.stairs.get());
+		tag(BlockTags.STAIRS).add(material.brick_stairs.get());
 		
-		getOrCreateBuilder(BlockTags.PRESSURE_PLATES).add(material.pressure_plate.get());
-		getOrCreateBuilder(BlockTags.STONE_PRESSURE_PLATES).add(material.pressure_plate.get());
+		tag(BlockTags.PRESSURE_PLATES).add(material.pressure_plate.get());
+		tag(BlockTags.STONE_PRESSURE_PLATES).add(material.pressure_plate.get());
 		
 		// Forge Tags
-		getOrCreateBuilder(Tags.Blocks.STONE).add(material.stone.get());
+		tag(Tags.Blocks.STONE).add(material.stone.get());
 	}
 	
 	private void registerMetalMaterialTags(MetalMaterial material)
 	{	
-		getOrCreateBuilder(BlockTags.BEACON_BASE_BLOCKS).add(material.block.get());
+		tag(BlockTags.BEACON_BASE_BLOCKS).add(material.block.get());
 		
-		getOrCreateBuilder(BlockTags.DOORS).add(material.door.get());
+		tag(BlockTags.DOORS).add(material.door.get());
 		
-		getOrCreateBuilder(BlockTags.STAIRS).add(material.stairs.get());
+		tag(BlockTags.STAIRS).add(material.stairs.get());
 
-		getOrCreateBuilder(BlockTags.TRAPDOORS).add(material.trapdoor.get());
+		tag(BlockTags.TRAPDOORS).add(material.trapdoor.get());
 		
-		getOrCreateBuilder(BlockTags.SLABS).add(material.slab.get());
+		tag(BlockTags.SLABS).add(material.slab.get());
 		
-		getOrCreateBuilder(BlockTags.PRESSURE_PLATES).add(material.pressure_plate.get());
+		tag(BlockTags.PRESSURE_PLATES).add(material.pressure_plate.get());
 		
-		getOrCreateBuilder(BlockTags.ANVIL).add(material.anvil.get());
+		tag(BlockTags.ANVIL).add(material.anvil.get());
 		
 		// Forge Tags
 		if (material.hasOre)
 		{
-			getOrCreateBuilder(Tags.Blocks.ORES).add(material.ore.get());
+			tag(Tags.Blocks.ORES).add(material.ore.get());
 		}
 		
-		getOrCreateBuilder(Tags.Blocks.STORAGE_BLOCKS).add(material.block.get());
+		tag(Tags.Blocks.STORAGE_BLOCKS).add(material.block.get());
 	}
 }

@@ -35,14 +35,14 @@ public class HelixTreeFeature extends Feature<NoFeatureConfig> {
 	
 	public HelixTreeFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 	
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config) {
-		if (!world.getBlockState(pos.down()).getBlock().isIn(ModTags.END_GROUND)) return false;
-		BlockHelper.setWithoutUpdate(world, pos, Blocks.AIR.getDefaultState());
+		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND)) return false;
+		BlockHelper.setWithoutUpdate(world, pos, Blocks.AIR.defaultBlockState());
 		
 		float angle = rand.nextFloat() * ModMathHelper.PI2;
 		float radiusRange = ModMathHelper.randRange(4.5F, 6F, rand);
@@ -57,32 +57,32 @@ public class HelixTreeFeature extends Feature<NoFeatureConfig> {
 			dz = (float) Math.cos(i + angle) * radius;
 			spline.add(new Vector3f(dx, i * 2, dz));
 		}
-		SDF sdf = SplineHelper.buildSDF(spline, 1.7F, 0.5F, (p) -> { return ModBlocks.HELIX_TREE.bark.get().getDefaultState(); });
+		SDF sdf = SplineHelper.buildSDF(spline, 1.7F, 0.5F, (p) -> { return ModBlocks.HELIX_TREE.bark.get().defaultBlockState(); });
 		SDF rotated = new SDFRotation().setRotation(Vector3f.YP, (float) Math.PI).setSource(sdf);
 		sdf = new SDFUnion().setSourceA(rotated).setSourceB(sdf);
 		
 		Vector3f lastPoint = spline.get(spline.size() - 1);
 		List<Vector3f> spline2 = SplineHelper.makeSpline(0, 0, 0, 0, 20, 0, 5);
-		SDF stem = SplineHelper.buildSDF(spline2, 1.0F, 0.5F, (p) -> { return ModBlocks.HELIX_TREE.bark.get().getDefaultState(); });
-		stem = new SDFTranslate().setTranslate(lastPoint.getX(), lastPoint.getY(), lastPoint.getZ()).setSource(stem);
+		SDF stem = SplineHelper.buildSDF(spline2, 1.0F, 0.5F, (p) -> { return ModBlocks.HELIX_TREE.bark.get().defaultBlockState(); });
+		stem = new SDFTranslate().setTranslate(lastPoint.x(), lastPoint.y(), lastPoint.z()).setSource(stem);
 		sdf = new SDFSmoothUnion().setRadius(3).setSourceA(sdf).setSourceB(stem);
 		
 		sdf = new SDFScale().setScale(scale).setSource(sdf);
 		dx = 30 * scale;
 		float dy1 = -20 * scale;
 		float dy2 = 100 * scale;
-		sdf.addPostProcess(POST).fillArea(world, pos, new AxisAlignedBB(pos.add(-dx, dy1, -dx), pos.add(dx, dy2, dx)));
+		sdf.addPostProcess(POST).fillArea(world, pos, new AxisAlignedBB(pos.offset(-dx, dy1, -dx), pos.offset(dx, dy2, dx)));
 		SplineHelper.scale(spline, scale);
-		SplineHelper.fillSplineForce(spline, world, ModBlocks.HELIX_TREE.bark.get().getDefaultState(), pos, (state) -> {
+		SplineHelper.fillSplineForce(spline, world, ModBlocks.HELIX_TREE.bark.get().defaultBlockState(), pos, (state) -> {
 			return state.getMaterial().isReplaceable();
 		});
 		SplineHelper.rotateSpline(spline, (float) Math.PI);
-		SplineHelper.fillSplineForce(spline, world, ModBlocks.HELIX_TREE.bark.get().getDefaultState(), pos, (state) -> {
+		SplineHelper.fillSplineForce(spline, world, ModBlocks.HELIX_TREE.bark.get().defaultBlockState(), pos, (state) -> {
 			return state.getMaterial().isReplaceable();
 		});
 		SplineHelper.scale(spline2, scale);
-		BlockPos leafStart = pos.add(lastPoint.getX() + 0.5, lastPoint.getY() + 0.5, lastPoint.getZ() + 0.5);
-		SplineHelper.fillSplineForce(spline2, world, ModBlocks.HELIX_TREE.log.get().getDefaultState(), leafStart, (state) -> {
+		BlockPos leafStart = pos.offset(lastPoint.x() + 0.5, lastPoint.y() + 0.5, lastPoint.z() + 0.5);
+		SplineHelper.fillSplineForce(spline2, world, ModBlocks.HELIX_TREE.log.get().defaultBlockState(), leafStart, (state) -> {
 			return state.getMaterial().isReplaceable();
 		});
 		
@@ -110,42 +110,42 @@ public class HelixTreeFeature extends Feature<NoFeatureConfig> {
 		Vector3f start = new Vector3f();
 		Vector3f end = new Vector3f();
 		lastPoint = spline.get(0);
-		BlockState leaf = ModBlocks.HELIX_TREE_LEAVES.get().getDefaultState();
+		BlockState leaf = ModBlocks.HELIX_TREE_LEAVES.get().defaultBlockState();
 		for (int i = 1; i < spline.size(); i++) {
 			Vector3f point = spline.get(i);
-			int minY = ModMathHelper.floor(lastPoint.getY());
-			int maxY = ModMathHelper.floor(point.getY());
-			float div = point.getY() - lastPoint.getY();
+			int minY = ModMathHelper.floor(lastPoint.y());
+			int maxY = ModMathHelper.floor(point.y());
+			float div = point.y() - lastPoint.y();
 			for (float py = minY; py <= maxY; py += 0.2F) {
 				start.set(0, py, 0);
 				float delta = (float) (py - minY) / div;
-				float px = MathHelper.lerp(delta, lastPoint.getX(), point.getX());
-				float pz = MathHelper.lerp(delta, lastPoint.getZ(), point.getZ());
+				float px = MathHelper.lerp(delta, lastPoint.x(), point.x());
+				float pz = MathHelper.lerp(delta, lastPoint.z(), point.z());
 				end.set(px, py, pz);
 				fillLine(start, end, world, leaf, leafStart, i / 2 - 1);
 				float ax = Math.abs(px);
 				float az = Math.abs(pz);
 				if (ax > az) {
-					start.set(start.getX(), start.getY(), start.getZ() + az > 0 ? 1 : -1);
-					end.set(end.getX(), end.getY(), end.getZ() + az > 0 ? 1 : -1);
+					start.set(start.x(), start.y(), start.z() + az > 0 ? 1 : -1);
+					end.set(end.x(), end.y(), end.z() + az > 0 ? 1 : -1);
 				}
 				else {
-					start.set(start.getX() + ax > 0 ? 1 : -1, start.getY(), start.getZ());
-					end.set(end.getX() + ax > 0 ? 1 : -1, end.getY(), end.getZ());
+					start.set(start.x() + ax > 0 ? 1 : -1, start.y(), start.z());
+					end.set(end.x() + ax > 0 ? 1 : -1, end.y(), end.z());
 				}
 				fillLine(start, end, world, leaf, leafStart, i / 2 - 1);
 			}
 			lastPoint = point;
 		}
 		
-		leaf = leaf.with(HelixTreeLeavesBlock.COLOR, 7);
-		leafStart = leafStart.add(0, lastPoint.getY(), 0);
+		leaf = leaf.setValue(HelixTreeLeavesBlock.COLOR, 7);
+		leafStart = leafStart.offset(0, lastPoint.y(), 0);
 		if (world.getBlockState(leafStart).isAir()) {
 			BlockHelper.setWithoutUpdate(world, leafStart, leaf);
-			leafStart = leafStart.up();
+			leafStart = leafStart.above();
 			if (world.getBlockState(leafStart).isAir()) {
 				BlockHelper.setWithoutUpdate(world, leafStart, leaf);
-				leafStart = leafStart.up();
+				leafStart = leafStart.above();
 						if (world.getBlockState(leafStart).isAir()) {
 							BlockHelper.setWithoutUpdate(world, leafStart, leaf);
 						}
@@ -156,40 +156,40 @@ public class HelixTreeFeature extends Feature<NoFeatureConfig> {
 	}
 	
 	private void fillLine(Vector3f start, Vector3f end, ISeedReader world, BlockState state, BlockPos pos, int offset) {
-		float dx = end.getX() - start.getX();
-		float dy = end.getY() - start.getY();
-		float dz = end.getZ() - start.getZ();
+		float dx = end.x() - start.x();
+		float dy = end.y() - start.y();
+		float dz = end.z() - start.z();
 		float max = ModMathHelper.max(Math.abs(dx), Math.abs(dy), Math.abs(dz));
 		int count = ModMathHelper.floor(max + 1);
 		dx /= max;
 		dy /= max;
 		dz /= max;
-		float x = start.getX();
-		float y = start.getY();
-		float z = start.getZ();
+		float x = start.x();
+		float y = start.y();
+		float z = start.z();
 		
 		Mutable bPos = new Mutable();
 		for (int i = 0; i < count; i++) {
-			bPos.setPos(x + pos.getX(), y + pos.getY(), z + pos.getZ());
+			bPos.set(x + pos.getX(), y + pos.getY(), z + pos.getZ());
 			int color = ModMathHelper.floor((float) i / (float) count * 7F + 0.5F) + offset;
 			color = MathHelper.clamp(color, 0, 7);
 			if (world.getBlockState(bPos).getMaterial().isReplaceable()) {
-				BlockHelper.setWithoutUpdate(world, bPos, state.with(HelixTreeLeavesBlock.COLOR, color));
+				BlockHelper.setWithoutUpdate(world, bPos, state.setValue(HelixTreeLeavesBlock.COLOR, color));
 			}
 			x += dx;
 			y += dy;
 			z += dz;
 		}
-		bPos.setPos(end.getX() + pos.getX(), end.getY() + pos.getY(), end.getZ() + pos.getZ());
+		bPos.set(end.x() + pos.getX(), end.y() + pos.getY(), end.z() + pos.getZ());
 		if (world.getBlockState(bPos).getMaterial().isReplaceable()) {
-			BlockHelper.setWithoutUpdate(world, bPos, state.with(HelixTreeLeavesBlock.COLOR, 7));
+			BlockHelper.setWithoutUpdate(world, bPos, state.setValue(HelixTreeLeavesBlock.COLOR, 7));
 		}
 	}
 	
 	static {
 		POST = (info) -> {
 			if (ModBlocks.HELIX_TREE.isTreeLog(info.getStateUp()) && ModBlocks.HELIX_TREE.isTreeLog(info.getStateDown())) {
-				return ModBlocks.HELIX_TREE.log.get().getDefaultState();
+				return ModBlocks.HELIX_TREE.log.get().defaultBlockState();
 			}
 			return info.getState();
 		};

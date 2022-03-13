@@ -10,6 +10,8 @@ import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.util.Direction;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class UmbrellaTreeMembraneBlock extends SlimeBlock
 {
 	public static final IntegerProperty COLOR = IntegerProperty.create("color", 0, 7);
@@ -23,24 +25,24 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) 
 	{
-		double px = context.getPos().getX() * 0.1;
-		double py = context.getPos().getY() * 0.1;
-		double pz = context.getPos().getZ() * 0.1;
-		return this.getDefaultState().with(COLOR, ModMathHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
+		double px = context.getClickedPos().getX() * 0.1;
+		double py = context.getClickedPos().getY() * 0.1;
+		double pz = context.getClickedPos().getZ() * 0.1;
+		return this.defaultBlockState().setValue(COLOR, ModMathHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(COLOR);
 	}
 	
 	@Override
-	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) 
+	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) 
 	{
-		if (state.get(COLOR) > 0) 
+		if (state.getValue(COLOR) > 0) 
 		{
-			return super.isSideInvisible(state, adjacentBlockState, side);
+			return super.skipRendering(state, adjacentBlockState, side);
 		}
 		else
 		{
@@ -49,8 +51,8 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock
 	}
 	
 	@Override
-	public boolean isTransparent(BlockState state) 
+	public boolean useShapeForLightOcclusion(BlockState state) 
 	{
-		return state.get(COLOR) > 0;
+		return state.getValue(COLOR) > 0;
 	}
 }

@@ -16,9 +16,9 @@ public class PallidiumBlock extends TerrainBlock {
 	private final Block nextLevel;
 	
 	public PallidiumBlock(String thickness, Block nextLevel) {
-		super(AbstractBlock.Properties.create(Material.ROCK, MaterialColor.LIGHT_GRAY).
-				setRequiresTool().
-				hardnessAndResistance(3.0F, 9.0F).
+		super(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_GRAY).
+				requiresCorrectToolForDrops().
+				strength(3.0F, 9.0F).
 				sound(SoundType.STONE));
 		this.nextLevel = nextLevel;
 	}

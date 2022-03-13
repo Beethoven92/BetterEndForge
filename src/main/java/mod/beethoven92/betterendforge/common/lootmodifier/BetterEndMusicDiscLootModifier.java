@@ -46,8 +46,8 @@ public class BetterEndMusicDiscLootModifier extends LootModifier {
 		@Override
 		public BetterEndMusicDiscLootModifier read(ResourceLocation name, JsonObject json,
 				ILootCondition[] conditionsIn) {
-			int min = JSONUtils.getInt(json, "min");
-			int max = JSONUtils.getInt(json, "max");
+			int min = JSONUtils.getAsInt(json, "min");
+			int max = JSONUtils.getAsInt(json, "max");
 			if (min >= max)
 				throw new JsonSyntaxException("min has to be smaller than max");
 			return new BetterEndMusicDiscLootModifier(conditionsIn, min, max);

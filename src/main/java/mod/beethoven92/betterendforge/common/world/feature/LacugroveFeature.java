@@ -39,7 +39,7 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 	static
 	{
 		REPLACE = (state) -> {
-			if (state.isIn(ModTags.END_GROUND)) 
+			if (state.is(ModTags.END_GROUND)) 
 			{
 				return true;
 			}
@@ -51,7 +51,7 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 			{
 				return true;
 			}
-			if (state.getMaterial().equals(Material.PLANTS)) 
+			if (state.getMaterial().equals(Material.PLANT)) 
 			{
 				return true;
 			}
@@ -65,7 +65,7 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 		POST = (info) -> {
 			if (ModBlocks.LACUGROVE.isTreeLog(info.getStateUp()) && ModBlocks.LACUGROVE.isTreeLog(info.getStateDown()))
 			{
-				return ModBlocks.LACUGROVE.log.get().getDefaultState();
+				return ModBlocks.LACUGROVE.log.get().defaultBlockState();
 			}
 			return info.getState();
 		};
@@ -73,14 +73,14 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 	
 	public LacugroveFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
+	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
 			BlockPos blockPos, NoFeatureConfig config) 
 	{
-		if (!world.getBlockState(blockPos.down()).isIn(ModTags.END_GROUND)) return false;
+		if (!world.getBlockState(blockPos.below()).is(ModTags.END_GROUND)) return false;
 		
 		float size = ModMathHelper.randRange(15, 25, random);
 		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, size, 0, 6);
@@ -96,11 +96,11 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 		float radius = ModMathHelper.randRange(6F, 8F, random);
 		radius *= (size - 15F) / 20F + 1F;
 		Vector3f center = spline.get(4);
-		leavesBall(world, blockPos.add(center.getX(), center.getY(), center.getZ()), radius, random, noise);
+		leavesBall(world, blockPos.offset(center.x(), center.y(), center.z()), radius, random, noise);
 		
 		radius = ModMathHelper.randRange(1.2F, 1.8F, random);
 		SDF function = SplineHelper.buildSDF(spline, radius, 0.7F, (bpos) -> {
-			return ModBlocks.LACUGROVE.bark.get().getDefaultState();
+			return ModBlocks.LACUGROVE.bark.get().defaultBlockState();
 		});
 		
 		function.setReplaceFunction(REPLACE);
@@ -108,7 +108,7 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 		function.fillRecursive(world, blockPos);
 		
 		spline = spline.subList(4, 6);
-		SplineHelper.fillSpline(spline, world, ModBlocks.LACUGROVE.bark.get().getDefaultState(), blockPos, REPLACE);
+		SplineHelper.fillSpline(spline, world, ModBlocks.LACUGROVE.bark.get().defaultBlockState(), blockPos, REPLACE);
 		
 		Mutable mut = new Mutable();
 		int offset = random.nextInt(2);
@@ -129,7 +129,7 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 					for (int y = minY; y < maxY; y++) 
 					{
 						mut.setY(y);
-						if (world.getBlockState(mut).isIn(ModTags.END_GROUND)) 
+						if (world.getBlockState(mut).is(ModTags.END_GROUND)) 
 						{
 							generate = true;
 							break;
@@ -142,7 +142,7 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 						{
 							mut.setY(y);
 							BlockState state = world.getBlockState(mut);
-							if (state.getMaterial().isReplaceable() || state.getMaterial().equals(Material.PLANTS) || state.isIn(ModTags.END_GROUND))
+							if (state.getMaterial().isReplaceable() || state.getMaterial().equals(Material.PLANT) || state.is(ModTags.END_GROUND))
 							{
 								BlockHelper.setWithoutUpdate(world, mut, y == top ? ModBlocks.LACUGROVE.bark.get() : ModBlocks.LACUGROVE.log.get());
 							}
@@ -160,8 +160,8 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 	
 	private void leavesBall(IServerWorld world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise)
 	{
-		SDF sphere = new SDFSphere().setRadius(radius).setBlock(ModBlocks.LACUGROVE_LEAVES.get().getDefaultState().with(LeavesBlock.DISTANCE, 6));
-		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
+		SDF sphere = new SDFSphere().setRadius(radius).setBlock(ModBlocks.LACUGROVE_LEAVES.get().defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
+		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius - 2, 0).setSource(sphere));
 		Mutable mut = new Mutable();
@@ -176,7 +176,7 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 						return info.getState();
 					}
 				}
-				info.setState(ModBlocks.LACUGROVE.bark.get().getDefaultState());
+				info.setState(ModBlocks.LACUGROVE.bark.get().defaultBlockState());
 				for (int x = -6; x < 7; x++) 
 				{
 					int ax = Math.abs(x);
@@ -194,9 +194,9 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 								BlockState state = info.getState(mut);
 								if (state.getBlock() instanceof LeavesBlock) 
 								{
-									int distance = state.get(LeavesBlock.DISTANCE);
+									int distance = state.getValue(LeavesBlock.DISTANCE);
 									if (d < distance) {
-										info.setState(mut, state.with(LeavesBlock.DISTANCE, d));
+										info.setState(mut, state.setValue(LeavesBlock.DISTANCE, d));
 									}
 								}
 							}
@@ -212,12 +212,12 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 			int count = (int) (radius * 2.5F);
 			for (int i = 0; i < count; i++) 
 			{
-				BlockPos p = pos.add(random.nextGaussian() * 1, random.nextGaussian() * 1, random.nextGaussian() * 1);
+				BlockPos p = pos.offset(random.nextGaussian() * 1, random.nextGaussian() * 1, random.nextGaussian() * 1);
 				boolean place = true;
 				for (Direction d: Direction.values()) 
 				{
-					BlockState state = world.getBlockState(p.offset(d));
-					if (!ModBlocks.LACUGROVE.isTreeLog(state) && !state.isIn(ModBlocks.LACUGROVE_LEAVES.get())) 
+					BlockState state = world.getBlockState(p.relative(d));
+					if (!ModBlocks.LACUGROVE.isTreeLog(state) && !state.is(ModBlocks.LACUGROVE_LEAVES.get())) 
 					{
 						place = false;
 						break;

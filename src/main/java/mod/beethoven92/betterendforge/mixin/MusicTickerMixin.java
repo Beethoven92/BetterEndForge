@@ -45,7 +45,7 @@ public class MusicTickerMixin
 	{
 		if (ClientOptions.blendBiomeMusic())
 		{
-			BackgroundMusicSelector musicSound = client.getBackgroundMusicSelector();
+			BackgroundMusicSelector musicSound = client.getSituationalMusic();
 			if (volume > 0 && beIsInEnd() && beShouldChangeSound(musicSound)) 
 			{
 				if (volume > 0) 
@@ -58,7 +58,7 @@ public class MusicTickerMixin
 					{
 						((SoundVolumeAccessor)currentMusic).setVolume(volume);
 					}
-					client.getSoundHandler().setSoundLevel(currentMusic.getCategory(), currentMusic.getVolume() * volume);
+					client.getSoundManager().updateSourceVolume(currentMusic.getSource(), currentMusic.getVolume() * volume);
 					long t = System.currentTimeMillis();
 					if (volume == 1 && time == 0) 
 					{
@@ -77,7 +77,7 @@ public class MusicTickerMixin
 					volume = 1;
 					time = 0;
 					srcVolume = -1;
-					this.client.getSoundHandler().stop(this.currentMusic);
+					this.client.getSoundManager().stop(this.currentMusic);
 					this.timeUntilNextMusic = MathHelper.nextInt(this.random, 0, musicSound.getMinDelay() / 2);
 					this.currentMusic = null;
 				}
@@ -96,12 +96,12 @@ public class MusicTickerMixin
 	
 	private boolean beIsInEnd() 
 	{
-		return client.world != null && client.world.getDimensionKey().equals(World.THE_END);
+		return client.level != null && client.level.dimension().equals(World.END);
 	}
 	
 	private boolean beShouldChangeSound(BackgroundMusicSelector musicSound) 
 	{
-		return currentMusic != null && !musicSound.getSoundEvent().getName().equals(this.currentMusic.getSoundLocation()) && musicSound.shouldReplaceCurrentMusic();
+		return currentMusic != null && !musicSound.getEvent().getLocation().equals(this.currentMusic.getLocation()) && musicSound.replaceCurrentMusic();
 	}
 	
 	@Shadow

@@ -17,20 +17,22 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class InfusionPedestal extends PedestalBlock
 {
 	private static final VoxelShape SHAPE_DEFAULT;
 	private static final VoxelShape SHAPE_PEDESTAL_TOP;
 	
 	static {
-		VoxelShape basinUp = Block.makeCuboidShape(2, 3, 2, 14, 4, 14);
-		VoxelShape basinDown = Block.makeCuboidShape(0, 0, 0, 16, 3, 16);
-		VoxelShape pedestalTop = Block.makeCuboidShape(1, 9, 1, 15, 11, 15);
-		VoxelShape pedestalDefault = Block.makeCuboidShape(1, 13, 1, 15, 15, 15);
-		VoxelShape pillar = Block.makeCuboidShape(3, 0, 3, 13, 9, 13);
-		VoxelShape pillarDefault = Block.makeCuboidShape(3, 4, 3, 13, 13, 13);
-		VoxelShape eyeDefault = Block.makeCuboidShape(4, 15, 4, 12, 16, 12);
-		VoxelShape eyeTop = Block.makeCuboidShape(4, 11, 4, 12, 12, 12);
+		VoxelShape basinUp = Block.box(2, 3, 2, 14, 4, 14);
+		VoxelShape basinDown = Block.box(0, 0, 0, 16, 3, 16);
+		VoxelShape pedestalTop = Block.box(1, 9, 1, 15, 11, 15);
+		VoxelShape pedestalDefault = Block.box(1, 13, 1, 15, 15, 15);
+		VoxelShape pillar = Block.box(3, 0, 3, 13, 9, 13);
+		VoxelShape pillarDefault = Block.box(3, 4, 3, 13, 13, 13);
+		VoxelShape eyeDefault = Block.box(4, 15, 4, 12, 16, 12);
+		VoxelShape eyeTop = Block.box(4, 11, 4, 12, 12, 12);
 		VoxelShape basin = VoxelShapes.or(basinDown, basinUp);
 		SHAPE_DEFAULT = VoxelShapes.or(basin, pillarDefault, pedestalDefault, eyeDefault);
 		SHAPE_PEDESTAL_TOP = VoxelShapes.or(pillar, pedestalTop, eyeTop);
@@ -45,9 +47,9 @@ public class InfusionPedestal extends PedestalBlock
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
 	{
-		if (state.isIn(this)) 
+		if (state.is(this)) 
 		{
-			switch(state.get(STATE)) 
+			switch(state.getValue(STATE)) 
 			{
 				case PEDESTAL_TOP: 
 				{
@@ -67,11 +69,11 @@ public class InfusionPedestal extends PedestalBlock
 	}
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit) 
 	{
-		if (worldIn.isRemote || !state.isIn(this)) return ActionResultType.CONSUME;
-		TileEntity tileEntity = worldIn.getTileEntity(pos);
+		if (worldIn.isClientSide || !state.is(this)) return ActionResultType.CONSUME;
+		TileEntity tileEntity = worldIn.getBlockEntity(pos);
 		InfusionPedestalTileEntity pedestal = null;
 		if (tileEntity instanceof InfusionPedestalTileEntity) 
 		{
@@ -93,7 +95,7 @@ public class InfusionPedestal extends PedestalBlock
 		ActionResultType result = ActionResultType.FAIL;
 		if (handIn != null) 
 		{
-			result = super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+			result = super.use(state, worldIn, pos, player, handIn, hit);
 		}
 		
 		if (result == ActionResultType.SUCCESS) 

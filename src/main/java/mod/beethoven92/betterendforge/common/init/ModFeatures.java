@@ -209,8 +209,8 @@ public class ModFeatures
 	public static final Feature<OreFeatureConfig> ENDER_ORE = new OreFeature(OreFeatureConfig.CODEC);
 	public static final Feature<OreFeatureConfig> AMBER_ORE = new OreFeature(OreFeatureConfig.CODEC);
 	public static final Feature<OreFeatureConfig> THALLASIUM_ORE = new OreFeature(OreFeatureConfig.CODEC);
-	public static final Feature<NoFeatureConfig> FLAVOLITE_LAYER = new OreLayerFeature(ModBlocks.FLAVOLITE.stone.get().getDefaultState(), 12, 4, 96);
-	public static final Feature<NoFeatureConfig> VIOLECITE_LAYER = new OreLayerFeature(ModBlocks.VIOLECITE.stone.get().getDefaultState(), 15, 4, 96);
+	public static final Feature<NoFeatureConfig> FLAVOLITE_LAYER = new OreLayerFeature(ModBlocks.FLAVOLITE.stone.get().defaultBlockState(), 12, 4, 96);
+	public static final Feature<NoFeatureConfig> VIOLECITE_LAYER = new OreLayerFeature(ModBlocks.VIOLECITE.stone.get().defaultBlockState(), 15, 4, 96);
 	
 	// BUILDINGS
 	public static final Feature<NoFeatureConfig> CRASHED_SHIP = new CrashedShipFeature();

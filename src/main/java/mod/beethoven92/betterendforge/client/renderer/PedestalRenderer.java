@@ -39,19 +39,19 @@ public class PedestalRenderer<T extends PedestalTileEntity> extends TileEntityRe
 			return;
 		}
 		
-		BlockState state = tileEntityIn.getWorld().getBlockState(tileEntityIn.getPos());
+		BlockState state = tileEntityIn.getLevel().getBlockState(tileEntityIn.getBlockPos());
 		if (!(state.getBlock() instanceof PedestalBlock)) 
 		{
 			return;
 		}
 
 		ItemStack activeItem = tileEntityIn.getStack();
-		matrixStackIn.push();
+		matrixStackIn.pushPose();
 		Minecraft minecraft = Minecraft.getInstance();
-		IBakedModel model = minecraft.getItemRenderer().getItemModelWithOverrides(activeItem, tileEntityIn.getWorld(), null);
-		Vector3f translate = model.getItemCameraTransforms().ground.translation;
+		IBakedModel model = minecraft.getItemRenderer().getModel(activeItem, tileEntityIn.getLevel(), null);
+		Vector3f translate = model.getTransforms().ground.translation;
 		PedestalBlock pedestal = (PedestalBlock) state.getBlock();
-		matrixStackIn.translate(translate.getX(), translate.getY(), translate.getZ());
+		matrixStackIn.translate(translate.x(), translate.y(), translate.z());
 		matrixStackIn.translate(0.5, pedestal.getHeight(state), 0.5);
 		
 		if (activeItem.getItem() instanceof BlockItem) 
@@ -63,10 +63,10 @@ public class PedestalRenderer<T extends PedestalTileEntity> extends TileEntityRe
 			matrixStackIn.scale(1.25F, 1.25F, 1.25F);
 		}
 		int age = tileEntityIn.getAge();
-		if (state.isIn(ModBlocks.ETERNAL_PEDESTAL.get()) && state.get(EternalPedestal.ACTIVATED)) 
+		if (state.is(ModBlocks.ETERNAL_PEDESTAL.get()) && state.getValue(EternalPedestal.ACTIVATED)) 
 		{
 			float[] colors = EternalCrystalRenderer.colors(age);
-			int y = tileEntityIn.getPos().getY();
+			int y = tileEntityIn.getBlockPos().getY();
 			
 			BeamRenderer.renderLightBeam(matrixStackIn, bufferIn, age, partialTicks, -y, 1024 - y, colors, 0.25F, 0.13F, 0.16F);
 			float altitude = MathHelper.sin((tileEntityIn.getAge() + partialTicks) / 10.0F) * 0.1F + 0.1F;
@@ -83,14 +83,14 @@ public class PedestalRenderer<T extends PedestalTileEntity> extends TileEntityRe
 		else 
 		{
 			float rotation = (age + partialTicks) / 25.0F + 6.0F;
-			matrixStackIn.rotate(Vector3f.YP.rotation(rotation));
-			minecraft.getItemRenderer().renderItem(activeItem, TransformType.GROUND, false, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, model);
+			matrixStackIn.mulPose(Vector3f.YP.rotation(rotation));
+			minecraft.getItemRenderer().render(activeItem, TransformType.GROUND, false, matrixStackIn, bufferIn, combinedLightIn, combinedOverlayIn, model);
 		}
-		matrixStackIn.pop();
+		matrixStackIn.popPose();
 	}
 	
 	@Override
-	public boolean isGlobalRenderer(T te) 
+	public boolean shouldRenderOffScreen(T te) 
 	{
 		return true;
 	}

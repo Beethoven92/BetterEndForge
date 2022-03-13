@@ -10,6 +10,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class UnderwaterWallPlantBlock extends WallPlantBlock implements ILiquidContainer
 {
 	public UnderwaterWallPlantBlock(Properties properties) 
@@ -18,19 +20,19 @@ public class UnderwaterWallPlantBlock extends WallPlantBlock implements ILiquidC
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		return worldIn.getFluidState(pos).getFluid() == Fluids.WATER && super.isValidPosition(state, worldIn, pos);
+		return worldIn.getFluidState(pos).getType() == Fluids.WATER && super.canSurvive(state, worldIn, pos);
 	}
 	
 	@Override
-	public boolean canContainFluid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluidIn) 
+	public boolean canPlaceLiquid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluidIn) 
 	{
 		return false;
 	}
 
 	@Override
-	public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) 
+	public boolean placeLiquid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) 
 	{
 		return false;
 	}
@@ -38,6 +40,6 @@ public class UnderwaterWallPlantBlock extends WallPlantBlock implements ILiquidC
 	@Override
 	public FluidState getFluidState(BlockState state) 
 	{
-		return Fluids.WATER.getStillFluidState(false);
+		return Fluids.WATER.getSource(false);
 	}
 }

@@ -62,46 +62,46 @@ public class PedestalTileEntity extends TileEntity implements ITickableTileEntit
 	public void setStack(ItemStack split) 
 	{
 		this.activeItem = split;
-		this.markDirty();
-		this.getWorld().notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
+		this.setChanged();
+		this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
 	}
 
 	public void removeStack(World world, BlockState state) 
 	{
-		world.setBlockState(pos, state.with(PedestalBlock.HAS_ITEM, false).with(PedestalBlock.HAS_LIGHT, false));
+		world.setBlockAndUpdate(worldPosition, state.setValue(PedestalBlock.HAS_ITEM, false).setValue(PedestalBlock.HAS_LIGHT, false));
 		this.activeItem = ItemStack.EMPTY;
-		this.markDirty();
+		this.setChanged();
 	}
 
 	public ItemStack removeStack() 
 	{
 		ItemStack stored = this.activeItem;
 		this.activeItem = ItemStack.EMPTY;
-		this.markDirty();
+		this.setChanged();
 		return stored;
 	}
 	
 	@Override
-	public void markDirty() 
+	public void setChanged() 
 	{
-		if (world != null && !world.isRemote) 
+		if (level != null && !level.isClientSide) 
 		{
-			BlockState state = world.getBlockState(pos);
+			BlockState state = level.getBlockState(worldPosition);
 			if (state.getBlock() instanceof PedestalBlock)
 			{
-				state = state.with(PedestalBlock.HAS_ITEM, !isEmpty());
+				state = state.setValue(PedestalBlock.HAS_ITEM, !isEmpty());
 				if (activeItem.getItem() == ModItems.ETERNAL_CRYSTAL.get()) 
 				{
-					state = state.with(PedestalBlock.HAS_LIGHT, true);
+					state = state.setValue(PedestalBlock.HAS_LIGHT, true);
 				} 
 				else 
 				{
-					state = state.with(PedestalBlock.HAS_LIGHT, false);
+					state = state.setValue(PedestalBlock.HAS_LIGHT, false);
 				}
-				world.setBlockState(pos, state);
+				level.setBlockAndUpdate(worldPosition, state);
 			}
 		}
-		super.markDirty();
+		super.setChanged();
 	}
 	
 	@Override
@@ -119,7 +119,7 @@ public class PedestalTileEntity extends TileEntity implements ITickableTileEntit
 	
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public double getMaxRenderDistanceSquared() 
+	public double getViewDistance() 
 	{
 		return 256.0D;
 	}
@@ -129,52 +129,52 @@ public class PedestalTileEntity extends TileEntity implements ITickableTileEntit
 	public SUpdateTileEntityPacket getUpdatePacket()
 	{
 		CompoundNBT nbtTagCompound = new CompoundNBT();
-	    write(nbtTagCompound);
+	    save(nbtTagCompound);
 	    int tileEntityType = 42;
-	    return new SUpdateTileEntityPacket(this.pos, tileEntityType, nbtTagCompound);
+	    return new SUpdateTileEntityPacket(this.worldPosition, tileEntityType, nbtTagCompound);
 	}
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) 
 	{
-		BlockState blockState = world.getBlockState(pos);
-	    read(blockState, pkt.getNbtCompound());
+		BlockState blockState = level.getBlockState(worldPosition);
+	    load(blockState, pkt.getTag());
 	}
 
 	@Override
 	public CompoundNBT getUpdateTag()
 	{
 		CompoundNBT nbtTagCompound = new CompoundNBT();
-	    write(nbtTagCompound);
+	    save(nbtTagCompound);
 	    return nbtTagCompound;
 	}
 	
 	@Override
     public void handleUpdateTag(BlockState blockState, CompoundNBT parentNBTTagCompound)
 	{
-		this.read(blockState, parentNBTTagCompound);
+		this.load(blockState, parentNBTTagCompound);
 	}
 	
 	@Override
-	public CompoundNBT write(CompoundNBT compound)
+	public CompoundNBT save(CompoundNBT compound)
 	{
-		super.write(compound);
+		super.save(compound);
 		CompoundNBT itemStackNBT = new CompoundNBT();
 		if (!activeItem.isEmpty())
 		{
-			activeItem.write(itemStackNBT);
+			activeItem.save(itemStackNBT);
 			compound.put("activeItem", itemStackNBT);
 		}
 		return compound;
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT nbt) 
+	public void load(BlockState state, CompoundNBT nbt) 
 	{
-		super.read(state, nbt);
+		super.load(state, nbt);
         if (nbt.contains("activeItem")) 
         {
-            activeItem = ItemStack.read(nbt.getCompound("activeItem"));
+            activeItem = ItemStack.of(nbt.getCompound("activeItem"));
         }
         else 
         {

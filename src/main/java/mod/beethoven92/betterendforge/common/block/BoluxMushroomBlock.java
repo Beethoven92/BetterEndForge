@@ -16,16 +16,16 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class BoluxMushroomBlock extends PlantBlock {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(1, 0, 1, 15, 9, 15);
+	private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 9, 15);
 
 	public BoluxMushroomBlock() {
-		super(AbstractBlock.Properties.create(Material.TALL_PLANTS).zeroHardnessAndResistance().doesNotBlockMovement()
-				.sound(SoundType.PLANT).setLightLevel(s -> 10));
+		super(AbstractBlock.Properties.of(Material.REPLACEABLE_PLANT).instabreak().noCollission()
+				.sound(SoundType.GRASS).lightLevel(s -> 10));
 	}
 
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(ModBlocks.RUTISCUS.get());
+		return state.is(ModBlocks.RUTISCUS.get());
 	}
 
 	@Override
@@ -39,12 +39,12 @@ public class BoluxMushroomBlock extends PlantBlock {
 	}
 
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
 		return false;
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
+	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) {
 		return false;
 	}
 }

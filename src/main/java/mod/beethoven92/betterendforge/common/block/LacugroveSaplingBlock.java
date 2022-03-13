@@ -8,6 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.gen.feature.Feature;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class LacugroveSaplingBlock extends EndSaplingBlock
 {	
 	public LacugroveSaplingBlock(Properties properties) 
@@ -16,10 +18,10 @@ public class LacugroveSaplingBlock extends EndSaplingBlock
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
 	{
-		return worldIn.getBlockState(pos.down()).isIn(ModBlocks.END_MOSS.get()) 
-				|| worldIn.getBlockState(pos.down()).isIn(ModBlocks.ENDSTONE_DUST.get());
+		return worldIn.getBlockState(pos.below()).is(ModBlocks.END_MOSS.get()) 
+				|| worldIn.getBlockState(pos.below()).is(ModBlocks.ENDSTONE_DUST.get());
 	}
 
 	@Override

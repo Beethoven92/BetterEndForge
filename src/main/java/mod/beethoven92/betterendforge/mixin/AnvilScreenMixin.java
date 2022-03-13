@@ -44,9 +44,9 @@ public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 	protected void be_setup(CallbackInfo info) 
 	{
 		this.be_buttons.clear();
-		int x = (width - xSize) / 2;
-	    int y = (height - ySize) / 2;
-	    this.anvilHandler = (ExtendedRepairContainer) this.container;
+		int x = (width - imageWidth) / 2;
+	    int y = (height - imageHeight) / 2;
+	    this.anvilHandler = (ExtendedRepairContainer) this.menu;
 	    this.be_buttons.add(new Button(x + 8, y + 45, 15, 20, new StringTextComponent("<"), (b) -> be_previousRecipe()));
 		this.be_buttons.add(new Button(x + 154, y + 45, 15, 20, new StringTextComponent(">"), (b) -> be_nextRecipe()));
 	}
@@ -75,7 +75,7 @@ public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 			{
 				this.be_buttons.forEach(button -> button.visible = false);
 			}
-			this.nameField.setText("");
+			this.nameField.setValue("");
 			info.cancel();
 		} 
 		else
@@ -103,10 +103,10 @@ public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 			{
 				if (elem.visible && elem.mouseClicked(mouseX, mouseY, button))
 				{
-					if (minecraft.playerController != null) 
+					if (minecraft.gameMode != null) 
 					{
 						int i = be_buttons.indexOf(elem);
-						this.minecraft.playerController.sendEnchantPacket(container.windowId, i);
+						this.minecraft.gameMode.handleInventoryButtonClick(menu.containerId, i);
 						return true;
 					}
 				}

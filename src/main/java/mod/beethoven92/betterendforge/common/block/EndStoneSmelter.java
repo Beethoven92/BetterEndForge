@@ -33,52 +33,54 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class EndStoneSmelter extends Block
 {
-	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+	public static final DirectionProperty FACING = HorizontalBlock.FACING;
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 	
 	public EndStoneSmelter(Properties properties) 
 	{
 		super(properties);
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH).with(LIT, false));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, false));
 	}
 
 	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context) 
 	{
-		return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing().getOpposite());
+		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 	
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) 
 	{
-		if (stateIn.get(LIT)) 
+		if (stateIn.getValue(LIT)) 
 		{
 			double x = pos.getX() + 0.5D;
 			double y = pos.getY();
 			double z = pos.getZ() + 0.5D;
 			if (rand.nextDouble() < 0.1D) 
 			{
-			   worldIn.playSound(x, y, z, SoundEvents.BLOCK_BLASTFURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+			   worldIn.playLocalSound(x, y, z, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 			}
 
-			Direction direction = (Direction)stateIn.get(FACING);
+			Direction direction = (Direction)stateIn.getValue(FACING);
 			Direction.Axis axis = direction.getAxis();
 			double defOffset = rand.nextDouble() * 0.6D - 0.3D;
-			double offX = axis == Direction.Axis.X ? direction.getXOffset() * 0.52D : defOffset;
+			double offX = axis == Direction.Axis.X ? direction.getStepX() * 0.52D : defOffset;
 			double offY = rand.nextDouble() * 9.0D / 16.0D;
-			double offZ = axis == Direction.Axis.Z ? direction.getZOffset() * 0.52D : defOffset;
+			double offZ = axis == Direction.Axis.Z ? direction.getStepZ() * 0.52D : defOffset;
 			worldIn.addParticle(ParticleTypes.SMOKE, x + offX, y + offY, z + offZ, 0.0D, 0.0D, 0.0D);
 		}
 	}
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
 			Hand handIn, BlockRayTraceResult hit)
 	{
-		if (worldIn.isRemote) 
+		if (worldIn.isClientSide) 
 		{
 			return ActionResultType.SUCCESS;
 		} 
@@ -91,7 +93,7 @@ public class EndStoneSmelter extends Block
 	
 	protected void interactWith(World worldIn, BlockPos pos, PlayerEntity player) 
 	{
-		TileEntity tileEntity = worldIn.getTileEntity(pos);
+		TileEntity tileEntity = worldIn.getBlockEntity(pos);
 		if (tileEntity instanceof EndStoneSmelterTileEntity) 
 		{
 			NetworkHooks.openGui((ServerPlayerEntity)player, (EndStoneSmelterTileEntity)tileEntity);
@@ -99,19 +101,19 @@ public class EndStoneSmelter extends Block
 	}
 	
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) 
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) 
 	{
-		if (!state.isIn(newState.getBlock())) 
+		if (!state.is(newState.getBlock())) 
 		{
-			TileEntity tileentity = worldIn.getTileEntity(pos);
+			TileEntity tileentity = worldIn.getBlockEntity(pos);
 	        if (tileentity instanceof EndStoneSmelterTileEntity) 
 	        {
-	        	InventoryHelper.dropInventoryItems(worldIn, pos, (EndStoneSmelterTileEntity)tileentity);
+	        	InventoryHelper.dropContents(worldIn, pos, (EndStoneSmelterTileEntity)tileentity);
 	             //((EndStoneSmelterTileEntity)tileentity).grantStoredRecipeExperience(worldIn, Vector3d.copyCentered(pos));
-	             worldIn.updateComparatorOutputLevel(pos, this);
+	             worldIn.updateNeighbourForOutputSignal(pos, this);
 	          }
 
-	          super.onReplaced(state, worldIn, pos, newState, isMoving);
+	          super.onRemove(state, worldIn, pos, newState, isMoving);
 	       }
 	}
 	
@@ -128,31 +130,31 @@ public class EndStoneSmelter extends Block
 	}
 	
 	@Override
-	public boolean hasComparatorInputOverride(BlockState state) 
+	public boolean hasAnalogOutputSignal(BlockState state) 
 	{
 		return true;
 	}
 	
 	@Override
-	public int getComparatorInputOverride(BlockState blockState, World worldIn, BlockPos pos) 
+	public int getAnalogOutputSignal(BlockState blockState, World worldIn, BlockPos pos) 
 	{
-		return Container.calcRedstone(worldIn.getTileEntity(pos));
+		return Container.getRedstoneSignalFromBlockEntity(worldIn.getBlockEntity(pos));
 	}
 	
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot) 
 	{
-		return state.with(FACING, rot.rotate(state.get(FACING)));
+		return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
 	}
 	
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn) 
 	{
-		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(FACING, LIT);
 	}

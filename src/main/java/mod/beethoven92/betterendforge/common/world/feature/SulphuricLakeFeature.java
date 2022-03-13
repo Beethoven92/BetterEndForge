@@ -31,11 +31,11 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 	
 	public SulphuricLakeFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos blockPos,
+	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos blockPos,
 			NoFeatureConfig config) 
 	{
 		blockPos = FeatureHelper.getPosOnSurfaceWG(world, blockPos);
@@ -72,19 +72,19 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 				if (dist <= r) 
 				{
 					POS.setY(FeatureHelper.getYOnSurface(world, x, z) - 1);
-					if (world.getBlockState(POS).isIn(ModTags.GEN_TERRAIN)) 
+					if (world.getBlockState(POS).is(ModTags.GEN_TERRAIN)) 
 					{
 						if (isBorder(world, POS)) 
 						{
 							if (rand.nextInt(8) > 0) 
 							{
-								brimstone.add(POS.toImmutable());
+								brimstone.add(POS.immutable());
 								if (rand.nextBoolean()) 
 								{
-									brimstone.add(POS.down());
+									brimstone.add(POS.below());
 									if (rand.nextBoolean())
 									{
-										brimstone.add(POS.down(2));
+										brimstone.add(POS.below(2));
 									}
 								}
 							}
@@ -93,23 +93,23 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 								if (!isAbsoluteBorder(world, POS)) 
 								{
 									BlockHelper.setWithoutUpdate(world, POS, Blocks.WATER);
-									world.getPendingFluidTicks().scheduleTick(POS, Fluids.WATER, 0);
-									brimstone.add(POS.down());
+									world.getLiquidTicks().scheduleTick(POS, Fluids.WATER, 0);
+									brimstone.add(POS.below());
 									if (rand.nextBoolean()) 
 									{
-										brimstone.add(POS.down(2));
+										brimstone.add(POS.below(2));
 										if (rand.nextBoolean()) 
 										{
-											brimstone.add(POS.down(3));
+											brimstone.add(POS.below(3));
 										}
 									}
 								}
 								else
 								{
-									brimstone.add(POS.toImmutable());
+									brimstone.add(POS.immutable());
 									if (rand.nextBoolean()) 
 									{
-										brimstone.add(POS.down());
+										brimstone.add(POS.below());
 									}
 								}
 							}
@@ -120,8 +120,8 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 							brimstone.remove(POS);
 							for (Direction dir: BlockHelper.HORIZONTAL_DIRECTIONS) 
 							{
-								BlockPos offseted = POS.offset(dir);
-								if (world.getBlockState(offseted).isIn(ModTags.GEN_TERRAIN)) 
+								BlockPos offseted = POS.relative(dir);
+								if (world.getBlockState(offseted).is(ModTags.GEN_TERRAIN)) 
 								{
 									brimstone.add(offseted);
 								}
@@ -132,20 +132,20 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 								brimstone.remove(POS);
 								for (Direction dir: BlockHelper.HORIZONTAL_DIRECTIONS) 
 								{
-									BlockPos offseted = POS.offset(dir);
-									if (world.getBlockState(offseted).isIn(ModTags.GEN_TERRAIN)) 
+									BlockPos offseted = POS.relative(dir);
+									if (world.getBlockState(offseted).is(ModTags.GEN_TERRAIN)) 
 									{
 										brimstone.add(offseted);
 									}
 								}
 							}
-							brimstone.add(POS.down());
+							brimstone.add(POS.below());
 							if (rand.nextBoolean()) 
 							{
-								brimstone.add(POS.down(2));
+								brimstone.add(POS.below(2));
 								if (rand.nextBoolean()) 
 								{
-									brimstone.add(POS.down(3));
+									brimstone.add(POS.below(3));
 								}
 							}
 						}
@@ -154,15 +154,15 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 				else if (dist < r2) 
 				{
 					POS.setY(FeatureHelper.getYOnSurface(world, x, z) - 1);
-					if (world.getBlockState(POS).isIn(ModTags.GEN_TERRAIN))
+					if (world.getBlockState(POS).is(ModTags.GEN_TERRAIN))
 					{
-						brimstone.add(POS.toImmutable());
+						brimstone.add(POS.immutable());
 						if (rand.nextBoolean()) 
 						{
-							brimstone.add(POS.down());
+							brimstone.add(POS.below());
 							if (rand.nextBoolean()) 
 							{
-								brimstone.add(POS.down(2));
+								brimstone.add(POS.below(2));
 							}
 						}
 					}
@@ -182,7 +182,7 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 		int y = pos.getY() + 1;
 		for (Direction dir: BlockHelper.DIRECTIONS) 
 		{
-			if (FeatureHelper.getYOnSurface(world, pos.getX() + dir.getXOffset(), pos.getZ() + dir.getZOffset()) < y) 
+			if (FeatureHelper.getYOnSurface(world, pos.getX() + dir.getStepX(), pos.getZ() + dir.getStepZ()) < y) 
 			{
 				return true;
 			}
@@ -195,7 +195,7 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 		int y = pos.getY() - 2;
 		for (Direction dir: BlockHelper.DIRECTIONS) 
 		{
-			if (FeatureHelper.getYOnSurface(world, pos.getX() + dir.getXOffset() * 3, pos.getZ() + dir.getZOffset() * 3) < y) 
+			if (FeatureHelper.getYOnSurface(world, pos.getX() + dir.getStepX() * 3, pos.getZ() + dir.getStepZ() * 3) < y) 
 			{
 				return true;
 			}
@@ -207,9 +207,9 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 	{
 		int y = pos.getY() + 1;
 		for (Direction dir: BlockHelper.DIRECTIONS) {
-			if (FeatureHelper.getYOnSurface(world, pos.getX() + dir.getXOffset(), pos.getZ() + dir.getZOffset()) < y
-					|| FeatureHelper.getYOnSurface(world, pos.getX() + dir.getXOffset() * 2, pos.getZ() + dir.getZOffset() * 2) < y
-					|| FeatureHelper.getYOnSurface(world, pos.getX() + dir.getXOffset() * 3, pos.getZ() + dir.getZOffset() * 3) < y) {
+			if (FeatureHelper.getYOnSurface(world, pos.getX() + dir.getStepX(), pos.getZ() + dir.getStepZ()) < y
+					|| FeatureHelper.getYOnSurface(world, pos.getX() + dir.getStepX() * 2, pos.getZ() + dir.getStepZ() * 2) < y
+					|| FeatureHelper.getYOnSurface(world, pos.getX() + dir.getStepX() * 3, pos.getZ() + dir.getStepZ() * 3) < y) {
 				return false;
 			}
 		}
@@ -220,7 +220,7 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 	{
 		BlockState state = getBrimstone(world, pos);
 		BlockHelper.setWithoutUpdate(world, pos, state);
-		if (state.get(BlockProperties.ACTIVATED)) 
+		if (state.getValue(BlockProperties.ACTIVATED)) 
 		{
 			makeShards(world, pos, random);
 		}
@@ -230,11 +230,11 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 	{
 		for (Direction dir: BlockHelper.DIRECTIONS) 
 		{
-			if (world.getBlockState(pos.offset(dir)).isIn(Blocks.WATER)) {
-				return ModBlocks.BRIMSTONE.get().getDefaultState().with(BlockProperties.ACTIVATED, true);
+			if (world.getBlockState(pos.relative(dir)).is(Blocks.WATER)) {
+				return ModBlocks.BRIMSTONE.get().defaultBlockState().setValue(BlockProperties.ACTIVATED, true);
 			}
 		}
-		return ModBlocks.BRIMSTONE.get().getDefaultState();
+		return ModBlocks.BRIMSTONE.get().defaultBlockState();
 	}
 	
 	private void makeShards(ISeedReader world, BlockPos pos, Random random) 
@@ -242,12 +242,12 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 		for (Direction dir: BlockHelper.DIRECTIONS) 
 		{
 			BlockPos side;
-			if (random.nextInt(16) == 0 && world.getBlockState((side = pos.offset(dir))).isIn(Blocks.WATER))
+			if (random.nextInt(16) == 0 && world.getBlockState((side = pos.relative(dir))).is(Blocks.WATER))
 			{
-				BlockState state = ModBlocks.SULPHUR_CRYSTAL.get().getDefaultState()
-						.with(SulphurCrystalBlock.WATERLOGGED, true)
-						.with(SulphurCrystalBlock.FACING, dir)
-						.with(SulphurCrystalBlock.AGE, random.nextInt(3));
+				BlockState state = ModBlocks.SULPHUR_CRYSTAL.get().defaultBlockState()
+						.setValue(SulphurCrystalBlock.WATERLOGGED, true)
+						.setValue(SulphurCrystalBlock.FACING, dir)
+						.setValue(SulphurCrystalBlock.AGE, random.nextInt(3));
 				BlockHelper.setWithoutUpdate(world, side, state);
 			}
 		}

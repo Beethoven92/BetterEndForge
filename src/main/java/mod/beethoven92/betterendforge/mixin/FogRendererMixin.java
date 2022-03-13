@@ -47,19 +47,19 @@ public abstract class FogRendererMixin
 	private static void onRender(ActiveRenderInfo activeRenderInfoIn, float partialTicks, ClientWorld worldIn, 
 			int renderDistanceChunks, float bossColorModifier, CallbackInfo info)
 	{
-		long l = Util.milliTime() - time;
+		long l = Util.getMillis() - time;
 		time += l;
 		lerp += l * 0.001F;
 		if (lerp > 1) lerp = 1;
 		
-		FluidState fluidState = activeRenderInfoIn.getFluidState();
-		if (fluidState.isEmpty() && worldIn.getDimensionKey().equals(World.THE_END)) 
+		FluidState fluidState = activeRenderInfoIn.getFluidInCamera();
+		if (fluidState.isEmpty() && worldIn.dimension().equals(World.END)) 
 		{
-			Entity entity = activeRenderInfoIn.getRenderViewEntity();
+			Entity entity = activeRenderInfoIn.getEntity();
 			boolean skip = false;
 			if (entity instanceof LivingEntity) 
 			{
-				EffectInstance effect = ((LivingEntity) entity).getActivePotionEffect(Effects.NIGHT_VISION);
+				EffectInstance effect = ((LivingEntity) entity).getEffect(Effects.NIGHT_VISION);
 				skip = effect != null && effect.getDuration() > 0;
 			}
 			if (!skip) 
@@ -80,11 +80,11 @@ public abstract class FogRendererMixin
 	private static void fogDensity(ActiveRenderInfo activeRenderInfoIn, FogRenderer.FogType fogTypeIn, 
 			float farPlaneDistance, boolean nearFog, float partialTicks, CallbackInfo info)
 	{
-		Entity entity = activeRenderInfoIn.getRenderViewEntity();
-		Biome biome = entity.world.getBiome(entity.getPosition());
-		FluidState fluidState = activeRenderInfoIn.getFluidState();
+		Entity entity = activeRenderInfoIn.getEntity();
+		Biome biome = entity.level.getBiome(entity.blockPosition());
+		FluidState fluidState = activeRenderInfoIn.getFluidInCamera();
 		
-		if (ClientOptions.useFogDensity() && biome.getCategory() == Category.THEEND && fluidState.isEmpty())
+		if (ClientOptions.useFogDensity() && biome.getBiomeCategory() == Category.THEEND && fluidState.isEmpty())
 		{			
 			BetterEndBiome endBiome = ModBiomes.getRenderBiome(biome);
 			if (fogDensity == 0) 
@@ -107,7 +107,7 @@ public abstract class FogRendererMixin
 			if (entity instanceof LivingEntity) 
 			{
 				LivingEntity le = (LivingEntity) entity;
-				EffectInstance effect = le.getActivePotionEffect(Effects.BLINDNESS);
+				EffectInstance effect = le.getEffect(Effects.BLINDNESS);
 				if (effect != null) 
 				{
 					int duration = effect.getDuration();

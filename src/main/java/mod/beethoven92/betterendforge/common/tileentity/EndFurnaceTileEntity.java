@@ -25,7 +25,7 @@ public class EndFurnaceTileEntity extends AbstractFurnaceTileEntity
 	@Override
 	protected Container createMenu(int id, PlayerInventory player)
 	{
-		return new FurnaceContainer(id, player, this, this.furnaceData);
+		return new FurnaceContainer(id, player, this, this.dataAccess);
 	}
 
 }

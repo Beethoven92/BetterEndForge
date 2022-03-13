@@ -14,6 +14,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class MengerSpongeWetBlock extends WetSpongeBlock
 {
 	public MengerSpongeWetBlock(Properties properties) 
@@ -22,13 +24,13 @@ public class MengerSpongeWetBlock extends WetSpongeBlock
 	}
 
 	@Override
-	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) 
+	public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) 
 	{
-		if (worldIn.getDimensionType().isUltrawarm()) 
+		if (worldIn.dimensionType().ultraWarm()) 
 		{
-			worldIn.setBlockState(pos, ModBlocks.MENGER_SPONGE.get().getDefaultState(), 3);
-	        worldIn.playEvent(2009, pos, 0);
-	        worldIn.playSound((PlayerEntity)null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, (1.0F + worldIn.getRandom().nextFloat() * 0.2F) * 0.7F);
+			worldIn.setBlock(pos, ModBlocks.MENGER_SPONGE.get().defaultBlockState(), 3);
+	        worldIn.levelEvent(2009, pos, 0);
+	        worldIn.playSound((PlayerEntity)null, pos, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, (1.0F + worldIn.getRandom().nextFloat() * 0.2F) * 0.7F);
 	    }
 	}
 
@@ -40,7 +42,7 @@ public class MengerSpongeWetBlock extends WetSpongeBlock
 	}*/
 	
 	@Override
-	public void onPlayerDestroy(IWorld worldIn, BlockPos pos, BlockState state) 
+	public void destroy(IWorld worldIn, BlockPos pos, BlockState state) 
 	{
 		BlockHelper.setWithUpdate(worldIn, pos, Blocks.AIR);
 	}
@@ -48,6 +50,6 @@ public class MengerSpongeWetBlock extends WetSpongeBlock
 	@Override
 	public FluidState getFluidState(BlockState state) 
 	{
-		return Fluids.WATER.getStillFluidState(false);
+		return Fluids.WATER.getSource(false);
 	}
 }

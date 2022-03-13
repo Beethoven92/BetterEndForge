@@ -78,7 +78,7 @@ public class PlayerListMixin
 	
 	@Final
 	@Shadow
-	private DynamicRegistries.Impl field_232639_s_;;
+	private DynamicRegistries.Impl registryHolder;;
 
 	@Shadow
 	private int viewDistance;
@@ -110,7 +110,7 @@ public class PlayerListMixin
 	protected void sendScoreboard(ServerScoreboard scoreboardIn, ServerPlayerEntity playerIn) {}
 	
 	@Shadow
-	public void func_232641_a_(ITextComponent p_232641_1_, ChatType p_232641_2_, UUID p_232641_3_) {}
+	public void broadcastMessage(ITextComponent p_232641_1_, ChatType p_232641_2_, UUID p_232641_3_) {}
 	
 	@Shadow
 	public void sendPacketToAllPlayers(IPacket<?> packetIn) {}
@@ -135,7 +135,7 @@ public class PlayerListMixin
 //		    if (serverworld == null) 
 //		    {
 //		    	LOGGER.warn("Unknown respawn dimension {}, defaulting to overworld", (Object)registrykey);
-//		        serverworld1 = this.server.func_241755_D_();
+//		        serverworld1 = this.server.overworld();
 //		    } 
 //		    else 
 //		    {
@@ -158,14 +158,14 @@ public class PlayerListMixin
 //		    GameRules gamerules = serverworld1.getGameRules();
 //		    boolean flag = gamerules.getBoolean(GameRules.DO_IMMEDIATE_RESPAWN);
 //		    boolean flag1 = gamerules.getBoolean(GameRules.REDUCED_DEBUG_INFO);
-//		    serverplaynethandler.sendPacket(new SJoinGamePacket(playerIn.getEntityId(), playerIn.interactionManager.getGameType(), playerIn.interactionManager.func_241815_c_(), BiomeManager.getHashedSeed(serverworld1.getSeed()), iworldinfo.isHardcore(), this.server.func_240770_D_(), this.field_232639_s_, serverworld1.getDimensionType(), serverworld1.getDimensionKey(), this.getMaxPlayers(), this.viewDistance, flag1, !flag, serverworld1.isDebug(), serverworld1.func_241109_A_()));
+//		    serverplaynethandler.sendPacket(new SJoinGamePacket(playerIn.getEntityId(), playerIn.interactionManager.getGameType(), playerIn.interactionManager.getPreviousGameModeForPlayer(), BiomeManager.getHashedSeed(serverworld1.getSeed()), iworldinfo.isHardcore(), this.server.levelKeys(), this.registryHolder, serverworld1.getDimensionType(), serverworld1.getDimensionKey(), this.getMaxPlayers(), this.viewDistance, flag1, !flag, serverworld1.isDebug(), serverworld1.isFlat()));
 //		    serverplaynethandler.sendPacket(new SCustomPayloadPlayPacket(SCustomPayloadPlayPacket.BRAND, (new PacketBuffer(Unpooled.buffer())).writeString(this.getServer().getServerModName())));
 //		    serverplaynethandler.sendPacket(new SServerDifficultyPacket(iworldinfo.getDifficulty(), iworldinfo.isDifficultyLocked()));
 //		    serverplaynethandler.sendPacket(new SPlayerAbilitiesPacket(playerIn.abilities));
 //		    serverplaynethandler.sendPacket(new SHeldItemChangePacket(playerIn.inventory.currentItem));
 //		    serverplaynethandler.sendPacket(new SUpdateRecipesPacket(this.server.getRecipeManager().getRecipes()));
-//		    serverplaynethandler.sendPacket(new STagsListPacket(this.server.func_244266_aF()));
-//		    net.minecraftforge.fml.network.NetworkHooks.syncCustomTagTypes(playerIn, this.server.func_244266_aF());
+//		    serverplaynethandler.sendPacket(new STagsListPacket(this.server.getTags()));
+//		    net.minecraftforge.fml.network.NetworkHooks.syncCustomTagTypes(playerIn, this.server.getTags());
 //		    this.updatePermissionLevel(playerIn);
 //		    playerIn.getStats().markAllDirty();
 //		    playerIn.getRecipeBook().init(playerIn);
@@ -181,7 +181,7 @@ public class PlayerListMixin
 //		    	iformattabletextcomponent = new TranslationTextComponent("multiplayer.player.joined.renamed", playerIn.getDisplayName(), s);
 //		    }
 //		    
-//		    this.func_232641_a_(iformattabletextcomponent.mergeStyle(TextFormatting.YELLOW), ChatType.SYSTEM, Util.DUMMY_UUID);
+//		    this.broadcastMessage(iformattabletextcomponent.mergeStyle(TextFormatting.YELLOW), ChatType.SYSTEM, Util.DUMMY_UUID);
 //		    serverplaynethandler.setPlayerLocation(playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), playerIn.rotationYaw, playerIn.rotationPitch);
 //		    this.players.add(playerIn);
 //		    this.uuidToPlayerMap.put(playerIn.getUniqueID(), playerIn);
