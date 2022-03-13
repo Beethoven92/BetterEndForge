@@ -18,7 +18,7 @@ import net.minecraft.world.gen.NoiseChunkGenerator;
 @Mixin(DimensionType.class)
 public abstract class DimensionTypeMixin 
 {
-    @Inject(at = @At("HEAD"), method = "getEndChunkGenerator(Lnet/minecraft/util/registry/Registry;Lnet/minecraft/util/registry/Registry;J)Lnet/minecraft/world/gen/ChunkGenerator;", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "defaultEndGenerator(Lnet/minecraft/util/registry/Registry;Lnet/minecraft/util/registry/Registry;J)Lnet/minecraft/world/gen/ChunkGenerator;", cancellable = true)
     private static void betterEndGenerator(Registry<Biome> registry, Registry<DimensionSettings> settings, long seed, CallbackInfoReturnable<ChunkGenerator> info) 
     {
     	info.setReturnValue(new NoiseChunkGenerator(
@@ -26,7 +26,7 @@ public abstract class DimensionTypeMixin
     			() -> settings.getOrThrow(DimensionSettings.END)));
     }
 	
-    @Inject(method = "doesHasDragonFight", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "createDragonFight", at = @At("HEAD"), cancellable = true)
 	private void be_hasEnderDragonFight(CallbackInfoReturnable<Boolean> info)
     {
 		if (!GeneratorOptions.hasDragonFights())

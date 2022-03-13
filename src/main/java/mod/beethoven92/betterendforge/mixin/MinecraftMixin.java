@@ -25,29 +25,29 @@ public class MinecraftMixin
 	public ClientPlayerEntity player;
 	
 	@Shadow
-	public Screen currentScreen;
+	public Screen screen;
 	
 	@Shadow
 	@Final
-	public IngameGui ingameGUI;
+	public IngameGui gui;
 	
 	@Shadow
-	public ClientWorld world;
+	public ClientWorld level;
 
-	@Inject(method = "getBackgroundMusicSelector", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "getSituationalMusic", at = @At("HEAD"), cancellable = true)
 	private void be_getEndMusic(CallbackInfoReturnable<BackgroundMusicSelector> info) 
 	{
-		if (!(this.currentScreen instanceof WinGameScreen) && this.player != null) 
+		if (!(this.screen instanceof WinGameScreen) && this.player != null)
 		{
 			if (this.player.level.dimension() == World.END) 
 			{
-				if (this.ingameGUI.getBossOverlay().shouldPlayMusic() && ModMathHelper.lengthSqr(this.player.getX(), this.player.getZ()) < 250000)
+				if (this.gui.getBossOverlay().shouldPlayMusic() && ModMathHelper.lengthSqr(this.player.getX(), this.player.getZ()) < 250000)
 				{
 					info.setReturnValue(BackgroundMusicTracks.END_BOSS);
 				}
 				else 
 				{
-					BackgroundMusicSelector sound = (BackgroundMusicSelector) this.world.getBiomeManager().getNoiseBiomeAtPosition(this.player.blockPosition()).getBackgroundMusic().orElse(BackgroundMusicTracks.END);
+					BackgroundMusicSelector sound = (BackgroundMusicSelector) this.level.getBiomeManager().getNoiseBiomeAtPosition(this.player.blockPosition()).getBackgroundMusic().orElse(BackgroundMusicTracks.END);
 					info.setReturnValue(sound);
 				}
 				info.cancel();

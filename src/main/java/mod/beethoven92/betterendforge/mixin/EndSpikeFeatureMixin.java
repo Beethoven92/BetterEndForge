@@ -39,8 +39,8 @@ import net.minecraft.world.gen.feature.EndSpikeFeatureConfig;
 public abstract class EndSpikeFeatureMixin 
 {
 
-	@Inject(method = "generate", at = @At("HEAD"), cancellable = true)
-	private void beGenerateSpike(ISeedReader world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos,
+	@Inject(method = "place", at = @At("HEAD"), cancellable = true)
+	private void be_place(ISeedReader world, ChunkGenerator chunkGenerator, Random random, BlockPos blockPos,
 								 EndSpikeFeatureConfig endSpikeFeatureConfig, CallbackInfoReturnable<Boolean> info)
 	{
 		if (!GeneratorOptions.hasPillars())

@@ -43,15 +43,15 @@ public abstract class ChorusFlowerBlockMixin extends Block
 	
 	@Shadow
 	@Final
-	private ChorusPlantBlock plantBlock;
+	private ChorusPlantBlock plant;
 	
 	public ChorusFlowerBlockMixin(Properties properties) 
 	{
 		super(properties);
 	}
 
-	@Inject(method = "isValidPosition", at = @At("HEAD"), cancellable = true)
-	private void isValidPosition(BlockState state, IWorldReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info) 
+	@Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
+	private void be_canSurvive(BlockState state, IWorldReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info)
 	{
 		if (world.getBlockState(pos.below()).is(ModBlocks.CHORUS_NYLIUM.get())) 
 		{
@@ -61,7 +61,7 @@ public abstract class ChorusFlowerBlockMixin extends Block
 	}
 	
 	@Inject(method = "randomTick", at = @At("HEAD"), cancellable = true)
-	private void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo info) 
+	private void be_randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo info)
 	{
 		if (world.getBlockState(pos.below()).is(ModTags.END_GROUND)) {
 			BlockPos up = pos.above();
@@ -69,7 +69,7 @@ public abstract class ChorusFlowerBlockMixin extends Block
 				int i = state.getValue(ChorusFlowerBlock.AGE);
 				if (i < 5) {
 					this.placeGrownFlower(world, up, i + 1);
-					BlockHelper.setWithoutUpdate(world, pos, plantBlock.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true));
+					BlockHelper.setWithoutUpdate(world, pos, plant.defaultBlockState().setValue(ChorusPlantBlock.UP, true).setValue(ChorusPlantBlock.DOWN, true));
 					info.cancel();
 				}
 			}
@@ -91,7 +91,7 @@ public abstract class ChorusFlowerBlockMixin extends Block
 	}
 
 	@Inject(method = "placeDeadFlower", at = @At("HEAD"), cancellable = true)
-	private void beOnDie(World world, BlockPos pos, CallbackInfo info) 
+	private void be_onDie(World world, BlockPos pos, CallbackInfo info)
 	{
 		BlockState down = world.getBlockState(pos.below());
 		if (down.is(Blocks.CHORUS_PLANT) || down.is(ModTags.GEN_TERRAIN)) 

@@ -21,10 +21,10 @@ import net.minecraft.world.server.ServerWorld;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
-	private static net.minecraft.util.Direction[] HORIZONTAL;
+	private static Direction[] HORIZONTAL;
 	
 	@Inject(method = "findRespawnPositionAndUseSpawnBlock", at = @At(value = "HEAD"), cancellable = true)
-	private static void statueRespawn(ServerWorld world, BlockPos pos, float f, boolean bl, boolean bl2, CallbackInfoReturnable<Optional<Vector3d>> info) {
+	private static void be_statueRespawn(ServerWorld world, BlockPos pos, float f, boolean bl, boolean bl2, CallbackInfoReturnable<Optional<Vector3d>> info) {
 		BlockState blockState = world.getBlockState(pos);
 		if (blockState.is(ModBlocks.RESPAWN_OBELISK.get())) {
 			info.setReturnValue(beObeliskRespawnPosition(world, pos, blockState));

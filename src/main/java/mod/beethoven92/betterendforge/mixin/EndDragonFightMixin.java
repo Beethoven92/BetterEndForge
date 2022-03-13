@@ -36,17 +36,17 @@ import java.util.List;
 @Mixin(DragonFightManager.class)
 public class EndDragonFightMixin {
 	@Shadow
-	private DragonSpawnState respawnState;
+	private DragonSpawnState respawnStage;
 	@Shadow
 	private boolean dragonKilled;
 	@Shadow
-	private BlockPos exitPortalLocation;
+	private BlockPos portalLocation;
 	@Final
 	@Shadow
 	private static Logger LOGGER;
 	@Final
 	@Shadow
-	private ServerWorld world;
+	private ServerWorld level;
 	
 	@Shadow
 	private BlockPattern.PatternHelper findExitPortal() {
@@ -54,36 +54,36 @@ public class EndDragonFightMixin {
 	}
 	
 	@Shadow
-	private void generatePortal(boolean bl) {
+	private void spawnExitPortal(boolean bl) {
 	}
 	
 	@Shadow
 	private void respawnDragon(List<EnderCrystalEntity> list) {
 	}
 	
-	@Inject(method = "tryRespawnDragon", at = @At("HEAD"), cancellable = true)
-	private void be_tryRespawnDragon(CallbackInfo info) {
-		if (GeneratorOptions.replacePortal() && GeneratorOptions.hasDragonFights() && this.dragonKilled && this.respawnState == null) {
-			BlockPos blockPos = exitPortalLocation;
+	@Inject(method = "tryRespawn", at = @At("HEAD"), cancellable = true)
+	private void be_tryRespawn(CallbackInfo info) {
+		if (GeneratorOptions.replacePortal() && GeneratorOptions.hasDragonFights() && this.dragonKilled && this.respawnStage == null) {
+			BlockPos blockPos = portalLocation;
 			if (blockPos == null) {
 				LOGGER.debug("Tried to respawn, but need to find the portal first.");
 				BlockPattern.PatternHelper blockPatternMatch = this.findExitPortal();
 				if (blockPatternMatch == null) {
 					LOGGER.debug("Couldn't find a portal, so we made one.");
-					generatePortal(true);
+					spawnExitPortal(true);
 				}
 				else {
 					LOGGER.debug("Found the exit portal & temporarily using it.");
 				}
 				
-				blockPos = exitPortalLocation;
+				blockPos = portalLocation;
 			}
 			
 			List<EnderCrystalEntity> crystals = Lists.newArrayList();
 			BlockPos center = GeneratorOptions.getPortalPos().above(5);
 			for (Direction dir : BlockHelper.HORIZONTAL_DIRECTIONS) {
 				BlockPos central = center.relative(dir, 4);
-				List<EnderCrystalEntity> crystalList = world.getEntitiesOfClass(
+				List<EnderCrystalEntity> crystalList = level.getEntitiesOfClass(
 					EnderCrystalEntity.class,
 					new AxisAlignedBB(central.below(255).south().west(), central.above(255).north().east())
 				);
@@ -91,7 +91,7 @@ public class EndDragonFightMixin {
 				int count = crystalList.size();
 				for (int n = 0; n < count; n++) {
 					EnderCrystalEntity crystal = crystalList.get(n);
-					if (!world.getBlockState(crystal.blockPosition().below()).is(Blocks.BEDROCK)) {
+					if (!level.getBlockState(crystal.blockPosition().below()).is(Blocks.BEDROCK)) {
 						crystalList.remove(n);
 						count--;
 						n--;

@@ -45,8 +45,8 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		}
 	}
 
-	@Inject(method = "makeConnections", at = @At("RETURN"), cancellable = true)
-	private void beConnectionProperties(IBlockReader blockGetter, BlockPos blockPos, CallbackInfoReturnable<BlockState> info)
+	@Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
+	private void be_getStateForPlacement2(IBlockReader blockGetter, BlockPos blockPos, CallbackInfoReturnable<BlockState> info)
 	{
 		BlockState plant = info.getReturnValue();
 		if (plant.is(Blocks.CHORUS_PLANT) && blockGetter.getBlockState(blockPos.below()).is(ModTags.END_GROUND)) {
@@ -55,8 +55,8 @@ public abstract class ChorusPlantBlockMixin extends Block {
 
 	}
 
-	@Inject(method = "isValidPosition", at = @At("HEAD"), cancellable = true)
-	private void isValidPosition(BlockState state, IWorldReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info)
+	@Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
+	private void be_canSurvive(BlockState state, IWorldReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info)
 	{
 		BlockState down = world.getBlockState(pos.below());
 		if (down.is(ModBlocks.CHORUS_NYLIUM.get()) || down.is(Blocks.END_STONE)) {
@@ -64,8 +64,8 @@ public abstract class ChorusPlantBlockMixin extends Block {
 		}
 	}
 
-	@Inject(method = "updatePostPlacement", at = @At("RETURN"), cancellable = true)
-	private void updatePostPlacement(BlockState state, Direction direction, BlockState newState, IWorld world,
+	@Inject(method = "updateShape", at = @At("RETURN"), cancellable = true)
+	private void be_updateShape(BlockState state, Direction direction, BlockState newState, IWorld world,
 			BlockPos pos, BlockPos posFrom, CallbackInfoReturnable<BlockState> info)
 	{
 		BlockState plant = info.getReturnValue();

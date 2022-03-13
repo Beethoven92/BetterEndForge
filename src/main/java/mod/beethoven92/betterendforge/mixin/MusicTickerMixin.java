@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import mod.beethoven92.betterendforge.config.ClientConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.BackgroundMusicSelector;
 import net.minecraft.client.audio.ISound;
@@ -24,7 +23,7 @@ public class MusicTickerMixin
 {
 	@Shadow
 	@Final
-	private Minecraft client;
+	private Minecraft minecraft;
 	
 	@Shadow
 	@Final
@@ -34,69 +33,69 @@ public class MusicTickerMixin
 	private ISound currentMusic;
 	
 	@Shadow
-	private int timeUntilNextMusic;
+	private int nextSongDelay;
 	
-	private static float volume = 1;
-	private static float srcVolume = 0;
-	private static long time;
+	private static float be_volume = 1;
+	private static float be_srcVolume = 0;
+	private static long be_time;
 
 	@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
 	public void be_onTick(CallbackInfo info) 
 	{
 		if (ClientOptions.blendBiomeMusic())
 		{
-			BackgroundMusicSelector musicSound = client.getSituationalMusic();
-			if (volume > 0 && beIsInEnd() && beShouldChangeSound(musicSound)) 
+			BackgroundMusicSelector musicSound = minecraft.getSituationalMusic();
+			if (be_volume > 0 && beIsInEnd() && beShouldChangeSound(musicSound))
 			{
-				if (volume > 0) 
+				if (be_volume > 0)
 				{
-					if (srcVolume < 0)
+					if (be_srcVolume < 0)
 					{
-						srcVolume = currentMusic.getVolume();
+						be_srcVolume = currentMusic.getVolume();
 					}
 					if (currentMusic instanceof LocatableSound) 
 					{
-						((SoundVolumeAccessor)currentMusic).setVolume(volume);
+						((SoundVolumeAccessor)currentMusic).setVolume(be_volume);
 					}
-					client.getSoundManager().updateSourceVolume(currentMusic.getSource(), currentMusic.getVolume() * volume);
+					minecraft.getSoundManager().updateSourceVolume(currentMusic.getSource(), currentMusic.getVolume() * be_volume);
 					long t = System.currentTimeMillis();
-					if (volume == 1 && time == 0) 
+					if (be_volume == 1 && be_time == 0)
 					{
-						time = t;
+						be_time = t;
 					}
-					float delta = (t - time) * 0.0005F;
-					time = t;
-					volume -= delta;
-					if (volume < 0) 
+					float delta = (t - be_time) * 0.0005F;
+					be_time = t;
+					be_volume -= delta;
+					if (be_volume < 0)
 					{
-						volume = 0;
+						be_volume = 0;
 					}
 				}
-				if (volume == 0) 
+				if (be_volume == 0)
 				{
-					volume = 1;
-					time = 0;
-					srcVolume = -1;
-					this.client.getSoundManager().stop(this.currentMusic);
-					this.timeUntilNextMusic = MathHelper.nextInt(this.random, 0, musicSound.getMinDelay() / 2);
+					be_volume = 1;
+					be_time = 0;
+					be_srcVolume = -1;
+					this.minecraft.getSoundManager().stop(this.currentMusic);
+					this.nextSongDelay = MathHelper.nextInt(this.random, 0, musicSound.getMinDelay() / 2);
 					this.currentMusic = null;
 				}
-				if (this.currentMusic == null && this.timeUntilNextMusic-- <= 0) 
+				if (this.currentMusic == null && this.nextSongDelay-- <= 0)
 				{
-					this.selectRandomBackgroundMusic(musicSound);
+					this.startPlaying(musicSound);
 				}
 				info.cancel();
 			}
 			else 
 			{
-				volume = 1;
+				be_volume = 1;
 			}
 		}
 	}
 	
 	private boolean beIsInEnd() 
 	{
-		return client.level != null && client.level.dimension().equals(World.END);
+		return minecraft.level != null && minecraft.level.dimension().equals(World.END);
 	}
 	
 	private boolean beShouldChangeSound(BackgroundMusicSelector musicSound) 
@@ -105,5 +104,5 @@ public class MusicTickerMixin
 	}
 	
 	@Shadow
-	public void selectRandomBackgroundMusic(BackgroundMusicSelector selector) {}
+	public void startPlaying(BackgroundMusicSelector selector) {}
 }

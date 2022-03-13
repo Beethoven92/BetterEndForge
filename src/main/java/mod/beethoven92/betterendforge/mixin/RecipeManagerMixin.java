@@ -40,16 +40,16 @@ public class RecipeManagerMixin
 	}
 	
 	@Shadow
-	private <C extends IInventory, T extends IRecipe<C>> Map<ResourceLocation, IRecipe<C>> getRecipes(IRecipeType<T> type) 
+	private <C extends IInventory, T extends IRecipe<C>> Map<ResourceLocation, IRecipe<C>> byType(IRecipeType<T> type)
 	{
 		return null;
 	}
 
 	@Overwrite
-	public <C extends IInventory, T extends IRecipe<C>> Optional<T> getRecipe(IRecipeType<T> type, 
+	public <C extends IInventory, T extends IRecipe<C>> Optional<T> getRecipeFor(IRecipeType<T> type,
 			C inventory, World world) 
 	{
-		Collection<IRecipe<C>> values = getRecipes(type).values();
+		Collection<IRecipe<C>> values = byType(type).values();
 		List<IRecipe<C>> list = new ArrayList<IRecipe<C>>(values);
 		list.sort((v1, v2) -> {
 			boolean b1 = v1.getId().getNamespace().equals("minecraft");

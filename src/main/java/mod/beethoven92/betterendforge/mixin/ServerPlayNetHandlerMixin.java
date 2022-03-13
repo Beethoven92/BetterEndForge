@@ -28,7 +28,7 @@ public class ServerPlayNetHandlerMixin {
 	@Shadow
 	public ServerPlayerEntity player;
 
-	@Inject(method = "processUpdateSign", at = @At(value = "HEAD"), cancellable = true)
+	@Inject(method = "handleSignUpdate", at = @At(value = "HEAD"), cancellable = true)
 	private void be_signUpdate(CUpdateSignPacket packet, CallbackInfo info) {
 		PacketThreadUtil.ensureRunningOnSameThread(packet, ServerPlayNetHandler.class.cast(this), this.player.getLevel());
 		this.player.resetLastActionTime();

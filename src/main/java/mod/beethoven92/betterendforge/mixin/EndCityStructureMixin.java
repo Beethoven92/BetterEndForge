@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.biome.Biome;
@@ -29,12 +28,12 @@ public abstract class EndCityStructureMixin
 			int chance = GeneratorOptions.getEndCityFailChance();
 			if (chance == 0) 
 			{
-				info.setReturnValue(getYPosForStructure(i, j, chunkGenerator) >= 60);
+				info.setReturnValue(getYPositionForFeature(i, j, chunkGenerator) >= 60);
 				info.cancel();
 			}
 			else if (chunkRandom.nextInt(chance) == 0)
 			{
-				info.setReturnValue(getYPosForStructure(i, j, chunkGenerator) >= 60);
+				info.setReturnValue(getYPositionForFeature(i, j, chunkGenerator) >= 60);
 				info.cancel();
 			}
 			else 
@@ -46,7 +45,7 @@ public abstract class EndCityStructureMixin
 	}
 	
 	@Shadow
-	private static int getYPosForStructure(int chunkX, int chunkY, ChunkGenerator generatorIn)
+	private static int getYPositionForFeature(int chunkX, int chunkY, ChunkGenerator generatorIn)
 	{
 		return 0;
 	}

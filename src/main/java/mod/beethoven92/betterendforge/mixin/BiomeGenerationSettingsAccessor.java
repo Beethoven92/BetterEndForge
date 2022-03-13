@@ -20,9 +20,9 @@ public interface BiomeGenerationSettingsAccessor {
 	@Accessor("features")
 	void be_setFeatures(List<List<Supplier<ConfiguredFeature<?, ?>>>> features);
 	
-	@Accessor("structures")
+	@Accessor("structureStarts")
 	List<Supplier<StructureFeature<?, ?>>> be_getStructures();
 	
-	@Accessor("structures")
+	@Accessor("structureStarts")
 	void be_setStructures(List<Supplier<StructureFeature<?, ?>>> structures);
 }

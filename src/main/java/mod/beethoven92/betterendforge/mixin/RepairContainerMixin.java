@@ -110,8 +110,8 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 		}
 	}
 	
-	@Inject(method = "updateRepairOutput", at = @At("HEAD"), cancellable = true)
-	public void updateRepairOutput(CallbackInfo info) 
+	@Inject(method = "createResult", at = @At("HEAD"), cancellable = true)
+	public void be_createResult(CallbackInfo info)
 	{
 		be_recipes = this.recipeManager.getRecipesFor(AnvilSmithingRecipe.TYPE, this.inputSlots, world);
 
@@ -136,8 +136,8 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 		}
 	}
 	
-	@Inject(method = "updateItemName", at = @At("HEAD"), cancellable = true)
-	public void updateItemName(String string, CallbackInfo info)
+	@Inject(method = "setItemName", at = @At("HEAD"), cancellable = true)
+	public void be_setItemName(String string, CallbackInfo info)
 	{
 		if (be_currentRecipe != null) 
 		{

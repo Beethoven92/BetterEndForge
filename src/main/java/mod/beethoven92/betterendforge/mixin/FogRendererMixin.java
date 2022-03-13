@@ -13,7 +13,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.util.BackgroundInfo;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
-import mod.beethoven92.betterendforge.config.ClientConfig;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.world.ClientWorld;
@@ -31,26 +30,26 @@ import net.minecraft.world.biome.Biome.Category;
 @Mixin(FogRenderer.class)
 public abstract class FogRendererMixin 
 {	
-	private static float lastFogDensity;
-	private static float fogDensity;
-	private static float lerp;
-	private static long time;
+	private static float be_lastFogDensity;
+	private static float be_fogDensity;
+	private static float be_lerp;
+	private static long be_time;
 	
 	@Shadow
-	private static float red;
+	private static float fogRed;
 	@Shadow
-	private static float green;
+	private static float fogGreen;
 	@Shadow
-	private static float blue;
+	private static float fogBlue;
 
-	@Inject(method = "updateFogColor", at = @At("RETURN"))
-	private static void onRender(ActiveRenderInfo activeRenderInfoIn, float partialTicks, ClientWorld worldIn, 
+	@Inject(method = "setupColor", at = @At("RETURN"))
+	private static void be_onRender(ActiveRenderInfo activeRenderInfoIn, float partialTicks, ClientWorld worldIn,
 			int renderDistanceChunks, float bossColorModifier, CallbackInfo info)
 	{
-		long l = Util.getMillis() - time;
-		time += l;
-		lerp += l * 0.001F;
-		if (lerp > 1) lerp = 1;
+		long l = Util.getMillis() - be_time;
+		be_time += l;
+		be_lerp += l * 0.001F;
+		if (be_lerp > 1) be_lerp = 1;
 		
 		FluidState fluidState = activeRenderInfoIn.getFluidInCamera();
 		if (fluidState.isEmpty() && worldIn.dimension().equals(World.END)) 
@@ -64,20 +63,20 @@ public abstract class FogRendererMixin
 			}
 			if (!skip) 
 			{
-				red *= 4;
-				green *= 4;
-				blue *= 4;
+				fogRed *= 4;
+				fogGreen *= 4;
+				fogBlue *= 4;
 			}
 		}
 		
-		BackgroundInfo.red = red;
-		BackgroundInfo.green = green;
-		BackgroundInfo.blue = blue;
+		BackgroundInfo.red = fogRed;
+		BackgroundInfo.green = fogGreen;
+		BackgroundInfo.blue = fogBlue;
 	}
 	
 
 	@Inject(at = @At("HEAD"), remap = false, method = "setupFog(Lnet/minecraft/client/renderer/ActiveRenderInfo;Lnet/minecraft/client/renderer/FogRenderer$FogType;FZF)V", cancellable = true)
-	private static void fogDensity(ActiveRenderInfo activeRenderInfoIn, FogRenderer.FogType fogTypeIn, 
+	private static void be_fogDensity(ActiveRenderInfo activeRenderInfoIn, FogRenderer.FogType fogTypeIn,
 			float farPlaneDistance, boolean nearFog, float partialTicks, CallbackInfo info)
 	{
 		Entity entity = activeRenderInfoIn.getEntity();
@@ -87,19 +86,19 @@ public abstract class FogRendererMixin
 		if (ClientOptions.useFogDensity() && biome.getBiomeCategory() == Category.THEEND && fluidState.isEmpty())
 		{			
 			BetterEndBiome endBiome = ModBiomes.getRenderBiome(biome);
-			if (fogDensity == 0) 
+			if (be_fogDensity == 0)
 			{
-				fogDensity = endBiome.getFogDensity();
-				lastFogDensity = fogDensity;
+				be_fogDensity = endBiome.getFogDensity();
+				be_lastFogDensity = be_fogDensity;
 			}
-			if (lerp == 1) 
+			if (be_lerp == 1)
 			{
-				lastFogDensity = fogDensity;
-				fogDensity = endBiome.getFogDensity();
-				lerp = 0;
+				be_lastFogDensity = be_fogDensity;
+				be_fogDensity = endBiome.getFogDensity();
+				be_lerp = 0;
 			}
 			
-			float fog = MathHelper.lerp(lerp, lastFogDensity, fogDensity);
+			float fog = MathHelper.lerp(be_lerp, be_lastFogDensity, be_fogDensity);
 			BackgroundInfo.fog = fog;
 			float start = farPlaneDistance * 0.75F / fog;
 			float end = farPlaneDistance / fog;

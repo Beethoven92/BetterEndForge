@@ -21,29 +21,29 @@ import net.minecraft.util.math.BlockPos;
 @Mixin(ClientPlayNetHandler.class)
 public class ClientPlayNetHandlerMixin {
 	@Shadow
-	private Minecraft client;
+	private Minecraft minecraft;
 
 	@Shadow
-	private ClientWorld world;
+	private ClientWorld level;
 
-	@Inject(method = "handleSignEditorOpen", at = @At(value = "HEAD"), cancellable = true)
+	@Inject(method = "handleOpenSignEditor", at = @At(value = "HEAD"), cancellable = true)
 	public void be_openSignEditor(SOpenSignMenuPacket packet, CallbackInfo info) {
-		PacketThreadUtil.ensureRunningOnSameThread(packet, (ClientPlayNetHandler) (Object) this, client);
-		TileEntity blockEntity = this.world.getBlockEntity(packet.getPos());
+		PacketThreadUtil.ensureRunningOnSameThread(packet, (ClientPlayNetHandler) (Object) this, minecraft);
+		TileEntity blockEntity = this.level.getBlockEntity(packet.getPos());
 		if (blockEntity instanceof ESignTileEntity) {
 			ESignTileEntity sign = (ESignTileEntity) blockEntity;
-			client.setScreen(new BlockSignEditScreen(sign));
+			minecraft.setScreen(new BlockSignEditScreen(sign));
 			info.cancel();
 		}
 	}
 
-	@Inject(method = "handleUpdateTileEntity", at = @At(value = "HEAD"), cancellable = true)
+	@Inject(method = "handleBlockEntityData", at = @At(value = "HEAD"), cancellable = true)
 	public void be_onEntityUpdate(SUpdateTileEntityPacket packet, CallbackInfo info) {
-		PacketThreadUtil.ensureRunningOnSameThread(packet, (ClientPlayNetHandler) (Object) this, client);
+		PacketThreadUtil.ensureRunningOnSameThread(packet, (ClientPlayNetHandler) (Object) this, minecraft);
 		BlockPos blockPos = packet.getPos();
-		TileEntity blockEntity = this.client.level.getBlockEntity(blockPos);
+		TileEntity blockEntity = this.minecraft.level.getBlockEntity(blockPos);
 		if (blockEntity instanceof ESignTileEntity || blockEntity instanceof PedestalTileEntity) {
-			blockEntity.load(this.client.level.getBlockState(blockPos), packet.getTag());
+			blockEntity.load(this.minecraft.level.getBlockState(blockPos), packet.getTag());
 			info.cancel();
 		}
 	}

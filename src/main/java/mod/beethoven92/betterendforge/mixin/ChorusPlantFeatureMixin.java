@@ -26,8 +26,8 @@ import net.minecraft.world.gen.feature.NoFeatureConfig;
 @Mixin(ChorusPlantFeature.class)
 public abstract class ChorusPlantFeatureMixin 
 {
-	@Inject(method = "generate", at = @At("HEAD"), cancellable = true)
-	private void be_generate(ISeedReader worldIn, ChunkGenerator chunkGenerator, Random random, 
+	@Inject(method = "place", at = @At("HEAD"), cancellable = true)
+	private void be_place(ISeedReader worldIn, ChunkGenerator chunkGenerator, Random random,
 			BlockPos blockPos, NoFeatureConfig config, CallbackInfoReturnable<Boolean> info) 
 	{
 

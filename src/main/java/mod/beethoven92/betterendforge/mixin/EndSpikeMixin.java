@@ -33,8 +33,8 @@ import net.minecraft.world.gen.feature.EndSpikeFeatureConfig;
 public abstract class EndSpikeMixin
 {
 	@Final
-@Shadow
-private int height;
+	@Shadow
+	private int height;
 
 	@Inject(method = "getHeight", at = @At("HEAD"), cancellable = true)
 	private void be_getSpikeHeight(CallbackInfoReturnable<Integer> info) {

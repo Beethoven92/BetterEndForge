@@ -15,8 +15,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 @Mixin(EndermanEntity.class)
 public abstract class EndermanEntityMixin 
 {
-	@Inject(at = @At("HEAD"), method = "shouldAttackPlayer", cancellable = true)
-	private void shouldAttackPlayer(PlayerEntity player, CallbackInfoReturnable<Boolean> info) 
+	@Inject(at = @At("HEAD"), method = "isLookingAtMe", cancellable = true)
+	private void be_isLookingAtMe(PlayerEntity player, CallbackInfoReturnable<Boolean> info)
 	{
 		if (player.isCreative() || player.hasEffect(ModEffects.END_VEIL.get()) ||
 				EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.END_VEIL.get(), 

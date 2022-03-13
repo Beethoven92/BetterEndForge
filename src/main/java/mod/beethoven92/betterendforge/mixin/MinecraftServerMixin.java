@@ -10,13 +10,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.listener.IChunkStatusListener;
-import net.minecraft.world.gen.settings.DimensionGeneratorSettings;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.IServerConfiguration;
 import net.minecraft.world.storage.IServerWorldInfo;
@@ -26,11 +24,11 @@ public class MinecraftServerMixin
 {
 	@Final
 	@Shadow
-	protected IServerConfiguration serverConfig;
+	protected IServerConfiguration worldData;
 	
 	@Final
 	@Shadow
-	private Map<RegistryKey<World>, ServerWorld> worlds;
+	private Map<RegistryKey<World>, ServerWorld> levels;
 	
 	@Shadow
 	public PlayerList getPlayerList()

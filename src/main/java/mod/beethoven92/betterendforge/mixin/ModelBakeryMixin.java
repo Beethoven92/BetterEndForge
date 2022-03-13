@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 @Mixin(ModelBakery.class)
 public class ModelBakeryMixin 
 {
-	@ModifyVariable(method = "loadBlockstate", ordinal = 2, at = @At(value = "INVOKE"))
+	@ModifyVariable(method = "loadModel", ordinal = 2, at = @At(value = "INVOKE"))
 	public ResourceLocation be_SwitchModel(ResourceLocation id) 
 	{
 		if (GeneratorOptions.changeChorusPlant() && id.getNamespace().equals("minecraft") &&

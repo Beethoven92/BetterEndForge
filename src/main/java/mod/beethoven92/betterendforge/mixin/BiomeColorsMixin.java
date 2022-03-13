@@ -28,8 +28,8 @@ public class BiomeColorsMixin {
 	private static final Point[] OFFSETS;
 	private static final boolean HAS_MAGNESIUM;
 
-	@Inject(method = "getWaterColor", at = @At("RETURN"), cancellable = true)
-	private static void be_getWaterColor(IBlockDisplayReader world, BlockPos blockPos, CallbackInfoReturnable<Integer> info) {
+	@Inject(method = "getAverageWaterColor", at = @At("RETURN"), cancellable = true)
+	private static void be_getAverageWaterColor(IBlockDisplayReader world, BlockPos blockPos, CallbackInfoReturnable<Integer> info) {
 		if (ClientOptions.useSulfurWaterColor()) {
 			IBlockDisplayReader view = HAS_MAGNESIUM ? Minecraft.getInstance().level : world;
 			Mutable mut = new Mutable();

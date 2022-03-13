@@ -29,10 +29,10 @@ import net.minecraft.util.text.StringTextComponent;
 public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 {
 	@Shadow
-	private TextFieldWidget nameField;
+	private TextFieldWidget name;
 	
 	private final List<AbstractButton> be_buttons = Lists.newArrayList();
-	private ExtendedRepairContainer anvilHandler;
+	private ExtendedRepairContainer be_anvilHandler;
 	
 	public AnvilScreenMixin(RepairContainer container, PlayerInventory playerInventory, ITextComponent title,
 			ResourceLocation guiTexture) 
@@ -40,13 +40,13 @@ public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 		super(container, playerInventory, title, guiTexture);
 	}
 
-	@Inject(method = "initFields", at = @At("TAIL"))
+	@Inject(method = "subInit", at = @At("TAIL"))
 	protected void be_setup(CallbackInfo info) 
 	{
 		this.be_buttons.clear();
 		int x = (width - imageWidth) / 2;
 	    int y = (height - imageHeight) / 2;
-	    this.anvilHandler = (ExtendedRepairContainer) this.menu;
+	    this.be_anvilHandler = (ExtendedRepairContainer) this.menu;
 	    this.be_buttons.add(new Button(x + 8, y + 45, 15, 20, new StringTextComponent("<"), (b) -> be_previousRecipe()));
 		this.be_buttons.add(new Button(x + 154, y + 45, 15, 20, new StringTextComponent(">"), (b) -> be_nextRecipe()));
 	}
@@ -61,8 +61,8 @@ public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 		});
 	}
 	
-	@Inject(method = "sendSlotContents", at = @At("HEAD"), cancellable = true)
-	public void be_onSlotUpdate(Container handler, int slotId, ItemStack stack, CallbackInfo info)
+	@Inject(method = "slotChanged", at = @At("HEAD"), cancellable = true)
+	public void be_slotChanged(Container handler, int slotId, ItemStack stack, CallbackInfo info)
 	{
 		ExtendedRepairContainer anvilHandler = (ExtendedRepairContainer) handler;
 		if (anvilHandler.be_getCurrentRecipe() != null) 
@@ -75,7 +75,7 @@ public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 			{
 				this.be_buttons.forEach(button -> button.visible = false);
 			}
-			this.nameField.setValue("");
+			this.name.setValue("");
 			info.cancel();
 		} 
 		else
@@ -86,12 +86,12 @@ public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 	
 	private void be_nextRecipe() 
 	{
-		this.anvilHandler.be_nextRecipe();
+		this.be_anvilHandler.be_nextRecipe();
 	}
 	
 	private void be_previousRecipe() 
 	{
-		this.anvilHandler.be_previousRecipe();
+		this.be_anvilHandler.be_previousRecipe();
 	}
 
 	@Override

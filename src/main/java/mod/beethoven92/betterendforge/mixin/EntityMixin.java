@@ -20,24 +20,24 @@ import net.minecraft.world.server.ServerWorld;
 @Mixin(Entity.class)
 public abstract class EntityMixin implements TeleportingEntity
 {	
-	private BlockPos exitPos;
-	private long cooldown;
+	private BlockPos be_exitPos;
+	private long be_cooldown;
 	
 	@Shadow
-	public float rotationYaw;
+	public float yRot;
 	@Shadow
-	public float rotationPitch;
+	public float xRot;
 	@Shadow
 	public boolean removed;
 	@Shadow
-	public World world;
+	public World level;
 	
 	@Final
 	@Shadow
-	public abstract void detach();
+	public abstract void unRide();
 	
 	@Shadow
-	public abstract Vector3d getMotion();
+	public abstract Vector3d getDeltaMovement();
 	
 	@Shadow
 	public abstract EntityType<?> getType();
@@ -46,17 +46,17 @@ public abstract class EntityMixin implements TeleportingEntity
 	protected abstract PortalInfo findDimensionEntryPoint(ServerWorld destination);
 
 	@Inject(method = "changeDimension", at = @At("HEAD"), cancellable = true)
-	public void changeDimension(ServerWorld destination, CallbackInfoReturnable<Entity> info) 
+	public void be_changeDimension(ServerWorld destination, CallbackInfoReturnable<Entity> info)
 	{
-		if (!removed && beCanTeleport() && world instanceof ServerWorld)
+		if (!removed && beCanTeleport() && level instanceof ServerWorld)
 		{
-			this.detach();
-			this.world.getProfiler().push("changeDimension");
-			this.world.getProfiler().push("reposition");
+			this.unRide();
+			this.level.getProfiler().push("changeDimension");
+			this.level.getProfiler().push("reposition");
 			PortalInfo teleportTarget = this.findDimensionEntryPoint(destination);
 			if (teleportTarget != null) 
 			{
-				this.world.getProfiler().popPush("reloading");
+				this.level.getProfiler().popPush("reloading");
 				Entity entity = this.getType().create(destination);
 				if (entity != null) 
 				{
@@ -66,10 +66,10 @@ public abstract class EntityMixin implements TeleportingEntity
 					destination.addFromAnotherDimension(entity);
 				}
 				this.removed = true;
-				this.world.getProfiler().pop();
-				((ServerWorld) world).resetEmptyTime();
+				this.level.getProfiler().pop();
+				((ServerWorld) level).resetEmptyTime();
 				destination.resetEmptyTime();
-				this.world.getProfiler().pop();
+				this.level.getProfiler().pop();
 				beResetExitPos();
 				info.setReturnValue(entity);
 				//info.cancel();
@@ -78,58 +78,58 @@ public abstract class EntityMixin implements TeleportingEntity
 	}
 	
 	@Inject(method = "findDimensionEntryPoint", at = @At("HEAD"), cancellable = true)
-	protected void getTeleportTarget(ServerWorld destination, CallbackInfoReturnable<PortalInfo> info) 
+	protected void be_getTeleportTarget(ServerWorld destination, CallbackInfoReturnable<PortalInfo> info)
 	{
 		if (beCanTeleport()) 
 		{
-			info.setReturnValue(new PortalInfo(new Vector3d(exitPos.getX() + 0.5D, exitPos.getY(), exitPos.getZ() + 0.5D), getMotion(), rotationYaw, rotationPitch));
+			info.setReturnValue(new PortalInfo(new Vector3d(be_exitPos.getX() + 0.5D, be_exitPos.getY(), be_exitPos.getZ() + 0.5D), getDeltaMovement(), yRot, xRot));
 			//beResetExitPos();
 			//info.cancel();
 		}
 	}
 	
 	@Inject(method = "baseTick", at = @At("TAIL"))
-	public void baseTick(CallbackInfo info) 
+	public void be_baseTick(CallbackInfo info)
 	{
 		if (hasCooldown())
 		{
-			this.cooldown--;
+			this.be_cooldown--;
 		}
 	}
 	
 	@Override
 	public long beGetCooldown()
 	{
-		return this.cooldown;
+		return this.be_cooldown;
 	}
 
 	@Override
 	public void beSetCooldown(long time)
 	{
-		this.cooldown = time;
+		this.be_cooldown = time;
 	}
 
 	@Override
 	public void beSetExitPos(BlockPos pos)
 	{
-		this.exitPos = pos.immutable();
+		this.be_exitPos = pos.immutable();
 	}
 
 	@Override
 	public BlockPos beGetExitPos()
 	{
-		return this.exitPos;
+		return this.be_exitPos;
 	}
 	
 	@Override
 	public void beResetExitPos()
 	{
-		this.exitPos = null;
+		this.be_exitPos = null;
 	}
 	
 	@Override
 	public boolean beCanTeleport()
 	{
-		return this.exitPos != null;
+		return this.be_exitPos != null;
 	}
 }

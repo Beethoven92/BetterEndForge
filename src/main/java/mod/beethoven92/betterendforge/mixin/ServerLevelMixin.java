@@ -51,7 +51,7 @@ public abstract class ServerLevelMixin extends World {
 		ModBiomes.onWorldLoad(world.getSeed(), world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY));
 	}
 	
-	@Inject(method = "getSpawnPoint", at = @At("HEAD"), cancellable = true)
+	@Inject(method = "getSharedSpawnPos", at = @At("HEAD"), cancellable = true)
 	private void be_getSharedSpawnPos(CallbackInfoReturnable<BlockPos> info) {
 		if (GeneratorOptions.changeSpawn()) {
 			if (ServerWorld.class.cast(this).dimension() == World.END) {
@@ -81,7 +81,7 @@ public abstract class ServerLevelMixin extends World {
 		}
 	}
 	
-	@ModifyArg(method = "tickEnvironment", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/server/ServerWorld;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)Z"))
+	@ModifyArg(method = "tickChunk", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/server/ServerWorld;setBlockAndUpdate(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)Z"))
 	private BlockState be_modifyTickState(BlockPos pos, BlockState state) {
 		if (state.is(Blocks.ICE)) {
 			ResourceLocation biome = ModBiomes.getBiomeID(getBiome(pos));

@@ -27,7 +27,7 @@ public class MossyDragonBoneBlock extends RotatedPillarBlock {
 		}
 	}
 	
-	public static boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
 		BlockPos blockPos = pos.above();
 		BlockState blockState = world.getBlockState(blockPos);
 		if (blockState.is(Blocks.SNOW) && (Integer) blockState.getValue(SnowBlock.LAYERS) == 1) {
