@@ -14,17 +14,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.scoreboard.ServerScoreboard;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.Connection;
+import net.minecraft.server.ServerScoreboard;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.management.PlayerList;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.util.text.ChatType;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.players.PlayerList;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.chat.ChatType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 
 @Mixin(PlayerList.class)
 public class PlayerListMixin 
@@ -39,21 +39,21 @@ public class PlayerListMixin
 	
 	@Final
 	@Shadow
-	private List<ServerPlayerEntity> players;
+	private List<ServerPlayer> players;
 	
 	@Final
 	@Shadow
-	private Map<UUID, ServerPlayerEntity> playersByUUID;
+	private Map<UUID, ServerPlayer> playersByUUID;
 	
 	@Final
 	@Shadow
-	private DynamicRegistries.Impl registryHolder;
+	private RegistryAccess.RegistryHolder registryHolder;
 
 	@Shadow
 	private int viewDistance;
 	
 	@Shadow
-	public CompoundNBT load(ServerPlayerEntity player)
+	public CompoundTag load(ServerPlayer player)
 	{
 		return null;
 	}
@@ -65,7 +65,7 @@ public class PlayerListMixin
 	}
 	
 	@Shadow
-	private void updatePlayerGameMode(ServerPlayerEntity player, @Nullable ServerPlayerEntity oldPlayer, ServerWorld world) {}
+	private void updatePlayerGameMode(ServerPlayer player, @Nullable ServerPlayer oldPlayer, ServerLevel world) {}
 	
 	@Shadow
 	public MinecraftServer getServer() 
@@ -73,22 +73,22 @@ public class PlayerListMixin
 		return null;
 	}
 	@Shadow
-	public void sendPlayerPermissionLevel(ServerPlayerEntity player) {}
+	public void sendPlayerPermissionLevel(ServerPlayer player) {}
 	
 	@Shadow
-	protected void updateEntireScoreboard(ServerScoreboard scoreboardIn, ServerPlayerEntity playerIn) {}
+	protected void updateEntireScoreboard(ServerScoreboard scoreboardIn, ServerPlayer playerIn) {}
 	
 	@Shadow
-	public void broadcastMessage(ITextComponent p_232641_1_, ChatType p_232641_2_, UUID p_232641_3_) {}
+	public void broadcastMessage(Component p_232641_1_, ChatType p_232641_2_, UUID p_232641_3_) {}
 	
 	@Shadow
-	public void broadcastAll(IPacket<?> packetIn) {}
+	public void broadcastAll(Packet<?> packetIn) {}
 	 
 	@Shadow
-	public void sendLevelInfo(ServerPlayerEntity playerIn, ServerWorld worldIn) {}
+	public void sendLevelInfo(ServerPlayer playerIn, ServerLevel worldIn) {}
 	
 	@Inject(method = "placeNewPlayer", at = @At(value = "HEAD"), cancellable = true)
-	public void be_placeNewPlayer(NetworkManager netManager, ServerPlayerEntity playerIn, CallbackInfo info)
+	public void be_placeNewPlayer(Connection netManager, ServerPlayer playerIn, CallbackInfo info)
 	{
 //		if (CommonConfig.swapOverworldWithEnd())
 //		{

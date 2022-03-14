@@ -2,7 +2,7 @@ package mod.beethoven92.betterendforge.common.world.generator;
 
 import mod.beethoven92.betterendforge.config.jsons.JsonConfig;
 //import net.minecraft.util.Mth;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 //import ru.bclib.config.PathConfig;
 
 public class LayerOptions {
@@ -24,27 +24,27 @@ public class LayerOptions {
 		this.coverage = clampCoverage(config.getFloat(name, "coverage[0-1]", 0.5F));
 		this.minY = this.center - this.heightVariation;
 		this.maxY = this.center + this.heightVariation;
-		this.centerDist = MathHelper.floor(1000 / this.distance);
+		this.centerDist = Mth.floor(1000 / this.distance);
 		this.hasCentralIsland = config.getBoolean(name, "hasCentralIsland", hasCentral);
 	}
 	
 	private float clampDistance(float value) {
-		return MathHelper.clamp(value, 1, 8192);
+		return Mth.clamp(value, 1, 8192);
 	}
 	
 	private float clampScale(float value) {
-		return MathHelper.clamp(value, 0.1F, 1024);
+		return Mth.clamp(value, 0.1F, 1024);
 	}
 	
 	private float clampCoverage(float value) {
-		return 0.9999F - MathHelper.clamp(value, 0, 1) * 2;
+		return 0.9999F - Mth.clamp(value, 0, 1) * 2;
 	}
 	
 	private int clampCenter(int value) {
-		return MathHelper.clamp(value, 0, 255);
+		return Mth.clamp(value, 0, 255);
 	}
 	
 	private int clampVariation(int value) {
-		return MathHelper.clamp(value, 0, 255);
+		return Mth.clamp(value, 0, 255);
 	}
 }

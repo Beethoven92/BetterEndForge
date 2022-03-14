@@ -8,33 +8,33 @@ import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.util.StructureHelper;
 import mod.beethoven92.betterendforge.common.world.structure.piece.NBTPiece;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.Heightmap.Type;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.feature.structure.StructureStart;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
-import net.minecraft.world.gen.feature.structure.Structure.IStartFactory;
+import net.minecraft.world.level.levelgen.feature.StructureFeature.StructureStartFactory;
 
-public class EternalPortalStructure extends Structure<NoFeatureConfig>
+public class EternalPortalStructure extends StructureFeature<NoneFeatureConfiguration>
 {
 	private static final ResourceLocation STRUCTURE_ID = new ResourceLocation(BetterEnd.MOD_ID, "portal/eternal_portal");
-	private static final Template STRUCTURE = StructureHelper.readStructure(STRUCTURE_ID);
+	private static final StructureTemplate STRUCTURE = StructureHelper.readStructure(STRUCTURE_ID);
 	
-	public EternalPortalStructure(Codec<NoFeatureConfig> p_i231997_1_) 
+	public EternalPortalStructure(Codec<NoneFeatureConfiguration> p_i231997_1_) 
 	{
 		super(p_i231997_1_);
 	}
@@ -52,9 +52,9 @@ public class EternalPortalStructure extends Structure<NoFeatureConfig>
 	}
 	
 	@Override
-	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeProvider provider, long seed,
-			SharedSeedRandom sharedSeedRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos,
-			NoFeatureConfig config) 
+	protected boolean isFeatureChunk(ChunkGenerator chunkGenerator, BiomeSource provider, long seed,
+			WorldgenRandom sharedSeedRandom, int chunkX, int chunkZ, Biome biome, ChunkPos chunkPos,
+			NoneFeatureConfiguration config) 
 	{
 		long x = chunkPos.x * chunkPos.x;
 		long z = chunkPos.z * chunkPos.z;
@@ -63,7 +63,7 @@ public class EternalPortalStructure extends Structure<NoFeatureConfig>
 		{
 			return false;
 		}
-		if (chunkGenerator.getBaseHeight((chunkX << 4) | 8, (chunkZ << 4) | 8, Type.WORLD_SURFACE_WG) < 58) 
+		if (chunkGenerator.getBaseHeight((chunkX << 4) | 8, (chunkZ << 4) | 8, Types.WORLD_SURFACE_WG) < 58) 
 		{
 			return false;
 		}
@@ -92,35 +92,35 @@ public class EternalPortalStructure extends Structure<NoFeatureConfig>
 
 		int k = (chunkX << 4) + 7;
 		int l = (chunkZ << 4) + 7;
-		int m = chunkGenerator.getBaseHeight(k, l, Heightmap.Type.WORLD_SURFACE_WG);
-		int n = chunkGenerator.getBaseHeight(k, l + j, Heightmap.Type.WORLD_SURFACE_WG);
-		int o = chunkGenerator.getBaseHeight(k + i, l, Heightmap.Type.WORLD_SURFACE_WG);
-		int p = chunkGenerator.getBaseHeight(k + i, l + j, Heightmap.Type.WORLD_SURFACE_WG);
+		int m = chunkGenerator.getBaseHeight(k, l, Heightmap.Types.WORLD_SURFACE_WG);
+		int n = chunkGenerator.getBaseHeight(k, l + j, Heightmap.Types.WORLD_SURFACE_WG);
+		int o = chunkGenerator.getBaseHeight(k + i, l, Heightmap.Types.WORLD_SURFACE_WG);
+		int p = chunkGenerator.getBaseHeight(k + i, l + j, Heightmap.Types.WORLD_SURFACE_WG);
 		return Math.min(Math.min(m, n), Math.min(o, p));
 	}
 	
 	@Override
-	public IStartFactory<NoFeatureConfig> getStartFactory() 
+	public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() 
 	{
 		return Start::new;
 	}
 	
-	public static class Start extends StructureStart<NoFeatureConfig>
+	public static class Start extends StructureStart<NoneFeatureConfiguration>
 	{
-		public Start(Structure<NoFeatureConfig> p_i225876_1_, int p_i225876_2_, int p_i225876_3_,
-				MutableBoundingBox p_i225876_4_, int p_i225876_5_, long p_i225876_6_) 
+		public Start(StructureFeature<NoneFeatureConfiguration> p_i225876_1_, int p_i225876_2_, int p_i225876_3_,
+				BoundingBox p_i225876_4_, int p_i225876_5_, long p_i225876_6_) 
 		{
 			super(p_i225876_1_, p_i225876_2_, p_i225876_3_, p_i225876_4_, p_i225876_5_, p_i225876_6_);
 		}
 
 		@Override
-		public void generatePieces(DynamicRegistries registry, ChunkGenerator chunkGenerator,
-				TemplateManager manager, int chunkX, int chunkZ, Biome biome,
-				NoFeatureConfig config)
+		public void generatePieces(RegistryAccess registry, ChunkGenerator chunkGenerator,
+				StructureManager manager, int chunkX, int chunkZ, Biome biome,
+				NoneFeatureConfiguration config)
 		{
 			int x = (chunkX << 4) | ModMathHelper.randRange(4, 12, random);
 			int z = (chunkZ << 4) | ModMathHelper.randRange(4, 12, random);
-			int y = chunkGenerator.getBaseHeight(x, z, Type.WORLD_SURFACE_WG);
+			int y = chunkGenerator.getBaseHeight(x, z, Types.WORLD_SURFACE_WG);
 			if (y > 10) 
 			{
 				this.pieces.add(new NBTPiece(STRUCTURE_ID, STRUCTURE, new BlockPos(x, y - 4, z), random.nextInt(5), true, random));

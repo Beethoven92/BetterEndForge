@@ -6,14 +6,14 @@ import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.block.template.UnderwaterPlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class EndLilySeedBlock extends UnderwaterPlantBlockWithAge
 {
@@ -23,7 +23,7 @@ public class EndLilySeedBlock extends UnderwaterPlantBlockWithAge
 	}
 
 	@Override
-	public void doGrow(ISeedReader world, Random random, BlockPos pos) 
+	public void doGrow(WorldGenLevel world, Random random, BlockPos pos) 
 	{	
 		if (searchForAirAbove(world, pos)) 
 		{
@@ -38,7 +38,7 @@ public class EndLilySeedBlock extends UnderwaterPlantBlockWithAge
 		}
 	}
 	
-	private boolean searchForAirAbove(ISeedReader world, BlockPos pos)
+	private boolean searchForAirAbove(WorldGenLevel world, BlockPos pos)
 	{
 		BlockPos up = pos.above();
 		while (world.getBlockState(up).getFluidState().getType().equals(Fluids.WATER.getSource())) 
@@ -49,13 +49,13 @@ public class EndLilySeedBlock extends UnderwaterPlantBlockWithAge
 	}
 	
 	@Override
-	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return true;
 	}
 	
 	@Override
-	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}

@@ -1,7 +1,7 @@
 package mod.beethoven92.betterendforge.common.interfaces;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.biome.Biome;
 
 public interface IBiomeArray 
 {

@@ -8,24 +8,24 @@ import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.FeatureHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class SurfaceVentFeature extends Feature<NoFeatureConfig>
+public class SurfaceVentFeature extends Feature<NoneFeatureConfiguration>
 {
 	public SurfaceVentFeature() 
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
-			NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos pos,
+			NoneFeatureConfiguration config) 
 	{
 		pos = FeatureHelper.getPosOnSurface(world, new BlockPos(pos.getX() + rand.nextInt(16), pos.getY(), pos.getZ() + rand.nextInt(16)));
 
@@ -34,7 +34,7 @@ public class SurfaceVentFeature extends Feature<NoFeatureConfig>
 			return false;
 		}
 		
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		int count = ModMathHelper.randRange(15, 30, rand);
 		BlockState vent = ModBlocks.HYDROTHERMAL_VENT.get().defaultBlockState().setValue(HydrothermalVentBlock.WATERLOGGED, false);
 		for (int i = 0; i < count; i++) 

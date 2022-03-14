@@ -6,15 +6,15 @@ import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredStructures;
 import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import mod.beethoven92.betterendforge.config.CommonConfig;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.biome.Biome.Category;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.ChorusPlantFeature;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.DecoratedFeature;
-import net.minecraft.world.gen.feature.DecoratedFeatureConfig;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.feature.ChorusPlantFeature;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.DecoratedFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.DecoratedFeatureConfiguration;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,7 +26,7 @@ public class BiomeModification
 	@SubscribeEvent(priority = EventPriority.HIGH)
     public static void addFeaturesToEndBiomes(final BiomeLoadingEvent event) 
 	{
-		if (event.getCategory() == Category.THEEND)
+		if (event.getCategory() == BiomeCategory.THEEND)
 		{
 			if (event.getName() == null) return;
 			
@@ -60,8 +60,8 @@ public class BiomeModification
 			// instead of vanilla phantoms
 			if (event.getName().equals(ModBiomes.SHADOW_FOREST.getID()))
 			{
-				MobSpawnInfo.Spawners phantom = new MobSpawnInfo.Spawners(EntityType.byString("deadlyendphantoms:specter").orElse(EntityType.PHANTOM), 10, 1, 2);
-				event.getSpawns().getSpawner(EntityClassification.MONSTER).add(phantom);
+				MobSpawnSettings.SpawnerData phantom = new MobSpawnSettings.SpawnerData(EntityType.byString("deadlyendphantoms:specter").orElse(EntityType.PHANTOM), 10, 1, 2);
+				event.getSpawns().getSpawner(MobCategory.MONSTER).add(phantom);
 			}
 		}
     }
@@ -71,7 +71,7 @@ public class BiomeModification
     {	   	    
 		if (GeneratorOptions.removeChorusFromVanillaBiomes())
 		{
-			if (event.getCategory() == Category.THEEND) 
+			if (event.getCategory() == BiomeCategory.THEEND) 
 			{
 				if (event.getName() == null || !event.getName().getNamespace().equals("minecraft")) return;
 				
@@ -85,7 +85,7 @@ public class BiomeModification
 						// Retrieve the original feature
 						while(feature.feature() instanceof DecoratedFeature)
 						{
-							feature = ((DecoratedFeatureConfig)feature.config()).feature.get();
+							feature = ((DecoratedFeatureConfiguration)feature.config()).feature.get();
 						}
 						
 			            if (feature.feature instanceof ChorusPlantFeature) 

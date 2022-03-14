@@ -12,25 +12,25 @@ import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.util.SplineHelper;
 import mod.beethoven92.betterendforge.common.util.sdf.PosInfo;
 import mod.beethoven92.betterendforge.common.util.sdf.SDF;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Direction.AxisDirection;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Direction.AxisDirection;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.util.Mth;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class GiganticAmaranitaFeature extends Feature<NoFeatureConfig> {
+public class GiganticAmaranitaFeature extends Feature<NoneFeatureConfiguration> {
 	
 	public GiganticAmaranitaFeature() {
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	private static final Function<BlockState, Boolean> REPLACE;
@@ -38,8 +38,8 @@ public class GiganticAmaranitaFeature extends Feature<NoFeatureConfig> {
 	private static final Function<PosInfo, BlockState> POST;
 	
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator generator, Random random, BlockPos pos,
-			NoFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND)) return false;
 		
 		float size = ModMathHelper.randRange(5, 10, random);
@@ -57,7 +57,7 @@ public class GiganticAmaranitaFeature extends Feature<NoFeatureConfig> {
 		});
 		
 		Vector3f capPos = spline.get(spline.size() - 1);
-		makeHead(world, pos.offset(capPos.x() + 0.5F, capPos.y() + 1.5F ,capPos.z() + 0.5F), MathHelper.floor(size / 1.6F));
+		makeHead(world, pos.offset(capPos.x() + 0.5F, capPos.y() + 1.5F ,capPos.z() + 0.5F), Mth.floor(size / 1.6F));
 		
 		function.setReplaceFunction(REPLACE);
 		function.addPostProcess(POST);
@@ -72,8 +72,8 @@ public class GiganticAmaranitaFeature extends Feature<NoFeatureConfig> {
 		return true;
 	}
 	
-	private void makeHead(ISeedReader world, BlockPos pos, int radius) {
-		Mutable mut = new Mutable();
+	private void makeHead(WorldGenLevel world, BlockPos pos, int radius) {
+		MutableBlockPos mut = new MutableBlockPos();
 		if (radius < 2) {
 			for (int i = -1; i < 2; i++) {
 				mut.set(pos).move(Direction.NORTH, 2).move(Direction.EAST, i);

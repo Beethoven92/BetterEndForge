@@ -13,26 +13,26 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFCappedCone;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFFlatland;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.BlockPos;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class ObsidianPillarBasementFeature extends Feature<NoFeatureConfig> {
+public class ObsidianPillarBasementFeature extends Feature<NoneFeatureConfiguration> {
 	public ObsidianPillarBasementFeature() {
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
-			BlockPos pos, NoFeatureConfig config) {
-		pos = world.getHeightmapPos(Heightmap.Type.WORLD_SURFACE, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random,
+			BlockPos pos, NoneFeatureConfiguration config) {
+		pos = world.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
 		if (!world.getBlockState(pos.below(5)).is(ModTags.GEN_TERRAIN)) {
 			return false;
 		}

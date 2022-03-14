@@ -11,20 +11,20 @@ import com.mojang.serialization.JsonOps;
 
 import mod.beethoven92.betterendforge.common.init.ModRecipeSerializers;
 import mod.beethoven92.betterendforge.common.rituals.InfusionRitual;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 
-public class InfusionRecipe implements IRecipe<InfusionRitual> {
+public class InfusionRecipe implements Recipe<InfusionRitual> {
 	public final static String GROUP = "infusion";
-	public final static IRecipeType<InfusionRecipe> TYPE = ModRecipeSerializers.registerRecipeType(GROUP);
+	public final static RecipeType<InfusionRecipe> TYPE = ModRecipeSerializers.registerRecipeType(GROUP);
 
 	public final ResourceLocation id;
 	public Ingredient input;
@@ -59,7 +59,7 @@ public class InfusionRecipe implements IRecipe<InfusionRitual> {
 	}
 
 	@Override
-	public boolean matches(InfusionRitual inv, World worldIn) {
+	public boolean matches(InfusionRitual inv, Level worldIn) {
 		boolean valid = this.input.test(inv.getItem(0));
 		if (!valid)
 			return false;
@@ -90,12 +90,12 @@ public class InfusionRecipe implements IRecipe<InfusionRitual> {
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return ModRecipeSerializers.INFUSION.get();
 	}
 
 	@Override
-	public IRecipeType<?> getType() {
+	public RecipeType<?> getType() {
 		return TYPE;
 	}
 
@@ -114,12 +114,12 @@ public class InfusionRecipe implements IRecipe<InfusionRitual> {
 			Arrays.fill(catalysts, Ingredient.EMPTY);
 		}
 
-		public Builder setInput(IItemProvider input) {
+		public Builder setInput(ItemLike input) {
 			this.input = Ingredient.of(input);
 			return this;
 		}
 
-		public Builder setOutput(IItemProvider output) {
+		public Builder setOutput(ItemLike output) {
 			this.output = new ItemStack(output);
 			this.output.setCount(1);
 			return this;
@@ -140,14 +140,14 @@ public class InfusionRecipe implements IRecipe<InfusionRitual> {
 			return this;
 		}
 
-		public Builder addCatalyst(int slot, IItemProvider... items) {
+		public Builder addCatalyst(int slot, ItemLike... items) {
 			if (slot > 7)
 				return this;
 			this.catalysts[slot] = Ingredient.of(items);
 			return this;
 		}
 
-		public void build(Consumer<IFinishedRecipe> consumerIn, ResourceLocation id) {
+		public void build(Consumer<FinishedRecipe> consumerIn, ResourceLocation id) {
 			validate(id);
 			consumerIn.accept(new Result(id, input, output, time, catalysts));
 		}
@@ -171,7 +171,7 @@ public class InfusionRecipe implements IRecipe<InfusionRitual> {
 			throw new IllegalArgumentException(String.format(s, id.toString()));
 		}
 
-		public static class Result implements IFinishedRecipe {
+		public static class Result implements FinishedRecipe {
 			private ResourceLocation id;
 			private Ingredient input;
 			private ItemStack output;
@@ -209,7 +209,7 @@ public class InfusionRecipe implements IRecipe<InfusionRitual> {
 			}
 
 			@Override
-			public IRecipeSerializer<?> getType() {
+			public RecipeSerializer<?> getType() {
 				return ModRecipeSerializers.INFUSION.get();
 			}
 

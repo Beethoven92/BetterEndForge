@@ -12,22 +12,22 @@ import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ChorusPlantBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChorusPlantBlock;
 import net.minecraft.block.SixWayBlock;
-import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 @Mixin(value = ChorusPlantBlock.class, priority = 100)
 public abstract class ChorusPlantBlockMixin extends Block {
@@ -36,9 +36,9 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	}
 
 	@Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
-	private void be_getStateForPlacement(BlockItemUseContext ctx, CallbackInfoReturnable<BlockState> info) {
+	private void be_getStateForPlacement(BlockPlaceContext ctx, CallbackInfoReturnable<BlockState> info) {
 		BlockPos pos = ctx.getClickedPos();
-		World world = ctx.getLevel();
+		Level world = ctx.getLevel();
 		BlockState plant = info.getReturnValue();
 		if (ctx.canPlace() && plant.is(Blocks.CHORUS_PLANT) && world.getBlockState(pos.below()).is(ModTags.END_GROUND)) {
 			info.setReturnValue(plant.setValue(BlockStateProperties.DOWN, true));
@@ -46,7 +46,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	}
 
 	@Inject(method = "getStateForPlacement", at = @At("RETURN"), cancellable = true)
-	private void be_getStateForPlacement2(IBlockReader blockGetter, BlockPos blockPos, CallbackInfoReturnable<BlockState> info)
+	private void be_getStateForPlacement2(BlockGetter blockGetter, BlockPos blockPos, CallbackInfoReturnable<BlockState> info)
 	{
 		BlockState plant = info.getReturnValue();
 		if (plant.is(Blocks.CHORUS_PLANT) && blockGetter.getBlockState(blockPos.below()).is(ModTags.END_GROUND)) {
@@ -56,7 +56,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	}
 
 	@Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
-	private void be_canSurvive(BlockState state, IWorldReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info)
+	private void be_canSurvive(BlockState state, LevelReader world, BlockPos pos, CallbackInfoReturnable<Boolean> info)
 	{
 		BlockState down = world.getBlockState(pos.below());
 		if (down.is(ModBlocks.CHORUS_NYLIUM.get()) || down.is(Blocks.END_STONE)) {
@@ -65,7 +65,7 @@ public abstract class ChorusPlantBlockMixin extends Block {
 	}
 
 	@Inject(method = "updateShape", at = @At("RETURN"), cancellable = true)
-	private void be_updateShape(BlockState state, Direction direction, BlockState newState, IWorld world,
+	private void be_updateShape(BlockState state, Direction direction, BlockState newState, LevelAccessor world,
 			BlockPos pos, BlockPos posFrom, CallbackInfoReturnable<BlockState> info)
 	{
 		BlockState plant = info.getReturnValue();

@@ -19,20 +19,20 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSubtraction;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class DragonTreeFeature extends Feature<NoFeatureConfig>
+public class DragonTreeFeature extends Feature<NoneFeatureConfiguration>
 {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Function<BlockState, Boolean> IGNORE;
@@ -102,12 +102,12 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 	
 	public DragonTreeFeature() 
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
-			NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos pos,
+			NoneFeatureConfiguration config) 
 	{
 		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND)) return false;
 		
@@ -142,7 +142,7 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 		return true;
 	}
 
-	private void makeCap(ISeedReader world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) 
+	private void makeCap(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) 
 	{
 		int count = (int) radius;
 		int offset = (int) (BRANCH.get(BRANCH.size() - 1).y() * radius);
@@ -169,7 +169,7 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 		leavesBall(world, pos.above(offset), radius * 1.15F + 2, random, noise);
 	}
 	
-	private void makeRoots(ISeedReader world, BlockPos pos, float radius, Random random) 
+	private void makeRoots(WorldGenLevel world, BlockPos pos, float radius, Random random) 
 	{
 		int count = (int) (radius * 1.5F);
 		for (int i = 0; i < count; i++) 
@@ -188,7 +188,7 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 		}
 	}
 	
-	private void leavesBall(ISeedReader world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) 
+	private void leavesBall(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) 
 	{
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(ModBlocks.DRAGON_TREE_LEAVES.get().defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
 		SDF sub = new SDFScale().setScale(5).setSource(sphere);
@@ -197,7 +197,7 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 		sphere = new SDFScale3D().setScale(1, 0.5F, 1).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 1.5F; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		sphere.addPostProcess((info) -> {
 			if (random.nextInt(5) == 0) 
 			{

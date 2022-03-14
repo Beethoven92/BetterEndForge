@@ -2,19 +2,19 @@ package mod.beethoven92.betterendforge.common.particles;
 
 import mod.beethoven92.betterendforge.common.block.TenaneaFlowersBlock;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class TenaneaPetalParticle extends SpriteTexturedParticle
+public class TenaneaPetalParticle extends TextureSheetParticle
 {
 	private double preVX;
 	private double preVY;
@@ -23,8 +23,8 @@ public class TenaneaPetalParticle extends SpriteTexturedParticle
 	private double nextVY;
 	private double nextVZ;
 
-	protected TenaneaPetalParticle(ClientWorld world, double x, double y, double z, double r, 
-			double g, double b, IAnimatedSprite spriteWithAge)
+	protected TenaneaPetalParticle(ClientLevel world, double x, double y, double z, double r, 
+			double g, double b, SpriteSet spriteWithAge)
 	{
 		super(world, x, y, z, r, g, b);
 		
@@ -50,9 +50,9 @@ public class TenaneaPetalParticle extends SpriteTexturedParticle
 	}
 
 	@Override
-	public IParticleRenderType getRenderType() 
+	public ParticleRenderType getRenderType() 
 	{
-		return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
 	}
 	
 	@Override
@@ -85,25 +85,25 @@ public class TenaneaPetalParticle extends SpriteTexturedParticle
 			this.remove();
 		}
 		
-		this.xd = MathHelper.lerp(delta, preVX, nextVX);
-		this.yd = MathHelper.lerp(delta, preVY, nextVY);
-		this.zd = MathHelper.lerp(delta, preVZ, nextVZ);
+		this.xd = Mth.lerp(delta, preVX, nextVX);
+		this.yd = Mth.lerp(delta, preVY, nextVY);
+		this.zd = Mth.lerp(delta, preVZ, nextVZ);
 		
 		super.tick();
 	}
 	
 	@OnlyIn(Dist.CLIENT)
-	public static class Factory implements IParticleFactory<BasicParticleType> 
+	public static class Factory implements ParticleProvider<SimpleParticleType> 
 	{
-		private final IAnimatedSprite sprite;
+		private final SpriteSet sprite;
 
-	    public Factory(IAnimatedSprite sprite) 
+	    public Factory(SpriteSet sprite) 
 	    {
 	         this.sprite = sprite;
 	    }
 	    
 	    @Override
-	    public Particle createParticle(BasicParticleType type, ClientWorld worldIn, double x, double y, double z,
+	    public Particle createParticle(SimpleParticleType type, ClientLevel worldIn, double x, double y, double z,
 	    		double xSpeed, double ySpeed, double zSpeed) 
 	    {
 	    	return new TenaneaPetalParticle(worldIn, x, y, z, 1, 1, 1, sprite);

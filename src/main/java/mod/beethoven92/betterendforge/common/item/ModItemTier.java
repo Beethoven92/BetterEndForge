@@ -4,10 +4,10 @@ import java.util.function.Supplier;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 
-public enum ModItemTier implements IItemTier
+public enum ModItemTier implements Tier
 {
 	THALLASIUM(2, 320, 7.0F, 1.5F, 12, () -> {
 		return Ingredient.of(ModBlocks.THALLASIUM.ingot.get());

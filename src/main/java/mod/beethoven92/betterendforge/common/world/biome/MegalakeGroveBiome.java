@@ -6,10 +6,10 @@ import mod.beethoven92.betterendforge.common.init.ModConfiguredStructures;
 import mod.beethoven92.betterendforge.common.init.ModEntityTypes;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.GenerationStage.Decoration;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 
 public class MegalakeGroveBiome extends BetterEndBiome 
 {
@@ -38,9 +38,9 @@ public class MegalakeGroveBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_CYAN).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_LIGHT_BLUE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_RED_RARE).
-				addMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.DRAGONFLY.get(), 20, 1, 3).
-				addMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.END_FISH.get(), 20, 3, 8).
-				addMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.CUBOZOA.get(), 50, 3, 8).
-				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 10, 1, 2));
+				addMobSpawn(MobCategory.AMBIENT, ModEntityTypes.DRAGONFLY.get(), 20, 1, 3).
+				addMobSpawn(MobCategory.AMBIENT, ModEntityTypes.END_FISH.get(), 20, 3, 8).
+				addMobSpawn(MobCategory.AMBIENT, ModEntityTypes.CUBOZOA.get(), 50, 3, 8).
+				addMobSpawn(MobCategory.MONSTER, EntityType.ENDERMAN, 10, 1, 2));
 	}
 }

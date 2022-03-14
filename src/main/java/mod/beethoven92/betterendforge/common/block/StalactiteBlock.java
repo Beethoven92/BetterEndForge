@@ -1,32 +1,32 @@
 package mod.beethoven92.betterendforge.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class StalactiteBlock extends Block implements IWaterLoggable
+public class StalactiteBlock extends Block implements SimpleWaterloggedBlock
 {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;
@@ -40,7 +40,7 @@ public class StalactiteBlock extends Block implements IWaterLoggable
 		SHAPES = new VoxelShape[8];
 		for (int i = 0; i < 8; i++) 
 		{
-			int side = MathHelper.floor(MathHelper.lerp(i / 7F, start, end) * 8F + 0.5F);
+			int side = Mth.floor(Mth.lerp(i / 7F, start, end) * 8F + 0.5F);
 			SHAPES[i] = Block.box(side, 0, side, 16 - side, 16, 16 - side);
 		}
 	}
@@ -52,15 +52,15 @@ public class StalactiteBlock extends Block implements IWaterLoggable
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
 		return SHAPES[state.getValue(SIZE)];
 	}
 	
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) 
+	public BlockState getStateForPlacement(BlockPlaceContext context) 
 	{
-		IWorldReader world = context.getLevel();
+		LevelReader world = context.getLevel();
 		BlockPos pos = context.getClickedPos();
 		Direction dir = context.getClickedFace();
 		boolean water = world.getFluidState(pos).getType() == Fluids.WATER;
@@ -104,11 +104,11 @@ public class StalactiteBlock extends Block implements IWaterLoggable
 	}
 	
 	@Override
-	public void setPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) 
+	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) 
 	{
 		boolean hasUp = isThis(world, pos.above());
 		boolean hasDown = isThis(world, pos.below());
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		if (hasUp && hasDown) 
 		{
 			boolean floor = state.getValue(IS_FLOOR);
@@ -192,7 +192,7 @@ public class StalactiteBlock extends Block implements IWaterLoggable
 	}
 	
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
 		if (!canSurvive(stateIn, worldIn, currentPos)) 
@@ -203,13 +203,13 @@ public class StalactiteBlock extends Block implements IWaterLoggable
 	}
 	
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) 
 	{
 		int size = state.getValue(SIZE);
 		return checkUp(worldIn, pos, size) || checkDown(worldIn, pos, size);
 	}
 	
-	private boolean isThis(IWorldReader world, BlockPos pos)
+	private boolean isThis(LevelReader world, BlockPos pos)
 	{
 		return isThis(world.getBlockState(pos));
 	}
@@ -219,14 +219,14 @@ public class StalactiteBlock extends Block implements IWaterLoggable
 		return state.getBlock() instanceof StalactiteBlock;
 	}
 	
-	private boolean checkUp(IBlockReader world, BlockPos pos, int size) 
+	private boolean checkUp(BlockGetter world, BlockPos pos, int size) 
 	{
 		BlockPos p = pos.above();
 		BlockState state = world.getBlockState(p);
 		return (isThis(state) && state.getValue(SIZE) >= size) || state.isRedstoneConductor(world, p);
 	}
 	
-	private boolean checkDown(IBlockReader world, BlockPos pos, int size) 
+	private boolean checkDown(BlockGetter world, BlockPos pos, int size) 
 	{
 		BlockPos p = pos.below();
 		BlockState state = world.getBlockState(p);

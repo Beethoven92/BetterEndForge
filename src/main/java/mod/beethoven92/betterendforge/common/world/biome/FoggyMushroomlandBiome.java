@@ -6,11 +6,11 @@ import mod.beethoven92.betterendforge.common.init.ModConfiguredSurfaceBuilders;
 import mod.beethoven92.betterendforge.common.init.ModEntityTypes;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.structure.StructureFeatures;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.data.worldgen.StructureFeatures;
 
 public class FoggyMushroomlandBiome extends BetterEndBiome 
 {
@@ -43,10 +43,10 @@ public class FoggyMushroomlandBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_RED_RARE).
 				addStructure(ModConfiguredStructures.GIANT_MOSSY_GLOWSHROOM).
 				addStructure(StructureFeatures.END_CITY).
-				addMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.DRAGONFLY.get(), 80, 2, 5).
-				addMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.END_FISH.get(), 20, 2, 5).
-				addMobSpawn(EntityClassification.MONSTER, ModEntityTypes.END_SLIME.get(), 10, 1, 2).
-				addMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.CUBOZOA.get(), 10, 3, 8).
-				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 10, 1, 2));
+				addMobSpawn(MobCategory.AMBIENT, ModEntityTypes.DRAGONFLY.get(), 80, 2, 5).
+				addMobSpawn(MobCategory.AMBIENT, ModEntityTypes.END_FISH.get(), 20, 2, 5).
+				addMobSpawn(MobCategory.MONSTER, ModEntityTypes.END_SLIME.get(), 10, 1, 2).
+				addMobSpawn(MobCategory.AMBIENT, ModEntityTypes.CUBOZOA.get(), 10, 3, 8).
+				addMobSpawn(MobCategory.MONSTER, EntityType.ENDERMAN, 10, 1, 2));
 	}
 }

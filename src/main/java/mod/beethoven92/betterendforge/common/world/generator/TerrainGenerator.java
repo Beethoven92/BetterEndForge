@@ -10,9 +10,9 @@ import java.util.List;
 import com.google.common.collect.Maps;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.config.CommonConfig;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.provider.BiomeProvider;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
 
 public class TerrainGenerator {
 	private static final Map<Point, TerrainBoolCache> TERRAIN_BOOL_CACHE_MAP = Maps.newHashMap();
@@ -39,7 +39,7 @@ public class TerrainGenerator {
 		TERRAIN_BOOL_CACHE_MAP.clear();
 	}
 	
-	public static void fillTerrainDensity(double[] buffer, int x, int z, BiomeProvider biomeSource) {
+	public static void fillTerrainDensity(double[] buffer, int x, int z, BiomeSource biomeSource) {
 		LOCKER.lock();
 
 		largeIslands.clearCache();
@@ -79,7 +79,7 @@ public class TerrainGenerator {
 		LOCKER.unlock();
 	}
 
-	private static float getAverageDepth(BiomeProvider biomeSource, int x, int z) {
+	private static float getAverageDepth(BiomeSource biomeSource, int x, int z) {
 		if (getBiome(biomeSource, x, z).getDepth() < 0.1F) {
 			return 0F;
 		}
@@ -92,7 +92,7 @@ public class TerrainGenerator {
 		return depth;
 	}
 
-	private static Biome getBiome(BiomeProvider biomeSource, int x, int z) {
+	private static Biome getBiome(BiomeSource biomeSource, int x, int z) {
 		return biomeSource.getNoiseBiome(x, 0, z);
 	}
 
@@ -204,7 +204,7 @@ public class TerrainGenerator {
 			}
 			if (dist > 0) {
 				LOCKER.unlock();
-				return MathHelper.floor(MathHelper.clamp(y + dist, y, y + 1) * SCALE_Y);
+				return Mth.floor(Mth.clamp(y + dist, y, y + 1) * SCALE_Y);
 			}
 		}
 		

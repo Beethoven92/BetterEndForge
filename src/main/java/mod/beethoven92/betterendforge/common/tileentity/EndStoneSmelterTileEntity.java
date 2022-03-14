@@ -17,39 +17,39 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.inventory.EndStoneSmelterContainer;
 import mod.beethoven92.betterendforge.common.recipes.AlloyingRecipe;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IRecipeHelperPopulator;
-import net.minecraft.inventory.IRecipeHolder;
-import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.BlastingRecipe;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tags.ITag;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.LockableTileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.StackedContentsCompatible;
+import net.minecraft.world.inventory.RecipeHolder;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.BlastingRecipe;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.level.block.entity.TickableBlockEntity;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
-public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITickableTileEntity, IRecipeHolder, IRecipeHelperPopulator, ISidedInventory
+public class EndStoneSmelterTileEntity extends BaseContainerBlockEntity implements TickableBlockEntity, RecipeHolder, StackedContentsCompatible, WorldlyContainer
 {
 	private static final int[] TOP_SLOTS = new int[] { 0, 1 };
 	private static final int[] BOTTOM_SLOTS = new int[] { 2, 3 };
@@ -58,8 +58,8 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	
 	private final Object2IntOpenHashMap<ResourceLocation> recipesUsed;
 	protected NonNullList<ItemStack> items;
-	protected final IIntArray data;
-	private IRecipe<?> lastRecipe;
+	protected final ContainerData data;
+	private Recipe<?> lastRecipe;
 	private int smeltTimeTotal;
 	private int smeltTime;
 	private int burnTime;
@@ -71,7 +71,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 		
 		this.recipesUsed = new Object2IntOpenHashMap<ResourceLocation>();
 		this.items= NonNullList.withSize(4, ItemStack.EMPTY);
-		this.data = new IIntArray() 
+		this.data = new ContainerData() 
 		{
 		 	public int get(int index) 
 		 	{
@@ -117,15 +117,15 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	}
 	
 	@Override
-	public CompoundNBT save(CompoundNBT compound)
+	public CompoundTag save(CompoundTag compound)
 	{
 		super.save(compound);
 		compound.putShort("BurnTime", (short) burnTime);
 		compound.putShort("FuelTime", (short) fuelTime);
 		compound.putShort("SmeltTime", (short) smeltTime);
 		compound.putShort("SmeltTimeTotal", (short) smeltTimeTotal);
-		ItemStackHelper.saveAllItems(compound, this.items);
-		CompoundNBT usedRecipes = new CompoundNBT();
+		ContainerHelper.saveAllItems(compound, this.items);
+		CompoundTag usedRecipes = new CompoundTag();
 		this.recipesUsed.forEach((identifier, integer) -> {
 			usedRecipes.putInt(identifier.toString(), integer);
 		});
@@ -135,16 +135,16 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	}
 	
 	@Override
-	public void load(BlockState state, CompoundNBT nbt)
+	public void load(BlockState state, CompoundTag nbt)
 	{	
 		super.load(state, nbt);
 		this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ItemStackHelper.loadAllItems(nbt, items);
+		ContainerHelper.loadAllItems(nbt, items);
 		this.burnTime = nbt.getShort("BurnTime");
 		this.fuelTime = nbt.getShort("FuelTime");
 		this.smeltTime = nbt.getShort("SmeltTime");
 		this.smeltTimeTotal = nbt.getShort("SmeltTimeTotal");
-		CompoundNBT compound = nbt.getCompound("RecipesUsed");
+		CompoundTag compound = nbt.getCompound("RecipesUsed");
 		Iterator<String> recipes = compound.getAllKeys().iterator();
 		while(recipes.hasNext()) 
 		{
@@ -165,9 +165,9 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 		return this.burnTime > 0;
 	}
 	
-	public void dropExperience(PlayerEntity player) 
+	public void dropExperience(Player player) 
 	{
-		List<IRecipe<?>> list = Lists.newArrayList();
+		List<Recipe<?>> list = Lists.newArrayList();
 		ObjectIterator<Entry<ResourceLocation>> usedRecipes = this.recipesUsed.object2IntEntrySet().iterator();
 		while(usedRecipes.hasNext()) 
 		{
@@ -189,19 +189,19 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 		this.recipesUsed.clear();
 	}
 	
-	private void dropExperience(World world, Vector3d vec3d, int i, float f) 
+	private void dropExperience(Level world, Vec3 vec3d, int i, float f) 
 	{
-		int j = MathHelper.floor(i * f);
-		float g = MathHelper.frac(i * f);
+		int j = Mth.floor(i * f);
+		float g = Mth.frac(i * f);
 		if (g != 0.0F && Math.random() < g) {
 			j++;
 		}
 
 		while(j > 0) 
 		{
-			int k = ExperienceOrbEntity.getExperienceValue(j);
+			int k = ExperienceOrb.getExperienceValue(j);
 			j -= k;
-			world.addFreshEntity(new ExperienceOrbEntity(world, vec3d.x, vec3d.y, vec3d.z, k));
+			world.addFreshEntity(new ExperienceOrb(world, vec3d.x, vec3d.y, vec3d.z, k));
 		}
 	}
 	
@@ -222,15 +222,15 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 			{
 				if (!burning && smeltTime > 0) 
 				{
-					this.smeltTime = MathHelper.clamp(smeltTime - 2, 0, smeltTimeTotal);
+					this.smeltTime = Mth.clamp(smeltTime - 2, 0, smeltTimeTotal);
 				}
 			} 
 			else 
 			{
-				IRecipe<?> recipe = this.level.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, this, level).orElse(null);
+				Recipe<?> recipe = this.level.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, this, level).orElse(null);
 				if (recipe == null) 
 				{
-					recipe = this.level.getRecipeManager().getRecipeFor(IRecipeType.BLASTING, this, level).orElse(null);
+					recipe = this.level.getRecipeManager().getRecipeFor(RecipeType.BLASTING, this, level).orElse(null);
 				}
 				boolean accepted = this.canAcceptRecipeOutput(recipe);
 				if (!burning && accepted) 
@@ -279,7 +279,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 		}
 	}
 
-	protected boolean canAcceptRecipeOutput(IRecipe<?> recipe) 
+	protected boolean canAcceptRecipeOutput(Recipe<?> recipe) 
 	{
 		if (recipe == null) return false;
 		boolean validInput = false;
@@ -327,7 +327,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 		return false;
 	}
 
-	private void craftRecipe(IRecipe<?> recipe) 
+	private void craftRecipe(Recipe<?> recipe) 
 	{
 		if (recipe == null || !canAcceptRecipeOutput(recipe)) return;
 		
@@ -393,13 +393,13 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	@Override
 	public ItemStack removeItem(int index, int count) 
 	{
-		return ItemStackHelper.removeItem(this.items, index, count);
+		return ContainerHelper.removeItem(this.items, index, count);
 	}
 
 	@Override
 	public ItemStack removeItemNoUpdate(int index)
 	{
-		return ItemStackHelper.takeItem(this.items, index);
+		return ContainerHelper.takeItem(this.items, index);
 	}
 
 	@Override
@@ -426,7 +426,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 				.map(AlloyingRecipe::getSmeltTime).orElse(0);
 		if (smeltTime == 0) 
 		{
-			smeltTime = this.level.getRecipeManager().getRecipeFor(IRecipeType.BLASTING, this, level)
+			smeltTime = this.level.getRecipeManager().getRecipeFor(RecipeType.BLASTING, this, level)
 				.map(BlastingRecipe::getCookingTime).orElse(200);
 			smeltTime /= 1.5;
 		}
@@ -466,7 +466,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	}
 	
 	@Override
-	public boolean stillValid(PlayerEntity player) 
+	public boolean stillValid(Player player) 
 	{
 		if (this.level.getBlockEntity(this.worldPosition) != this) 
 		{
@@ -485,19 +485,19 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	}
 
 	@Override
-	protected ITextComponent getDefaultName() 
+	protected Component getDefaultName() 
 	{
-		return new TranslationTextComponent("container.betterendforge.end_stone_smelter");
+		return new TranslatableComponent("container.betterendforge.end_stone_smelter");
 	}
 
 	@Override
-	protected Container createMenu(int id, PlayerInventory player) 
+	protected AbstractContainerMenu createMenu(int id, Inventory player) 
 	{
 		return new EndStoneSmelterContainer(id, player, this, this.data);
 	}
 
 	@Override
-	public void fillStackedContents(RecipeItemHelper helper) 
+	public void fillStackedContents(StackedContents helper) 
 	{
 		for(ItemStack itemstack : this.items) 
 		{
@@ -506,7 +506,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	}
 
 	@Override
-	public void setRecipeUsed(IRecipe<?> recipe) 
+	public void setRecipeUsed(Recipe<?> recipe) 
 	{
 		if (recipe != null) 
 		{
@@ -517,7 +517,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 	}
 	   
 	@Override
-	public IRecipe<?> getRecipeUsed() 
+	public Recipe<?> getRecipeUsed() 
 	{
 		return this.lastRecipe;
 	}
@@ -558,7 +558,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 		}
 	}
 	
-	public static void registerFuel(IItemProvider fuel, int time) 
+	public static void registerFuel(ItemLike fuel, int time) 
 	{
 		if (AVAILABLE_FUELS.containsKey(fuel))
 		{
@@ -570,7 +570,7 @@ public class EndStoneSmelterTileEntity extends LockableTileEntity implements ITi
 		}
 	}
 	
-	public static void registerFuel(ITag<Item> tag, int time)
+	public static void registerFuel(Tag<Item> tag, int time)
 	{
 		Iterator<Item> tagItems = tag.getValues().iterator();
 		tagItems.forEachRemaining(item -> registerFuel(item, time));

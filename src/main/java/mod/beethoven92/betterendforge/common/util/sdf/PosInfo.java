@@ -2,10 +2,10 @@ package mod.beethoven92.betterendforge.common.util.sdf;
 
 import java.util.Map;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 
 public class PosInfo implements Comparable<PosInfo>
 {

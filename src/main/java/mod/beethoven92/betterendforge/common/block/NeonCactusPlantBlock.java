@@ -13,38 +13,38 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.entity.Entity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
-public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
+public class NeonCactusPlantBlock extends Block implements SimpleWaterloggedBlock {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
 	public static final EnumProperty<CactusBottom> CACTUS_BOTTOM = BlockProperties.CACTUS_BOTTOM;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -59,7 +59,7 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 	private static final int MAX_LENGTH = 12;
 
 	public NeonCactusPlantBlock() {
-		super(AbstractBlock.Properties.copy(Blocks.CACTUS).lightLevel(s -> 15).randomTicks());
+		super(BlockBehaviour.Properties.copy(Blocks.CACTUS).lightLevel(s -> 15).randomTicks());
 		registerDefaultState(
 				defaultBlockState().setValue(WATERLOGGED, false).setValue(FACING, Direction.UP).setValue(SHAPE, TripleShape.TOP));
 	}
@@ -70,8 +70,8 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
-		World world = ctx.getLevel();
+	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+		Level world = ctx.getLevel();
 		BlockPos pos = ctx.getClickedPos();
 		Direction dir = ctx.getClickedFace();
 		BlockState down = world.getBlockState(pos.relative(dir.getOpposite()));
@@ -103,7 +103,7 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world,
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world,
 			BlockPos pos, BlockPos facingPos) {
 		world.getBlockTicks().scheduleTick(pos, this, 2);
 		if ((Boolean) state.getValue(WATERLOGGED)) {
@@ -122,14 +122,14 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
+	public void tick(BlockState state, ServerLevel worldIn, BlockPos pos, Random rand) {
 		if (!state.canSurvive(worldIn, pos)) {
 			worldIn.destroyBlock(pos, true, null, 1);
 		}
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader view, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext context) {
 		TripleShape shape = state.getValue(SHAPE);
 		Direction dir = state.getValue(FACING);
 		BlockState next = view.getBlockState(pos.relative(dir));
@@ -148,7 +148,7 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
 		Direction dir = state.getValue(FACING);
 		BlockPos supportPos = pos.relative(dir.getOpposite());
 		BlockState support = worldIn.getBlockState(supportPos);
@@ -156,7 +156,7 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (!this.canSurvive(state, world, pos) || random.nextInt(8) > 0) {
 			return;
 		}
@@ -191,11 +191,11 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 		mutateStem(placement, world, pos, MAX_LENGTH);
 	}
 
-	public void growPlant(ISeedReader world, BlockPos pos, Random random) {
+	public void growPlant(WorldGenLevel world, BlockPos pos, Random random) {
 		growPlant(world, pos, random, ModMathHelper.randRange(MAX_LENGTH >> 1, MAX_LENGTH, random));
 	}
 
-	public void growPlant(ISeedReader world, BlockPos pos, Random random, int iterations) {
+	public void growPlant(WorldGenLevel world, BlockPos pos, Random random, int iterations) {
 		BlockState state = defaultBlockState();
 		BlockState downState = world.getBlockState(pos.below());
 		if (downState.is(Blocks.END_STONE) || downState.is(ModBlocks.ENDSTONE_DUST.get())) {
@@ -206,7 +206,7 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 			state = state.setValue(CACTUS_BOTTOM, CactusBottom.EMPTY);
 		}
 		BlockHelper.setWithoutUpdate(world, pos, state);
-		List<Mutable> ends = Lists.newArrayList(pos.mutable());
+		List<MutableBlockPos> ends = Lists.newArrayList(pos.mutable());
 		for (int i = 0; i < iterations; i++) {
 			int count = ends.size();
 			for (int n = 0; n < count; n++) {
@@ -219,7 +219,7 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 		}
 	}
 
-	private boolean growIteration(ISeedReader world, Mutable pos, Random random, List<Mutable> ends, int length) {
+	private boolean growIteration(WorldGenLevel world, MutableBlockPos pos, Random random, List<MutableBlockPos> ends, int length) {
 		BlockState state = world.getBlockState(pos);
 		if (!state.is(this)) {
 			return false;
@@ -254,9 +254,9 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 		return true;
 	}
 
-	private Direction getSideDirection(ISeedReader world, BlockPos pos, BlockState iterState, Direction dir,
+	private Direction getSideDirection(WorldGenLevel world, BlockPos pos, BlockState iterState, Direction dir,
 			Random random) {
-		Mutable iterPos = pos.mutable();
+		MutableBlockPos iterPos = pos.mutable();
 		Direction startDir = dir;
 		Direction lastDir = null;
 		while (iterState.is(this) && startDir.getAxis().isVertical()) {
@@ -285,19 +285,19 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public boolean isPathfindable(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
+	public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
 		return false;
 	}
 
 	@Override
-	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+	public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) {
 		entityIn.hurt(DamageSource.CACTUS, 1.0F);
 	}
 
-	private int getLength(BlockState state, ServerWorld world, BlockPos pos, int max) {
+	private int getLength(BlockState state, ServerLevel world, BlockPos pos, int max) {
 		int length = 0;
 		Direction dir = state.getValue(FACING).getOpposite();
-		Mutable mut = new Mutable().set(pos);
+		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		for (int i = 0; i < max; i++) {
 			mut.move(dir);
 			state = world.getBlockState(mut);
@@ -313,10 +313,10 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 		return length;
 	}
 
-	private int getHorizontal(BlockState state, ISeedReader world, BlockPos pos, int max) {
+	private int getHorizontal(BlockState state, WorldGenLevel world, BlockPos pos, int max) {
 		int count = 0;
 		Direction dir = state.getValue(FACING).getOpposite();
-		Mutable mut = new Mutable().set(pos);
+		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		for (int i = 0; i < max; i++) {
 			mut.move(dir);
 			state = world.getBlockState(mut);
@@ -332,9 +332,9 @@ public class NeonCactusPlantBlock extends Block implements IWaterLoggable {
 		return count;
 	}
 
-	private void mutateStem(BlockState state, ISeedReader world, BlockPos pos, int max) {
+	private void mutateStem(BlockState state, WorldGenLevel world, BlockPos pos, int max) {
 		Direction dir = state.getValue(FACING).getOpposite();
-		Mutable mut = new Mutable().set(pos);
+		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		for (int i = 0; i < max; i++) {
 			mut.move(dir);
 			state = world.getBlockState(mut);

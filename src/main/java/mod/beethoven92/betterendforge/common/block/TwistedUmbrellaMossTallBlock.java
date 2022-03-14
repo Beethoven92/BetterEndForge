@@ -2,9 +2,9 @@ package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.block.template.DoublePlantBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class TwistedUmbrellaMossTallBlock extends DoublePlantBlock
 {

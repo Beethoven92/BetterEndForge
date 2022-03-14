@@ -9,45 +9,45 @@ import com.google.common.collect.Lists;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.world.surfacebuilder.DoubleBlockSurfaceBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.audio.BackgroundMusicSelector;
-import net.minecraft.client.audio.BackgroundMusicTracks;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
-import net.minecraft.world.biome.Biome.RainType;
-import net.minecraft.world.biome.Biome.TemperatureModifier;
-import net.minecraft.world.biome.BiomeAmbience;
-import net.minecraft.world.biome.BiomeGenerationSettings;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.biome.MoodSoundAmbience;
-import net.minecraft.world.biome.ParticleEffectAmbience;
-import net.minecraft.world.biome.SoundAdditionsAmbience;
-import net.minecraft.world.gen.GenerationStage.Carving;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.carver.ConfiguredCarver;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.ProbabilityConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
-import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilders;
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.sounds.Music;
+import net.minecraft.sounds.Musics;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
+import net.minecraft.world.level.biome.Biome.Precipitation;
+import net.minecraft.world.level.biome.Biome.TemperatureModifier;
+import net.minecraft.world.level.biome.BiomeSpecialEffects;
+import net.minecraft.world.level.biome.BiomeGenerationSettings;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.biome.AmbientMoodSettings;
+import net.minecraft.world.level.biome.AmbientParticleSettings;
+import net.minecraft.world.level.biome.AmbientAdditionsSettings;
+import net.minecraft.world.level.levelgen.GenerationStep.Carving;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.ProbabilityFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.levelgen.surfacebuilders.ConfiguredSurfaceBuilder;
+import net.minecraft.data.worldgen.SurfaceBuilders;
+import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder;
+import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderBaseConfiguration;
 
 public class BiomeTemplate 
 {
 	private static final int DEFAULT_FOLIAGE = ModMathHelper.color(197, 210, 112);
 	
-	private final List<StructureFeature<?, ?>> structures = new ArrayList<>();
+	private final List<ConfiguredStructureFeature<?, ?>> structures = new ArrayList<>();
 	private final List<FeatureInfo> features = Lists.newArrayList();
 	private final List<CarverInfo> carvers = Lists.newArrayList();
 	private final List<SpawnInfo> mobs = Lists.newArrayList();
-	private final List<MobSpawnInfo.Spawners> spawns = Lists.newArrayList();
+	private final List<MobSpawnSettings.SpawnerData> spawns = Lists.newArrayList();
 	private Supplier<ConfiguredSurfaceBuilder<?>> surface;
 	
 	private float depth = 0.1F;
@@ -63,11 +63,11 @@ public class BiomeTemplate
 	private int grassColor = DEFAULT_FOLIAGE;
 	
 	private SoundEvent ambient;
-	private MoodSoundAmbience mood;
-	private SoundAdditionsAmbience additions;
+	private AmbientMoodSettings mood;
+	private AmbientAdditionsSettings additions;
 	private SoundEvent music;
 	
-	private ParticleEffectAmbience particle;
+	private AmbientParticleSettings particle;
 	
 	private final ResourceLocation id;
 	private float genChance = 1F;
@@ -103,9 +103,9 @@ public class BiomeTemplate
 		return this;
 	}
 	
-	public BiomeTemplate setParticles(IParticleData particle, float probability) 
+	public BiomeTemplate setParticles(ParticleOptions particle, float probability) 
 	{
-		this.particle = new ParticleEffectAmbience(particle, probability);
+		this.particle = new AmbientParticleSettings(particle, probability);
 		return this;
 	}
 	
@@ -183,13 +183,13 @@ public class BiomeTemplate
 
 	public BiomeTemplate setMoodSound(SoundEvent mood) 
 	{
-		this.mood = new MoodSoundAmbience(mood, 6000, 8, 2.0D);
+		this.mood = new AmbientMoodSettings(mood, 6000, 8, 2.0D);
 		return this;
 	}
 	
 	public BiomeTemplate setAdditionsSounds(SoundEvent additions) 
 	{
-		this.additions = new SoundAdditionsAmbience(additions, 0.0111D);
+		this.additions = new AmbientAdditionsSettings(additions, 0.0111D);
 		return this;
 	}
 	
@@ -217,13 +217,13 @@ public class BiomeTemplate
 		return this;
 	}
 	
-	public BiomeTemplate addMobSpawn(MobSpawnInfo.Spawners entry)
+	public BiomeTemplate addMobSpawn(MobSpawnSettings.SpawnerData entry)
 	{
 		spawns.add(entry);
 		return this;
 	}
 	
-	public BiomeTemplate addMobSpawn(EntityClassification type, EntityType<?> entity, 
+	public BiomeTemplate addMobSpawn(MobCategory type, EntityType<?> entity, 
 			int weight, int minCount, int maxCount)
 	{
 		SpawnInfo info = new SpawnInfo();
@@ -238,7 +238,7 @@ public class BiomeTemplate
 	
 	public BiomeTemplate setSurface(Block block) 
 	{
-		setSurface(() -> SurfaceBuilder.DEFAULT.configured(new SurfaceBuilderConfig(
+		setSurface(() -> SurfaceBuilder.DEFAULT.configured(new SurfaceBuilderBaseConfiguration(
 				block.defaultBlockState(),
 				Blocks.END_STONE.defaultBlockState(),
 				Blocks.END_STONE.defaultBlockState()
@@ -252,7 +252,7 @@ public class BiomeTemplate
 		return this;
 	}
 	
-	public BiomeTemplate addStructure(StructureFeature<?,?> structure)
+	public BiomeTemplate addStructure(ConfiguredStructureFeature<?,?> structure)
 	{
 		structures.add(structure);
 		return this;
@@ -267,7 +267,7 @@ public class BiomeTemplate
 		return this;
 	}
 
-	public BiomeTemplate addCarver(Carving carverStep, ConfiguredCarver<ProbabilityConfig> carver) 
+	public BiomeTemplate addCarver(Carving carverStep, ConfiguredWorldCarver<ProbabilityFeatureConfiguration> carver) 
 	{
 		CarverInfo info = new CarverInfo();
 		info.carverStep = carverStep;
@@ -278,15 +278,15 @@ public class BiomeTemplate
 	
 	public Biome build()
 	{
-		BiomeAmbience.Builder effects = new BiomeAmbience.Builder();
+		BiomeSpecialEffects.Builder effects = new BiomeSpecialEffects.Builder();
 		BiomeGenerationSettings.Builder generationSettings = new BiomeGenerationSettings.Builder();
-		MobSpawnInfo.Builder spawnSettings = new MobSpawnInfo.Builder();
+		MobSpawnSettings.Builder spawnSettings = new MobSpawnSettings.Builder();
 		
 		// Set mob spawns
 		for (SpawnInfo info : mobs)
 		{
 			spawnSettings.addSpawn(info.type, 
-					new MobSpawnInfo.Spawners(info.entity, info.weight, info.minGroupSize, info.maxGroupSize));
+					new MobSpawnSettings.SpawnerData(info.entity, info.weight, info.minGroupSize, info.maxGroupSize));
 		}
 		
 		spawns.forEach((entry) -> {
@@ -300,7 +300,7 @@ public class BiomeTemplate
 		}
 		else
 		{
-			generationSettings.surfaceBuilder(ConfiguredSurfaceBuilders.END);
+			generationSettings.surfaceBuilder(SurfaceBuilders.END);
 		}
 		
 		for (CarverInfo info : carvers)
@@ -311,7 +311,7 @@ public class BiomeTemplate
 		{
 			generationSettings.addFeature(info.stage, info.feature);
 		}
-		for(StructureFeature<?,?> structure : structures)
+		for(ConfiguredStructureFeature<?,?> structure : structures)
 		{
 			generationSettings.addStructureStart(structure);
 		}
@@ -330,19 +330,19 @@ public class BiomeTemplate
 		if (additions != null) effects.ambientAdditionsSound(additions);
 		if (music != null)
 		{
-			effects.backgroundMusic(new BackgroundMusicSelector(music, 600, 2400, true));
+			effects.backgroundMusic(new Music(music, 600, 2400, true));
 		}
 		else
 		{
-			effects.backgroundMusic(BackgroundMusicTracks.END);
+			effects.backgroundMusic(Musics.END);
 		}
 		
 		// Set particles
 		if (particle != null) effects.ambientParticle(particle);
 		
-		return new Biome.Builder().
-				         biomeCategory(isCaveBiome ? Category.NONE : Category.THEEND).
-				         precipitation(RainType.NONE).
+		return new Biome.BiomeBuilder().
+				         biomeCategory(isCaveBiome ? BiomeCategory.NONE : BiomeCategory.THEEND).
+				         precipitation(Precipitation.NONE).
 				         depth(this.depth).
 				         scale(this.scale).
 				         temperature(this.temperature).
@@ -356,7 +356,7 @@ public class BiomeTemplate
 	
 	private static final class SpawnInfo 
 	{
-		EntityClassification type;
+		MobCategory type;
 		EntityType<?> entity;
 		int weight;
 		int minGroupSize;
@@ -372,7 +372,7 @@ public class BiomeTemplate
 	private static final class CarverInfo 
 	{
 		Carving carverStep;
-		ConfiguredCarver<ProbabilityConfig> carver;
+		ConfiguredWorldCarver<ProbabilityFeatureConfiguration> carver;
 	}
 	
 	public ResourceLocation getID() 

@@ -7,20 +7,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import mod.beethoven92.betterendforge.common.init.ModEffects;
 import mod.beethoven92.betterendforge.common.init.ModEnchantments;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.monster.EndermanEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
 
-@Mixin(EndermanEntity.class)
+@Mixin(EnderMan.class)
 public abstract class EndermanEntityMixin 
 {
 	@Inject(at = @At("HEAD"), method = "isLookingAtMe", cancellable = true)
-	private void be_isLookingAtMe(PlayerEntity player, CallbackInfoReturnable<Boolean> info)
+	private void be_isLookingAtMe(Player player, CallbackInfoReturnable<Boolean> info)
 	{
 		if (player.isCreative() || player.hasEffect(ModEffects.END_VEIL.get()) ||
 				EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.END_VEIL.get(), 
-						player.getItemBySlot(EquipmentSlotType.HEAD)) > 0) 
+						player.getItemBySlot(EquipmentSlot.HEAD)) > 0) 
 		{
 			info.setReturnValue(false);
 			info.cancel();

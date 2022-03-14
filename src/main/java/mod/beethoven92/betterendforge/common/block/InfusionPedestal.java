@@ -3,21 +3,21 @@ package mod.beethoven92.betterendforge.common.block;
 import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
 import mod.beethoven92.betterendforge.common.rituals.InfusionRitual;
 import mod.beethoven92.betterendforge.common.tileentity.InfusionPedestalTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class InfusionPedestal extends PedestalBlock
 {
@@ -33,9 +33,9 @@ public class InfusionPedestal extends PedestalBlock
 		VoxelShape pillarDefault = Block.box(3, 4, 3, 13, 13, 13);
 		VoxelShape eyeDefault = Block.box(4, 15, 4, 12, 16, 12);
 		VoxelShape eyeTop = Block.box(4, 11, 4, 12, 12, 12);
-		VoxelShape basin = VoxelShapes.or(basinDown, basinUp);
-		SHAPE_DEFAULT = VoxelShapes.or(basin, pillarDefault, pedestalDefault, eyeDefault);
-		SHAPE_PEDESTAL_TOP = VoxelShapes.or(pillar, pedestalTop, eyeTop);
+		VoxelShape basin = Shapes.or(basinDown, basinUp);
+		SHAPE_DEFAULT = Shapes.or(basin, pillarDefault, pedestalDefault, eyeDefault);
+		SHAPE_PEDESTAL_TOP = Shapes.or(pillar, pedestalTop, eyeTop);
 	}
 	
 	public InfusionPedestal(Properties properties) 
@@ -45,7 +45,7 @@ public class InfusionPedestal extends PedestalBlock
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
 		if (state.is(this)) 
 		{
@@ -69,11 +69,11 @@ public class InfusionPedestal extends PedestalBlock
 	}
 	
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-			Hand handIn, BlockRayTraceResult hit) 
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player,
+			InteractionHand handIn, BlockHitResult hit) 
 	{
-		if (worldIn.isClientSide || !state.is(this)) return ActionResultType.CONSUME;
-		TileEntity tileEntity = worldIn.getBlockEntity(pos);
+		if (worldIn.isClientSide || !state.is(this)) return InteractionResult.CONSUME;
+		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
 		InfusionPedestalTileEntity pedestal = null;
 		if (tileEntity instanceof InfusionPedestalTileEntity) 
 		{
@@ -83,22 +83,22 @@ public class InfusionPedestal extends PedestalBlock
 				if (pedestal.getRitual().hasRecipe()) 
 				{
 					pedestal.getRitual().stop();
-					return ActionResultType.SUCCESS;
+					return InteractionResult.SUCCESS;
 				} 
 				else if (pedestal.getRitual().checkRecipe()) 
 				{
-					return ActionResultType.SUCCESS;
+					return InteractionResult.SUCCESS;
 				}
 			}
 		}
 		
-		ActionResultType result = ActionResultType.FAIL;
+		InteractionResult result = InteractionResult.FAIL;
 		if (handIn != null) 
 		{
 			result = super.use(state, worldIn, pos, player, handIn, hit);
 		}
 		
-		if (result == ActionResultType.SUCCESS) 
+		if (result == InteractionResult.SUCCESS) 
 		{
 			if (pedestal != null) 
 			{
@@ -138,7 +138,7 @@ public class InfusionPedestal extends PedestalBlock
 	}*/
 	
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) 
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world) 
 	{
 		return new InfusionPedestalTileEntity();
 	}

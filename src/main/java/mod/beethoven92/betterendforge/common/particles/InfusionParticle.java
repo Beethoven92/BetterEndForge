@@ -1,20 +1,20 @@
 package mod.beethoven92.betterendforge.common.particles;
 
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class InfusionParticle extends SpriteTexturedParticle
+public class InfusionParticle extends TextureSheetParticle
 {
-	private final IAnimatedSprite spriteWithAge;
+	private final SpriteSet spriteWithAge;
 
-	public InfusionParticle(ClientWorld clientWorld, double x, double y, double z, double velocityX, 
-			double velocityY, double velocityZ, float[] palette, IAnimatedSprite spriteWithAge)
+	public InfusionParticle(ClientLevel clientWorld, double x, double y, double z, double velocityX, 
+			double velocityY, double velocityZ, float[] palette, SpriteSet spriteWithAge)
 	{
 		super(clientWorld, x, y, z, 0.0, 0.0, 0.0);
 		this.spriteWithAge = spriteWithAge;
@@ -29,9 +29,9 @@ public class InfusionParticle extends SpriteTexturedParticle
 	}
 
 	@Override
-	public IParticleRenderType getRenderType() 
+	public ParticleRenderType getRenderType() 
 	{
-		return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
 	}
 
 	@Override
@@ -55,17 +55,17 @@ public class InfusionParticle extends SpriteTexturedParticle
 	}
 	
 	@OnlyIn(Dist.CLIENT)
-	public static class Factory implements IParticleFactory<InfusionParticleData> 
+	public static class Factory implements ParticleProvider<InfusionParticleData> 
 	{
-		private final IAnimatedSprite sprite;
+		private final SpriteSet sprite;
 
-	    public Factory(IAnimatedSprite sprite) 
+	    public Factory(SpriteSet sprite) 
 	    {
 	         this.sprite = sprite;
 	    }
 	    
 	    @Override
-	    public Particle createParticle(InfusionParticleData data, ClientWorld worldIn, double x, double y, double z,
+	    public Particle createParticle(InfusionParticleData data, ClientLevel worldIn, double x, double y, double z,
 	    		double xSpeed, double ySpeed, double zSpeed) 
 	    {
 	    	return new InfusionParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, data.getPalette(), this.sprite);

@@ -8,15 +8,15 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFCoordModify;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFScale3D;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class OreLayerFeature extends Feature<NoFeatureConfig>
+public class OreLayerFeature extends Feature<NoneFeatureConfiguration>
 {
 	private static final SDFSphere SPHERE;
 	private static final SDFCoordModify NOISE;
@@ -45,7 +45,7 @@ public class OreLayerFeature extends Feature<NoFeatureConfig>
 	
 	public OreLayerFeature(BlockState state, float radius, int minY, int maxY)
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 		this.state = state;
 		this.radius = radius;
 		this.minY = minY;
@@ -53,8 +53,8 @@ public class OreLayerFeature extends Feature<NoFeatureConfig>
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
-			BlockPos blockPos, NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random,
+			BlockPos blockPos, NoneFeatureConfiguration config) 
 	{
 		float radius = this.radius * 0.5F;
 		int r = ModMathHelper.floor(radius + 1);

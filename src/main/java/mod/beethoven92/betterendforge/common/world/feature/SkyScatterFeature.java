@@ -4,10 +4,10 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.ISeedReader;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
 
 public abstract class SkyScatterFeature extends ScatterFeature {
 	public SkyScatterFeature(int radius) {
@@ -20,7 +20,7 @@ public abstract class SkyScatterFeature extends ScatterFeature {
 	}
 
 	@Override
-	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) {
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) {
 		if (!world.isEmptyBlock(blockPos)) {
 			return false;
 		}
@@ -38,16 +38,16 @@ public abstract class SkyScatterFeature extends ScatterFeature {
 	}
 	
 	@Override
-	protected boolean canSpawn(ISeedReader world, BlockPos pos) {
+	protected boolean canSpawn(WorldGenLevel world, BlockPos pos) {
 		return true;
 	}
 	
 	@Override
-	protected BlockPos getCenterGround(ISeedReader world, BlockPos pos) {
+	protected BlockPos getCenterGround(WorldGenLevel world, BlockPos pos) {
 		return new BlockPos(pos.getX(), ModMathHelper.randRange(32, 192, world.getRandom()), pos.getZ());
 	}
 	
-	protected boolean getGroundPlant(ISeedReader world, Mutable pos) {
+	protected boolean getGroundPlant(WorldGenLevel world, MutableBlockPos pos) {
 		pos.setY(pos.getY() + ModMathHelper.randRange(-getYOffset(), getYOffset(), world.getRandom()));
 		return true;
 	}

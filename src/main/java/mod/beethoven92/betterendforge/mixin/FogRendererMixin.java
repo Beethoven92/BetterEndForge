@@ -13,19 +13,19 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.util.BackgroundInfo;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
-import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.FogRenderer;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.Util;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
 
 @Mixin(FogRenderer.class)
 public abstract class FogRendererMixin 
@@ -43,7 +43,7 @@ public abstract class FogRendererMixin
 	private static float fogBlue;
 
 	@Inject(method = "setupColor", at = @At("RETURN"))
-	private static void be_onRender(ActiveRenderInfo activeRenderInfoIn, float partialTicks, ClientWorld worldIn,
+	private static void be_onRender(Camera activeRenderInfoIn, float partialTicks, ClientLevel worldIn,
 			int renderDistanceChunks, float bossColorModifier, CallbackInfo info)
 	{
 		long l = Util.getMillis() - be_time;
@@ -52,13 +52,13 @@ public abstract class FogRendererMixin
 		if (be_lerp > 1) be_lerp = 1;
 		
 		FluidState fluidState = activeRenderInfoIn.getFluidInCamera();
-		if (fluidState.isEmpty() && worldIn.dimension().equals(World.END)) 
+		if (fluidState.isEmpty() && worldIn.dimension().equals(Level.END)) 
 		{
 			Entity entity = activeRenderInfoIn.getEntity();
 			boolean skip = false;
 			if (entity instanceof LivingEntity) 
 			{
-				EffectInstance effect = ((LivingEntity) entity).getEffect(Effects.NIGHT_VISION);
+				MobEffectInstance effect = ((LivingEntity) entity).getEffect(MobEffects.NIGHT_VISION);
 				skip = effect != null && effect.getDuration() > 0;
 			}
 			if (!skip) 
@@ -76,14 +76,14 @@ public abstract class FogRendererMixin
 	
 
 	@Inject(at = @At("HEAD"), remap = false, method = "setupFog(Lnet/minecraft/client/renderer/ActiveRenderInfo;Lnet/minecraft/client/renderer/FogRenderer$FogType;FZF)V", cancellable = true)
-	private static void be_fogDensity(ActiveRenderInfo activeRenderInfoIn, FogRenderer.FogType fogTypeIn,
+	private static void be_fogDensity(Camera activeRenderInfoIn, FogRenderer.FogMode fogTypeIn,
 			float farPlaneDistance, boolean nearFog, float partialTicks, CallbackInfo info)
 	{
 		Entity entity = activeRenderInfoIn.getEntity();
 		Biome biome = entity.level.getBiome(entity.blockPosition());
 		FluidState fluidState = activeRenderInfoIn.getFluidInCamera();
 		
-		if (ClientOptions.useFogDensity() && biome.getBiomeCategory() == Category.THEEND && fluidState.isEmpty())
+		if (ClientOptions.useFogDensity() && biome.getBiomeCategory() == BiomeCategory.THEEND && fluidState.isEmpty())
 		{			
 			BetterEndBiome endBiome = ModBiomes.getRenderBiome(biome);
 			if (be_fogDensity == 0)
@@ -98,7 +98,7 @@ public abstract class FogRendererMixin
 				be_lerp = 0;
 			}
 			
-			float fog = MathHelper.lerp(be_lerp, be_lastFogDensity, be_fogDensity);
+			float fog = Mth.lerp(be_lerp, be_lastFogDensity, be_fogDensity);
 			BackgroundInfo.fog = fog;
 			float start = farPlaneDistance * 0.75F / fog;
 			float end = farPlaneDistance / fog;
@@ -106,7 +106,7 @@ public abstract class FogRendererMixin
 			if (entity instanceof LivingEntity) 
 			{
 				LivingEntity le = (LivingEntity) entity;
-				EffectInstance effect = le.getEffect(Effects.BLINDNESS);
+				MobEffectInstance effect = le.getEffect(MobEffects.BLINDNESS);
 				if (effect != null) 
 				{
 					int duration = effect.getDuration();
@@ -120,8 +120,8 @@ public abstract class FogRendererMixin
 					{
 						float delta = (float) duration / 20F;
 						BackgroundInfo.blindness = delta;
-						start = MathHelper.lerp(delta, start, 0);
-						end = MathHelper.lerp(delta, end, end * 0.03F);
+						start = Mth.lerp(delta, start, 0);
+						end = Mth.lerp(delta, end, end * 0.03F);
 					}
 				}
 				else 

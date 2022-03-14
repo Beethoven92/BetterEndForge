@@ -9,25 +9,25 @@ import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.init.ModStructurePieces;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.Heightmap.Type;
-import net.minecraft.world.gen.feature.structure.StructureManager;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
 public class PaintedMountainPiece extends StructurePiece
 {
@@ -59,7 +59,7 @@ public class PaintedMountainPiece extends StructurePiece
 		makeBoundingBox();
 	}
 	
-	public PaintedMountainPiece(TemplateManager p_i50677_1_, CompoundNBT nbt) 
+	public PaintedMountainPiece(StructureManager p_i50677_1_, CompoundTag nbt) 
 	{
 		super(ModStructurePieces.PAINTED_MOUNTAIN_PIECE, nbt);
 		
@@ -72,17 +72,17 @@ public class PaintedMountainPiece extends StructurePiece
 		seed2 = nbt.getInt("seed2");
 		noise1 = new OpenSimplexNoise(seed1);
 		noise2 = new OpenSimplexNoise(seed2);
-		ListNBT slise = nbt.getList("slises", 10);
+		ListTag slise = nbt.getList("slises", 10);
 		slises = new BlockState[slise.size()];
 		for (int i = 0; i < slises.length; i++) 
 		{
-			slises[i] = NBTUtil.readBlockState(slise.getCompound(i));
+			slises[i] = NbtUtils.readBlockState(slise.getCompound(i));
 		}
 		makeBoundingBox();
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT tagCompound)
+	protected void addAdditionalSaveData(CompoundTag tagCompound)
 	{	
 		tagCompound.putInt("centerX", this.center.getX());
 	    tagCompound.putInt("centerY", this.center.getY());
@@ -93,10 +93,10 @@ public class PaintedMountainPiece extends StructurePiece
 		tagCompound.putInt("seed1", seed1);
 		tagCompound.putInt("seed2", seed2);
 		
-		ListNBT slise = new ListNBT();
+		ListTag slise = new ListTag();
 		for (BlockState state: slises) 
 		{
-			slise.add(NBTUtil.writeBlockState(state));
+			slise.add(NbtUtils.writeBlockState(state));
 		}
 		tagCompound.put("slises", slise);
 	}
@@ -107,19 +107,19 @@ public class PaintedMountainPiece extends StructurePiece
 		int minZ = ModMathHelper.floor(center.getZ() - radius);
 		int maxX = ModMathHelper.floor(center.getX() + radius + 1);
 		int maxZ = ModMathHelper.floor(center.getZ() + radius + 1);
-		this.boundingBox = new MutableBoundingBox(minX, minZ, maxX, maxZ);
+		this.boundingBox = new BoundingBox(minX, minZ, maxX, maxZ);
 	}
 	
 	@Override
-	public boolean postProcess(ISeedReader world, StructureManager manager, ChunkGenerator chunkGenerator,
-			Random random, MutableBoundingBox box, ChunkPos chunkPos, BlockPos blockPos) 
+	public boolean postProcess(WorldGenLevel world, StructureFeatureManager manager, ChunkGenerator chunkGenerator,
+			Random random, BoundingBox box, ChunkPos chunkPos, BlockPos blockPos) 
 	{
 		int sx = chunkPos.getMinBlockX();
 		int sz = chunkPos.getMinBlockZ();
-		Mutable pos = new Mutable();
-		IChunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
-		Heightmap map = chunk.getOrCreateHeightmapUnprimed(Type.WORLD_SURFACE);
-		Heightmap map2 = chunk.getOrCreateHeightmapUnprimed(Type.WORLD_SURFACE_WG);
+		MutableBlockPos pos = new MutableBlockPos();
+		ChunkAccess chunk = world.getChunk(chunkPos.x, chunkPos.z);
+		Heightmap map = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE);
+		Heightmap map2 = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE_WG);
 		for (int x = 0; x < 16; x++) 
 		{
 			int px = x + sx;
@@ -165,7 +165,7 @@ public class PaintedMountainPiece extends StructurePiece
 		return true;
 	}
 	
-	private int getHeight(ISeedReader world, BlockPos pos) 
+	private int getHeight(WorldGenLevel world, BlockPos pos) 
 	{
 		int p = ((pos.getX() & 2047) << 11) | (pos.getZ() & 2047);
 		int h = heightmap.getOrDefault(p, Integer.MIN_VALUE);
@@ -180,7 +180,7 @@ public class PaintedMountainPiece extends StructurePiece
 			return -4;
 		}
 		
-		h = world.getHeight(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		h = world.getHeight(Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		if (h < 57) 
 		{
 			heightmap.put(p, -4);
@@ -199,9 +199,9 @@ public class PaintedMountainPiece extends StructurePiece
 		return h;
 	}
 	
-	private float getHeightClamp(ISeedReader world, int radius, int posX, int posZ) 
+	private float getHeightClamp(WorldGenLevel world, int radius, int posX, int posZ) 
 	{
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		float height = 0;
 		float max = 0;
 		for (int x = -radius; x <= radius; x++)
@@ -220,6 +220,6 @@ public class PaintedMountainPiece extends StructurePiece
 			}
 		}
 		height /= max;
-		return MathHelper.clamp(height / radius, 0, 1);
+		return Mth.clamp(height / radius, 0, 1);
 	}
 }

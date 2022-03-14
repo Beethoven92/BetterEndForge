@@ -1,12 +1,12 @@
 package mod.beethoven92.betterendforge.common.block.template;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.PaneBlock;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.IronBarsBlock;
+import net.minecraft.core.Direction;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class MetalPaneBlock extends PaneBlock
+public class MetalPaneBlock extends IronBarsBlock
 {
 	public MetalPaneBlock(Properties builder)
 	{

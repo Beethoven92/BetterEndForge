@@ -15,20 +15,20 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFUnion;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFCappedCone;
 import mod.beethoven92.betterendforge.common.world.structure.piece.VoxelPiece;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.feature.structure.StructureStart;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import com.mojang.math.Vector3f;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
-import net.minecraft.world.gen.feature.structure.Structure.IStartFactory;
+import net.minecraft.world.level.levelgen.feature.StructureFeature.StructureStartFactory;
 
 public class GiantIceStarStructure extends SDFStructure
 {
@@ -37,7 +37,7 @@ public class GiantIceStarStructure extends SDFStructure
 	private final int minCount = 25;
 	private final int maxCount = 40;
 	
-	public GiantIceStarStructure(Codec<NoFeatureConfig> codec) 
+	public GiantIceStarStructure(Codec<NoneFeatureConfiguration> codec) 
 	{
 		super(codec);
 	}
@@ -130,23 +130,23 @@ public class GiantIceStarStructure extends SDFStructure
 	}
 	
 	@Override
-	public IStartFactory<NoFeatureConfig> getStartFactory() 
+	public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() 
 	{
 		return Start::new;
 	}
 	
-	public static class Start extends StructureStart<NoFeatureConfig> 
+	public static class Start extends StructureStart<NoneFeatureConfiguration> 
 	{
-		public Start(Structure<NoFeatureConfig> p_i225876_1_, int p_i225876_2_, int p_i225876_3_,
-				MutableBoundingBox p_i225876_4_, int p_i225876_5_, long p_i225876_6_) 
+		public Start(StructureFeature<NoneFeatureConfiguration> p_i225876_1_, int p_i225876_2_, int p_i225876_3_,
+				BoundingBox p_i225876_4_, int p_i225876_5_, long p_i225876_6_) 
 		{
 			super(p_i225876_1_, p_i225876_2_, p_i225876_3_, p_i225876_4_, p_i225876_5_, p_i225876_6_);
 		}
 
 		@Override
-		public void generatePieces(DynamicRegistries registry, ChunkGenerator chunkGenerator,
-				TemplateManager manager, int chunkX, int chunkZ, Biome biome,
-				NoFeatureConfig config) 
+		public void generatePieces(RegistryAccess registry, ChunkGenerator chunkGenerator,
+				StructureManager manager, int chunkX, int chunkZ, Biome biome,
+				NoneFeatureConfiguration config) 
 		{
 			int x = (chunkX << 4) | ModMathHelper.randRange(4, 12, random);
 			int z = (chunkZ << 4) | ModMathHelper.randRange(4, 12, random);

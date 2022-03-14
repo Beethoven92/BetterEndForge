@@ -3,7 +3,7 @@ package mod.beethoven92.betterendforge.common.world.generator;
 import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 public class VoronoiNoise 
 {

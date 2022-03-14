@@ -2,67 +2,67 @@ package mod.beethoven92.betterendforge.client.gui;
 
 import java.util.Arrays;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import mod.beethoven92.betterendforge.client.renderer.EndSignTileEntityRenderer;
 import mod.beethoven92.betterendforge.common.block.EndSignBlock;
 import mod.beethoven92.betterendforge.common.tileentity.ESignTileEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.gui.DialogTexts;
-import net.minecraft.client.gui.fonts.TextInputUtil;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.network.play.ClientPlayNetHandler;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldVertexBufferUploader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.network.chat.CommonComponents;
+import net.minecraft.client.gui.font.TextFieldHelper;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.multiplayer.ClientPacketListener;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import net.minecraft.client.renderer.MultiBufferSource;
+import com.mojang.blaze3d.platform.Lighting;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.BufferUploader;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.network.play.client.CUpdateSignPacket;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import net.minecraft.network.protocol.game.ServerboundSignUpdatePacket;
+import net.minecraft.Util;
+import com.mojang.math.Matrix4f;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class BlockSignEditScreen extends Screen {
-	private final SignTileEntityRenderer.SignModel model = new SignTileEntityRenderer.SignModel();
+	private final SignRenderer.SignModel model = new SignRenderer.SignModel();
 	private final ESignTileEntity sign;
 	private int ticksSinceOpened;
 	private int currentRow;
-	private TextInputUtil selectionManager;
+	private TextFieldHelper selectionManager;
 	private final String[] text = (String[]) Util.make(new String[4], (strings) -> {
 		Arrays.fill(strings, "");
 	});
 
 	public BlockSignEditScreen(ESignTileEntity sign) {
-		super(new TranslationTextComponent("sign.edit"));
+		super(new TranslatableComponent("sign.edit"));
 		this.sign = sign;
 	}
 
 	@Override
 	protected void init() {
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
-		this.addButton(new Button(this.width / 2 - 100, this.height / 4 + 120, 200, 20, DialogTexts.GUI_DONE,
+		this.addButton(new Button(this.width / 2 - 100, this.height / 4 + 120, 200, 20, CommonComponents.GUI_DONE,
 				(buttonWidget) -> {
 					this.finishEditing();
 				}));
 		this.sign.setEditable(false);
-		this.selectionManager = new TextInputUtil(() -> {
+		this.selectionManager = new TextFieldHelper(() -> {
 			return this.text[this.currentRow];
 		}, (string) -> {
 			this.text[this.currentRow] = string;
-			this.sign.setTextOnRow(this.currentRow, new StringTextComponent(string));
-		}, TextInputUtil.createClipboardGetter(this.minecraft), TextInputUtil.createClipboardSetter(this.minecraft),
+			this.sign.setTextOnRow(this.currentRow, new TextComponent(string));
+		}, TextFieldHelper.createClipboardGetter(this.minecraft), TextFieldHelper.createClipboardSetter(this.minecraft),
 				(string) -> {
 					return this.minecraft.font.width(string) <= 90;
 				});
@@ -71,9 +71,9 @@ public class BlockSignEditScreen extends Screen {
 	@Override
 	public void removed() {
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
-		ClientPlayNetHandler clientPlayNetworkHandler = this.minecraft.getConnection();
+		ClientPacketListener clientPlayNetworkHandler = this.minecraft.getConnection();
 		if (clientPlayNetworkHandler != null) {
-			clientPlayNetworkHandler.send(new CUpdateSignPacket(this.sign.getBlockPos(), this.text[0], this.text[1],
+			clientPlayNetworkHandler.send(new ServerboundSignUpdatePacket(this.sign.getBlockPos(), this.text[0], this.text[1],
 					this.text[2], this.text[3]));
 		}
 
@@ -121,10 +121,10 @@ public class BlockSignEditScreen extends Screen {
 	}
 
 	@Override
-	public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-		RenderHelper.setupForFlatItems();
+	public void render(PoseStack matrices, int mouseX, int mouseY, float delta) {
+		Lighting.setupForFlatItems();
 		this.renderBackground(matrices);
-		AbstractGui.drawCenteredString(matrices, this.font, this.title, this.width / 2, 40, 16777215);
+		GuiComponent.drawCenteredString(matrices, this.font, this.title, this.width / 2, 40, 16777215);
 		matrices.pushPose();
 		matrices.translate((double) (this.width / 2), 0.0D, 50.0D);
 
@@ -141,8 +141,8 @@ public class BlockSignEditScreen extends Screen {
 
 		matrices.pushPose();
 		matrices.scale(0.6666667F, -0.6666667F, -0.6666667F);
-		IRenderTypeBuffer.Impl immediate = this.minecraft.renderBuffers().bufferSource();
-		IVertexBuilder vertexConsumer = EndSignTileEntityRenderer.getConsumer(immediate, blockState.getBlock());
+		MultiBufferSource.BufferSource immediate = this.minecraft.renderBuffers().bufferSource();
+		VertexConsumer vertexConsumer = EndSignTileEntityRenderer.getConsumer(immediate, blockState.getBlock());
 		this.model.sign.render(matrices, vertexConsumer, 15728880, OverlayTexture.NO_OVERLAY);
 
 		if (bl) {
@@ -208,12 +208,12 @@ public class BlockSignEditScreen extends Screen {
 							- this.minecraft.font.width(string2) / 2;
 					int x = Math.min(v, w);
 					int y = Math.max(v, w);
-					Tessellator tessellator = Tessellator.getInstance();
+					Tesselator tessellator = Tesselator.getInstance();
 					BufferBuilder bufferBuilder = tessellator.getBuilder();
 					RenderSystem.disableTexture();
 					RenderSystem.enableColorLogicOp();
 					RenderSystem.logicOp(GlStateManager.LogicOp.OR_REVERSE);
-					bufferBuilder.begin(7, DefaultVertexFormats.POSITION_COLOR);
+					bufferBuilder.begin(7, DefaultVertexFormat.POSITION_COLOR);
 					float var32 = (float) x;
 					this.minecraft.font.getClass();
 					bufferBuilder.vertex(matrix4f, var32, (float) (l + 9), 0.0F).color(0, 0, 255, 255).endVertex();
@@ -223,7 +223,7 @@ public class BlockSignEditScreen extends Screen {
 					bufferBuilder.vertex(matrix4f, (float) y, (float) l, 0.0F).color(0, 0, 255, 255).endVertex();
 					bufferBuilder.vertex(matrix4f, (float) x, (float) l, 0.0F).color(0, 0, 255, 255).endVertex();
 					bufferBuilder.end();
-					WorldVertexBufferUploader.end(bufferBuilder);
+					BufferUploader.end(bufferBuilder);
 					RenderSystem.disableColorLogicOp();
 					RenderSystem.enableTexture();
 				}
@@ -231,7 +231,7 @@ public class BlockSignEditScreen extends Screen {
 		}
 
 		matrices.popPose();
-		RenderHelper.setupFor3DItems();
+		Lighting.setupFor3DItems();
 		super.render(matrices, mouseX, mouseY, delta);
 	}
 }

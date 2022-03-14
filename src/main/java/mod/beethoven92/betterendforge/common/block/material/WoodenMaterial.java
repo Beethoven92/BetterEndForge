@@ -15,29 +15,29 @@ import mod.beethoven92.betterendforge.common.init.ModCreativeTabs;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.block.ComposterBlock;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.block.FenceBlock;
-import net.minecraft.block.FenceGateBlock;
-import net.minecraft.block.LadderBlock;
-import net.minecraft.block.PressurePlateBlock;
-import net.minecraft.block.PressurePlateBlock.Sensitivity;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.block.TrapDoorBlock;
-import net.minecraft.block.WoodButtonBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.LadderBlock;
+import net.minecraft.world.level.block.PressurePlateBlock;
+import net.minecraft.world.level.block.PressurePlateBlock.Sensitivity;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.WoodButtonBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.tags.Tag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
 import net.minecraftforge.fml.RegistryObject;
 
 // TO DO? Make all wooden blocks flammable so they can take and spread fire
@@ -71,8 +71,8 @@ public class WoodenMaterial
 	public final RegistryObject<Block> shelf;
 	public final RegistryObject<Block> composter;
 
-	public final ITag.INamedTag<Block> logBlockTag;
-	public final ITag.INamedTag<Item> logItemTag;
+	public final Tag.Named<Block> logBlockTag;
+	public final Tag.Named<Item> logItemTag;
 
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) 
 	{
@@ -81,10 +81,10 @@ public class WoodenMaterial
 		logBlockTag = ModTags.makeModBlockTag(name + "_logs");
 		logItemTag = ModTags.makeModItemTag(name + "_logs");
 
-		AbstractBlock.Properties materialPlanks = AbstractBlock.Properties.of(Material.WOOD, planksColor).
+		BlockBehaviour.Properties materialPlanks = BlockBehaviour.Properties.of(Material.WOOD, planksColor).
 				                                                           strength(2.0F, 3.0F).
 				                                                           sound(SoundType.WOOD);
-		AbstractBlock.Properties materialPlanksNotSolid = AbstractBlock.Properties.of(Material.WOOD, planksColor).
+		BlockBehaviour.Properties materialPlanksNotSolid = BlockBehaviour.Properties.of(Material.WOOD, planksColor).
                 strength(2.0F, 3.0F).
                 sound(SoundType.WOOD).
                 noOcclusion();
@@ -102,7 +102,7 @@ public class WoodenMaterial
 		planks = ModBlocks.registerBlockWithDefaultItem(name + "_planks", 
 				() -> new Block(materialPlanks));
 		stairs = ModBlocks.registerBlockWithDefaultItem(name + "_stairs", 
-				() -> new StairsBlock(() -> planks.get().defaultBlockState(), materialPlanks));
+				() -> new StairBlock(() -> planks.get().defaultBlockState(), materialPlanks));
 		slab = ModBlocks.registerBlockWithDefaultItem(name + "_slab", 
 				() -> new SlabBlock(materialPlanks));
 		fence = ModBlocks.registerBlockWithDefaultItem(name + "_fence", 
@@ -126,20 +126,20 @@ public class WoodenMaterial
 				() -> new LadderBlock(materialPlanksNotSolid), 300);
 		chest = ModBlocks.registerBlock(name + "_chest",
 				() -> new ChestBlock(materialPlanksNotSolid, () -> ModTileEntityTypes.CHEST.get()) {
-					public net.minecraft.tileentity.TileEntity createTileEntity(BlockState state,
-							net.minecraft.world.IBlockReader world) {
+					public net.minecraft.world.level.block.entity.BlockEntity createTileEntity(BlockState state,
+							net.minecraft.world.level.BlockGetter world) {
 						return ModTileEntityTypes.CHEST.get().create();
 					};
 				});
 		ModItems.ITEMS.register(name + "_chest", () -> new BlockItem(chest.get(), new Item.Properties()
 				.tab(ModCreativeTabs.CREATIVE_TAB).setISTER(() -> ChestItemTileEntityRenderer::new)) {
-			public int getBurnTime(net.minecraft.item.ItemStack itemStack) {
+			public int getBurnTime(net.minecraft.world.item.ItemStack itemStack) {
 				return 300;
 			};
 		});
 
 		sign = registerBlockWithBurnItem(name + "_sign", 
-				() -> new EndSignBlock(AbstractBlock.Properties.of(Material.WOOD, planksColor).
+				() -> new EndSignBlock(BlockBehaviour.Properties.of(Material.WOOD, planksColor).
 		                strength(2.0F, 3.0F).
 		                sound(SoundType.WOOD).
 		                noOcclusion().noCollission()), 200);
@@ -148,7 +148,7 @@ public class WoodenMaterial
 		shelf = registerBlockWithBurnItem(name + "_bookshelf",
 				() -> new Block(materialPlanks) {
 					@Override
-					public float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos) 
+					public float getEnchantPowerBonus(BlockState state, LevelReader world, BlockPos pos) 
 					{
 						return 1;
 					};
@@ -168,7 +168,7 @@ public class WoodenMaterial
 		RegistryObject<T> block = ModBlocks.BLOCKS.register(name, blockSupplier);
 		ModItems.ITEMS.register(name,
 				() -> new BlockItem(block.get(), new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB)) {
-					public int getBurnTime(net.minecraft.item.ItemStack itemStack) {
+					public int getBurnTime(net.minecraft.world.item.ItemStack itemStack) {
 						return burnTime;
 					};
 				});

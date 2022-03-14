@@ -4,34 +4,34 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public abstract class InvertedScatterFeature extends Feature<NoFeatureConfig>
+public abstract class InvertedScatterFeature extends Feature<NoneFeatureConfiguration>
 {
-	private static final Mutable POS = new Mutable();
+	private static final MutableBlockPos POS = new MutableBlockPos();
 	private final int radius;
 	
 	public InvertedScatterFeature(int radius) 
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 		this.radius = radius;
 	}
 	
-	public abstract boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius);
+	public abstract boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius);
 	
-	public abstract void generate(ISeedReader world, Random random, BlockPos blockPos);
+	public abstract void generate(WorldGenLevel world, Random random, BlockPos blockPos);
 	
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
-			BlockPos pos, NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random,
+			BlockPos pos, NoneFeatureConfiguration config) 
 	{
-		int maxY = world.getHeight(Heightmap.Type.WORLD_SURFACE, pos.getX(), pos.getZ());
+		int maxY = world.getHeight(Heightmap.Types.WORLD_SURFACE, pos.getX(), pos.getZ());
 		int minY = BlockHelper.upRay(world, new BlockPos(pos.getX(), 0, pos.getZ()), maxY);
 
 		for (int y = maxY; y > minY; y--) 

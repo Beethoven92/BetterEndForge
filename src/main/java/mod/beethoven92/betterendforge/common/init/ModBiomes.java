@@ -25,13 +25,13 @@ import mod.beethoven92.betterendforge.config.Configs;
 import mod.beethoven92.betterendforge.config.jsons.JsonConfigs;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
-import net.minecraft.world.biome.Biomes;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -112,7 +112,7 @@ public class ModBiomes
 		Map<String, JsonObject> configs = Maps.newHashMap();
 		
 		biomeRegistry.forEach((biome) -> {
-			if (biome.getBiomeCategory() == Category.THEEND) 
+			if (biome.getBiomeCategory() == BiomeCategory.THEEND) 
 			{
 				ResourceLocation id = biomeRegistry.getKey(biome);
 				
@@ -205,7 +205,7 @@ public class ModBiomes
 	
 	public static BetterEndBiome registerBiome(Biome biome, EndBiomeType type, float fogDensity, float genChance) 
 	{
-		BetterEndBiome endBiome = new BetterEndBiome(WorldGenRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, true);
+		BetterEndBiome endBiome = new BetterEndBiome(BuiltinRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, true);
 		if (Configs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true))
 		{
 			addToPicker(endBiome, type);
@@ -221,7 +221,7 @@ public class ModBiomes
 	
 	public static BetterEndBiome registerSubBiome(Biome biome, BetterEndBiome parent, float fogDensity, float genChance, boolean hasCaves) 
 	{
-		BetterEndBiome endBiome = new BetterEndBiome(WorldGenRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, hasCaves);
+		BetterEndBiome endBiome = new BetterEndBiome(BuiltinRegistries.BIOME.getKey(biome), biome, fogDensity, genChance, hasCaves);
 		if (Configs.BIOME_CONFIG.getBoolean(endBiome.getID(), "enabled", true))
 		{
 			parent.addSubBiome(endBiome);
@@ -257,14 +257,14 @@ public class ModBiomes
 		return biome;
 	}
 	
-	private static BetterEndBiome registerBiome(RegistryKey<Biome> key, EndBiomeType type, float genChance) 
+	private static BetterEndBiome registerBiome(ResourceKey<Biome> key, EndBiomeType type, float genChance) 
 	{
-		return registerBiome(WorldGenRegistries.BIOME.getOrThrow(key), type, genChance);
+		return registerBiome(BuiltinRegistries.BIOME.getOrThrow(key), type, genChance);
 	}
 	
-	private static BetterEndBiome registerSubBiome(RegistryKey<Biome> key, BetterEndBiome parent, float genChance) 
+	private static BetterEndBiome registerSubBiome(ResourceKey<Biome> key, BetterEndBiome parent, float genChance) 
 	{
-		return registerSubBiome(WorldGenRegistries.BIOME.getOrThrow(key), parent, genChance, true);
+		return registerSubBiome(BuiltinRegistries.BIOME.getOrThrow(key), parent, genChance, true);
 	}
 	
 	private static void addToPicker(BetterEndBiome biome, EndBiomeType type) 

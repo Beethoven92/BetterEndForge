@@ -25,21 +25,21 @@ import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFFlatland;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFPrimitive;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.util.Mth;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class GeyserFeature extends Feature<NoFeatureConfig>
+public class GeyserFeature extends Feature<NoneFeatureConfiguration>
 {
 	protected static final Function<BlockState, Boolean> REPLACE1;
 	protected static final Function<BlockState, Boolean> REPLACE2;
@@ -71,12 +71,12 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 	
 	public GeyserFeature() 
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
-			NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos pos,
+			NoneFeatureConfiguration config) 
 	{
 		pos = FeatureHelper.getPosOnSurfaceWG(world, pos);
 		
@@ -85,7 +85,7 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 			return false;
 		}
 		
-		Mutable bpos = new Mutable().set(pos);
+		MutableBlockPos bpos = new MutableBlockPos().set(pos);
 		bpos.setY(bpos.getY() - 1);
 		BlockState state = world.getBlockState(bpos);
 		while (state.is(ModTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) 
@@ -110,7 +110,7 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 		{
 			int py = i << 1;
 			float delta = (float) i / (float) (count - 1);
-			float radius = MathHelper.lerp(delta, radius1, radius2) * 1.3F;
+			float radius = Mth.lerp(delta, radius1, radius2) * 1.3F;
 
 			SDF bowl = new SDFCappedCone().setHeight(radius).setRadius1(0).setRadius2(radius).setBlock(ModBlocks.SULPHURIC_ROCK.stone.get());
 
@@ -193,7 +193,7 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 		}).setSource(cave).setReplaceFunction(REPLACE1).fillRecursiveIgnore(world, pos, IGNORE);
 
 		BlockHelper.setWithoutUpdate(world, pos, Blocks.WATER);
-		Mutable mut = new Mutable().set(pos);
+		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		count = FeatureHelper.getYOnSurface(world, pos.getX(), pos.getZ()) - pos.getY();
 		for (int i = 0; i < count; i++) 
 		{
@@ -229,7 +229,7 @@ public class GeyserFeature extends Feature<NoFeatureConfig>
 							BlockPos p = mut.relative(dir);
 							if (rand.nextBoolean() && world.getBlockState(p).is(Blocks.WATER)) 
 							{
-								BlockHelper.setWithoutUpdate(world, p, ModBlocks.TUBE_WORM.get().defaultBlockState().setValue(HorizontalBlock.FACING, dir));
+								BlockHelper.setWithoutUpdate(world, p, ModBlocks.TUBE_WORM.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, dir));
 							}
 						}
 						mut.setY(mut.getY() + 1);

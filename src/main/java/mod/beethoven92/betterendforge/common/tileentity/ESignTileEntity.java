@@ -5,34 +5,34 @@ import java.util.function.Function;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.ICommandSource;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.DyeColor;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.IReorderingProcessor;
-import net.minecraft.util.math.vector.Vector2f;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentUtils;
-import net.minecraft.util.text.event.ClickEvent;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.CommandSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ESignTileEntity extends TileEntity {
-	private final ITextComponent[] text = new ITextComponent[] { StringTextComponent.EMPTY, StringTextComponent.EMPTY,
-			StringTextComponent.EMPTY, StringTextComponent.EMPTY };
+public class ESignTileEntity extends BlockEntity {
+	private final Component[] text = new Component[] { TextComponent.EMPTY, TextComponent.EMPTY,
+			TextComponent.EMPTY, TextComponent.EMPTY };
 	private boolean editable = true;
-	private PlayerEntity editor;
-	private final IReorderingProcessor[] textBeingEdited = new IReorderingProcessor[4];
+	private Player editor;
+	private final FormattedCharSequence[] textBeingEdited = new FormattedCharSequence[4];
 	private DyeColor textColor = DyeColor.BLACK;
 
 	public ESignTileEntity() {
@@ -40,11 +40,11 @@ public class ESignTileEntity extends TileEntity {
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT tag) {
+	public CompoundTag save(CompoundTag tag) {
 		super.save(tag);
 
 		for (int i = 0; i < 4; ++i) {
-			String string = ITextComponent.Serializer.toJson(this.text[i]);
+			String string = Component.Serializer.toJson(this.text[i]);
 			tag.putString("Text" + (i + 1), string);
 		}
 
@@ -53,17 +53,17 @@ public class ESignTileEntity extends TileEntity {
 	}
 
 	@Override
-	public void load(BlockState state, CompoundNBT tag) {
+	public void load(BlockState state, CompoundTag tag) {
 		this.editable = false;
 		super.load(state, tag);
 		this.textColor = DyeColor.byName(tag.getString("Color"), DyeColor.BLACK);
 
 		for (int i = 0; i < 4; ++i) {
 			String string = tag.getString("Text" + (i + 1));
-			ITextComponent text = ITextComponent.Serializer.fromJson(string.isEmpty() ? "\"\"" : string);
-			if (this.level instanceof ServerWorld) {
+			Component text = Component.Serializer.fromJson(string.isEmpty() ? "\"\"" : string);
+			if (this.level instanceof ServerLevel) {
 				try {
-					this.text[i] = TextComponentUtils.updateForEntity(this.getCommandSource((ServerPlayerEntity) null),
+					this.text[i] = ComponentUtils.updateForEntity(this.getCommandSource((ServerPlayer) null),
 							text, (Entity) null, 0);
 				} catch (CommandSyntaxException var7) {
 					this.text[i] = text;
@@ -77,28 +77,28 @@ public class ESignTileEntity extends TileEntity {
 
 	}
 
-	public void setTextOnRow(int row, ITextComponent text) {
+	public void setTextOnRow(int row, Component text) {
 		this.text[row] = text;
 		this.textBeingEdited[row] = null;
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public IReorderingProcessor getTextBeingEditedOnRow(int row, Function<ITextComponent, IReorderingProcessor> function) {
+	public FormattedCharSequence getTextBeingEditedOnRow(int row, Function<Component, FormattedCharSequence> function) {
 		if (this.textBeingEdited[row] == null && this.text[row] != null) {
-			this.textBeingEdited[row] = (IReorderingProcessor) function.apply(this.text[row]);
+			this.textBeingEdited[row] = (FormattedCharSequence) function.apply(this.text[row]);
 		}
 
 		return this.textBeingEdited[row];
 	}
 
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket() {
-		return new SUpdateTileEntityPacket(this.worldPosition, 9, this.getUpdateTag());
+	public ClientboundBlockEntityDataPacket getUpdatePacket() {
+		return new ClientboundBlockEntityDataPacket(this.worldPosition, 9, this.getUpdateTag());
 	}
 
 	@Override
-	public CompoundNBT getUpdateTag() {
-		return this.save(new CompoundNBT());
+	public CompoundTag getUpdateTag() {
+		return this.save(new CompoundTag());
 	}
 
 	@Override
@@ -119,26 +119,26 @@ public class ESignTileEntity extends TileEntity {
 
 	}
 
-	public void setEditor(PlayerEntity player) {
+	public void setEditor(Player player) {
 		this.editor = player;
 	}
 
-	public PlayerEntity getEditor() {
+	public Player getEditor() {
 		return this.editor;
 	}
 
-	public boolean onActivate(PlayerEntity player) {
-		ITextComponent[] var2 = this.text;
+	public boolean onActivate(Player player) {
+		Component[] var2 = this.text;
 		int var3 = var2.length;
 
 		for (int var4 = 0; var4 < var3; ++var4) {
-			ITextComponent text = var2[var4];
+			Component text = var2[var4];
 			Style style = text == null ? null : text.getStyle();
 			if (style != null && style.getClickEvent() != null) {
 				ClickEvent clickEvent = style.getClickEvent();
 				if (clickEvent.getAction() == ClickEvent.Action.RUN_COMMAND) {
 					player.getServer().getCommands()
-							.performCommand(this.getCommandSource((ServerPlayerEntity) player), clickEvent.getValue());
+							.performCommand(this.getCommandSource((ServerPlayer) player), clickEvent.getValue());
 				}
 			}
 		}
@@ -146,11 +146,11 @@ public class ESignTileEntity extends TileEntity {
 		return true;
 	}
 
-	public CommandSource getCommandSource(ServerPlayerEntity player) {
+	public CommandSourceStack getCommandSource(ServerPlayer player) {
 		String string = player == null ? "Sign" : player.getName().getString();
-		ITextComponent text = player == null ? new StringTextComponent("Sign") : player.getDisplayName();
-		return new CommandSource(ICommandSource.NULL, Vector3d.atCenterOf(this.worldPosition), Vector2f.ZERO,
-				(ServerWorld) this.level, 2, string, (ITextComponent) text, this.level.getServer(), player);
+		Component text = player == null ? new TextComponent("Sign") : player.getDisplayName();
+		return new CommandSourceStack(CommandSource.NULL, Vec3.atCenterOf(this.worldPosition), Vec2.ZERO,
+				(ServerLevel) this.level, 2, string, (Component) text, this.level.getServer(), player);
 	}
 
 	public DyeColor getTextColor() {

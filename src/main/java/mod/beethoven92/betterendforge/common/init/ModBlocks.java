@@ -25,23 +25,29 @@ import mod.beethoven92.betterendforge.common.block.template.WallMushroomBlock;
 import mod.beethoven92.betterendforge.common.block.template.WallPlantBlock;
 import mod.beethoven92.betterendforge.common.item.ModArmorMaterial;
 import mod.beethoven92.betterendforge.common.item.ModItemTier;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowerPotBlock;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.item.*;
-import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Tier;
 
 public class ModBlocks 
 {
@@ -49,77 +55,77 @@ public class ModBlocks
 	
 	// TERRAINS
 	public static final RegistryObject<Block> CRYSTAL_MOSS = registerBlockWithDefaultItem("crystal_moss",
-			() -> new TerrainBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_PINK).
+			() -> new TerrainBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_PINK).
 					                                        requiresCorrectToolForDrops().
 					                                        strength(3.0F, 9.0F).
 					                                        sound(SoundType.GRAVEL).
 					                                        randomTicks()));
 	
 	public static final RegistryObject<Block> END_MYCELIUM = registerBlockWithDefaultItem("end_mycelium", 
-			() -> new TerrainBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).
+			() -> new TerrainBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_LIGHT_BLUE).
 					                                        requiresCorrectToolForDrops().
                                                             strength(3.0F, 9.0F).
                                                             sound(SoundType.GRAVEL).
                                                             randomTicks()));
 	
 	public static final RegistryObject<Block> END_MOSS = registerBlockWithDefaultItem("end_moss", 
-			() -> new TerrainBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_CYAN).
+			() -> new TerrainBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_CYAN).
                                                             requiresCorrectToolForDrops().
                                                             strength(3.0F, 9.0F).
                                                             sound(SoundType.GRAVEL).
                                                             randomTicks()));
 	
 	public static final RegistryObject<Block> CHORUS_NYLIUM = registerBlockWithDefaultItem("chorus_nylium", 
-			() -> new TerrainBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_MAGENTA).
+			() -> new TerrainBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_MAGENTA).
                                                             requiresCorrectToolForDrops().
                                                             strength(3.0F, 9.0F).
                                                             sound(SoundType.STONE).
                                                             randomTicks()));
 	
 	public static final RegistryObject<Block> CAVE_MOSS = registerBlockWithDefaultItem("cave_moss", 
-			() -> new TripleTerrainBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_PURPLE).
+			() -> new TripleTerrainBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_PURPLE).
                                                             requiresCorrectToolForDrops().
                                                             strength(3.0F, 9.0F).
                                                             sound(SoundType.GRAVEL).
                                                             randomTicks()));
 	
 	public static final RegistryObject<Block> SHADOW_GRASS = registerBlockWithDefaultItem("shadow_grass", 
-			() -> new ShadowGrassBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).
+			() -> new ShadowGrassBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).
                                                                 requiresCorrectToolForDrops().
                                                                 strength(3.0F, 9.0F).
                                                                 sound(SoundType.GRAVEL).
                                                                 randomTicks()));
 	
 	public static final RegistryObject<Block> PINK_MOSS = registerBlockWithDefaultItem("pink_moss", 
-			() -> new TerrainBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_PINK).
+			() -> new TerrainBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_PINK).
                                                             requiresCorrectToolForDrops().
                                                             strength(3.0F, 9.0F).
                                                             sound(SoundType.GRAVEL).
                                                             randomTicks()));
 	
 	public static final RegistryObject<Block> AMBER_MOSS = registerBlockWithDefaultItem("amber_moss", 
-			() -> new TerrainBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_ORANGE).
+			() -> new TerrainBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_ORANGE).
                                                             requiresCorrectToolForDrops().
                                                             strength(3.0F, 9.0F).
                                                             sound(SoundType.GRAVEL).
                                                             randomTicks()));
 	
 	public static final RegistryObject<Block> JUNGLE_MOSS = registerBlockWithDefaultItem("jungle_moss", 
-			() -> new TerrainBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_ORANGE).
+			() -> new TerrainBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_ORANGE).
                                                             requiresCorrectToolForDrops().
                                                             strength(3.0F, 9.0F).
                                                             sound(SoundType.GRAVEL).
                                                             randomTicks()));
 	
 	public static final RegistryObject<Block> SANGNUM = registerBlockWithDefaultItem("sangnum", 
-			() -> new TerrainBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_RED).
+			() -> new TerrainBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).
                                                             requiresCorrectToolForDrops().
                                                             strength(3.0F, 9.0F).
                                                             sound(SoundType.GRAVEL).
                                                             randomTicks()));
 	
 	public static final RegistryObject<Block> RUTISCUS = registerBlockWithDefaultItem("rutiscus",
-			() -> new TerrainBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_ORANGE).
+			() -> new TerrainBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_ORANGE).
                                                             requiresCorrectToolForDrops().
                                                             strength(3.0F, 9.0F).
                                                             sound(SoundType.GRAVEL).
@@ -143,12 +149,12 @@ public class ModBlocks
 
 
 	public static final RegistryObject<Block> ENDSTONE_DUST = registerBlockWithDefaultItem("endstone_dust", 
-			() -> new EndstoneDustBlock(AbstractBlock.Properties.of(Material.SAND, Blocks.END_STONE.defaultMaterialColor()).
+			() -> new EndstoneDustBlock(BlockBehaviour.Properties.of(Material.SAND, Blocks.END_STONE.defaultMaterialColor()).
 					                                             strength(0.5F).
 					                                             sound(SoundType.SAND)));
 	
 	public static final RegistryObject<Block> SILK_MOTH_NEST = registerBlockWithDefaultItem("silk_moth_nest", 
-			() -> new SilkMothNestBlock(AbstractBlock.Properties.of(Material.WOOL).strength(0.5f, 0.1f).sound(SoundType.WOOL).noOcclusion().randomTicks()));
+			() -> new SilkMothNestBlock(BlockBehaviour.Properties.of(Material.WOOL).strength(0.5f, 0.1f).sound(SoundType.WOOL).noOcclusion().randomTicks()));
 	
 	//PATHS
 	public static final RegistryObject<Block> CRYSTAL_MOSS_PATH = registerBlockWithDefaultItem("crystal_moss_path",
@@ -189,32 +195,32 @@ public class ModBlocks
 			() -> new MossyObsidianBlock());
 	
 	public static final RegistryObject<RotatedPillarBlock> DRAGON_BONE_BLOCK = registerBlockWithDefaultItem("dragon_bone_block", 
-			() -> new RotatedPillarBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.SAND).requiresCorrectToolForDrops().strength(2.0F).sound(SoundType.BONE_BLOCK)));
+			() -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.SAND).requiresCorrectToolForDrops().strength(2.0F).sound(SoundType.BONE_BLOCK)));
 	
-	public static final RegistryObject<StairsBlock> DRAGON_BONE_STAIRS = registerBlockWithDefaultItem("dragon_bone_stairs", 
-			() -> new StairsBlock(() -> DRAGON_BONE_BLOCK.get().defaultBlockState(), AbstractBlock.Properties.copy(DRAGON_BONE_BLOCK.get())));
+	public static final RegistryObject<StairBlock> DRAGON_BONE_STAIRS = registerBlockWithDefaultItem("dragon_bone_stairs", 
+			() -> new StairBlock(() -> DRAGON_BONE_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(DRAGON_BONE_BLOCK.get())));
 	
 	public static final RegistryObject<SlabBlock> DRAGON_BONE_SLAB = registerBlockWithDefaultItem("dragon_bone_slab", 
-			() -> new SlabBlock(AbstractBlock.Properties.copy(DRAGON_BONE_BLOCK.get())));
+			() -> new SlabBlock(BlockBehaviour.Properties.copy(DRAGON_BONE_BLOCK.get())));
 
 	public static final RegistryObject<Block> MOSSY_DRAGON_BONE = registerBlockWithDefaultItem("mossy_dragon_bone", 
 			() -> new MossyDragonBoneBlock());
 
 	// MATERIALS
 	public static final RegistryObject<Block> AETERNIUM_BLOCK = registerBlockWithDefaultItem("aeternium_block",
-			() -> new Block(AbstractBlock.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY).
+			() -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GRAY).
 					                                 strength(65F, 1200F).
 					                                 requiresCorrectToolForDrops().
 					                                 sound(SoundType.NETHERITE_BLOCK)));
 	
 	public static final RegistryObject<Block> ENDER_BLOCK = registerBlockWithDefaultItem("ender_block",
-			() -> new Block(AbstractBlock.Properties.of(Material.STONE).
+			() -> new Block(BlockBehaviour.Properties.of(Material.STONE).
 					                                 strength(5F, 6F).
 					                                 requiresCorrectToolForDrops().
 					                                 sound(SoundType.STONE)));
 	
 	public static final RegistryObject<Block> AURORA_CRYSTAL = registerBlockWithDefaultItem("aurora_crystal", 
-			() -> new AuroraCrystalBlock(AbstractBlock.Properties.of(Material.GLASS).
+			() -> new AuroraCrystalBlock(BlockBehaviour.Properties.of(Material.GLASS).
 					                                              harvestTool(ToolType.PICKAXE).
 					                                              strength(1F).
 					                                              sound(SoundType.GLASS).
@@ -224,20 +230,20 @@ public class ModBlocks
 					                                              noOcclusion()));
 	
 	public static final RegistryObject<Block> AMBER_BLOCK = registerBlockWithDefaultItem("amber_block", 
-			() -> new Block(AbstractBlock.Properties.of(Material.METAL, MaterialColor.COLOR_YELLOW).
+			() -> new Block(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_YELLOW).
 					requiresCorrectToolForDrops().
 					strength(5.0F, 6.0F).
 					sound(SoundType.METAL)));
 	
 	public static final RegistryObject<Block> SMARAGDANT_CRYSTAL = registerBlockWithDefaultItem("smaragdant_crystal", 
-			() -> new RotatedPillarBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_GREEN).
+			() -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GREEN).
 					                                 harvestTool(ToolType.PICKAXE).
 					                                 strength(1F).
 					                                 lightLevel((value) -> {return 15;}).
 					                                 sound(SoundType.GLASS)));
 	
 	public static final RegistryObject<Block> SMARAGDANT_CRYSTAL_SHARD = registerBlockWithDefaultItem("smaragdant_crystal_shard", 
-			() -> new SmaragdantCrystalShardBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_GREEN).
+			() -> new SmaragdantCrystalShardBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GREEN).
 					                                                       harvestTool(ToolType.PICKAXE).
 					                                                       requiresCorrectToolForDrops().
 					                                                       lightLevel((value) -> {return 15;}).
@@ -246,109 +252,109 @@ public class ModBlocks
 	
 	// LANTERNS
 	public static final RegistryObject<Block> ANDESITE_LANTERN = registerBlockWithDefaultItem("andesite_lantern", 
-			() -> new ModLanternBlock(AbstractBlock.Properties.copy(Blocks.ANDESITE).
+			() -> new ModLanternBlock(BlockBehaviour.Properties.copy(Blocks.ANDESITE).
                     lightLevel(s -> 15)));
 	public static final RegistryObject<Block> DIORITE_LANTERN = registerBlockWithDefaultItem("diorite_lantern", 
-			() -> new ModLanternBlock(AbstractBlock.Properties.copy(Blocks.DIORITE).
+			() -> new ModLanternBlock(BlockBehaviour.Properties.copy(Blocks.DIORITE).
                     lightLevel(s -> 15)));
 	public static final RegistryObject<Block> GRANITE_LANTERN = registerBlockWithDefaultItem("granite_lantern", 
-			() -> new ModLanternBlock(AbstractBlock.Properties.copy(Blocks.GRANITE).
+			() -> new ModLanternBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE).
                     lightLevel(s -> 15)));
 	public static final RegistryObject<Block> QUARTZ_LANTERN = registerBlockWithDefaultItem("quartz_lantern", 
-			() -> new ModLanternBlock(AbstractBlock.Properties.copy(Blocks.QUARTZ_BLOCK).
+			() -> new ModLanternBlock(BlockBehaviour.Properties.copy(Blocks.QUARTZ_BLOCK).
                     lightLevel(s -> 15)));
 	public static final RegistryObject<Block> PURPUR_LANTERN = registerBlockWithDefaultItem("purpur_lantern", 
-			() -> new ModLanternBlock(AbstractBlock.Properties.copy(Blocks.PURPUR_BLOCK).
+			() -> new ModLanternBlock(BlockBehaviour.Properties.copy(Blocks.PURPUR_BLOCK).
                     lightLevel(s -> 15)));
 	public static final RegistryObject<Block> END_STONE_LANTERN = registerBlockWithDefaultItem("end_stone_lantern", 
-			() -> new ModLanternBlock(AbstractBlock.Properties.copy(Blocks.END_STONE).
+			() -> new ModLanternBlock(BlockBehaviour.Properties.copy(Blocks.END_STONE).
                     lightLevel(s -> 15)));
 	public static final RegistryObject<Block> BLACKSTONE_LANTERN = registerBlockWithDefaultItem("blackstone_lantern", 
-			() -> new ModLanternBlock(AbstractBlock.Properties.copy(Blocks.BLACKSTONE).
+			() -> new ModLanternBlock(BlockBehaviour.Properties.copy(Blocks.BLACKSTONE).
                     lightLevel(s -> 15)));  
 	  
     public static final RegistryObject<Block> IRON_BULB_LANTERN = registerBlockWithDefaultItem("iron_bulb_lantern", 
     		() -> new BulbVineLanternBlock());
     
 	public static final RegistryObject<Block> IRON_CHANDELIER = registerBlockWithDefaultItem("iron_chandelier", 
-			() -> new ChandelierBlock(AbstractBlock.Properties.copy(Blocks.IRON_BLOCK).
+			() -> new ChandelierBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK).
 					                                           noCollission().
 					                                           requiresCorrectToolForDrops().
 					                                           lightLevel((state) -> 15)));
 	
 	public static final RegistryObject<Block> GOLD_CHANDELIER = registerBlockWithDefaultItem("gold_chandelier", 
-			() -> new ChandelierBlock(AbstractBlock.Properties.copy(Blocks.GOLD_BLOCK).
+			() -> new ChandelierBlock(BlockBehaviour.Properties.copy(Blocks.GOLD_BLOCK).
 					                                           noCollission().
 					                                           requiresCorrectToolForDrops().
 					                                           lightLevel((state) -> 15)));
 	
 	// ORES
 	public static final RegistryObject<Block> ENDER_ORE = registerBlockWithDefaultItem("ender_ore",
-			() -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.SAND).
+			() -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.SAND).
 					                                 strength(3F, 9F).
 					                                 requiresCorrectToolForDrops().
 					                                 sound(SoundType.STONE)));
 	
 	public static final RegistryObject<Block> AMBER_ORE = registerBlockWithDefaultItem("amber_ore",
-			() -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.SAND).
+			() -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.SAND).
 					                                 strength(3F, 9F).
 					                                 requiresCorrectToolForDrops().
 					                                 sound(SoundType.STONE)));
 	
 	// ROCKS	
 	public static final RegistryObject<Block> BRIMSTONE = registerBlockWithDefaultItem("brimstone",
-			() -> new BrimstoneBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_BROWN).
+			() -> new BrimstoneBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BROWN).
 					                                          requiresCorrectToolForDrops().
 					                                          strength(3.0F, 9.0F).
 					                                          randomTicks()));
 	
 	public static final RegistryObject<Block> SULPHUR_CRYSTAL = registerBlockWithDefaultItem("sulphur_crystal",
-			() -> new SulphurCrystalBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_YELLOW).
+			() -> new SulphurCrystalBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_YELLOW).
 					                                          requiresCorrectToolForDrops().
 					                                          noCollission().
 					                                          sound(SoundType.GLASS)));
 	
 	public static final RegistryObject<Block> HYDROTHERMAL_VENT = registerBlockWithDefaultItem("hydrothermal_vent",
-			() -> new HydrothermalVentBlock(AbstractBlock.Properties.of(Material.STONE).
+			() -> new HydrothermalVentBlock(BlockBehaviour.Properties.of(Material.STONE).
                                                                      requiresCorrectToolForDrops().
                                                                      randomTicks().
                                                                      noCollission().
                                                                      sound(SoundType.STONE)));
 	
 	public static final RegistryObject<Block> FLAVOLITE_RUNED = registerBlockWithDefaultItem("flavolite_runed",
-			() -> new RunedFlavoliteBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.SAND).
+			() -> new RunedFlavoliteBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.SAND).
 					                                               requiresCorrectToolForDrops().
 					                                               strength(3.0F, Blocks.OBSIDIAN.getExplosionResistance())));
 	
 	public static final RegistryObject<Block> FLAVOLITE_RUNED_ETERNAL = registerBlockWithDefaultItem("flavolite_runed_eternal", 
-			() -> new RunedFlavoliteBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.SAND).
+			() -> new RunedFlavoliteBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.SAND).
 					                                               strength(-1.0F, 3600000.0F).
 					                                               noDrops()));
 	
 	public static final RegistryObject<Block> QUARTZ_PEDESTAL = registerBlockWithDefaultItem("quartz_pedestal",
-			() -> new PedestalBlock(AbstractBlock.Properties.copy(Blocks.QUARTZ_BLOCK).lightLevel(PedestalBlock.light())));
+			() -> new PedestalBlock(BlockBehaviour.Properties.copy(Blocks.QUARTZ_BLOCK).lightLevel(PedestalBlock.light())));
 	
 	public static final RegistryObject<Block> PURPUR_PEDESTAL = registerBlockWithDefaultItem("purpur_pedestal",
-			() -> new PedestalBlock(AbstractBlock.Properties.copy(Blocks.PURPUR_BLOCK).lightLevel(PedestalBlock.light())));
+			() -> new PedestalBlock(BlockBehaviour.Properties.copy(Blocks.PURPUR_BLOCK).lightLevel(PedestalBlock.light())));
 	
 	public static final RegistryObject<Block> ANDESITE_PEDESTAL = registerBlockWithDefaultItem("andesite_pedestal",
-			() -> new PedestalBlock(AbstractBlock.Properties.copy(Blocks.ANDESITE).lightLevel(PedestalBlock.light())));
+			() -> new PedestalBlock(BlockBehaviour.Properties.copy(Blocks.ANDESITE).lightLevel(PedestalBlock.light())));
 
 	public static final RegistryObject<Block> DIORITE_PEDESTAL = registerBlockWithDefaultItem("diorite_pedestal",
-			() -> new PedestalBlock(AbstractBlock.Properties.copy(Blocks.DIORITE).lightLevel(PedestalBlock.light())));
+			() -> new PedestalBlock(BlockBehaviour.Properties.copy(Blocks.DIORITE).lightLevel(PedestalBlock.light())));
 
 	public static final RegistryObject<Block> GRANITE_PEDESTAL = registerBlockWithDefaultItem("granite_pedestal",
-			() -> new PedestalBlock(AbstractBlock.Properties.copy(Blocks.GRANITE).lightLevel(PedestalBlock.light())));
+			() -> new PedestalBlock(BlockBehaviour.Properties.copy(Blocks.GRANITE).lightLevel(PedestalBlock.light())));
 
 	public static final RegistryObject<Block> END_STONE_STALACTITE = registerBlockWithDefaultItem("end_stone_stalactite", 
-			() -> new StalactiteBlock(AbstractBlock.Properties.copy(Blocks.END_STONE).noOcclusion()));
+			() -> new StalactiteBlock(BlockBehaviour.Properties.copy(Blocks.END_STONE).noOcclusion()));
 	
 	public static final RegistryObject<Block> END_STONE_STALACTITE_CAVEMOSS = registerBlockWithDefaultItem("end_stone_stalactite_cavemoss", 
-			() -> new StalactiteBlock(AbstractBlock.Properties.copy(CAVE_MOSS.get()).noOcclusion()));		
+			() -> new StalactiteBlock(BlockBehaviour.Properties.copy(CAVE_MOSS.get()).noOcclusion()));		
 	
 	// PLANTS
 	public static final RegistryObject<Block> UMBRELLA_MOSS = registerBlockWithDefaultItem("umbrella_moss", 
-			() -> new UmbrellaMossBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new UmbrellaMossBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                             instabreak().
 					                                             lightLevel((value) -> {return 11;}).
 					                                             noCollission().
@@ -356,14 +362,14 @@ public class ModBlocks
 					                                             emissiveRendering((state, reader, pos) -> {return true;})));
 			
 	public static final RegistryObject<Block> UMBRELLA_MOSS_TALL = registerBlockWithDefaultItem("umbrella_moss_tall", 
-			() -> new UmbrellaMossTallBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new UmbrellaMossTallBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                                 instabreak().
                                                                      lightLevel((state) -> { return state.getValue(UmbrellaMossTallBlock.TOP) ? 12 : 0; }).
                                                                      noCollission().
                                                                      sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> CREEPING_MOSS = registerBlockWithDefaultItem("creeping_moss",
-			() -> new GlowingMossBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new GlowingMossBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                                 instabreak().
                                                                 lightLevel((value) -> {return 11;}).
                                                                 noCollission().
@@ -371,13 +377,13 @@ public class ModBlocks
                                                                 emissiveRendering((state, reader, pos) -> {return true;})));
 	
 	public static final RegistryObject<Block> CHORUS_GRASS = registerBlockWithDefaultItem("chorus_grass", 
-			() -> new ChorusGrassBlock(AbstractBlock.Properties.of(Material.REPLACEABLE_PLANT).
+			() -> new ChorusGrassBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).
                                                                 instabreak().
                                                                 noCollission().
                                                                 sound(SoundType.GRASS)));
 
 	public static final RegistryObject<Block> CHARCOAL_BLOCK = registerBlockWithNoItem("charcoal_block",
-			() -> new CharcoalBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).
+			() -> new CharcoalBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).
 					strength(3.0F, 5.0F).
 					sound(SoundType.STONE)));
 	
@@ -438,20 +444,20 @@ public class ModBlocks
 
 	
 	public static final RegistryObject<Block> BLUE_VINE_SEED = registerBlockWithDefaultItem("blue_vine_seed", 
-			() -> new BlueVineSeedBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new BlueVineSeedBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                             instabreak().
 					                                             noCollission().
 					                                             randomTicks().
 					                                             sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> BLUE_VINE = registerBlock("blue_vine", 
-			() -> new BlueVineBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new BlueVineBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                              instabreak().
                                                              noCollission().
                                                              sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> BLUE_VINE_LANTERN = registerBlockWithDefaultItem("blue_vine_lantern", 
-			() -> new BlueVineLanternBlock(AbstractBlock.Properties.of(Material.WOOD).
+			() -> new BlueVineLanternBlock(BlockBehaviour.Properties.of(Material.WOOD).
                                                                     instabreak().
                                                                     harvestTool(ToolType.AXE).
                                                                     requiresCorrectToolForDrops().
@@ -459,14 +465,14 @@ public class ModBlocks
                                                                     sound(SoundType.WART_BLOCK)));
 	
 	public static final RegistryObject<Block> BLUE_VINE_FUR = registerBlockWithDefaultItem("blue_vine_fur", 
-			() -> new FurBlock(AbstractBlock.Properties.of(Material.REPLACEABLE_PLANT).
+			() -> new FurBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).
                                                                instabreak().
                                                                lightLevel((value) -> {return 15;}).
                                                                noCollission().
                                                                sound(SoundType.WET_GRASS)));
 	
 	public static final RegistryObject<Block> CAVE_BUSH = registerBlockWithDefaultItem("cave_bush",
-			() -> new Block(AbstractBlock.Properties.of(Material.LEAVES, MaterialColor.COLOR_MAGENTA).
+			() -> new Block(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_MAGENTA).
                                                            strength(0.2F).randomTicks().
                                                            sound(SoundType.GRASS).
                                                            noOcclusion().
@@ -475,96 +481,96 @@ public class ModBlocks
                                                            isViewBlocking((state, reader, pos) -> {return false;})));
 	
 	public static final RegistryObject<Block> END_LILY_SEED = registerBlockWithDefaultItem("end_lily_seed",
-			() -> new EndLilySeedBlock(AbstractBlock.Properties.of(Material.WATER_PLANT).
+			() -> new EndLilySeedBlock(BlockBehaviour.Properties.of(Material.WATER_PLANT).
 					                                            sound(SoundType.WET_GRASS).
 					                                            randomTicks().
 					                                            noCollission().
 					                                            instabreak()));
 	
 	public static final RegistryObject<Block> END_LILY = registerBlock("end_lily",
-			() -> new EndLilyBlock(AbstractBlock.Properties.of(Material.WATER_PLANT).
+			() -> new EndLilyBlock(BlockBehaviour.Properties.of(Material.WATER_PLANT).
 					                                        sound(SoundType.WET_GRASS).
 					                                        noCollission().
 					                                        lightLevel((state) -> {return state.getValue(EndLilyBlock.SHAPE) == TripleShape.TOP ? 13 : 0;}).
 					                                        instabreak()));
 	
 	public static final RegistryObject<Block> END_LOTUS_SEED = registerBlockWithDefaultItem("end_lotus_seed",
-			() -> new EndLotusSeedBlock(AbstractBlock.Properties.of(Material.WATER_PLANT).
+			() -> new EndLotusSeedBlock(BlockBehaviour.Properties.of(Material.WATER_PLANT).
 					                                             sound(SoundType.WET_GRASS).
 					                                             randomTicks().
 					                                             noCollission().
 					                                             instabreak()));
 	
 	public static final RegistryObject<Block> END_LOTUS_STEM = registerBlockWithDefaultItem("end_lotus_stem",
-			() -> new EndLotusStemBlock(AbstractBlock.Properties.copy(Blocks.OAK_PLANKS)));
+			() -> new EndLotusStemBlock(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS)));
 	
 	public static final RegistryObject<Block> END_LOTUS_LEAF = registerBlock("end_lotus_leaf",
-			() -> new EndLotusLeafBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new EndLotusLeafBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                             isRedstoneConductor((state, world, pos) -> { return false; }).
 					                                             noOcclusion().
 					                                             sound(SoundType.WET_GRASS)));
 		
 	public static final RegistryObject<Block> END_LOTUS_FLOWER = registerBlock("end_lotus_flower",
-			() -> new EndLotusFlowerBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new EndLotusFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                               isRedstoneConductor((state, world, pos) -> { return false; }).
 					                                               lightLevel((value) -> {return 15;})));
 	
 	public static final RegistryObject<Block> BUBBLE_CORAL = registerBlockWithDefaultItem("bubble_coral",
-			() -> new BubbleCoralBlock(AbstractBlock.Properties.of(Material.WATER_PLANT).
+			() -> new BubbleCoralBlock(BlockBehaviour.Properties.of(Material.WATER_PLANT).
 					                                            instabreak().
 					                                            sound(SoundType.CORAL_BLOCK).
 					                                            noOcclusion()));
 	
 	public static final RegistryObject<Block> MURKWEED = registerBlockWithDefaultItem("murkweed", 
-			() -> new MurkweedBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new MurkweedBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                             instabreak().
 					                                             noCollission().
 					                                             sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> NEEDLEGRASS = registerBlockWithDefaultItem("needlegrass", 
-			() -> new NeedlegrassBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new NeedlegrassBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                             instabreak().
 					                                             noCollission().
 					                                             sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> MENGER_SPONGE = registerBlockWithDefaultItem("menger_sponge",
-			() -> new MengerSpongeBlock(AbstractBlock.Properties.copy(Blocks.SPONGE).noOcclusion()));
+			() -> new MengerSpongeBlock(BlockBehaviour.Properties.copy(Blocks.SPONGE).noOcclusion()));
 	
 	public static final RegistryObject<Block> MENGER_SPONGE_WET = registerBlockWithDefaultItem("menger_sponge_wet",
-			() -> new MengerSpongeWetBlock(AbstractBlock.Properties.copy(Blocks.WET_SPONGE).noOcclusion()));
+			() -> new MengerSpongeWetBlock(BlockBehaviour.Properties.copy(Blocks.WET_SPONGE).noOcclusion()));
 	
 	public static final RegistryObject<Block> CHARNIA_RED = registerBlockWithDefaultItem("charnia_red",
-			() -> new CharniaBlock(AbstractBlock.Properties.of(Material.WATER_PLANT).
+			() -> new CharniaBlock(BlockBehaviour.Properties.of(Material.WATER_PLANT).
 					                                        instabreak().
 					                                        sound(SoundType.WET_GRASS).
 					                                        noCollission()));
 	
 	public static final RegistryObject<Block> CHARNIA_PURPLE = registerBlockWithDefaultItem("charnia_purple",
-			() -> new CharniaBlock(AbstractBlock.Properties.of(Material.WATER_PLANT).
+			() -> new CharniaBlock(BlockBehaviour.Properties.of(Material.WATER_PLANT).
 					                                        instabreak().
 					                                        sound(SoundType.WET_GRASS).
 					                                        noCollission()));
 	
 	public static final RegistryObject<Block> CHARNIA_ORANGE = registerBlockWithDefaultItem("charnia_orange",
-			() -> new CharniaBlock(AbstractBlock.Properties.of(Material.WATER_PLANT).
+			() -> new CharniaBlock(BlockBehaviour.Properties.of(Material.WATER_PLANT).
 					                                        instabreak().
 					                                        sound(SoundType.WET_GRASS).
 					                                        noCollission()));
 	
 	public static final RegistryObject<Block> CHARNIA_LIGHT_BLUE = registerBlockWithDefaultItem("charnia_light_blue",
-			() -> new CharniaBlock(AbstractBlock.Properties.of(Material.WATER_PLANT).
+			() -> new CharniaBlock(BlockBehaviour.Properties.of(Material.WATER_PLANT).
 					                                        instabreak().
 					                                        sound(SoundType.WET_GRASS).
 					                                        noCollission()));
 	
 	public static final RegistryObject<Block> CHARNIA_CYAN = registerBlockWithDefaultItem("charnia_cyan",
-			() -> new CharniaBlock(AbstractBlock.Properties.of(Material.WATER_PLANT).
+			() -> new CharniaBlock(BlockBehaviour.Properties.of(Material.WATER_PLANT).
 					                                        instabreak().
 					                                        sound(SoundType.WET_GRASS).
 					                                        noCollission()));
 	
 	public static final RegistryObject<Block> CHARNIA_GREEN = registerBlockWithDefaultItem("charnia_green",
-			() -> new CharniaBlock(AbstractBlock.Properties.of(Material.WATER_PLANT).
+			() -> new CharniaBlock(BlockBehaviour.Properties.of(Material.WATER_PLANT).
 					                                        instabreak().
 					                                        sound(SoundType.WET_GRASS).
 					                                        noCollission()));
@@ -573,54 +579,54 @@ public class ModBlocks
 			() -> new FlamaeaBlock());
 	
 	public static final RegistryObject<Block> HYDRALUX_SAPLING = registerBlockWithDefaultItem("hydralux_sapling",
-			() -> new HydraluxSaplingBlock(AbstractBlock.Properties.of(Material.WATER_PLANT).
+			() -> new HydraluxSaplingBlock(BlockBehaviour.Properties.of(Material.WATER_PLANT).
 					                                                instabreak().
 					                                                sound(SoundType.WET_GRASS).
 					                                                randomTicks().
 					                                                noCollission()));
 	
 	public static final RegistryObject<Block> HYDRALUX = registerBlock("hydralux",
-			() -> new HydraluxBlock(AbstractBlock.Properties.of(Material.WATER_PLANT).
+			() -> new HydraluxBlock(BlockBehaviour.Properties.of(Material.WATER_PLANT).
 					                                                instabreak().
 					                                                sound(SoundType.WET_GRASS).
 					                                                lightLevel((state) -> {return (state.getValue(HydraluxBlock.SHAPE).hasGlow()) ? 15 : 0;}).
 					                                                noCollission()));
 	
 	public static final RegistryObject<Block> HYDRALUX_PETAL_BLOCK = registerBlockWithDefaultItem("hydralux_petal_block",
-			() -> new HydraluxPetalBlock(AbstractBlock.Properties.of(Material.PLANT, MaterialColor.PLANT).
+			() -> new HydraluxPetalBlock(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.PLANT).
 					                                              sound(SoundType.WART_BLOCK).
 					                                              strength(1F).
 					                                              harvestTool(ToolType.AXE)));
 	
 	public static final RegistryObject<Block> LANCELEAF_SEED = registerBlockWithDefaultItem("lanceleaf_seed", 
-			() -> new LanceleafSeedBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new LanceleafSeedBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                             instabreak().
 					                                             noCollission().
 					                                             randomTicks().
 					                                             sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> LANCELEAF = registerBlock("lanceleaf", 
-			() -> new LanceleafBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new LanceleafBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                              instabreak().
                                                              noCollission().
                                                              sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> LUMECORN_SEED = registerBlockWithDefaultItem("lumecorn_seed", 
-			() -> new LumecornSeedBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new LumecornSeedBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                             instabreak().
 					                                             noCollission().
 					                                             randomTicks().
 					                                             sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> LUMECORN = registerBlock("lumecorn", 
-			() -> new LumecornBlock(AbstractBlock.Properties.of(Material.WOOD).
+			() -> new LumecornBlock(BlockBehaviour.Properties.of(Material.WOOD).
 												                 harvestTool(ToolType.AXE).
 												                 strength(0.5f).
 												                 lightLevel(s -> s.getValue(LumecornBlock.SHAPE).getLight()).
                                                                  sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> GLOWING_PILLAR_SEED = registerBlockWithDefaultItem("glowing_pillar_seed", 
-			() -> new GlowingPillarSeedBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new GlowingPillarSeedBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                             instabreak().
 					                                             noCollission().
 					                                             randomTicks().
@@ -628,26 +634,26 @@ public class ModBlocks
 					                                             lightLevel((s) -> s.getValue(PlantBlockWithAge.AGE) * 3 + 3)));
 	
 	public static final RegistryObject<Block> GLOWING_PILLAR_ROOTS = registerBlock("glowing_pillar_roots", 
-			() -> new GlowingPillarRootsBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new GlowingPillarRootsBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                              instabreak().
                                                              noCollission().
                                                              sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> GLOWING_PILLAR_LUMINOPHOR = registerBlockWithDefaultItem("glowing_pillar_luminophor", 
-			() -> new GlowingPillarLuminophorBlock(AbstractBlock.Properties.of(Material.LEAVES, MaterialColor.COLOR_ORANGE).
+			() -> new GlowingPillarLuminophorBlock(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_ORANGE).
 					                                             sound(SoundType.GRASS).
 					                                             strength(0.2f).
 					                                             lightLevel((s) -> 15)));
 	
 	public static final RegistryObject<Block> GLOWING_PILLAR_LEAVES = registerBlockWithDefaultItem("glowing_pillar_leaves", 
-			() -> new FurBlock(AbstractBlock.Properties.of(Material.REPLACEABLE_PLANT).
+			() -> new FurBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).
 					                                           instabreak().
 					                                           lightLevel((value) -> 15).
 					                                           noCollission().
 					                                           sound(SoundType.WET_GRASS)));
 	
 	public static final RegistryObject<Block> TWISTED_UMBRELLA_MOSS = registerBlockWithDefaultItem("twisted_umbrella_moss", 
-			() -> new TwistedUmbrellaMossBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new TwistedUmbrellaMossBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                             instabreak().
 					                                             lightLevel((value) -> {return 11;}).
 					                                             noCollission().
@@ -655,14 +661,14 @@ public class ModBlocks
 					                                             emissiveRendering((state, reader, pos) -> {return true;})));
 	
 	public static final RegistryObject<Block> TWISTED_UMBRELLA_MOSS_TALL = registerBlockWithDefaultItem("twisted_umbrella_moss_tall", 
-			() -> new TwistedUmbrellaMossTallBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new TwistedUmbrellaMossTallBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                                 instabreak().
                                                                      lightLevel((state) -> { return state.getValue(TwistedUmbrellaMossTallBlock.TOP) ? 12 : 0; }).
                                                                      noCollission().
                                                                      sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> SMALL_JELLYSHROOM = registerBlockWithDefaultItem("small_jellyshroom", 
-			() -> new SmallJellyshroomBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new SmallJellyshroomBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                                 instabreak().
                                                                      noCollission().
                                                                      sound(SoundType.NETHER_WART)));
@@ -671,16 +677,16 @@ public class ModBlocks
 			() -> new NeonCactusPlantBlock());
 	
 	public static final RegistryObject<Block> NEON_CACTUS_BLOCK = registerBlockWithDefaultItem("neon_cactus_block", 
-			() -> new RotatedPillarBlock(AbstractBlock.Properties.copy(Blocks.CACTUS).lightLevel(s -> { return 15; } )));
+			() -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.CACTUS).lightLevel(s -> { return 15; } )));
 	
 	public static final RegistryObject<Block> NEON_CACTUS_BLOCK_STAIRS = registerBlockWithDefaultItem("neon_cactus_stairs", 
-			() -> new StairsBlock(() -> NEON_CACTUS_BLOCK.get().defaultBlockState(), AbstractBlock.Properties.copy(Blocks.CACTUS).lightLevel(s -> { return 15; })));
+			() -> new StairBlock(() -> NEON_CACTUS_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.CACTUS).lightLevel(s -> { return 15; })));
 	
 	public static final RegistryObject<Block> NEON_CACTUS_BLOCK_SLAB = registerBlockWithDefaultItem("neon_cactus_slab", 
-			() -> new SlabBlock(AbstractBlock.Properties.copy(Blocks.CACTUS).lightLevel(s -> { return 15; })));	
+			() -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.CACTUS).lightLevel(s -> { return 15; })));	
 	// CROPS
 	public static final RegistryObject<Block> SHADOW_BERRY = registerBlockWithDefaultItem("shadow_berry", 
-			() -> new ShadowBerryBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new ShadowBerryBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                             instabreak().
 					                                             noCollission().
 					                                             randomTicks().
@@ -689,7 +695,7 @@ public class ModBlocks
 
 	
 	public static final RegistryObject<Block> BLOSSOM_BERRY = registerBlockWithDefaultItem("blossom_berry_seed", 
-			() -> new EndCropBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new EndCropBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                             instabreak().
                                                             noCollission().
                                                             randomTicks().
@@ -697,7 +703,7 @@ public class ModBlocks
                                                             PINK_MOSS.get()));
 	
 	public static final RegistryObject<Block> AMBER_ROOT = registerBlockWithDefaultItem("amber_root_seed", 
-			() -> new EndCropBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new EndCropBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                             instabreak().
                                                             noCollission().
                                                             randomTicks().
@@ -705,7 +711,7 @@ public class ModBlocks
                                                             AMBER_MOSS.get()));
 	
 	public static final RegistryObject<Block> CHORUS_MUSHROOM = registerBlockWithDefaultItem("chorus_mushroom_seed", 
-			() -> new EndCropBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new EndCropBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                             instabreak().
                                                             noCollission().
                                                             randomTicks().
@@ -724,7 +730,7 @@ public class ModBlocks
 
 	// WALL PLANTS
 	public static final RegistryObject<Block> PURPLE_POLYPORE = registerBlockWithDefaultItem("purple_polypore", 
-			() -> new WallMushroomBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new WallMushroomBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                             harvestTool(ToolType.AXE).
 					                                             strength(0.2F).
                                                                  noCollission().
@@ -732,7 +738,7 @@ public class ModBlocks
                                                                  lightLevel((value) -> {return 13;})));
 	
 	public static final RegistryObject<Block> AURANT_POLYPORE = registerBlockWithDefaultItem("aurant_polypore", 
-			() -> new WallMushroomBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new WallMushroomBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                             harvestTool(ToolType.AXE).
 					                                             strength(0.2F).
                                                                  noCollission().
@@ -740,44 +746,44 @@ public class ModBlocks
                                                                  lightLevel((value) -> {return 13;})));
 	
 	public static final RegistryObject<Block> TAIL_MOSS = registerBlockWithDefaultItem("tail_moss", 
-			() -> new WallPlantBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new WallPlantBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                               instabreak().
                                                               noCollission().
                                                               sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> CYAN_MOSS = registerBlockWithDefaultItem("cyan_moss", 
-			() -> new WallPlantBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new WallPlantBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                               instabreak().
                                                               noCollission().
                                                               sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> TWISTED_MOSS = registerBlockWithDefaultItem("twisted_moss", 
-			() -> new WallPlantBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new WallPlantBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                               instabreak().
                                                               noCollission().
                                                               sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> BULB_MOSS = registerBlockWithDefaultItem("bulb_moss", 
-			() -> new WallPlantBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new WallPlantBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                               instabreak().
                                                               noCollission().
                                                               sound(SoundType.GRASS).
                                                               lightLevel((a) -> 12)));
 	
 	public static final RegistryObject<Block> TUBE_WORM = registerBlockWithDefaultItem("tube_worm", 
-			() -> new UnderwaterWallPlantBlock(AbstractBlock.Properties.of(Material.WATER_PLANT).
+			() -> new UnderwaterWallPlantBlock(BlockBehaviour.Properties.of(Material.WATER_PLANT).
                                                                         instabreak().
                                                                         noCollission().
                                                                         sound(SoundType.WET_GRASS)));
 	
 	public static final RegistryObject<Block> JUNGLE_FERN = registerBlockWithDefaultItem("jungle_fern", 
-			() -> new WallPlantBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new WallPlantBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                               instabreak().
                                                               noCollission().
                                                               sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> RUSCUS = registerBlockWithDefaultItem("ruscus", 
-			() -> new WallPlantBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new WallPlantBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                               instabreak().
                                                               noCollission().
                                                               sound(SoundType.GRASS)));
@@ -788,47 +794,47 @@ public class ModBlocks
 	
 	// VINES
 	public static final RegistryObject<Block> DENSE_VINE = registerBlockWithDefaultItem("dense_vine",
-			() -> new EndVineBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new EndVineBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                        instabreak().
 					                                        noCollission().
 					                                        lightLevel((state) -> {return state.getValue(EndVineBlock.SHAPE) == TripleShape.BOTTOM ? 15 : 0;}).
 					                                        sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> TWISTED_VINE = registerBlockWithDefaultItem("twisted_vine",
-			() -> new EndVineBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new EndVineBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                        instabreak().
 					                                        noCollission().
 					                                        sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> BULB_VINE = registerBlockWithDefaultItem("bulb_vine",
-			() -> new BulbVineBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new BulbVineBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                        instabreak().
 					                                        noCollission().
 					                                        lightLevel((state) -> {return state.getValue(EndVineBlock.SHAPE) == TripleShape.BOTTOM ? 15 : 0;}).
 					                                        sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> BULB_VINE_SEED = registerBlockWithDefaultItem("bulb_vine_seed",
-			() -> new BulbVineSeedBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new BulbVineSeedBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                        instabreak().
 					                                        noCollission().
 					                                        randomTicks().
 					                                        sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> JUNGLE_VINE = registerBlockWithDefaultItem("jungle_vine",
-			() -> new EndVineBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new EndVineBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                        instabreak().
 					                                        noCollission().
 					                                        sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> RUBINEA = registerBlockWithDefaultItem("rubinea", 
-			() -> new EndVineBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new EndVineBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                             instabreak().
                                                             noCollission().
                                                             sound(SoundType.GRASS)));
 	
 	// TREES
 	public static final RegistryObject<Block> MOSSY_GLOWSHROOM_SAPLING = registerBlockWithDefaultItem("mossy_glowshroom_sapling", 
-			() -> new MossyGlowshroomSaplingBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new MossyGlowshroomSaplingBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                                       instabreak().
 					                                                       noCollission().
 					                                                       sound(SoundType.GRASS).
@@ -836,34 +842,34 @@ public class ModBlocks
 					                                                       randomTicks()));
 	
 	public static final RegistryObject<Block> MOSSY_GLOWSHROOM_CAP = registerBlockWithDefaultItem("mossy_glowshroom_cap", 
-			() -> new MossyGlowshroomCapBlock(AbstractBlock.Properties.of(Material.WOOD).
+			() -> new MossyGlowshroomCapBlock(BlockBehaviour.Properties.of(Material.WOOD).
 					                                                   harvestTool(ToolType.AXE).
 					                                                   requiresCorrectToolForDrops().
 					                                                   sound(SoundType.WOOD)));
 	
 	public static final RegistryObject<Block> MOSSY_GLOWSHROOM_HYMENOPHORE = registerBlockWithDefaultItem("mossy_glowshroom_hymenophore", 
-			() -> new Block(AbstractBlock.Properties.of(Material.WOOD).
+			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).
                                                      harvestTool(ToolType.AXE).
                                                      requiresCorrectToolForDrops().
                                                      sound(SoundType.WART_BLOCK).
                                                      lightLevel((value) -> {return 15;})));
 	
 	public static final RegistryObject<Block> MOSSY_GLOWSHROOM_FUR = registerBlockWithDefaultItem("mossy_glowshroom_fur", 
-			() -> new FurBlock(AbstractBlock.Properties.of(Material.REPLACEABLE_PLANT).
+			() -> new FurBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).
 					                                           instabreak().
 					                                           lightLevel((value) -> {return 15;}).
 					                                           noCollission().
 					                                           sound(SoundType.WET_GRASS)));
 		
 	public static final RegistryObject<Block> LACUGROVE_SAPLING = registerBlockWithDefaultItem("lacugrove_sapling", 
-			() -> new LacugroveSaplingBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new LacugroveSaplingBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                                      instabreak().
                                                                      noCollission().
                                                                      sound(SoundType.GRASS).
                                                                      randomTicks()));
 	
 	public static final RegistryObject<Block> LACUGROVE_LEAVES = registerBlockWithDefaultItem("lacugrove_leaves", 
-			() -> new LeavesBlock(AbstractBlock.Properties.of(Material.LEAVES, MaterialColor.COLOR_CYAN).
+			() -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_CYAN).
                                                            strength(0.2F).randomTicks().
 					                                       sound(SoundType.GRASS).
 					                                       noOcclusion().
@@ -872,14 +878,14 @@ public class ModBlocks
 					                                       isViewBlocking((state, reader, pos) -> {return false;})));
 	
 	public static final RegistryObject<Block> PYTHADENDRON_SAPLING = registerBlockWithDefaultItem("pythadendron_sapling", 
-			() -> new PythadendronSaplingBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new PythadendronSaplingBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                                         instabreak().
                                                                         noCollission().
                                                                         sound(SoundType.GRASS).
                                                                         randomTicks()));
 	
 	public static final RegistryObject<Block> PYTHADENDRON_LEAVES = registerBlockWithDefaultItem("pythadendron_leaves", 
-			() -> new LeavesBlock(AbstractBlock.Properties.of(Material.LEAVES, MaterialColor.COLOR_MAGENTA).
+			() -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_MAGENTA).
 					                                       strength(0.2F).
 					                                       randomTicks().
                                                            sound(SoundType.GRASS).
@@ -889,14 +895,14 @@ public class ModBlocks
                                                            isViewBlocking((state, reader, pos) -> {return false;})));
 	
 	public static final RegistryObject<Block> DRAGON_TREE_SAPLING = registerBlockWithDefaultItem("dragon_tree_sapling", 
-			() -> new DragonTreeSaplingBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new DragonTreeSaplingBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                                       instabreak().
                                                                       noCollission().
                                                                       sound(SoundType.GRASS).
                                                                       randomTicks()));
 	
 	public static final RegistryObject<Block> DRAGON_TREE_LEAVES = registerBlockWithDefaultItem("dragon_tree_leaves", 
-			() -> new LeavesBlock(AbstractBlock.Properties.of(Material.LEAVES, MaterialColor.COLOR_MAGENTA).
+			() -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_MAGENTA).
 					                                       strength(0.2F).
 					                                       randomTicks().
                                                            sound(SoundType.GRASS).
@@ -906,14 +912,14 @@ public class ModBlocks
                                                            isViewBlocking((state, reader, pos) -> {return false;})));
 	
 	public static final RegistryObject<Block> TENANEA_SAPLING = registerBlockWithDefaultItem("tenanea_sapling", 
-			() -> new TenaneaSaplingBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new TenaneaSaplingBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                                    instabreak().
                                                                    noCollission().
                                                                    sound(SoundType.GRASS).
                                                                    randomTicks()));
 	
 	public static final RegistryObject<Block> TENANEA_LEAVES = registerBlockWithDefaultItem("tenanea_leaves", 
-			() -> new LeavesBlock(AbstractBlock.Properties.of(Material.LEAVES, MaterialColor.COLOR_PINK).
+			() -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_PINK).
 					                                       strength(0.2F).
 					                                       randomTicks().
                                                            sound(SoundType.GRASS).
@@ -923,27 +929,27 @@ public class ModBlocks
                                                            isViewBlocking((state, reader, pos) -> {return false;})));
 	
 	public static final RegistryObject<Block> TENANEA_FLOWERS = registerBlockWithDefaultItem("tenanea_flowers",
-			() -> new TenaneaFlowersBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new TenaneaFlowersBlock(BlockBehaviour.Properties.of(Material.PLANT).
 					                                               instabreak().
 					                                               noCollission().
 					                                               lightLevel((state) -> {return 15;}).
 					                                               sound(SoundType.GRASS)));
 	
 	public static final RegistryObject<Block> TENANEA_OUTER_LEAVES = registerBlockWithDefaultItem("tenanea_outer_leaves", 
-			() -> new FurBlock(AbstractBlock.Properties.of(Material.REPLACEABLE_PLANT).
+			() -> new FurBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).
 					                                           instabreak().
 					                                           noCollission().
 					                                           sound(SoundType.WET_GRASS)));
 	
 	public static final RegistryObject<Block> HELIX_TREE_SAPLING = registerBlockWithDefaultItem("helix_tree_sapling",
-			() -> new HelixTreeSaplingBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new HelixTreeSaplingBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                                    instabreak().
                                                                    noCollission().
                                                                    sound(SoundType.GRASS).
                                                                    randomTicks()));
 	
 	public static final RegistryObject<Block> HELIX_TREE_LEAVES = registerBlockWithDefaultItem("helix_tree_leaves",
-			() -> new HelixTreeLeavesBlock(AbstractBlock.Properties.of(Material.LEAVES, MaterialColor.COLOR_ORANGE).
+			() -> new HelixTreeLeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_ORANGE).
 					                                       strength(0.2F).
 					                                       randomTicks().
                                                            sound(SoundType.NETHER_WART).
@@ -953,23 +959,23 @@ public class ModBlocks
                                                            isViewBlocking((state, reader, pos) -> {return false;})));
 	
 	public static final RegistryObject<Block> UMBRELLA_TREE_SAPLING = registerBlockWithDefaultItem("umbrella_tree_sapling",
-			() -> new UmbrellaTreeSaplingBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new UmbrellaTreeSaplingBlock(BlockBehaviour.Properties.of(Material.PLANT).
                                                                    instabreak().
                                                                    noCollission().
                                                                    sound(SoundType.GRASS).
                                                                    randomTicks()));
 	
 	public static final RegistryObject<Block> UMBRELLA_TREE_MEMBRANE = registerBlockWithDefaultItem("umbrella_tree_membrane",
-			() -> new UmbrellaTreeMembraneBlock(AbstractBlock.Properties.copy(Blocks.SLIME_BLOCK)));
+			() -> new UmbrellaTreeMembraneBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK)));
 	
 	public static final RegistryObject<Block> UMBRELLA_TREE_CLUSTER = registerBlockWithDefaultItem("umbrella_tree_cluster",
-			() -> new UmbrellaTreeClusterBlock(AbstractBlock.Properties.of(Material.GRASS, MaterialColor.COLOR_PURPLE).
+			() -> new UmbrellaTreeClusterBlock(BlockBehaviour.Properties.of(Material.GRASS, MaterialColor.COLOR_PURPLE).
 					                                                    strength(1.0F).
 					                                                    lightLevel((value) -> {return 15;}).
 					                                                    sound(SoundType.WART_BLOCK)));
 	
 	public static final RegistryObject<Block> UMBRELLA_TREE_CLUSTER_EMPTY = registerBlockWithDefaultItem("umbrella_tree_cluster_empty",
-			() -> new UmbrellaTreeClusterBlock(AbstractBlock.Properties.of(Material.GRASS, MaterialColor.COLOR_PURPLE).
+			() -> new UmbrellaTreeClusterBlock(BlockBehaviour.Properties.of(Material.GRASS, MaterialColor.COLOR_PURPLE).
 					                                                    strength(1.0F).
 					                                                    randomTicks().
 					                                                    sound(SoundType.WART_BLOCK)));
@@ -981,26 +987,26 @@ public class ModBlocks
 			() -> new LargeAmaranitaBlock());
 	
 	public static final RegistryObject<Block> AMARANITA_STEM = registerBlockWithDefaultItem("amaranita_stem",
-			() -> new RotatedPillarBlock(AbstractBlock.Properties.of(Material.WOOD, MaterialColor.COLOR_LIGHT_GREEN).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
+			() -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_LIGHT_GREEN).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
 	
 	public static final RegistryObject<Block> AMARANITA_HYPHAE = registerBlockWithDefaultItem("amaranita_hyphae",
-			() -> new RotatedPillarBlock(AbstractBlock.Properties.of(Material.WOOD, MaterialColor.COLOR_LIGHT_GREEN).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
+			() -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_LIGHT_GREEN).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
 	
 	public static final RegistryObject<Block> AMARANITA_HYMENOPHORE = registerBlockWithDefaultItem("amaranita_hymenophore",
-			() -> new Block(AbstractBlock.Properties.of(Material.WOOD).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
+			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
 	
 	public static final RegistryObject<Block> AMARANITA_LANTERN = registerBlockWithDefaultItem("amaranita_lantern",
-			() -> new Block(AbstractBlock.Properties.of(Material.WOOD).harvestTool(ToolType.AXE).sound(SoundType.WART_BLOCK).lightLevel(s -> 15)));
+			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).harvestTool(ToolType.AXE).sound(SoundType.WART_BLOCK).lightLevel(s -> 15)));
 	
 	public static final RegistryObject<Block> AMARANITA_FUR = registerBlockWithDefaultItem("amaranita_fur",
-			() -> new FurBlock(AbstractBlock.Properties.of(Material.REPLACEABLE_PLANT).
+			() -> new FurBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).
                     instabreak().
                     lightLevel((value) -> {return 15;}).
                     noCollission().
                     sound(SoundType.WET_GRASS)));
 	
 	public static final RegistryObject<Block> AMARANITA_CAP = registerBlockWithDefaultItem("amaranita_cap",
-			() -> new Block(AbstractBlock.Properties.of(Material.WOOD).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
+			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
 	
 	
 	public static final RegistryObject<Block> JELLYSHROOM_CAP_PURPLE = registerBlockWithDefaultItem("jellyshroom_cap_purple", 
@@ -1008,15 +1014,15 @@ public class ModBlocks
 	
 	// BLOCKS WITH TILE ENTITY
 	public static final RegistryObject<Block> ETERNAL_PEDESTAL = registerBlockWithDefaultItem("eternal_pedestal", 
-			() -> new EternalPedestal(AbstractBlock.Properties.copy(FLAVOLITE_RUNED_ETERNAL.get()).
+			() -> new EternalPedestal(BlockBehaviour.Properties.copy(FLAVOLITE_RUNED_ETERNAL.get()).
 					                                           lightLevel(PedestalBlock.light())));
 	
 	public static final RegistryObject<Block> INFUSION_PEDESTAL = registerBlockWithDefaultItem("infusion_pedestal", 
-			() -> new InfusionPedestal(AbstractBlock.Properties.copy(Blocks.OBSIDIAN).
+			() -> new InfusionPedestal(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN).
 					                                            lightLevel(PedestalBlock.light())));
 	
 	public static final RegistryObject<Block> END_STONE_SMELTER = registerBlockWithDefaultItem("end_stone_smelter", 
-			() -> new EndStoneSmelter(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_GRAY).
+			() -> new EndStoneSmelter(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GRAY).
 					                                           strength(4F, 100F).
 					                                           requiresCorrectToolForDrops().
 					                                           sound(SoundType.STONE).
@@ -1025,32 +1031,32 @@ public class ModBlocks
 					                                           )));
 	
 	public static final RegistryObject<Block> END_STONE_FURNACE = registerBlockWithDefaultItem("end_stone_furnace", 
-			() -> new EndFurnaceBlock(AbstractBlock.Properties.copy(Blocks.END_STONE).
+			() -> new EndFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.END_STONE).
 					                                           lightLevel((state) -> {
 					                                        	   return state.getValue(BlockStateProperties.LIT) ? 13 : 0;}
 					                                           )));
 	
 	// MISC
 	public static final RegistryObject<Block> AETERNIUM_ANVIL = registerBlock("aeternium_anvil", 
-			() -> new AeterniumAnvil(AbstractBlock.Properties.of(Material.HEAVY_METAL, MaterialColor.COLOR_GRAY).requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.ANVIL)));
+			() -> new AeterniumAnvil(BlockBehaviour.Properties.of(Material.HEAVY_METAL, MaterialColor.COLOR_GRAY).requiresCorrectToolForDrops().strength(5.0F, 1200.0F).sound(SoundType.ANVIL)));
 	
 	public static final RegistryObject<Block> DENSE_SNOW = registerBlockWithDefaultItem("dense_snow", 
-			() -> new Block(AbstractBlock.Properties.of(Material.SNOW).
+			() -> new Block(BlockBehaviour.Properties.of(Material.SNOW).
 					                                 strength(0.2F).
 					                                 sound(SoundType.SNOW)));
 	
 	public static final RegistryObject<Block> EMERALD_ICE = registerBlockWithDefaultItem("emerald_ice", 
-			() -> new EmeraldIceBlock(AbstractBlock.Properties.copy(Blocks.ICE)));
+			() -> new EmeraldIceBlock(BlockBehaviour.Properties.copy(Blocks.ICE)));
 	
 	public static final RegistryObject<Block> DENSE_EMERALD_ICE = registerBlockWithDefaultItem("dense_emerald_ice", 
-			() -> new Block(AbstractBlock.Properties.copy(Blocks.PACKED_ICE)));
+			() -> new Block(BlockBehaviour.Properties.copy(Blocks.PACKED_ICE)));
 	
 	public static final RegistryObject<Block> ANCIENT_EMERALD_ICE = registerBlockWithDefaultItem("ancient_emerald_ice", 
-			() -> new AncientEmeraldIceBlock(AbstractBlock.Properties.copy(Blocks.BLUE_ICE).
+			() -> new AncientEmeraldIceBlock(BlockBehaviour.Properties.copy(Blocks.BLUE_ICE).
 					                                                  randomTicks()));
 	
 	public static final RegistryObject<Block> END_PORTAL_BLOCK = registerBlock("end_portal_block", 
-			() -> new EndPortalBlock(AbstractBlock.Properties.of(Material.PORTAL).
+			() -> new EndPortalBlock(BlockBehaviour.Properties.of(Material.PORTAL).
 					                                          noCollission().
 					                                          randomTicks().
 					                                          strength(-1.0F).
@@ -1059,7 +1065,7 @@ public class ModBlocks
 					                                          noDrops()));
 	
 	public static final RegistryObject<Block> RESPAWN_OBELISK = registerBlockWithDefaultItem("respawn_obelisk",
-			() -> new RespawnObeliskBlock(AbstractBlock.Properties.of(Material.STONE, MaterialColor.SAND).
+			() -> new RespawnObeliskBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.SAND).
 					requiresCorrectToolForDrops().
 					strength(3.0F, 9.0F).
 					lightLevel((state) -> {
@@ -1067,13 +1073,13 @@ public class ModBlocks
 					})));
 	
 	public static final RegistryObject<Block> VENT_BUBBLE_COLUMN = registerBlock("vent_bubble_column",
-			() -> new VentBubbleColumnBlock(AbstractBlock.Properties.of(Material.BUBBLE_COLUMN).
+			() -> new VentBubbleColumnBlock(BlockBehaviour.Properties.of(Material.BUBBLE_COLUMN).
                                                                      noCollission().
                                                                      isRedstoneConductor((state, world, pos) -> { return false; }).
                                                                      noDrops()));
 	
 	public static final RegistryObject<Block> MISSING_TILE = registerBlockWithDefaultItem("missing_tile",
-			() -> new Block(AbstractBlock.Properties.copy(Blocks.END_STONE)));
+			() -> new Block(BlockBehaviour.Properties.copy(Blocks.END_STONE)));
 	
 	// FLOWER POT BLOCKS
 	public static final RegistryObject<Block> POTTED_MOSSY_GLOWSHROOM_SAPLING = registerFlowerPotBlock("potted_mossy_glowshroom_sapling", MOSSY_GLOWSHROOM_SAPLING);
@@ -1101,14 +1107,14 @@ public class ModBlocks
 	public static final WoodenMaterial LUCERNIA = createWoodenMaterial("lucernia", MaterialColor.COLOR_ORANGE, MaterialColor.COLOR_ORANGE);
 	
 	public static final RegistryObject<Block> LUCERNIA_SAPLING = registerBlockWithDefaultItem("lucernia_sapling",
-			() -> new LucerniaSaplingBlock(AbstractBlock.Properties.of(Material.PLANT).
+			() -> new LucerniaSaplingBlock(BlockBehaviour.Properties.of(Material.PLANT).
                     instabreak().
                     noCollission().
                     sound(SoundType.GRASS).
                     randomTicks()));
 	
 	public static final RegistryObject<Block> LUCERNIA_LEAVES = registerBlockWithDefaultItem("lucernia_leaves",
-			() -> new LeavesBlock(AbstractBlock.Properties.of(Material.LEAVES, MaterialColor.COLOR_ORANGE).
+			() -> new LeavesBlock(BlockBehaviour.Properties.of(Material.LEAVES, MaterialColor.COLOR_ORANGE).
                     strength(0.2F).randomTicks().
                     sound(SoundType.GRASS).
                     noOcclusion().
@@ -1117,7 +1123,7 @@ public class ModBlocks
                     isViewBlocking((state, reader, pos) -> {return false;})));
 	
 	public static final RegistryObject<Block> LUCERNIA_OUTER_LEAVES = registerBlockWithDefaultItem("lucernia_outer_leaves",
-			() -> new FurBlock(AbstractBlock.Properties.of(Material.REPLACEABLE_PLANT, MaterialColor.COLOR_ORANGE).
+			() -> new FurBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT, MaterialColor.COLOR_ORANGE).
                     instabreak().
                     lightLevel((value) -> {return 15;}).
                     noCollission().
@@ -1128,7 +1134,7 @@ public class ModBlocks
 	public static final RegistryObject<Block> FILALUX_WINGS = registerBlockWithDefaultItem("filalux_wings",
 			() -> new FilaluxWingsBlock());
 	public static final RegistryObject<Block> FILALUX_LANTERN = registerBlockWithDefaultItem("filalux_lantern",
-			() -> new Block(AbstractBlock.Properties.of(Material.WOOD).lightLevel(b -> 15).sound(SoundType.WOOD).harvestTool(ToolType.AXE)));
+			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).lightLevel(b -> 15).sound(SoundType.WOOD).harvestTool(ToolType.AXE)));
 
 	
 	// STONE MATERIALS
@@ -1150,8 +1156,8 @@ public class ModBlocks
 	public static List<MetalMaterial> getMetalMaterials() {
 		return ImmutableList.copyOf(metalMaterials);
 	}
-    public static final MetalMaterial THALLASIUM = createMetalMaterial("thallasium", true, AbstractBlock.Properties.of(Material.METAL, MaterialColor.COLOR_BLUE).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL), new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB), ModItemTier.THALLASIUM, ModArmorMaterial.THALLASIUM);
-    public static final MetalMaterial TERMINITE = createMetalMaterial("terminite", false, AbstractBlock.Properties.of(Material.METAL, MaterialColor.COLOR_GREEN).requiresCorrectToolForDrops().strength(7, 9).sound(SoundType.METAL), new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB), ModItemTier.TERMINITE, ModArmorMaterial.TERMINITE);
+    public static final MetalMaterial THALLASIUM = createMetalMaterial("thallasium", true, BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_BLUE).requiresCorrectToolForDrops().strength(5.0F, 6.0F).sound(SoundType.METAL), new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB), ModItemTier.THALLASIUM, ModArmorMaterial.THALLASIUM);
+    public static final MetalMaterial TERMINITE = createMetalMaterial("terminite", false, BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_GREEN).requiresCorrectToolForDrops().strength(7, 9).sound(SoundType.METAL), new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB), ModItemTier.TERMINITE, ModArmorMaterial.TERMINITE);
 
     
     // COLORED MATERIALS
@@ -1189,7 +1195,7 @@ public class ModBlocks
 
 	
 	public static <T extends Block> RegistryObject<T> registerBlockWithDefaultItem(String name, Supplier<? extends T> blockSupplier, 
-			ItemGroup group)
+			CreativeModeTab group)
 	{
 		RegistryObject<T> block = BLOCKS.register(name, blockSupplier);
 		ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(group)));
@@ -1198,7 +1204,7 @@ public class ModBlocks
 	
 	public static RegistryObject<Block> registerFlowerPotBlock(String name, Supplier<? extends Block> plant)
 	{
-		RegistryObject<Block> flowerPot = BLOCKS.register(name, () -> new FlowerPotBlock(plant.get(), AbstractBlock.Properties.of(Material.DECORATION).instabreak().noOcclusion()));
+		RegistryObject<Block> flowerPot = BLOCKS.register(name, () -> new FlowerPotBlock(plant.get(), BlockBehaviour.Properties.of(Material.DECORATION).instabreak().noOcclusion()));
 		return flowerPot;
 	}
 	
@@ -1220,7 +1226,7 @@ public class ModBlocks
 		return material;
 	}
 	
-	public static MetalMaterial createMetalMaterial(String name, boolean hasOre, AbstractBlock.Properties blockSettings, Item.Properties itemSettings, IItemTier itemTier, IArmorMaterial armor) {
+	public static MetalMaterial createMetalMaterial(String name, boolean hasOre, BlockBehaviour.Properties blockSettings, Item.Properties itemSettings, Tier itemTier, ArmorMaterial armor) {
 		if (metalMaterials == null)
 			metalMaterials = new ArrayList<>();
 		

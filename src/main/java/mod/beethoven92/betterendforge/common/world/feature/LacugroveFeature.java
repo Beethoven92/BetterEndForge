@@ -16,21 +16,21 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSubtraction;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.IServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class LacugroveFeature extends Feature<NoFeatureConfig>
+public class LacugroveFeature extends Feature<NoneFeatureConfiguration>
 {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Function<BlockState, Boolean> IGNORE;
@@ -73,12 +73,12 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 	
 	public LacugroveFeature() 
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
-			BlockPos blockPos, NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random,
+			BlockPos blockPos, NoneFeatureConfiguration config) 
 	{
 		if (!world.getBlockState(blockPos.below()).is(ModTags.END_GROUND)) return false;
 		
@@ -110,7 +110,7 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 		spline = spline.subList(4, 6);
 		SplineHelper.fillSpline(spline, world, ModBlocks.LACUGROVE.bark.get().defaultBlockState(), blockPos, REPLACE);
 		
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		int offset = random.nextInt(2);
 		for (int i = 0; i < 100; i++) 
 		{
@@ -158,13 +158,13 @@ public class LacugroveFeature extends Feature<NoFeatureConfig>
 		return true;
 	}
 	
-	private void leavesBall(IServerWorld world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise)
+	private void leavesBall(ServerLevelAccessor world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise)
 	{
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(ModBlocks.LACUGROVE_LEAVES.get().defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
 		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius - 2, 0).setSource(sphere));
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		sphere.addPostProcess((info) -> {
 			if (random.nextInt(5) == 0) 
 			{

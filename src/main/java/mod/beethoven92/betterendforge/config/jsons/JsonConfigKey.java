@@ -1,6 +1,6 @@
 package mod.beethoven92.betterendforge.config.jsons;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class JsonConfigKey 
 {

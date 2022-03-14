@@ -1,578 +1,578 @@
 package mod.beethoven92.betterendforge.common.init;
 
 import mod.beethoven92.betterendforge.BetterEnd;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.gen.feature.ConfiguredFeature;
-import net.minecraft.world.gen.feature.FeatureSpreadConfig;
-import net.minecraft.world.gen.feature.Features;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.feature.OreFeatureConfig;
-import net.minecraft.world.gen.feature.template.BlockMatchRuleTest;
-import net.minecraft.world.gen.placement.ChanceConfig;
-import net.minecraft.world.gen.placement.NoPlacementConfig;
-import net.minecraft.world.gen.placement.Placement;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.CountConfiguration;
+import net.minecraft.data.worldgen.Features;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
+import net.minecraft.world.level.levelgen.placement.ChanceDecoratorConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneDecoratorConfiguration;
+import net.minecraft.world.level.levelgen.placement.FeatureDecorator;
 
 public class ModConfiguredFeatures 
 {
 	// WATER PLANTS
 	public static final ConfiguredFeature<?, ?> END_LOTUS = 
-			ModFeatures.END_LOTUS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(5));
+			ModFeatures.END_LOTUS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(5));
 	
 	public static final ConfiguredFeature<?, ?> END_LOTUS_LEAF = 
-			ModFeatures.END_LOTUS_LEAF.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(25));
+			ModFeatures.END_LOTUS_LEAF.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(25));
 	
 	public static final ConfiguredFeature<?, ?> BUBBLE_CORAL = 
-			ModFeatures.BUBBLE_CORAL.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(10));
+			ModFeatures.BUBBLE_CORAL.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(10));
 	
 	public static final ConfiguredFeature<?, ?> BUBBLE_CORAL_RARE = 
-			ModFeatures.BUBBLE_CORAL_RARE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(4));
+			ModFeatures.BUBBLE_CORAL_RARE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(4));
 	
 	public static final ConfiguredFeature<?, ?> END_LILY = 
-			ModFeatures.END_LILY.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(10));
+			ModFeatures.END_LILY.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(10));
 	
 	public static final ConfiguredFeature<?, ?> END_LILY_RARE = 
-			ModFeatures.END_LILY_RARE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(4));
+			ModFeatures.END_LILY_RARE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(4));
 	
 	public static final ConfiguredFeature<?, ?> MENGER_SPONGE = 
-			ModFeatures.MENGER_SPONGE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(1));
+			ModFeatures.MENGER_SPONGE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(1));
 	
 	public static final ConfiguredFeature<?, ?> CHARNIA_RED = 
-			ModFeatures.CHARNIA_RED.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(10));
+			ModFeatures.CHARNIA_RED.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(10));
 	
 	public static final ConfiguredFeature<?, ?> CHARNIA_PURPLE = 
-			ModFeatures.CHARNIA_PURPLE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(10));
+			ModFeatures.CHARNIA_PURPLE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(10));
 	
 	public static final ConfiguredFeature<?, ?> CHARNIA_ORANGE = 
-			ModFeatures.CHARNIA_ORANGE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(10));
+			ModFeatures.CHARNIA_ORANGE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(10));
 	
 	public static final ConfiguredFeature<?, ?> CHARNIA_LIGHT_BLUE = 
-			ModFeatures.CHARNIA_LIGHT_BLUE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(10));
+			ModFeatures.CHARNIA_LIGHT_BLUE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(10));
 	
 	public static final ConfiguredFeature<?, ?> CHARNIA_CYAN = 
-			ModFeatures.CHARNIA_CYAN.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(10));
+			ModFeatures.CHARNIA_CYAN.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(10));
 	
 	public static final ConfiguredFeature<?, ?> CHARNIA_GREEN = 
-			ModFeatures.CHARNIA_GREEN.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(10));
+			ModFeatures.CHARNIA_GREEN.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(10));
 	
 	public static final ConfiguredFeature<?, ?> CHARNIA_RED_RARE = 
-			ModFeatures.CHARNIA_RED_RARE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(2));
+			ModFeatures.CHARNIA_RED_RARE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(2));
 	
 	public static final ConfiguredFeature<?, ?> HYDRALUX = 
-			ModFeatures.HYDRALUX.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(5));
+			ModFeatures.HYDRALUX.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(5));
 	
 	public static final ConfiguredFeature<?, ?> FLAMAEA = 
-			ModFeatures.FLAMAEA.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(20);
+			ModFeatures.FLAMAEA.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(20);
 	
 	public static final ConfiguredFeature<?, ?> POND_ANEMONE = 
-			ModFeatures.POND_ANEMONE.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(10);
+			ModFeatures.POND_ANEMONE.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(10);
 
 	
 	// BUSHES
 	public static final ConfiguredFeature<?, ?> PYTHADENDRON_BUSH = 
-			ModFeatures.PYTHADENDRON_BUSH.configured(IFeatureConfig.NONE).
-			decorated(Placement.TOP_SOLID_HEIGHTMAP.configured(NoPlacementConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE)));
+			ModFeatures.PYTHADENDRON_BUSH.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.TOP_SOLID_HEIGHTMAP.configured(NoneDecoratorConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE)));
 	
 	public static final ConfiguredFeature<?, ?> DRAGON_TREE_BUSH = 
-			ModFeatures.DRAGON_TREE_BUSH.configured(IFeatureConfig.NONE).
-			decorated(Placement.TOP_SOLID_HEIGHTMAP.configured(NoPlacementConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE)));
+			ModFeatures.DRAGON_TREE_BUSH.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.TOP_SOLID_HEIGHTMAP.configured(NoneDecoratorConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE)));
 	
 	public static final ConfiguredFeature<?, ?> LARGE_AMARANITA = 
-			ModFeatures.LARGE_AMARANITA.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(5);
+			ModFeatures.LARGE_AMARANITA.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(5);
 	
 	public static final ConfiguredFeature<?, ?> TENANEA_BUSH = 
-			ModFeatures.TENANEA_BUSH.configured(IFeatureConfig.NONE).
-			decorated(Placement.TOP_SOLID_HEIGHTMAP.configured(NoPlacementConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE)));
+			ModFeatures.TENANEA_BUSH.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.TOP_SOLID_HEIGHTMAP.configured(NoneDecoratorConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE)));
 	
 	public static final ConfiguredFeature<?, ?> LUCERNIA_BUSH = 
-			ModFeatures.LUCERNIA_BUSH.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(10);
+			ModFeatures.LUCERNIA_BUSH.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(10);
 
 	public static final ConfiguredFeature<?, ?> LUCERNIA_BUSH_RARE =
-			ModFeatures.LUCERNIA_BUSH_RARE.configured(IFeatureConfig.NONE).
-					decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(1);
+			ModFeatures.LUCERNIA_BUSH_RARE.configured(FeatureConfiguration.NONE).
+					decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(1);
 	
 	public static final ConfiguredFeature<?, ?> NEON_CACTUS = 
-			ModFeatures.NEON_CACTUS.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(2);
+			ModFeatures.NEON_CACTUS.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(2);
 
 	
 	// PLANTS
 	public static final ConfiguredFeature<?, ?> UMBRELLA_MOSS = 
-			ModFeatures.UMBRELLA_MOSS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(5));
+			ModFeatures.UMBRELLA_MOSS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(5));
 	
 	public static final ConfiguredFeature<?, ?> CREEPING_MOSS = 
-			ModFeatures.CREEPING_MOSS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(5));
+			ModFeatures.CREEPING_MOSS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(5));
 	
 	public static final ConfiguredFeature<?, ?> CHORUS_GRASS = 
-			ModFeatures.CHORUS_GRASS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(5));
+			ModFeatures.CHORUS_GRASS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(5));
 
 	public static final ConfiguredFeature<?, ?> CHORUS_MUSHROOM =
-			ModFeatures.CHORUS_MUSHROOM.configured(IFeatureConfig.NONE).
-					decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(1));
+			ModFeatures.CHORUS_MUSHROOM.configured(FeatureConfiguration.NONE).
+					decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(1));
 
 	public static final ConfiguredFeature<?, ?> CRYSTAL_GRASS = 
-			ModFeatures.CRYSTAL_GRASS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(5));
+			ModFeatures.CRYSTAL_GRASS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(5));
 	
 	public static final ConfiguredFeature<?, ?> AMBER_GRASS = 
-			ModFeatures.AMBER_GRASS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(9));
+			ModFeatures.AMBER_GRASS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(9));
 
 	public static final ConfiguredFeature<?, ?> AMBER_ROOT =
-			ModFeatures.AMBER_ROOT.configured(IFeatureConfig.NONE).
-					decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(1));
+			ModFeatures.AMBER_ROOT.configured(FeatureConfiguration.NONE).
+					decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(1));
 
 	public static final ConfiguredFeature<?, ?> SHADOW_PLANT = 
-			ModFeatures.SHADOW_PLANT.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(9));
+			ModFeatures.SHADOW_PLANT.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(9));
 	
 	public static final ConfiguredFeature<?, ?> BLUE_VINE = 
-			ModFeatures.BLUE_VINE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(1));
+			ModFeatures.BLUE_VINE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(1));
 	
 	public static final ConfiguredFeature<?, ?> MURKWEED = 
-			ModFeatures.MURKWEED.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(2));
+			ModFeatures.MURKWEED.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(2));
 	
 	public static final ConfiguredFeature<?, ?> NEEDLEGRASS = 
-			ModFeatures.NEEDLEGRASS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(2));
+			ModFeatures.NEEDLEGRASS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(2));
 	
 	public static final ConfiguredFeature<?, ?> SHADOW_BERRY = 
-			ModFeatures.SHADOW_BERRY.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(1));
+			ModFeatures.SHADOW_BERRY.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(1));
 	
 	public static final ConfiguredFeature<?, ?> BUSHY_GRASS = 
-			ModFeatures.BUSHY_GRASS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(20));
+			ModFeatures.BUSHY_GRASS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(20));
 	
 	public static final ConfiguredFeature<?, ?> BUSHY_GRASS_WG = 
-			ModFeatures.BUSHY_GRASS_WG.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(10));
+			ModFeatures.BUSHY_GRASS_WG.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(10));
 	
 	public static final ConfiguredFeature<?, ?> LANCELEAF = 
-			ModFeatures.LANCELEAF.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(3));
+			ModFeatures.LANCELEAF.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(3));
 	
 	public static final ConfiguredFeature<?, ?> GLOW_PILLAR = 
-			ModFeatures.GLOW_PILLAR.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(1));
+			ModFeatures.GLOW_PILLAR.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(1));
 	
 	public static final ConfiguredFeature<?, ?> TWISTED_UMBRELLA_MOSS = 
-			ModFeatures.TWISTED_UMBRELLA_MOSS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(5));
+			ModFeatures.TWISTED_UMBRELLA_MOSS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(5));
 	
 	public static final ConfiguredFeature<?, ?> JUNGLE_GRASS = 
-			ModFeatures.JUNGLE_GRASS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(8));
+			ModFeatures.JUNGLE_GRASS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(8));
 	
 	public static final ConfiguredFeature<?, ?> SMALL_JELLYSHROOM_FLOOR = 
-			ModFeatures.SMALL_JELLYSHROOM_FLOOR.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(4));
+			ModFeatures.SMALL_JELLYSHROOM_FLOOR.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(4));
 	
 	public static final ConfiguredFeature<?, ?> BLOSSOM_BERRY = 
-			ModFeatures.BLOSSOM_BERRY.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(2));
+			ModFeatures.BLOSSOM_BERRY.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(2));
 	
 	public static final ConfiguredFeature<?, ?> LUMECORN = 
-			ModFeatures.LUMECORN.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(5);
+			ModFeatures.LUMECORN.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(5);
 	
 	public static final ConfiguredFeature<?, ?> BLOOMING_COOKSONIA = 
-			ModFeatures.BLOOMING_COOKSONIA.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(5);
+			ModFeatures.BLOOMING_COOKSONIA.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(5);
 	
 	public static final ConfiguredFeature<?, ?> SALTEAGO = 
-			ModFeatures.SALTEAGO.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(5);
+			ModFeatures.SALTEAGO.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(5);
 	
 	public static final ConfiguredFeature<?, ?> VAIOLUSH_FERN = 
-			ModFeatures.VAIOLUSH_FERN.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(5);
+			ModFeatures.VAIOLUSH_FERN.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(5);
 	
 	public static final ConfiguredFeature<?, ?> FRACTURN = 
-			ModFeatures.FRACTURN.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(5);
+			ModFeatures.FRACTURN.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(5);
 	
 	public static final ConfiguredFeature<?, ?> UMBRELLA_MOSS_RARE = 
-			ModFeatures.UMBRELLA_MOSS_RARE.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(2);
+			ModFeatures.UMBRELLA_MOSS_RARE.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(2);
 	
 	public static final ConfiguredFeature<?, ?> CREEPING_MOSS_RARE = 
-			ModFeatures.CREEPING_MOSS_RARE.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(2);
+			ModFeatures.CREEPING_MOSS_RARE.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(2);
 	
 	public static final ConfiguredFeature<?, ?> TWISTED_UMBRELLA_MOSS_RARE = 
-			ModFeatures.TWISTED_UMBRELLA_MOSS_RARE.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(2);
+			ModFeatures.TWISTED_UMBRELLA_MOSS_RARE.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(2);
 	
 	public static final ConfiguredFeature<?, ?> SMALL_AMARANITA = 
-			ModFeatures.SMALL_AMARANITA.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(4);
+			ModFeatures.SMALL_AMARANITA.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(4);
 	
 	public static final ConfiguredFeature<?, ?> GLOBULAGUS = 
-			ModFeatures.GLOBULAGUS.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(6);
+			ModFeatures.GLOBULAGUS.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(6);
 	
 	public static final ConfiguredFeature<?, ?> CLAWFERN = 
-			ModFeatures.CLAWFERN.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(5);
+			ModFeatures.CLAWFERN.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(5);
 	
 	public static final ConfiguredFeature<?, ?> AERIDIUM = 
-			ModFeatures.AERIDIUM.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(5);
+			ModFeatures.AERIDIUM.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(5);
 	
 	public static final ConfiguredFeature<?, ?> LAMELLARIUM = 
-			ModFeatures.LAMELLARIUM.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(6); 
+			ModFeatures.LAMELLARIUM.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(6); 
 	
 	public static final ConfiguredFeature<?, ?> BOLUX_MUSHROOM = 
-			ModFeatures.BOLUX_MUSHROOM.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(2); 
+			ModFeatures.BOLUX_MUSHROOM.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(2); 
 	
 	public static final ConfiguredFeature<?, ?> ORANGO = 
-			ModFeatures.ORANGO.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(6); 
+			ModFeatures.ORANGO.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(6); 
 	
 	public static final ConfiguredFeature<?, ?> LUTEBUS = 
-			ModFeatures.LUTEBUS.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(5);
+			ModFeatures.LUTEBUS.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(5);
 
 	public static final ConfiguredFeature<?, ?> FLAMMALIX =
-			ModFeatures.FLAMMALIX.configured(IFeatureConfig.NONE).
-					decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(5);
+			ModFeatures.FLAMMALIX.configured(FeatureConfiguration.NONE).
+					decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(5);
 
 	public static final ConfiguredFeature<?, ?> INFLEXIA =
-			ModFeatures.INFLEXIA.configured(IFeatureConfig.NONE).
-					decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(16);
+			ModFeatures.INFLEXIA.configured(FeatureConfiguration.NONE).
+					decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(16);
 
 
 	// SKY PLANTS
 	public static final ConfiguredFeature<?, ?> FILALUX = 
-			ModFeatures.FILALUX.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(1);
+			ModFeatures.FILALUX.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(1);
 
 	
 	
 	// WALL PLANTS
 	public static final ConfiguredFeature<?, ?> PURPLE_POLYPORE = 
-			ModFeatures.PURPLE_POLYPORE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(5));
+			ModFeatures.PURPLE_POLYPORE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(5));
 	
 	public static final ConfiguredFeature<?, ?> AURANT_POLYPORE = 
-			ModFeatures.AURANT_POLYPORE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(5));
+			ModFeatures.AURANT_POLYPORE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(5));
 	
 	public static final ConfiguredFeature<?, ?> PURPLE_POLYPORE_DENSE = 
-			ModFeatures.PURPLE_POLYPORE_DENSE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(15));
+			ModFeatures.PURPLE_POLYPORE_DENSE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(15));
 	
 	public static final ConfiguredFeature<?, ?> TAIL_MOSS = 
-			ModFeatures.TAIL_MOSS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(15));
+			ModFeatures.TAIL_MOSS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(15));
 	
 	public static final ConfiguredFeature<?, ?> TAIL_MOSS_WOOD = 
-			ModFeatures.TAIL_MOSS_WOOD.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(25));
+			ModFeatures.TAIL_MOSS_WOOD.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(25));
 	
 	public static final ConfiguredFeature<?, ?> CYAN_MOSS = 
-			ModFeatures.CYAN_MOSS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(15));
+			ModFeatures.CYAN_MOSS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(15));
 	
 	public static final ConfiguredFeature<?, ?> CYAN_MOSS_WOOD = 
-			ModFeatures.CYAN_MOSS_WOOD.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(25));
+			ModFeatures.CYAN_MOSS_WOOD.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(25));
 	
 	public static final ConfiguredFeature<?, ?> TWISTED_MOSS = 
-			ModFeatures.TWISTED_MOSS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(15));
+			ModFeatures.TWISTED_MOSS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(15));
 	
 	public static final ConfiguredFeature<?, ?> TWISTED_MOSS_WOOD = 
-			ModFeatures.TWISTED_MOSS_WOOD.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(25));
+			ModFeatures.TWISTED_MOSS_WOOD.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(25));
 	
 	public static final ConfiguredFeature<?, ?> BULB_MOSS = 
-			ModFeatures.BULB_MOSS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(1));
+			ModFeatures.BULB_MOSS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(1));
 	
 	public static final ConfiguredFeature<?, ?> BULB_MOSS_WOOD = 
-			ModFeatures.BULB_MOSS_WOOD.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(15));
+			ModFeatures.BULB_MOSS_WOOD.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(15));
 	
 	public static final ConfiguredFeature<?, ?> SMALL_JELLYSHROOM_WALL = 
-			ModFeatures.SMALL_JELLYSHROOM_WALL.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(4));
+			ModFeatures.SMALL_JELLYSHROOM_WALL.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(4));
 	
 	public static final ConfiguredFeature<?, ?> SMALL_JELLYSHROOM_WOOD = 
-			ModFeatures.SMALL_JELLYSHROOM_WOOD.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(8));
+			ModFeatures.SMALL_JELLYSHROOM_WOOD.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(8));
 	
 	public static final ConfiguredFeature<?, ?> JUNGLE_FERN_WOOD = 
-			ModFeatures.JUNGLE_FERN_WOOD.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(12));
+			ModFeatures.JUNGLE_FERN_WOOD.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(12));
 	
 	public static final ConfiguredFeature<?, ?> RUSCUS = 
-			ModFeatures.RUSCUS.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(10));
+			ModFeatures.RUSCUS.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(10));
 	
 	public static final ConfiguredFeature<?, ?> RUSCUS_WOOD = 
-			ModFeatures.RUSCUS_WOOD.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(10));
+			ModFeatures.RUSCUS_WOOD.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(10));
 
 	
 	// VINES
 	public static final ConfiguredFeature<?, ?> DENSE_VINE = 
-			ModFeatures.DENSE_VINE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(3));
+			ModFeatures.DENSE_VINE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(3));
 	
 	public static final ConfiguredFeature<?, ?> TWISTED_VINE = 
-			ModFeatures.TWISTED_VINE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(3));
+			ModFeatures.TWISTED_VINE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(3));
 	
 	public static final ConfiguredFeature<?, ?> BULB_VINE = 
-			ModFeatures.BULB_VINE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(5));
+			ModFeatures.BULB_VINE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(5));
 	
 	public static final ConfiguredFeature<?, ?> JUNGLE_VINE = 
-			ModFeatures.JUNGLE_VINE.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(5));
+			ModFeatures.JUNGLE_VINE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(5));
 	
 	// CEIL PLANTS
 	public static final ConfiguredFeature<?, ?> SMALL_JELLYSHROOM_CEIL = 
-			ModFeatures.SMALL_JELLYSHROOM_CEIL.configured(IFeatureConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE).count(8));
+			ModFeatures.SMALL_JELLYSHROOM_CEIL.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE).count(8));
 	
 	// TERRAIN
 	public static final ConfiguredFeature<?, ?> ROUND_CAVE = 
-			ModFeatures.ROUND_CAVE.configured(IFeatureConfig.NONE).
-			decorated(Placement.CHANCE.configured(new ChanceConfig(2)));
+			ModFeatures.ROUND_CAVE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(2)));
 	
 	public static final ConfiguredFeature<?, ?> END_LAKE = 
-			ModFeatures.END_LAKE.configured(IFeatureConfig.NONE).
-			decorated(Placement.WATER_LAKE.configured(new ChanceConfig(4)));
+			ModFeatures.END_LAKE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.WATER_LAKE.configured(new ChanceDecoratorConfiguration(4)));
 	public static final ConfiguredFeature<?, ?> END_LAKE_RARE = 
-			ModFeatures.END_LAKE_RARE.configured(IFeatureConfig.NONE).
-			decorated(Placement.WATER_LAKE.configured(new ChanceConfig(40)));
+			ModFeatures.END_LAKE_RARE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.WATER_LAKE.configured(new ChanceDecoratorConfiguration(40)));
 	public static final ConfiguredFeature<?, ?> END_LAKE_NORMAL = 
-			ModFeatures.END_LAKE.configured(IFeatureConfig.NONE).
-			decorated(Placement.WATER_LAKE.configured(new ChanceConfig(20)));
+			ModFeatures.END_LAKE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.WATER_LAKE.configured(new ChanceDecoratorConfiguration(20)));
 	
 	public static final ConfiguredFeature<?, ?> DESERT_LAKE = 
-			ModFeatures.DESERT_LAKE.configured(IFeatureConfig.NONE).
-			decorated(Placement.WATER_LAKE.configured(new ChanceConfig(8)));
+			ModFeatures.DESERT_LAKE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.WATER_LAKE.configured(new ChanceDecoratorConfiguration(8)));
 	
 	public static final ConfiguredFeature<?, ?> SPIRE = 
-			ModFeatures.SPIRE.configured(IFeatureConfig.NONE).
-			decorated(Placement.CHANCE.configured(new ChanceConfig(2)));
+			ModFeatures.SPIRE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(2)));
 	public static final ConfiguredFeature<?, ?> FLOATING_SPIRE = 
-			ModFeatures.FLOATING_SPIRE.configured(IFeatureConfig.NONE).
-			decorated(Placement.CHANCE.configured(new ChanceConfig(8)));
+			ModFeatures.FLOATING_SPIRE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(8)));
 	
 	public static final ConfiguredFeature<?, ?> GEYSER = 
-			ModFeatures.GEYSER.configured(IFeatureConfig.NONE).
-			decorated(Placement.CHANCE.configured(new ChanceConfig(8)));
+			ModFeatures.GEYSER.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(8)));
 	
 	public static final ConfiguredFeature<?, ?> SULPHURIC_LAKE = 
-			ModFeatures.SULPHURIC_LAKE.configured(IFeatureConfig.NONE).
-			decorated(Placement.WATER_LAKE.configured(new ChanceConfig(8)));
+			ModFeatures.SULPHURIC_LAKE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.WATER_LAKE.configured(new ChanceDecoratorConfiguration(8)));
 	
 	public static final ConfiguredFeature<?, ?> SULPHURIC_CAVE = 
-			ModFeatures.SULPHURIC_CAVE.configured(IFeatureConfig.NONE).
-			decorated(Placement.COUNT.configured(new FeatureSpreadConfig(2)));
+			ModFeatures.SULPHURIC_CAVE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.COUNT.configured(new CountConfiguration(2)));
 	
 	public static final ConfiguredFeature<?, ?> SURFACE_VENT = 
-			ModFeatures.SURFACE_VENT.configured(IFeatureConfig.NONE).
-			decorated(Placement.CHANCE.configured(new ChanceConfig(4)));
+			ModFeatures.SURFACE_VENT.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(4)));
 	
 	public static final ConfiguredFeature<?, ?> ICE_STAR = 
-			ModFeatures.ICE_STAR.configured(IFeatureConfig.NONE).
-			decorated(Placement.CHANCE.configured(new ChanceConfig(15)));
+			ModFeatures.ICE_STAR.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(15)));
 	
 	public static final ConfiguredFeature<?, ?> ICE_STAR_SMALL = 
-			ModFeatures.ICE_STAR_SMALL.configured(IFeatureConfig.NONE).
-			decorated(Placement.CHANCE.configured(new ChanceConfig(8)));
+			ModFeatures.ICE_STAR_SMALL.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(8)));
 	
 	public static final ConfiguredFeature<?, ?> OVERWORLD_ISLAND = 
-			ModFeatures.OVERWORLD_ISLAND.configured(IFeatureConfig.NONE);
+			ModFeatures.OVERWORLD_ISLAND.configured(FeatureConfiguration.NONE);
 	
 	public static final ConfiguredFeature<?, ?> OBSIDIAN_PILLAR_BASEMENT = 
-			ModFeatures.OBSIDIAN_PILLAR_BASEMENT.configured(IFeatureConfig.NONE).
-			decorated(Placement.CHANCE.configured(new ChanceConfig(8)));
+			ModFeatures.OBSIDIAN_PILLAR_BASEMENT.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(8)));
 	
 	public static final ConfiguredFeature<?, ?> FALLEN_PILLAR = 
-			ModFeatures.FALLEN_PILLAR.configured(IFeatureConfig.NONE).
-			decorated(Placement.CHANCE.configured(new ChanceConfig(20)));
+			ModFeatures.FALLEN_PILLAR.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(20)));
 	
 	public static final ConfiguredFeature<?, ?> OBSIDIAN_BOULDER = 
-			ModFeatures.OBSIDIAN_BOULDER.configured(IFeatureConfig.NONE).
-			decorated(Placement.CHANCE.configured(new ChanceConfig(10)));
+			ModFeatures.OBSIDIAN_BOULDER.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(10)));
 
 	public static final ConfiguredFeature<?, ?> TUNEL_CAVE =
-			ModFeatures.TUNEL_CAVE.configured(IFeatureConfig.NONE)
-			.decorated(Placement.COUNT.configured(new FeatureSpreadConfig(1)));
+			ModFeatures.TUNEL_CAVE.configured(FeatureConfiguration.NONE)
+			.decorated(FeatureDecorator.COUNT.configured(new CountConfiguration(1)));
 
 	public static final ConfiguredFeature<?, ?> THIN_ARCH =
-			ModFeatures.THIN_ARCH.configured(IFeatureConfig.NONE)
-					.decorated(Placement.CHANCE.configured(new ChanceConfig(15)));
+			ModFeatures.THIN_ARCH.configured(FeatureConfiguration.NONE)
+					.decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(15)));
 
 	public static final ConfiguredFeature<?, ?> UMBRALITH_ARCH =
-			ModFeatures.UMBRALITH_ARCH.configured(IFeatureConfig.NONE)
-					.decorated(Placement.CHANCE.configured(new ChanceConfig(10)));
+			ModFeatures.UMBRALITH_ARCH.configured(FeatureConfiguration.NONE)
+					.decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(10)));
 
 
 	// TREES
 	public static final ConfiguredFeature<?, ?> MOSSY_GLOWSHROOM = 
-			ModFeatures.MOSSY_GLOWSHROOM.configured(IFeatureConfig.NONE).
-			decorated(Placement.TOP_SOLID_HEIGHTMAP.configured(NoPlacementConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE)));//count(3));
+			ModFeatures.MOSSY_GLOWSHROOM.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.TOP_SOLID_HEIGHTMAP.configured(NoneDecoratorConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE)));//count(3));
 	
 	public static final ConfiguredFeature<?, ?> LACUGROVE = 
-			ModFeatures.LACUGROVE.configured(IFeatureConfig.NONE).
-			decorated(Placement.TOP_SOLID_HEIGHTMAP.configured(NoPlacementConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE)));
+			ModFeatures.LACUGROVE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.TOP_SOLID_HEIGHTMAP.configured(NoneDecoratorConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE)));
 	
 	public static final ConfiguredFeature<?, ?> PYTHADENDRON = 
-			ModFeatures.PYTHADENDRON.configured(IFeatureConfig.NONE).
-			decorated(Placement.TOP_SOLID_HEIGHTMAP.configured(NoPlacementConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE)));
+			ModFeatures.PYTHADENDRON.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.TOP_SOLID_HEIGHTMAP.configured(NoneDecoratorConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE)));
 	
 	public static final ConfiguredFeature<?, ?> DRAGON_TREE = 
-			ModFeatures.DRAGON_TREE.configured(IFeatureConfig.NONE).
-			decorated(Placement.TOP_SOLID_HEIGHTMAP.configured(NoPlacementConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE)));
+			ModFeatures.DRAGON_TREE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.TOP_SOLID_HEIGHTMAP.configured(NoneDecoratorConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE)));
 	
 	public static final ConfiguredFeature<?, ?> TENANEA = 
-			ModFeatures.TENANEA.configured(IFeatureConfig.NONE).
-			decorated(Placement.TOP_SOLID_HEIGHTMAP.configured(NoPlacementConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE)));
+			ModFeatures.TENANEA.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.TOP_SOLID_HEIGHTMAP.configured(NoneDecoratorConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE)));
 	
 	public static final ConfiguredFeature<?, ?> HELIX_TREE = 
-			ModFeatures.HELIX_TREE.configured(IFeatureConfig.NONE).
-			decorated(Placement.TOP_SOLID_HEIGHTMAP.configured(NoPlacementConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE)));
+			ModFeatures.HELIX_TREE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.TOP_SOLID_HEIGHTMAP.configured(NoneDecoratorConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE)));
 	
 	public static final ConfiguredFeature<?, ?> UMBRELLA_TREE = 
-			ModFeatures.UMBRELLA_TREE.configured(IFeatureConfig.NONE).
-			decorated(Placement.TOP_SOLID_HEIGHTMAP.configured(NoPlacementConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE)));
+			ModFeatures.UMBRELLA_TREE.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.TOP_SOLID_HEIGHTMAP.configured(NoneDecoratorConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE)));
 	
 	public static final ConfiguredFeature<?, ?> JELLYSHROOM = 
-			ModFeatures.JELLYSHROOM.configured(IFeatureConfig.NONE).
-			decorated(Placement.TOP_SOLID_HEIGHTMAP.configured(NoPlacementConfig.NONE).
-			decorated(Placement.SQUARE.configured(NoPlacementConfig.NONE)));
+			ModFeatures.JELLYSHROOM.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.TOP_SOLID_HEIGHTMAP.configured(NoneDecoratorConfiguration.NONE).
+			decorated(FeatureDecorator.SQUARE.configured(NoneDecoratorConfiguration.NONE)));
 	
 	public static final ConfiguredFeature<?, ?> GIGANTIC_AMARANITA = 
-			ModFeatures.GIGANTIC_AMARANITA.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(1);
+			ModFeatures.GIGANTIC_AMARANITA.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(1);
 	
 	public static final ConfiguredFeature<?, ?> LUCERNIA = 
-			ModFeatures.LUCERNIA.configured(IFeatureConfig.NONE).
-			decorated(Features.Placements.HEIGHTMAP_SQUARE).countRandom(3);
+			ModFeatures.LUCERNIA.configured(FeatureConfiguration.NONE).
+			decorated(Features.Decorators.HEIGHTMAP_SQUARE).countRandom(3);
 
 	// ORES
 	public static final ConfiguredFeature<?, ?> THALLASIUM_ORE =
 			ModFeatures.THALLASIUM_ORE.configured(
-					new OreFeatureConfig(
-							new BlockMatchRuleTest(Blocks.END_STONE), ModBlocks.THALLASIUM.ore.get().defaultBlockState(), 6)).
+					new OreConfiguration(
+							new BlockMatchTest(Blocks.END_STONE), ModBlocks.THALLASIUM.ore.get().defaultBlockState(), 6)).
 			range(96).squared().count(20);
 	
 	public static final ConfiguredFeature<?, ?> ENDER_ORE =
 			ModFeatures.ENDER_ORE.configured(
-					new OreFeatureConfig(
-							new BlockMatchRuleTest(Blocks.END_STONE), ModBlocks.ENDER_ORE.get().defaultBlockState(), 3)).
+					new OreConfiguration(
+							new BlockMatchTest(Blocks.END_STONE), ModBlocks.ENDER_ORE.get().defaultBlockState(), 3)).
 			range(96).squared().count(20);
 	
 	public static final ConfiguredFeature<?, ?> AMBER_ORE =
 			ModFeatures.AMBER_ORE.configured(
-					new OreFeatureConfig(
-							new BlockMatchRuleTest(Blocks.END_STONE), ModBlocks.AMBER_ORE.get().defaultBlockState(), 6)).
+					new OreConfiguration(
+							new BlockMatchTest(Blocks.END_STONE), ModBlocks.AMBER_ORE.get().defaultBlockState(), 6)).
 			range(96).squared().count(20);
 	
 	public static final ConfiguredFeature<?, ?> FLAVOLITE_LAYER = 
-			ModFeatures.FLAVOLITE_LAYER.configured(IFeatureConfig.NONE).
+			ModFeatures.FLAVOLITE_LAYER.configured(FeatureConfiguration.NONE).
 			//withPlacement(Placement.CHANCE.configure(new ChanceConfig(6)));
-			decorated(Placement.COUNT.configured(new FeatureSpreadConfig(6)));
+			decorated(FeatureDecorator.COUNT.configured(new CountConfiguration(6)));
 	
 	public static final ConfiguredFeature<?, ?> VIOLECITE_LAYER = 
-			ModFeatures.VIOLECITE_LAYER.configured(IFeatureConfig.NONE).
+			ModFeatures.VIOLECITE_LAYER.configured(FeatureConfiguration.NONE).
 			//withPlacement(Placement.CHANCE.configure(new ChanceConfig(8)));
-			decorated(Placement.COUNT.configured(new FeatureSpreadConfig(8)));
+			decorated(FeatureDecorator.COUNT.configured(new CountConfiguration(8)));
 	
 	// BUILDINGS
 	public static final ConfiguredFeature<?, ?> CRASHED_SHIP = 
-			ModFeatures.CRASHED_SHIP.configured(IFeatureConfig.NONE).
-			decorated(Placement.CHANCE.configured(new ChanceConfig(500)));
+			ModFeatures.CRASHED_SHIP.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(500)));
 	
 	public static final ConfiguredFeature<?, ?> NBT_STRUCTURES = 
-			ModFeatures.NBT_STRUCTURES.configured(IFeatureConfig.NONE).
-			decorated(Placement.CHANCE.configured(new ChanceConfig(10)));
+			ModFeatures.NBT_STRUCTURES.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(10)));
 	
 	// MOBS
 	public static final ConfiguredFeature<?, ?> SILK_MOTH_NEST = 
-			ModFeatures.SILK_MOTH_NEST.configured(IFeatureConfig.NONE).
-			decorated(Placement.CHANCE.configured(new ChanceConfig(2)));
+			ModFeatures.SILK_MOTH_NEST.configured(FeatureConfiguration.NONE).
+			decorated(FeatureDecorator.CHANCE.configured(new ChanceDecoratorConfiguration(2)));
 
 	// CAVES
 	public static final ConfiguredFeature<?, ?> SMARAGDANT_CRYSTAL = 
-			ModFeatures.SMARAGDANT_CRYSTAL.configured(IFeatureConfig.NONE);
+			ModFeatures.SMARAGDANT_CRYSTAL.configured(FeatureConfiguration.NONE);
 	
 	public static final ConfiguredFeature<?, ?> SMARAGDANT_CRYSTAL_SHARD = 
-			ModFeatures.SMARAGDANT_CRYSTAL_SHARD.configured(IFeatureConfig.NONE);
+			ModFeatures.SMARAGDANT_CRYSTAL_SHARD.configured(FeatureConfiguration.NONE);
 	
 	public static final ConfiguredFeature<?, ?> BIG_AURORA_CRYSTAL = 
-			ModFeatures.BIG_AURORA_CRYSTAL.configured(IFeatureConfig.NONE);
+			ModFeatures.BIG_AURORA_CRYSTAL.configured(FeatureConfiguration.NONE);
 	
 	public static final ConfiguredFeature<?, ?> END_STONE_STALACTITE = 
-			ModFeatures.END_STONE_STALACTITE.configured(IFeatureConfig.NONE);
+			ModFeatures.END_STONE_STALACTITE.configured(FeatureConfiguration.NONE);
 	
 	public static final ConfiguredFeature<?, ?> END_STONE_STALAGMITE = 
-			ModFeatures.END_STONE_STALAGMITE.configured(IFeatureConfig.NONE);
+			ModFeatures.END_STONE_STALAGMITE.configured(FeatureConfiguration.NONE);
 	
 	public static final ConfiguredFeature<?, ?> END_STONE_STALACTITE_CAVEMOSS = 
-			ModFeatures.END_STONE_STALACTITE_CAVEMOSS.configured(IFeatureConfig.NONE);
+			ModFeatures.END_STONE_STALACTITE_CAVEMOSS.configured(FeatureConfiguration.NONE);
 	
 	public static final ConfiguredFeature<?, ?> END_STONE_STALAGMITE_CAVEMOSS = 
-			ModFeatures.END_STONE_STALAGMITE_CAVEMOSS.configured(IFeatureConfig.NONE);
+			ModFeatures.END_STONE_STALAGMITE_CAVEMOSS.configured(FeatureConfiguration.NONE);
 	
 	public static final ConfiguredFeature<?, ?> CAVE_BUSH = 
-			ModFeatures.CAVE_BUSH.configured(IFeatureConfig.NONE);
+			ModFeatures.CAVE_BUSH.configured(FeatureConfiguration.NONE);
 	
 	public static final ConfiguredFeature<?, ?> CAVE_GRASS = 
-			ModFeatures.CAVE_GRASS.configured(IFeatureConfig.NONE);
+			ModFeatures.CAVE_GRASS.configured(FeatureConfiguration.NONE);
 	
 	public static final ConfiguredFeature<?, ?> RUBINEA = 
-			ModFeatures.RUBINEA.configured(IFeatureConfig.NONE);
+			ModFeatures.RUBINEA.configured(FeatureConfiguration.NONE);
 	
 	public static void registerConfiguredFeatures() 	
 	{
-        Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
+        Registry<ConfiguredFeature<?, ?>> registry = BuiltinRegistries.CONFIGURED_FEATURE;
         // WATER PLANTS
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "end_lotus"), END_LOTUS);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "end_lotus_leaf"), END_LOTUS_LEAF);

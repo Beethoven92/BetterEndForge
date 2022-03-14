@@ -12,42 +12,42 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFUnion;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFTorus;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
 import mod.beethoven92.betterendforge.data.AABBAcc;
-import net.minecraft.block.Block;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import com.mojang.math.Vector3f;
+import net.minecraft.core.Vec3i;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.Random;
 
-public class ThinArchFeature extends Feature<NoFeatureConfig> {
+public class ThinArchFeature extends Feature<NoneFeatureConfiguration> {
     private Block block;
 
     public ThinArchFeature(Block block)
     {
-        super(NoFeatureConfig.CODEC);
+        super(NoneFeatureConfiguration.CODEC);
         this.block = block;
     }
 
-    public static AxisAlignedBB ofSize(Vector3d vec3, double d, double e, double f) {
-        return new AxisAlignedBB (vec3.x - d / 2.0D, vec3.y - e / 2.0D, vec3.z - f / 2.0D, vec3.x + d / 2.0D, vec3.y + e / 2.0D, vec3.z + f / 2.0D);
+    public static AABB ofSize(Vec3 vec3, double d, double e, double f) {
+        return new AABB (vec3.x - d / 2.0D, vec3.y - e / 2.0D, vec3.z - f / 2.0D, vec3.x + d / 2.0D, vec3.y + e / 2.0D, vec3.z + f / 2.0D);
     }
 
-    public static Vector3d atCenterOf(Vector3i vec3i) {
-        return new Vector3d((double)vec3i.getX() + 0.5D, (double)vec3i.getY() + 0.5D, (double)vec3i.getZ() + 0.5D);
+    public static Vec3 atCenterOf(Vec3i vec3i) {
+        return new Vec3((double)vec3i.getX() + 0.5D, (double)vec3i.getY() + 0.5D, (double)vec3i.getZ() + 0.5D);
     }
 
     @Override
-    public boolean place(ISeedReader level, ChunkGenerator generator, Random random, BlockPos origin,
-                            NoFeatureConfig config)
+    public boolean place(WorldGenLevel level, ChunkGenerator generator, Random random, BlockPos origin,
+                            NoneFeatureConfiguration config)
     {
-        final ISeedReader world = level;
+        final WorldGenLevel world = level;
 
         BlockPos pos = FeatureHelper.getPosOnSurface(world, new BlockPos((origin.getX() & 0xFFFFFFF0) | 7, 0, (origin.getZ() & 0xFFFFFFF0) | 7));
         if (!world.getBlockState(pos.below(5)).is(ModTags.GEN_TERRAIN)) {
@@ -78,7 +78,7 @@ public class ThinArchFeature extends Feature<NoFeatureConfig> {
         }).setSource(sdf);
         sdf = new SDFDisplacement().setFunction(vec -> {
             float offset = vec.y() / bigRadius - 0.5F;
-            return MathHelper.clamp(offset * 3, -10F, 0F);
+            return Mth.clamp(offset * 3, -10F, 0F);
         }).setSource(sdf);
 
         float side = (bigRadius + 2.5F) * 2;

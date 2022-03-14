@@ -1,11 +1,11 @@
 package mod.beethoven92.betterendforge.common.block.template;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class WallMushroomBlock extends WallPlantBlock
 {
@@ -15,7 +15,7 @@ public class WallMushroomBlock extends WallPlantBlock
 	}
 	
 	@Override
-	public boolean isValidSupport(IWorldReader world, BlockPos pos, BlockState blockState, Direction direction) 
+	public boolean isValidSupport(LevelReader world, BlockPos pos, BlockState blockState, Direction direction) 
 	{
 		return blockState.getMaterial().isSolid() && blockState.isFaceSturdy(world, pos, direction);
 	}

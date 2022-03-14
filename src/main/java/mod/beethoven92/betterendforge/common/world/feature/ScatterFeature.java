@@ -6,36 +6,36 @@ import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.FeatureHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public abstract class ScatterFeature extends Feature<NoFeatureConfig>
+public abstract class ScatterFeature extends Feature<NoneFeatureConfiguration>
 {
-	private static final Mutable POS = new Mutable();
+	private static final MutableBlockPos POS = new MutableBlockPos();
 	private final int radius;
 	
 	public ScatterFeature(int radius) 
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 		
 		this.radius = radius;
 	}
 	
-	public abstract boolean canGenerate(ISeedReader world, Random random, BlockPos center, 
+	public abstract boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, 
 			BlockPos blockPos, float radius);
 	
-	public abstract void generate(ISeedReader world, Random random, BlockPos blockPos);
+	public abstract void generate(WorldGenLevel world, Random random, BlockPos blockPos);
 	
-	protected BlockPos getCenterGround(ISeedReader world, BlockPos pos) 
+	protected BlockPos getCenterGround(WorldGenLevel world, BlockPos pos) 
 	{
 		return FeatureHelper.getPosOnSurfaceWG(world, pos);
 	}
 	
-	protected boolean canSpawn(ISeedReader world, BlockPos pos) 
+	protected boolean canSpawn(WorldGenLevel world, BlockPos pos) 
 	{
 		if (pos.getY() < 5)
 		{
@@ -48,7 +48,7 @@ public abstract class ScatterFeature extends Feature<NoFeatureConfig>
 		return true;
 	}
 	
-	protected boolean getGroundPlant(ISeedReader world, Mutable pos)
+	protected boolean getGroundPlant(WorldGenLevel world, MutableBlockPos pos)
 	{
 		int down = BlockHelper.downRay(world, pos, 16);
 		
@@ -71,8 +71,8 @@ public abstract class ScatterFeature extends Feature<NoFeatureConfig>
 	}
 	
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand,
-			BlockPos pos, NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand,
+			BlockPos pos, NoneFeatureConfiguration config) 
 	{
 		pos = getCenterGround(world, pos);
 		

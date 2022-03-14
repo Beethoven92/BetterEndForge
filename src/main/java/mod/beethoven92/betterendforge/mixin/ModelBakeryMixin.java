@@ -5,8 +5,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import mod.beethoven92.betterendforge.config.CommonConfig;
-import net.minecraft.client.renderer.model.ModelBakery;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.resources.ResourceLocation;
 
 @Mixin(ModelBakery.class)
 public class ModelBakeryMixin 

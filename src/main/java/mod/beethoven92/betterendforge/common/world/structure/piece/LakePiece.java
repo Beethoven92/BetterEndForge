@@ -13,27 +13,27 @@ import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap.Type;
-import net.minecraft.world.gen.feature.structure.StructureManager;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
 public class LakePiece extends StructurePiece
 {
@@ -66,7 +66,7 @@ public class LakePiece extends StructurePiece
 		makeBoundingBox();
 	}
 	
-	public LakePiece(TemplateManager p_i50677_1_, CompoundNBT nbt) 
+	public LakePiece(StructureManager p_i50677_1_, CompoundTag nbt) 
 	{
 		super(ModStructurePieces.LAKE_PIECE, nbt);
         // READ STRUCTURE DATA
@@ -81,7 +81,7 @@ public class LakePiece extends StructurePiece
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT tagCompound) 
+	protected void addAdditionalSaveData(CompoundTag tagCompound) 
 	{
 		tagCompound.putInt("centerX", this.center.getX());
 	    tagCompound.putInt("centerY", this.center.getY());
@@ -100,19 +100,19 @@ public class LakePiece extends StructurePiece
 		int maxX = ModMathHelper.floor(center.getX() + radius + 8);
 		int maxY = ModMathHelper.floor(center.getY() + depth);
 		int maxZ = ModMathHelper.floor(center.getZ() + radius + 8);
-		this.boundingBox = new MutableBoundingBox(minX, minY, minZ, maxX, maxY, maxZ);
+		this.boundingBox = new BoundingBox(minX, minY, minZ, maxX, maxY, maxZ);
 	}
 	
 	@Override
-	public boolean postProcess(ISeedReader world, StructureManager manager, ChunkGenerator chunkGenerator,
-			Random random, MutableBoundingBox box, ChunkPos chunkPos, BlockPos blockPos) 
+	public boolean postProcess(WorldGenLevel world, StructureFeatureManager manager, ChunkGenerator chunkGenerator,
+			Random random, BoundingBox box, ChunkPos chunkPos, BlockPos blockPos) 
 	{
 		int minY = this.boundingBox.y0;
 		int maxY = this.boundingBox.y1;
 		int sx = chunkPos.x << 4;
 		int sz = chunkPos.z << 4;
-		Mutable mut = new Mutable();
-		IChunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
+		MutableBlockPos mut = new MutableBlockPos();
+		ChunkAccess chunk = world.getChunk(chunkPos.x, chunkPos.z);
 		for (int x = 0; x < 16; x++) 
 		{
 			mut.setX(x);
@@ -177,18 +177,18 @@ public class LakePiece extends StructurePiece
 		return true;
 	}
 	
-	private boolean canReplace(IChunk chunk, BlockPos pos, BlockState state) {
+	private boolean canReplace(ChunkAccess chunk, BlockPos pos, BlockState state) {
 		if (state.is(ModTags.GEN_TERRAIN) || state.isAir())
 			return true;
 		Block b = state.getBlock();
-		if (b instanceof PlantBlock && !(b instanceof IWaterLoggable)) {
+		if (b instanceof PlantBlock && !(b instanceof SimpleWaterloggedBlock)) {
 			removePlant(chunk, pos);
 			return true;
 		}
 		return false;
 	}
 	
-	private void removePlant(IChunk chunk, BlockPos pos) {
+	private void removePlant(ChunkAccess chunk, BlockPos pos) {
 		BlockPos p = new BlockPos(pos);
 		while (chunk.getBlockState(p).getBlock() instanceof PlantBlock) {
 			chunk.setBlockState(p, AIR, false);
@@ -201,7 +201,7 @@ public class LakePiece extends StructurePiece
 		}
 	}
 
-	private void fixWater(ISeedReader world, IChunk chunk, Mutable mut, Random random, int sx, int sz) 
+	private void fixWater(WorldGenLevel world, ChunkAccess chunk, MutableBlockPos mut, Random random, int sx, int sz) 
 	{
 		int minY = this.boundingBox.y0;
 		int maxY = this.boundingBox.y1;
@@ -269,7 +269,7 @@ public class LakePiece extends StructurePiece
 		}
 	}
 	
-	private void makeEndstonePillar(IChunk chunk, Mutable mut, BlockState terrain) 
+	private void makeEndstonePillar(ChunkAccess chunk, MutableBlockPos mut, BlockState terrain) 
 	{
 		chunk.setBlockState(mut, terrain, false);
 		mut.setY(mut.getY() - 1);
@@ -280,9 +280,9 @@ public class LakePiece extends StructurePiece
 		}
 	}
 	
-	private float getHeightClamp(ISeedReader world, int radius, int posX, int posZ) 
+	private float getHeightClamp(WorldGenLevel world, int radius, int posX, int posZ) 
 	{
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		int r2 = radius * radius;
 		float height = 0;
 		float max = 0;
@@ -303,10 +303,10 @@ public class LakePiece extends StructurePiece
 			}
 		}
 		height /= max;
-		return MathHelper.clamp(height, 0, 1);
+		return Mth.clamp(height, 0, 1);
 	}
 	
-	private int getHeight(ISeedReader world, BlockPos pos) 
+	private int getHeight(WorldGenLevel world, BlockPos pos) 
 	{
 		int p = ((pos.getX() & 2047) << 11) | (pos.getZ() & 2047);
 		int h = heightmap.getOrDefault(p, Byte.MIN_VALUE);
@@ -321,8 +321,8 @@ public class LakePiece extends StructurePiece
 			return 0;
 		}
 		
-		h = world.getHeight(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
-		h = MathHelper.abs(h - center.getY());
+		h = world.getHeight(Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		h = Mth.abs(h - center.getY());
 		h = h < 8 ? 1 : 0;
 		
 		heightmap.put(p, (byte) h);

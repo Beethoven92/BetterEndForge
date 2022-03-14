@@ -4,10 +4,10 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredStructures;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.GenerationStage.Decoration;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 
 public class CrystalMountainsBiome extends BetterEndBiome
 {
@@ -21,6 +21,6 @@ public class CrystalMountainsBiome extends BetterEndBiome
 				                  addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CRYSTAL_GRASS).
 				                  addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CAVE_GRASS).
 				                  addStructure(ModConfiguredStructures.MOUNTAIN_STRUCTURE).
-				                  addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
+				                  addMobSpawn(MobCategory.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

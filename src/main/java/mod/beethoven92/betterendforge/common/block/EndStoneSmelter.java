@@ -4,40 +4,40 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.tileentity.EndStoneSmelterTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Containers;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class EndStoneSmelter extends Block
 {
-	public static final DirectionProperty FACING = HorizontalBlock.FACING;
+	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty LIT = BlockStateProperties.LIT;
 	
 	public EndStoneSmelter(Properties properties) 
@@ -47,14 +47,14 @@ public class EndStoneSmelter extends Block
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) 
+	public BlockState getStateForPlacement(BlockPlaceContext context) 
 	{
 		return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 	
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) 
+	public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) 
 	{
 		if (stateIn.getValue(LIT)) 
 		{
@@ -63,7 +63,7 @@ public class EndStoneSmelter extends Block
 			double z = pos.getZ() + 0.5D;
 			if (rand.nextDouble() < 0.1D) 
 			{
-			   worldIn.playLocalSound(x, y, z, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+			   worldIn.playLocalSound(x, y, z, SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 			}
 
 			Direction direction = (Direction)stateIn.getValue(FACING);
@@ -77,38 +77,38 @@ public class EndStoneSmelter extends Block
 	}
 	
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-			Hand handIn, BlockRayTraceResult hit)
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player,
+			InteractionHand handIn, BlockHitResult hit)
 	{
 		if (worldIn.isClientSide) 
 		{
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		} 
 		else
 		{
 			this.interactWith(worldIn, pos, player);
-			return ActionResultType.CONSUME;
+			return InteractionResult.CONSUME;
 		}
 	}
 	
-	protected void interactWith(World worldIn, BlockPos pos, PlayerEntity player) 
+	protected void interactWith(Level worldIn, BlockPos pos, Player player) 
 	{
-		TileEntity tileEntity = worldIn.getBlockEntity(pos);
+		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
 		if (tileEntity instanceof EndStoneSmelterTileEntity) 
 		{
-			NetworkHooks.openGui((ServerPlayerEntity)player, (EndStoneSmelterTileEntity)tileEntity);
+			NetworkHooks.openGui((ServerPlayer)player, (EndStoneSmelterTileEntity)tileEntity);
 		}
 	}
 	
 	@Override
-	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) 
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) 
 	{
 		if (!state.is(newState.getBlock())) 
 		{
-			TileEntity tileentity = worldIn.getBlockEntity(pos);
+			BlockEntity tileentity = worldIn.getBlockEntity(pos);
 	        if (tileentity instanceof EndStoneSmelterTileEntity) 
 	        {
-	        	InventoryHelper.dropContents(worldIn, pos, (EndStoneSmelterTileEntity)tileentity);
+	        	Containers.dropContents(worldIn, pos, (EndStoneSmelterTileEntity)tileentity);
 	             //((EndStoneSmelterTileEntity)tileentity).grantStoredRecipeExperience(worldIn, Vector3d.copyCentered(pos));
 	             worldIn.updateNeighbourForOutputSignal(pos, this);
 	          }
@@ -124,7 +124,7 @@ public class EndStoneSmelter extends Block
 	}
 	
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) 
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world) 
 	{
 		return ModTileEntityTypes.END_STONE_SMELTER.get().create();
 	}
@@ -136,9 +136,9 @@ public class EndStoneSmelter extends Block
 	}
 	
 	@Override
-	public int getAnalogOutputSignal(BlockState blockState, World worldIn, BlockPos pos) 
+	public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) 
 	{
-		return Container.getRedstoneSignalFromBlockEntity(worldIn.getBlockEntity(pos));
+		return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(worldIn.getBlockEntity(pos));
 	}
 	
 	@Override

@@ -3,14 +3,14 @@ package mod.beethoven92.betterendforge.common.block;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.HydraluxShape;
 import mod.beethoven92.betterendforge.common.block.template.UnderwaterPlantBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class HydraluxBlock extends UnderwaterPlantBlock
 {
@@ -22,7 +22,7 @@ public class HydraluxBlock extends UnderwaterPlantBlock
 	}
 
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) 
 	{
 		BlockState down = worldIn.getBlockState(pos.below());
 		HydraluxShape shape = state.getValue(SHAPE);

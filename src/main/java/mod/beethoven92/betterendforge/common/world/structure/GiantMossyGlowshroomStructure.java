@@ -27,17 +27,17 @@ import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFCappedCone;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFPrimitive;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 public class GiantMossyGlowshroomStructure extends SDFStructure
 {
-	public GiantMossyGlowshroomStructure(Codec<NoFeatureConfig> p_i231997_1_)
+	public GiantMossyGlowshroomStructure(Codec<NoneFeatureConfiguration> p_i231997_1_)
 	{
 		super(p_i231997_1_);
 	}
@@ -97,15 +97,15 @@ public class GiantMossyGlowshroomStructure extends SDFStructure
 		priGlowCone.setBlock(ModBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE.get());
 		primRoots.setBlock(ModBlocks.MOSSY_GLOWSHROOM.bark.get());
 		
-		float height = MathHelper.nextFloat(random, 10F, 25F);
-		int count = MathHelper.floor(height / 4);
+		float height = Mth.nextFloat(random, 10F, 25F);
+		int count = Mth.floor(height / 4);
 		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, height, 0, count);
 		SplineHelper.offsetParts(spline, random, 1F, 0, 1F);
 		SDF sdf = SplineHelper.buildSDF(spline, 2.1F, 1.5F, (pos) -> {
 			return ModBlocks.MOSSY_GLOWSHROOM.log.get().defaultBlockState();
 		});
 		Vector3f pos = spline.get(spline.size() - 1);
-		float scale = MathHelper.nextFloat(random, 2F, 3.5F);
+		float scale = Mth.nextFloat(random, 2F, 3.5F);
 		
 		HEAD_POS.setTranslate(pos.x(), pos.y(), pos.z());
 		rotRoots.setAngle(random.nextFloat() * ((float)Math.PI * 2));

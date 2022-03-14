@@ -10,27 +10,27 @@ import mod.beethoven92.betterendforge.common.block.material.WoodenMaterial;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import mod.beethoven92.betterendforge.common.init.ModTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.data.CookingRecipeBuilder;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.IFinishedRecipe;
-import net.minecraft.data.RecipeProvider;
-import net.minecraft.data.ShapedRecipeBuilder;
-import net.minecraft.data.ShapelessRecipeBuilder;
-import net.minecraft.data.SingleItemRecipeBuilder;
-import net.minecraft.data.SmithingRecipeBuilder;
-import net.minecraft.item.DyeColor;
-import net.minecraft.item.DyeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
+import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.data.recipes.SingleItemRecipeBuilder;
+import net.minecraft.data.recipes.UpgradeRecipeBuilder;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class ModRecipes extends RecipeProvider
 {
@@ -44,7 +44,7 @@ public class ModRecipes extends RecipeProvider
 	}
 	
 	@Override
-	protected void buildShapelessRecipes(Consumer<IFinishedRecipe> consumer) 
+	protected void buildShapelessRecipes(Consumer<FinishedRecipe> consumer) 
 	{
 		// BLOCKS
 	    ShapedRecipeBuilder.shaped(ModBlocks.ENDER_BLOCK.get()).define('#', Items.ENDER_PEARL).pattern("##").pattern("##").unlockedBy("has_ender_pearl", has(Items.ENDER_PEARL)).save(consumer);	    
@@ -137,9 +137,9 @@ public class ModRecipes extends RecipeProvider
 		cookFood(ModItems.END_LILY_LEAF.get(), ModItems.END_LILY_LEAF_DRIED.get(), 0.35F, 200, consumer);
 		cookFood(ModItems.SHADOW_BERRY_RAW.get(), ModItems.SHADOW_BERRY_COOKED.get(), 0.35F, 200, consumer);
 		cookFood(ModItems.CHORUS_MUSHROOM_RAW.get(), ModItems.CHORUS_MUSHROOM_COOKED.get(), 0.35F, 200, consumer);
-		CookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.ENDSTONE_DUST.get()), Blocks.GLASS.asItem(), 0.35F, 200).unlockedBy("has_end_stone_dust", has(ModBlocks.ENDSTONE_DUST.get())).save(consumer, rl("glass_from_end_stone_dust"));
-		CookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.JELLYSHROOM_CAP_PURPLE.get()), Items.SLIME_BALL, 0.35F, 200).unlockedBy("has_jellyshroom_cap", has(ModBlocks.JELLYSHROOM_CAP_PURPLE.get())).save(consumer, rl("slime_ball_from_jellyshroom_cap"));
-		CookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.MENGER_SPONGE_WET.get()), ModBlocks.MENGER_SPONGE.get(), 0.35F, 200).unlockedBy("has_menger_sponge_wet", has(ModBlocks.MENGER_SPONGE_WET.get())).save(consumer);
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.ENDSTONE_DUST.get()), Blocks.GLASS.asItem(), 0.35F, 200).unlockedBy("has_end_stone_dust", has(ModBlocks.ENDSTONE_DUST.get())).save(consumer, rl("glass_from_end_stone_dust"));
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.JELLYSHROOM_CAP_PURPLE.get()), Items.SLIME_BALL, 0.35F, 200).unlockedBy("has_jellyshroom_cap", has(ModBlocks.JELLYSHROOM_CAP_PURPLE.get())).save(consumer, rl("slime_ball_from_jellyshroom_cap"));
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModBlocks.MENGER_SPONGE_WET.get()), ModBlocks.MENGER_SPONGE.get(), 0.35F, 200).unlockedBy("has_menger_sponge_wet", has(ModBlocks.MENGER_SPONGE_WET.get())).save(consumer);
 		
 		// ARMORS AND TOOLS
 		makeIngotAndBlockRecipes(ModBlocks.AETERNIUM_BLOCK.get(), ModItems.AETERNIUM_INGOT.get(), consumer, "aeternium");
@@ -202,7 +202,7 @@ public class ModRecipes extends RecipeProvider
 		makeColoredMaterialRecipes(ModBlocks.IRON_BULB_LANTERN_COLORED, consumer);
 	}
 	
-	private void makeWoodenMaterialRecipes(WoodenMaterial material, Consumer<IFinishedRecipe> consumer)
+	private void makeWoodenMaterialRecipes(WoodenMaterial material, Consumer<FinishedRecipe> consumer)
 	{
 		ShapelessRecipeBuilder.shapeless(material.planks.get(), 4).requires(material.logItemTag).group("end_planks").unlockedBy("has_logs", has(material.logItemTag)).save(consumer);
 		ShapedRecipeBuilder.shaped(material.stairs.get(), 4).define('#', material.planks.get()).pattern("#  ").pattern("## ").pattern("###").group("end_planks__stairs").unlockedBy("has_planks", has(material.planks.get())).save(consumer);
@@ -225,7 +225,7 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shaped(material.shelf.get(), 1).define('#', material.planks.get()).define('P', Items.BOOK).pattern("###").pattern("PPP").pattern("###").group("end_bookshelves").unlockedBy("has_planks", has(material.planks.get())).save(consumer);
 	}
 	
-	private void makeStoneMaterialRecipes(StoneMaterial material, Consumer<IFinishedRecipe> consumer)
+	private void makeStoneMaterialRecipes(StoneMaterial material, Consumer<FinishedRecipe> consumer)
 	{
 		// Crafting
 		ShapedRecipeBuilder.shaped(material.bricks.get(), 4).define('#', material.stone.get()).pattern("##").pattern("##").group("end_bricks").unlockedBy("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer);
@@ -261,7 +261,7 @@ public class ModRecipes extends RecipeProvider
 		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.bricks.get()), material.brick_wall.get()).unlocks("has_" + material.bricks.get().getRegistryName().getPath(), has(material.bricks.get())).save(consumer, rl(material.name + "_bricks_wall_from_" + material.name + "_bricks_stonecutting"));
 	}
 	
-	private void makeMetalMaterialRecipes(MetalMaterial material, Consumer<IFinishedRecipe> consumer)
+	private void makeMetalMaterialRecipes(MetalMaterial material, Consumer<FinishedRecipe> consumer)
 	{
 		// Base
 	    makeIngotAndBlockRecipes(material.block.get(), material.ingot.get(), consumer, material.name);
@@ -288,12 +288,12 @@ public class ModRecipes extends RecipeProvider
 	    int blastTime = smeltTime / 2;
 	    if (material.hasOre)
 	    {
-	    	CookingRecipeBuilder.smelting(Ingredient.of(material.ore.get()), material.ingot.get(), exp, smeltTime).unlockedBy("has_" + material.name + "_ore", has(material.ore.get())).save(consumer, rl(material.name + "_ingot_from_smelting"));
-	    	CookingRecipeBuilder.blasting(Ingredient.of(material.ore.get()), material.ingot.get(), exp, blastTime).unlockedBy("has_" + material.name + "_ore", has(material.ore.get())).save(consumer, rl(material.name + "_ingot_from_blasting"));
+	    	SimpleCookingRecipeBuilder.smelting(Ingredient.of(material.ore.get()), material.ingot.get(), exp, smeltTime).unlockedBy("has_" + material.name + "_ore", has(material.ore.get())).save(consumer, rl(material.name + "_ingot_from_smelting"));
+	    	SimpleCookingRecipeBuilder.blasting(Ingredient.of(material.ore.get()), material.ingot.get(), exp, blastTime).unlockedBy("has_" + material.name + "_ore", has(material.ore.get())).save(consumer, rl(material.name + "_ingot_from_blasting"));
 	    }
 	    Item[] nuggetables = new Item[] { material.axe.get(), material.pickaxe.get(), material.shovel.get(), material.hoe.get(),material.sword.get(), material.hammer.get(), material.helmet.get(), material.chestplate.get(), material.leggings.get(), material.boots.get() };
-	    CookingRecipeBuilder nuggetSmeltingRecipes = CookingRecipeBuilder.smelting(Ingredient.of(nuggetables), material.nugget.get(), exp, smeltTime);
-	    CookingRecipeBuilder nuggetBlastingRecipes = CookingRecipeBuilder.blasting(Ingredient.of(nuggetables), material.nugget.get(), exp, blastTime);
+	    SimpleCookingRecipeBuilder nuggetSmeltingRecipes = SimpleCookingRecipeBuilder.smelting(Ingredient.of(nuggetables), material.nugget.get(), exp, smeltTime);
+	    SimpleCookingRecipeBuilder nuggetBlastingRecipes = SimpleCookingRecipeBuilder.blasting(Ingredient.of(nuggetables), material.nugget.get(), exp, blastTime);
 	    for (Item nuggetable : nuggetables) {
 	    	nuggetSmeltingRecipes.unlockedBy("has_" + nuggetable.getRegistryName().getPath(), has(nuggetable));
 	    	nuggetBlastingRecipes.unlockedBy("has_" + nuggetable.getRegistryName().getPath(), has(nuggetable));
@@ -317,7 +317,7 @@ public class ModRecipes extends RecipeProvider
 		makeBootsRecipe(material.boots.get(), material.ingot.get(), consumer, material.name);
 	}
 	
-	private void makeColoredMaterialRecipes(ColoredMaterial material, Consumer<IFinishedRecipe> consumer)
+	private void makeColoredMaterialRecipes(ColoredMaterial material, Consumer<FinishedRecipe> consumer)
 	{
 		if (material.craftEight)
 		{
@@ -336,79 +336,79 @@ public class ModRecipes extends RecipeProvider
 			
 	}
 	
-	private void cookFood(Item in, Item out, float exp, int time, Consumer<IFinishedRecipe> consumer) {
-		CookingRecipeBuilder.smelting(Ingredient.of(in), out, exp, time).unlockedBy("has_" + in.getRegistryName().getPath(), has(in)).save(consumer);
-	    CookingRecipeBuilder.cooking(Ingredient.of(in), out, exp, time / 2, IRecipeSerializer.SMOKING_RECIPE).unlockedBy("has_" + in.getRegistryName().getPath(), has(in)).save(consumer, new ResourceLocation(BetterEnd.MOD_ID, out.getRegistryName().getPath() + "_from_smoking"));
-	    CookingRecipeBuilder.cooking(Ingredient.of(in), out, exp, time * 3, IRecipeSerializer.CAMPFIRE_COOKING_RECIPE).unlockedBy("has_" + in.getRegistryName().getPath(), has(in)).save(consumer, new ResourceLocation(BetterEnd.MOD_ID, out.getRegistryName().getPath() + "_from_campfire_cooking"));
+	private void cookFood(Item in, Item out, float exp, int time, Consumer<FinishedRecipe> consumer) {
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(in), out, exp, time).unlockedBy("has_" + in.getRegistryName().getPath(), has(in)).save(consumer);
+	    SimpleCookingRecipeBuilder.cooking(Ingredient.of(in), out, exp, time / 2, RecipeSerializer.SMOKING_RECIPE).unlockedBy("has_" + in.getRegistryName().getPath(), has(in)).save(consumer, new ResourceLocation(BetterEnd.MOD_ID, out.getRegistryName().getPath() + "_from_smoking"));
+	    SimpleCookingRecipeBuilder.cooking(Ingredient.of(in), out, exp, time * 3, RecipeSerializer.CAMPFIRE_COOKING_RECIPE).unlockedBy("has_" + in.getRegistryName().getPath(), has(in)).save(consumer, new ResourceLocation(BetterEnd.MOD_ID, out.getRegistryName().getPath() + "_from_campfire_cooking"));
 	}
 	
-	private void makeSmithingRecipe(Item base, Item addition, Item output, Consumer<IFinishedRecipe> consumer)
+	private void makeSmithingRecipe(Item base, Item addition, Item output, Consumer<FinishedRecipe> consumer)
 	{
-		SmithingRecipeBuilder.smithing(Ingredient.of(base), Ingredient.of(addition), output).unlocks("has_" + addition.getRegistryName().getPath(), has(addition)).save(consumer, rl(output.getRegistryName().getPath() + "_smithing"));
+		UpgradeRecipeBuilder.smithing(Ingredient.of(base), Ingredient.of(addition), output).unlocks("has_" + addition.getRegistryName().getPath(), has(addition)).save(consumer, rl(output.getRegistryName().getPath() + "_smithing"));
 	}
 	
-	private void makeIngotAndBlockRecipes(Block block, Item ingot, Consumer<IFinishedRecipe> consumer, String material)
+	private void makeIngotAndBlockRecipes(Block block, Item ingot, Consumer<FinishedRecipe> consumer, String material)
 	{
 	    ShapedRecipeBuilder.shaped(block).define('#', ingot).pattern("###").pattern("###").pattern("###").unlockedBy("has_" + material + "_ingot", has(ingot)).save(consumer);
 	    ShapelessRecipeBuilder.shapeless(ingot, 9).requires(block).group(material + "_ingot").unlockedBy("has_" + material + "_block", has(block)).save(consumer, rl(material + "_ingot_from_" + material + "_block"));
 	}
 	
-	private void makeHelmetRecipe(Item result, Item ingredient, Consumer<IFinishedRecipe> consumer, String material)
+	private void makeHelmetRecipe(Item result, Item ingredient, Consumer<FinishedRecipe> consumer, String material)
 	{
 		ShapedRecipeBuilder.shaped(result).define('X', ingredient).pattern("XXX").pattern("X X").unlockedBy("has_" + material + "_ingot", has(ingredient)).save(consumer);
 	}
 	
-	private void makeChestplateRecipe(Item result, Item ingredient, Consumer<IFinishedRecipe> consumer, String material)
+	private void makeChestplateRecipe(Item result, Item ingredient, Consumer<FinishedRecipe> consumer, String material)
 	{
 		ShapedRecipeBuilder.shaped(result).define('X', ingredient).pattern("X X").pattern("XXX").pattern("XXX").unlockedBy("has_" + material + "_ingot", has(ingredient)).save(consumer);
 	}
 	
-	private void makeLeggingsRecipe(Item result, Item ingredient, Consumer<IFinishedRecipe> consumer, String material)
+	private void makeLeggingsRecipe(Item result, Item ingredient, Consumer<FinishedRecipe> consumer, String material)
 	{
 		ShapedRecipeBuilder.shaped(result).define('X', ingredient).pattern("XXX").pattern("X X").pattern("X X").unlockedBy("has_" + material + "_ingot", has(ingredient)).save(consumer);
 	}
 	
-	private void makeBootsRecipe(Item result, Item ingredient, Consumer<IFinishedRecipe> consumer, String material)
+	private void makeBootsRecipe(Item result, Item ingredient, Consumer<FinishedRecipe> consumer, String material)
 	{
 		ShapedRecipeBuilder.shaped(result).define('X', ingredient).pattern("X X").pattern("X X").unlockedBy("has_" + material + "_ingot", has(ingredient)).save(consumer);
 	}
 	
-	private void makeSwordRecipe(Item sword, Item ingredient, Consumer<IFinishedRecipe> consumer, String material)
+	private void makeSwordRecipe(Item sword, Item ingredient, Consumer<FinishedRecipe> consumer, String material)
 	{
 		ShapedRecipeBuilder.shaped(sword).define('#', Items.STICK).define('X', ingredient).pattern("X").pattern("X").pattern("#").unlockedBy("has_" + material + "_ingot", has(ingredient)).save(consumer);
 	}
 	
-	private void makePickaxeRecipe(Item pickaxe, Item ingredient, Consumer<IFinishedRecipe> consumer, String material)
+	private void makePickaxeRecipe(Item pickaxe, Item ingredient, Consumer<FinishedRecipe> consumer, String material)
 	{
 		ShapedRecipeBuilder.shaped(pickaxe).define('#', Items.STICK).define('X', ingredient).pattern("XXX").pattern(" # ").pattern(" # ").unlockedBy("has_" + material + "_ingot", has(ingredient)).save(consumer);
 	}
 	
-	private void makeAxeRecipe(Item axe, Item ingredient, Consumer<IFinishedRecipe> consumer, String material)
+	private void makeAxeRecipe(Item axe, Item ingredient, Consumer<FinishedRecipe> consumer, String material)
 	{
 		ShapedRecipeBuilder.shaped(axe).define('#', Items.STICK).define('X', ingredient).pattern("XX").pattern("X#").pattern(" #").unlockedBy("has_" + material + "_ingot", has(ingredient)).save(consumer);
 	}
 	
-	private void makeShovelRecipe(Item shovel, Item ingredient, Consumer<IFinishedRecipe> consumer, String material)
+	private void makeShovelRecipe(Item shovel, Item ingredient, Consumer<FinishedRecipe> consumer, String material)
 	{
 		ShapedRecipeBuilder.shaped(shovel).define('#', Items.STICK).define('X', ingredient).pattern("X").pattern("#").pattern("#").unlockedBy("has_" + material + "_ingot", has(ingredient)).save(consumer);
 	}
 	
-	private void makeHoeRecipe(Item hoe, Item ingredient, Consumer<IFinishedRecipe> consumer, String material)
+	private void makeHoeRecipe(Item hoe, Item ingredient, Consumer<FinishedRecipe> consumer, String material)
 	{
 		ShapedRecipeBuilder.shaped(hoe).define('#', Items.STICK).define('X', ingredient).pattern("XX").pattern(" #").pattern(" #").unlockedBy("has_" + material + "_ingot", has(ingredient)).save(consumer);
 	}
 	
-	private void makeHammerRecipe(Item hammer, Item ingredient, Consumer<IFinishedRecipe> consumer, String material)
+	private void makeHammerRecipe(Item hammer, Item ingredient, Consumer<FinishedRecipe> consumer, String material)
 	{
 		ShapedRecipeBuilder.shaped(hammer).define('#', Items.STICK).define('X', ingredient).pattern("X X").pattern("X#X").pattern(" # ").unlockedBy("has_" + material + "_ingot", has(ingredient)).save(consumer);
 	}
 	
-	private void registerPedestal(Block pedestal, Block slab, Block pillar, Consumer<IFinishedRecipe> consumer, String material) 
+	private void registerPedestal(Block pedestal, Block slab, Block pillar, Consumer<FinishedRecipe> consumer, String material) 
 	{
 		ShapedRecipeBuilder.shaped(pedestal, 2).define('S', slab).define('#', pillar).pattern("S").pattern("#").pattern("S").unlockedBy("has_" + material + "_slab", has(slab)).unlockedBy("has_" + material + "_pillar", has(pillar)).save(consumer);
 	}
 	
-	private void registerLantern(Block lantern, Block slab, Consumer<IFinishedRecipe> consumer, String material) 
+	private void registerLantern(Block lantern, Block slab, Consumer<FinishedRecipe> consumer, String material) 
 	{
 		ShapedRecipeBuilder.shaped(lantern).define('S', slab).define('#', ModItems.CRYSTAL_SHARDS.get()).pattern("S").pattern("#").pattern("S").unlockedBy("has_" + material + "_slab", has(slab)).unlockedBy("has_crystal_shard", has(ModItems.CRYSTAL_SHARDS.get())).save(consumer);
 	}

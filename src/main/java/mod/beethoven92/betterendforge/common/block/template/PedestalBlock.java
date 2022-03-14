@@ -7,30 +7,30 @@ import mod.beethoven92.betterendforge.common.block.BlockProperties.PedestalState
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.tileentity.PedestalTileEntity;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer.Builder;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class PedestalBlock extends Block
 {
@@ -55,14 +55,14 @@ public class PedestalBlock extends Block
 		VoxelShape pedestalDefault = Block.box(1, 12, 1, 15, 14, 15);
 		VoxelShape pillar = Block.box(3, 0, 3, 13, 8, 13);
 		VoxelShape pillarDefault = Block.box(3, 0, 3, 13, 12, 13);
-		VoxelShape columnTop = VoxelShapes.or(columnTopDown, columnTopUp);
-		VoxelShape basin = VoxelShapes.or(basinDown, basinUp);
+		VoxelShape columnTop = Shapes.or(columnTopDown, columnTopUp);
+		VoxelShape basin = Shapes.or(basinDown, basinUp);
 		SHAPE_PILLAR = Block.box(3, 0, 3, 13, 16, 13);
-		SHAPE_DEFAULT = VoxelShapes.or(basin, pillarDefault, pedestalDefault);
-		SHAPE_PEDESTAL_TOP = VoxelShapes.or(pillar, pedestalTop);
-		SHAPE_COLUMN_TOP = VoxelShapes.or(SHAPE_PILLAR, columnTop);
-		SHAPE_COLUMN = VoxelShapes.or(basin, SHAPE_PILLAR, columnTop);
-		SHAPE_BOTTOM = VoxelShapes.or(basin, SHAPE_PILLAR);
+		SHAPE_DEFAULT = Shapes.or(basin, pillarDefault, pedestalDefault);
+		SHAPE_PEDESTAL_TOP = Shapes.or(pillar, pedestalTop);
+		SHAPE_COLUMN_TOP = Shapes.or(SHAPE_PILLAR, columnTop);
+		SHAPE_COLUMN = Shapes.or(basin, SHAPE_PILLAR, columnTop);
+		SHAPE_BOTTOM = Shapes.or(basin, SHAPE_PILLAR);
 	}
 	
 	protected float height = 1.0F;
@@ -88,7 +88,7 @@ public class PedestalBlock extends Block
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
 		if (state.is(this)) 
 		{
@@ -120,7 +120,7 @@ public class PedestalBlock extends Block
 				}
 			}
 		}
-		return VoxelShapes.block();
+		return Shapes.block();
 	}
 
 	@Override
@@ -130,31 +130,31 @@ public class PedestalBlock extends Block
 	}
 	
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) 
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world) 
 	{
 		return ModTileEntityTypes.PEDESTAL.get().create();
 	}
 	
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-			Hand handIn, BlockRayTraceResult hit) 
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player,
+			InteractionHand handIn, BlockHitResult hit) 
 	{
-		if (worldIn.isClientSide|| !state.is(this)) return ActionResultType.CONSUME;
+		if (worldIn.isClientSide|| !state.is(this)) return InteractionResult.CONSUME;
 		if (!this.isPlaceable(state)) 
 		{
-			return ActionResultType.PASS;
+			return InteractionResult.PASS;
 		}
-		TileEntity tileEntity = worldIn.getBlockEntity(pos);
+		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
 		if (tileEntity instanceof PedestalTileEntity) 
 		{
 			PedestalTileEntity pedestal = (PedestalTileEntity) tileEntity;
 			if (pedestal.isEmpty()) 
 			{
 				ItemStack itemStack = player.getItemInHand(handIn);
-				if (itemStack.isEmpty()) return ActionResultType.CONSUME;
+				if (itemStack.isEmpty()) return InteractionResult.CONSUME;
 				pedestal.setStack(player.abilities.instabuild ? itemStack.copy().split(1) : itemStack.split(1));
 				//this.checkRitual(worldIn, pos);
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			} 
 			else 
 			{
@@ -162,12 +162,12 @@ public class PedestalBlock extends Block
 				if (player.addItem(itemStack)) 
 				{
 					pedestal.removeStack(worldIn, state);
-					return ActionResultType.SUCCESS;
+					return InteractionResult.SUCCESS;
 				}
-				return ActionResultType.FAIL;
+				return InteractionResult.FAIL;
 			}
 		}
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 	
 	/*public void checkRitual(World world, BlockPos pos) 
@@ -187,15 +187,15 @@ public class PedestalBlock extends Block
 	}*/
 	
 	@Override
-	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving)
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving)
 	{
 		if (!state.is(newState.getBlock())) 
 		{
-			TileEntity tileentity = worldIn.getBlockEntity(pos);
+			BlockEntity tileentity = worldIn.getBlockEntity(pos);
 	        if (tileentity instanceof PedestalTileEntity) 
 	        {
 	        	PedestalTileEntity pedestal = (PedestalTileEntity) tileentity;
-	        	InventoryHelper.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), pedestal.getStack());
+	        	Containers.dropItemStack(worldIn, pos.getX(), pos.getY(), pos.getZ(), pedestal.getStack());
 	        	worldIn.updateNeighbourForOutputSignal(pos, this);
 	        }
 	        super.onRemove(state, worldIn, pos, newState, isMoving);
@@ -203,9 +203,9 @@ public class PedestalBlock extends Block
 	}
 	
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) 
+	public BlockState getStateForPlacement(BlockPlaceContext context) 
 	{
-		World world = context.getLevel();
+		Level world = context.getLevel();
 		BlockPos pos = context.getClickedPos();
 		BlockState upState = world.getBlockState(pos.above());
 		BlockState downState = world.getBlockState(pos.below());
@@ -236,7 +236,7 @@ public class PedestalBlock extends Block
 	}
 	
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos)
 	{
 		BlockState updated = this.getUpdatedState(stateIn, facing, facingState, worldIn, currentPos, facingPos);
@@ -248,7 +248,7 @@ public class PedestalBlock extends Block
 		return updated;
 	}
 
-	private BlockState getUpdatedState(BlockState state, Direction direction, BlockState newState, IWorld world, BlockPos pos, BlockPos posFrom)
+	private BlockState getUpdatedState(BlockState state, Direction direction, BlockState newState, LevelAccessor world, BlockPos pos, BlockPos posFrom)
 	{
 		if (!state.is(this)) return state.updateShape(direction, newState, world, pos, posFrom);
 		if (direction != Direction.UP && direction != Direction.DOWN) return state;
@@ -289,10 +289,10 @@ public class PedestalBlock extends Block
 		return state.setValue(STATE, PedestalState.DEFAULT);
 	}
 	
-	private void moveStoredStack(IWorld world, BlockState state, BlockPos pos) 
+	private void moveStoredStack(LevelAccessor world, BlockState state, BlockPos pos) 
 	{
 		ItemStack stack = ItemStack.EMPTY;
-		TileEntity blockEntity = world.getBlockEntity(pos);
+		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (blockEntity instanceof PedestalTileEntity && state.is(this)) 
 		{
 			PedestalTileEntity pedestal = (PedestalTileEntity) blockEntity;
@@ -306,9 +306,9 @@ public class PedestalBlock extends Block
 		}
 	}
 	
-	private void moveStoredStack(IWorld world, ItemStack stack, BlockState state, BlockPos pos)
+	private void moveStoredStack(LevelAccessor world, ItemStack stack, BlockState state, BlockPos pos)
 	{
-		TileEntity blockEntity = world.getBlockEntity(pos);
+		BlockEntity blockEntity = world.getBlockEntity(pos);
 		if (!state.is(this)) 
 		{
 			this.dropStoredStack(blockEntity, stack, pos);
@@ -340,16 +340,16 @@ public class PedestalBlock extends Block
 		}
 	}
 	
-	private void dropStoredStack(TileEntity tileEntity, ItemStack stack, BlockPos pos) 
+	private void dropStoredStack(BlockEntity tileEntity, ItemStack stack, BlockPos pos) 
 	{
 		if (tileEntity != null && tileEntity.getLevel() != null) 
 		{
-			World world = tileEntity.getLevel();
+			Level world = tileEntity.getLevel();
 			Block.popResource(world, this.getDropPos(world, pos), stack);
 		}
 	}
 	
-	private BlockPos getDropPos(IWorld world, BlockPos pos) 
+	private BlockPos getDropPos(LevelAccessor world, BlockPos pos) 
 	{
 		BlockPos dropPos;
 		for(int i = 2; i < Direction.values().length; i++) 
@@ -390,7 +390,7 @@ public class PedestalBlock extends Block
 	}
 	
 	@Override
-	public int getAnalogOutputSignal(BlockState blockState, World worldIn, BlockPos pos) 
+	public int getAnalogOutputSignal(BlockState blockState, Level worldIn, BlockPos pos) 
 	{
 		return blockState.getValue(HAS_ITEM) ? 15 : 0;
 	}

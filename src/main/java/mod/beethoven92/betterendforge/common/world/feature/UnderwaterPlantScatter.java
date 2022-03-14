@@ -2,14 +2,14 @@ package mod.beethoven92.betterendforge.common.world.feature;
 
 import java.util.Random;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.ISeedReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
 
 public abstract class UnderwaterPlantScatter extends ScatterFeature
 {
-	private static final Mutable POS = new Mutable();
+	private static final MutableBlockPos POS = new MutableBlockPos();
 	
 	public UnderwaterPlantScatter(int radius)
 	{
@@ -17,7 +17,7 @@ public abstract class UnderwaterPlantScatter extends ScatterFeature
 	}
 	
 	@Override
-	protected BlockPos getCenterGround(ISeedReader world, BlockPos pos) 
+	protected BlockPos getCenterGround(WorldGenLevel world, BlockPos pos) 
 	{
 		POS.setX(pos.getX());
 		POS.setZ(pos.getZ());
@@ -26,19 +26,19 @@ public abstract class UnderwaterPlantScatter extends ScatterFeature
 	}
 	
 	@Override
-	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) 
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) 
 	{
 		return world.getBlockState(blockPos).is(Blocks.WATER);
 	}
 	
 	@Override
-	protected boolean canSpawn(ISeedReader world, BlockPos pos)
+	protected boolean canSpawn(WorldGenLevel world, BlockPos pos)
 	{
 		return world.getBlockState(pos).is(Blocks.WATER);
 	}
 	
 	@Override
-	protected boolean getGroundPlant(ISeedReader world, Mutable pos) 
+	protected boolean getGroundPlant(WorldGenLevel world, MutableBlockPos pos) 
 	{
 		return getGround(world, pos).getY() < 128;
 	}
@@ -55,7 +55,7 @@ public abstract class UnderwaterPlantScatter extends ScatterFeature
 		return 5;
 	}
 	
-	private BlockPos getGround(ISeedReader world, Mutable pos) 
+	private BlockPos getGround(WorldGenLevel world, MutableBlockPos pos) 
 	{
 		while (pos.getY() < 128 && world.getFluidState(pos).isEmpty()) 
 		{

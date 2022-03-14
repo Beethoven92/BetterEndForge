@@ -7,10 +7,10 @@ import mod.beethoven92.betterendforge.common.block.template.EndCropBlock;
 import mod.beethoven92.betterendforge.common.block.template.PlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.FeatureHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
 
 public class SinglePlantFeature extends ScatterFeature
 {
@@ -47,19 +47,19 @@ public class SinglePlantFeature extends ScatterFeature
 	}
 	
 	@Override
-	protected BlockPos getCenterGround(ISeedReader world, BlockPos pos) 
+	protected BlockPos getCenterGround(WorldGenLevel world, BlockPos pos) 
 	{
 		return rawHeightmap ? FeatureHelper.getPosOnSurfaceWG(world, pos) : FeatureHelper.getPosOnSurface(world, pos);
 	}
 	
 	@Override
-	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) 
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) 
 	{
 		return plant.canSurvive(plant.defaultBlockState(), world, blockPos);
 	}
 
 	@Override
-	public void generate(ISeedReader world, Random random, BlockPos blockPos) 
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) 
 	{
 		if (plant instanceof DoublePlantBlock) 
 		{

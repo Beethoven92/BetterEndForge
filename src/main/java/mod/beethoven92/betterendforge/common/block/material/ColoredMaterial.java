@@ -7,8 +7,8 @@ import com.google.common.collect.Maps;
 
 import mod.beethoven92.betterendforge.common.block.IDyedBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.item.DyeColor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.fml.RegistryObject;
 
 public class ColoredMaterial

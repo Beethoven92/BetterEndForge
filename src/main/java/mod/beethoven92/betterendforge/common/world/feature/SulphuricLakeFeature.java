@@ -13,30 +13,30 @@ import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.FeatureHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
+public class SulphuricLakeFeature extends Feature<NoneFeatureConfiguration>
 {
 	private static final OpenSimplexNoise NOISE = new OpenSimplexNoise(15152);
-	private static final Mutable POS = new Mutable();
+	private static final MutableBlockPos POS = new MutableBlockPos();
 	
 	public SulphuricLakeFeature() 
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos blockPos,
-			NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos blockPos,
+			NoneFeatureConfiguration config) 
 	{
 		blockPos = FeatureHelper.getPosOnSurfaceWG(world, blockPos);
 		
@@ -177,7 +177,7 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 		return true;
 	}
 
-	private boolean isBorder(ISeedReader world, BlockPos pos) 
+	private boolean isBorder(WorldGenLevel world, BlockPos pos) 
 	{
 		int y = pos.getY() + 1;
 		for (Direction dir: BlockHelper.DIRECTIONS) 
@@ -190,7 +190,7 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 		return false;
 	}
 	
-	private boolean isAbsoluteBorder(ISeedReader world, BlockPos pos) 
+	private boolean isAbsoluteBorder(WorldGenLevel world, BlockPos pos) 
 	{
 		int y = pos.getY() - 2;
 		for (Direction dir: BlockHelper.DIRECTIONS) 
@@ -203,7 +203,7 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 		return false;
 	}
 	
-	private boolean isDeepWater(ISeedReader world, BlockPos pos) 
+	private boolean isDeepWater(WorldGenLevel world, BlockPos pos) 
 	{
 		int y = pos.getY() + 1;
 		for (Direction dir: BlockHelper.DIRECTIONS) {
@@ -216,7 +216,7 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 		return true;
 	}
 	
-	private void placeBrimstone(ISeedReader world, BlockPos pos, Random random) 
+	private void placeBrimstone(WorldGenLevel world, BlockPos pos, Random random) 
 	{
 		BlockState state = getBrimstone(world, pos);
 		BlockHelper.setWithoutUpdate(world, pos, state);
@@ -226,7 +226,7 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 		}
 	}
 	
-	private BlockState getBrimstone(ISeedReader world, BlockPos pos) 
+	private BlockState getBrimstone(WorldGenLevel world, BlockPos pos) 
 	{
 		for (Direction dir: BlockHelper.DIRECTIONS) 
 		{
@@ -237,7 +237,7 @@ public class SulphuricLakeFeature extends Feature<NoFeatureConfig>
 		return ModBlocks.BRIMSTONE.get().defaultBlockState();
 	}
 	
-	private void makeShards(ISeedReader world, BlockPos pos, Random random) 
+	private void makeShards(WorldGenLevel world, BlockPos pos, Random random) 
 	{
 		for (Direction dir: BlockHelper.DIRECTIONS) 
 		{

@@ -5,48 +5,48 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.init.ModItems;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.Level;
 
-public class EndFishEntity extends AbstractGroupFishEntity
+public class EndFishEntity extends AbstractSchoolingFish
 {
 	public static final int VARIANTS_NORMAL = 5;
 	public static final int VARIANTS_SULPHUR = 3;
 	public static final int VARIANTS = VARIANTS_NORMAL + VARIANTS_SULPHUR;
 	
-	private static final DataParameter<Byte> VARIANT = EntityDataManager.defineId(EndFishEntity.class, DataSerializers.BYTE);
-	private static final DataParameter<Byte> SCALE = EntityDataManager.defineId(EndFishEntity.class, DataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(EndFishEntity.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> SCALE = SynchedEntityData.defineId(EndFishEntity.class, EntityDataSerializers.BYTE);
 	
-	public EndFishEntity(EntityType<? extends AbstractGroupFishEntity> type, World worldIn) 
+	public EndFishEntity(EntityType<? extends AbstractSchoolingFish> type, Level worldIn) 
 	{
 		super(type, worldIn);
 	}
 
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason,
-			ILivingEntityData spawnDataIn, CompoundNBT dataTag) 
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason,
+			SpawnGroupData spawnDataIn, CompoundTag dataTag) 
 	{
-		ILivingEntityData data = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		SpawnGroupData data = super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 		
 		if (ModBiomes.getFromBiome(level.getBiome(blockPosition())) == ModBiomes.SULPHUR_SPRINGS) {
 			this.entityData.set(VARIANT, (byte) (random.nextInt(VARIANTS_SULPHUR) + VARIANTS_NORMAL));
@@ -72,7 +72,7 @@ public class EndFishEntity extends AbstractGroupFishEntity
 	}
 	
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) 
+	public void addAdditionalSaveData(CompoundTag compound) 
 	{
 		super.addAdditionalSaveData(compound);
 		compound.putByte("Variant", (byte)this.getVariant());
@@ -80,7 +80,7 @@ public class EndFishEntity extends AbstractGroupFishEntity
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) 
+	public void readAdditionalSaveData(CompoundTag compound) 
 	{
 		super.readAdditionalSaveData(compound);
 		if (compound.contains("Variant")) 
@@ -97,7 +97,7 @@ public class EndFishEntity extends AbstractGroupFishEntity
 	protected ItemStack getBucketItemStack() 
 	{
 		ItemStack bucket = ModItems.BUCKET_END_FISH.get().getDefaultInstance();
-		CompoundNBT tag = bucket.getOrCreateTag();
+		CompoundTag tag = bucket.getOrCreateTag();
 		tag.putByte("variant", entityData.get(VARIANT));
 		tag.putByte("scale", entityData.get(SCALE));
 		return bucket;
@@ -134,7 +134,7 @@ public class EndFishEntity extends AbstractGroupFishEntity
 		}
 	}
 
-	public static AttributeModifierMap.MutableAttribute registerAttributes() 
+	public static AttributeSupplier.Builder registerAttributes() 
 	{
 		return LivingEntity.createLivingAttributes().add(Attributes.MAX_HEALTH, 2.0).
 				add(Attributes.FOLLOW_RANGE, 16.0).
@@ -151,10 +151,10 @@ public class EndFishEntity extends AbstractGroupFishEntity
 		return this.entityData.get(SCALE) / 32F + 0.75F;
 	}
 
-	public static boolean canSpawn(EntityType<EndFishEntity> type, IServerWorld world, SpawnReason spawnReason,
+	public static boolean canSpawn(EntityType<EndFishEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason,
 			BlockPos pos, Random random) 
 	{
-		AxisAlignedBB box = new AxisAlignedBB(pos).inflate(16);
+		AABB box = new AABB(pos).inflate(16);
 		List<EndFishEntity> list = world.getEntitiesOfClass(EndFishEntity.class, box, (entity) -> { return true; });
 		return list.size() < 9;
 	}

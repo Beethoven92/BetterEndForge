@@ -14,27 +14,27 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.teleporter.EndPortals;
 import mod.beethoven92.betterendforge.common.tileentity.EternalPedestalTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.Item;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.particles.BlockParticleData;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.DimensionType;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.Features;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.item.Item;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.data.worldgen.Features;
+import net.minecraft.server.level.ServerLevel;
 
 public class EternalRitual 
 {
@@ -61,24 +61,24 @@ public class EternalRitual
 	private final static Block PORTAL = ModBlocks.END_PORTAL_BLOCK.get();
 	private final static BooleanProperty ACTIVE = BlockProperties.ACTIVATED;
 	
-	private World world;
+	private Level world;
 	private Direction.Axis axis;
 	private BlockPos center;
 	private BlockPos exit;
 	private boolean active = false;
 	
-	public EternalRitual(World world) 
+	public EternalRitual(Level world) 
 	{
 		this.world = world;
 	}
 	
-	public EternalRitual(World world, BlockPos initial) 
+	public EternalRitual(Level world, BlockPos initial) 
 	{
 		this(world);
 		this.configure(initial);
 	}
 	
-	public void setWorld(World world) 
+	public void setWorld(Level world) 
 	{
 		this.world = world;
 	}
@@ -87,7 +87,7 @@ public class EternalRitual
 	{
 		return world == null || world.isClientSide() ||
 				center == null || axis == null ||
-				world.dimension() == World.NETHER;
+				world.dimension() == Level.NETHER;
 	}
 	
 	public void checkStructure() 
@@ -110,7 +110,7 @@ public class EternalRitual
 		
 		for (Point pos : STRUCTURE_MAP) 
 		{
-			BlockPos.Mutable checkPos = center.mutable();
+			BlockPos.MutableBlockPos checkPos = center.mutable();
 			checkPos.move(moveX, pos.x).move(moveY, pos.y);
 			valid &= this.isActive(checkPos);
 			
@@ -167,7 +167,7 @@ public class EternalRitual
 		int state = EndPortals.getPortalState(Registry.ITEM.getKey(item));
 		this.activatePortal(world, center, state);
 		
-		this.doEffects((ServerWorld) world, center);
+		this.doEffects((ServerLevel) world, center);
 		if (exit == null) 
 		{
 			//this.exit = this.findPortalPos();
@@ -176,7 +176,7 @@ public class EternalRitual
 		else 
 		{
 			//World targetWorld = this.getTargetWorld();
-			World targetWorld = this.getTargetWorld(state);
+			Level targetWorld = this.getTargetWorld(state);
 			if (targetWorld.getBlockState(exit.above()).is(ModBlocks.END_PORTAL_BLOCK.get())) 
 			{
 				//this.exit = this.findPortalPos();
@@ -191,7 +191,7 @@ public class EternalRitual
 		this.active = true;
 	}
 
-	private void doEffects(ServerWorld serverWorld, BlockPos center) 
+	private void doEffects(ServerLevel serverWorld, BlockPos center) 
 	{
 		Direction moveX, moveY;
 		if (Direction.Axis.X == axis) 
@@ -206,15 +206,15 @@ public class EternalRitual
 		}
 		for (Point pos : STRUCTURE_MAP) 
 		{
-			BlockPos.Mutable p = center.mutable();
+			BlockPos.MutableBlockPos p = center.mutable();
 			p.move(moveX, pos.x).move(moveY, pos.y);
 			serverWorld.sendParticles(ParticleTypes.PORTAL, p.getX() + 0.5, p.getY() + 1.5, p.getZ() + 0.5, 20, 0, 0, 0, 1);
 			serverWorld.sendParticles(ParticleTypes.REVERSE_PORTAL, p.getX() + 0.5, p.getY() + 1.5, p.getZ() + 0.5, 20, 0, 0, 0, 0.3);
 		}
-		serverWorld.playSound(null, center, SoundEvents.END_PORTAL_SPAWN, SoundCategory.NEUTRAL, 16, 1);
+		serverWorld.playSound(null, center, SoundEvents.END_PORTAL_SPAWN, SoundSource.NEUTRAL, 16, 1);
 	}
 	
-	private void activatePortal(World world, BlockPos center, int dim) 
+	private void activatePortal(Level world, BlockPos center, int dim) 
 	{
 		BlockPos framePos = center.below();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
@@ -237,8 +237,8 @@ public class EternalRitual
 		//BlockState portal = PORTAL.getDefaultState().with(EndPortalBlock.AXIS, portalAxis);
 		BlockState portal = PORTAL.defaultBlockState().setValue(EndPortalBlock.AXIS, portalAxis).setValue(EndPortalBlock.PORTAL, dim);
 		
-		IParticleData effect = new BlockParticleData(ParticleTypes.BLOCK, portal);
-		ServerWorld serverWorld = (ServerWorld) world;
+		ParticleOptions effect = new BlockParticleOption(ParticleTypes.BLOCK, portal);
+		ServerLevel serverWorld = (ServerLevel) world;
 		
 		PORTAL_MAP.forEach(point -> {
 			BlockPos pos = center.mutable().move(moveDir, point.x).move(Direction.UP, point.y);
@@ -261,12 +261,12 @@ public class EternalRitual
 	{
 		if (!active || isInvalid()) return;
 		//World targetWorld = this.getTargetWorld();
-		World targetWorld = this.getTargetWorld(state);
+		Level targetWorld = this.getTargetWorld(state);
 		this.removePortal(world, center);
 		this.removePortal(targetWorld, exit);
 	}
 	
-	private void removePortal(World world, BlockPos center) 
+	private void removePortal(Level world, BlockPos center) 
 	{
 		BlockPos framePos = center.below();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
@@ -302,12 +302,12 @@ public class EternalRitual
 	private BlockPos findPortalPos(int state) 
 	{
 		//ServerWorld targetWorld = (ServerWorld) this.getTargetWorld();
-		ServerWorld targetWorld = (ServerWorld) this.getTargetWorld(state);
+		ServerLevel targetWorld = (ServerLevel) this.getTargetWorld(state);
 		
 		DimensionType type = Objects.requireNonNull(targetWorld.dimensionType());
 		double mult = type.coordinateScale();
 		
-		BlockPos.Mutable basePos = center.mutable().set(center.getX() / mult, center.getY(), center.getZ() / mult);
+		BlockPos.MutableBlockPos basePos = center.mutable().set(center.getX() / mult, center.getY(), center.getZ() / mult);
 		Direction.Axis portalAxis = Direction.Axis.X == axis ? Direction.Axis.Z : Direction.Axis.X;
 		if (checkIsAreaValid(targetWorld, basePos, portalAxis)) 
 		{
@@ -317,16 +317,16 @@ public class EternalRitual
 		else 
 		{
 			Direction direction = Direction.EAST;
-			BlockPos.Mutable checkPos = basePos.mutable();
+			BlockPos.MutableBlockPos checkPos = basePos.mutable();
 
 			for (int step = 1; step < 128; step++) 
 			{
 				for (int i = 0; i < (step >> 1); i++)
 				{
-					IChunk chunk = world.getChunk(checkPos);
+					ChunkAccess chunk = world.getChunk(checkPos);
 					if (chunk != null)
 					{
-						int ceil = chunk.getHeight(Heightmap.Type.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15) + 1;
+						int ceil = chunk.getHeight(Heightmap.Types.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15) + 1;
 						if (ceil < 2) continue;
 						checkPos.setY(ceil);
 						while (checkPos.getY() > 2) 
@@ -345,13 +345,13 @@ public class EternalRitual
 			}
 		}
 		
-		if (targetWorld.dimension() == World.END) 
+		if (targetWorld.dimension() == Level.END) 
 		{
 			Features.END_ISLAND.place(targetWorld, targetWorld.getChunkSource().getGenerator(), new Random(basePos.asLong()), basePos.below());
 		} 
 		else 
 		{
-			basePos.setY(targetWorld.getChunk(basePos).getHeight(Heightmap.Type.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
+			basePos.setY(targetWorld.getChunk(basePos).getHeight(Heightmap.Types.WORLD_SURFACE, basePos.getX(), basePos.getZ()) + 1);
 			ModConfiguredFeatures.OVERWORLD_ISLAND.place(targetWorld, targetWorld.getChunkSource().getGenerator(), new Random(basePos.asLong()), basePos.below());
 		}
 		
@@ -360,24 +360,24 @@ public class EternalRitual
 		return basePos.immutable();
 	}
 	
-	private World getTargetWorld(int state) 
+	private Level getTargetWorld(int state) 
 	{
 		//RegistryKey<World> target = world.getDimensionKey() == World.THE_END ? World.OVERWORLD : World.THE_END;
 		//return Objects.requireNonNull(world.getServer()).getWorld(target);
-		if (world.dimension() == World.END) 
+		if (world.dimension() == Level.END) 
 		{
 			return EndPortals.getWorld(world.getServer(), state);
 		}
-		return Objects.requireNonNull(world.getServer()).getLevel(World.END);
+		return Objects.requireNonNull(world.getServer()).getLevel(Level.END);
 	}
 	
-	private boolean checkIsAreaValid(World world, BlockPos pos, Direction.Axis axis) 
+	private boolean checkIsAreaValid(Level world, BlockPos pos, Direction.Axis axis) 
 	{
 		if (!isBaseValid(world, pos, axis)) return false;
 		return EternalRitual.checkArea(world, pos, axis);
 	}
 	
-	private boolean isBaseValid(World world, BlockPos pos, Direction.Axis axis) 
+	private boolean isBaseValid(Level world, BlockPos pos, Direction.Axis axis) 
 	{
 		boolean solid = true;
 		if (axis.equals(Direction.Axis.X)) 
@@ -403,12 +403,12 @@ public class EternalRitual
 		return solid;
 	}
 	
-	private boolean validBlock(World world, BlockPos pos, BlockState state) 
+	private boolean validBlock(Level world, BlockPos pos, BlockState state) 
 	{
 		return state.isRedstoneConductor(world, pos) && state.isSolidRender(world, pos);
 	}
 	
-	public static void generatePortal(World world, BlockPos center, Direction.Axis axis) 
+	public static void generatePortal(Level world, BlockPos center, Direction.Axis axis) 
 	{
 		BlockPos framePos = center.below();
 		Direction moveDir = Direction.Axis.X == axis ? Direction.EAST: Direction.NORTH;
@@ -429,7 +429,7 @@ public class EternalRitual
 		generateBase(world, framePos, moveDir);
 	}
 	
-	private static void generateBase(World world, BlockPos center, Direction moveX) 
+	private static void generateBase(Level world, BlockPos center, Direction moveX) 
 	{
 		BlockState base = BASE.defaultBlockState();
 		Direction moveY = moveX.getClockWise();
@@ -445,7 +445,7 @@ public class EternalRitual
 		});
 	}
 	
-	public static boolean checkArea(World world, BlockPos center, Direction.Axis axis) 
+	public static boolean checkArea(Level world, BlockPos center, Direction.Axis axis) 
 	{
 		Direction moveDir = Direction.Axis.X == axis ? Direction.NORTH: Direction.EAST;
 		for (BlockPos checkPos : BlockPos.betweenClosed(center.relative(moveDir.getClockWise()), center.relative(moveDir.getCounterClockWise()))) 
@@ -588,24 +588,24 @@ public class EternalRitual
 		return false;
 	}
 	
-	public CompoundNBT write(CompoundNBT compound) 
+	public CompoundTag write(CompoundTag compound) 
 	{
-		compound.put("center", NBTUtil.writeBlockPos((center)));
+		compound.put("center", NbtUtils.writeBlockPos((center)));
 		if (exit != null) {
-			compound.put("exit", NBTUtil.writeBlockPos(exit));
+			compound.put("exit", NbtUtils.writeBlockPos(exit));
 		}
 		compound.putString("axis", axis.getName());
 		compound.putBoolean("active", active);
 		return compound;
 	}
 	
-	public void read(CompoundNBT nbt) 
+	public void read(CompoundTag nbt) 
 	{
 		this.axis = Direction.Axis.byName(nbt.getString("axis"));
-		this.center = NBTUtil.readBlockPos(nbt.getCompound("center"));
+		this.center = NbtUtils.readBlockPos(nbt.getCompound("center"));
 		this.active = nbt.getBoolean("active");
 		if (nbt.contains("exit")) {
-			this.exit = NBTUtil.readBlockPos(nbt.getCompound("exit"));
+			this.exit = NbtUtils.readBlockPos(nbt.getCompound("exit"));
 		}
 	}
 }

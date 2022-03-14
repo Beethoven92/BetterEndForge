@@ -14,38 +14,38 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import mod.beethoven92.betterendforge.common.block.template.EndAnvilBlock;
 import mod.beethoven92.betterendforge.common.interfaces.ExtendedRepairContainer;
 import mod.beethoven92.betterendforge.common.recipes.AnvilSmithingRecipe;
-import net.minecraft.block.AnvilBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.AbstractRepairContainer;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.RepairContainer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.RecipeManager;
+import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ItemCombinerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.AnvilMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
-import net.minecraft.world.World;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.level.Level;
 
-@Mixin(RepairContainer.class)
-public abstract class RepairContainerMixin extends AbstractRepairContainer implements ExtendedRepairContainer
+@Mixin(AnvilMenu.class)
+public abstract class RepairContainerMixin extends ItemCombinerMenu implements ExtendedRepairContainer
 {
-	private final World world = this.player.level;
+	private final Level world = this.player.level;
 	private final RecipeManager recipeManager = this.world.getRecipeManager();
 	
 	private List<AnvilSmithingRecipe> be_recipes = Collections.emptyList();
 	private AnvilSmithingRecipe be_currentRecipe;
-	private IntReferenceHolder anvilLevel;
+	private DataSlot anvilLevel;
 	
-	public RepairContainerMixin(ContainerType<?> p_i231587_1_, int p_i231587_2_, PlayerInventory p_i231587_3_,
-			IWorldPosCallable p_i231587_4_) {
+	public RepairContainerMixin(MenuType<?> p_i231587_1_, int p_i231587_2_, Inventory p_i231587_3_,
+			ContainerLevelAccess p_i231587_4_) {
 		super(p_i231587_1_, p_i231587_2_, p_i231587_3_, p_i231587_4_);
 	}
 	
 	@Inject(method = "<init>*", at = @At("TAIL"))
-	public void be_initAnvilLevel(int id, PlayerInventory inventory, IWorldPosCallable worldPosCallable, CallbackInfo info)
+	public void be_initAnvilLevel(int id, Inventory inventory, ContainerLevelAccess worldPosCallable, CallbackInfo info)
 	{
 		int anvLevel = worldPosCallable.evaluate((world, blockPos) -> {
 			Block anvilBlock = world.getBlockState(blockPos).getBlock();
@@ -56,7 +56,7 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 			return 1;
 		}, 1);
 		
-		IntReferenceHolder anvilLevel = IntReferenceHolder.standalone();
+		DataSlot anvilLevel = DataSlot.standalone();
 		anvilLevel.set(anvLevel);
 		this.anvilLevel = addDataSlot(anvilLevel);
 	}
@@ -65,7 +65,7 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 	public abstract void createResult();
 	
 	@Inject(method = "mayPickup", at = @At("HEAD"), cancellable = true)
-	protected void be_canTakeOutput(PlayerEntity player, boolean present, CallbackInfoReturnable<Boolean> info) 
+	protected void be_canTakeOutput(Player player, boolean present, CallbackInfoReturnable<Boolean> info) 
 	{
 		if (be_currentRecipe != null) 
 		{
@@ -74,7 +74,7 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 	}
 	
 	@Inject(method = "onTake", at = @At("HEAD"), cancellable = true)
-	protected void be_onTakeOutput(PlayerEntity player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) 
+	protected void be_onTakeOutput(Player player, ItemStack stack, CallbackInfoReturnable<ItemStack> info) 
 	{
 		if (be_currentRecipe != null)
 		{
@@ -146,7 +146,7 @@ public abstract class RepairContainerMixin extends AbstractRepairContainer imple
 	}
 	
 	@Override
-	public boolean clickMenuButton(PlayerEntity playerIn, int id) 
+	public boolean clickMenuButton(Player playerIn, int id) 
 	{
 		if (id == 0) 
 		{

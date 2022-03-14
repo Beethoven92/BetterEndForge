@@ -2,10 +2,10 @@ package mod.beethoven92.betterendforge.common.tileentity;
 
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.rituals.InfusionRitual;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class InfusionPedestalTileEntity extends PedestalTileEntity
 {
@@ -17,7 +17,7 @@ public class InfusionPedestalTileEntity extends PedestalTileEntity
 	}
 	
 	@Override
-	public void setLevelAndPosition(World world, BlockPos pos) 
+	public void setLevelAndPosition(Level world, BlockPos pos) 
 	{
 		super.setLevelAndPosition(world, pos);
 		if (hasRitual()) 
@@ -52,18 +52,18 @@ public class InfusionPedestalTileEntity extends PedestalTileEntity
 	}
 	
 	@Override
-	public CompoundNBT save(CompoundNBT compound) 
+	public CompoundTag save(CompoundTag compound) 
 	{
 		super.save(compound);
 		if (hasRitual()) 
 		{
-			compound.put("ritual", linkedRitual.write(new CompoundNBT()));
+			compound.put("ritual", linkedRitual.write(new CompoundTag()));
 		}
 		return compound;
 	}
 	
 	@Override
-	public void load(BlockState state, CompoundNBT nbt) 
+	public void load(BlockState state, CompoundTag nbt) 
 	{
 		super.load(state, nbt);
 		if (nbt.contains("ritual")) 

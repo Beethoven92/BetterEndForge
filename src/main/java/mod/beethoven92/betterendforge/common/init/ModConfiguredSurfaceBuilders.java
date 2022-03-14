@@ -3,12 +3,12 @@ package mod.beethoven92.betterendforge.common.init;
 import java.util.function.Supplier;
 
 import mod.beethoven92.betterendforge.BetterEnd;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.world.level.levelgen.surfacebuilders.ConfiguredSurfaceBuilder;
+import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilder;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,22 +18,22 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 // NEEDS RE-WRITE
 public class ModConfiguredSurfaceBuilders 
 {
-	public static RegistryKey<ConfiguredSurfaceBuilder<?>> CRYSTAL_SURFACE = makeKey("crystal_surface");
-	public static RegistryKey<ConfiguredSurfaceBuilder<?>> MEGALAKE_SURFACE = makeKey("megalake_surface");
-	public static RegistryKey<ConfiguredSurfaceBuilder<?>> MUSHROOMLAND_SURFACE = makeKey("mushroomland_surface");
-	public static RegistryKey<ConfiguredSurfaceBuilder<?>> SULPHURIC_SURFACE = makeKey("sulphuric_surface");
-	public static RegistryKey<ConfiguredSurfaceBuilder<?>> NEON_OASUS_SURFACE = makeKey("neon_oasis_surface");
-	public static RegistryKey<ConfiguredSurfaceBuilder<?>> UMBRA_SURFACE = makeKey("umbra_surface");
+	public static ResourceKey<ConfiguredSurfaceBuilder<?>> CRYSTAL_SURFACE = makeKey("crystal_surface");
+	public static ResourceKey<ConfiguredSurfaceBuilder<?>> MEGALAKE_SURFACE = makeKey("megalake_surface");
+	public static ResourceKey<ConfiguredSurfaceBuilder<?>> MUSHROOMLAND_SURFACE = makeKey("mushroomland_surface");
+	public static ResourceKey<ConfiguredSurfaceBuilder<?>> SULPHURIC_SURFACE = makeKey("sulphuric_surface");
+	public static ResourceKey<ConfiguredSurfaceBuilder<?>> NEON_OASUS_SURFACE = makeKey("neon_oasis_surface");
+	public static ResourceKey<ConfiguredSurfaceBuilder<?>> UMBRA_SURFACE = makeKey("umbra_surface");
 	
-	private static RegistryKey<ConfiguredSurfaceBuilder<?>> makeKey(final String name) 
+	private static ResourceKey<ConfiguredSurfaceBuilder<?>> makeKey(final String name) 
 	{
-		return RegistryKey.create(Registry.CONFIGURED_SURFACE_BUILDER_REGISTRY, 
+		return ResourceKey.create(Registry.CONFIGURED_SURFACE_BUILDER_REGISTRY, 
 				new ResourceLocation(BetterEnd.MOD_ID, name));
 	}
 	
-	public static Supplier<ConfiguredSurfaceBuilder<?>> get(final RegistryKey<ConfiguredSurfaceBuilder<?>> key) 
+	public static Supplier<ConfiguredSurfaceBuilder<?>> get(final ResourceKey<ConfiguredSurfaceBuilder<?>> key) 
 	{
-		return () -> WorldGenRegistries.CONFIGURED_SURFACE_BUILDER.getOrThrow(key);
+		return () -> BuiltinRegistries.CONFIGURED_SURFACE_BUILDER.getOrThrow(key);
 	}
 	
 	@Mod.EventBusSubscriber(modid = BetterEnd.MOD_ID, bus = Bus.MOD)
@@ -52,10 +52,10 @@ public class ModConfiguredSurfaceBuilders
 
 		}
 
-		private static void register(final RegistryKey<ConfiguredSurfaceBuilder<?>> key, 
+		private static void register(final ResourceKey<ConfiguredSurfaceBuilder<?>> key, 
 				final ConfiguredSurfaceBuilder<?> configuredSurfaceBuilder) 
 		{
-			Registry.register(WorldGenRegistries.CONFIGURED_SURFACE_BUILDER, key.location(), configuredSurfaceBuilder);
+			Registry.register(BuiltinRegistries.CONFIGURED_SURFACE_BUILDER, key.location(), configuredSurfaceBuilder);
 		}
 	}
 }

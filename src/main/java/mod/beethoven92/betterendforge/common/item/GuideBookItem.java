@@ -3,22 +3,22 @@ package mod.beethoven92.betterendforge.common.item;
 import java.util.List;
 
 import mod.beethoven92.betterendforge.BetterEnd;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.ModList;
 import vazkii.patchouli.api.PatchouliAPI;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
 public class GuideBookItem extends Item
 {
@@ -30,28 +30,28 @@ public class GuideBookItem extends Item
 	}
 	
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) 
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) 
 	{
-    	if (!worldIn.isClientSide && playerIn instanceof ServerPlayerEntity)
+    	if (!worldIn.isClientSide && playerIn instanceof ServerPlayer)
     	{
     		if (ModList.get().isLoaded("patchouli"))
     		{
-    			PatchouliAPI.get().openBookGUI((ServerPlayerEntity) playerIn, BOOK_ID);
-    			return ActionResult.success(playerIn.getItemInHand(handIn));
+    			PatchouliAPI.get().openBookGUI((ServerPlayer) playerIn, BOOK_ID);
+    			return InteractionResultHolder.success(playerIn.getItemInHand(handIn));
     		}
     		else
     		{
-    			playerIn.displayClientMessage(new TranslationTextComponent("message.betterendforge.patchouli_missing"), true);
-    			return ActionResult.fail(playerIn.getItemInHand(handIn));
+    			playerIn.displayClientMessage(new TranslatableComponent("message.betterendforge.patchouli_missing"), true);
+    			return InteractionResultHolder.fail(playerIn.getItemInHand(handIn));
     		}
         }
-        return ActionResult.consume(playerIn.getItemInHand(handIn));
+        return InteractionResultHolder.consume(playerIn.getItemInHand(handIn));
 	}
 	
 	@Override
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) 
+	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) 
 	{
-		tooltip.add(new TranslationTextComponent(String.format("%s.%s", "book.betterendforge", "subtitle")).
-				withStyle(TextFormatting.DARK_PURPLE, TextFormatting.ITALIC));
+		tooltip.add(new TranslatableComponent(String.format("%s.%s", "book.betterendforge", "subtitle")).
+				withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 	}
 }

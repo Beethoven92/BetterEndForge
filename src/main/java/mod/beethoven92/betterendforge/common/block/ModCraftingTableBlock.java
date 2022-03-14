@@ -1,66 +1,66 @@
 package mod.beethoven92.betterendforge.common.block;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CraftingTableBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.SimpleNamedContainerProvider;
-import net.minecraft.inventory.container.WorkbenchContainer;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.CraftingTableBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.inventory.CraftingMenu;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class ModCraftingTableBlock extends CraftingTableBlock {
-	private static final ITextComponent CONTAINER_NAME = new TranslationTextComponent("container.crafting");
+	private static final Component CONTAINER_NAME = new TranslatableComponent("container.crafting");
 
 	public ModCraftingTableBlock(Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-			Hand handIn, BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player,
+			InteractionHand handIn, BlockHitResult hit) {
 		if (worldIn.isClientSide) {
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		} else {
-			SimpleNamedContainerProvider provider = new SimpleNamedContainerProvider((id, inventory,
-					p) -> new ModCraftingContainer(id, inventory, IWorldPosCallable.create(worldIn, pos)),
+			SimpleMenuProvider provider = new SimpleMenuProvider((id, inventory,
+					p) -> new ModCraftingContainer(id, inventory, ContainerLevelAccess.create(worldIn, pos)),
 					CONTAINER_NAME);
-			NetworkHooks.openGui((ServerPlayerEntity) player, provider);
+			NetworkHooks.openGui((ServerPlayer) player, provider);
 			player.awardStat(Stats.INTERACT_WITH_CRAFTING_TABLE);
-			return ActionResultType.CONSUME;
+			return InteractionResult.CONSUME;
 		}
 	}
 
 	@Override
-	public INamedContainerProvider getMenuProvider(BlockState state, World worldIn, BlockPos pos) {
-		return new SimpleNamedContainerProvider((id, inventory, player) -> {
-			return new WorkbenchContainer(id, inventory, IWorldPosCallable.create(worldIn, pos));
+	public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
+		return new SimpleMenuProvider((id, inventory, player) -> {
+			return new CraftingMenu(id, inventory, ContainerLevelAccess.create(worldIn, pos));
 		}, CONTAINER_NAME);
 	}
 
-	private static class ModCraftingContainer extends WorkbenchContainer {
+	private static class ModCraftingContainer extends CraftingMenu {
 
-		private IWorldPosCallable worldPosCallable;
+		private ContainerLevelAccess worldPosCallable;
 
-		public ModCraftingContainer(int syncid, PlayerInventory playerInv, IWorldPosCallable posCallable) {
+		public ModCraftingContainer(int syncid, Inventory playerInv, ContainerLevelAccess posCallable) {
 			super(syncid, playerInv, posCallable);
 			this.worldPosCallable = posCallable;
 		}
 
 		@Override
-		public boolean stillValid(PlayerEntity playerIn) {
+		public boolean stillValid(Player playerIn) {
 			return worldPosCallable.evaluate((world, pos) -> {
 				return !(world.getBlockState(pos).getBlock() instanceof ModCraftingTableBlock) ? false
 						: playerIn.distanceToSqr(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5) <= 64d;

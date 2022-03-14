@@ -5,9 +5,9 @@ import mod.beethoven92.betterendforge.client.model.DragonflyEntityModel;
 import mod.beethoven92.betterendforge.client.renderer.layer.EyesLayer;
 import mod.beethoven92.betterendforge.common.entity.DragonflyEntity;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class DragonflyEntityRenderer extends MobRenderer<DragonflyEntity, DragonflyEntityModel>
 {
@@ -16,7 +16,7 @@ public class DragonflyEntityRenderer extends MobRenderer<DragonflyEntity, Dragon
 	private static final RenderType GLOW = RenderType.eyes(new ResourceLocation(BetterEnd.MOD_ID, 
 			"textures/entity/dragonfly_glow.png"));
 	
-	public DragonflyEntityRenderer(EntityRendererManager renderManagerIn) 
+	public DragonflyEntityRenderer(EntityRenderDispatcher renderManagerIn) 
 	{
 		super(renderManagerIn, new DragonflyEntityModel(), 0.5F);
 		

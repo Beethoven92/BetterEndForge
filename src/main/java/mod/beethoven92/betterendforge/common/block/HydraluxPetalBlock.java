@@ -1,10 +1,10 @@
 package mod.beethoven92.betterendforge.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.BlockGetter;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class HydraluxPetalBlock extends Block
 {
@@ -14,7 +14,7 @@ public class HydraluxPetalBlock extends Block
 	}
 
 	@Override
-	public void updateEntityAfterFallOn(IBlockReader worldIn, Entity entityIn) 
+	public void updateEntityAfterFallOn(BlockGetter worldIn, Entity entityIn) 
 	{
 	}
 }

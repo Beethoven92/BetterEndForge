@@ -6,33 +6,33 @@ import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IGrowable;
-import net.minecraft.block.ILiquidContainer;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.LiquidBlockContainer;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.IForgeShearable;
 
-import net.minecraft.block.AbstractBlock.OffsetType;
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class EndLotusSeedBlock extends Block implements IGrowable, ILiquidContainer, IForgeShearable
+public class EndLotusSeedBlock extends Block implements BonemealableBlock, LiquidBlockContainer, IForgeShearable
 {
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 3);
 	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 14, 12);
@@ -43,9 +43,9 @@ public class EndLotusSeedBlock extends Block implements IGrowable, ILiquidContai
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
-			Vector3d vec3d = state.getOffset(worldIn, pos);
+			Vec3 vec3d = state.getOffset(worldIn, pos);
 			return SHAPE.move(vec3d.x, vec3d.y, vec3d.z);
 	}
 	
@@ -62,7 +62,7 @@ public class EndLotusSeedBlock extends Block implements IGrowable, ILiquidContai
 	}
 	
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) 
 	{
 		BlockState down = worldIn.getBlockState(pos.below());
 		state = worldIn.getBlockState(pos);
@@ -70,7 +70,7 @@ public class EndLotusSeedBlock extends Block implements IGrowable, ILiquidContai
 	}
 	
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
 		if (!canSurvive(stateIn, worldIn, currentPos)) 
@@ -89,25 +89,25 @@ public class EndLotusSeedBlock extends Block implements IGrowable, ILiquidContai
 	}
 	
 	@Override
-	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) 
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) 
 	{
 		performBonemeal(worldIn, random, pos, state);
 	}
 	
 	@Override
-	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return true;
 	}
 
 	@Override
-	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}
 
 	@Override
-	public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
+	public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		if (rand.nextInt(4) == 0) 
 		{
@@ -123,9 +123,9 @@ public class EndLotusSeedBlock extends Block implements IGrowable, ILiquidContai
 		}
 	}
 	
-	public boolean searchForAirAbove(IWorld worldIn, BlockPos pos) 
+	public boolean searchForAirAbove(LevelAccessor worldIn, BlockPos pos) 
 	{
-		Mutable bpos = new Mutable();
+		MutableBlockPos bpos = new MutableBlockPos();
 		bpos.set(pos);
 		while (worldIn.getBlockState(bpos).getFluidState().getType().equals(Fluids.WATER.getSource())) 
 		{
@@ -134,7 +134,7 @@ public class EndLotusSeedBlock extends Block implements IGrowable, ILiquidContai
 		return worldIn.isEmptyBlock(bpos) && worldIn.isEmptyBlock(bpos.above());
 	}
 	
-	public void generate(IWorld worldIn, Random rand, BlockPos pos)
+	public void generate(LevelAccessor worldIn, Random rand, BlockPos pos)
 	{
 		if (searchForAirAbove(worldIn, pos))
 		{
@@ -144,7 +144,7 @@ public class EndLotusSeedBlock extends Block implements IGrowable, ILiquidContai
 			BlockState flower = ModBlocks.END_LOTUS_FLOWER.get().defaultBlockState();
 			
 			worldIn.setBlock(pos, roots, 1 | 2 | 16);
-			Mutable bpos = new Mutable().set(pos);
+			MutableBlockPos bpos = new MutableBlockPos().set(pos);
 			bpos.setY(bpos.getY() + 1);
 			while (worldIn.getFluidState(bpos).isSource()) 
 			{
@@ -208,9 +208,9 @@ public class EndLotusSeedBlock extends Block implements IGrowable, ILiquidContai
 		}
 	}
 	
-	private boolean canGenerateLeaf(IWorld world, BlockPos pos) 
+	private boolean canGenerateLeaf(LevelAccessor world, BlockPos pos) 
 	{
-		Mutable p = new Mutable();
+		MutableBlockPos p = new MutableBlockPos();
 		p.setY(pos.getY());
 		int count = 0;
 		for (int x = -1; x < 2; x ++) 
@@ -226,9 +226,9 @@ public class EndLotusSeedBlock extends Block implements IGrowable, ILiquidContai
 		return count == 9;
 	}
 	
-	private void generateLeaf(IWorld worldIn, BlockPos pos) 	
+	private void generateLeaf(LevelAccessor worldIn, BlockPos pos) 	
 	{
-		Mutable p = new Mutable();
+		MutableBlockPos p = new MutableBlockPos();
 		BlockState leaf = ModBlocks.END_LOTUS_LEAF.get().defaultBlockState();
 		worldIn.setBlock(pos, leaf.setValue(EndLotusLeafBlock.SHAPE, TripleShape.BOTTOM), 1 | 2 | 16);
 		
@@ -246,13 +246,13 @@ public class EndLotusSeedBlock extends Block implements IGrowable, ILiquidContai
 	}
 
 	@Override
-	public boolean canPlaceLiquid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluidIn) 
+	public boolean canPlaceLiquid(BlockGetter worldIn, BlockPos pos, BlockState state, Fluid fluidIn) 
 	{
 		return false;
 	}
 
 	@Override
-	public boolean placeLiquid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn)
+	public boolean placeLiquid(LevelAccessor worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn)
 	{
 		return false;
 	}

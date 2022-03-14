@@ -2,16 +2,16 @@ package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.block.template.PlantBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class NeedlegrassBlock extends PlantBlock
 {
@@ -21,7 +21,7 @@ public class NeedlegrassBlock extends PlantBlock
 	}
 	
 	@Override
-	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) 
+	public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) 
 	{
 		if (entityIn instanceof LivingEntity)
 		{
@@ -36,7 +36,7 @@ public class NeedlegrassBlock extends PlantBlock
 	}
 	
 	@Override
-	public boolean isPathfindable(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) 
+	public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) 
 	{
 		return false;
 	}

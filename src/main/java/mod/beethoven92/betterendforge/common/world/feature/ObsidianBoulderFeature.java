@@ -10,40 +10,40 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFDisplacement;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFScale3D;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class ObsidianBoulderFeature extends Feature<NoFeatureConfig> {
+public class ObsidianBoulderFeature extends Feature<NoneFeatureConfiguration> {
 	
 	public ObsidianBoulderFeature() {
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
-			BlockPos pos, NoFeatureConfig config) {
-		pos = world.getHeightmapPos(Heightmap.Type.WORLD_SURFACE, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random,
+			BlockPos pos, NoneFeatureConfiguration config) {
+		pos = world.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, new BlockPos(pos.getX() + random.nextInt(16), pos.getY(), pos.getZ() + random.nextInt(16)));
 		if (!world.getBlockState(pos.below()).is(ModTags.END_GROUND)) {
 			return false;
 		}
 		
 		int count = ModMathHelper.randRange(1, 5, random);
 		for (int i = 0; i < count; i++) {
-			BlockPos p = world.getHeightmapPos(Heightmap.Type.WORLD_SURFACE, new BlockPos(pos.getX() + random.nextInt(16) - 8, pos.getY(), pos.getZ() + random.nextInt(16) - 8));
+			BlockPos p = world.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, new BlockPos(pos.getX() + random.nextInt(16) - 8, pos.getY(), pos.getZ() + random.nextInt(16) - 8));
 			makeBoulder(world, p, random);
 		}
 		
 		return true;
 	}
 	
-	private void makeBoulder(ISeedReader world, BlockPos pos, Random random) {
+	private void makeBoulder(WorldGenLevel world, BlockPos pos, Random random) {
 		if (!world.getBlockState(pos.below()).is(ModTags.END_GROUND)) {
 			return;
 		}

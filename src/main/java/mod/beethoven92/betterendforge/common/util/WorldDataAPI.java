@@ -3,7 +3,7 @@ package mod.beethoven92.betterendforge.common.util;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import mod.beethoven92.betterendforge.BetterEnd;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraftforge.fml.ModContainer;
 import net.minecraftforge.fml.ModList;
@@ -16,28 +16,28 @@ import java.util.Map;
 import java.util.Optional;
 
 public class WorldDataAPI {
-    private static final Map<String, CompoundNBT> TAGS = Maps.newHashMap();
+    private static final Map<String, CompoundTag> TAGS = Maps.newHashMap();
     private static final List<String> MODS = Lists.newArrayList();
     private static File dataDir;
 
 
-    public static CompoundNBT getRootTag(String modID) {
-        CompoundNBT root = TAGS.get(modID);
+    public static CompoundTag getRootTag(String modID) {
+        CompoundTag root = TAGS.get(modID);
         if (root == null) {
-            root = new CompoundNBT();
+            root = new CompoundTag();
             TAGS.put(modID, root);
         }
         return root;
     }
-    public static CompoundNBT getCompoundTag(String modID, String path) {
+    public static CompoundTag getCompoundTag(String modID, String path) {
         String[] parts = path.split("\\.");
-        CompoundNBT tag = getRootTag(modID);
+        CompoundTag tag = getRootTag(modID);
         for (String part : parts) {
             if (tag.contains(part)) {
                 tag = tag.getCompound(part);
             }
             else {
-                CompoundNBT t = new CompoundNBT();
+                CompoundTag t = new CompoundTag();
                 tag.put(part, t);
                 tag = t;
             }

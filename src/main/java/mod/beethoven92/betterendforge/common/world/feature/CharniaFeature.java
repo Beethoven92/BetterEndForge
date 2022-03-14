@@ -1,6 +1,6 @@
 package mod.beethoven92.betterendforge.common.world.feature;
 
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 
 public class CharniaFeature extends UnderwaterPlantFeature
 {

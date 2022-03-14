@@ -2,11 +2,11 @@ package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.block.template.PlantBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class GlowingMossBlock extends PlantBlock
 {
@@ -22,7 +22,7 @@ public class GlowingMossBlock extends PlantBlock
 	}
 
 	@Override
-	public float getShadeBrightness(BlockState state, IBlockReader worldIn, BlockPos pos) 
+	public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) 
 	{
 		return 1F;
 	}

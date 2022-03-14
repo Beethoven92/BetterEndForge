@@ -3,23 +3,23 @@ package mod.beethoven92.betterendforge.common.block;
 import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class TripleTerrainBlock extends TerrainBlock
 {
@@ -32,19 +32,19 @@ public class TripleTerrainBlock extends TerrainBlock
 	}
 	
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-			Hand handIn, BlockRayTraceResult hit) 
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player,
+			InteractionHand handIn, BlockHitResult hit) 
 	{
 		TripleShape shape = state.getValue(SHAPE);
 		if (shape == TripleShape.BOTTOM) 
 		{
 			return super.use(state, worldIn, pos, player, handIn, hit);
 		}
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 	
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) 
+	public BlockState getStateForPlacement(BlockPlaceContext context) 
 	{
 		Direction dir = context.getClickedFace();
 		TripleShape shape = dir == Direction.UP ? TripleShape.BOTTOM : dir == Direction.DOWN ? TripleShape.TOP : TripleShape.MIDDLE;
@@ -52,7 +52,7 @@ public class TripleTerrainBlock extends TerrainBlock
 	}
 	
 	@Override
-	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) 
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) 
 	{
 		TripleShape shape = state.getValue(SHAPE);
 		if (shape == TripleShape.BOTTOM) 
@@ -89,7 +89,7 @@ public class TripleTerrainBlock extends TerrainBlock
 		}
 	}
 	
-	protected boolean canSurviveBottom(IWorld world, BlockPos pos) 
+	protected boolean canSurviveBottom(LevelAccessor world, BlockPos pos) 
 	{
 		BlockPos blockPos = pos.below();
 		BlockState blockState = world.getBlockState(blockPos);

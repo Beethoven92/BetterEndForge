@@ -11,20 +11,20 @@ import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class SulphuricCaveFeature extends Feature<NoFeatureConfig>
+public class SulphuricCaveFeature extends Feature<NoneFeatureConfiguration>
 {
 	private static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
 	private static final BlockState WATER = Blocks.WATER.defaultBlockState();
@@ -32,17 +32,17 @@ public class SulphuricCaveFeature extends Feature<NoFeatureConfig>
 	
 	public SulphuricCaveFeature() 
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
-			NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos pos,
+			NoneFeatureConfiguration config) 
 	{
 		int radius = ModMathHelper.randRange(10, 30, rand);
 		
-		int top = world.getHeight(Heightmap.Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
-		Mutable bpos = new Mutable();
+		int top = world.getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		MutableBlockPos bpos = new MutableBlockPos();
 		bpos.setX(pos.getX());
 		bpos.setZ(pos.getZ());
 		bpos.setY(top - 1);
@@ -71,7 +71,7 @@ public class SulphuricCaveFeature extends Feature<NoFeatureConfig>
 			return false;
 		}
 		
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		pos = new BlockPos(pos.getX(), ModMathHelper.randRange(bottom, top, rand), pos.getZ());
 		
 		OpenSimplexNoise noise = new OpenSimplexNoise(ModMathHelper.getSeed(534, pos.getX(), pos.getZ()));
@@ -165,7 +165,7 @@ public class SulphuricCaveFeature extends Feature<NoFeatureConfig>
 								BlockPos p = mut.relative(dir);
 								if (rand.nextBoolean() && world.getBlockState(p).is(Blocks.WATER)) 
 								{
-									BlockHelper.setWithoutUpdate(world, p, ModBlocks.TUBE_WORM.get().defaultBlockState().setValue(HorizontalBlock.FACING, dir));
+									BlockHelper.setWithoutUpdate(world, p, ModBlocks.TUBE_WORM.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, dir));
 								}
 							}
 							mut.setY(mut.getY() + 1);
@@ -202,7 +202,7 @@ public class SulphuricCaveFeature extends Feature<NoFeatureConfig>
 				|| state.getMaterial().equals(Material.LEAVES);
 	}
 	
-	private void placeBrimstone(ISeedReader world, BlockPos pos, Random random) 
+	private void placeBrimstone(WorldGenLevel world, BlockPos pos, Random random) 
 	{
 		BlockState state = getBrimstone(world, pos);
 		BlockHelper.setWithoutUpdate(world, pos, state);
@@ -212,7 +212,7 @@ public class SulphuricCaveFeature extends Feature<NoFeatureConfig>
 		}
 	}
 	
-	private BlockState getBrimstone(ISeedReader world, BlockPos pos) 
+	private BlockState getBrimstone(WorldGenLevel world, BlockPos pos) 
 	{
 		for (Direction dir: BlockHelper.DIRECTIONS) 
 		{
@@ -224,7 +224,7 @@ public class SulphuricCaveFeature extends Feature<NoFeatureConfig>
 		return ModBlocks.BRIMSTONE.get().defaultBlockState();
 	}
 	
-	private void makeShards(ISeedReader world, BlockPos pos, Random random) 
+	private void makeShards(WorldGenLevel world, BlockPos pos, Random random) 
 	{
 		for (Direction dir: BlockHelper.DIRECTIONS) 
 		{

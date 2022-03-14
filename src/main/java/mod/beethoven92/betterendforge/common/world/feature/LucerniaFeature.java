@@ -22,19 +22,19 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSubtraction;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class LucerniaFeature extends Feature<NoFeatureConfig> {
+public class LucerniaFeature extends Feature<NoneFeatureConfiguration> {
 	private static final Direction[] DIRECTIONS = Direction.values();
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Function<BlockState, Boolean> IGNORE;
@@ -42,12 +42,12 @@ public class LucerniaFeature extends Feature<NoFeatureConfig> {
 	private static final List<Vector3f> ROOT;
 
 	public LucerniaFeature() {
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND))
 			return false;
 
@@ -74,7 +74,7 @@ public class LucerniaFeature extends Feature<NoFeatureConfig> {
 		return true;
 	}
 
-	private void leavesBall(ISeedReader world, BlockPos pos, float radius, Random random,
+	private void leavesBall(WorldGenLevel world, BlockPos pos, float radius, Random random,
 			OpenSimplexNoise noise, boolean natural) {
 		SDF sphere = new SDFSphere().setRadius(radius)
 				.setBlock(ModBlocks.LUCERNIA_LEAVES.get().defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
@@ -89,7 +89,7 @@ public class LucerniaFeature extends Feature<NoFeatureConfig> {
 			return ModMathHelper.randRange(-1.5F, 1.5F, random);
 		}).setSource(sphere);
 
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		for (Direction d1 : BlockHelper.HORIZONTAL_DIRECTIONS) {
 			BlockPos p = mut.set(pos).move(Direction.UP).move(d1).immutable();
 			BlockHelper.setWithoutUpdate(world, p, ModBlocks.LUCERNIA.bark.get().defaultBlockState());
@@ -177,7 +177,7 @@ public class LucerniaFeature extends Feature<NoFeatureConfig> {
 		});
 	}
 
-	private void makeRoots(ISeedReader world, BlockPos pos, float radius, Random random) {
+	private void makeRoots(WorldGenLevel world, BlockPos pos, float radius, Random random) {
 		int count = (int) (radius * 1.5F);
 		for (int i = 0; i < count; i++) {
 			float angle = (float) i / (float) count * ModMathHelper.PI2;

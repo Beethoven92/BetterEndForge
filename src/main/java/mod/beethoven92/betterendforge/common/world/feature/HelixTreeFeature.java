@@ -18,29 +18,29 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFScale;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSmoothUnion;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFUnion;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.util.Mth;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class HelixTreeFeature extends Feature<NoFeatureConfig> {
+public class HelixTreeFeature extends Feature<NoneFeatureConfiguration> {
 	private static final Function<PosInfo, BlockState> POST;
 	
 	public HelixTreeFeature() 
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 	
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
-			NoFeatureConfig config) {
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos pos,
+			NoneFeatureConfiguration config) {
 		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND)) return false;
 		BlockHelper.setWithoutUpdate(world, pos, Blocks.AIR.defaultBlockState());
 		
@@ -71,7 +71,7 @@ public class HelixTreeFeature extends Feature<NoFeatureConfig> {
 		dx = 30 * scale;
 		float dy1 = -20 * scale;
 		float dy2 = 100 * scale;
-		sdf.addPostProcess(POST).fillArea(world, pos, new AxisAlignedBB(pos.offset(-dx, dy1, -dx), pos.offset(dx, dy2, dx)));
+		sdf.addPostProcess(POST).fillArea(world, pos, new AABB(pos.offset(-dx, dy1, -dx), pos.offset(dx, dy2, dx)));
 		SplineHelper.scale(spline, scale);
 		SplineHelper.fillSplineForce(spline, world, ModBlocks.HELIX_TREE.bark.get().defaultBlockState(), pos, (state) -> {
 			return state.getMaterial().isReplaceable();
@@ -119,8 +119,8 @@ public class HelixTreeFeature extends Feature<NoFeatureConfig> {
 			for (float py = minY; py <= maxY; py += 0.2F) {
 				start.set(0, py, 0);
 				float delta = (float) (py - minY) / div;
-				float px = MathHelper.lerp(delta, lastPoint.x(), point.x());
-				float pz = MathHelper.lerp(delta, lastPoint.z(), point.z());
+				float px = Mth.lerp(delta, lastPoint.x(), point.x());
+				float pz = Mth.lerp(delta, lastPoint.z(), point.z());
 				end.set(px, py, pz);
 				fillLine(start, end, world, leaf, leafStart, i / 2 - 1);
 				float ax = Math.abs(px);
@@ -155,7 +155,7 @@ public class HelixTreeFeature extends Feature<NoFeatureConfig> {
 		return true;
 	}
 	
-	private void fillLine(Vector3f start, Vector3f end, ISeedReader world, BlockState state, BlockPos pos, int offset) {
+	private void fillLine(Vector3f start, Vector3f end, WorldGenLevel world, BlockState state, BlockPos pos, int offset) {
 		float dx = end.x() - start.x();
 		float dy = end.y() - start.y();
 		float dz = end.z() - start.z();
@@ -168,11 +168,11 @@ public class HelixTreeFeature extends Feature<NoFeatureConfig> {
 		float y = start.y();
 		float z = start.z();
 		
-		Mutable bPos = new Mutable();
+		MutableBlockPos bPos = new MutableBlockPos();
 		for (int i = 0; i < count; i++) {
 			bPos.set(x + pos.getX(), y + pos.getY(), z + pos.getZ());
 			int color = ModMathHelper.floor((float) i / (float) count * 7F + 0.5F) + offset;
-			color = MathHelper.clamp(color, 0, 7);
+			color = Mth.clamp(color, 0, 7);
 			if (world.getBlockState(bPos).getMaterial().isReplaceable()) {
 				BlockHelper.setWithoutUpdate(world, bPos, state.setValue(HelixTreeLeavesBlock.COLOR, color));
 			}

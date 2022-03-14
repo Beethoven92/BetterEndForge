@@ -5,10 +5,10 @@ import java.util.function.Function;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
 
 public class MengerSpongeFeature extends UnderwaterPlantScatter
 {
@@ -35,7 +35,7 @@ public class MengerSpongeFeature extends UnderwaterPlantScatter
 	}
 
 	@Override
-	public void generate(ISeedReader world, Random random, BlockPos blockPos) 
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) 
 	{
 		BlockHelper.setWithoutUpdate(world, blockPos, ModBlocks.MENGER_SPONGE_WET.get());
 		if (random.nextBoolean()) 

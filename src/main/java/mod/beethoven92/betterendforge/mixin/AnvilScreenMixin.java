@@ -9,32 +9,32 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import mod.beethoven92.betterendforge.common.interfaces.ExtendedRepairContainer;
-import net.minecraft.client.gui.screen.inventory.AbstractRepairScreen;
-import net.minecraft.client.gui.screen.inventory.AnvilScreen;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.button.AbstractButton;
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.RepairContainer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.gui.screens.inventory.ItemCombinerScreen;
+import net.minecraft.client.gui.screens.inventory.AnvilScreen;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.AbstractButton;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.AnvilMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 
 @Mixin(AnvilScreen.class)
-public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
+public class AnvilScreenMixin extends ItemCombinerScreen<AnvilMenu>
 {
 	@Shadow
-	private TextFieldWidget name;
+	private EditBox name;
 	
 	private final List<AbstractButton> be_buttons = Lists.newArrayList();
 	private ExtendedRepairContainer be_anvilHandler;
 	
-	public AnvilScreenMixin(RepairContainer container, PlayerInventory playerInventory, ITextComponent title,
+	public AnvilScreenMixin(AnvilMenu container, Inventory playerInventory, Component title,
 			ResourceLocation guiTexture) 
 	{
 		super(container, playerInventory, title, guiTexture);
@@ -47,12 +47,12 @@ public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 		int x = (width - imageWidth) / 2;
 	    int y = (height - imageHeight) / 2;
 	    this.be_anvilHandler = (ExtendedRepairContainer) this.menu;
-	    this.be_buttons.add(new Button(x + 8, y + 45, 15, 20, new StringTextComponent("<"), (b) -> be_previousRecipe()));
-		this.be_buttons.add(new Button(x + 154, y + 45, 15, 20, new StringTextComponent(">"), (b) -> be_nextRecipe()));
+	    this.be_buttons.add(new Button(x + 8, y + 45, 15, 20, new TextComponent("<"), (b) -> be_previousRecipe()));
+		this.be_buttons.add(new Button(x + 154, y + 45, 15, 20, new TextComponent(">"), (b) -> be_nextRecipe()));
 	}
 	
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) 
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) 
 	{
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 
@@ -62,7 +62,7 @@ public class AnvilScreenMixin extends AbstractRepairScreen<RepairContainer>
 	}
 	
 	@Inject(method = "slotChanged", at = @At("HEAD"), cancellable = true)
-	public void be_slotChanged(Container handler, int slotId, ItemStack stack, CallbackInfo info)
+	public void be_slotChanged(AbstractContainerMenu handler, int slotId, ItemStack stack, CallbackInfo info)
 	{
 		ExtendedRepairContainer anvilHandler = (ExtendedRepairContainer) handler;
 		if (anvilHandler.be_getCurrentRecipe() != null) 

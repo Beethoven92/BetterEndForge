@@ -12,29 +12,29 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.BoneMealItem;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome.Category;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
 
 // TO DO: consider replacing the mixin with events and block behaviours(see grass block grow method for example)
 @Mixin(BoneMealItem.class)
 public abstract class BoneMealItemMixin
 {
 	private static final Direction[] DIR = BlockHelper.makeHorizontal();
-	private static final Mutable POS = new Mutable();
+	private static final MutableBlockPos POS = new MutableBlockPos();
 
 	@Inject(method = "useOn", at = @At("HEAD"), cancellable = true)
-	private void be_useOn(ItemUseContext context, CallbackInfoReturnable<ActionResultType> info)
+	private void be_useOn(UseOnContext context, CallbackInfoReturnable<InteractionResult> info)
 	{
-		World world = context.getLevel();
+		Level world = context.getLevel();
 		BlockPos blockPos = context.getClickedPos();
 		
 		// FIX underwater seeds not being able to grow when using bonemeal on them
@@ -45,13 +45,13 @@ public abstract class BoneMealItemMixin
 	             world.levelEvent(2005, blockPos, 0);
 	          }
 
-	          info.setReturnValue(ActionResultType.sidedSuccess(world.isClientSide));
+	          info.setReturnValue(InteractionResult.sidedSuccess(world.isClientSide));
 	          info.cancel();
 		}
 		else if (!world.isClientSide()) 
 		{
 			BlockPos offseted = blockPos.relative(context.getClickedFace());
-			boolean endBiome = world.getBiome(offseted).getBiomeCategory() == Category.THEEND;
+			boolean endBiome = world.getBiome(offseted).getBiomeCategory() == BiomeCategory.THEEND;
 			
 			if (world.getBlockState(blockPos).is(ModTags.END_GROUND)) 
 			{
@@ -67,7 +67,7 @@ public abstract class BoneMealItemMixin
 					// Cannot grow underwater plants on end stone
 					if (!world.getFluidState(offseted).isEmpty() && endBiome) 
 					{
-						info.setReturnValue(ActionResultType.FAIL);
+						info.setReturnValue(InteractionResult.FAIL);
 						info.cancel();
 					}
 				}
@@ -87,20 +87,20 @@ public abstract class BoneMealItemMixin
 				{
 					if (!context.getPlayer().isCreative()) context.getItemInHand().shrink(1);
 					world.levelEvent(2005, blockPos, 0);
-					info.setReturnValue(ActionResultType.SUCCESS);
+					info.setReturnValue(InteractionResult.SUCCESS);
 					info.cancel();
 				}
 			}
 			// Prevents bonemeal generating sea grass underwater in end biomes
 			else if (!world.getFluidState(offseted).isEmpty() && endBiome) 
 			{
-				info.setReturnValue(ActionResultType.FAIL);
+				info.setReturnValue(InteractionResult.FAIL);
 				info.cancel();
 			}
 		}
 	}
 	
-	private boolean be_growGrass(World world, BlockPos pos)
+	private boolean be_growGrass(Level world, BlockPos pos)
 	{
 		int y1 = pos.getY() + 3;
 		int y2 = pos.getY() - 3;
@@ -130,7 +130,7 @@ public abstract class BoneMealItemMixin
 		return result;
 	}
 	
-	private boolean be_growWaterGrass(World world, BlockPos pos)
+	private boolean be_growWaterGrass(Level world, BlockPos pos)
 	{
 		int y1 = pos.getY() + 3;
 		int y2 = pos.getY() - 3;
@@ -166,7 +166,7 @@ public abstract class BoneMealItemMixin
 				ModBlocks.UMBRELLA_MOSS.get(), ModBlocks.TWISTED_UMBRELLA_MOSS.get() };
 	}
 	
-	private BlockState be_getGrassState(World world, BlockPos pos)
+	private BlockState be_getGrassState(Level world, BlockPos pos)
 	{
 		BlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
@@ -217,7 +217,7 @@ public abstract class BoneMealItemMixin
 		return null;
 	}
 	
-	private BlockState be_getWaterGrassState(World world, BlockPos pos)
+	private BlockState be_getWaterGrassState(Level world, BlockPos pos)
 	{
 		BetterEndBiome biome = ModBiomes.getFromBiome(world.getBiome(pos));
 
@@ -271,7 +271,7 @@ public abstract class BoneMealItemMixin
 		}
 	}
 
-	private BlockState be_getNylium(World world, BlockPos pos)
+	private BlockState be_getNylium(Level world, BlockPos pos)
 	{
 		be_shuffle(world.random);
 		for (Direction dir : DIR)

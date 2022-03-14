@@ -22,11 +22,11 @@ import mod.beethoven92.betterendforge.common.integration.jei.infusion.InfusionRe
 import mod.beethoven92.betterendforge.common.recipes.AlloyingRecipe;
 import mod.beethoven92.betterendforge.common.recipes.AnvilSmithingRecipe;
 import mod.beethoven92.betterendforge.common.recipes.InfusionRecipe;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
 
 @JeiPlugin
 public class BetterEndJeiPlugin implements IModPlugin
@@ -67,7 +67,7 @@ public class BetterEndJeiPlugin implements IModPlugin
 	{
 		// TO DO: move the recipes lists in a separate utility class
 		Minecraft mc = Minecraft.getInstance();
-		ClientWorld world = Objects.requireNonNull(mc.level);
+		ClientLevel world = Objects.requireNonNull(mc.level);
 		
 		Set<AlloyingRecipe> alloyingRecipes = ImmutableSet.copyOf(world.getRecipeManager().getAllRecipesFor(AlloyingRecipe.TYPE));
 		registration.addRecipes(alloyingRecipes, AlloyingRecipeCategory.UID);

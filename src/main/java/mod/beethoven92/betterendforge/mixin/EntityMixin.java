@@ -9,13 +9,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import mod.beethoven92.betterendforge.common.interfaces.TeleportingEntity;
-import net.minecraft.block.PortalInfo;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.portal.PortalInfo;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements TeleportingEntity
@@ -30,25 +30,25 @@ public abstract class EntityMixin implements TeleportingEntity
 	@Shadow
 	public boolean removed;
 	@Shadow
-	public World level;
+	public Level level;
 	
 	@Final
 	@Shadow
 	public abstract void unRide();
 	
 	@Shadow
-	public abstract Vector3d getDeltaMovement();
+	public abstract Vec3 getDeltaMovement();
 	
 	@Shadow
 	public abstract EntityType<?> getType();
 	
 	@Shadow
-	protected abstract PortalInfo findDimensionEntryPoint(ServerWorld destination);
+	protected abstract PortalInfo findDimensionEntryPoint(ServerLevel destination);
 
 	@Inject(method = "changeDimension", at = @At("HEAD"), cancellable = true)
-	public void be_changeDimension(ServerWorld destination, CallbackInfoReturnable<Entity> info)
+	public void be_changeDimension(ServerLevel destination, CallbackInfoReturnable<Entity> info)
 	{
-		if (!removed && beCanTeleport() && level instanceof ServerWorld)
+		if (!removed && beCanTeleport() && level instanceof ServerLevel)
 		{
 			this.unRide();
 			this.level.getProfiler().push("changeDimension");
@@ -67,7 +67,7 @@ public abstract class EntityMixin implements TeleportingEntity
 				}
 				this.removed = true;
 				this.level.getProfiler().pop();
-				((ServerWorld) level).resetEmptyTime();
+				((ServerLevel) level).resetEmptyTime();
 				destination.resetEmptyTime();
 				this.level.getProfiler().pop();
 				beResetExitPos();
@@ -78,11 +78,11 @@ public abstract class EntityMixin implements TeleportingEntity
 	}
 	
 	@Inject(method = "findDimensionEntryPoint", at = @At("HEAD"), cancellable = true)
-	protected void be_getTeleportTarget(ServerWorld destination, CallbackInfoReturnable<PortalInfo> info)
+	protected void be_getTeleportTarget(ServerLevel destination, CallbackInfoReturnable<PortalInfo> info)
 	{
 		if (beCanTeleport()) 
 		{
-			info.setReturnValue(new PortalInfo(new Vector3d(be_exitPos.getX() + 0.5D, be_exitPos.getY(), be_exitPos.getZ() + 0.5D), getDeltaMovement(), yRot, xRot));
+			info.setReturnValue(new PortalInfo(new Vec3(be_exitPos.getX() + 0.5D, be_exitPos.getY(), be_exitPos.getZ() + 0.5D), getDeltaMovement(), yRot, xRot));
 			//beResetExitPos();
 			//info.cancel();
 		}

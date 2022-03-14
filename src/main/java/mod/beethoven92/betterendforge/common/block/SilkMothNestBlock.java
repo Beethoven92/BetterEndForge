@@ -5,32 +5,32 @@ import java.util.Random;
 import mod.beethoven92.betterendforge.common.entity.SilkMothEntity;
 import mod.beethoven92.betterendforge.common.init.ModEntityTypes;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 public class SilkMothNestBlock extends Block {
 	public static final BooleanProperty ACTIVE = BlockProperties.ACTIVATED;
@@ -39,7 +39,7 @@ public class SilkMothNestBlock extends Block {
 	private static final VoxelShape TOP = box(6, 0, 6, 10, 16, 10);
 	private static final VoxelShape BOTTOM = box(0, 0, 0, 16, 16, 16);
 
-	public SilkMothNestBlock(AbstractBlock.Properties properties) {
+	public SilkMothNestBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 	}
 
@@ -49,18 +49,18 @@ public class SilkMothNestBlock extends Block {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 		return state.getValue(ACTIVE) ? BOTTOM : TOP;
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext ctx) {
+	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
 		Direction dir = ctx.getHorizontalDirection().getOpposite();
 		return this.defaultBlockState().setValue(FACING, dir);
 	}
 
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, IWorld world,
+	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState, LevelAccessor world,
 			BlockPos pos, BlockPos neighborPos) {
 		if (!state.getValue(ACTIVE)) {
 			if (canSupportCenter(world, pos.above(), Direction.DOWN)
@@ -84,7 +84,7 @@ public class SilkMothNestBlock extends Block {
 	}
 
 	@Override
-	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		if (!state.getValue(ACTIVE) && player.isCreative()) {
 			BlockHelper.setWithUpdate(world, pos.below(), Blocks.AIR);
 		}
@@ -96,7 +96,7 @@ public class SilkMothNestBlock extends Block {
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (!state.getValue(ACTIVE)) {
 			return;
 		}
@@ -109,7 +109,7 @@ public class SilkMothNestBlock extends Block {
 			return;
 		}
 		int count = world
-				.getEntities(ModEntityTypes.SILK_MOTH.get(), new AxisAlignedBB(pos).inflate(16), (entity) -> {
+				.getEntities(ModEntityTypes.SILK_MOTH.get(), new AABB(pos).inflate(16), (entity) -> {
 					return true;
 				}).size();
 		if (count > 8) {
@@ -118,9 +118,9 @@ public class SilkMothNestBlock extends Block {
 		SilkMothEntity moth = new SilkMothEntity(ModEntityTypes.SILK_MOTH.get(), world);
 		moth.moveTo(spawn.getX() + 0.5, spawn.getY() + 0.5, spawn.getZ() + 0.5, dir.toYRot(),
 				0);
-		moth.setDeltaMovement(new Vector3d(dir.getStepX() * 0.4, 0, dir.getStepZ() * 0.4));
+		moth.setDeltaMovement(new Vec3(dir.getStepX() * 0.4, 0, dir.getStepZ() * 0.4));
 		moth.setHive(world, pos);
 		world.addFreshEntity(moth);
-		world.playSound(null, pos, SoundEvents.BEEHIVE_EXIT, SoundCategory.BLOCKS, 1, 1);
+		world.playSound(null, pos, SoundEvents.BEEHIVE_EXIT, SoundSource.BLOCKS, 1, 1);
 	}
 }

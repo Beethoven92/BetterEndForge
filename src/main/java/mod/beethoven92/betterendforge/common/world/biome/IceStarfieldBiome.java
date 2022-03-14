@@ -3,9 +3,9 @@ package mod.beethoven92.betterendforge.common.world.biome;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredStructures;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.gen.GenerationStage.Decoration;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 
 public class IceStarfieldBiome extends BetterEndBiome
 {
@@ -20,6 +20,6 @@ public class IceStarfieldBiome extends BetterEndBiome
 				addStructure(ModConfiguredStructures.GIANT_ICE_STAR).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.ICE_STAR).
 				addFeature(Decoration.RAW_GENERATION, ModConfiguredFeatures.ICE_STAR_SMALL).
-				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 20, 1, 4));
+				addMobSpawn(MobCategory.MONSTER, EntityType.ENDERMAN, 20, 1, 4));
 	}
 }

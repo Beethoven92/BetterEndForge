@@ -12,21 +12,21 @@ import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import mod.beethoven92.betterendforge.common.block.template.FurBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FallingBlock;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.IWorldWriter;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.LevelWriter;
 
 public class BlockHelper 
 {
@@ -44,11 +44,11 @@ public class BlockHelper
 	public static final Direction[] HORIZONTAL_DIRECTIONS = makeHorizontal();
 	public static final Direction[] DIRECTIONS = Direction.values();
 	
-	private static final Mutable POS = new Mutable();
+	private static final MutableBlockPos POS = new MutableBlockPos();
 	protected static final BlockState AIR = Blocks.AIR.defaultBlockState();
 	protected static final BlockState WATER = Blocks.WATER.defaultBlockState();
 	
-	public static int upRay(IWorldReader world, BlockPos pos, int maxDist) 
+	public static int upRay(LevelReader world, BlockPos pos, int maxDist) 
 	{
 		int length = 0;
 		for (int j = 1; j < maxDist && (world.isEmptyBlock(pos.above(j))); j++)
@@ -56,7 +56,7 @@ public class BlockHelper
 		return length;
 	}
 	
-	public static int downRay(IWorldReader world, BlockPos pos, int maxDist) 
+	public static int downRay(LevelReader world, BlockPos pos, int maxDist) 
 	{
 		int length = 0;
 		for (int j = 1; j < maxDist && (world.isEmptyBlock(pos.below(j))); j++)
@@ -64,7 +64,7 @@ public class BlockHelper
 		return length;
 	}
 	
-	public static int downRayRep(IWorldReader world, BlockPos pos, int maxDist) 
+	public static int downRayRep(LevelReader world, BlockPos pos, int maxDist) 
 	{
 		POS.set(pos);
 		for (int j = 1; j < maxDist && (world.getBlockState(POS)).getMaterial().isReplaceable(); j++)
@@ -102,25 +102,25 @@ public class BlockHelper
 		return HORIZONTAL_DIRECTIONS[rand.nextInt(4)];
 	}
 	
-	public static void setWithoutUpdate(IWorldWriter world, BlockPos pos, BlockState state) 
+	public static void setWithoutUpdate(LevelWriter world, BlockPos pos, BlockState state) 
 	{
 		world.setBlock(pos, state, SET_SILENT);
 	}
 	
-	public static void setWithUpdate(IWorldWriter world, BlockPos pos, BlockState state) {
+	public static void setWithUpdate(LevelWriter world, BlockPos pos, BlockState state) {
 		world.setBlock(pos, state, SET_OBSERV);
 	}
 	
-	public static void setWithUpdate(IWorldWriter world, BlockPos pos, Block block) {
+	public static void setWithUpdate(LevelWriter world, BlockPos pos, Block block) {
 		world.setBlock(pos, block.defaultBlockState(), SET_OBSERV);
 	}
 	
-	public static void setWithoutUpdate(IWorldWriter world, BlockPos pos, Block block) 
+	public static void setWithoutUpdate(LevelWriter world, BlockPos pos, Block block) 
 	{
 		world.setBlock(pos, block.defaultBlockState(), SET_SILENT);
 	}
 	
-	public static void fixBlocks(IWorld world, BlockPos start, BlockPos end) 
+	public static void fixBlocks(LevelAccessor world, BlockPos start, BlockPos end) 
 	{
 		BlockState state;
 		Set<BlockPos> doubleCheck = Sets.newHashSet();

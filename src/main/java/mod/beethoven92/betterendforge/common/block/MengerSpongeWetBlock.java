@@ -2,19 +2,19 @@ package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.WetSpongeBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.WetSpongeBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class MengerSpongeWetBlock extends WetSpongeBlock
 {
@@ -24,13 +24,13 @@ public class MengerSpongeWetBlock extends WetSpongeBlock
 	}
 
 	@Override
-	public void onPlace(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) 
+	public void onPlace(BlockState state, Level worldIn, BlockPos pos, BlockState oldState, boolean isMoving) 
 	{
 		if (worldIn.dimensionType().ultraWarm()) 
 		{
 			worldIn.setBlock(pos, ModBlocks.MENGER_SPONGE.get().defaultBlockState(), 3);
 	        worldIn.levelEvent(2009, pos, 0);
-	        worldIn.playSound((PlayerEntity)null, pos, SoundEvents.FIRE_EXTINGUISH, SoundCategory.BLOCKS, 1.0F, (1.0F + worldIn.getRandom().nextFloat() * 0.2F) * 0.7F);
+	        worldIn.playSound((Player)null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, (1.0F + worldIn.getRandom().nextFloat() * 0.2F) * 0.7F);
 	    }
 	}
 
@@ -42,7 +42,7 @@ public class MengerSpongeWetBlock extends WetSpongeBlock
 	}*/
 	
 	@Override
-	public void destroy(IWorld worldIn, BlockPos pos, BlockState state) 
+	public void destroy(LevelAccessor worldIn, BlockPos pos, BlockState state) 
 	{
 		BlockHelper.setWithUpdate(worldIn, pos, Blocks.AIR);
 	}

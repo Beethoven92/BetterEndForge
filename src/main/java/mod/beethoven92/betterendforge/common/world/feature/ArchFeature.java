@@ -11,34 +11,34 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFRotation;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFTorus;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
 import mod.beethoven92.betterendforge.data.AABBAcc;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
-public class ArchFeature extends Feature<NoFeatureConfig> {
+public class ArchFeature extends Feature<NoneFeatureConfiguration> {
 	private Function<BlockPos, BlockState> surfaceFunction;
 	private Block block;
 	
 	public ArchFeature(Block block, Function<BlockPos, BlockState> surfaceFunction) {
-        super(NoFeatureConfig.CODEC);
+        super(NoneFeatureConfiguration.CODEC);
         this.surfaceFunction = surfaceFunction;
 		this.block = block;
 	}
 	
 	@Override
-	public boolean place(ISeedReader level, ChunkGenerator generator, Random random, BlockPos origin,
-                            NoFeatureConfig config) {
-		final ISeedReader world = level;
+	public boolean place(WorldGenLevel level, ChunkGenerator generator, Random random, BlockPos origin,
+                            NoneFeatureConfiguration config) {
+		final WorldGenLevel world = level;
 
 		
 		BlockPos pos = FeatureHelper.getPosOnSurfaceWG(
@@ -82,7 +82,7 @@ public class ArchFeature extends Feature<NoFeatureConfig> {
 		if (side > 47) {
 			side = 47;
 		}
-		arch.fillArea(world, pos, AABBAcc.ofSize(Vector3d.atCenterOf(pos), side, side, side));
+		arch.fillArea(world, pos, AABBAcc.ofSize(Vec3.atCenterOf(pos), side, side, side));
 		
 		return true;
 	}

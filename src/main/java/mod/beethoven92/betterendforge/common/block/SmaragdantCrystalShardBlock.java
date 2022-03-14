@@ -5,39 +5,39 @@ import java.util.EnumMap;
 import com.google.common.collect.Maps;
 
 import mod.beethoven92.betterendforge.common.block.template.AttachedBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class SmaragdantCrystalShardBlock extends AttachedBlock implements IWaterLoggable
+public class SmaragdantCrystalShardBlock extends AttachedBlock implements SimpleWaterloggedBlock
 {
 	private static final EnumMap<Direction, VoxelShape> BOUNDING_SHAPES = Maps.newEnumMap(Direction.class);
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	
 	static 
 	{
-		BOUNDING_SHAPES.put(Direction.UP, VoxelShapes.box(0.125, 0.0, 0.125, 0.875F, 0.875F, 0.875F));
-		BOUNDING_SHAPES.put(Direction.DOWN, VoxelShapes.box(0.125, 0.125, 0.125, 0.875F, 1.0, 0.875F));
-		BOUNDING_SHAPES.put(Direction.NORTH, VoxelShapes.box(0.125, 0.125, 0.125, 0.875F, 0.875F, 1.0));
-		BOUNDING_SHAPES.put(Direction.SOUTH, VoxelShapes.box(0.125, 0.125, 0.0, 0.875F, 0.875F, 0.875F));
-		BOUNDING_SHAPES.put(Direction.WEST, VoxelShapes.box(0.125, 0.125, 0.125, 1.0, 0.875F, 0.875F));
-		BOUNDING_SHAPES.put(Direction.EAST, VoxelShapes.box(0.0, 0.125, 0.125, 0.875F, 0.875F, 0.875F));
+		BOUNDING_SHAPES.put(Direction.UP, Shapes.box(0.125, 0.0, 0.125, 0.875F, 0.875F, 0.875F));
+		BOUNDING_SHAPES.put(Direction.DOWN, Shapes.box(0.125, 0.125, 0.125, 0.875F, 1.0, 0.875F));
+		BOUNDING_SHAPES.put(Direction.NORTH, Shapes.box(0.125, 0.125, 0.125, 0.875F, 0.875F, 1.0));
+		BOUNDING_SHAPES.put(Direction.SOUTH, Shapes.box(0.125, 0.125, 0.0, 0.875F, 0.875F, 0.875F));
+		BOUNDING_SHAPES.put(Direction.WEST, Shapes.box(0.125, 0.125, 0.125, 1.0, 0.875F, 0.875F));
+		BOUNDING_SHAPES.put(Direction.EAST, Shapes.box(0.0, 0.125, 0.125, 0.875F, 0.875F, 0.875F));
 	}
 	
 	public SmaragdantCrystalShardBlock(Properties properties) 
@@ -46,18 +46,18 @@ public class SmaragdantCrystalShardBlock extends AttachedBlock implements IWater
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
 		return BOUNDING_SHAPES.get(state.getValue(FACING));
 	}
 	
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) 
+	public BlockState getStateForPlacement(BlockPlaceContext context) 
 	{
 		BlockState state = super.getStateForPlacement(context);
 		if (state != null) 
 		{
-			World worldView = context.getLevel();
+			Level worldView = context.getLevel();
 			BlockPos blockPos = context.getClickedPos();
 			boolean water = worldView.getFluidState(blockPos).getType() == Fluids.WATER;
 			return state.setValue(WATERLOGGED, water);
@@ -66,7 +66,7 @@ public class SmaragdantCrystalShardBlock extends AttachedBlock implements IWater
 	}
 	
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) 
 	{
 		Direction direction = (Direction) state.getValue(FACING);
 		BlockPos blockPos = pos.relative(direction.getOpposite());

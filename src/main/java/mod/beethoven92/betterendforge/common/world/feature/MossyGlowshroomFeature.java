@@ -25,19 +25,19 @@ import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFCappedCone;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFPrimitive;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class MossyGlowshroomFeature extends Feature<NoFeatureConfig>
+public class MossyGlowshroomFeature extends Feature<NoneFeatureConfiguration>
 {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Vector3f CENTER = new Vector3f();
@@ -105,12 +105,12 @@ public class MossyGlowshroomFeature extends Feature<NoFeatureConfig>
 	
 	public MossyGlowshroomFeature() 
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
-			BlockPos blockPos, NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random,
+			BlockPos blockPos, NoneFeatureConfiguration config) 
 	{
 		BlockState down = world.getBlockState(blockPos.below());
 		if (!down.is(ModBlocks.END_MYCELIUM.get()) && !down.is(ModBlocks.END_MOSS.get()))
@@ -124,7 +124,7 @@ public class MossyGlowshroomFeature extends Feature<NoFeatureConfig>
 		ROOTS.setBlock(ModBlocks.MOSSY_GLOWSHROOM.bark.get());
 		
 		float height = ModMathHelper.randRange(10F, 25F, random);
-		int count = MathHelper.floor(height / 4);
+		int count = Mth.floor(height / 4);
 		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, height, 0, count);
 		SplineHelper.offsetParts(spline, random, 1F, 0, 1F);
 		SDF sdf = SplineHelper.buildSDF(spline, 2.1F, 1.5F, (pos) -> {

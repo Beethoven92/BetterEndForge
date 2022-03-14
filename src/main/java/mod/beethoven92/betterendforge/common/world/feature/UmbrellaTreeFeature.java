@@ -21,19 +21,19 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSubtraction;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFUnion;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.util.Mth;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
+public class UmbrellaTreeFeature extends Feature<NoneFeatureConfiguration>
 {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final List<Vector3f> SPLINE;
@@ -69,12 +69,12 @@ public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
 	
 	public UmbrellaTreeFeature() 
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
-			NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos pos,
+			NoneFeatureConfiguration config) 
 	{
 		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND)) return false;
 		
@@ -158,7 +158,7 @@ public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
 					}
 				}
 				int color = ModMathHelper.floor(d / min.radius * 7);
-				color = MathHelper.clamp(color, 1, 7);
+				color = Mth.clamp(color, 1, 7);
 				return info.getState().setValue(UmbrellaTreeMembraneBlock.COLOR, color);
 			}
 			return info.getState();
@@ -184,7 +184,7 @@ public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
 		return true;
 	}
 
-	private void makeRoots(ISeedReader world, BlockPos pos, float radius, Random random, BlockState wood) 
+	private void makeRoots(WorldGenLevel world, BlockPos pos, float radius, Random random, BlockState wood) 
 	{
 		int count = (int) (radius * 1.5F);
 		for (int i = 0; i < count; i++) 
@@ -203,7 +203,7 @@ public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
 		}
 	}
 	
-	private SDF makeMembrane(ISeedReader world, float radius, Random random, BlockState membrane, BlockState center) 
+	private SDF makeMembrane(WorldGenLevel world, float radius, Random random, BlockState membrane, BlockState center) 
 	{
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(membrane);
 		SDF sub = new SDFTranslate().setTranslate(0, -4, 0).setSource(sphere);
@@ -225,9 +225,9 @@ public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
 		return sphere;
 	}
 	
-	private void makeFruits(ISeedReader world, double px, double py, double pz, BlockState fruit, float scale) 
+	private void makeFruits(WorldGenLevel world, double px, double py, double pz, BlockState fruit, float scale) 
 	{
-		Mutable mut = new Mutable().set(px, py, pz);
+		MutableBlockPos mut = new MutableBlockPos().set(px, py, pz);
 		for (int i = 0; i < 8; i++) {
 			mut.move(Direction.DOWN);
 			if (world.isEmptyBlock(mut)) 

@@ -2,32 +2,32 @@ package mod.beethoven92.betterendforge.common.tileentity;
 
 import mod.beethoven92.betterendforge.common.block.EndBarrelBlock;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
-import net.minecraft.block.BarrelBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.ChestContainer;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.Vec3i;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
-public class EndBarrelTileEntity extends LockableLootTileEntity {
+public class EndBarrelTileEntity extends RandomizableContainerBlockEntity {
 	private NonNullList<ItemStack> inventory;
 	private int viewerCount;
 
-	private EndBarrelTileEntity(TileEntityType<?> type) {
+	private EndBarrelTileEntity(BlockEntityType<?> type) {
 		super(type);
 		this.inventory = NonNullList.withSize(27, ItemStack.EMPTY);
 	}
@@ -37,21 +37,21 @@ public class EndBarrelTileEntity extends LockableLootTileEntity {
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT tag) {
+	public CompoundTag save(CompoundTag tag) {
 		super.save(tag);
 		if (!this.trySaveLootTable(tag)) {
-			ItemStackHelper.saveAllItems(tag, this.inventory);
+			ContainerHelper.saveAllItems(tag, this.inventory);
 		}
 
 		return tag;
 	}
 
 	@Override
-	public void load(BlockState state, CompoundNBT tag) {
+	public void load(BlockState state, CompoundTag tag) {
 		super.load(state, tag);
 		this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 		if (!this.tryLoadLootTable(tag)) {
-			ItemStackHelper.loadAllItems(tag, this.inventory);
+			ContainerHelper.loadAllItems(tag, this.inventory);
 		}
 
 	}
@@ -72,17 +72,17 @@ public class EndBarrelTileEntity extends LockableLootTileEntity {
 	}
 
 	@Override
-	protected ITextComponent getDefaultName() {
-		return new TranslationTextComponent("container.barrel");
+	protected Component getDefaultName() {
+		return new TranslatableComponent("container.barrel");
 	}
 
 	@Override
-	protected Container createMenu(int syncId, PlayerInventory playerInventory) {
-		return ChestContainer.threeRows(syncId, playerInventory, this);
+	protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
+		return ChestMenu.threeRows(syncId, playerInventory, this);
 	}
 
 	@Override
-	public void startOpen(PlayerEntity player) {
+	public void startOpen(Player player) {
 		if (!player.isSpectator()) {
 			if (this.viewerCount < 0) {
 				this.viewerCount = 0;
@@ -109,7 +109,7 @@ public class EndBarrelTileEntity extends LockableLootTileEntity {
 		int i = this.worldPosition.getX();
 		int j = this.worldPosition.getY();
 		int k = this.worldPosition.getZ();
-		this.viewerCount = ChestTileEntity.getOpenCount(this.level, this, i, j, k);
+		this.viewerCount = ChestBlockEntity.getOpenCount(this.level, this, i, j, k);
 		if (this.viewerCount > 0) {
 			this.scheduleTick();
 		} else {
@@ -129,7 +129,7 @@ public class EndBarrelTileEntity extends LockableLootTileEntity {
 	}
 
 	@Override
-	public void stopOpen(PlayerEntity player) {
+	public void stopOpen(Player player) {
 		if (!player.isSpectator()) {
 			--this.viewerCount;
 		}
@@ -141,11 +141,11 @@ public class EndBarrelTileEntity extends LockableLootTileEntity {
 	}
 
 	private void playSound(BlockState blockState, SoundEvent soundEvent) {
-		Vector3i vec3i = ((Direction) blockState.getValue(BarrelBlock.FACING)).getNormal();
+		Vec3i vec3i = ((Direction) blockState.getValue(BarrelBlock.FACING)).getNormal();
 		double d = (double) this.worldPosition.getX() + 0.5D + (double) vec3i.getX() / 2.0D;
 		double e = (double) this.worldPosition.getY() + 0.5D + (double) vec3i.getY() / 2.0D;
 		double f = (double) this.worldPosition.getZ() + 0.5D + (double) vec3i.getZ() / 2.0D;
-		this.level.playSound((PlayerEntity) null, d, e, f, soundEvent, SoundCategory.BLOCKS, 0.5F,
+		this.level.playSound((Player) null, d, e, f, soundEvent, SoundSource.BLOCKS, 0.5F,
 				this.level.random.nextFloat() * 0.1F + 0.9F);
 	}
 }

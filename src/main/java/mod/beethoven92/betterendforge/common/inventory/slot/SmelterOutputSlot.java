@@ -1,17 +1,17 @@
 package mod.beethoven92.betterendforge.common.inventory.slot;
 
 import mod.beethoven92.betterendforge.common.tileentity.EndStoneSmelterTileEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 public class SmelterOutputSlot extends Slot
 {
-	private PlayerEntity player;
+	private Player player;
 	private int amount;
 
-	public SmelterOutputSlot(PlayerEntity player, IInventory inventoryIn, int index, int xPosition, int yPosition) 
+	public SmelterOutputSlot(Player player, Container inventoryIn, int index, int xPosition, int yPosition) 
 	{
 		super(inventoryIn, index, xPosition, yPosition);
 		this.player = player;
@@ -35,7 +35,7 @@ public class SmelterOutputSlot extends Slot
 	}
 	
 	@Override
-	public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) 
+	public ItemStack onTake(Player thePlayer, ItemStack stack) 
 	{
 		this.checkTakeAchievements(stack);
 		super.onTake(player, stack);

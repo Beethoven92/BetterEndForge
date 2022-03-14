@@ -17,20 +17,20 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSubtraction;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class PythadendronFeature extends Feature<NoFeatureConfig>
+public class PythadendronFeature extends Feature<NoneFeatureConfiguration>
 {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Function<BlockState, Boolean> IGNORE;
@@ -68,12 +68,12 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 	
 	public PythadendronFeature()
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
-			BlockPos pos, NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random,
+			BlockPos pos, NoneFeatureConfiguration config) 
 	{
 		if (world.getBlockState(pos.below()).getBlock() != ModBlocks.CHORUS_NYLIUM.get() &&
 				world.getBlockState(pos.below()).getBlock() != ModBlocks.ENDSTONE_DUST.get())
@@ -102,7 +102,7 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 		return true;
 	}
 	
-	private void branch(float x, float y, float z, float size, float angle, Random random, int depth, ISeedReader world, BlockPos pos) 
+	private void branch(float x, float y, float z, float size, float angle, Random random, int depth, WorldGenLevel world, BlockPos pos) 
 	{
 		if (depth == 0) return;
 		
@@ -154,7 +154,7 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 		}
 	}
 	
-	private void leavesBall(ISeedReader world, BlockPos pos, Random random, OpenSimplexNoise noise)
+	private void leavesBall(WorldGenLevel world, BlockPos pos, Random random, OpenSimplexNoise noise)
 	{
 		float radius = ModMathHelper.randRange(4.5F, 6.5F, random);
 		
@@ -163,7 +163,7 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		sphere.addPostProcess((info) -> {
 			if (random.nextInt(5) == 0) 
 			{

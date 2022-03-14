@@ -1,24 +1,24 @@
 package mod.beethoven92.betterendforge.client.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.inventory.EndStoneSmelterContainer;
-import net.minecraft.client.gui.recipebook.IRecipeShownListener;
-import net.minecraft.client.gui.recipebook.RecipeBookGui;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.widget.button.ImageButton;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
+import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.components.ImageButton;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class EndStoneSmelterScreen extends ContainerScreen<EndStoneSmelterContainer> implements IRecipeShownListener
+public class EndStoneSmelterScreen extends AbstractContainerScreen<EndStoneSmelterContainer> implements RecipeUpdateListener
 {
 	private final static ResourceLocation RECIPE_BUTTON_TEXTURE = new ResourceLocation("textures/gui/recipe_button.png");
 	private final static ResourceLocation BACKGROUND_TEXTURE = new ResourceLocation(BetterEnd.MOD_ID, "textures/gui/smelter_gui.png");
@@ -26,8 +26,8 @@ public class EndStoneSmelterScreen extends ContainerScreen<EndStoneSmelterContai
 	public final EndStoneSmelterRecipeBookScreen recipeBook;
 	private boolean narrow;
 	
-	public EndStoneSmelterScreen(EndStoneSmelterContainer screenContainer, PlayerInventory inv,
-			ITextComponent titleIn)
+	public EndStoneSmelterScreen(EndStoneSmelterContainer screenContainer, Inventory inv,
+			Component titleIn)
 	{
 		super(screenContainer, inv, titleIn);
 		this.recipeBook = new EndStoneSmelterRecipeBookScreen();
@@ -57,7 +57,7 @@ public class EndStoneSmelterScreen extends ContainerScreen<EndStoneSmelterContai
 	}
 	
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) 
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) 
 	{
 		this.renderBackground(matrixStack);
 		if (this.recipeBook.isVisible() && this.narrow) 
@@ -77,7 +77,7 @@ public class EndStoneSmelterScreen extends ContainerScreen<EndStoneSmelterContai
 	}
 	
 	@Override
-	protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) 
+	protected void renderBg(PoseStack matrixStack, float partialTicks, int x, int y) 
 	{		
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bind(BACKGROUND_TEXTURE);
@@ -140,7 +140,7 @@ public class EndStoneSmelterScreen extends ContainerScreen<EndStoneSmelterContai
 	}
 
 	@Override
-	public RecipeBookGui getRecipeBookComponent() 
+	public RecipeBookComponent getRecipeBookComponent() 
 	{
 		return this.recipeBook;
 	}

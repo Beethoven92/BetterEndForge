@@ -1,6 +1,6 @@
 package mod.beethoven92.betterendforge.common.integration.jei.infusion;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -13,10 +13,10 @@ import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.recipes.InfusionRecipe;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe>
 {
@@ -57,7 +57,7 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe>
 	@Override
 	public String getTitle() 
 	{
-		return new TranslationTextComponent("gui.jei.category.infusion").getString();
+		return new TranslatableComponent("gui.jei.category.infusion").getString();
 	}
 
 	@Override
@@ -100,21 +100,21 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe>
 		guiItemStacks.set(ingredients);
 	}
 	
-	protected void drawInfusionTime(InfusionRecipe recipe, MatrixStack matrixStack, int y) 
+	protected void drawInfusionTime(InfusionRecipe recipe, PoseStack matrixStack, int y) 
 	{
 		int infusionTime = recipe.time;
 		if (infusionTime > 0) 
 		{
-			TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category.infusion.time", infusionTime);
+			TranslatableComponent timeString = new TranslatableComponent("gui.jei.category.infusion.time", infusionTime);
 			Minecraft minecraft = Minecraft.getInstance();
-			FontRenderer fontRenderer = minecraft.font;
+			Font fontRenderer = minecraft.font;
 			int stringWidth = fontRenderer.width(timeString);
 			fontRenderer.draw(matrixStack, timeString, background.getWidth() - stringWidth, y, 0xFF808080);
 		}
 	}
 	
 	@Override
-	public void draw(InfusionRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) 
+	public void draw(InfusionRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) 
 	{
 		drawInfusionTime(recipe, matrixStack, 0);
 	}

@@ -6,9 +6,9 @@ import mod.beethoven92.betterendforge.common.block.template.PlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
 
 public class BlueVineFeature extends ScatterFeature
 {
@@ -20,7 +20,7 @@ public class BlueVineFeature extends ScatterFeature
 	}
 
 	@Override
-	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) 
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) 
 	{
 		float d = ModMathHelper.length(center.getX() - blockPos.getX(), center.getZ() - blockPos.getZ()) / radius * 0.6F + random.nextFloat() * 0.4F;
 		small = d > 0.5F;
@@ -28,7 +28,7 @@ public class BlueVineFeature extends ScatterFeature
 	}
 
 	@Override
-	public void generate(ISeedReader world, Random random, BlockPos blockPos) 
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) 
 	{
 		if (small) 
 		{

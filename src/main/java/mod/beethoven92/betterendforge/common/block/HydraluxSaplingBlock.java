@@ -7,15 +7,15 @@ import mod.beethoven92.betterendforge.common.block.template.UnderwaterPlantBlock
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class HydraluxSaplingBlock extends UnderwaterPlantBlockWithAge
 {
@@ -25,10 +25,10 @@ public class HydraluxSaplingBlock extends UnderwaterPlantBlockWithAge
 	}
 
 	@Override
-	public void doGrow(ISeedReader world, Random random, BlockPos pos) 
+	public void doGrow(WorldGenLevel world, Random random, BlockPos pos) 
 	{
 		int h = ModMathHelper.randRange(4, 8, random);
-		Mutable mut = new Mutable().set(pos);
+		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		
 		for (int i = 1; i < h; i++) 
 		{
@@ -63,13 +63,13 @@ public class HydraluxSaplingBlock extends UnderwaterPlantBlockWithAge
 	}
 	
 	@Override
-	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return true;
 	}
 	
 	@Override
-	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}

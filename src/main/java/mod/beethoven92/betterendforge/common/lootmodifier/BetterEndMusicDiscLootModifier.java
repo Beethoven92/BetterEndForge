@@ -9,12 +9,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
 import mod.beethoven92.betterendforge.common.init.ModItems;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 
@@ -26,7 +26,7 @@ public class BetterEndMusicDiscLootModifier extends LootModifier {
 
 	private int min, max;
 
-	public BetterEndMusicDiscLootModifier(ILootCondition[] conditionsIn, int min, int max) {
+	public BetterEndMusicDiscLootModifier(LootItemCondition[] conditionsIn, int min, int max) {
 		super(conditionsIn);
 		this.min = min;
 		this.max = max;
@@ -45,9 +45,9 @@ public class BetterEndMusicDiscLootModifier extends LootModifier {
 
 		@Override
 		public BetterEndMusicDiscLootModifier read(ResourceLocation name, JsonObject json,
-				ILootCondition[] conditionsIn) {
-			int min = JSONUtils.getAsInt(json, "min");
-			int max = JSONUtils.getAsInt(json, "max");
+				LootItemCondition[] conditionsIn) {
+			int min = GsonHelper.getAsInt(json, "min");
+			int max = GsonHelper.getAsInt(json, "max");
 			if (min >= max)
 				throw new JsonSyntaxException("min has to be smaller than max");
 			return new BetterEndMusicDiscLootModifier(conditionsIn, min, max);

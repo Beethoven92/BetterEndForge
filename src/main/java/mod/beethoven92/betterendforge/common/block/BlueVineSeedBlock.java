@@ -8,14 +8,14 @@ import mod.beethoven92.betterendforge.common.block.template.PlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlueVineSeedBlock extends PlantBlockWithAge
 {
@@ -25,7 +25,7 @@ public class BlueVineSeedBlock extends PlantBlockWithAge
 	}
 
 	@Override
-	public void growAdult(ISeedReader world, Random random, BlockPos pos) 
+	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) 
 	{
 		int height = ModMathHelper.randRange(2, 5, random);
 		int h = BlockHelper.upRay(world, pos, height + 2);
@@ -42,7 +42,7 @@ public class BlueVineSeedBlock extends PlantBlockWithAge
 		placeLantern(world, pos.above(height + 1));
 	}
 	
-	private void placeLantern(ISeedReader world, BlockPos pos) 
+	private void placeLantern(WorldGenLevel world, BlockPos pos) 
 	{
 		BlockHelper.setWithoutUpdate(world, pos, ModBlocks.BLUE_VINE_LANTERN.get().defaultBlockState().setValue(BlueVineLanternBlock.NATURAL, true));
 		for (Direction dir: BlockHelper.HORIZONTAL_DIRECTIONS) 
@@ -66,13 +66,13 @@ public class BlueVineSeedBlock extends PlantBlockWithAge
 	}
 	
 	@Override
-	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return true;
 	}
 	
 	@Override
-	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}

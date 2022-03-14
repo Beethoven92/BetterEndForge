@@ -5,25 +5,25 @@ import java.util.Random;
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.core.Vec3i;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class TenaneaFlowersBlock extends EndVineBlock
 {
-	public static final Vector3i[] COLORS;
+	public static final Vec3i[] COLORS;
 	
 	static 
 	{
-		COLORS = new Vector3i[] {
-			new Vector3i(250, 111, 222),
-			new Vector3i(167, 89, 255),
-			new Vector3i(120, 207, 239),
-			new Vector3i(255, 87, 182)
+		COLORS = new Vec3i[] {
+			new Vec3i(250, 111, 222),
+			new Vec3i(167, 89, 255),
+			new Vec3i(120, 207, 239),
+			new Vec3i(255, 87, 182)
 		};
 	}
 	
@@ -33,7 +33,7 @@ public class TenaneaFlowersBlock extends EndVineBlock
 	}
 
 	@Override
-	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand)
+	public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand)
 	{
 		super.animateTick(stateIn, worldIn, pos, rand);
 		if (rand.nextInt(32) == 0) {
@@ -54,12 +54,12 @@ public class TenaneaFlowersBlock extends EndVineBlock
 		delta -= index;
 		index &= 3;
 			
-		Vector3i color1 = COLORS[index];
-		Vector3i color2 = COLORS[index2];
+		Vec3i color1 = COLORS[index];
+		Vec3i color2 = COLORS[index2];
 			
-		int r = ModMathHelper.floor(MathHelper.lerp(delta, color1.getX(), color2.getX()));
-		int g = ModMathHelper.floor(MathHelper.lerp(delta, color1.getY(), color2.getY()));
-		int b = ModMathHelper.floor(MathHelper.lerp(delta, color1.getZ(), color2.getZ()));
+		int r = ModMathHelper.floor(Mth.lerp(delta, color1.getX(), color2.getX()));
+		int g = ModMathHelper.floor(Mth.lerp(delta, color1.getY(), color2.getY()));
+		int b = ModMathHelper.floor(Mth.lerp(delta, color1.getZ(), color2.getZ()));
 		float[] hsb = ModMathHelper.fromRGBtoHSB(r, g, b);
 			
 		return ModMathHelper.fromHSBtoRGB(hsb[0], ModMathHelper.max(0.5F, hsb[1]), hsb[2]);

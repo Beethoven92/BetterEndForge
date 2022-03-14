@@ -2,15 +2,15 @@ package mod.beethoven92.betterendforge.common.block.template;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.server.level.ServerLevel;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public abstract class PlantBlockWithAge extends PlantBlock
 {
@@ -27,10 +27,10 @@ public abstract class PlantBlockWithAge extends PlantBlock
 		builder.add(AGE);
 	}
 	
-	public abstract void growAdult(ISeedReader world, Random random, BlockPos pos);
+	public abstract void growAdult(WorldGenLevel world, Random random, BlockPos pos);
 	
 	@Override
-	public void performBonemeal(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
+	public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		if (rand.nextInt(4) == 0) 
 		{
@@ -47,7 +47,7 @@ public abstract class PlantBlockWithAge extends PlantBlock
 	}
 	
 	@Override
-	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) 
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) 
 	{
 		performBonemeal(worldIn, random, pos, state);
 	}

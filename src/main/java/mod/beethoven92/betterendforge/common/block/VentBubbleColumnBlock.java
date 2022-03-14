@@ -4,32 +4,32 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IBucketPickupHandler;
-import net.minecraft.entity.Entity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class VentBubbleColumnBlock extends Block implements IBucketPickupHandler
+public class VentBubbleColumnBlock extends Block implements BucketPickup
 {
 	public VentBubbleColumnBlock(Properties properties) 
 	{
@@ -37,20 +37,20 @@ public class VentBubbleColumnBlock extends Block implements IBucketPickupHandler
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
-		return VoxelShapes.empty();
+		return Shapes.empty();
 	}
 	
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) 
 	{
 		BlockState blockState = worldIn.getBlockState(pos.below());
 		return blockState.is(this) || blockState.is(ModBlocks.HYDROTHERMAL_VENT.get());
 	}
 	
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
 		if (!stateIn.canSurvive(worldIn, currentPos)) 
@@ -70,7 +70,7 @@ public class VentBubbleColumnBlock extends Block implements IBucketPickupHandler
 	}
 	
 	@Override
-	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
+	public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn)
 	{
 		BlockState blockState = worldIn.getBlockState(pos.above());
 		if (blockState.isAir())
@@ -78,7 +78,7 @@ public class VentBubbleColumnBlock extends Block implements IBucketPickupHandler
 			entityIn.onAboveBubbleCol(false);
 			if (!worldIn.isClientSide()) 
 			{
-				ServerWorld serverWorld = (ServerWorld) worldIn;
+				ServerLevel serverWorld = (ServerLevel) worldIn;
 
 				for (int i = 0; i < 2; ++i) 
 				{
@@ -94,7 +94,7 @@ public class VentBubbleColumnBlock extends Block implements IBucketPickupHandler
 	}
 	
 	@Override
-	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) 
+	public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) 
 	{
 		if (rand.nextInt(4) == 0) 
 		{
@@ -106,14 +106,14 @@ public class VentBubbleColumnBlock extends Block implements IBucketPickupHandler
 		if (rand.nextInt(200) == 0) 
 		{
 			worldIn.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT, 
-					SoundCategory.BLOCKS, 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
+					SoundSource.BLOCKS, 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
 		}
 	}
 	
 	@Override
-	public BlockRenderType getRenderShape(BlockState state) 
+	public RenderShape getRenderShape(BlockState state) 
 	{
-		return BlockRenderType.INVISIBLE;
+		return RenderShape.INVISIBLE;
 	}
 	
 	@Override
@@ -123,7 +123,7 @@ public class VentBubbleColumnBlock extends Block implements IBucketPickupHandler
 	}
 
 	@Override
-	public Fluid takeLiquid(IWorld worldIn, BlockPos pos, BlockState state) 
+	public Fluid takeLiquid(LevelAccessor worldIn, BlockPos pos, BlockState state) 
 	{
 		worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
 		return Fluids.WATER;

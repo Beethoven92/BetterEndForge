@@ -1,15 +1,15 @@
 package mod.beethoven92.betterendforge.common.item;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.DrinkHelper;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
 public class UmbrellaClusterJuiceItem extends Item
 {
@@ -23,13 +23,13 @@ public class UmbrellaClusterJuiceItem extends Item
 		return 32;
 	}
 
-	public UseAction getUseAnimation(ItemStack stack) 
+	public UseAnim getUseAnimation(ItemStack stack) 
 	{
-		return UseAction.DRINK;
+		return UseAnim.DRINK;
 	}
 
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) 
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) 
 	{
-		return DrinkHelper.useDrink(worldIn, playerIn, handIn);
+		return ItemUtils.useDrink(worldIn, playerIn, handIn);
 	}
 }

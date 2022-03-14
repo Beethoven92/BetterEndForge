@@ -12,10 +12,10 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.IBlockDisplayReader;
-import net.minecraft.world.biome.BiomeColors;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.BlockAndTintGetter;
+import net.minecraft.client.renderer.BiomeColors;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -29,10 +29,10 @@ public class BiomeColorsMixin {
 	private static final boolean HAS_MAGNESIUM;
 
 	@Inject(method = "getAverageWaterColor", at = @At("RETURN"), cancellable = true)
-	private static void be_getAverageWaterColor(IBlockDisplayReader world, BlockPos blockPos, CallbackInfoReturnable<Integer> info) {
+	private static void be_getAverageWaterColor(BlockAndTintGetter world, BlockPos blockPos, CallbackInfoReturnable<Integer> info) {
 		if (ClientOptions.useSulfurWaterColor()) {
-			IBlockDisplayReader view = HAS_MAGNESIUM ? Minecraft.getInstance().level : world;
-			Mutable mut = new Mutable();
+			BlockAndTintGetter view = HAS_MAGNESIUM ? Minecraft.getInstance().level : world;
+			MutableBlockPos mut = new MutableBlockPos();
 			mut.setY(blockPos.getY());
 			for (int i = 0; i < OFFSETS.length; i++) {
 				mut.setX(blockPos.getX() + OFFSETS[i].x);

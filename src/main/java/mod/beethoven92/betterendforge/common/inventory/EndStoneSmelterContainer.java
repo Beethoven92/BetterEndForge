@@ -5,35 +5,35 @@ import mod.beethoven92.betterendforge.common.inventory.slot.SmelterFuelSlot;
 import mod.beethoven92.betterendforge.common.inventory.slot.SmelterOutputSlot;
 import mod.beethoven92.betterendforge.common.recipes.AlloyingRecipe;
 import mod.beethoven92.betterendforge.common.tileentity.EndStoneSmelterTileEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.IRecipeHelperPopulator;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.RecipeBookContainer;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.RecipeBookCategory;
-import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.util.IIntArray;
-import net.minecraft.util.IntArray;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.StackedContentsCompatible;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.inventory.RecipeBookMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.inventory.RecipeBookType;
+import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EndStoneSmelterContainer extends RecipeBookContainer<IInventory>
+public class EndStoneSmelterContainer extends RecipeBookMenu<Container>
 {
-	private final IInventory inventory;
-	private final IIntArray data;
-	protected final World world;
+	private final Container inventory;
+	private final ContainerData data;
+	protected final Level world;
 	
-	public EndStoneSmelterContainer(int id, PlayerInventory inventory, net.minecraft.network.PacketBuffer extraData) 
+	public EndStoneSmelterContainer(int id, Inventory inventory, net.minecraft.network.FriendlyByteBuf extraData) 
 	{
-		this(id, inventory, new Inventory(4), new IntArray(4));
+		this(id, inventory, new SimpleContainer(4), new SimpleContainerData(4));
 	}
 	
-	public EndStoneSmelterContainer(int syncId, PlayerInventory playerInventory, IInventory inventory, IIntArray data) 
+	public EndStoneSmelterContainer(int syncId, Inventory playerInventory, Container inventory, ContainerData data) 
 	{
 		super(ModContainerTypes.END_STONE_SMELTER.get(), syncId);
 		this.inventory = inventory;
@@ -60,11 +60,11 @@ public class EndStoneSmelterContainer extends RecipeBookContainer<IInventory>
 	}
 	
 	@Override
-	public void fillCraftSlotsStackedContents(RecipeItemHelper itemHelperIn) 
+	public void fillCraftSlotsStackedContents(StackedContents itemHelperIn) 
 	{
-		if (inventory instanceof IRecipeHelperPopulator) 
+		if (inventory instanceof StackedContentsCompatible) 
 		{
-			((IRecipeHelperPopulator) inventory).fillStackedContents(itemHelperIn);
+			((StackedContentsCompatible) inventory).fillStackedContents(itemHelperIn);
 		}
 	}
 
@@ -75,7 +75,7 @@ public class EndStoneSmelterContainer extends RecipeBookContainer<IInventory>
 	}
 
 	@Override
-	public boolean recipeMatches(IRecipe<? super IInventory> recipeIn) 
+	public boolean recipeMatches(Recipe<? super Container> recipeIn) 
 	{
 		return recipeIn.matches(this.inventory, this.world);
 	}
@@ -105,20 +105,20 @@ public class EndStoneSmelterContainer extends RecipeBookContainer<IInventory>
 	}
 
 	@Override
-	public RecipeBookCategory getRecipeBookType() 
+	public RecipeBookType getRecipeBookType() 
 	{
-		return RecipeBookCategory.BLAST_FURNACE;
+		return RecipeBookType.BLAST_FURNACE;
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) 
+	public boolean stillValid(Player playerIn) 
 	{
 		return this.inventory.stillValid(playerIn);
 	}
 
 	protected boolean isSmeltable(ItemStack itemStack) 
 	{
-		return this.world.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, new Inventory(new ItemStack[]{itemStack}), this.world).isPresent();
+		return this.world.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, new SimpleContainer(new ItemStack[]{itemStack}), this.world).isPresent();
 	}
 
 	public boolean isFuel(ItemStack itemStack) 
@@ -127,7 +127,7 @@ public class EndStoneSmelterContainer extends RecipeBookContainer<IInventory>
 	}
 	
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) 
+	public ItemStack quickMoveStack(Player playerIn, int index) 
 	{
 		ItemStack itemStack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);

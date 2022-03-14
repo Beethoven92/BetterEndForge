@@ -4,44 +4,44 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.google.common.collect.Maps;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.EndSignBlock;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import mod.beethoven92.betterendforge.common.tileentity.ESignTileEntity;
-import net.minecraft.block.AbstractSignBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.StandingSignBlock;
-import net.minecraft.block.WoodType;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.Atlases;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.world.level.block.SignBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.StandingSignBlock;
+import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.RenderMaterial;
-import net.minecraft.client.renderer.texture.NativeImage;
-import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer.SignModel;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.BlockItem;
-import net.minecraft.util.IReorderingProcessor;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.client.resources.model.Material;
+import com.mojang.blaze3d.platform.NativeImage;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
+import net.minecraft.client.renderer.blockentity.SignRenderer.SignModel;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Vector3f;
 
-public class EndSignTileEntityRenderer extends TileEntityRenderer<ESignTileEntity> {
+public class EndSignTileEntityRenderer extends BlockEntityRenderer<ESignTileEntity> {
 	private static final HashMap<Block, RenderType> LAYERS = Maps.newHashMap();
 	private static RenderType defaultLayer;
-	private final SignModel model = new SignTileEntityRenderer.SignModel();
+	private final SignModel model = new SignRenderer.SignModel();
 
-	public EndSignTileEntityRenderer(TileEntityRendererDispatcher dispatcher) {
+	public EndSignTileEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
 		super(dispatcher);
 	}
 
-	public void render(ESignTileEntity signBlockEntity, float tickDelta, MatrixStack matrixStack,
-			IRenderTypeBuffer provider, int light, int overlay) {
+	public void render(ESignTileEntity signBlockEntity, float tickDelta, PoseStack matrixStack,
+			MultiBufferSource provider, int light, int overlay) {
 		BlockState state = signBlockEntity.getBlockState();
 		matrixStack.pushPose();
 
@@ -60,11 +60,11 @@ public class EndSignTileEntityRenderer extends TileEntityRenderer<ESignTileEntit
 
 		matrixStack.pushPose();
 		matrixStack.scale(0.6666667F, -0.6666667F, -0.6666667F);
-		IVertexBuilder vertexConsumer = getConsumer(provider, state.getBlock());
+		VertexConsumer vertexConsumer = getConsumer(provider, state.getBlock());
 		model.sign.render(matrixStack, vertexConsumer, light, overlay);
 		model.stick.render(matrixStack, vertexConsumer, light, overlay);
 		matrixStack.popPose();
-		FontRenderer textRenderer = renderer.getFont();
+		Font textRenderer = renderer.getFont();
 		matrixStack.translate(0.0D, 0.3333333432674408D, 0.046666666865348816D);
 		matrixStack.scale(0.010416667F, -0.010416667F, 0.010416667F);
 		int m = signBlockEntity.getTextColor().getTextColor();
@@ -74,13 +74,13 @@ public class EndSignTileEntityRenderer extends TileEntityRenderer<ESignTileEntit
 		int q = NativeImage.combine(0, p, o, n);
 
 		for (int s = 0; s < 4; ++s) {
-			IReorderingProcessor orderedText = signBlockEntity.getTextBeingEditedOnRow(s, (text) -> {
-				List<IReorderingProcessor> list = textRenderer.split(text, 90);
-				return list.isEmpty() ? IReorderingProcessor.EMPTY : (IReorderingProcessor) list.get(0);
+			FormattedCharSequence orderedText = signBlockEntity.getTextBeingEditedOnRow(s, (text) -> {
+				List<FormattedCharSequence> list = textRenderer.split(text, 90);
+				return list.isEmpty() ? FormattedCharSequence.EMPTY : (FormattedCharSequence) list.get(0);
 			});
 			if (orderedText != null) {
 				float t = (float) (-textRenderer.width(orderedText) / 2);
-				textRenderer.drawInBatch((IReorderingProcessor) orderedText, t, (float) (s * 10 - 20), q, false,
+				textRenderer.drawInBatch((FormattedCharSequence) orderedText, t, (float) (s * 10 - 20), q, false,
 						matrixStack.last().pose(), provider, false, 0, light);
 			}
 		}
@@ -88,18 +88,18 @@ public class EndSignTileEntityRenderer extends TileEntityRenderer<ESignTileEntit
 		matrixStack.popPose();
 	}
 
-	public static RenderMaterial getModelTexture(Block block) {
+	public static Material getModelTexture(Block block) {
 		WoodType signType2;
-		if (block instanceof AbstractSignBlock) {
-			signType2 = ((AbstractSignBlock) block).type();
+		if (block instanceof SignBlock) {
+			signType2 = ((SignBlock) block).type();
 		} else {
 			signType2 = WoodType.OAK;
 		}
 
-		return Atlases.signTexture(signType2);
+		return Sheets.signTexture(signType2);
 	}
 
-	public static IVertexBuilder getConsumer(IRenderTypeBuffer provider, Block block) {
+	public static VertexConsumer getConsumer(MultiBufferSource provider, Block block) {
 		return provider.getBuffer(LAYERS.getOrDefault(block, defaultLayer));
 	}
 

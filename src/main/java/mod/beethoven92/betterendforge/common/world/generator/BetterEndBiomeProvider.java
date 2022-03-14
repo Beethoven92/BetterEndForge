@@ -10,17 +10,17 @@ import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
 import mod.beethoven92.betterendforge.config.CommonConfig;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryLookupCodec;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biomes;
-import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.biome.provider.EndBiomeProvider;
-import net.minecraft.world.gen.SimplexNoiseGenerator;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.RegistryLookupCodec;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.biome.TheEndBiomeSource;
+import net.minecraft.world.level.levelgen.synth.SimplexNoise;
 
-public class BetterEndBiomeProvider extends BiomeProvider
+public class BetterEndBiomeProvider extends BiomeSource
 {
 	public static final Codec<BetterEndBiomeProvider> BETTER_END_CODEC = RecordCodecBuilder.create(
 			(builder) -> {return builder.group(RegistryLookupCodec.create(Registry.BIOME_REGISTRY).forGetter(
@@ -30,7 +30,7 @@ public class BetterEndBiomeProvider extends BiomeProvider
 		   });
 	
 	private static final OpenSimplexNoise SMALL_NOISE = new OpenSimplexNoise(8324);
-	private final SimplexNoiseGenerator generator;
+	private final SimplexNoise generator;
 	private final Registry<Biome> lookupRegistry;
 	private final Biome centerBiome;
 	private final Biome barrens;
@@ -50,9 +50,9 @@ public class BetterEndBiomeProvider extends BiomeProvider
 		this.lookupRegistry = lookupRegistry;
 		this.seed = seed;
 
-		SharedSeedRandom sharedseedrandom = new SharedSeedRandom(seed);
+		WorldgenRandom sharedseedrandom = new WorldgenRandom(seed);
 	    sharedseedrandom.consumeCount(17292);
-	    this.generator = new SimplexNoiseGenerator(sharedseedrandom);
+	    this.generator = new SimplexNoise(sharedseedrandom);
 	    
 	    ModBiomes.mutateRegistry(lookupRegistry);
 	}
@@ -101,7 +101,7 @@ public class BetterEndBiomeProvider extends BiomeProvider
 		}
 		else 
 		{
-			float height = EndBiomeProvider.getHeightValue(generator, (x >> 1) + 1, (z >> 1) + 1) + (float) SMALL_NOISE.eval(x, z) * 5;
+			float height = TheEndBiomeSource.getHeightValue(generator, (x >> 1) + 1, (z >> 1) + 1) + (float) SMALL_NOISE.eval(x, z) * 5;
 	
 			if (height > -20F && height < -5F) 
 			{
@@ -114,13 +114,13 @@ public class BetterEndBiomeProvider extends BiomeProvider
 	}
 
 	@Override
-	protected Codec<? extends BiomeProvider> codec() 
+	protected Codec<? extends BiomeSource> codec() 
 	{
 		return BETTER_END_CODEC;
 	}
 
 	@Override
-	public BiomeProvider withSeed(long seed) 
+	public BiomeSource withSeed(long seed) 
 	{
 		return new BetterEndBiomeProvider(this.lookupRegistry, seed);
 	}

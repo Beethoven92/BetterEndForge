@@ -11,21 +11,21 @@ import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import mod.beethoven92.betterendforge.config.CommonConfig;
-import net.minecraft.block.PortalInfo;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.portal.PortalInfo;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -40,7 +40,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
-public class EndData implements INBTSerializable<CompoundNBT> {
+public class EndData implements INBTSerializable<CompoundTag> {
 	@CapabilityInject(EndData.class)
 	public static final Capability<EndData> CAPABILITY = null;
 
@@ -51,7 +51,7 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 		players = new HashSet<>();
 	}
 
-	private void login(ServerPlayerEntity player) {
+	private void login(ServerPlayer player) {
 		if (players.contains(player.getUUID()))
 			return;
 		players.add(player.getUUID());
@@ -59,13 +59,13 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 		teleportToSpawn(player);
 	}
 
-	private void teleportToSpawn(ServerPlayerEntity player) {
+	private void teleportToSpawn(ServerPlayer player) {
 		// If custom spawn point is set or config not set, get out of here
 		if (player.getRespawnPosition() != null || !GeneratorOptions.swapOverworldToEnd())
 			return;
 
-		ServerWorld world = player.getLevel();
-		ServerWorld end = world.getServer().getLevel(World.END);
+		ServerLevel world = player.getLevel();
+		ServerLevel end = world.getServer().getLevel(Level.END);
 		if (end == null)
 			return;
 
@@ -80,22 +80,22 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 			player.changeDimension(end, new ITeleporter() {
 
 				@Override
-				public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw,
+				public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw,
 						Function<Boolean, Entity> repositionEntity) {
 					return repositionEntity.apply(false);
 				}
 
 				@Override
-				public PortalInfo getPortalInfo(Entity entity, ServerWorld destWorld,
-						Function<ServerWorld, PortalInfo> defaultPortalInfo) {
-					return new PortalInfo(Vector3d.atLowerCornerOf(spawn), Vector3d.ZERO, entity.yRot,
+				public PortalInfo getPortalInfo(Entity entity, ServerLevel destWorld,
+						Function<ServerLevel, PortalInfo> defaultPortalInfo) {
+					return new PortalInfo(Vec3.atLowerCornerOf(spawn), Vec3.ZERO, entity.yRot,
 							entity.xRot);
 				}
 			});
 		}
 	}
 
-	private BlockPos findSpawn(ServerWorld end, PlayerEntity player) {
+	private BlockPos findSpawn(ServerLevel end, Player player) {
 		ImmutableList<Biome> biomes = ImmutableList.of(ModBiomes.AMBER_LAND.getActualBiome(),
 				ModBiomes.BLOSSOMING_SPIRES.getActualBiome(), ModBiomes.CHORUS_FOREST.getActualBiome(),
 				ModBiomes.CRYSTAL_MOUNTAINS.getActualBiome(), ModBiomes.DRY_SHRUBLAND.getActualBiome(),
@@ -120,44 +120,44 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 		return null;
 	}
 
-	public static void playerLogin(ServerPlayerEntity player) {
-		World end = player.getServer().getLevel(World.END);
+	public static void playerLogin(ServerPlayer player) {
+		Level end = player.getServer().getLevel(Level.END);
 		if (end == null)
 			return;
 		end.getCapability(CAPABILITY).ifPresent(c -> c.login(player));
 	}
 
-	public static void playerRespawn(ServerPlayerEntity player) {
-		World end = player.getServer().getLevel(World.END);
+	public static void playerRespawn(ServerPlayer player) {
+		Level end = player.getServer().getLevel(Level.END);
 		if (end == null)
 			return;
 		end.getCapability(CAPABILITY).ifPresent(c -> c.teleportToSpawn(player));
 	}
 
 	@Override
-	public CompoundNBT serializeNBT() {
-		CompoundNBT nbt = new CompoundNBT();
+	public CompoundTag serializeNBT() {
+		CompoundTag nbt = new CompoundTag();
 		if (spawn != null)
-			nbt.put("spawn", NBTUtil.writeBlockPos(spawn));
-		ListNBT list = new ListNBT();
+			nbt.put("spawn", NbtUtils.writeBlockPos(spawn));
+		ListTag list = new ListTag();
 		for (UUID id : players)
-			list.add(NBTUtil.createUUID(id));
+			list.add(NbtUtils.createUUID(id));
 		nbt.put("players", list);
 		return nbt;
 	}
 
 	@Override
-	public void deserializeNBT(CompoundNBT nbt) {
+	public void deserializeNBT(CompoundTag nbt) {
 		if (nbt.contains("spawn"))
-			spawn = NBTUtil.readBlockPos(nbt.getCompound("spawn"));
+			spawn = NbtUtils.readBlockPos(nbt.getCompound("spawn"));
 
-		ListNBT list = nbt.getList("players", Constants.NBT.TAG_INT_ARRAY);
+		ListTag list = nbt.getList("players", Constants.NBT.TAG_INT_ARRAY);
 		for (int i = 0; i < list.size(); i++)
-			players.add(NBTUtil.loadUUID(list.get(i)));
+			players.add(NbtUtils.loadUUID(list.get(i)));
 	}
 
 	@EventBusSubscriber(modid = BetterEnd.MOD_ID, bus = EventBusSubscriber.Bus.FORGE)
-	public static class Provider implements ICapabilitySerializable<INBT> {
+	public static class Provider implements ICapabilitySerializable<Tag> {
 
 		private LazyOptional<EndData> instance = LazyOptional.of(CAPABILITY::getDefaultInstance);
 
@@ -167,13 +167,13 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 		}
 
 		@Override
-		public INBT serializeNBT() {
+		public Tag serializeNBT() {
 			return CAPABILITY.getStorage().writeNBT(CAPABILITY,
 					instance.orElseThrow(() -> new IllegalArgumentException("LazyOptional cannot be empty!")), null);
 		}
 
 		@Override
-		public void deserializeNBT(INBT nbt) {
+		public void deserializeNBT(Tag nbt) {
 			CAPABILITY.getStorage().readNBT(CAPABILITY,
 					instance.orElseThrow(() -> new IllegalArgumentException("LazyOptional cannot be empty!")), null,
 					nbt);
@@ -182,8 +182,8 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 		private static final ResourceLocation LOCATION = new ResourceLocation(BetterEnd.MOD_ID, "enddata");
 
 		@SubscribeEvent
-		public static void attachCapability(AttachCapabilitiesEvent<World> event) {
-			if (event.getObject().dimension() == World.END)
+		public static void attachCapability(AttachCapabilitiesEvent<Level> event) {
+			if (event.getObject().dimension() == Level.END)
 				event.addCapability(LOCATION, new Provider());
 		}
 	}
@@ -191,14 +191,14 @@ public class EndData implements INBTSerializable<CompoundNBT> {
 	public static class Storage implements IStorage<EndData> {
 
 		@Override
-		public INBT writeNBT(Capability<EndData> capability, EndData instance, Direction side) {
+		public Tag writeNBT(Capability<EndData> capability, EndData instance, Direction side) {
 			return instance.serializeNBT();
 
 		}
 
 		@Override
-		public void readNBT(Capability<EndData> capability, EndData instance, Direction side, INBT nbt) {
-			instance.deserializeNBT((CompoundNBT) nbt);
+		public void readNBT(Capability<EndData> capability, EndData instance, Direction side, Tag nbt) {
+			instance.deserializeNBT((CompoundTag) nbt);
 		}
 	}
 

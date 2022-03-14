@@ -5,12 +5,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 import mod.beethoven92.betterendforge.common.interfaces.IBiomeArray;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeContainer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkBiomeContainer;
 
-@Mixin(BiomeContainer.class)
+@Mixin(ChunkBiomeContainer.class)
 public class BiomeContainerMixin implements IBiomeArray
 {
 	@Final
@@ -42,7 +42,7 @@ public class BiomeContainerMixin implements IBiomeArray
 	private int be_getArrayIndex(int biomeX, int biomeY, int biomeZ) 
 	{
 		int i = biomeX & HORIZONTAL_MASK;
-		int j = MathHelper.clamp(biomeY, 0, VERTICAL_MASK);
+		int j = Mth.clamp(biomeY, 0, VERTICAL_MASK);
 		int k = biomeZ & HORIZONTAL_MASK;
 		return j << BIOMES_SIZE + BIOMES_SIZE | k << BIOMES_SIZE | i;
 	}

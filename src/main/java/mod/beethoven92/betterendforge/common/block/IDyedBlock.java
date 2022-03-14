@@ -1,7 +1,7 @@
 package mod.beethoven92.betterendforge.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.DyeColor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.DyeColor;
 
 public interface IDyedBlock 
 {

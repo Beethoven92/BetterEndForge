@@ -4,17 +4,17 @@ import java.util.List;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.template.EndAnvilBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
 public class EndAnvilItem extends BlockItem {
 
@@ -23,7 +23,7 @@ public class EndAnvilItem extends BlockItem {
 	}
 
 	@Override
-	protected BlockState getPlacementState(BlockItemUseContext context) {
+	protected BlockState getPlacementState(BlockPlaceContext context) {
 		BlockState blockState = super.getPlacementState(context);
 		if (blockState == null)
 			return null;
@@ -34,11 +34,11 @@ public class EndAnvilItem extends BlockItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack itemStack, World level, List<ITextComponent> list, ITooltipFlag tooltipFlag) {
+	public void appendHoverText(ItemStack itemStack, Level level, List<Component> list, TooltipFlag tooltipFlag) {
 		super.appendHoverText(itemStack, level, list, tooltipFlag);
 		int l = itemStack.getOrCreateTag().getInt("level");
 		if (l > 0) {
-			list.add(new TranslationTextComponent("message." + BetterEnd.MOD_ID + ".anvil_damage").append(": " + l));
+			list.add(new TranslatableComponent("message." + BetterEnd.MOD_ID + ".anvil_damage").append(": " + l));
 		}
 	}
 }

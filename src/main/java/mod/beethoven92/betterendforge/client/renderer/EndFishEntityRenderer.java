@@ -1,18 +1,18 @@
 package mod.beethoven92.betterendforge.client.renderer;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.client.model.EndFishEntityModel;
 import mod.beethoven92.betterendforge.client.renderer.layer.EyesLayer;
 import mod.beethoven92.betterendforge.common.entity.EndFishEntity;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -22,7 +22,7 @@ public class EndFishEntityRenderer extends MobRenderer<EndFishEntity, EndFishEnt
 	private static final ResourceLocation[] TEXTURE = new ResourceLocation[EndFishEntity.VARIANTS];
 	private static final RenderType[] GLOW = new RenderType[EndFishEntity.VARIANTS];
 	
-	public EndFishEntityRenderer(EntityRendererManager renderManagerIn) 
+	public EndFishEntityRenderer(EntityRenderDispatcher renderManagerIn) 
 	{
 		super(renderManagerIn, new EndFishEntityModel(), 0.5f);
 	    
@@ -35,11 +35,11 @@ public class EndFishEntityRenderer extends MobRenderer<EndFishEntity, EndFishEnt
 			}
 
 			@Override
-			public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn,
+			public void render(PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn,
 					EndFishEntity entityIn, float limbSwing, float limbSwingAmount, float partialTicks,
 					float ageInTicks, float netHeadYaw, float headPitch) 
 			{
-				IVertexBuilder iVertexBuilder = bufferIn.getBuffer(GLOW[entityIn.getVariant()]);
+				VertexConsumer iVertexBuilder = bufferIn.getBuffer(GLOW[entityIn.getVariant()]);
 
 				this.getParentModel().renderToBuffer(matrixStackIn, iVertexBuilder, packedLightIn, 
 						OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
@@ -48,7 +48,7 @@ public class EndFishEntityRenderer extends MobRenderer<EndFishEntity, EndFishEnt
 	}
 
 	@Override
-	protected void scale(EndFishEntity entity, MatrixStack matrixStack, float f) 
+	protected void scale(EndFishEntity entity, PoseStack matrixStack, float f) 
 	{
 		float scale = entity.getScale();
 		matrixStack.scale(scale, scale, scale);

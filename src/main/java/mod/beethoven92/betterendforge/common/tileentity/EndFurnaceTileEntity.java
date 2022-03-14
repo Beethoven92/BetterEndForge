@@ -1,31 +1,31 @@
 package mod.beethoven92.betterendforge.common.tileentity;
 
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.FurnaceContainer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.tileentity.AbstractFurnaceTileEntity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.FurnaceMenu;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 
-public class EndFurnaceTileEntity extends AbstractFurnaceTileEntity
+public class EndFurnaceTileEntity extends AbstractFurnaceBlockEntity
 {
 	public EndFurnaceTileEntity()
 	{
-		super(ModTileEntityTypes.FURNACE.get(), IRecipeType.SMELTING);
+		super(ModTileEntityTypes.FURNACE.get(), RecipeType.SMELTING);
 	}
 
 	@Override
-	protected ITextComponent getDefaultName() 
+	protected Component getDefaultName() 
 	{
-		return new TranslationTextComponent("container.furnace");
+		return new TranslatableComponent("container.furnace");
 	}
 
 	@Override
-	protected Container createMenu(int id, PlayerInventory player)
+	protected AbstractContainerMenu createMenu(int id, Inventory player)
 	{
-		return new FurnaceContainer(id, player, this, this.dataAccess);
+		return new FurnaceMenu(id, player, this, this.dataAccess);
 	}
 
 }

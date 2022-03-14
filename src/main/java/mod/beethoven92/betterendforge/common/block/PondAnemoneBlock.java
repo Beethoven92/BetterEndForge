@@ -3,32 +3,32 @@ package mod.beethoven92.betterendforge.common.block;
 import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.block.template.UnderwaterPlantBlock;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 
 public class PondAnemoneBlock extends UnderwaterPlantBlock {
 	private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 14, 14);
 
 	public PondAnemoneBlock() {
-		super(AbstractBlock.Properties.of(Material.WATER_PLANT).noCollission().instabreak()
+		super(BlockBehaviour.Properties.of(Material.WATER_PLANT).noCollission().instabreak()
 				.lightLevel(s -> 13));
 	}
 
 	@Override
-	public AbstractBlock.OffsetType getOffsetType() {
-		return AbstractBlock.OffsetType.NONE;
+	public BlockBehaviour.OffsetType getOffsetType() {
+		return BlockBehaviour.OffsetType.NONE;
 	}
 
 	@Override
-	public void animateTick(BlockState stateIn, World world, BlockPos pos, Random random) {
+	public void animateTick(BlockState stateIn, Level world, BlockPos pos, Random random) {
 		double x = pos.getX() + random.nextDouble();
 		double y = pos.getY() + random.nextDouble() * 0.5F + 0.5F;
 		double z = pos.getZ() + random.nextDouble();
@@ -36,17 +36,17 @@ public class PondAnemoneBlock extends UnderwaterPlantBlock {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
 		return false;
 	}
 
 	@Override
-	public boolean isBonemealSuccess(World worldIn, Random rand, BlockPos pos, BlockState state) {
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
 		return false;
 	}
 }

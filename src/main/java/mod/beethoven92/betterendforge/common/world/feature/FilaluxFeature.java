@@ -7,11 +7,11 @@ import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
 
 public class FilaluxFeature extends SkyScatterFeature {
 	public FilaluxFeature() {
@@ -19,7 +19,7 @@ public class FilaluxFeature extends SkyScatterFeature {
 	}
 
 	@Override
-	public void generate(ISeedReader world, Random random, BlockPos blockPos) {
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
 		BlockState vine = ModBlocks.FILALUX.get().defaultBlockState();
 		BlockState wings = ModBlocks.FILALUX_WINGS.get().defaultBlockState();
 		BlockHelper.setWithoutUpdate(world, blockPos, ModBlocks.FILALUX_LANTERN.get());

@@ -6,25 +6,25 @@ import mod.beethoven92.betterendforge.common.particles.InfusionParticleData;
 import mod.beethoven92.betterendforge.common.recipes.InfusionRecipe;
 import mod.beethoven92.betterendforge.common.tileentity.InfusionPedestalTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.PedestalTileEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
-public class InfusionRitual implements IInventory
+public class InfusionRitual implements Container
 {
 	private static final Point[] PEDESTALS_MAP = new Point[] {
 			new Point(0, 3), new Point(2, 2), new Point(3, 0), new Point(2, -2),
 			new Point(0, -3), new Point(-2, -2), new Point(-3, 0), new Point(-2, 2)
 		};
 
-	private World world;
+	private Level world;
 	private BlockPos worldPos;
 	private InfusionRecipe activeRecipe;
 	private boolean isDirty = false;
@@ -35,7 +35,7 @@ public class InfusionRitual implements IInventory
 	private InfusionPedestalTileEntity input;
 	private PedestalTileEntity[] catalysts = new PedestalTileEntity[8];
 	
-	public InfusionRitual(World world, BlockPos pos) 
+	public InfusionRitual(Level world, BlockPos pos) 
 	{
 		this.world = world;
 		this.worldPos = pos;
@@ -50,7 +50,7 @@ public class InfusionRitual implements IInventory
 	public void configure() 
 	{
 		if (world == null || world.isClientSide || worldPos == null) return;
-		TileEntity inputEntity = world.getBlockEntity(worldPos);
+		BlockEntity inputEntity = world.getBlockEntity(worldPos);
 		if (inputEntity instanceof InfusionPedestalTileEntity) 
 		{
 			this.input = (InfusionPedestalTileEntity) inputEntity;
@@ -58,8 +58,8 @@ public class InfusionRitual implements IInventory
 		int i = 0;
 		for(Point point : PEDESTALS_MAP) 
 		{
-			BlockPos.Mutable checkPos = worldPos.mutable().move(Direction.EAST, point.x).move(Direction.NORTH, point.y);
-			TileEntity catalystEntity = world.getBlockEntity(checkPos);
+			BlockPos.MutableBlockPos checkPos = worldPos.mutable().move(Direction.EAST, point.x).move(Direction.NORTH, point.y);
+			BlockEntity catalystEntity = world.getBlockEntity(checkPos);
 			if (catalystEntity instanceof PedestalTileEntity) 
 			{
 				catalysts[i] = (PedestalTileEntity) catalystEntity;
@@ -140,7 +140,7 @@ public class InfusionRitual implements IInventory
 		} 
 		else 
 		{
-			ServerWorld world = (ServerWorld) this.world;
+			ServerLevel world = (ServerLevel) this.world;
 			BlockPos target = this.worldPos.above();
 			double tx = target.getX() + 0.5;
 			double ty = target.getY() + 0.5;
@@ -181,7 +181,7 @@ public class InfusionRitual implements IInventory
 		return this.hasRecipe;
 	}
 
-	public void setLocation(World world, BlockPos pos) 
+	public void setLocation(Level world, BlockPos pos) 
 	{
 		this.world = world;
 		this.worldPos = pos;
@@ -273,12 +273,12 @@ public class InfusionRitual implements IInventory
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player) 
+	public boolean stillValid(Player player) 
 	{
 		return true;
 	}
 
-	public void read(CompoundNBT tag) 
+	public void read(CompoundTag tag) 
 	{
 		if (tag.contains("recipe")) 
 		{
@@ -288,7 +288,7 @@ public class InfusionRitual implements IInventory
 		}
 	}
 
-	public CompoundNBT write(CompoundNBT tag)
+	public CompoundTag write(CompoundTag tag)
 	{
 		if (hasRecipe()) 
 		{

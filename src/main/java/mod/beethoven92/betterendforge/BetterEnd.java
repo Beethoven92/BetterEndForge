@@ -4,11 +4,11 @@ import mod.beethoven92.betterendforge.client.ClientOptions;
 import mod.beethoven92.betterendforge.common.init.*;
 import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import mod.beethoven92.betterendforge.config.Configs;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
@@ -114,7 +114,7 @@ public class BetterEnd
     	}
     	
     	@SubscribeEvent
-    	public static void registerStructures(RegistryEvent.Register<Structure<?>> event) 
+    	public static void registerStructures(RegistryEvent.Register<StructureFeature<?>> event) 
     	{
     		ModStructures.registerStructures(event);
     		ModConfiguredStructures.registerConfiguredStructures();

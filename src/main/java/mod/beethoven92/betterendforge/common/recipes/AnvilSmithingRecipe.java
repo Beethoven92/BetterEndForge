@@ -2,23 +2,23 @@ package mod.beethoven92.betterendforge.common.recipes;
 
 import mod.beethoven92.betterendforge.common.init.ModRecipeSerializers;
 import mod.beethoven92.betterendforge.common.init.ModTags;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 
-public class AnvilSmithingRecipe implements IRecipe<IInventory>
+public class AnvilSmithingRecipe implements Recipe<Container>
 {
 	public final static String GROUP = "anvil_smithing";
-	public final static IRecipeType<AnvilSmithingRecipe> TYPE = ModRecipeSerializers.registerRecipeType(GROUP);
+	public final static RecipeType<AnvilSmithingRecipe> TYPE = ModRecipeSerializers.registerRecipeType(GROUP);
 	
 	private final ResourceLocation id;
 	public final Ingredient input;
@@ -41,7 +41,7 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 	}
 	
 	@Override
-	public boolean matches(IInventory inv, World worldIn) 
+	public boolean matches(Container inv, Level worldIn) 
 	{
 		ItemStack hammer = inv.getItem(0);
 		if (hammer.isEmpty() || !ModTags.HAMMERS.contains(hammer.getItem())) 
@@ -51,11 +51,11 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 		ItemStack material = inv.getItem(1);
 		int materialCount = material.getCount();
 		
-		int level = ((ToolItem)hammer.getItem()).getTier().getLevel();
+		int level = ((DiggerItem)hammer.getItem()).getTier().getLevel();
 		return level >= this.level && this.input.test(inv.getItem(1)) && materialCount >= this.inputCount;
 	}
 	
-	public boolean checkHammerDurability(IInventory craftingInventory, PlayerEntity player) 
+	public boolean checkHammerDurability(Container craftingInventory, Player player) 
 	{
 		if (player.isCreative()) return true;
 		ItemStack hammer = craftingInventory.getItem(0);
@@ -69,7 +69,7 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 		NonNullList<Ingredient> defaultedList = NonNullList.create();
 
 		defaultedList.add(Ingredient.of(ModTags.HAMMERS.getValues().stream().filter(hammer -> {
-			return ((ToolItem) hammer).getTier().getLevel() >= level;
+			return ((DiggerItem) hammer).getTier().getLevel() >= level;
 		}).map(ItemStack::new)));
 
 		// Needed for JEI to display the amount of input items required by this recipe
@@ -80,12 +80,12 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 	}
 	
 	@Override
-	public ItemStack assemble(IInventory inv) 
+	public ItemStack assemble(Container inv) 
 	{
 		return this.output.copy();
 	}
 	
-	public ItemStack craft(IInventory craftingInventory, PlayerEntity player) 
+	public ItemStack craft(Container craftingInventory, Player player) 
 	{
 		if (!player.isCreative()) 
 		{
@@ -93,7 +93,7 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 			
 			ItemStack hammer = craftingInventory.getItem(0);
 			hammer.hurtAndBreak(this.damage, player, entity -> {
-				entity.broadcastBreakEvent(EquipmentSlotType.MAINHAND);
+				entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
 			});
 		}
 		return this.assemble(craftingInventory);
@@ -118,13 +118,13 @@ public class AnvilSmithingRecipe implements IRecipe<IInventory>
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer() 
+	public RecipeSerializer<?> getSerializer() 
 	{
 		return ModRecipeSerializers.ANVIL_SMITHING.get();
 	}
 
 	@Override
-	public IRecipeType<?> getType() 
+	public RecipeType<?> getType() 
 	{
 		return TYPE;
 	}

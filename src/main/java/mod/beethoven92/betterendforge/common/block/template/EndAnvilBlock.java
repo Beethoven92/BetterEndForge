@@ -1,18 +1,18 @@
 package mod.beethoven92.betterendforge.common.block.template;
 
 import mod.beethoven92.betterendforge.common.block.BlockProperties;
-import net.minecraft.block.AnvilBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.fml.ModList;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class EndAnvilBlock extends AnvilBlock
 {
@@ -33,7 +33,7 @@ public class EndAnvilBlock extends AnvilBlock
 	}
 	
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) 
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world) 
 	{
 		// Need to check if the mod is loaded and also if their anvil module is enabled, otherwise this would crash!
 		if (ModList.get().isLoaded("apotheosis") && Registry.BLOCK_ENTITY_TYPE.getOptional(new ResourceLocation("apotheosis", "anvil")).isPresent())

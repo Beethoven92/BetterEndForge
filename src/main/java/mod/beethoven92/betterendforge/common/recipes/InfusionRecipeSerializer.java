@@ -7,30 +7,30 @@ import com.google.gson.JsonSyntaxException;
 import com.mojang.serialization.JsonOps;
 
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
 
-public class InfusionRecipeSerializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>
-		implements IRecipeSerializer<InfusionRecipe> {
+public class InfusionRecipeSerializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>>
+		implements RecipeSerializer<InfusionRecipe> {
 	@Override
 	public InfusionRecipe fromJson(ResourceLocation id, JsonObject json) {
 		InfusionRecipe recipe = new InfusionRecipe(id);
 		recipe.input = Ingredient.fromJson(json.get("input"));
 		recipe.output = readOutput(json);
-		recipe.time = JSONUtils.getAsInt(json, "time", 1);
+		recipe.time = GsonHelper.getAsInt(json, "time", 1);
 
-		JsonArray catalysts = JSONUtils.getAsJsonArray(json, "catalysts");
+		JsonArray catalysts = GsonHelper.getAsJsonArray(json, "catalysts");
 
 		for (int i = 0; i < catalysts.size(); i++) {
 			JsonObject indexedIngredient = catalysts.get(i).getAsJsonObject();
-			int index = JSONUtils.getAsInt(indexedIngredient, "index");
+			int index = GsonHelper.getAsInt(indexedIngredient, "index");
 			if (index < 0 || index > 7) {
 				throw new IllegalStateException(
 						"BETTER_END_FORGE: Infusion recipe ingredient index out of bounds, must be between 0 and 8 (excluded)");
@@ -61,11 +61,11 @@ public class InfusionRecipeSerializer extends net.minecraftforge.registries.Forg
 		if (outputElem.isJsonObject())
 			return ItemStack.CODEC.parse(JsonOps.INSTANCE, outputElem).result().get();
 		else
-			return new ItemStack(JSONUtils.convertToItem(outputElem, "output"));
+			return new ItemStack(GsonHelper.convertToItem(outputElem, "output"));
 	}
 
 	@Override
-	public InfusionRecipe fromNetwork(ResourceLocation id, PacketBuffer buffer) {
+	public InfusionRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) {
 		InfusionRecipe recipe = new InfusionRecipe(id);
 		recipe.input = Ingredient.fromNetwork(buffer);
 		recipe.output = buffer.readItem();
@@ -88,7 +88,7 @@ public class InfusionRecipeSerializer extends net.minecraftforge.registries.Forg
 	}
 
 	@Override
-	public void toNetwork(PacketBuffer buffer, InfusionRecipe recipe) {
+	public void toNetwork(FriendlyByteBuf buffer, InfusionRecipe recipe) {
 		recipe.input.toNetwork(buffer);
 		buffer.writeItem(recipe.output);
 		buffer.writeVarInt(recipe.time);

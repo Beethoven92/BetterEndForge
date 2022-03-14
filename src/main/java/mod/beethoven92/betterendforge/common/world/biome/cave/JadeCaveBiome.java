@@ -5,10 +5,10 @@ import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndCaveBiome;
 import mod.beethoven92.betterendforge.common.world.biome.BiomeTemplate;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 
 
 public class JadeCaveBiome extends BetterEndCaveBiome {
@@ -34,8 +34,8 @@ public class JadeCaveBiome extends BetterEndCaveBiome {
 	@Override
 	public BlockState getWall(BlockPos pos) {
 		double depth = DEPTH_NOISE.eval(pos.getX() * 0.02, pos.getZ() * 0.02) * 0.2 + 0.5;
-		int index = MathHelper.floor((pos.getY() + WALL_NOISE.eval(pos.getX() * 0.2, pos.getZ() * 0.2) * 1.5) * depth + 0.5);
-		index = MathHelper.abs(index) % 3;
+		int index = Mth.floor((pos.getY() + WALL_NOISE.eval(pos.getX() * 0.2, pos.getZ() * 0.2) * 1.5) * depth + 0.5);
+		index = Mth.abs(index) % 3;
 		return JADE[index];
 	}
 }

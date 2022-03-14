@@ -25,31 +25,31 @@ import mod.beethoven92.betterendforge.common.block.template.EndAnvilBlock;
 import mod.beethoven92.betterendforge.common.block.template.EndCropBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
-import net.minecraft.advancements.criterion.StatePropertiesPredicate;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowerPotBlock;
-import net.minecraft.data.loot.BlockLootTables;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.loot.ConstantRange;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootEntry;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.RandomValueRange;
-import net.minecraft.loot.conditions.BlockStateProperty;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.loot.conditions.RandomChance;
-import net.minecraft.loot.conditions.TableBonus;
-import net.minecraft.loot.functions.SetCount;
-import net.minecraft.loot.functions.SetNBT;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.ConstantIntValue;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.RandomValueBounds;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.functions.SetNbtFunction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ModBlockLootTables extends BlockLootTables {
+public class ModBlockLootTables extends BlockLoot {
 	@Override
 	protected Iterable<Block> getKnownBlocks() {
 		return StreamSupport.stream(ForgeRegistries.BLOCKS.spliterator(), false)
@@ -177,39 +177,39 @@ public class ModBlockLootTables extends BlockLootTables {
 			return sulphurCrystalDrop(block, ModItems.CRYSTALLINE_SULPHUR.get());
 		});
 
-		add(ModBlocks.END_STONE_SMELTER.get(), BlockLootTables::createNameableBlockEntityTable);
-		add(ModBlocks.END_STONE_FURNACE.get(), BlockLootTables::createNameableBlockEntityTable);
+		add(ModBlocks.END_STONE_SMELTER.get(), BlockLoot::createNameableBlockEntityTable);
+		add(ModBlocks.END_STONE_FURNACE.get(), BlockLoot::createNameableBlockEntityTable);
 
 		dropSelf(ModBlocks.END_STONE_STALACTITE.get());
 		dropSelf(ModBlocks.END_STONE_STALACTITE_CAVEMOSS.get());
 
 		// PLANTS
-		add(ModBlocks.UMBRELLA_MOSS.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.UMBRELLA_MOSS_TALL.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.CREEPING_MOSS.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.CHORUS_GRASS.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.CAVE_GRASS.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.CRYSTAL_GRASS.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.AMBER_GRASS.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.SHADOW_PLANT.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.BUSHY_GRASS.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.TWISTED_UMBRELLA_MOSS.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.JUNGLE_GRASS.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.BLOOMING_COOKSONIA.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.SALTEAGO.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.VAIOLUSH_FERN.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.FRACTURN.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.UMBRELLA_MOSS.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.UMBRELLA_MOSS_TALL.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.CREEPING_MOSS.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.CHORUS_GRASS.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.CAVE_GRASS.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.CRYSTAL_GRASS.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.AMBER_GRASS.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.SHADOW_PLANT.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.BUSHY_GRASS.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.TWISTED_UMBRELLA_MOSS.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.JUNGLE_GRASS.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.BLOOMING_COOKSONIA.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.SALTEAGO.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.VAIOLUSH_FERN.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.FRACTURN.get(), BlockLoot::createShearsOnlyDrop);
 		add(ModBlocks.LARGE_AMARANITA_MUSHROOM.get(), noDrop());
-		add(ModBlocks.SMALL_AMARANITA_MUSHROOM.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.GLOBULAGUS.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.CLAWFERN.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.AERIDIUM.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.LAMELLARIUM.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.POND_ANEMONE.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.RUSCUS.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.ORANGO.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.LUTEBUS.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.SMALL_AMARANITA_MUSHROOM.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.GLOBULAGUS.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.CLAWFERN.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.AERIDIUM.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.LAMELLARIUM.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.POND_ANEMONE.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.RUSCUS.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.ORANGO.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.LUTEBUS.get(), BlockLoot::createShearsOnlyDrop);
 		dropSelf(ModBlocks.FLAMAEA.get());
 		dropSelf(ModBlocks.BOLUX_MUSHROOM.get());
 		dropSelf(ModBlocks.AURANT_POLYPORE.get());
@@ -218,75 +218,75 @@ public class ModBlockLootTables extends BlockLootTables {
 		dropSelf(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get());
 		dropSelf(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get());
 
-		add(ModBlocks.BLUE_VINE_SEED.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.BLUE_VINE.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.BLUE_VINE_SEED.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.BLUE_VINE.get(), BlockLoot::createShearsOnlyDrop);
 		dropSelf(ModBlocks.BLUE_VINE_LANTERN.get());
 		add(ModBlocks.BLUE_VINE_FUR.get(), (block) -> {
 			return createSilkTouchOrShearsDispatchTable(block,
-					applyExplosionCondition(block, ItemLootEntry.lootTableItem(ModBlocks.BLUE_VINE_SEED.get())).when(
-							TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
+					applyExplosionCondition(block, LootItem.lootTableItem(ModBlocks.BLUE_VINE_SEED.get())).when(
+							BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F, 0.083333336F, 0.1F)));
 		});
 
-		add(ModBlocks.CAVE_BUSH.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.CAVE_BUSH.get(), BlockLoot::createShearsOnlyDrop);
 
-		add(ModBlocks.END_LILY_SEED.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.END_LILY_SEED.get(), BlockLoot::createShearsOnlyDrop);
 
 		this.add(ModBlocks.END_LILY.get(), (block) -> {
 			return endLilyDrop();
 		});
 
-		add(ModBlocks.END_LOTUS_SEED.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.END_LOTUS_LEAF.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.END_LOTUS_SEED.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.END_LOTUS_LEAF.get(), BlockLoot::createShearsOnlyDrop);
 		dropSelf(ModBlocks.END_LOTUS_STEM.get());
 		add(ModBlocks.END_LOTUS_FLOWER.get(),
-				createSingleItemTable(ModBlocks.END_LOTUS_SEED.get(), RandomValueRange.between(1.0F, 2.0F)));
+				createSingleItemTable(ModBlocks.END_LOTUS_SEED.get(), RandomValueBounds.between(1.0F, 2.0F)));
 
-		add(ModBlocks.BUBBLE_CORAL.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.BUBBLE_CORAL.get(), BlockLoot::createShearsOnlyDrop);
 
-		add(ModBlocks.MURKWEED.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.MURKWEED.get(), BlockLoot::createShearsOnlyDrop);
 
 		add(ModBlocks.NEEDLEGRASS.get(), (block) -> {
-			return createShearsDispatchTable(block, applyExplosionDecay(block, ItemLootEntry.lootTableItem(Items.STICK)
-					.apply(SetCount.setCount(RandomValueRange.between(0.0F, 2.0F)))));
+			return createShearsDispatchTable(block, applyExplosionDecay(block, LootItem.lootTableItem(Items.STICK)
+					.apply(SetItemCountFunction.setCount(RandomValueBounds.between(0.0F, 2.0F)))));
 		});
 
 		dropSelf(ModBlocks.MENGER_SPONGE.get());
 		dropSelf(ModBlocks.MENGER_SPONGE_WET.get());
 
-		add(ModBlocks.CHARNIA_RED.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.CHARNIA_PURPLE.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.CHARNIA_ORANGE.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.CHARNIA_LIGHT_BLUE.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.CHARNIA_CYAN.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.CHARNIA_GREEN.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.CHARNIA_RED.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.CHARNIA_PURPLE.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.CHARNIA_ORANGE.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.CHARNIA_LIGHT_BLUE.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.CHARNIA_CYAN.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.CHARNIA_GREEN.get(), BlockLoot::createShearsOnlyDrop);
 
-		add(ModBlocks.HYDRALUX_SAPLING.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.HYDRALUX_SAPLING.get(), BlockLoot::createShearsOnlyDrop);
 		this.add(ModBlocks.HYDRALUX.get(), (block) -> {
 			return hydraluxDrop();
 		});
 
-		add(ModBlocks.LANCELEAF_SEED.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.LANCELEAF_SEED.get(), BlockLoot::createShearsOnlyDrop);
 		lanceleaf();
 
 		lumecorn();
 
-		add(ModBlocks.GLOWING_PILLAR_SEED.get(), BlockLootTables::createShearsOnlyDrop);
-		add(ModBlocks.GLOWING_PILLAR_ROOTS.get(), (a) -> BlockLootTables.noDrop());
+		add(ModBlocks.GLOWING_PILLAR_SEED.get(), BlockLoot::createShearsOnlyDrop);
+		add(ModBlocks.GLOWING_PILLAR_ROOTS.get(), (a) -> BlockLoot.noDrop());
 		dropSelf(ModBlocks.GLOWING_PILLAR_LUMINOPHOR.get());
 		add(ModBlocks.GLOWING_PILLAR_LEAVES.get(), (block) -> {
 			return createSilkTouchOrShearsDispatchTable(block,
-					applyExplosionCondition(block, ItemLootEntry.lootTableItem(ModBlocks.GLOWING_PILLAR_SEED.get()))
-							.when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
+					applyExplosionCondition(block, LootItem.lootTableItem(ModBlocks.GLOWING_PILLAR_SEED.get()))
+							.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
 									0.083333336F, 0.1F)));
 		});
 
-		add(ModBlocks.SMALL_JELLYSHROOM.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.SMALL_JELLYSHROOM.get(), BlockLoot::createShearsOnlyDrop);
 
 		add(ModBlocks.SILK_MOTH_NEST.get(), (block) -> {
 			return LootTable.lootTable()
-					.withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantRange.exactly(1))
-							.add(ItemLootEntry.lootTableItem(block).when(
-									BlockStateProperty.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder
+					.withPool(applyExplosionCondition(block, LootPool.lootPool().setRolls(ConstantIntValue.exactly(1))
+							.add(LootItem.lootTableItem(block).when(
+									LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder
 											.properties().hasProperty(SilkMothNestBlock.ACTIVE, true))))));
 		});
 
@@ -295,22 +295,22 @@ public class ModBlockLootTables extends BlockLootTables {
 		dropSelf(ModBlocks.FILALUX_WINGS.get());
 
 		// CROPS
-		ILootCondition.IBuilder ilootcondition$ibuilder = BlockStateProperty.hasBlockStateProperties(ModBlocks.SHADOW_BERRY.get())
+		LootItemCondition.Builder ilootcondition$ibuilder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.SHADOW_BERRY.get())
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(ShadowBerryBlock.AGE, 3));
 		add(ModBlocks.SHADOW_BERRY.get(), createCropDrops(ModBlocks.SHADOW_BERRY.get(),
 				ModItems.SHADOW_BERRY_RAW.get(), ModBlocks.SHADOW_BERRY.get().asItem(), ilootcondition$ibuilder));
 
-		ilootcondition$ibuilder = BlockStateProperty.hasBlockStateProperties(ModBlocks.BLOSSOM_BERRY.get())
+		ilootcondition$ibuilder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BLOSSOM_BERRY.get())
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(EndCropBlock.AGE, 3));
 		add(ModBlocks.BLOSSOM_BERRY.get(), createCropDrops(ModBlocks.BLOSSOM_BERRY.get(),
 				ModItems.BLOSSOM_BERRY.get(), ModBlocks.BLOSSOM_BERRY.get().asItem(), ilootcondition$ibuilder));
 
-		ilootcondition$ibuilder = BlockStateProperty.hasBlockStateProperties(ModBlocks.AMBER_ROOT.get())
+		ilootcondition$ibuilder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.AMBER_ROOT.get())
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(EndCropBlock.AGE, 3));
 		add(ModBlocks.AMBER_ROOT.get(), createCropDrops(ModBlocks.AMBER_ROOT.get(),
 				ModItems.AMBER_ROOT_RAW.get(), ModBlocks.AMBER_ROOT.get().asItem(), ilootcondition$ibuilder));
 
-		ilootcondition$ibuilder = BlockStateProperty.hasBlockStateProperties(ModBlocks.CHORUS_MUSHROOM.get())
+		ilootcondition$ibuilder = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.CHORUS_MUSHROOM.get())
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(EndCropBlock.AGE, 3));
 		add(ModBlocks.CHORUS_MUSHROOM.get(), createCropDrops(ModBlocks.CHORUS_MUSHROOM.get(),
 				ModItems.CHORUS_MUSHROOM_RAW.get(), ModBlocks.CHORUS_MUSHROOM.get().asItem(), ilootcondition$ibuilder));
@@ -321,31 +321,31 @@ public class ModBlockLootTables extends BlockLootTables {
 		// WALL_PLANTS
 		dropSelf(ModBlocks.PURPLE_POLYPORE.get());
 
-		add(ModBlocks.TAIL_MOSS.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.TAIL_MOSS.get(), BlockLoot::createShearsOnlyDrop);
 
-		add(ModBlocks.CYAN_MOSS.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.CYAN_MOSS.get(), BlockLoot::createShearsOnlyDrop);
 
-		add(ModBlocks.TWISTED_MOSS.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.TWISTED_MOSS.get(), BlockLoot::createShearsOnlyDrop);
 
-		add(ModBlocks.BULB_MOSS.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.BULB_MOSS.get(), BlockLoot::createShearsOnlyDrop);
 
-		add(ModBlocks.TUBE_WORM.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.TUBE_WORM.get(), BlockLoot::createShearsOnlyDrop);
 
-		add(ModBlocks.JUNGLE_FERN.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.JUNGLE_FERN.get(), BlockLoot::createShearsOnlyDrop);
 
 		// VINES
-		add(ModBlocks.DENSE_VINE.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.DENSE_VINE.get(), BlockLoot::createShearsOnlyDrop);
 
-		add(ModBlocks.TWISTED_VINE.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.TWISTED_VINE.get(), BlockLoot::createShearsOnlyDrop);
 
 		add(ModBlocks.BULB_VINE.get(), (block) -> {
 			return bulbVineDrop();
 		});
-		add(ModBlocks.BULB_VINE_SEED.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.BULB_VINE_SEED.get(), BlockLoot::createShearsOnlyDrop);
 
-		add(ModBlocks.JUNGLE_VINE.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.JUNGLE_VINE.get(), BlockLoot::createShearsOnlyDrop);
 
-		add(ModBlocks.RUBINEA.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.RUBINEA.get(), BlockLoot::createShearsOnlyDrop);
 
 		// TREES
 		dropSelf(ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get());
@@ -353,56 +353,56 @@ public class ModBlockLootTables extends BlockLootTables {
 		dropSelf(ModBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE.get());
 		add(ModBlocks.MOSSY_GLOWSHROOM_FUR.get(), (block) -> {
 			return createSilkTouchOrShearsDispatchTable(block,
-					applyExplosionCondition(block, ItemLootEntry.lootTableItem(ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get()))
-							.when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
+					applyExplosionCondition(block, LootItem.lootTableItem(ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get()))
+							.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
 									0.083333336F, 0.1F)));
 		});
 
 		dropSelf(ModBlocks.LACUGROVE_SAPLING.get());
 		add(ModBlocks.LACUGROVE_LEAVES.get(), (block) -> {
 			return createSilkTouchOrShearsDispatchTable(block,
-					applyExplosionCondition(block, ItemLootEntry.lootTableItem(ModBlocks.LACUGROVE_SAPLING.get()))
-							.when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
+					applyExplosionCondition(block, LootItem.lootTableItem(ModBlocks.LACUGROVE_SAPLING.get()))
+							.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
 									0.083333336F, 0.1F)));
 		});
 
 		dropSelf(ModBlocks.PYTHADENDRON_SAPLING.get());
 		add(ModBlocks.PYTHADENDRON_LEAVES.get(), (block) -> {
 			return createSilkTouchOrShearsDispatchTable(block,
-					applyExplosionCondition(block, ItemLootEntry.lootTableItem(ModBlocks.PYTHADENDRON_SAPLING.get()))
-							.when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
+					applyExplosionCondition(block, LootItem.lootTableItem(ModBlocks.PYTHADENDRON_SAPLING.get()))
+							.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
 									0.083333336F, 0.1F)));
 		});
 
 		dropSelf(ModBlocks.DRAGON_TREE_SAPLING.get());
 		add(ModBlocks.DRAGON_TREE_LEAVES.get(), (block) -> {
 			return createSilkTouchOrShearsDispatchTable(block,
-					applyExplosionCondition(block, ItemLootEntry.lootTableItem(ModBlocks.DRAGON_TREE_SAPLING.get()))
-							.when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
+					applyExplosionCondition(block, LootItem.lootTableItem(ModBlocks.DRAGON_TREE_SAPLING.get()))
+							.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
 									0.083333336F, 0.1F)));
 		});
 
 		dropSelf(ModBlocks.TENANEA_SAPLING.get());
 		add(ModBlocks.TENANEA_LEAVES.get(), (block) -> {
 			return createSilkTouchOrShearsDispatchTable(block,
-					applyExplosionCondition(block, ItemLootEntry.lootTableItem(ModBlocks.TENANEA_SAPLING.get()))
-							.when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
+					applyExplosionCondition(block, LootItem.lootTableItem(ModBlocks.TENANEA_SAPLING.get()))
+							.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
 									0.083333336F, 0.1F)));
 		});
 
-		add(ModBlocks.TENANEA_FLOWERS.get(), BlockLootTables::createShearsOnlyDrop);
+		add(ModBlocks.TENANEA_FLOWERS.get(), BlockLoot::createShearsOnlyDrop);
 		add(ModBlocks.TENANEA_OUTER_LEAVES.get(), (block) -> {
 			return createSilkTouchOrShearsDispatchTable(block,
-					applyExplosionCondition(block, ItemLootEntry.lootTableItem(ModBlocks.TENANEA_SAPLING.get()))
-							.when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
+					applyExplosionCondition(block, LootItem.lootTableItem(ModBlocks.TENANEA_SAPLING.get()))
+							.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
 									0.083333336F, 0.1F)));
 		});
 
 		dropSelf(ModBlocks.HELIX_TREE_SAPLING.get());
 		add(ModBlocks.HELIX_TREE_LEAVES.get(), (block) -> {
 			return createSilkTouchOrShearsDispatchTable(block,
-					applyExplosionCondition(block, ItemLootEntry.lootTableItem(ModBlocks.HELIX_TREE_SAPLING.get()))
-							.when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
+					applyExplosionCondition(block, LootItem.lootTableItem(ModBlocks.HELIX_TREE_SAPLING.get()))
+							.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
 									0.083333336F, 0.1F)));
 		});
 
@@ -431,8 +431,8 @@ public class ModBlockLootTables extends BlockLootTables {
 		dropSelf(ModBlocks.AMARANITA_CAP.get());
 		add(ModBlocks.AMARANITA_FUR.get(), (block) -> {
 			return createSilkTouchOrShearsDispatchTable(block,
-					applyExplosionCondition(block, ItemLootEntry.lootTableItem(ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get()))
-							.when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
+					applyExplosionCondition(block, LootItem.lootTableItem(ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get()))
+							.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
 									0.083333336F, 0.1F)));
 		});
 
@@ -446,15 +446,15 @@ public class ModBlockLootTables extends BlockLootTables {
 		dropSelf(ModBlocks.LUCERNIA_SAPLING.get());
 		add(ModBlocks.LUCERNIA_LEAVES.get(), (block) -> {
 			return createSilkTouchOrShearsDispatchTable(block,
-					applyExplosionCondition(block, ItemLootEntry.lootTableItem(ModBlocks.LUCERNIA_SAPLING.get()))
-							.when(TableBonus.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
+					applyExplosionCondition(block, LootItem.lootTableItem(ModBlocks.LUCERNIA_SAPLING.get()))
+							.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.05F, 0.0625F, 0.025F,
 									0.083333336F, 0.1F)));
 		});
 		add(ModBlocks.LUCERNIA_OUTER_LEAVES.get(), (block) -> {
-			return createSilkTouchOrShearsDispatchTable(block, ItemLootEntry.lootTableItem(Items.AIR));
+			return createSilkTouchOrShearsDispatchTable(block, LootItem.lootTableItem(Items.AIR));
 		});
 		add(ModBlocks.FILALUX.get(), (block) -> {
-			return createSilkTouchOrShearsDispatchTable(block, ItemLootEntry.lootTableItem(Items.AIR));
+			return createSilkTouchOrShearsDispatchTable(block, LootItem.lootTableItem(Items.AIR));
 		});
 
 		// FLOWER POT BLOCKS
@@ -493,23 +493,23 @@ public class ModBlockLootTables extends BlockLootTables {
 	}
 
 	private void lanceleaf() {
-		ILootCondition.IBuilder lanceleafSeedCond1 = BlockStateProperty.hasBlockStateProperties((ModBlocks.LANCELEAF.get()))
+		LootItemCondition.Builder lanceleafSeedCond1 = LootItemBlockStatePropertyCondition.hasBlockStateProperties((ModBlocks.LANCELEAF.get()))
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LanceleafBlock.SHAPE,
 						BlockProperties.PentaShape.BOTTOM));
-		ILootCondition.IBuilder lanceleafSeedCond2 = BlockStateProperty.hasBlockStateProperties((ModBlocks.LANCELEAF.get()))
+		LootItemCondition.Builder lanceleafSeedCond2 = LootItemBlockStatePropertyCondition.hasBlockStateProperties((ModBlocks.LANCELEAF.get()))
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LanceleafBlock.SHAPE,
 						BlockProperties.PentaShape.PRE_BOTTOM));
-		ILootCondition.IBuilder lanceleafSeedCond3 = BlockStateProperty.hasBlockStateProperties((ModBlocks.LANCELEAF.get()))
+		LootItemCondition.Builder lanceleafSeedCond3 = LootItemBlockStatePropertyCondition.hasBlockStateProperties((ModBlocks.LANCELEAF.get()))
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LanceleafBlock.SHAPE,
 						BlockProperties.PentaShape.MIDDLE));
-		ILootCondition.IBuilder lanceleafSeedCond4 = BlockStateProperty.hasBlockStateProperties((ModBlocks.LANCELEAF.get()))
+		LootItemCondition.Builder lanceleafSeedCond4 = LootItemBlockStatePropertyCondition.hasBlockStateProperties((ModBlocks.LANCELEAF.get()))
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LanceleafBlock.SHAPE,
 						BlockProperties.PentaShape.PRE_TOP));
-		ILootCondition.IBuilder lanceleafSeedCond5 = BlockStateProperty.hasBlockStateProperties((ModBlocks.LANCELEAF.get()))
+		LootItemCondition.Builder lanceleafSeedCond5 = LootItemBlockStatePropertyCondition.hasBlockStateProperties((ModBlocks.LANCELEAF.get()))
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LanceleafBlock.SHAPE,
 						BlockProperties.PentaShape.TOP));
-		LootEntry.Builder<?> lanceleafSeedDrop = ItemLootEntry.lootTableItem(ModBlocks.LANCELEAF_SEED.get())
-				.when(RandomChance.randomChance(0.5F));
+		LootPoolEntryContainer.Builder<?> lanceleafSeedDrop = LootItem.lootTableItem(ModBlocks.LANCELEAF_SEED.get())
+				.when(LootItemRandomChanceCondition.randomChance(0.5F));
 		add(ModBlocks.LANCELEAF.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool().add(lanceleafSeedDrop).when(lanceleafSeedCond1))
 				.withPool(LootPool.lootPool().add(lanceleafSeedDrop).when(lanceleafSeedCond2))
@@ -520,32 +520,32 @@ public class ModBlockLootTables extends BlockLootTables {
 	}
 
 	private void lumecorn() {
-		add(ModBlocks.LUMECORN_SEED.get(), BlockLootTables::createShearsOnlyDrop);
-		ILootCondition.IBuilder lumecornSeedCond1 = BlockStateProperty.hasBlockStateProperties(ModBlocks.LUMECORN.get())
+		add(ModBlocks.LUMECORN_SEED.get(), BlockLoot::createShearsOnlyDrop);
+		LootItemCondition.Builder lumecornSeedCond1 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.LUMECORN.get())
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LumecornBlock.SHAPE,
 						BlockProperties.LumecornShape.BOTTOM_BIG));
-		ILootCondition.IBuilder lumecornSeedCond2 = BlockStateProperty.hasBlockStateProperties(ModBlocks.LUMECORN.get())
+		LootItemCondition.Builder lumecornSeedCond2 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.LUMECORN.get())
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LumecornBlock.SHAPE,
 						BlockProperties.LumecornShape.BOTTOM_SMALL));
-		ILootCondition.IBuilder lumecornSeedCond3 = BlockStateProperty.hasBlockStateProperties(ModBlocks.LUMECORN.get())
+		LootItemCondition.Builder lumecornSeedCond3 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.LUMECORN.get())
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LumecornBlock.SHAPE,
 						BlockProperties.LumecornShape.MIDDLE));
-		ILootCondition.IBuilder lumecornRodCond1 = BlockStateProperty.hasBlockStateProperties(ModBlocks.LUMECORN.get())
+		LootItemCondition.Builder lumecornRodCond1 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.LUMECORN.get())
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LumecornBlock.SHAPE,
 						BlockProperties.LumecornShape.LIGHT_TOP));
-		ILootCondition.IBuilder lumecornRodCond2 = BlockStateProperty.hasBlockStateProperties(ModBlocks.LUMECORN.get())
+		LootItemCondition.Builder lumecornRodCond2 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.LUMECORN.get())
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LumecornBlock.SHAPE,
 						BlockProperties.LumecornShape.LIGHT_TOP_MIDDLE));
-		ILootCondition.IBuilder lumecornRodCond3 = BlockStateProperty.hasBlockStateProperties(ModBlocks.LUMECORN.get())
+		LootItemCondition.Builder lumecornRodCond3 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.LUMECORN.get())
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LumecornBlock.SHAPE,
 						BlockProperties.LumecornShape.LIGHT_MIDDLE));
-		ILootCondition.IBuilder lumecornRodCond4 = BlockStateProperty.hasBlockStateProperties(ModBlocks.LUMECORN.get())
+		LootItemCondition.Builder lumecornRodCond4 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.LUMECORN.get())
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(LumecornBlock.SHAPE,
 						BlockProperties.LumecornShape.LIGHT_BOTTOM));
-		LootEntry.Builder<?> lumecornSeedDrop = ItemLootEntry.lootTableItem(ModBlocks.LUMECORN_SEED.get())
-				.when(RandomChance.randomChance(0.5F));
-		LootEntry.Builder<?> lumecornRodDrop = ItemLootEntry.lootTableItem(ModItems.LUMECORN_ROD.get())
-				.when(RandomChance.randomChance(0.5F));
+		LootPoolEntryContainer.Builder<?> lumecornSeedDrop = LootItem.lootTableItem(ModBlocks.LUMECORN_SEED.get())
+				.when(LootItemRandomChanceCondition.randomChance(0.5F));
+		LootPoolEntryContainer.Builder<?> lumecornRodDrop = LootItem.lootTableItem(ModItems.LUMECORN_ROD.get())
+				.when(LootItemRandomChanceCondition.randomChance(0.5F));
 		add(ModBlocks.LUMECORN.get(),
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool().add(lumecornSeedDrop).when(lumecornSeedCond1))
@@ -564,13 +564,13 @@ public class ModBlockLootTables extends BlockLootTables {
 		dropSelf(material.bark_stripped.get());
 		dropSelf(material.planks.get());
 		dropSelf(material.stairs.get());
-		add(material.slab.get(), BlockLootTables::createSlabItemTable);
+		add(material.slab.get(), BlockLoot::createSlabItemTable);
 		dropSelf(material.fence.get());
 		dropSelf(material.gate.get());
 		dropSelf(material.button.get());
 		dropSelf(material.pressurePlate.get());
 		dropSelf(material.trapdoor.get());
-		add(material.door.get(), BlockLootTables::createDoorTable);
+		add(material.door.get(), BlockLoot::createDoorTable);
 		dropSelf(material.composter.get());
 		dropSelf(material.craftingTable.get());
 		dropSelf(material.ladder.get());
@@ -578,7 +578,7 @@ public class ModBlockLootTables extends BlockLootTables {
 		dropSelf(material.sign.get());
 		dropSelf(material.barrel.get());
 		add(material.shelf.get(),
-				createSingleItemTableWithSilkTouch(material.shelf.get(), Items.BOOK, ConstantRange.exactly(3)));
+				createSingleItemTableWithSilkTouch(material.shelf.get(), Items.BOOK, ConstantIntValue.exactly(3)));
 	}
 
 	private void registerStoneMaterialLootTables(StoneMaterial material) {
@@ -587,17 +587,17 @@ public class ModBlockLootTables extends BlockLootTables {
 		dropSelf(material.tiles.get());
 		dropSelf(material.pillar.get());
 		dropSelf(material.stairs.get());
-		add(material.slab.get(), BlockLootTables::createSlabItemTable);
+		add(material.slab.get(), BlockLoot::createSlabItemTable);
 		dropSelf(material.wall.get());
 		dropSelf(material.button.get());
 		dropSelf(material.pressure_plate.get());
 		dropSelf(material.bricks.get());
 		dropSelf(material.brick_stairs.get());
-		add(material.brick_slab.get(), BlockLootTables::createSlabItemTable);
+		add(material.brick_slab.get(), BlockLoot::createSlabItemTable);
 		dropSelf(material.brick_wall.get());
 		dropSelf(material.lantern.get());
 		dropSelf(material.pedestal.get());
-		add(material.furnace.get(), BlockLootTables::createNameableBlockEntityTable);
+		add(material.furnace.get(), BlockLoot::createNameableBlockEntityTable);
 	}
 
 	private void registerMetalMaterialLootTables(MetalMaterial material) {
@@ -607,8 +607,8 @@ public class ModBlockLootTables extends BlockLootTables {
 		dropSelf(material.block.get());
 		dropSelf(material.tile.get());
 		dropSelf(material.stairs.get());
-		add(material.slab.get(), BlockLootTables::createSlabItemTable);
-		add(material.door.get(), BlockLootTables::createDoorTable);
+		add(material.slab.get(), BlockLoot::createSlabItemTable);
+		add(material.door.get(), BlockLoot::createDoorTable);
 		dropSelf(material.trapdoor.get());
 		anvilLootTable((EndAnvilBlock) material.anvil.get());
 		dropSelf(material.chain.get());
@@ -620,23 +620,23 @@ public class ModBlockLootTables extends BlockLootTables {
 	}
 
 	private void anvilLootTable(EndAnvilBlock block) {
-		ILootCondition.IBuilder builder0 = BlockStateProperty.hasBlockStateProperties(block).setProperties(
+		LootItemCondition.Builder builder0 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(
 				StatePropertiesPredicate.Builder.properties().hasProperty(EndAnvilBlock.DESTRUCTION, 0));
-		ILootCondition.IBuilder builder1 = BlockStateProperty.hasBlockStateProperties(block).setProperties(
+		LootItemCondition.Builder builder1 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(
 				StatePropertiesPredicate.Builder.properties().hasProperty(EndAnvilBlock.DESTRUCTION, 1));
-		ILootCondition.IBuilder builder2 = BlockStateProperty.hasBlockStateProperties(block).setProperties(
+		LootItemCondition.Builder builder2 = LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(
 				StatePropertiesPredicate.Builder.properties().hasProperty(EndAnvilBlock.DESTRUCTION, 2));
-		CompoundNBT level0 = new CompoundNBT();
+		CompoundTag level0 = new CompoundTag();
 		level0.putInt("level", 0);
-		CompoundNBT level1 = new CompoundNBT();
+		CompoundTag level1 = new CompoundTag();
 		level1.putInt("level", 1);
-		CompoundNBT level2 = new CompoundNBT();
+		CompoundTag level2 = new CompoundTag();
 		level2.putInt("level", 2);
 		
 		add(block, LootTable.lootTable()
-				.withPool(LootPool.lootPool().add(ItemLootEntry.lootTableItem(block).apply(SetNBT.setTag(level0)).when(builder0)))
-				.withPool(LootPool.lootPool().add(ItemLootEntry.lootTableItem(block).apply(SetNBT.setTag(level1)).when(builder1)))
-				.withPool(LootPool.lootPool().add(ItemLootEntry.lootTableItem(block).apply(SetNBT.setTag(level2)).when(builder2))));
+				.withPool(LootPool.lootPool().add(LootItem.lootTableItem(block).apply(SetNbtFunction.setTag(level0)).when(builder0)))
+				.withPool(LootPool.lootPool().add(LootItem.lootTableItem(block).apply(SetNbtFunction.setTag(level1)).when(builder1)))
+				.withPool(LootPool.lootPool().add(LootItem.lootTableItem(block).apply(SetNbtFunction.setTag(level2)).when(builder2))));
 
 	}
 
@@ -655,82 +655,82 @@ public class ModBlockLootTables extends BlockLootTables {
 	}
 
 	private static LootTable.Builder endLilyDrop() {
-		LootEntry.Builder<?> leaf_drop = ItemLootEntry.lootTableItem(ModItems.END_LILY_LEAF.get())
-				.apply(SetCount.setCount(RandomValueRange.between(1.0F, 2.0F)));
-		LootEntry.Builder<?> seed_drop = ItemLootEntry.lootTableItem(ModBlocks.END_LILY_SEED.get())
-				.apply(SetCount.setCount(RandomValueRange.between(1.0F, 2.0F)));
+		LootPoolEntryContainer.Builder<?> leaf_drop = LootItem.lootTableItem(ModItems.END_LILY_LEAF.get())
+				.apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 2.0F)));
+		LootPoolEntryContainer.Builder<?> seed_drop = LootItem.lootTableItem(ModBlocks.END_LILY_SEED.get())
+				.apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 2.0F)));
 		LootPool.Builder top_loot_leaf = LootPool.lootPool().add(leaf_drop)
-				.when(BlockStateProperty.hasBlockStateProperties(ModBlocks.END_LILY.get()).setProperties(
+				.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.END_LILY.get()).setProperties(
 						StatePropertiesPredicate.Builder.properties().hasProperty(EndLilyBlock.SHAPE, TripleShape.TOP)));
 		LootPool.Builder top_loot_seed = LootPool.lootPool().add(seed_drop)
-				.when(BlockStateProperty.hasBlockStateProperties(ModBlocks.END_LILY.get()).setProperties(
+				.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.END_LILY.get()).setProperties(
 						StatePropertiesPredicate.Builder.properties().hasProperty(EndLilyBlock.SHAPE, TripleShape.TOP)));
 
 		return LootTable.lootTable().withPool(top_loot_leaf).withPool(top_loot_seed);
 	}
 
 	private static LootTable.Builder bulbVineDrop() {
-		LootEntry.Builder<?> bulb_drop = ItemLootEntry.lootTableItem(ModItems.GLOWING_BULB.get());
-		LootEntry.Builder<?> seed_drop = ItemLootEntry.lootTableItem(ModBlocks.BULB_VINE_SEED.get())
-				.when(RandomChance.randomChance(0.125F));
+		LootPoolEntryContainer.Builder<?> bulb_drop = LootItem.lootTableItem(ModItems.GLOWING_BULB.get());
+		LootPoolEntryContainer.Builder<?> seed_drop = LootItem.lootTableItem(ModBlocks.BULB_VINE_SEED.get())
+				.when(LootItemRandomChanceCondition.randomChance(0.125F));
 
 		LootPool.Builder bottom_loot = LootPool.lootPool().add(bulb_drop).when(
-				BlockStateProperty.hasBlockStateProperties(ModBlocks.BULB_VINE.get()).setProperties(StatePropertiesPredicate.Builder
+				LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BULB_VINE.get()).setProperties(StatePropertiesPredicate.Builder
 						.properties().hasProperty(BulbVineBlock.SHAPE, TripleShape.BOTTOM)));
 		LootPool.Builder middle_loot = LootPool.lootPool().add(seed_drop).when(
-				BlockStateProperty.hasBlockStateProperties(ModBlocks.BULB_VINE.get()).setProperties(StatePropertiesPredicate.Builder
+				LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BULB_VINE.get()).setProperties(StatePropertiesPredicate.Builder
 						.properties().hasProperty(BulbVineBlock.SHAPE, TripleShape.MIDDLE)));
 		LootPool.Builder top_loot = LootPool.lootPool().add(bulb_drop)
-				.when(BlockStateProperty.hasBlockStateProperties(ModBlocks.BULB_VINE.get()).setProperties(
+				.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BULB_VINE.get()).setProperties(
 						StatePropertiesPredicate.Builder.properties().hasProperty(BulbVineBlock.SHAPE, TripleShape.TOP)));
 
 		return LootTable.lootTable().withPool(bottom_loot).withPool(middle_loot).withPool(top_loot);
 	}
 
 	private static LootTable.Builder hydraluxDrop() {
-		LootEntry.Builder<?> petal_drop = ItemLootEntry.lootTableItem(ModItems.HYDRALUX_PETAL.get())
-				.apply(SetCount.setCount(RandomValueRange.between(1.0F, 4.0F)));
-		LootEntry.Builder<?> roots_drop = ItemLootEntry.lootTableItem(ModBlocks.HYDRALUX_SAPLING.get())
-				.apply(SetCount.setCount(RandomValueRange.between(1.0F, 2.0F)));
+		LootPoolEntryContainer.Builder<?> petal_drop = LootItem.lootTableItem(ModItems.HYDRALUX_PETAL.get())
+				.apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 4.0F)));
+		LootPoolEntryContainer.Builder<?> roots_drop = LootItem.lootTableItem(ModBlocks.HYDRALUX_SAPLING.get())
+				.apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 2.0F)));
 
 		LootPool.Builder small_flower_loot = LootPool.lootPool().add(petal_drop).when(
-				BlockStateProperty.hasBlockStateProperties(ModBlocks.HYDRALUX.get()).setProperties(StatePropertiesPredicate.Builder
+				LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.HYDRALUX.get()).setProperties(StatePropertiesPredicate.Builder
 						.properties().hasProperty(HydraluxBlock.SHAPE, HydraluxShape.FLOWER_SMALL_BOTTOM)));
 		LootPool.Builder big_flower_loot = LootPool.lootPool().add(petal_drop).when(
-				BlockStateProperty.hasBlockStateProperties(ModBlocks.HYDRALUX.get()).setProperties(StatePropertiesPredicate.Builder
+				LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.HYDRALUX.get()).setProperties(StatePropertiesPredicate.Builder
 						.properties().hasProperty(HydraluxBlock.SHAPE, HydraluxShape.FLOWER_BIG_BOTTOM)));
 		LootPool.Builder roots_loot = LootPool.lootPool().add(roots_drop).when(
-				BlockStateProperty.hasBlockStateProperties(ModBlocks.HYDRALUX.get()).setProperties(StatePropertiesPredicate.Builder
+				LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.HYDRALUX.get()).setProperties(StatePropertiesPredicate.Builder
 						.properties().hasProperty(HydraluxBlock.SHAPE, HydraluxShape.ROOTS)));
 
 		return LootTable.lootTable().withPool(small_flower_loot).withPool(big_flower_loot).withPool(roots_loot);
 	}
 
 	private static LootTable.Builder umbrellaTreeMembraneDrop() {
-		LootEntry.Builder<?> block_drop = ItemLootEntry.lootTableItem(ModBlocks.UMBRELLA_TREE_MEMBRANE.get());
-		LootEntry.Builder<?> sapling_drop = ItemLootEntry.lootTableItem(ModBlocks.UMBRELLA_TREE_SAPLING.get())
-				.when(RandomChance.randomChance(0.25F));
+		LootPoolEntryContainer.Builder<?> block_drop = LootItem.lootTableItem(ModBlocks.UMBRELLA_TREE_MEMBRANE.get());
+		LootPoolEntryContainer.Builder<?> sapling_drop = LootItem.lootTableItem(ModBlocks.UMBRELLA_TREE_SAPLING.get())
+				.when(LootItemRandomChanceCondition.randomChance(0.25F));
 
 		LootPool.Builder color_0_loot = LootPool.lootPool().add(sapling_drop)
-				.when(BlockStateProperty.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
+				.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
 						StatePropertiesPredicate.Builder.properties().hasProperty(UmbrellaTreeMembraneBlock.COLOR, 0)));
 		LootPool.Builder color_1_loot = LootPool.lootPool().add(block_drop)
-				.when(BlockStateProperty.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
+				.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
 						StatePropertiesPredicate.Builder.properties().hasProperty(UmbrellaTreeMembraneBlock.COLOR, 1)));
 		LootPool.Builder color_2_loot = LootPool.lootPool().add(block_drop)
-				.when(BlockStateProperty.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
+				.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
 						StatePropertiesPredicate.Builder.properties().hasProperty(UmbrellaTreeMembraneBlock.COLOR, 2)));
 		LootPool.Builder color_3_loot = LootPool.lootPool().add(block_drop)
-				.when(BlockStateProperty.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
+				.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
 						StatePropertiesPredicate.Builder.properties().hasProperty(UmbrellaTreeMembraneBlock.COLOR, 3)));
 		LootPool.Builder color_4_loot = LootPool.lootPool().add(block_drop)
-				.when(BlockStateProperty.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
+				.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
 						StatePropertiesPredicate.Builder.properties().hasProperty(UmbrellaTreeMembraneBlock.COLOR, 4)));
 		LootPool.Builder color_5_loot = LootPool.lootPool().add(block_drop)
-				.when(BlockStateProperty.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
+				.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
 						StatePropertiesPredicate.Builder.properties().hasProperty(UmbrellaTreeMembraneBlock.COLOR, 5)));
 		LootPool.Builder color_6_loot = LootPool.lootPool().add(block_drop)
-				.when(BlockStateProperty.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
+				.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()).setProperties(
 						StatePropertiesPredicate.Builder.properties().hasProperty(UmbrellaTreeMembraneBlock.COLOR, 6)));
 
 		return LootTable.lootTable().withPool(color_0_loot).withPool(color_1_loot).withPool(color_2_loot)
@@ -741,9 +741,9 @@ public class ModBlockLootTables extends BlockLootTables {
 	// Need to improve
 	private static LootTable.Builder sulphurCrystalDrop(Block block, Item drop) { // .rolls(ConstantRange.of(1)).
 		return LootTable.lootTable()
-				.withPool(applyExplosionDecay(block, LootPool.lootPool().add(ItemLootEntry.lootTableItem(drop)
-						.apply(SetCount.setCount(RandomValueRange.between(1.0F, 3.0F)).when(
-								BlockStateProperty.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder
+				.withPool(applyExplosionDecay(block, LootPool.lootPool().add(LootItem.lootTableItem(drop)
+						.apply(SetItemCountFunction.setCount(RandomValueBounds.between(1.0F, 3.0F)).when(
+								LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder
 										.properties().hasProperty(SulphurCrystalBlock.AGE, 3)))))));
 	}
 }

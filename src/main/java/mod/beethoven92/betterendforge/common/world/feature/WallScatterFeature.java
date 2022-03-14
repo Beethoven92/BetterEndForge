@@ -4,35 +4,35 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public abstract class WallScatterFeature extends Feature<NoFeatureConfig>
+public abstract class WallScatterFeature extends Feature<NoneFeatureConfiguration>
 {
 	private static final Direction[] DIR = BlockHelper.makeHorizontal();
 	private final int radius;
 	
 	public WallScatterFeature(int radius) 
 	{
-		super(NoFeatureConfig.CODEC);
+		super(NoneFeatureConfiguration.CODEC);
 		this.radius = radius;
 	}
 	
-	public abstract boolean canGenerate(ISeedReader world, Random random, BlockPos pos, Direction dir);
+	public abstract boolean canGenerate(WorldGenLevel world, Random random, BlockPos pos, Direction dir);
 	
-	public abstract void generate(ISeedReader world, Random random, BlockPos pos, Direction dir);
+	public abstract void generate(WorldGenLevel world, Random random, BlockPos pos, Direction dir);
 	
 	@Override
-	public boolean place(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
-			BlockPos center, NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random,
+			BlockPos center, NoneFeatureConfiguration config) 
 	{
-		int maxY = world.getHeight(Heightmap.Type.WORLD_SURFACE, center.getX(), center.getZ());
+		int maxY = world.getHeight(Heightmap.Types.WORLD_SURFACE, center.getX(), center.getZ());
 		int minY = BlockHelper.upRay(world, new BlockPos(center.getX(), 0, center.getZ()), maxY);
 		if (maxY < 10 || maxY < minY) 
 		{
@@ -40,7 +40,7 @@ public abstract class WallScatterFeature extends Feature<NoFeatureConfig>
 		}
 		int py = ModMathHelper.randRange(minY, maxY, random);
 		
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		for (int x = -radius; x <= radius; x++) 
 		{
 			mut.setX(center.getX() + x);

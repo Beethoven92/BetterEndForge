@@ -6,31 +6,31 @@ import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.interfaces.TeleportingEntity;
 import mod.beethoven92.betterendforge.common.teleporter.BetterEndTeleporter;
 import mod.beethoven92.betterendforge.common.teleporter.EndPortals;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.NetherPortalBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.NetherPortalBlock;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.Direction.AxisDirection;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.DimensionType;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Direction.AxisDirection;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.dimension.DimensionType;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class EndPortalBlock extends NetherPortalBlock
 {
@@ -43,11 +43,11 @@ public class EndPortalBlock extends NetherPortalBlock
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) 
+	public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) 
 	{
 		if (rand.nextInt(100) == 0) 
 		{
-			worldIn.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, SoundEvents.PORTAL_AMBIENT, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
+			worldIn.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
 		}
 
 		double x = pos.getX() + rand.nextDouble();
@@ -65,21 +65,21 @@ public class EndPortalBlock extends NetherPortalBlock
 	}
 	
 	@Override
-	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) 
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) 
 	{
 	}
 	
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
 		return stateIn;
 	}
 	
 	@Override
-	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) 
+	public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn) 
 	{
-		if (worldIn instanceof ServerWorld && !entityIn.isPassenger() && !entityIn.isVehicle() 
+		if (worldIn instanceof ServerLevel && !entityIn.isPassenger() && !entityIn.isVehicle() 
 				&& entityIn.canChangeDimensions()) 
 		{
 			TeleportingEntity teleEntity = TeleportingEntity.class.cast(entityIn);
@@ -89,9 +89,9 @@ public class EndPortalBlock extends NetherPortalBlock
 			if (entityIn.isOnPortalCooldown()) return;
 
 			
-			boolean isOverworld = worldIn.dimension().equals(World.OVERWORLD);
-			MinecraftServer server = ((ServerWorld) worldIn).getServer();
-			ServerWorld destination = isOverworld ? server.getLevel(World.END) : EndPortals.getWorld(server, state.getValue(PORTAL));
+			boolean isOverworld = worldIn.dimension().equals(Level.OVERWORLD);
+			MinecraftServer server = ((ServerLevel) worldIn).getServer();
+			ServerLevel destination = isOverworld ? server.getLevel(Level.END) : EndPortals.getWorld(server, state.getValue(PORTAL));
 			//ServerWorld destination = ((ServerWorld) worldIn).getServer().getWorld(isOverworld ? World.THE_END : World.OVERWORLD);
 	        
 			if (destination == null) 
@@ -106,9 +106,9 @@ public class EndPortalBlock extends NetherPortalBlock
 				return;
 			}
 			
-			if (entityIn instanceof ServerPlayerEntity) 
+			if (entityIn instanceof ServerPlayer) 
 			{
-				ServerPlayerEntity player = (ServerPlayerEntity) entityIn;
+				ServerPlayer player = (ServerPlayer) entityIn;
 				// FIX "player moved wrongly" errors
 				player.changeDimension(destination, new BetterEndTeleporter(exitPos));
 		        //teleEntity.beSetCooldown(player.isCreative() ? 50 : 300);
@@ -129,15 +129,15 @@ public class EndPortalBlock extends NetherPortalBlock
 		}
 	}
 	
-	private BlockPos findExitPos(ServerWorld world, BlockPos pos, Entity entity) 
+	private BlockPos findExitPos(ServerLevel world, BlockPos pos, Entity entity) 
 	{
 		DimensionType type = world.dimensionType();
 
 		double mult = type.coordinateScale();
 		
-		BlockPos.Mutable basePos;
+		BlockPos.MutableBlockPos basePos;
 		
-		if (!world.dimension().equals(World.END))
+		if (!world.dimension().equals(Level.END))
 		//if (world.getDimensionKey().equals(World.OVERWORLD)) 
 		{
 			basePos = pos.mutable().set(pos.getX() / mult, pos.getY(), pos.getZ() / mult);
@@ -149,17 +149,17 @@ public class EndPortalBlock extends NetherPortalBlock
 		
 		Direction direction = Direction.EAST;
 		
-		BlockPos.Mutable checkPos = basePos.mutable();
+		BlockPos.MutableBlockPos checkPos = basePos.mutable();
 
 		for (int step = 1; step < 128; step++)
 		{
 			for (int i = 0; i < (step >> 1); i++) 
 			{
-				IChunk chunk = world.getChunk(checkPos);
+				ChunkAccess chunk = world.getChunk(checkPos);
 				
 				if (chunk != null) 
 				{
-					int ceil = chunk.getHeight(Heightmap.Type.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15);
+					int ceil = chunk.getHeight(Heightmap.Types.WORLD_SURFACE, checkPos.getX() & 15, checkPos.getZ() & 15);
 					if (ceil > 5) 
 					{
 						checkPos.setY(ceil);
@@ -200,12 +200,12 @@ public class EndPortalBlock extends NetherPortalBlock
 		return null;
 	}
 	
-	private BlockPos.Mutable findCenter(World world, BlockPos.Mutable pos, Direction.Axis axis) 
+	private BlockPos.MutableBlockPos findCenter(Level world, BlockPos.MutableBlockPos pos, Direction.Axis axis) 
 	{
 		return this.findCenter(world, pos, axis, 1);
 	}
 	
-	private BlockPos.Mutable findCenter(World world, BlockPos.Mutable pos, Direction.Axis axis, int step) 
+	private BlockPos.MutableBlockPos findCenter(Level world, BlockPos.MutableBlockPos pos, Direction.Axis axis, int step) 
 	{
 		if (step > 8) return pos;
 		

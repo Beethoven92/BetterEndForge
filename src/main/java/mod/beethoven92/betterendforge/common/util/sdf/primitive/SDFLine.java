@@ -1,7 +1,7 @@
 package mod.beethoven92.betterendforge.common.util.sdf.primitive;
 
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 public class SDFLine extends SDFPrimitive 
 {
@@ -48,7 +48,7 @@ public class SDFLine extends SDFPrimitive
 
 		float dpb = ModMathHelper.dot(pax, pay, paz, bax, bay, baz);
 		float dbb = ModMathHelper.dot(bax, bay, baz, bax, bay, baz);
-		float h = MathHelper.clamp(dpb / dbb, 0F, 1F);
+		float h = Mth.clamp(dpb / dbb, 0F, 1F);
 		return ModMathHelper.length(pax - bax * h, pay - bay * h, paz - baz * h) - radius;
 	}
 

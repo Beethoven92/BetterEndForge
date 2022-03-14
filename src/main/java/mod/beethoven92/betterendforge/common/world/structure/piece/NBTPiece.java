@@ -5,33 +5,33 @@ import java.util.Random;
 import mod.beethoven92.betterendforge.common.init.ModStructurePieces;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.util.StructureHelper;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.structure.StructureManager;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
 public class NBTPiece extends StructurePiece
 {
 	private ResourceLocation structureID;
 	private Rotation rotation;
 	private Mirror mirror;
-	private Template structure;
+	private StructureTemplate structure;
 	private BlockPos pos;
 	private int erosion;
 	private boolean cover;
 	
-	public NBTPiece(ResourceLocation structureID, Template structure, BlockPos pos, int erosion, boolean cover, Random random)
+	public NBTPiece(ResourceLocation structureID, StructureTemplate structure, BlockPos pos, int erosion, boolean cover, Random random)
 	{
 		super(ModStructurePieces.NBT_PIECE, 0);
 		this.structureID = structureID;
@@ -44,7 +44,7 @@ public class NBTPiece extends StructurePiece
 		makeBoundingBox();
 	}
 	
-	public NBTPiece(TemplateManager p_i50677_1_, CompoundNBT nbt) 
+	public NBTPiece(StructureManager p_i50677_1_, CompoundTag nbt) 
 	{
 		super(ModStructurePieces.NBT_PIECE, nbt);
 		
@@ -52,20 +52,20 @@ public class NBTPiece extends StructurePiece
 		rotation = Rotation.values()[nbt.getInt("rotation")];
 		mirror = Mirror.values()[nbt.getInt("mirror")];
 		erosion = nbt.getInt("erosion");
-		pos = NBTUtil.readBlockPos(nbt.getCompound("pos"));
+		pos = NbtUtils.readBlockPos(nbt.getCompound("pos"));
 		cover = nbt.getBoolean("cover");
 		structure = StructureHelper.readStructure(structureID);
 		makeBoundingBox();
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT tagCompound) 
+	protected void addAdditionalSaveData(CompoundTag tagCompound) 
 	{
 		tagCompound.putString("Template", structureID.toString());
 		tagCompound.putInt("rotation", rotation.ordinal());
 		tagCompound.putInt("mirror", mirror.ordinal());
 		tagCompound.putInt("erosion", erosion);
-		tagCompound.put("pos", NBTUtil.writeBlockPos(pos));
+		tagCompound.put("pos", NbtUtils.writeBlockPos(pos));
 		tagCompound.putBoolean("cover", cover);
 	}
 
@@ -75,13 +75,13 @@ public class NBTPiece extends StructurePiece
 	}
 	
 	@Override
-	public boolean postProcess(ISeedReader world, StructureManager manager, ChunkGenerator chunkGenerator,
-			Random random, MutableBoundingBox box, ChunkPos chunkPos, BlockPos blockPos) 
+	public boolean postProcess(WorldGenLevel world, StructureFeatureManager manager, ChunkGenerator chunkGenerator,
+			Random random, BoundingBox box, ChunkPos chunkPos, BlockPos blockPos) 
 	{
-	    MutableBoundingBox bounds = new MutableBoundingBox(box);
+	    BoundingBox bounds = new BoundingBox(box);
 		bounds.y1 = this.boundingBox.y1;
 		bounds.y0 = this.boundingBox.y0;
-		PlacementSettings placementData = new PlacementSettings().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
+		StructurePlaceSettings placementData = new StructurePlaceSettings().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
 		structure.placeInWorld(world, pos, placementData, random);
 		if (erosion > 0) 
 		{

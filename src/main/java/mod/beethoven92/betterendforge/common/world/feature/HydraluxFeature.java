@@ -4,8 +4,8 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.block.HydraluxSaplingBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
 
 public class HydraluxFeature extends UnderwaterPlantScatter
 {
@@ -15,7 +15,7 @@ public class HydraluxFeature extends UnderwaterPlantScatter
 	}
 
 	@Override
-	public void generate(ISeedReader world, Random random, BlockPos blockPos) 
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) 
 	{
 		HydraluxSaplingBlock seed = (HydraluxSaplingBlock) ModBlocks.HYDRALUX_SAPLING.get();
 		seed.doGrow(world, random, blockPos);

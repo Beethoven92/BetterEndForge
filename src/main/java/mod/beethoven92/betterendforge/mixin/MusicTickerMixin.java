@@ -11,14 +11,14 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.BackgroundMusicSelector;
-import net.minecraft.client.audio.ISound;
-import net.minecraft.client.audio.LocatableSound;
-import net.minecraft.client.audio.MusicTicker;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.sounds.Music;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.client.resources.sounds.AbstractSoundInstance;
+import net.minecraft.client.sounds.MusicManager;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
-@Mixin(MusicTicker.class)
+@Mixin(MusicManager.class)
 public class MusicTickerMixin 
 {
 	@Shadow
@@ -30,7 +30,7 @@ public class MusicTickerMixin
 	private Random random;
 	
 	@Shadow
-	private ISound currentMusic;
+	private SoundInstance currentMusic;
 	
 	@Shadow
 	private int nextSongDelay;
@@ -44,7 +44,7 @@ public class MusicTickerMixin
 	{
 		if (ClientOptions.blendBiomeMusic())
 		{
-			BackgroundMusicSelector musicSound = minecraft.getSituationalMusic();
+			Music musicSound = minecraft.getSituationalMusic();
 			if (be_volume > 0 && beIsInEnd() && beShouldChangeSound(musicSound))
 			{
 				if (be_volume > 0)
@@ -53,7 +53,7 @@ public class MusicTickerMixin
 					{
 						be_srcVolume = currentMusic.getVolume();
 					}
-					if (currentMusic instanceof LocatableSound) 
+					if (currentMusic instanceof AbstractSoundInstance) 
 					{
 						((SoundVolumeAccessor)currentMusic).setVolume(be_volume);
 					}
@@ -77,7 +77,7 @@ public class MusicTickerMixin
 					be_time = 0;
 					be_srcVolume = -1;
 					this.minecraft.getSoundManager().stop(this.currentMusic);
-					this.nextSongDelay = MathHelper.nextInt(this.random, 0, musicSound.getMinDelay() / 2);
+					this.nextSongDelay = Mth.nextInt(this.random, 0, musicSound.getMinDelay() / 2);
 					this.currentMusic = null;
 				}
 				if (this.currentMusic == null && this.nextSongDelay-- <= 0)
@@ -95,14 +95,14 @@ public class MusicTickerMixin
 	
 	private boolean beIsInEnd() 
 	{
-		return minecraft.level != null && minecraft.level.dimension().equals(World.END);
+		return minecraft.level != null && minecraft.level.dimension().equals(Level.END);
 	}
 	
-	private boolean beShouldChangeSound(BackgroundMusicSelector musicSound) 
+	private boolean beShouldChangeSound(Music musicSound) 
 	{
 		return currentMusic != null && !musicSound.getEvent().getLocation().equals(this.currentMusic.getLocation()) && musicSound.replaceCurrentMusic();
 	}
 	
 	@Shadow
-	public void startPlaying(BackgroundMusicSelector selector) {}
+	public void startPlaying(Music selector) {}
 }

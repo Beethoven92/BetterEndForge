@@ -60,7 +60,7 @@ import mod.beethoven92.betterendforge.common.world.feature.*;
 import mod.beethoven92.betterendforge.common.world.feature.caves.RoundCaveFeature;
 import mod.beethoven92.betterendforge.common.world.feature.caves.TunelCaveFeature;
 import mod.beethoven92.betterendforge.common.world.surfacebuilder.UmbraSurfaceBuilder;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.*;
@@ -69,167 +69,172 @@ import net.minecraftforge.event.RegistryEvent.Register;
 import java.util.List;
 import java.util.function.Supplier;
 
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.OreFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+
 public class ModFeatures
 {
 	// WATER PLANTS
-	public static final Feature<NoFeatureConfig> END_LOTUS = new EndLotusFeature(7);
-	public static final Feature<NoFeatureConfig> END_LOTUS_LEAF = new EndLotusLeafFeature(20);	
-	public static final Feature<NoFeatureConfig> BUBBLE_CORAL = new UnderwaterPlantFeature(ModBlocks.BUBBLE_CORAL.get(), 6);
-	public static final Feature<NoFeatureConfig> BUBBLE_CORAL_RARE = new UnderwaterPlantFeature(ModBlocks.BUBBLE_CORAL.get(), 3);
-	public static final Feature<NoFeatureConfig> END_LILY = new EndLilyFeature(6);
-	public static final Feature<NoFeatureConfig> END_LILY_RARE = new EndLilyFeature(3);
-	public static final Feature<NoFeatureConfig> MENGER_SPONGE = new MengerSpongeFeature(5);
-	public static final Feature<NoFeatureConfig> CHARNIA_RED = new CharniaFeature(ModBlocks.CHARNIA_RED.get());
-	public static final Feature<NoFeatureConfig> CHARNIA_PURPLE = new CharniaFeature(ModBlocks.CHARNIA_PURPLE.get());
-	public static final Feature<NoFeatureConfig> CHARNIA_ORANGE = new CharniaFeature(ModBlocks.CHARNIA_ORANGE.get());
-	public static final Feature<NoFeatureConfig> CHARNIA_LIGHT_BLUE = new CharniaFeature(ModBlocks.CHARNIA_LIGHT_BLUE.get());
-	public static final Feature<NoFeatureConfig> CHARNIA_CYAN = new CharniaFeature(ModBlocks.CHARNIA_CYAN.get());
-	public static final Feature<NoFeatureConfig> CHARNIA_GREEN = new CharniaFeature(ModBlocks.CHARNIA_GREEN.get());
-	public static final Feature<NoFeatureConfig> CHARNIA_RED_RARE = new CharniaFeature(ModBlocks.CHARNIA_RED.get());
-	public static final Feature<NoFeatureConfig> HYDRALUX = new HydraluxFeature(5);
-	public static final Feature<NoFeatureConfig> FLAMAEA = new SinglePlantFeature(ModBlocks.FLAMAEA.get(), 12, false, 5);
-	public static final Feature<NoFeatureConfig> POND_ANEMONE = new UnderwaterPlantFeature(ModBlocks.POND_ANEMONE.get(), 6);
+	public static final Feature<NoneFeatureConfiguration> END_LOTUS = new EndLotusFeature(7);
+	public static final Feature<NoneFeatureConfiguration> END_LOTUS_LEAF = new EndLotusLeafFeature(20);	
+	public static final Feature<NoneFeatureConfiguration> BUBBLE_CORAL = new UnderwaterPlantFeature(ModBlocks.BUBBLE_CORAL.get(), 6);
+	public static final Feature<NoneFeatureConfiguration> BUBBLE_CORAL_RARE = new UnderwaterPlantFeature(ModBlocks.BUBBLE_CORAL.get(), 3);
+	public static final Feature<NoneFeatureConfiguration> END_LILY = new EndLilyFeature(6);
+	public static final Feature<NoneFeatureConfiguration> END_LILY_RARE = new EndLilyFeature(3);
+	public static final Feature<NoneFeatureConfiguration> MENGER_SPONGE = new MengerSpongeFeature(5);
+	public static final Feature<NoneFeatureConfiguration> CHARNIA_RED = new CharniaFeature(ModBlocks.CHARNIA_RED.get());
+	public static final Feature<NoneFeatureConfiguration> CHARNIA_PURPLE = new CharniaFeature(ModBlocks.CHARNIA_PURPLE.get());
+	public static final Feature<NoneFeatureConfiguration> CHARNIA_ORANGE = new CharniaFeature(ModBlocks.CHARNIA_ORANGE.get());
+	public static final Feature<NoneFeatureConfiguration> CHARNIA_LIGHT_BLUE = new CharniaFeature(ModBlocks.CHARNIA_LIGHT_BLUE.get());
+	public static final Feature<NoneFeatureConfiguration> CHARNIA_CYAN = new CharniaFeature(ModBlocks.CHARNIA_CYAN.get());
+	public static final Feature<NoneFeatureConfiguration> CHARNIA_GREEN = new CharniaFeature(ModBlocks.CHARNIA_GREEN.get());
+	public static final Feature<NoneFeatureConfiguration> CHARNIA_RED_RARE = new CharniaFeature(ModBlocks.CHARNIA_RED.get());
+	public static final Feature<NoneFeatureConfiguration> HYDRALUX = new HydraluxFeature(5);
+	public static final Feature<NoneFeatureConfiguration> FLAMAEA = new SinglePlantFeature(ModBlocks.FLAMAEA.get(), 12, false, 5);
+	public static final Feature<NoneFeatureConfiguration> POND_ANEMONE = new UnderwaterPlantFeature(ModBlocks.POND_ANEMONE.get(), 6);
 
 
 	// BUSHES
-	public static final Feature<NoFeatureConfig> PYTHADENDRON_BUSH = new BushFeature(ModBlocks.PYTHADENDRON_LEAVES.get(), ModBlocks.PYTHADENDRON.bark.get());
-	public static final Feature<NoFeatureConfig> DRAGON_TREE_BUSH = new BushFeature(ModBlocks.DRAGON_TREE_LEAVES.get(), ModBlocks.DRAGON_TREE.bark.get());
-	public static final Feature<NoFeatureConfig> TENANEA_BUSH = new TenaneaBushFeature();
-	public static final Feature<NoFeatureConfig> LARGE_AMARANITA = new LargeAmaranitaFeature();
-	public static final Feature<NoFeatureConfig> LUCERNIA_BUSH = new BushWithOuterFeature(ModBlocks.LUCERNIA_LEAVES.get(), ModBlocks.LUCERNIA_OUTER_LEAVES.get(), ModBlocks.LUCERNIA.bark.get());
-	public static final Feature<NoFeatureConfig> LUCERNIA_BUSH_RARE = new BushWithOuterFeature(ModBlocks.LUCERNIA_LEAVES.get(), ModBlocks.LUCERNIA_OUTER_LEAVES.get(), ModBlocks.LUCERNIA.bark.get());
-	public static final Feature<NoFeatureConfig> NEON_CACTUS = new NeonCactusFeature();
+	public static final Feature<NoneFeatureConfiguration> PYTHADENDRON_BUSH = new BushFeature(ModBlocks.PYTHADENDRON_LEAVES.get(), ModBlocks.PYTHADENDRON.bark.get());
+	public static final Feature<NoneFeatureConfiguration> DRAGON_TREE_BUSH = new BushFeature(ModBlocks.DRAGON_TREE_LEAVES.get(), ModBlocks.DRAGON_TREE.bark.get());
+	public static final Feature<NoneFeatureConfiguration> TENANEA_BUSH = new TenaneaBushFeature();
+	public static final Feature<NoneFeatureConfiguration> LARGE_AMARANITA = new LargeAmaranitaFeature();
+	public static final Feature<NoneFeatureConfiguration> LUCERNIA_BUSH = new BushWithOuterFeature(ModBlocks.LUCERNIA_LEAVES.get(), ModBlocks.LUCERNIA_OUTER_LEAVES.get(), ModBlocks.LUCERNIA.bark.get());
+	public static final Feature<NoneFeatureConfiguration> LUCERNIA_BUSH_RARE = new BushWithOuterFeature(ModBlocks.LUCERNIA_LEAVES.get(), ModBlocks.LUCERNIA_OUTER_LEAVES.get(), ModBlocks.LUCERNIA.bark.get());
+	public static final Feature<NoneFeatureConfiguration> NEON_CACTUS = new NeonCactusFeature();
 	
 	// PLANTS
-	public static final Feature<NoFeatureConfig> UMBRELLA_MOSS = new DoublePlantFeature(ModBlocks.UMBRELLA_MOSS.get(), ModBlocks.UMBRELLA_MOSS_TALL.get(), 5);
-	public static final Feature<NoFeatureConfig> CREEPING_MOSS = new SinglePlantFeature(ModBlocks.CREEPING_MOSS.get(), 5);
-	public static final Feature<NoFeatureConfig> CHORUS_GRASS = new SinglePlantFeature(ModBlocks.CHORUS_GRASS.get(), 4);
-	public static final Feature<NoFeatureConfig> CHORUS_MUSHROOM = new SinglePlantFeature(ModBlocks.CHORUS_MUSHROOM.get(), 5, 5);
-	public static final Feature<NoFeatureConfig> CRYSTAL_GRASS = new SinglePlantFeature(ModBlocks.CRYSTAL_GRASS.get(), 8, false);
-	public static final Feature<NoFeatureConfig> AMBER_GRASS = new SinglePlantFeature(ModBlocks.AMBER_GRASS.get(), 6);
-	public static final Feature<NoFeatureConfig> AMBER_ROOT = new SinglePlantFeature(ModBlocks.AMBER_ROOT.get(), 5, 5);
-	public static final Feature<NoFeatureConfig> SHADOW_PLANT = new SinglePlantFeature(ModBlocks.SHADOW_PLANT.get(), 6);
-	public static final Feature<NoFeatureConfig> BLUE_VINE = new BlueVineFeature(5);
-	public static final Feature<NoFeatureConfig> MURKWEED = new SinglePlantFeature(ModBlocks.MURKWEED.get(), 3);
-	public static final Feature<NoFeatureConfig> NEEDLEGRASS = new SinglePlantFeature(ModBlocks.NEEDLEGRASS.get(), 3);
-	public static final Feature<NoFeatureConfig> SHADOW_BERRY = new SinglePlantFeature(ModBlocks.SHADOW_BERRY.get(), 2);
-	public static final Feature<NoFeatureConfig> BUSHY_GRASS = new SinglePlantFeature(ModBlocks.BUSHY_GRASS.get(), 8, false);
-	public static final Feature<NoFeatureConfig> BUSHY_GRASS_WG = new SinglePlantFeature(ModBlocks.BUSHY_GRASS.get(), 5);
-	public static final Feature<NoFeatureConfig> LANCELEAF = new LanceleafFeature();
-	public static final Feature<NoFeatureConfig> GLOW_PILLAR = new GlowPillarFeature();
-	public static final Feature<NoFeatureConfig> TWISTED_UMBRELLA_MOSS = new DoublePlantFeature(ModBlocks.TWISTED_UMBRELLA_MOSS.get(), ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get(), 6);
-	public static final Feature<NoFeatureConfig> JUNGLE_GRASS = new SinglePlantFeature(ModBlocks.JUNGLE_GRASS.get(), 7, 3);
-	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_FLOOR = new SinglePlantFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 5, 5);
-	public static final Feature<NoFeatureConfig> BLOSSOM_BERRY = new SinglePlantFeature(ModBlocks.BLOSSOM_BERRY.get(), 3, 3);
-	public static final Feature<NoFeatureConfig> BLOOMING_COOKSONIA = new SinglePlantFeature(ModBlocks.BLOOMING_COOKSONIA.get(), 5);
-	public static final Feature<NoFeatureConfig> SALTEAGO = new SinglePlantFeature(ModBlocks.SALTEAGO.get(), 5);
-	public static final Feature<NoFeatureConfig> VAIOLUSH_FERN = new SinglePlantFeature(ModBlocks.VAIOLUSH_FERN.get(), 5);
-	public static final Feature<NoFeatureConfig> FRACTURN = new SinglePlantFeature(ModBlocks.FRACTURN.get(), 5);
-	public static final Feature<NoFeatureConfig> UMBRELLA_MOSS_RARE = new SinglePlantFeature(ModBlocks.UMBRELLA_MOSS.get(), 3);
-	public static final Feature<NoFeatureConfig> CREEPING_MOSS_RARE = new SinglePlantFeature(ModBlocks.CREEPING_MOSS.get(), 3);
-	public static final Feature<NoFeatureConfig> TWISTED_UMBRELLA_MOSS_RARE = new SinglePlantFeature(ModBlocks.TWISTED_UMBRELLA_MOSS.get(), 3);
-	public static final Feature<NoFeatureConfig> LUMECORN = new Lumecorn();
-	public static final Feature<NoFeatureConfig> SMALL_AMARANITA = new SinglePlantFeature(ModBlocks.SMALL_AMARANITA_MUSHROOM.get(), 5, 5);
-	public static final Feature<NoFeatureConfig> GLOBULAGUS = new SinglePlantFeature(ModBlocks.GLOBULAGUS.get(), 5, 3);
-	public static final Feature<NoFeatureConfig> CLAWFERN = new SinglePlantFeature(ModBlocks.CLAWFERN.get(), 5, 4);
-	public static final Feature<NoFeatureConfig> AERIDIUM = new SinglePlantFeature(ModBlocks.AERIDIUM.get(), 5, 4);
-	public static final Feature<NoFeatureConfig> LAMELLARIUM = new SinglePlantFeature(ModBlocks.LAMELLARIUM.get(), 5);
-	public static final Feature<NoFeatureConfig> BOLUX_MUSHROOM = new SinglePlantFeature(ModBlocks.BOLUX_MUSHROOM.get(), 5, 5);
-	public static final Feature<NoFeatureConfig> ORANGO = new SinglePlantFeature(ModBlocks.ORANGO.get(), 5);
-	public static final Feature<NoFeatureConfig> LUTEBUS = new SinglePlantFeature(ModBlocks.LUTEBUS.get(), 5, 2);
-	public static final Feature<NoFeatureConfig> INFLEXIA = new SinglePlantFeature(ModBlocks.INFLEXIA.get(), 7, false, 3);
-	public static final Feature<NoFeatureConfig> FLAMMALIX = new SinglePlantFeature(ModBlocks.FLAMMALIX.get(), 3, false, 7);
+	public static final Feature<NoneFeatureConfiguration> UMBRELLA_MOSS = new DoublePlantFeature(ModBlocks.UMBRELLA_MOSS.get(), ModBlocks.UMBRELLA_MOSS_TALL.get(), 5);
+	public static final Feature<NoneFeatureConfiguration> CREEPING_MOSS = new SinglePlantFeature(ModBlocks.CREEPING_MOSS.get(), 5);
+	public static final Feature<NoneFeatureConfiguration> CHORUS_GRASS = new SinglePlantFeature(ModBlocks.CHORUS_GRASS.get(), 4);
+	public static final Feature<NoneFeatureConfiguration> CHORUS_MUSHROOM = new SinglePlantFeature(ModBlocks.CHORUS_MUSHROOM.get(), 5, 5);
+	public static final Feature<NoneFeatureConfiguration> CRYSTAL_GRASS = new SinglePlantFeature(ModBlocks.CRYSTAL_GRASS.get(), 8, false);
+	public static final Feature<NoneFeatureConfiguration> AMBER_GRASS = new SinglePlantFeature(ModBlocks.AMBER_GRASS.get(), 6);
+	public static final Feature<NoneFeatureConfiguration> AMBER_ROOT = new SinglePlantFeature(ModBlocks.AMBER_ROOT.get(), 5, 5);
+	public static final Feature<NoneFeatureConfiguration> SHADOW_PLANT = new SinglePlantFeature(ModBlocks.SHADOW_PLANT.get(), 6);
+	public static final Feature<NoneFeatureConfiguration> BLUE_VINE = new BlueVineFeature(5);
+	public static final Feature<NoneFeatureConfiguration> MURKWEED = new SinglePlantFeature(ModBlocks.MURKWEED.get(), 3);
+	public static final Feature<NoneFeatureConfiguration> NEEDLEGRASS = new SinglePlantFeature(ModBlocks.NEEDLEGRASS.get(), 3);
+	public static final Feature<NoneFeatureConfiguration> SHADOW_BERRY = new SinglePlantFeature(ModBlocks.SHADOW_BERRY.get(), 2);
+	public static final Feature<NoneFeatureConfiguration> BUSHY_GRASS = new SinglePlantFeature(ModBlocks.BUSHY_GRASS.get(), 8, false);
+	public static final Feature<NoneFeatureConfiguration> BUSHY_GRASS_WG = new SinglePlantFeature(ModBlocks.BUSHY_GRASS.get(), 5);
+	public static final Feature<NoneFeatureConfiguration> LANCELEAF = new LanceleafFeature();
+	public static final Feature<NoneFeatureConfiguration> GLOW_PILLAR = new GlowPillarFeature();
+	public static final Feature<NoneFeatureConfiguration> TWISTED_UMBRELLA_MOSS = new DoublePlantFeature(ModBlocks.TWISTED_UMBRELLA_MOSS.get(), ModBlocks.TWISTED_UMBRELLA_MOSS_TALL.get(), 6);
+	public static final Feature<NoneFeatureConfiguration> JUNGLE_GRASS = new SinglePlantFeature(ModBlocks.JUNGLE_GRASS.get(), 7, 3);
+	public static final Feature<NoneFeatureConfiguration> SMALL_JELLYSHROOM_FLOOR = new SinglePlantFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 5, 5);
+	public static final Feature<NoneFeatureConfiguration> BLOSSOM_BERRY = new SinglePlantFeature(ModBlocks.BLOSSOM_BERRY.get(), 3, 3);
+	public static final Feature<NoneFeatureConfiguration> BLOOMING_COOKSONIA = new SinglePlantFeature(ModBlocks.BLOOMING_COOKSONIA.get(), 5);
+	public static final Feature<NoneFeatureConfiguration> SALTEAGO = new SinglePlantFeature(ModBlocks.SALTEAGO.get(), 5);
+	public static final Feature<NoneFeatureConfiguration> VAIOLUSH_FERN = new SinglePlantFeature(ModBlocks.VAIOLUSH_FERN.get(), 5);
+	public static final Feature<NoneFeatureConfiguration> FRACTURN = new SinglePlantFeature(ModBlocks.FRACTURN.get(), 5);
+	public static final Feature<NoneFeatureConfiguration> UMBRELLA_MOSS_RARE = new SinglePlantFeature(ModBlocks.UMBRELLA_MOSS.get(), 3);
+	public static final Feature<NoneFeatureConfiguration> CREEPING_MOSS_RARE = new SinglePlantFeature(ModBlocks.CREEPING_MOSS.get(), 3);
+	public static final Feature<NoneFeatureConfiguration> TWISTED_UMBRELLA_MOSS_RARE = new SinglePlantFeature(ModBlocks.TWISTED_UMBRELLA_MOSS.get(), 3);
+	public static final Feature<NoneFeatureConfiguration> LUMECORN = new Lumecorn();
+	public static final Feature<NoneFeatureConfiguration> SMALL_AMARANITA = new SinglePlantFeature(ModBlocks.SMALL_AMARANITA_MUSHROOM.get(), 5, 5);
+	public static final Feature<NoneFeatureConfiguration> GLOBULAGUS = new SinglePlantFeature(ModBlocks.GLOBULAGUS.get(), 5, 3);
+	public static final Feature<NoneFeatureConfiguration> CLAWFERN = new SinglePlantFeature(ModBlocks.CLAWFERN.get(), 5, 4);
+	public static final Feature<NoneFeatureConfiguration> AERIDIUM = new SinglePlantFeature(ModBlocks.AERIDIUM.get(), 5, 4);
+	public static final Feature<NoneFeatureConfiguration> LAMELLARIUM = new SinglePlantFeature(ModBlocks.LAMELLARIUM.get(), 5);
+	public static final Feature<NoneFeatureConfiguration> BOLUX_MUSHROOM = new SinglePlantFeature(ModBlocks.BOLUX_MUSHROOM.get(), 5, 5);
+	public static final Feature<NoneFeatureConfiguration> ORANGO = new SinglePlantFeature(ModBlocks.ORANGO.get(), 5);
+	public static final Feature<NoneFeatureConfiguration> LUTEBUS = new SinglePlantFeature(ModBlocks.LUTEBUS.get(), 5, 2);
+	public static final Feature<NoneFeatureConfiguration> INFLEXIA = new SinglePlantFeature(ModBlocks.INFLEXIA.get(), 7, false, 3);
+	public static final Feature<NoneFeatureConfiguration> FLAMMALIX = new SinglePlantFeature(ModBlocks.FLAMMALIX.get(), 3, false, 7);
 
 
 	// SKY PLANTS
-	public static final Feature<NoFeatureConfig> FILALUX = new FilaluxFeature();
+	public static final Feature<NoneFeatureConfiguration> FILALUX = new FilaluxFeature();
 	
 	// WALL PLANTS
-	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 3);
-	public static final Feature<NoFeatureConfig> AURANT_POLYPORE = new WallPlantOnLogFeature(ModBlocks.AURANT_POLYPORE.get(), 3);
-	public static final Feature<NoFeatureConfig> PURPLE_POLYPORE_DENSE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 5);
-	public static final Feature<NoFeatureConfig> TAIL_MOSS = new WallPlantFeature(ModBlocks.TAIL_MOSS.get(), 3);
-	public static final Feature<NoFeatureConfig> TAIL_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.TAIL_MOSS.get(), 4);
-	public static final Feature<NoFeatureConfig> CYAN_MOSS = new WallPlantFeature(ModBlocks.CYAN_MOSS.get(), 3);
-	public static final Feature<NoFeatureConfig> CYAN_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.CYAN_MOSS.get(), 4);
-	public static final Feature<NoFeatureConfig> TWISTED_MOSS = new WallPlantFeature(ModBlocks.TWISTED_MOSS.get(), 6);
-	public static final Feature<NoFeatureConfig> TWISTED_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.TWISTED_MOSS.get(), 6);
-	public static final Feature<NoFeatureConfig> BULB_MOSS = new WallPlantFeature(ModBlocks.BULB_MOSS.get(), 6);
-	public static final Feature<NoFeatureConfig> BULB_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.BULB_MOSS.get(), 6);
-	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_WALL = new WallPlantFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 4);
-	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_WOOD = new WallPlantOnLogFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 4);
-	public static final Feature<NoFeatureConfig> JUNGLE_FERN_WOOD = new WallPlantOnLogFeature(ModBlocks.JUNGLE_FERN.get(), 3);
-	public static final Feature<NoFeatureConfig> RUSCUS = new WallPlantFeature(ModBlocks.RUSCUS.get(), 6);
-	public static final Feature<NoFeatureConfig> RUSCUS_WOOD = new WallPlantOnLogFeature(ModBlocks.RUSCUS.get(), 6);
+	public static final Feature<NoneFeatureConfiguration> PURPLE_POLYPORE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 3);
+	public static final Feature<NoneFeatureConfiguration> AURANT_POLYPORE = new WallPlantOnLogFeature(ModBlocks.AURANT_POLYPORE.get(), 3);
+	public static final Feature<NoneFeatureConfiguration> PURPLE_POLYPORE_DENSE = new WallPlantOnLogFeature(ModBlocks.PURPLE_POLYPORE.get(), 5);
+	public static final Feature<NoneFeatureConfiguration> TAIL_MOSS = new WallPlantFeature(ModBlocks.TAIL_MOSS.get(), 3);
+	public static final Feature<NoneFeatureConfiguration> TAIL_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.TAIL_MOSS.get(), 4);
+	public static final Feature<NoneFeatureConfiguration> CYAN_MOSS = new WallPlantFeature(ModBlocks.CYAN_MOSS.get(), 3);
+	public static final Feature<NoneFeatureConfiguration> CYAN_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.CYAN_MOSS.get(), 4);
+	public static final Feature<NoneFeatureConfiguration> TWISTED_MOSS = new WallPlantFeature(ModBlocks.TWISTED_MOSS.get(), 6);
+	public static final Feature<NoneFeatureConfiguration> TWISTED_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.TWISTED_MOSS.get(), 6);
+	public static final Feature<NoneFeatureConfiguration> BULB_MOSS = new WallPlantFeature(ModBlocks.BULB_MOSS.get(), 6);
+	public static final Feature<NoneFeatureConfiguration> BULB_MOSS_WOOD = new WallPlantOnLogFeature(ModBlocks.BULB_MOSS.get(), 6);
+	public static final Feature<NoneFeatureConfiguration> SMALL_JELLYSHROOM_WALL = new WallPlantFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 4);
+	public static final Feature<NoneFeatureConfiguration> SMALL_JELLYSHROOM_WOOD = new WallPlantOnLogFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 4);
+	public static final Feature<NoneFeatureConfiguration> JUNGLE_FERN_WOOD = new WallPlantOnLogFeature(ModBlocks.JUNGLE_FERN.get(), 3);
+	public static final Feature<NoneFeatureConfiguration> RUSCUS = new WallPlantFeature(ModBlocks.RUSCUS.get(), 6);
+	public static final Feature<NoneFeatureConfiguration> RUSCUS_WOOD = new WallPlantOnLogFeature(ModBlocks.RUSCUS.get(), 6);
 	
 	// VINES
-	public static final Feature<NoFeatureConfig> DENSE_VINE = new VineFeature(ModBlocks.DENSE_VINE.get(), 24);
-	public static final Feature<NoFeatureConfig> TWISTED_VINE = new VineFeature(ModBlocks.TWISTED_VINE.get(), 24);
-	public static final Feature<NoFeatureConfig> BULB_VINE = new VineFeature(ModBlocks.BULB_VINE.get(), 24);
-	public static final Feature<NoFeatureConfig> JUNGLE_VINE = new VineFeature(ModBlocks.JUNGLE_VINE.get(), 24);
+	public static final Feature<NoneFeatureConfiguration> DENSE_VINE = new VineFeature(ModBlocks.DENSE_VINE.get(), 24);
+	public static final Feature<NoneFeatureConfiguration> TWISTED_VINE = new VineFeature(ModBlocks.TWISTED_VINE.get(), 24);
+	public static final Feature<NoneFeatureConfiguration> BULB_VINE = new VineFeature(ModBlocks.BULB_VINE.get(), 24);
+	public static final Feature<NoneFeatureConfiguration> JUNGLE_VINE = new VineFeature(ModBlocks.JUNGLE_VINE.get(), 24);
 	
 	// CEIL PLANTS
-	public static final Feature<NoFeatureConfig> SMALL_JELLYSHROOM_CEIL = new SingleInvertedScatterFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 8);
+	public static final Feature<NoneFeatureConfiguration> SMALL_JELLYSHROOM_CEIL = new SingleInvertedScatterFeature(ModBlocks.SMALL_JELLYSHROOM.get(), 8);
 		
 	// TERRAIN
-	public static final Feature<NoFeatureConfig> ROUND_CAVE = new RoundCaveFeature();
-	public static final Feature<NoFeatureConfig> END_LAKE = new EndLakeFeature();
-	public static final Feature<NoFeatureConfig> END_LAKE_RARE = new EndLakeFeature();
-	public static final Feature<NoFeatureConfig> DESERT_LAKE = new DesertLakeFeature();
-	public static final Feature<NoFeatureConfig> SPIRE = new SpireFeature();
-	public static final Feature<NoFeatureConfig> FLOATING_SPIRE = new FloatingSpireFeature();
-	public static final Feature<NoFeatureConfig> GEYSER = new GeyserFeature();
-	public static final Feature<NoFeatureConfig> SULPHURIC_LAKE = new SulphuricLakeFeature();
-	public static final Feature<NoFeatureConfig> SULPHURIC_CAVE = new SulphuricCaveFeature();
-	public static final Feature<NoFeatureConfig> SURFACE_VENT = new SurfaceVentFeature();
-	public static final Feature<NoFeatureConfig> ICE_STAR = new IceStarFeature(5, 15, 10, 25);
-	public static final Feature<NoFeatureConfig> ICE_STAR_SMALL = new IceStarFeature(3, 5, 7, 12);
-	public static final Feature<NoFeatureConfig> OVERWORLD_ISLAND = new OverworldIslandFeature();
-	public static final Feature<NoFeatureConfig> OBSIDIAN_PILLAR_BASEMENT = new ObsidianPillarBasementFeature();
-	public static final Feature<NoFeatureConfig> FALLEN_PILLAR = new FallenPillarFeature();
-	public static final Feature<NoFeatureConfig> OBSIDIAN_BOULDER = new ObsidianBoulderFeature();
-	public static final Feature<NoFeatureConfig> TUNEL_CAVE = new TunelCaveFeature();
-	public static final Feature<NoFeatureConfig> THIN_ARCH = new ThinArchFeature(ModBlocks.UMBRALITH.stone.get());
-	public static final Feature<NoFeatureConfig> UMBRALITH_ARCH = new ArchFeature(ModBlocks.UMBRALITH.stone.get(), UmbraSurfaceBuilder::getSurfaceState);
+	public static final Feature<NoneFeatureConfiguration> ROUND_CAVE = new RoundCaveFeature();
+	public static final Feature<NoneFeatureConfiguration> END_LAKE = new EndLakeFeature();
+	public static final Feature<NoneFeatureConfiguration> END_LAKE_RARE = new EndLakeFeature();
+	public static final Feature<NoneFeatureConfiguration> DESERT_LAKE = new DesertLakeFeature();
+	public static final Feature<NoneFeatureConfiguration> SPIRE = new SpireFeature();
+	public static final Feature<NoneFeatureConfiguration> FLOATING_SPIRE = new FloatingSpireFeature();
+	public static final Feature<NoneFeatureConfiguration> GEYSER = new GeyserFeature();
+	public static final Feature<NoneFeatureConfiguration> SULPHURIC_LAKE = new SulphuricLakeFeature();
+	public static final Feature<NoneFeatureConfiguration> SULPHURIC_CAVE = new SulphuricCaveFeature();
+	public static final Feature<NoneFeatureConfiguration> SURFACE_VENT = new SurfaceVentFeature();
+	public static final Feature<NoneFeatureConfiguration> ICE_STAR = new IceStarFeature(5, 15, 10, 25);
+	public static final Feature<NoneFeatureConfiguration> ICE_STAR_SMALL = new IceStarFeature(3, 5, 7, 12);
+	public static final Feature<NoneFeatureConfiguration> OVERWORLD_ISLAND = new OverworldIslandFeature();
+	public static final Feature<NoneFeatureConfiguration> OBSIDIAN_PILLAR_BASEMENT = new ObsidianPillarBasementFeature();
+	public static final Feature<NoneFeatureConfiguration> FALLEN_PILLAR = new FallenPillarFeature();
+	public static final Feature<NoneFeatureConfiguration> OBSIDIAN_BOULDER = new ObsidianBoulderFeature();
+	public static final Feature<NoneFeatureConfiguration> TUNEL_CAVE = new TunelCaveFeature();
+	public static final Feature<NoneFeatureConfiguration> THIN_ARCH = new ThinArchFeature(ModBlocks.UMBRALITH.stone.get());
+	public static final Feature<NoneFeatureConfiguration> UMBRALITH_ARCH = new ArchFeature(ModBlocks.UMBRALITH.stone.get(), UmbraSurfaceBuilder::getSurfaceState);
 
 
 	// TREES
-	public static final Feature<NoFeatureConfig> MOSSY_GLOWSHROOM = new MossyGlowshroomFeature();
-	public static final Feature<NoFeatureConfig> LACUGROVE = new LacugroveFeature();
-	public static final Feature<NoFeatureConfig> PYTHADENDRON = new PythadendronFeature();
-	public static final Feature<NoFeatureConfig> DRAGON_TREE = new DragonTreeFeature();
-	public static final Feature<NoFeatureConfig> TENANEA = new TenaneaFeature();
-	public static final Feature<NoFeatureConfig> HELIX_TREE = new HelixTreeFeature();
-	public static final Feature<NoFeatureConfig> UMBRELLA_TREE = new UmbrellaTreeFeature();
-	public static final Feature<NoFeatureConfig> JELLYSHROOM = new JellyshroomFeature();
-	public static final Feature<NoFeatureConfig> GIGANTIC_AMARANITA = new GiganticAmaranitaFeature();
-	public static final Feature<NoFeatureConfig> LUCERNIA = new LucerniaFeature();
+	public static final Feature<NoneFeatureConfiguration> MOSSY_GLOWSHROOM = new MossyGlowshroomFeature();
+	public static final Feature<NoneFeatureConfiguration> LACUGROVE = new LacugroveFeature();
+	public static final Feature<NoneFeatureConfiguration> PYTHADENDRON = new PythadendronFeature();
+	public static final Feature<NoneFeatureConfiguration> DRAGON_TREE = new DragonTreeFeature();
+	public static final Feature<NoneFeatureConfiguration> TENANEA = new TenaneaFeature();
+	public static final Feature<NoneFeatureConfiguration> HELIX_TREE = new HelixTreeFeature();
+	public static final Feature<NoneFeatureConfiguration> UMBRELLA_TREE = new UmbrellaTreeFeature();
+	public static final Feature<NoneFeatureConfiguration> JELLYSHROOM = new JellyshroomFeature();
+	public static final Feature<NoneFeatureConfiguration> GIGANTIC_AMARANITA = new GiganticAmaranitaFeature();
+	public static final Feature<NoneFeatureConfiguration> LUCERNIA = new LucerniaFeature();
 	
 	// ORES
-	public static final Feature<OreFeatureConfig> ENDER_ORE = new OreFeature(OreFeatureConfig.CODEC);
-	public static final Feature<OreFeatureConfig> AMBER_ORE = new OreFeature(OreFeatureConfig.CODEC);
-	public static final Feature<OreFeatureConfig> THALLASIUM_ORE = new OreFeature(OreFeatureConfig.CODEC);
-	public static final Feature<NoFeatureConfig> FLAVOLITE_LAYER = new OreLayerFeature(ModBlocks.FLAVOLITE.stone.get().defaultBlockState(), 12, 4, 96);
-	public static final Feature<NoFeatureConfig> VIOLECITE_LAYER = new OreLayerFeature(ModBlocks.VIOLECITE.stone.get().defaultBlockState(), 15, 4, 96);
+	public static final Feature<OreConfiguration> ENDER_ORE = new OreFeature(OreConfiguration.CODEC);
+	public static final Feature<OreConfiguration> AMBER_ORE = new OreFeature(OreConfiguration.CODEC);
+	public static final Feature<OreConfiguration> THALLASIUM_ORE = new OreFeature(OreConfiguration.CODEC);
+	public static final Feature<NoneFeatureConfiguration> FLAVOLITE_LAYER = new OreLayerFeature(ModBlocks.FLAVOLITE.stone.get().defaultBlockState(), 12, 4, 96);
+	public static final Feature<NoneFeatureConfiguration> VIOLECITE_LAYER = new OreLayerFeature(ModBlocks.VIOLECITE.stone.get().defaultBlockState(), 15, 4, 96);
 	
 	// BUILDINGS
-	public static final Feature<NoFeatureConfig> CRASHED_SHIP = new CrashedShipFeature();
-	public static final Feature<NoFeatureConfig> NBT_STRUCTURES = new BiomeNBTStructures();
+	public static final Feature<NoneFeatureConfiguration> CRASHED_SHIP = new CrashedShipFeature();
+	public static final Feature<NoneFeatureConfiguration> NBT_STRUCTURES = new BiomeNBTStructures();
 	
 	// Mobs
-	public static final Feature<NoFeatureConfig> SILK_MOTH_NEST = new SilkMothNestFeature();
+	public static final Feature<NoneFeatureConfiguration> SILK_MOTH_NEST = new SilkMothNestFeature();
 	
 	// Caves
-    public static final Feature<NoFeatureConfig> SMARAGDANT_CRYSTAL = new SmaragdantCrystalFeature();
-    public static final Feature<NoFeatureConfig> SMARAGDANT_CRYSTAL_SHARD = new SingleBlockFeature(ModBlocks.SMARAGDANT_CRYSTAL_SHARD.get());
-    public static final Feature<NoFeatureConfig> BIG_AURORA_CRYSTAL = new BigAuroraCrystalFeature();
-	public static final Feature<NoFeatureConfig> END_STONE_STALACTITE = new StalactiteFeature(true, ModBlocks.END_STONE_STALACTITE.get(), Blocks.END_STONE);
-	public static final Feature<NoFeatureConfig> END_STONE_STALAGMITE = new StalactiteFeature(false, ModBlocks.END_STONE_STALACTITE.get(), Blocks.END_STONE);
-	public static final Feature<NoFeatureConfig> END_STONE_STALACTITE_CAVEMOSS = new StalactiteFeature(true, ModBlocks.END_STONE_STALACTITE_CAVEMOSS.get(), Blocks.END_STONE, ModBlocks.CAVE_MOSS.get());
-	public static final Feature<NoFeatureConfig> END_STONE_STALAGMITE_CAVEMOSS = new StalactiteFeature(false, ModBlocks.END_STONE_STALACTITE_CAVEMOSS.get(), ModBlocks.CAVE_MOSS.get());
-	public static final Feature<NoFeatureConfig> CAVE_BUSH = new BushFeature(ModBlocks.CAVE_BUSH.get(), ModBlocks.CAVE_BUSH.get());
-	public static final Feature<NoFeatureConfig> CAVE_GRASS = new SingleBlockFeature(ModBlocks.CAVE_GRASS.get());
-	public static final Feature<NoFeatureConfig> RUBINEA = new VineFeature(ModBlocks.RUBINEA.get(), 8);
+    public static final Feature<NoneFeatureConfiguration> SMARAGDANT_CRYSTAL = new SmaragdantCrystalFeature();
+    public static final Feature<NoneFeatureConfiguration> SMARAGDANT_CRYSTAL_SHARD = new SingleBlockFeature(ModBlocks.SMARAGDANT_CRYSTAL_SHARD.get());
+    public static final Feature<NoneFeatureConfiguration> BIG_AURORA_CRYSTAL = new BigAuroraCrystalFeature();
+	public static final Feature<NoneFeatureConfiguration> END_STONE_STALACTITE = new StalactiteFeature(true, ModBlocks.END_STONE_STALACTITE.get(), Blocks.END_STONE);
+	public static final Feature<NoneFeatureConfiguration> END_STONE_STALAGMITE = new StalactiteFeature(false, ModBlocks.END_STONE_STALACTITE.get(), Blocks.END_STONE);
+	public static final Feature<NoneFeatureConfiguration> END_STONE_STALACTITE_CAVEMOSS = new StalactiteFeature(true, ModBlocks.END_STONE_STALACTITE_CAVEMOSS.get(), Blocks.END_STONE, ModBlocks.CAVE_MOSS.get());
+	public static final Feature<NoneFeatureConfiguration> END_STONE_STALAGMITE_CAVEMOSS = new StalactiteFeature(false, ModBlocks.END_STONE_STALACTITE_CAVEMOSS.get(), ModBlocks.CAVE_MOSS.get());
+	public static final Feature<NoneFeatureConfiguration> CAVE_BUSH = new BushFeature(ModBlocks.CAVE_BUSH.get(), ModBlocks.CAVE_BUSH.get());
+	public static final Feature<NoneFeatureConfiguration> CAVE_GRASS = new SingleBlockFeature(ModBlocks.CAVE_GRASS.get());
+	public static final Feature<NoneFeatureConfiguration> RUBINEA = new VineFeature(ModBlocks.RUBINEA.get(), 8);
 
 	//Integration
 

@@ -5,46 +5,46 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.init.ModItems;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.network.play.server.SChangeGameStatePacket;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.Level;
 
-public class CubozoaEntity extends AbstractGroupFishEntity {
+public class CubozoaEntity extends AbstractSchoolingFish {
 	public static final int VARIANTS = 2;
-	private static final DataParameter<Byte> VARIANT = EntityDataManager.defineId(CubozoaEntity.class, DataSerializers.BYTE);
-	private static final DataParameter<Byte> SCALE = EntityDataManager.defineId(CubozoaEntity.class, DataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> VARIANT = SynchedEntityData.defineId(CubozoaEntity.class, EntityDataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> SCALE = SynchedEntityData.defineId(CubozoaEntity.class, EntityDataSerializers.BYTE);
 
-	public CubozoaEntity(EntityType<CubozoaEntity> entityType, World world) {
+	public CubozoaEntity(EntityType<CubozoaEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason spawnReason, ILivingEntityData entityData, CompoundNBT entityTag) {
-		ILivingEntityData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, SpawnGroupData entityData, CompoundTag entityTag) {
+		SpawnGroupData data = super.finalizeSpawn(world, difficulty, spawnReason, entityData, entityTag);
 		
 		if (ModBiomes.getFromBiome(world.getBiome(blockPosition())) == ModBiomes.SULPHUR_SPRINGS) 
 		{
@@ -70,14 +70,14 @@ public class CubozoaEntity extends AbstractGroupFishEntity {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT tag) {
+	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putByte("Variant", (byte) getVariant());
 		tag.putByte("Scale", entityData.get(SCALE));
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT tag) {
+	public void readAdditionalSaveData(CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
 		if (tag.contains("Variant")) {
 			this.entityData.set(VARIANT, tag.getByte("Variant"));
@@ -87,7 +87,7 @@ public class CubozoaEntity extends AbstractGroupFishEntity {
 		}
 	}
 
-	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+	public static AttributeSupplier.Builder registerAttributes() {
 		return LivingEntity.createLivingAttributes()
 				.add(Attributes.MAX_HEALTH, 2.0)
 				.add(Attributes.FOLLOW_RANGE, 16.0)
@@ -102,8 +102,8 @@ public class CubozoaEntity extends AbstractGroupFishEntity {
 		return this.entityData.get(SCALE) / 32F + 0.75F;
 	}
 
-	public static boolean canSpawn(EntityType<CubozoaEntity> type, IServerWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
-		AxisAlignedBB box = new AxisAlignedBB(pos).inflate(16);
+	public static boolean canSpawn(EntityType<CubozoaEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason, BlockPos pos, Random random) {
+		AABB box = new AABB(pos).inflate(16);
 		List<CubozoaEntity> list = world.getEntitiesOfClass(CubozoaEntity.class, box, (entity) -> {
 			return true;
 		});
@@ -111,7 +111,7 @@ public class CubozoaEntity extends AbstractGroupFishEntity {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize dimensions) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return dimensions.height * 0.5F;
 	}
 	
@@ -127,7 +127,7 @@ public class CubozoaEntity extends AbstractGroupFishEntity {
 	@Override
 	protected ItemStack getBucketItemStack() {
 		ItemStack bucket = ModItems.BUCKET_CUBOZOA.get().getDefaultInstance();
-		CompoundNBT tag = bucket.getOrCreateTag();
+		CompoundTag tag = bucket.getOrCreateTag();
 		tag.putByte("variant", entityData.get(VARIANT));
 		tag.putByte("scale", entityData.get(SCALE));
 		return bucket;
@@ -139,13 +139,13 @@ public class CubozoaEntity extends AbstractGroupFishEntity {
 	}
 	
 	@Override
-	public void playerTouch(PlayerEntity player) {
-		if (player instanceof ServerPlayerEntity && player.hurt(DamageSource.mobAttack(this), 0.5F)) {
+	public void playerTouch(Player player) {
+		if (player instanceof ServerPlayer && player.hurt(DamageSource.mobAttack(this), 0.5F)) {
 			if (!this.isSilent()) {
-				((ServerPlayerEntity) player).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.PUFFER_FISH_STING, 0.0F));
+				((ServerPlayer) player).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.PUFFER_FISH_STING, 0.0F));
 			}
 			if (random.nextBoolean()) {
-				player.addEffect(new EffectInstance(Effects.POISON, 20, 0));
+				player.addEffect(new MobEffectInstance(MobEffects.POISON, 20, 0));
 			}
 		}
 	}

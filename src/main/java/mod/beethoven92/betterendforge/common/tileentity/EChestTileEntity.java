@@ -1,11 +1,11 @@
 package mod.beethoven92.betterendforge.common.tileentity;
 
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.tileentity.ChestTileEntity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 
-public class EChestTileEntity extends ChestTileEntity {
+public class EChestTileEntity extends ChestBlockEntity {
 	private Block chest = Blocks.AIR;
 	
 	public EChestTileEntity() {

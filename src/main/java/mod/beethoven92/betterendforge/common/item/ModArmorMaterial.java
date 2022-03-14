@@ -5,13 +5,13 @@ import java.util.function.Supplier;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 
-public enum ModArmorMaterial implements IArmorMaterial
+public enum ModArmorMaterial implements ArmorMaterial
 {
 	THALLASIUM(BetterEnd.MOD_ID + ":thallasium", 17, new int[] { 1, 4, 5, 2 }, 12, 
 			SoundEvents.ARMOR_EQUIP_IRON, 0.0F, () -> {
@@ -54,13 +54,13 @@ public enum ModArmorMaterial implements IArmorMaterial
 	}
 	
 	@Override
-	public int getDurabilityForSlot(EquipmentSlotType slotIn) 
+	public int getDurabilityForSlot(EquipmentSlot slotIn) 
 	{
 		return MAX_DAMAGE_ARRAY[slotIn.getIndex()] * this.maxDamageFactor;
 	}
 
 	@Override
-	public int getDefenseForSlot(EquipmentSlotType slotIn) 
+	public int getDefenseForSlot(EquipmentSlot slotIn) 
 	{
 		return damageReductionAmountArray[slotIn.getIndex()];
 	}

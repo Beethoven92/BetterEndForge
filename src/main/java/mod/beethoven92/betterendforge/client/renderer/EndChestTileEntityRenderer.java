@@ -3,36 +3,36 @@ package mod.beethoven92.betterendforge.client.renderer;
 import java.util.HashMap;
 
 import com.google.common.collect.Maps;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import mod.beethoven92.betterendforge.common.tileentity.EChestTileEntity;
-import net.minecraft.block.AbstractChestBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.ChestBlock;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.world.level.block.AbstractChestBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.ChestBlock;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.client.renderer.tileentity.DualBrightnessCallback;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.BlockItem;
-import net.minecraft.state.properties.ChestType;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.tileentity.IChestLid;
-import net.minecraft.tileentity.TileEntityMerger;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.World;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.blockentity.BrightnessCombiner;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.level.block.state.properties.ChestType;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.entity.LidBlockEntity;
+import net.minecraft.world.level.block.DoubleBlockCombiner;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.Level;
 
-public class EndChestTileEntityRenderer extends TileEntityRenderer<EChestTileEntity> {
+public class EndChestTileEntityRenderer extends BlockEntityRenderer<EChestTileEntity> {
 	private static final HashMap<Block, RenderType[]> LAYERS = Maps.newHashMap();
 	private static RenderType[] defaultLayer;
 
@@ -40,50 +40,50 @@ public class EndChestTileEntityRenderer extends TileEntityRenderer<EChestTileEnt
 	private static final int ID_LEFT = 1;
 	private static final int ID_RIGHT = 2;
 
-	private final ModelRenderer partA;
-	private final ModelRenderer partC;
-	private final ModelRenderer partB;
-	private final ModelRenderer partRightA;
-	private final ModelRenderer partRightC;
-	private final ModelRenderer partRightB;
-	private final ModelRenderer partLeftA;
-	private final ModelRenderer partLeftC;
-	private final ModelRenderer partLeftB;
+	private final ModelPart partA;
+	private final ModelPart partC;
+	private final ModelPart partB;
+	private final ModelPart partRightA;
+	private final ModelPart partRightC;
+	private final ModelPart partRightB;
+	private final ModelPart partLeftA;
+	private final ModelPart partLeftC;
+	private final ModelPart partLeftB;
 
-	public EndChestTileEntityRenderer(TileEntityRendererDispatcher blockEntityRenderDispatcher) {
+	public EndChestTileEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher) {
 		super(blockEntityRenderDispatcher);
 
-		this.partC = new ModelRenderer(64, 64, 0, 19);
+		this.partC = new ModelPart(64, 64, 0, 19);
 		this.partC.addBox(1.0F, 0.0F, 1.0F, 14.0F, 9.0F, 14.0F, 0.0F);
-		this.partA = new ModelRenderer(64, 64, 0, 0);
+		this.partA = new ModelPart(64, 64, 0, 0);
 		this.partA.addBox(1.0F, 0.0F, 0.0F, 14.0F, 5.0F, 14.0F, 0.0F);
 		this.partA.y = 9.0F;
 		this.partA.z = 1.0F;
-		this.partB = new ModelRenderer(64, 64, 0, 0);
+		this.partB = new ModelPart(64, 64, 0, 0);
 		this.partB.addBox(7.0F, -1.0F, 15.0F, 2.0F, 4.0F, 1.0F, 0.0F);
 		this.partB.y = 8.0F;
-		this.partRightC = new ModelRenderer(64, 64, 0, 19);
+		this.partRightC = new ModelPart(64, 64, 0, 19);
 		this.partRightC.addBox(1.0F, 0.0F, 1.0F, 15.0F, 9.0F, 14.0F, 0.0F);
-		this.partRightA = new ModelRenderer(64, 64, 0, 0);
+		this.partRightA = new ModelPart(64, 64, 0, 0);
 		this.partRightA.addBox(1.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
 		this.partRightA.y = 9.0F;
 		this.partRightA.z = 1.0F;
-		this.partRightB = new ModelRenderer(64, 64, 0, 0);
+		this.partRightB = new ModelPart(64, 64, 0, 0);
 		this.partRightB.addBox(15.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
 		this.partRightB.y = 8.0F;
-		this.partLeftC = new ModelRenderer(64, 64, 0, 19);
+		this.partLeftC = new ModelPart(64, 64, 0, 19);
 		this.partLeftC.addBox(0.0F, 0.0F, 1.0F, 15.0F, 9.0F, 14.0F, 0.0F);
-		this.partLeftA = new ModelRenderer(64, 64, 0, 0);
+		this.partLeftA = new ModelPart(64, 64, 0, 0);
 		this.partLeftA.addBox(0.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
 		this.partLeftA.y = 9.0F;
 		this.partLeftA.z = 1.0F;
-		this.partLeftB = new ModelRenderer(64, 64, 0, 0);
+		this.partLeftB = new ModelPart(64, 64, 0, 0);
 		this.partLeftB.addBox(0.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
 		this.partLeftB.y = 8.0F;
 	}
 
-	public void render(EChestTileEntity entity, float tickDelta, MatrixStack matrices, IRenderTypeBuffer vertexConsumers, int light, int overlay) {
-		World world = entity.getLevel();
+	public void render(EChestTileEntity entity, float tickDelta, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay) {
+		Level world = entity.getLevel();
 		boolean worldExists = world != null;
 		BlockState blockState = worldExists ? entity.getBlockState() : (BlockState) Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
 		ChestType chestType = blockState.hasProperty(ChestBlock.TYPE) ? (ChestType) blockState.getValue(ChestBlock.TYPE) : ChestType.SINGLE;
@@ -94,7 +94,7 @@ public class EndChestTileEntityRenderer extends TileEntityRenderer<EChestTileEnt
 			AbstractChestBlock<?> abstractChestBlock = (AbstractChestBlock<?>) block;
 			boolean isDouble = chestType != ChestType.SINGLE;
 			float f = ((Direction) blockState.getValue(ChestBlock.FACING)).toYRot();
-			TileEntityMerger.ICallbackWrapper<? extends ChestTileEntity> propertySource;
+			DoubleBlockCombiner.NeighborCombineResult<? extends ChestBlockEntity> propertySource;
 
 			matrices.pushPose();
 			matrices.translate(0.5D, 0.5D, 0.5D);
@@ -104,16 +104,16 @@ public class EndChestTileEntityRenderer extends TileEntityRenderer<EChestTileEnt
 			if (worldExists) {
 				propertySource = abstractChestBlock.combine(blockState, world, entity.getBlockPos(), true);
 			} else {
-				propertySource = TileEntityMerger.ICallback::acceptNone;
+				propertySource = DoubleBlockCombiner.Combiner::acceptNone;
 			}
 
-			float pitch = ((Float2FloatFunction) propertySource.apply(ChestBlock.opennessCombiner((IChestLid) entity))).get(tickDelta);
+			float pitch = ((Float2FloatFunction) propertySource.apply(ChestBlock.opennessCombiner((LidBlockEntity) entity))).get(tickDelta);
 			pitch = 1.0F - pitch;
 			pitch = 1.0F - pitch * pitch * pitch;
 			@SuppressWarnings({ "unchecked", "rawtypes" })
-			int blockLight = ((Int2IntFunction) propertySource.apply(new DualBrightnessCallback())).applyAsInt(light);
+			int blockLight = ((Int2IntFunction) propertySource.apply(new BrightnessCombiner())).applyAsInt(light);
 
-			IVertexBuilder vertexConsumer = getConsumer(vertexConsumers, block, chestType);
+			VertexConsumer vertexConsumer = getConsumer(vertexConsumers, block, chestType);
 
 			if (isDouble) {
 				if (chestType == ChestType.LEFT) {
@@ -129,7 +129,7 @@ public class EndChestTileEntityRenderer extends TileEntityRenderer<EChestTileEnt
 		}
 	}
 
-	private void renderParts(MatrixStack matrices, IVertexBuilder vertices, ModelRenderer modelPart, ModelRenderer modelPart2, ModelRenderer modelPart3, float pitch, int light, int overlay) {
+	private void renderParts(PoseStack matrices, VertexConsumer vertices, ModelPart modelPart, ModelPart modelPart2, ModelPart modelPart3, float pitch, int light, int overlay) {
 		modelPart.xRot = -(pitch * 1.5707964F);
 		modelPart2.xRot = modelPart.xRot;
 		modelPart.render(matrices, vertices, light, overlay);
@@ -149,7 +149,7 @@ public class EndChestTileEntityRenderer extends TileEntityRenderer<EChestTileEnt
 		}
 	}
 
-	public static IVertexBuilder getConsumer(IRenderTypeBuffer provider, Block block, ChestType chestType) {
+	public static VertexConsumer getConsumer(MultiBufferSource provider, Block block, ChestType chestType) {
 		RenderType[] layers = LAYERS.getOrDefault(block, defaultLayer);
 		return provider.getBuffer(getChestTexture(chestType, layers));
 	}

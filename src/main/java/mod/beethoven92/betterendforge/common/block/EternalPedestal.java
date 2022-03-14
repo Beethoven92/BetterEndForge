@@ -5,26 +5,26 @@ import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.rituals.EternalRitual;
 import mod.beethoven92.betterendforge.common.teleporter.EndPortals;
 import mod.beethoven92.betterendforge.common.tileentity.EternalPedestalTileEntity;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class EternalPedestal extends PedestalBlock
 {
@@ -37,13 +37,13 @@ public class EternalPedestal extends PedestalBlock
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-			Hand handIn, BlockRayTraceResult hit)
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player,
+			InteractionHand handIn, BlockHitResult hit)
 	{
-		ActionResultType result = super.use(state, worldIn, pos, player, handIn, hit);
-		if (result.equals(ActionResultType.SUCCESS)) 
+		InteractionResult result = super.use(state, worldIn, pos, player, handIn, hit);
+		if (result.equals(InteractionResult.SUCCESS)) 
 		{
-			TileEntity blockEntity = worldIn.getBlockEntity(pos);
+			BlockEntity blockEntity = worldIn.getBlockEntity(pos);
 			if (blockEntity instanceof EternalPedestalTileEntity) 
 			{
 				EternalPedestalTileEntity pedestal = (EternalPedestalTileEntity) blockEntity;
@@ -87,7 +87,7 @@ public class EternalPedestal extends PedestalBlock
 	}
 	
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
 		BlockState updated = super.updateShape(stateIn, facing, facingState, worldIn, currentPos, facingPos);
@@ -107,7 +107,7 @@ public class EternalPedestal extends PedestalBlock
 	}
 	
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) 
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world) 
 	{
 		return ModTileEntityTypes.ETERNAL_PEDESTAL.get().create();
 	}

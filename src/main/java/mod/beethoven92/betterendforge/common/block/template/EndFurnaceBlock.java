@@ -1,17 +1,17 @@
 package mod.beethoven92.betterendforge.common.block.template;
 
 import mod.beethoven92.betterendforge.common.tileentity.EndFurnaceTileEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FurnaceBlock;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.FurnaceBlock;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.MenuProvider;
 import net.minecraft.stats.Stats;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 
-import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class EndFurnaceBlock extends FurnaceBlock
 {
@@ -27,18 +27,18 @@ public class EndFurnaceBlock extends FurnaceBlock
 	}
 	
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) 
+	public BlockEntity createTileEntity(BlockState state, BlockGetter world) 
 	{
 		return new EndFurnaceTileEntity();
 	}
 	
 	@Override
-	protected void openContainer(World worldIn, BlockPos pos, PlayerEntity player) 
+	protected void openContainer(Level worldIn, BlockPos pos, Player player) 
 	{
-		TileEntity tileentity = worldIn.getBlockEntity(pos);
+		BlockEntity tileentity = worldIn.getBlockEntity(pos);
 	    if (tileentity instanceof EndFurnaceTileEntity) 
 	    {
-	    	player.openMenu((INamedContainerProvider)tileentity);
+	    	player.openMenu((MenuProvider)tileentity);
 	        player.awardStat(Stats.INTERACT_WITH_FURNACE);
 	    }
 	}
