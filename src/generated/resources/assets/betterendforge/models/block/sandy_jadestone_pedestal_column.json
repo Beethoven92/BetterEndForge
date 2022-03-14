@@ -1,8 +1,0 @@
-{
-  "parent": "betterendforge:block/pedestal_column",
-  "textures": {
-    "base": "betterendforge:block/sandy_jadestone_polished",
-    "pillar": "betterendforge:block/sandy_jadestone_pillar_side",
-    "bottom": "betterendforge:block/sandy_jadestone_polished"
-  }
-}

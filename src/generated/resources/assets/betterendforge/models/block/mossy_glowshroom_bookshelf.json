@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "side": "betterendforge:block/mossy_glowshroom_bookshelf",
-    "end": "betterendforge:block/mossy_glowshroom_planks"
-  }
-}

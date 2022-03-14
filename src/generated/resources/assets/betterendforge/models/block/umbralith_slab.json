@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "side": "betterendforge:block/umbralith",
-    "bottom": "betterendforge:block/umbralith",
-    "top": "betterendforge:block/umbralith"
-  }
-}
