@@ -30,7 +30,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 	@Override
 	protected void addTags() 
 	{
-		ModBlocks.BLOCKS.values().forEach((block) -> {
+		ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach((block) -> {
 			if (block instanceof TerrainBlock)
 			{
 				tag(BlockTags.NYLIUM).add(block);
@@ -53,32 +53,30 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 				tag(BlockTags.FLOWER_POTS).add(block);
 			}
 		});
-
-
 				
 		// Misc Forge tags
-		tag(Tags.Blocks.ORES).add(ModBlocks.ENDER_ORE);
-		tag(Tags.Blocks.ORES).add(ModBlocks.AMBER_ORE);
+		tag(Tags.Blocks.ORES).add(ModBlocks.ENDER_ORE.get());
+		tag(Tags.Blocks.ORES).add(ModBlocks.AMBER_ORE.get());
 		
-		tag(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK);
-		tag(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.AMBER_BLOCK);
+		tag(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get());
+		tag(Tags.Blocks.STORAGE_BLOCKS).add(ModBlocks.AMBER_BLOCK.get());
 		
 		// Misc Minecraft tags
-		tag(BlockTags.BEACON_BASE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK);
+		tag(BlockTags.BEACON_BASE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get());
 		
-		tag(BlockTags.ICE).add(ModBlocks.EMERALD_ICE);
-		tag(BlockTags.ICE).add(ModBlocks.DENSE_EMERALD_ICE);
-		tag(BlockTags.ICE).add(ModBlocks.ANCIENT_EMERALD_ICE);
+		tag(BlockTags.ICE).add(ModBlocks.EMERALD_ICE.get());
+		tag(BlockTags.ICE).add(ModBlocks.DENSE_EMERALD_ICE.get());
+		tag(BlockTags.ICE).add(ModBlocks.ANCIENT_EMERALD_ICE.get());
 		
-		tag(BlockTags.ANVIL).add(ModBlocks.AETERNIUM_ANVIL);
+		tag(BlockTags.ANVIL).add(ModBlocks.AETERNIUM_ANVIL.get());
 		
-		tag(BlockTags.SLABS).add(ModBlocks.DRAGON_BONE_SLAB);
-		tag(BlockTags.SLABS).add(ModBlocks.NEON_CACTUS_BLOCK_SLAB);
-		tag(BlockTags.WOODEN_SLABS).add(ModBlocks.NEON_CACTUS_BLOCK_SLAB);
+		tag(BlockTags.SLABS).add(ModBlocks.DRAGON_BONE_SLAB.get());
+		tag(BlockTags.SLABS).add(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get());
+		tag(BlockTags.WOODEN_SLABS).add(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get());
 
-		tag(BlockTags.STAIRS).add(ModBlocks.DRAGON_BONE_STAIRS);
-		tag(BlockTags.STAIRS).add(ModBlocks.NEON_CACTUS_BLOCK_STAIRS);
-		tag(BlockTags.WOODEN_STAIRS).add(ModBlocks.NEON_CACTUS_BLOCK_STAIRS);
+		tag(BlockTags.STAIRS).add(ModBlocks.DRAGON_BONE_STAIRS.get());
+		tag(BlockTags.STAIRS).add(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get());
+		tag(BlockTags.WOODEN_STAIRS).add(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get());
 		
 		// WOODEN MATERIALS
 		registerWoodenMaterialTags(ModBlocks.MOSSY_GLOWSHROOM);
@@ -108,13 +106,13 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 	
 	private void registerWoodenMaterialTags(WoodenMaterial material)
 	{
-		tag(material.logBlockTag).add(material.log, material.bark, material.log_stripped, material.bark_stripped);
+		tag(material.logBlockTag).add(material.log.get(), material.bark.get(), material.log_stripped.get(), material.bark_stripped.get());
 		
-		tag(BlockTags.PLANKS).add(material.planks);
+		tag(BlockTags.PLANKS).add(material.planks.get());
 		
-		tag(BlockTags.LOGS).add(material.log, material.bark, material.log_stripped, material.bark_stripped);
+		tag(BlockTags.LOGS).add(material.log.get(), material.bark.get(), material.log_stripped.get(), material.bark_stripped.get());
 		
-		tag(BlockTags.LOGS_THAT_BURN).add(material.log, material.bark, material.log_stripped, material.bark_stripped);
+		tag(BlockTags.LOGS_THAT_BURN).add(material.log.get(), material.bark.get(), material.log_stripped.get(), material.bark_stripped.get());
 		
 		tag(BlockTags.BUTTONS).add(material.button.get());
 		tag(BlockTags.WOODEN_BUTTONS).add(material.button.get());
