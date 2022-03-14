@@ -54,26 +54,26 @@ public class ModItemTagsProvider extends ItemTagsProvider
 		});
 		
 		// Misc Forge tags
-		tag(Tags.Items.DUSTS).add(ModItems.ENDER_DUST.get());
+		tag(Tags.Items.DUSTS).add(ModItems.ENDER_DUST);
 
-		tag(Tags.Items.INGOTS).add(ModItems.AETERNIUM_INGOT.get());
+		tag(Tags.Items.INGOTS).add(ModItems.AETERNIUM_INGOT);
 		
-		tag(Tags.Items.MUSHROOMS).add(ModBlocks.BOLUX_MUSHROOM.get().asItem());
-		tag(Tags.Items.MUSHROOMS).add(ModItems.CHORUS_MUSHROOM_RAW.get());
+		tag(Tags.Items.MUSHROOMS).add(ModBlocks.BOLUX_MUSHROOM.asItem());
+		tag(Tags.Items.MUSHROOMS).add(ModItems.CHORUS_MUSHROOM_RAW);
 		
-		tag(Tags.Items.ORES).add(ModBlocks.ENDER_ORE.get().asItem());
-		tag(Tags.Items.ORES).add(ModBlocks.AMBER_ORE.get().asItem());
+		tag(Tags.Items.ORES).add(ModBlocks.ENDER_ORE.asItem());
+		tag(Tags.Items.ORES).add(ModBlocks.AMBER_ORE.asItem());
 		
-		tag(Tags.Items.SEEDS).add(ModBlocks.END_LOTUS_SEED.get().asItem());
+		tag(Tags.Items.SEEDS).add(ModBlocks.END_LOTUS_SEED.asItem());
 		
-		tag(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.get().asItem());
-		tag(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AMBER_BLOCK.get().asItem());
+		tag(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AETERNIUM_BLOCK.asItem());
+		tag(Tags.Items.STORAGE_BLOCKS).add(ModBlocks.AMBER_BLOCK.asItem());
 		
-		tag(ItemTags.createOptional(frl("cooked_fishes"))).add(ModItems.END_FISH_COOKED.get());
-		tag(ItemTags.createOptional(frl("fruits"))).add(ModItems.BLOSSOM_BERRY.get(), ModItems.SHADOW_BERRY_RAW.get());
-		tag(ItemTags.createOptional(frl("ice"))).add(ModBlocks.ANCIENT_EMERALD_ICE.get().asItem(), ModBlocks.DENSE_EMERALD_ICE.get().asItem(), ModBlocks.EMERALD_ICE.get().asItem());
-		tag(ItemTags.createOptional(frl("raw_fishes"))).add(ModItems.END_FISH_RAW.get());
-		tag(ItemTags.createOptional(frl("saplings"))).add(ModBlocks.DRAGON_TREE_SAPLING.get().asItem(), ModBlocks.HELIX_TREE_SAPLING.get().asItem(), ModBlocks.HYDRALUX_SAPLING.get().asItem(), ModBlocks.LACUGROVE_SAPLING.get().asItem(), ModBlocks.LUCERNIA_SAPLING.get().asItem(), ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get().asItem(), ModBlocks.PYTHADENDRON_SAPLING.get().asItem(), ModBlocks.TENANEA_SAPLING.get().asItem(), ModBlocks.UMBRELLA_TREE_SAPLING.get().asItem());
+		tag(ItemTags.createOptional(frl("cooked_fishes"))).add(ModItems.END_FISH_COOKED);
+		tag(ItemTags.createOptional(frl("fruits"))).add(ModItems.BLOSSOM_BERRY, ModItems.SHADOW_BERRY_RAW);
+		tag(ItemTags.createOptional(frl("ice"))).add(ModBlocks.ANCIENT_EMERALD_ICE.asItem(), ModBlocks.DENSE_EMERALD_ICE.asItem(), ModBlocks.EMERALD_ICE.asItem());
+		tag(ItemTags.createOptional(frl("raw_fishes"))).add(ModItems.END_FISH_RAW);
+		tag(ItemTags.createOptional(frl("saplings"))).add(ModBlocks.DRAGON_TREE_SAPLING.asItem(), ModBlocks.HELIX_TREE_SAPLING.get().asItem(), ModBlocks.HYDRALUX_SAPLING.get().asItem(), ModBlocks.LACUGROVE_SAPLING.get().asItem(), ModBlocks.LUCERNIA_SAPLING.get().asItem(), ModBlocks.MOSSY_GLOWSHROOM_SAPLING.get().asItem(), ModBlocks.PYTHADENDRON_SAPLING.get().asItem(), ModBlocks.TENANEA_SAPLING.get().asItem(), ModBlocks.UMBRELLA_TREE_SAPLING.get().asItem());
 		tag(ItemTags.createOptional(frl("vegetables"))).add(ModItems.AMBER_ROOT_RAW.get());
 		
 		// Misc Minecraft tags

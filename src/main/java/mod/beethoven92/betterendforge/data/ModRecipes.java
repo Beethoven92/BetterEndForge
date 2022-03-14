@@ -47,17 +47,17 @@ public class ModRecipes extends RecipeProvider
 	protected void buildShapelessRecipes(Consumer<FinishedRecipe> consumer) 
 	{
 		// BLOCKS
-	    ShapedRecipeBuilder.shaped(ModBlocks.ENDER_BLOCK.get()).define('#', Items.ENDER_PEARL).pattern("##").pattern("##").unlockedBy("has_ender_pearl", has(Items.ENDER_PEARL)).save(consumer);	    
-	    ShapelessRecipeBuilder.shapeless(Items.ENDER_PEARL, 4).requires(ModBlocks.ENDER_BLOCK.get()).unlockedBy("has_ender_block", has(ModBlocks.ENDER_BLOCK.get())).save(consumer, rl("ender_pearl_from_ender_block"));
+	    ShapedRecipeBuilder.shaped(ModBlocks.ENDER_BLOCK).define('#', Items.ENDER_PEARL).pattern("##").pattern("##").unlockedBy("has_ender_pearl", has(Items.ENDER_PEARL)).save(consumer);
+	    ShapelessRecipeBuilder.shapeless(Items.ENDER_PEARL, 4).requires(ModBlocks.ENDER_BLOCK).unlockedBy("has_ender_block", has(ModBlocks.ENDER_BLOCK)).save(consumer, rl("ender_pearl_from_ender_block"));
 	    
-	    ShapedRecipeBuilder.shaped(ModBlocks.HYDRALUX_PETAL_BLOCK.get()).define('#', ModItems.HYDRALUX_PETAL.get()).pattern("##").pattern("##").unlockedBy("has_hydralux_petal", has(ModItems.HYDRALUX_PETAL.get())).save(consumer);
+	    ShapedRecipeBuilder.shaped(ModBlocks.HYDRALUX_PETAL_BLOCK).define('#', ModItems.HYDRALUX_PETAL).pattern("##").pattern("##").unlockedBy("has_hydralux_petal", has(ModItems.HYDRALUX_PETAL)).save(consumer);
 	    
-	    ShapedRecipeBuilder.shaped(ModBlocks.AMBER_BLOCK.get()).define('#', ModItems.AMBER_GEM.get()).pattern("##").pattern("##").unlockedBy("has_amber_gem", has(ModItems.AMBER_GEM.get())).save(consumer);
-	    ShapelessRecipeBuilder.shapeless(ModItems.AMBER_GEM.get(), 4).requires(ModBlocks.AMBER_BLOCK.get()).unlockedBy("has_amber_block", has(ModBlocks.AMBER_BLOCK.get())).save(consumer, rl("amber_gem_from_amber_block"));
+	    ShapedRecipeBuilder.shaped(ModBlocks.AMBER_BLOCK).define('#', ModItems.AMBER_GEM).pattern("##").pattern("##").unlockedBy("has_amber_gem", has(ModItems.AMBER_GEM)).save(consumer);
+	    ShapelessRecipeBuilder.shapeless(ModItems.AMBER_GEM, 4).requires(ModBlocks.AMBER_BLOCK).unlockedBy("has_amber_block", has(ModBlocks.AMBER_BLOCK)).save(consumer, rl("amber_gem_from_amber_block"));
 	    
-	    ShapedRecipeBuilder.shaped(ModBlocks.AURORA_CRYSTAL.get()).define('#', ModItems.CRYSTAL_SHARDS.get()).pattern("##").pattern("##").unlockedBy("has_crystal_shard", has(ModItems.CRYSTAL_SHARDS.get())).save(consumer);
+	    ShapedRecipeBuilder.shaped(ModBlocks.AURORA_CRYSTAL).define('#', ModItems.CRYSTAL_SHARDS).pattern("##").pattern("##").unlockedBy("has_crystal_shard", has(ModItems.CRYSTAL_SHARDS)).save(consumer);
 	    
-	    ShapedRecipeBuilder.shaped(ModBlocks.END_LOTUS.log.get()).define('#', ModBlocks.END_LOTUS_STEM.get()).pattern("##").pattern("##").unlockedBy("has_end_lotus_stem", has(ModBlocks.END_LOTUS_STEM.get())).save(consumer);
+	    ShapedRecipeBuilder.shaped(ModBlocks.END_LOTUS.log).define('#', ModBlocks.END_LOTUS_STEM.get()).pattern("##").pattern("##").unlockedBy("has_end_lotus_stem", has(ModBlocks.END_LOTUS_STEM.get())).save(consumer);
 
 	    ShapedRecipeBuilder.shaped(ModBlocks.END_STONE_FURNACE.get()).define('#', Blocks.END_STONE).pattern("###").pattern("# #").pattern("###").group("end_stone_furnaces").unlockedBy("has_end_stone", has(Blocks.END_STONE)).save(consumer);
 	    

@@ -64,20 +64,20 @@ public class ModBlockStates extends BlockStateProvider
 	{
 		// BLOCKS
 		// BlockItem handled in item model provider
-		chandelierBlock(ModBlocks.IRON_CHANDELIER.get());
+		chandelierBlock(ModBlocks.IRON_CHANDELIER);
 		// BlockItem handled in item model provider
-		chandelierBlock(ModBlocks.GOLD_CHANDELIER.get());
+		chandelierBlock(ModBlocks.GOLD_CHANDELIER);
 		
-		furnaceBlock(ModBlocks.END_STONE_FURNACE.get(), "end_stone");
-		makeBlockItemFromExistingModel(ModBlocks.END_STONE_FURNACE.get(), "end_stone_furnace");
+		furnaceBlock(ModBlocks.END_STONE_FURNACE, "end_stone");
+		makeBlockItemFromExistingModel(ModBlocks.END_STONE_FURNACE, "end_stone_furnace");
 		
-		simpleBlock(ModBlocks.MISSING_TILE.get());
-		makeBlockItemFromExistingModel(ModBlocks.MISSING_TILE.get());
+		simpleBlock(ModBlocks.MISSING_TILE);
+		makeBlockItemFromExistingModel(ModBlocks.MISSING_TILE);
 		
 		// BlockItem handled in item model provider
-		stalactiteBlock(ModBlocks.END_STONE_STALACTITE.get());
+		stalactiteBlock(ModBlocks.END_STONE_STALACTITE);
 		// BlockItem handled in item model provider
-		stalactiteBlock(ModBlocks.END_STONE_STALACTITE_CAVEMOSS.get());
+		stalactiteBlock(ModBlocks.END_STONE_STALACTITE_CAVEMOSS);
 		
 		// WOODEN MATERIALS
 		registerWoodenMaterialBlockStates(ModBlocks.MOSSY_GLOWSHROOM);
@@ -107,7 +107,7 @@ public class ModBlockStates extends BlockStateProvider
 		
 		// COLORED MATERIALS
 		registerColoredMaterialBlockStates(ModBlocks.HYDRALUX_PETAL_BLOCK_COLORED, "block_petal_colored");
-		bulbLanterns("iron", ModBlocks.IRON_BULB_LANTERN.get(), ModBlocks.IRON_BULB_LANTERN_COLORED);
+		bulbLanterns("iron", ModBlocks.IRON_BULB_LANTERN, ModBlocks.IRON_BULB_LANTERN_COLORED);
 		
 		// PEDESTALS
 		registerPedestals();

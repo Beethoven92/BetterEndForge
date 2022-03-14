@@ -61,10 +61,10 @@ public class ModItemModels extends ItemModelProvider
 		registerMetalMaterialItemModels(ModBlocks.THALLASIUM);
 		registerMetalMaterialItemModels(ModBlocks.TERMINITE);
 		
-		simpleItem(ModItems.MUSIC_DISC_ENDSEEKER.get());
-		simpleItem(ModItems.MUSIC_DISC_EO_DRACONA.get());
-		simpleItem(ModItems.MUSIC_DISC_GRASPING_AT_STARS.get());
-		simpleItem(ModItems.MUSIC_DISC_STRANGE_AND_ALIEN.get());
+		simpleItem(ModItems.MUSIC_DISC_ENDSEEKER);
+		simpleItem(ModItems.MUSIC_DISC_EO_DRACONA);
+		simpleItem(ModItems.MUSIC_DISC_GRASPING_AT_STARS);
+		simpleItem(ModItems.MUSIC_DISC_STRANGE_AND_ALIEN);
 	}
 	
 	private ItemModelBuilder simpleItem(Item item) {

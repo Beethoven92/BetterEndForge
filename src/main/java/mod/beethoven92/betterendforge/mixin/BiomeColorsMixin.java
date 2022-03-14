@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.util.Direction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockPos.MutableBlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;

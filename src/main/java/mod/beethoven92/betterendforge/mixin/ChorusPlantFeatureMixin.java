@@ -16,7 +16,6 @@ import mod.beethoven92.betterendforge.config.CommonConfig;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ChorusFlowerBlock;
-import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkGenerator;

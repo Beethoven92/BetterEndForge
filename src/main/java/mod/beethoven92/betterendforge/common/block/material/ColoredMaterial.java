@@ -9,19 +9,18 @@ import mod.beethoven92.betterendforge.common.block.IDyedBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.DyeColor;
-import net.minecraftforge.fml.RegistryObject;
 
 public class ColoredMaterial
 {
-	public final Map<DyeColor, RegistryObject<Block>> dyedBlocks = Maps.newEnumMap(DyeColor.class);
+	public final Map<DyeColor, Block> dyedBlocks = Maps.newEnumMap(DyeColor.class);
 	
 	public final boolean craftEight;
 	
-	public final RegistryObject<Block> craftMaterial;
+	public final Block craftMaterial;
 	
 	public final String name;
 
-	public ColoredMaterial(String name, Supplier<? extends IDyedBlock> source, RegistryObject<Block> craftMaterial, boolean craftEight)
+	public ColoredMaterial(String name, Supplier<? extends IDyedBlock> source, Block craftMaterial, boolean craftEight)
 	{	
 		this.craftEight = craftEight;
 		
@@ -33,7 +32,7 @@ public class ColoredMaterial
 		{
 			String coloredName = name + "_" + color.getSerializedName();
 
-			RegistryObject<Block> block = ModBlocks.registerBlockWithDefaultItem(coloredName, () -> source.get().createFromColor(color));
+			Block block = ModBlocks.registerBlockWithDefaultItem(coloredName, source.get().createFromColor(color));
 			
 			dyedBlocks.put(color, block);
 		}
@@ -41,11 +40,11 @@ public class ColoredMaterial
 	
 	public Block[] getBlocks()
 	{
-		return dyedBlocks.values().stream().map(RegistryObject::get).toArray(Block[]::new);
+		return dyedBlocks.values().toArray(Block[]::new);
 	}
 	
 	public Block getByColor(DyeColor color) 
 	{
-		return dyedBlocks.get(color).get();
+		return dyedBlocks.get(color);
 	}
 }

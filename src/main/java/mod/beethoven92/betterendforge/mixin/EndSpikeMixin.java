@@ -6,14 +6,7 @@ import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.WorldDataAPI;
 import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.PaneBlock;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.EnderCrystalEntity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IServerWorld;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -21,13 +14,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import mod.beethoven92.betterendforge.config.CommonConfig;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.SpikeFeature;
-import net.minecraft.world.gen.feature.EndSpikeFeatureConfig;
 
 @Mixin(SpikeFeature.EndSpike.class)
 public abstract class EndSpikeMixin

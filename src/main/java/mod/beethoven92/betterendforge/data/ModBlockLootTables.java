@@ -61,16 +61,16 @@ public class ModBlockLootTables extends BlockLoot {
 	@Override
 	protected void addTables() {
 		// BLOCKS
-		anvilLootTable((EndAnvilBlock) ModBlocks.AETERNIUM_ANVIL.get());
+		anvilLootTable((EndAnvilBlock) ModBlocks.AETERNIUM_ANVIL);
 
-		add(ModBlocks.RESPAWN_OBELISK.get(), (block) -> {
+		add(ModBlocks.RESPAWN_OBELISK, (block) -> {
 			return createSinglePropConditionTable(block, RespawnObeliskBlock.SHAPE, TripleShape.BOTTOM);
 		});
 
-		dropSelf(ModBlocks.HYDRALUX_PETAL_BLOCK.get());
+		dropSelf(ModBlocks.HYDRALUX_PETAL_BLOCK);
 
-		dropSelf(ModBlocks.DENSE_SNOW.get());
-		dropWhenSilkTouch(ModBlocks.EMERALD_ICE.get());
+		dropSelf(ModBlocks.DENSE_SNOW);
+		dropWhenSilkTouch(ModBlocks.EMERALD_ICE);
 		dropSelf(ModBlocks.DENSE_EMERALD_ICE.get());
 		dropSelf(ModBlocks.ANCIENT_EMERALD_ICE.get());
 
