@@ -23,14 +23,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ChestBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModTileEntityTypes 
 {
 	public static final DeferredRegister<BlockEntityType<?>> TILE_ENTITY_TYPES =
-			DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, BetterEnd.MOD_ID);
+			DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, BetterEnd.MOD_ID);
 
 	public static final RegistryObject<BlockEntityType<PedestalTileEntity>> PEDESTAL =
 			TILE_ENTITY_TYPES.register("pedestal_tile_entity", 

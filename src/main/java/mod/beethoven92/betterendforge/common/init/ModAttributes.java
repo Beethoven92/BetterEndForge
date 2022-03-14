@@ -3,8 +3,9 @@ package mod.beethoven92.betterendforge.common.init;
 import mod.beethoven92.betterendforge.BetterEnd;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import net.minecraftforge.fml.RegistryObject;
+
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModAttributes {
 	public static final DeferredRegister<Attribute> ATTRIBUTES = DeferredRegister.create(Attribute.class,

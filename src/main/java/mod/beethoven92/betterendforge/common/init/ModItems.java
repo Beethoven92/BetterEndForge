@@ -13,13 +13,14 @@ import mod.beethoven92.betterendforge.common.item.ModItemTier;
 import mod.beethoven92.betterendforge.common.item.ModSpawnEggItem;
 import mod.beethoven92.betterendforge.common.item.UmbrellaClusterJuiceItem;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.Block;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.MobBucketItem;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.item.*;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -29,7 +30,6 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.item.FishBucketItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -40,6 +40,7 @@ import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.WaterLilyBlockItem;
+import org.lwjgl.system.CallbackI;
 
 public class ModItems 
 {
@@ -120,8 +121,8 @@ public class ModItems
 	public final static RegistryObject<Item> UMBRELLA_CLUSTER_JUICE = ITEMS.register("umbrella_cluster_juice", () -> new UmbrellaClusterJuiceItem(new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB).stacksTo(1).food(new FoodProperties.Builder().nutrition(5).saturationMod(0.7F).build())));
 	
 	// MISC ITEMS
-	public final static RegistryObject<Item> BUCKET_END_FISH = ITEMS.register("bucket_end_fish", () -> new FishBucketItem(() -> ModEntityTypes.END_FISH.get(), () -> Fluids.WATER, new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB).stacksTo(1)));
-	public final static RegistryObject<Item> BUCKET_CUBOZOA = ITEMS.register("bucket_cubozoa", () -> new FishBucketItem(() -> ModEntityTypes.CUBOZOA.get(), () -> Fluids.WATER, new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB).stacksTo(1)));
+	public final static RegistryObject<Item> BUCKET_END_FISH = ITEMS.register("bucket_end_fish", () -> new MobBucketItem(() -> ModEntityTypes.END_FISH.get(), () -> Fluids.WATER, () -> SoundEvents.BUCKET_FILL, new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB).stacksTo(1)));
+	public final static RegistryObject<Item> BUCKET_CUBOZOA = ITEMS.register("bucket_cubozoa", () -> new MobBucketItem(() -> ModEntityTypes.CUBOZOA.get(), () -> Fluids.WATER, () -> SoundEvents.BUCKET_FILL, new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB).stacksTo(1)));
 	public final static RegistryObject<Item> GUIDE_BOOK = ITEMS.register("guidebook", () -> new GuideBookItem(new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB).stacksTo(1)));
 	public final static RegistryObject<Item> FLAMAEA = ITEMS.register("flamaea", () -> new WaterLilyBlockItem(ModBlocks.FLAMAEA.get(), new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB)));
 	
@@ -139,7 +140,7 @@ public class ModItems
 	public final static RegistryObject<BlockItem> CHARCOAL_BLOCK = ITEMS.register("charcoal_block", () -> new BlockItem(ModBlocks.CHARCOAL_BLOCK.get(), new Item.Properties().tab(ModCreativeTabs.CREATIVE_TAB))
 	{
 		@Override
-		public int getBurnTime(ItemStack itemStack) {
+		public int getBurnTime(ItemStack itemStack, RecipeType<?> type) {
 			return 14400;
 	    }
 	});

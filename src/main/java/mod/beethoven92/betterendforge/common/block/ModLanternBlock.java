@@ -2,8 +2,8 @@ package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.Lantern;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -15,7 +15,7 @@ import net.minecraft.world.level.BlockGetter;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class ModLanternBlock extends Lantern {
+public class ModLanternBlock extends LanternBlock {
 	private static final VoxelShape SHAPE_CEIL = Block.box(3, 1, 3, 13, 16, 13);
 	private static final VoxelShape SHAPE_FLOOR = Block.box(3, 0, 3, 13, 15, 13);
 	private static final Vec3i[] COLORS = AuroraCrystalBlock.COLORS;
@@ -26,7 +26,7 @@ public class ModLanternBlock extends Lantern {
 
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-		return state.getValue(Lantern.HANGING) ? SHAPE_CEIL : SHAPE_FLOOR;
+		return state.getValue(LanternBlock.HANGING) ? SHAPE_CEIL : SHAPE_FLOOR;
 	}
 
 	public static int getBlockColor(BlockState state, BlockAndTintGetter world, BlockPos pos, int tintIndex) {

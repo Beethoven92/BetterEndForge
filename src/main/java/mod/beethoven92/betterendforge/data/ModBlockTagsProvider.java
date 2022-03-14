@@ -1,6 +1,7 @@
 package mod.beethoven92.betterendforge.data;
 
 import mod.beethoven92.betterendforge.BetterEnd;
+import mod.beethoven92.betterendforge.common.block.BulbVineLanternBlock;
 import mod.beethoven92.betterendforge.common.block.TerrainBlock;
 import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
 import mod.beethoven92.betterendforge.common.block.material.StoneMaterial;
@@ -17,7 +18,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.versions.forge.ForgeVersion;
 
 public class ModBlockTagsProvider extends BlockTagsProvider
@@ -52,7 +53,14 @@ public class ModBlockTagsProvider extends BlockTagsProvider
 			{
 				tag(BlockTags.FLOWER_POTS).add(block);
 			}
+			if (block instanceof BulbVineLanternBlock){
+				tag(BlockTags.createOptional(new ResourceLocation("minecraft", "mineable/pickaxe"))).add(block);
+			}
 		});
+
+
+		tag(BlockTags.createOptional(new ResourceLocation("minecraft","mineable/pickaxe"))).add(ModBlocks.AURORA_CRYSTAL.get(), ModBlocks.SMARAGDANT_CRYSTAL.get(), ModBlocks.SMARAGDANT_CRYSTAL_SHARD.get());
+		tag(BlockTags.createOptional(new ResourceLocation("minecraft", "mineable/axe"))).add(ModBlocks.BLUE_VINE_LANTERN.get(), ModBlocks.HYDRALUX_PETAL_BLOCK.get(), ModBlocks.LUMECORN.get(), ModBlocks.PURPLE_POLYPORE.get(), ModBlocks.AURANT_POLYPORE.get(), ModBlocks.MOSSY_GLOWSHROOM_CAP.get(), ModBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE.get(), ModBlocks.AMARANITA_HYMENOPHORE.get(), ModBlocks.AMARANITA_LANTERN.get(), ModBlocks.AMARANITA_CAP.get(), ModBlocks.FILALUX_LANTERN.get());
 				
 		// Misc Forge tags
 		tag(Tags.Blocks.ORES).add(ModBlocks.ENDER_ORE.get());

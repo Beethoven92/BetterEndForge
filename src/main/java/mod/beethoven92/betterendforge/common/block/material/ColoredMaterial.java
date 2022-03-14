@@ -9,6 +9,7 @@ import mod.beethoven92.betterendforge.common.block.IDyedBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.DyeColor;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ColoredMaterial
 {

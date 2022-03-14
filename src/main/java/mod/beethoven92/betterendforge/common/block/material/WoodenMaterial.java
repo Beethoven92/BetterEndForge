@@ -38,7 +38,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.tags.Tag;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 
 // TO DO? Make all wooden blocks flammable so they can take and spread fire
 public class WoodenMaterial 

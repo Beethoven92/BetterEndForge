@@ -125,7 +125,7 @@ public class CubozoaEntity extends AbstractSchoolingFish {
 	}*/
 
 	@Override
-	protected ItemStack getBucketItemStack() {
+	public ItemStack getBucketItemStack() {
 		ItemStack bucket = ModItems.BUCKET_CUBOZOA.get().getDefaultInstance();
 		CompoundTag tag = bucket.getOrCreateTag();
 		tag.putByte("variant", entityData.get(VARIANT));

@@ -36,10 +36,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.item.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -48,6 +45,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tier;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlocks 
 {
@@ -221,7 +219,6 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> AURORA_CRYSTAL = registerBlockWithDefaultItem("aurora_crystal", 
 			() -> new AuroraCrystalBlock(BlockBehaviour.Properties.of(Material.GLASS).
-					                                              harvestTool(ToolType.PICKAXE).
 					                                              strength(1F).
 					                                              sound(SoundType.GLASS).
 					                                              lightLevel((value) -> {return 15;}).
@@ -237,14 +234,12 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> SMARAGDANT_CRYSTAL = registerBlockWithDefaultItem("smaragdant_crystal", 
 			() -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GREEN).
-					                                 harvestTool(ToolType.PICKAXE).
 					                                 strength(1F).
 					                                 lightLevel((value) -> {return 15;}).
 					                                 sound(SoundType.GLASS)));
 	
 	public static final RegistryObject<Block> SMARAGDANT_CRYSTAL_SHARD = registerBlockWithDefaultItem("smaragdant_crystal_shard", 
 			() -> new SmaragdantCrystalShardBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_GREEN).
-					                                                       harvestTool(ToolType.PICKAXE).
 					                                                       requiresCorrectToolForDrops().
 					                                                       lightLevel((value) -> {return 15;}).
 					                                                       noCollission().     
@@ -459,7 +454,6 @@ public class ModBlocks
 	public static final RegistryObject<Block> BLUE_VINE_LANTERN = registerBlockWithDefaultItem("blue_vine_lantern", 
 			() -> new BlueVineLanternBlock(BlockBehaviour.Properties.of(Material.WOOD).
                                                                     instabreak().
-                                                                    harvestTool(ToolType.AXE).
                                                                     requiresCorrectToolForDrops().
                                                                     lightLevel((value) -> {return 15;}).
                                                                     sound(SoundType.WART_BLOCK)));
@@ -595,8 +589,7 @@ public class ModBlocks
 	public static final RegistryObject<Block> HYDRALUX_PETAL_BLOCK = registerBlockWithDefaultItem("hydralux_petal_block",
 			() -> new HydraluxPetalBlock(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.PLANT).
 					                                              sound(SoundType.WART_BLOCK).
-					                                              strength(1F).
-					                                              harvestTool(ToolType.AXE)));
+					                                              strength(1F)));
 	
 	public static final RegistryObject<Block> LANCELEAF_SEED = registerBlockWithDefaultItem("lanceleaf_seed", 
 			() -> new LanceleafSeedBlock(BlockBehaviour.Properties.of(Material.PLANT).
@@ -620,7 +613,6 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> LUMECORN = registerBlock("lumecorn", 
 			() -> new LumecornBlock(BlockBehaviour.Properties.of(Material.WOOD).
-												                 harvestTool(ToolType.AXE).
 												                 strength(0.5f).
 												                 lightLevel(s -> s.getValue(LumecornBlock.SHAPE).getLight()).
                                                                  sound(SoundType.GRASS)));
@@ -731,7 +723,6 @@ public class ModBlocks
 	// WALL PLANTS
 	public static final RegistryObject<Block> PURPLE_POLYPORE = registerBlockWithDefaultItem("purple_polypore", 
 			() -> new WallMushroomBlock(BlockBehaviour.Properties.of(Material.PLANT).
-					                                             harvestTool(ToolType.AXE).
 					                                             strength(0.2F).
                                                                  noCollission().
                                                                  sound(SoundType.WOOD).
@@ -739,7 +730,6 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> AURANT_POLYPORE = registerBlockWithDefaultItem("aurant_polypore", 
 			() -> new WallMushroomBlock(BlockBehaviour.Properties.of(Material.PLANT).
-					                                             harvestTool(ToolType.AXE).
 					                                             strength(0.2F).
                                                                  noCollission().
                                                                  sound(SoundType.WOOD).
@@ -843,13 +833,11 @@ public class ModBlocks
 	
 	public static final RegistryObject<Block> MOSSY_GLOWSHROOM_CAP = registerBlockWithDefaultItem("mossy_glowshroom_cap", 
 			() -> new MossyGlowshroomCapBlock(BlockBehaviour.Properties.of(Material.WOOD).
-					                                                   harvestTool(ToolType.AXE).
 					                                                   requiresCorrectToolForDrops().
 					                                                   sound(SoundType.WOOD)));
 	
 	public static final RegistryObject<Block> MOSSY_GLOWSHROOM_HYMENOPHORE = registerBlockWithDefaultItem("mossy_glowshroom_hymenophore", 
 			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).
-                                                     harvestTool(ToolType.AXE).
                                                      requiresCorrectToolForDrops().
                                                      sound(SoundType.WART_BLOCK).
                                                      lightLevel((value) -> {return 15;})));
@@ -993,10 +981,10 @@ public class ModBlocks
 			() -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_LIGHT_GREEN).strength(2.0F, 3.0F).sound(SoundType.WOOD)));
 	
 	public static final RegistryObject<Block> AMARANITA_HYMENOPHORE = registerBlockWithDefaultItem("amaranita_hymenophore",
-			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
+			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)));
 	
 	public static final RegistryObject<Block> AMARANITA_LANTERN = registerBlockWithDefaultItem("amaranita_lantern",
-			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).harvestTool(ToolType.AXE).sound(SoundType.WART_BLOCK).lightLevel(s -> 15)));
+			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WART_BLOCK).lightLevel(s -> 15)));
 	
 	public static final RegistryObject<Block> AMARANITA_FUR = registerBlockWithDefaultItem("amaranita_fur",
 			() -> new FurBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).
@@ -1006,7 +994,7 @@ public class ModBlocks
                     sound(SoundType.WET_GRASS)));
 	
 	public static final RegistryObject<Block> AMARANITA_CAP = registerBlockWithDefaultItem("amaranita_cap",
-			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).harvestTool(ToolType.AXE).sound(SoundType.WOOD)));
+			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)));
 	
 	
 	public static final RegistryObject<Block> JELLYSHROOM_CAP_PURPLE = registerBlockWithDefaultItem("jellyshroom_cap_purple", 
@@ -1134,7 +1122,7 @@ public class ModBlocks
 	public static final RegistryObject<Block> FILALUX_WINGS = registerBlockWithDefaultItem("filalux_wings",
 			() -> new FilaluxWingsBlock());
 	public static final RegistryObject<Block> FILALUX_LANTERN = registerBlockWithDefaultItem("filalux_lantern",
-			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).lightLevel(b -> 15).sound(SoundType.WOOD).harvestTool(ToolType.AXE)));
+			() -> new Block(BlockBehaviour.Properties.of(Material.WOOD).lightLevel(b -> 15).sound(SoundType.WOOD)));
 
 	
 	// STONE MATERIALS

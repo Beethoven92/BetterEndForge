@@ -94,7 +94,7 @@ public class EndFishEntity extends AbstractSchoolingFish
 	}
 	
 	@Override
-	protected ItemStack getBucketItemStack() 
+	public ItemStack getBucketItemStack()
 	{
 		ItemStack bucket = ModItems.BUCKET_END_FISH.get().getDefaultInstance();
 		CompoundTag tag = bucket.getOrCreateTag();
