@@ -11,6 +11,8 @@ import it.unimi.dsi.fastutil.ints.Int2IntFunction;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import mod.beethoven92.betterendforge.common.tileentity.EChestTileEntity;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.level.block.AbstractChestBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -32,7 +34,7 @@ import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
 import net.minecraft.world.level.Level;
 
-public class EndChestTileEntityRenderer extends BlockEntityRenderer<EChestTileEntity> {
+public class EndChestTileEntityRenderer implements BlockEntityRenderer<EChestTileEntity> {
 	private static final HashMap<Block, RenderType[]> LAYERS = Maps.newHashMap();
 	private static RenderType[] defaultLayer;
 
@@ -40,74 +42,59 @@ public class EndChestTileEntityRenderer extends BlockEntityRenderer<EChestTileEn
 	private static final int ID_LEFT = 1;
 	private static final int ID_RIGHT = 2;
 
-	private final ModelPart partA;
-	private final ModelPart partC;
-	private final ModelPart partB;
-	private final ModelPart partRightA;
-	private final ModelPart partRightC;
-	private final ModelPart partRightB;
-	private final ModelPart partLeftA;
-	private final ModelPart partLeftC;
-	private final ModelPart partLeftB;
+	public final ModelPart lid;
+	public final ModelPart bottom;
+	public final ModelPart lock;
+	public final ModelPart doubleLeftLid;
+	public final ModelPart doubleLeftBottom;
+	public final ModelPart doubleLeftLock;
+	public final ModelPart doubleRightLid;
+	public final ModelPart doubleRightBottom;
+	public final ModelPart doubleRightLock;
 
-	public EndChestTileEntityRenderer(BlockEntityRenderDispatcher blockEntityRenderDispatcher) {
-		super(blockEntityRenderDispatcher);
+	public EndChestTileEntityRenderer(BlockEntityRendererProvider.Context ctx) {
+		super();
 
-		this.partC = new ModelPart(64, 64, 0, 19);
-		this.partC.addBox(1.0F, 0.0F, 1.0F, 14.0F, 9.0F, 14.0F, 0.0F);
-		this.partA = new ModelPart(64, 64, 0, 0);
-		this.partA.addBox(1.0F, 0.0F, 0.0F, 14.0F, 5.0F, 14.0F, 0.0F);
-		this.partA.y = 9.0F;
-		this.partA.z = 1.0F;
-		this.partB = new ModelPart(64, 64, 0, 0);
-		this.partB.addBox(7.0F, -1.0F, 15.0F, 2.0F, 4.0F, 1.0F, 0.0F);
-		this.partB.y = 8.0F;
-		this.partRightC = new ModelPart(64, 64, 0, 19);
-		this.partRightC.addBox(1.0F, 0.0F, 1.0F, 15.0F, 9.0F, 14.0F, 0.0F);
-		this.partRightA = new ModelPart(64, 64, 0, 0);
-		this.partRightA.addBox(1.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
-		this.partRightA.y = 9.0F;
-		this.partRightA.z = 1.0F;
-		this.partRightB = new ModelPart(64, 64, 0, 0);
-		this.partRightB.addBox(15.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
-		this.partRightB.y = 8.0F;
-		this.partLeftC = new ModelPart(64, 64, 0, 19);
-		this.partLeftC.addBox(0.0F, 0.0F, 1.0F, 15.0F, 9.0F, 14.0F, 0.0F);
-		this.partLeftA = new ModelPart(64, 64, 0, 0);
-		this.partLeftA.addBox(0.0F, 0.0F, 0.0F, 15.0F, 5.0F, 14.0F, 0.0F);
-		this.partLeftA.y = 9.0F;
-		this.partLeftA.z = 1.0F;
-		this.partLeftB = new ModelPart(64, 64, 0, 0);
-		this.partLeftB.addBox(0.0F, -1.0F, 15.0F, 1.0F, 4.0F, 1.0F, 0.0F);
-		this.partLeftB.y = 8.0F;
+		ModelPart modelpart = ctx.bakeLayer(ModelLayers.CHEST);
+		this.bottom = modelpart.getChild("bottom");
+		this.lid = modelpart.getChild("lid");
+		this.lock = modelpart.getChild("lock");
+		ModelPart modelpart1 = ctx.bakeLayer(ModelLayers.DOUBLE_CHEST_LEFT);
+		this.doubleLeftBottom = modelpart1.getChild("bottom");
+		this.doubleLeftLid = modelpart1.getChild("lid");
+		this.doubleLeftLock = modelpart1.getChild("lock");
+		ModelPart modelpart2 = ctx.bakeLayer(ModelLayers.DOUBLE_CHEST_RIGHT);
+		this.doubleRightBottom = modelpart2.getChild("bottom");
+		this.doubleRightLid = modelpart2.getChild("lid");
+		this.doubleRightLock = modelpart2.getChild("lock");
 	}
 
-	public void render(EChestTileEntity entity, float tickDelta, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay) {
-		Level world = entity.getLevel();
+	public void render(EChestTileEntity chest, float tickDelta, PoseStack matrix, MultiBufferSource vertexConsumers, int light, int overlay) {
+		Level world = chest.getLevel();
 		boolean worldExists = world != null;
-		BlockState blockState = worldExists ? entity.getBlockState() : (BlockState) Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
-		ChestType chestType = blockState.hasProperty(ChestBlock.TYPE) ? (ChestType) blockState.getValue(ChestBlock.TYPE) : ChestType.SINGLE;
+		BlockState blockState = worldExists ? chest.getBlockState() : Blocks.CHEST.defaultBlockState().setValue(ChestBlock.FACING, Direction.SOUTH);
+		ChestType chestType = blockState.hasProperty(ChestBlock.TYPE) ? blockState.getValue(ChestBlock.TYPE) : ChestType.SINGLE;
 		Block block = blockState.getBlock();
-		if (entity.hasChest())
-			block = entity.getChest();
-		if (block instanceof AbstractChestBlock) {
-			AbstractChestBlock<?> abstractChestBlock = (AbstractChestBlock<?>) block;
+		if (chest.hasChest())
+			block = chest.getChest();
+		if (block instanceof AbstractChestBlock<?> abstractChestBlock) {
 			boolean isDouble = chestType != ChestType.SINGLE;
-			float f = ((Direction) blockState.getValue(ChestBlock.FACING)).toYRot();
+
+			float f = blockState.getValue(ChestBlock.FACING).toYRot();
 			DoubleBlockCombiner.NeighborCombineResult<? extends ChestBlockEntity> propertySource;
 
-			matrices.pushPose();
-			matrices.translate(0.5D, 0.5D, 0.5D);
-			matrices.mulPose(Vector3f.YP.rotationDegrees(-f));
-			matrices.translate(-0.5D, -0.5D, -0.5D);
+			matrix.pushPose();
+			matrix.translate(0.5D, 0.5D, 0.5D);
+			matrix.mulPose(Vector3f.YP.rotationDegrees(-f));
+			matrix.translate(-0.5D, -0.5D, -0.5D);
 
 			if (worldExists) {
-				propertySource = abstractChestBlock.combine(blockState, world, entity.getBlockPos(), true);
+				propertySource = abstractChestBlock.combine(blockState, world, chest.getBlockPos(), true);
 			} else {
 				propertySource = DoubleBlockCombiner.Combiner::acceptNone;
 			}
 
-			float pitch = ((Float2FloatFunction) propertySource.apply(ChestBlock.opennessCombiner((LidBlockEntity) entity))).get(tickDelta);
+			float pitch = propertySource.apply(ChestBlock.opennessCombiner(chest)).get(tickDelta);
 			pitch = 1.0F - pitch;
 			pitch = 1.0F - pitch * pitch * pitch;
 			@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -117,15 +104,15 @@ public class EndChestTileEntityRenderer extends BlockEntityRenderer<EChestTileEn
 
 			if (isDouble) {
 				if (chestType == ChestType.LEFT) {
-					renderParts(matrices, vertexConsumer, this.partLeftA, this.partLeftB, this.partLeftC, pitch, blockLight, overlay);
+					renderParts(matrix, vertexConsumer, this.doubleLeftLid, this.doubleLeftLock, this.doubleLeftBottom, pitch, blockLight, overlay);
 				} else {
-					renderParts(matrices, vertexConsumer, this.partRightA, this.partRightB, this.partRightC, pitch, blockLight, overlay);
+					renderParts(matrix, vertexConsumer, this.doubleRightLid, this.doubleRightLock, this.doubleRightBottom, pitch, blockLight, overlay);
 				}
 			} else {
-				renderParts(matrices, vertexConsumer, this.partA, this.partB, this.partC, pitch, blockLight, overlay);
+				renderParts(matrix, vertexConsumer, this.lid, this.lock, this.bottom, pitch, blockLight, overlay);
 			}
 
-			matrices.popPose();
+			matrix.popPose();
 		}
 	}
 

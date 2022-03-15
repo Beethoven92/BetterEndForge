@@ -7,13 +7,13 @@ import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import mod.beethoven92.betterendforge.common.tileentity.PedestalTileEntity;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderDispatcher;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -23,11 +23,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class PedestalRenderer<T extends PedestalTileEntity> extends BlockEntityRenderer<T>
-{
-	public PedestalRenderer(BlockEntityRenderDispatcher rendererDispatcherIn) 
-	{
-		super(rendererDispatcherIn);
+public class PedestalItemRenderer<T extends PedestalTileEntity> implements BlockEntityRenderer<T> {
+	public PedestalItemRenderer(BlockEntityRendererProvider.Context ctx) {
+		super();
 	}
 
 	@Override
@@ -48,7 +46,7 @@ public class PedestalRenderer<T extends PedestalTileEntity> extends BlockEntityR
 		ItemStack activeItem = tileEntityIn.getStack();
 		matrixStackIn.pushPose();
 		Minecraft minecraft = Minecraft.getInstance();
-		BakedModel model = minecraft.getItemRenderer().getModel(activeItem, tileEntityIn.getLevel(), null);
+		BakedModel model = minecraft.getItemRenderer().getModel(activeItem, tileEntityIn.getLevel(), null, 0);
 		Vector3f translate = model.getTransforms().ground.translation;
 		PedestalBlock pedestal = (PedestalBlock) state.getBlock();
 		matrixStackIn.translate(translate.x(), translate.y(), translate.z());

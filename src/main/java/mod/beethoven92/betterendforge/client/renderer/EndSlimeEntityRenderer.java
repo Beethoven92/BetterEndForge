@@ -9,6 +9,7 @@ import mod.beethoven92.betterendforge.common.entity.EndSlimeEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -22,8 +23,8 @@ public class EndSlimeEntityRenderer extends MobRenderer<EndSlimeEntity, EndSlime
 	private static final ResourceLocation TEXTURE[] = new ResourceLocation[4];
 	private static final RenderType GLOW[] = new RenderType[4];
 
-	public EndSlimeEntityRenderer(EntityRenderDispatcher entityRenderDispatcher) {
-		super(entityRenderDispatcher, new EndSlimeEntityModel<EndSlimeEntity>(false), 0.25F);
+	public EndSlimeEntityRenderer(EntityRendererProvider.Context context) {
+		super(context, new EndSlimeEntityModel<EndSlimeEntity>(false), 0.25F);
 		this.addLayer(new OverlayFeatureRenderer<EndSlimeEntity>(this));
 		this.addLayer(new EyesLayer<EndSlimeEntity, EndSlimeEntityModel<EndSlimeEntity>>(this) {
 			@Override

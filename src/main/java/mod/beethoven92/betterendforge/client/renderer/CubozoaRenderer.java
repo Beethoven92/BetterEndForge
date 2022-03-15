@@ -9,6 +9,7 @@ import mod.beethoven92.betterendforge.common.entity.CubozoaEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -18,8 +19,8 @@ public class CubozoaRenderer extends MobRenderer<CubozoaEntity, CubozoaModel> {
 	private static final ResourceLocation[] TEXTURE = new ResourceLocation[2];
 	private static final RenderType[] GLOW = new RenderType[2];
 
-	public CubozoaRenderer(EntityRenderDispatcher entityRenderDispatcher) {
-		super(entityRenderDispatcher, new CubozoaModel(), 0.5f);
+	public CubozoaRenderer(EntityRendererProvider.Context context) {
+		super(context, new CubozoaModel(), 0.5f);
 		this.addLayer(new EyesLayer<CubozoaEntity, CubozoaModel>(this) {
 			@Override
 			public RenderType renderType() {

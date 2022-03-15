@@ -8,7 +8,7 @@ import mod.beethoven92.betterendforge.client.renderer.EndChestTileEntityRenderer
 import mod.beethoven92.betterendforge.client.renderer.EndFishEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.EndSignTileEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.EndSlimeEntityRenderer;
-import mod.beethoven92.betterendforge.client.renderer.PedestalRenderer;
+import mod.beethoven92.betterendforge.client.renderer.PedestalItemRenderer;
 import mod.beethoven92.betterendforge.client.renderer.ShadowWalkerEntityRenderer;
 import mod.beethoven92.betterendforge.client.renderer.SilkMothEntityRenderer;
 import mod.beethoven92.betterendforge.common.block.material.MetalMaterial;
@@ -23,11 +23,10 @@ import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 public class PhysicalClientSide implements IPhysicalSide
 {
@@ -35,31 +34,31 @@ public class PhysicalClientSide implements IPhysicalSide
 	public void setup(IEventBus modEventBus, IEventBus forgeEventBus) 
 	{
 		modEventBus.addListener(this::clientSetup);
+		modEventBus.addListener(this::registerRenderers);
 	}
 	
 	private void clientSetup(FMLClientSetupEvent event)
 	{
-		registerRenderers();
 		registerGUIs();
 		setRenderLayers();
 	}
 		
-	private void registerRenderers()
+	private void registerRenderers(EntityRenderersEvent.RegisterRenderers event)
 	{
 		// Tile entity renderers
-		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.ETERNAL_PEDESTAL.get(), PedestalRenderer::new);
-		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.INFUSION_PEDESTAL.get(), PedestalRenderer::new);
-		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.PEDESTAL.get(), PedestalRenderer::new);
-		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.CHEST.get(), EndChestTileEntityRenderer::new);
-		ClientRegistry.bindTileEntityRenderer(ModTileEntityTypes.SIGN.get(), EndSignTileEntityRenderer::new);
+		event.registerBlockEntityRenderer(ModTileEntityTypes.ETERNAL_PEDESTAL.get(), PedestalItemRenderer::new);
+		event.registerBlockEntityRenderer(ModTileEntityTypes.INFUSION_PEDESTAL.get(), PedestalItemRenderer::new);
+		event.registerBlockEntityRenderer(ModTileEntityTypes.PEDESTAL.get(), PedestalItemRenderer::new);
+		event.registerBlockEntityRenderer(ModTileEntityTypes.CHEST.get(), EndChestTileEntityRenderer::new);
+		event.registerBlockEntityRenderer(ModTileEntityTypes.SIGN.get(), EndSignTileEntityRenderer::new);
 		
 		// Entity renderers
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.END_FISH.get(), EndFishEntityRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.DRAGONFLY.get(), DragonflyEntityRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SHADOW_WALKER.get(), ShadowWalkerEntityRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.END_SLIME.get(), EndSlimeEntityRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.CUBOZOA.get(), CubozoaRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntityTypes.SILK_MOTH.get(), SilkMothEntityRenderer::new);
+		event.registerEntityRenderer(ModEntityTypes.END_FISH.get(), EndFishEntityRenderer::new);
+		event.registerEntityRenderer(ModEntityTypes.DRAGONFLY.get(), DragonflyEntityRenderer::new);
+		event.registerEntityRenderer(ModEntityTypes.SHADOW_WALKER.get(), ShadowWalkerEntityRenderer::new);
+		event.registerEntityRenderer(ModEntityTypes.END_SLIME.get(), EndSlimeEntityRenderer::new);
+		event.registerEntityRenderer(ModEntityTypes.CUBOZOA.get(), CubozoaRenderer::new);
+		event.registerEntityRenderer(ModEntityTypes.SILK_MOTH.get(), SilkMothEntityRenderer::new);
 	}
 	
 	private void registerGUIs()

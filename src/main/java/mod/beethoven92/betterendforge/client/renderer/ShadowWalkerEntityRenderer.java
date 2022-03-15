@@ -2,6 +2,7 @@ package mod.beethoven92.betterendforge.client.renderer;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.entity.ShadowWalkerEntity;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.model.HumanoidModel;
@@ -12,9 +13,9 @@ public class ShadowWalkerEntityRenderer extends HumanoidMobRenderer<ShadowWalker
 {
 	private static final ResourceLocation TEXTURE = new ResourceLocation(BetterEnd.MOD_ID, "textures/entity/shadow_walker.png");
 	
-	public ShadowWalkerEntityRenderer(EntityRenderDispatcher rendererManager) 
+	public ShadowWalkerEntityRenderer(EntityRendererProvider.Context context)
 	{
-		super(rendererManager, new PlayerModel<ShadowWalkerEntity>(0.0F, false), 0.5F);
+		super(context, new PlayerModel<ShadowWalkerEntity>(0.0F, false), 0.5F);
 	}
 
 	@Override

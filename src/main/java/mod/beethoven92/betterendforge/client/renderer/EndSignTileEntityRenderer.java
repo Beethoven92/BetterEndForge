@@ -11,6 +11,8 @@ import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.EndSignBlock;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import mod.beethoven92.betterendforge.common.tileentity.ESignTileEntity;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.level.block.SignBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,13 +33,14 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.resources.ResourceLocation;
 import com.mojang.math.Vector3f;
 
-public class EndSignTileEntityRenderer extends BlockEntityRenderer<ESignTileEntity> {
+public class EndSignTileEntityRenderer implements BlockEntityRenderer<ESignTileEntity> {
 	private static final HashMap<Block, RenderType> LAYERS = Maps.newHashMap();
 	private static RenderType defaultLayer;
 	private final SignModel model = new SignRenderer.SignModel();
 
-	public EndSignTileEntityRenderer(BlockEntityRenderDispatcher dispatcher) {
-		super(dispatcher);
+	public EndSignTileEntityRenderer(BlockEntityRendererProvider.Context context) {
+		super();
+		//model = new SignModel(context.bakeLayer(ModelLayers.createSignModelName()))
 	}
 
 	public void render(ESignTileEntity signBlockEntity, float tickDelta, PoseStack matrixStack,
@@ -61,7 +64,7 @@ public class EndSignTileEntityRenderer extends BlockEntityRenderer<ESignTileEnti
 		matrixStack.pushPose();
 		matrixStack.scale(0.6666667F, -0.6666667F, -0.6666667F);
 		VertexConsumer vertexConsumer = getConsumer(provider, state.getBlock());
-		model.sign.render(matrixStack, vertexConsumer, light, overlay);
+		model.root.render(matrixStack, vertexConsumer, light, overlay);
 		model.stick.render(matrixStack, vertexConsumer, light, overlay);
 		matrixStack.popPose();
 		Font textRenderer = renderer.getFont();
