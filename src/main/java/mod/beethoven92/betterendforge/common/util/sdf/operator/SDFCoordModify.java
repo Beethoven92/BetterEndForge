@@ -2,7 +2,7 @@ package mod.beethoven92.betterendforge.common.util.sdf.operator;
 
 import java.util.function.Consumer;
 
-import net.minecraft.util.math.vector.Vector3f;
+import com.mojang.math.Vector3f;
 
 public class SDFCoordModify extends SDFUnary
 {
@@ -20,7 +20,7 @@ public class SDFCoordModify extends SDFUnary
 	{
 		POS.set(x, y, z);
 		function.accept(POS);
-		return this.source.getDistance(POS.getX(), POS.getY(), POS.getZ());
+		return this.source.getDistance(POS.x(), POS.y(), POS.z());
 	}
 
 }

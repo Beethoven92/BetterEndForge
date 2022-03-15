@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_top_rh",
-  "textures": {
-    "bottom": "betterendforge:block/mossy_glowshroom_door_bottom",
-    "top": "betterendforge:block/mossy_glowshroom_door_top"
-  }
-}

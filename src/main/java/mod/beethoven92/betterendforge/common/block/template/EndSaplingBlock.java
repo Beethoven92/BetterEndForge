@@ -3,24 +3,26 @@ package mod.beethoven92.betterendforge.common.block.template;
 import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IGrowable;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.server.level.ServerLevel;
 
-public abstract class EndSaplingBlock extends Block implements IGrowable
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public abstract class EndSaplingBlock extends Block implements BonemealableBlock
 {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 14, 12);
+	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 14, 12);
 	
 	public EndSaplingBlock(Properties properties) 
 	{
@@ -30,51 +32,51 @@ public abstract class EndSaplingBlock extends Block implements IGrowable
 	protected abstract Feature<?> getFeature();
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) 
 	{
-		return worldIn.getBlockState(pos.down()).isIn(ModTags.END_GROUND);
+		return worldIn.getBlockState(pos.below()).is(ModTags.END_GROUND);
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos))
-			return Blocks.AIR.getDefaultState();
+		if (!canSurvive(stateIn, worldIn, currentPos))
+			return Blocks.AIR.defaultBlockState();
 		else
 			return stateIn;
 	}
 	
 	@Override
-	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) 
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) 
 	{
-		grow(worldIn, random, pos, state);
+		performBonemeal(worldIn, random, pos, state);
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
 		return SHAPE;
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient)
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient)
 	{
 		return true;
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state)
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state)
 	{
 		return true;
 	}
 
 	@Override
-	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state)
+	public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state)
 	{
 		if (rand.nextInt(16) == 0)
 		{
-			getFeature().generate(worldIn, worldIn.getChunkProvider().getChunkGenerator(), rand, pos, null);
+			getFeature().place(worldIn, worldIn.getChunkSource().getGenerator(), rand, pos, null);
 		}
 	}		
 }

@@ -2,18 +2,18 @@ package mod.beethoven92.betterendforge.common.tileentity;
 
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.rituals.EternalRitual;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class EternalPedestalTileEntity extends PedestalTileEntity
 {
 	private EternalRitual linkedRitual;
 	
-	public EternalPedestalTileEntity() 
+	public EternalPedestalTileEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntityTypes.ETERNAL_PEDESTAL.get());
+		super(ModTileEntityTypes.ETERNAL_PEDESTAL.get(), pos, state);
 	}
 	
 	public boolean hasRitual() 
@@ -32,9 +32,9 @@ public class EternalPedestalTileEntity extends PedestalTileEntity
 	}
 	
 	@Override
-	public void setWorldAndPos(World world, BlockPos pos) 
+	public void setLevel(Level world)
 	{
-		super.setWorldAndPos(world, pos);
+		super.setLevel(world);
 		if (hasRitual()) 
 		{
 			this.linkedRitual.setWorld(world);
@@ -42,24 +42,23 @@ public class EternalPedestalTileEntity extends PedestalTileEntity
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT nbt) 
+	public void load(CompoundTag nbt)
 	{
-		super.read(state, nbt);
+		super.load(nbt);
 		if (nbt.contains("ritual")) 
 		{
-			this.linkedRitual = new EternalRitual(world);
+			this.linkedRitual = new EternalRitual(level);
 			this.linkedRitual.read(nbt.getCompound("ritual"));
 		}
 	}
 	
 	@Override
-	public CompoundNBT write(CompoundNBT compound) 
+	public void saveAdditional(CompoundTag compound)
 	{
-		super.write(compound);
+		super.saveAdditional(compound);
 		if (this.hasRitual()) 
 		{
-			compound.put("ritual", linkedRitual.write(new CompoundNBT()));
+			compound.put("ritual", linkedRitual.write(new CompoundTag()));
 		}
-		return compound;
 	}
 }

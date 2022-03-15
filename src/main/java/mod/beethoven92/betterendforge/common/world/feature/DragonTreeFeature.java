@@ -19,20 +19,20 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSubtraction;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class DragonTreeFeature extends Feature<NoFeatureConfig>
+public class DragonTreeFeature extends Feature<NoneFeatureConfiguration>
 {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Function<BlockState, Boolean> IGNORE;
@@ -45,7 +45,7 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 	static 
 	{
 		REPLACE = (state) -> {
-			if (state.isIn(ModTags.END_GROUND)) 
+			if (state.is(ModTags.END_GROUND)) 
 			{
 				return true;
 			}
@@ -53,7 +53,7 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 			{
 				return true;
 			}
-			if (state.getMaterial().equals(Material.PLANTS)) 
+			if (state.getMaterial().equals(Material.PLANT)) 
 			{
 				return true;
 			}
@@ -67,7 +67,7 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 		POST = (info) -> {
 			if (ModBlocks.DRAGON_TREE.isTreeLog(info.getStateUp()) && ModBlocks.DRAGON_TREE.isTreeLog(info.getStateDown())) 
 			{
-				return ModBlocks.DRAGON_TREE.log.get().getDefaultState();
+				return ModBlocks.DRAGON_TREE.log.get().defaultBlockState();
 			}
 			return info.getState();
 		};
@@ -102,14 +102,14 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 	
 	public DragonTreeFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
-			NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos pos,
+			NoneFeatureConfiguration config) 
 	{
-		if (!world.getBlockState(pos.down()).getBlock().isIn(ModTags.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND)) return false;
 		
 		float size = ModMathHelper.randRange(10, 25, rand);
 		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, size, 0, 6);
@@ -125,14 +125,14 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 		Vector3f last = SplineHelper.getPos(spline, 3.5F);
 		OpenSimplexNoise noise = new OpenSimplexNoise(rand.nextLong());
 		float radius = size * ModMathHelper.randRange(0.5F, 0.7F, rand);
-		makeCap(world, pos.add(last.getX(), last.getY(), last.getZ()), radius, rand, noise);
+		makeCap(world, pos.offset(last.x(), last.y(), last.z()), radius, rand, noise);
 		
 		last = spline.get(0);
-		makeRoots(world, pos.add(last.getX(), last.getY(), last.getZ()), radius, rand);
+		makeRoots(world, pos.offset(last.x(), last.y(), last.z()), radius, rand);
 		
 		radius = ModMathHelper.randRange(1.2F, 2.3F, rand);
 		SDF function = SplineHelper.buildSDF(spline, radius, 1.2F, (bpos) -> {
-			return ModBlocks.DRAGON_TREE.bark.get().getDefaultState();
+			return ModBlocks.DRAGON_TREE.bark.get().defaultBlockState();
 		});
 		
 		function.setReplaceFunction(REPLACE);
@@ -142,10 +142,10 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 		return true;
 	}
 
-	private void makeCap(ISeedReader world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) 
+	private void makeCap(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) 
 	{
 		int count = (int) radius;
-		int offset = (int) (BRANCH.get(BRANCH.size() - 1).getY() * radius);
+		int offset = (int) (BRANCH.get(BRANCH.size() - 1).y() * radius);
 		for (int i = 0; i < count; i++) 
 		{
 			float angle = (float) i / (float) count * ModMathHelper.PI2;
@@ -154,22 +154,22 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 			List<Vector3f> branch = SplineHelper.copySpline(BRANCH);
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
-			SplineHelper.fillSpline(branch, world, ModBlocks.DRAGON_TREE.bark.get().getDefaultState(), pos, REPLACE);
+			SplineHelper.fillSpline(branch, world, ModBlocks.DRAGON_TREE.bark.get().defaultBlockState(), pos, REPLACE);
 			
 			branch = SplineHelper.copySpline(SIDE1);
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
-			SplineHelper.fillSpline(branch, world, ModBlocks.DRAGON_TREE.bark.get().getDefaultState(), pos, REPLACE);
+			SplineHelper.fillSpline(branch, world, ModBlocks.DRAGON_TREE.bark.get().defaultBlockState(), pos, REPLACE);
 			
 			branch = SplineHelper.copySpline(SIDE2);
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
-			SplineHelper.fillSpline(branch, world, ModBlocks.DRAGON_TREE.bark.get().getDefaultState(), pos, REPLACE);
+			SplineHelper.fillSpline(branch, world, ModBlocks.DRAGON_TREE.bark.get().defaultBlockState(), pos, REPLACE);
 		}
-		leavesBall(world, pos.up(offset), radius * 1.15F + 2, random, noise);
+		leavesBall(world, pos.above(offset), radius * 1.15F + 2, random, noise);
 	}
 	
-	private void makeRoots(ISeedReader world, BlockPos pos, float radius, Random random) 
+	private void makeRoots(WorldGenLevel world, BlockPos pos, float radius, Random random) 
 	{
 		int count = (int) (radius * 1.5F);
 		for (int i = 0; i < count; i++) 
@@ -181,23 +181,23 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.add(last.getX(), last.getY(), last.getZ())).isIn(ModTags.GEN_TERRAIN)) 
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(ModTags.GEN_TERRAIN)) 
 			{
-				SplineHelper.fillSpline(branch, world, ModBlocks.DRAGON_TREE.bark.get().getDefaultState(), pos, REPLACE);
+				SplineHelper.fillSpline(branch, world, ModBlocks.DRAGON_TREE.bark.get().defaultBlockState(), pos, REPLACE);
 			}
 		}
 	}
 	
-	private void leavesBall(ISeedReader world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) 
+	private void leavesBall(WorldGenLevel world, BlockPos pos, float radius, Random random, OpenSimplexNoise noise) 
 	{
-		SDF sphere = new SDFSphere().setRadius(radius).setBlock(ModBlocks.DRAGON_TREE_LEAVES.get().getDefaultState().with(LeavesBlock.DISTANCE, 6));
+		SDF sphere = new SDFSphere().setRadius(radius).setBlock(ModBlocks.DRAGON_TREE_LEAVES.get().defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
 		SDF sub = new SDFScale().setScale(5).setSource(sphere);
 		sub = new SDFTranslate().setTranslate(0, -radius * 5, 0).setSource(sub);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(sub);
 		sphere = new SDFScale3D().setScale(1, 0.5F, 1).setSource(sphere);
-		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 1.5F; }).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 1.5F; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		sphere.addPostProcess((info) -> {
 			if (random.nextInt(5) == 0) 
 			{
@@ -209,7 +209,7 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 						return info.getState();
 					}
 				}
-				info.setState(ModBlocks.DRAGON_TREE.bark.get().getDefaultState());
+				info.setState(ModBlocks.DRAGON_TREE.bark.get().defaultBlockState());
 				for (int x = -6; x < 7; x++) 
 				{
 					int ax = Math.abs(x);
@@ -228,10 +228,10 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 								BlockState state = info.getState(mut);
 								if (state.getBlock() instanceof LeavesBlock) 
 								{
-									int distance = state.get(LeavesBlock.DISTANCE);
+									int distance = state.getValue(LeavesBlock.DISTANCE);
 									if (d < distance) 
 									{
-										info.setState(mut, state.with(LeavesBlock.DISTANCE, d));
+										info.setState(mut, state.setValue(LeavesBlock.DISTANCE, d));
 									}
 								}
 							}
@@ -247,11 +247,11 @@ public class DragonTreeFeature extends Feature<NoFeatureConfig>
 		if (radius > 5) {
 			int count = (int) (radius * 2.5F);
 			for (int i = 0; i < count; i++) {
-				BlockPos p = pos.add(random.nextGaussian() * 1, random.nextGaussian() * 1, random.nextGaussian() * 1);
+				BlockPos p = pos.offset(random.nextGaussian() * 1, random.nextGaussian() * 1, random.nextGaussian() * 1);
 				boolean place = true;
 				for (Direction d: Direction.values()) {
-					BlockState state = world.getBlockState(p.offset(d));
-					if (!ModBlocks.DRAGON_TREE.isTreeLog(state) && !state.isIn(ModBlocks.DRAGON_TREE_LEAVES.get()))
+					BlockState state = world.getBlockState(p.relative(d));
+					if (!ModBlocks.DRAGON_TREE.isTreeLog(state) && !state.is(ModBlocks.DRAGON_TREE_LEAVES.get()))
 					{
 						place = false;
 						break;

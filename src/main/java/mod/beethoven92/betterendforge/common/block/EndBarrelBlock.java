@@ -5,71 +5,72 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import mod.beethoven92.betterendforge.common.tileentity.EndBarrelTileEntity;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BarrelBlock;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.piglin.PiglinTasks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.piglin.PiglinAi;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.stats.Stats;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
-public class EndBarrelBlock extends BarrelBlock {
-	public EndBarrelBlock(AbstractBlock.Properties properties) {
+public class EndBarrelBlock extends BarrelBlock implements EntityBlock {
+	public EndBarrelBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(IBlockReader worldIn) {
-		return new EndBarrelTileEntity();
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new EndBarrelTileEntity(pos, state);
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player,
-			Hand handIn, BlockRayTraceResult hit) {
-		if (world.isRemote) {
-			return ActionResultType.SUCCESS;
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player,
+			InteractionHand handIn, BlockHitResult hit) {
+		if (world.isClientSide) {
+			return InteractionResult.SUCCESS;
 		} else {
-			TileEntity blockEntity = world.getTileEntity(pos);
-			if (blockEntity instanceof EndBarrelTileEntity) {
-				player.openContainer((EndBarrelTileEntity) blockEntity);
-				player.addStat(Stats.OPEN_BARREL);
-				PiglinTasks.func_234478_a_(player, true);
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof EndBarrelTileEntity e) {
+				player.openMenu(e);
+				player.awardStat(Stats.OPEN_BARREL);
+				PiglinAi.angerNearbyPiglins(player, true);
 			}
 
-			return ActionResultType.CONSUME;
+			return InteractionResult.CONSUME;
 		}
 	}
 
 	@Override
-	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
-		TileEntity blockEntity = world.getTileEntity(pos);
-		if (blockEntity instanceof EndBarrelTileEntity) {
-			((EndBarrelTileEntity) blockEntity).tick();
+	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
+		BlockEntity blockEntity = world.getBlockEntity(pos);
+		if (blockEntity instanceof EndBarrelTileEntity e) {
+			e.tick(world, pos, state);
 		}
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state) {
-		return BlockRenderType.MODEL;
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.MODEL;
 	}
 
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer,
+	public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer,
 			ItemStack stack) {
-		if (stack.hasDisplayName()) {
-			TileEntity blockEntity = world.getTileEntity(pos);
-			if (blockEntity instanceof EndBarrelTileEntity) {
-				((EndBarrelTileEntity) blockEntity).setCustomName(stack.getDisplayName());
+		if (stack.hasCustomHoverName()) {
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof EndBarrelTileEntity e) {
+				e.setCustomName(stack.getHoverName());
 			}
 		}
 	}

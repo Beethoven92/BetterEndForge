@@ -8,8 +8,8 @@ import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndCaveBiome;
 import mod.beethoven92.betterendforge.common.world.biome.BiomeTemplate;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 
 public class LushAuroraCaveBiome extends BetterEndCaveBiome 
 {
@@ -51,6 +51,6 @@ public class LushAuroraCaveBiome extends BetterEndCaveBiome
 	@Override
 	public BlockState getCeil(BlockPos pos) 
 	{
-		return ModBlocks.CAVE_MOSS.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
+		return ModBlocks.CAVE_MOSS.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
 	}
 }

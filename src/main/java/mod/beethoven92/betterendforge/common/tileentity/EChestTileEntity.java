@@ -1,15 +1,17 @@
 package mod.beethoven92.betterendforge.common.tileentity;
 
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.tileentity.ChestTileEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class EChestTileEntity extends ChestTileEntity {
+public class EChestTileEntity extends ChestBlockEntity {
 	private Block chest = Blocks.AIR;
 	
-	public EChestTileEntity() {
-		super(ModTileEntityTypes.CHEST.get());
+	public EChestTileEntity(BlockPos pos, BlockState state) {
+		super(ModTileEntityTypes.CHEST.get(), pos, state);
 	}
 
 	public void setChest(Block chest) {
@@ -21,6 +23,6 @@ public class EChestTileEntity extends ChestTileEntity {
 	}
 	
 	public boolean hasChest() {
-		return !chest.getDefaultState().isAir();
+		return !chest.defaultBlockState().isAir();
 	}
 }

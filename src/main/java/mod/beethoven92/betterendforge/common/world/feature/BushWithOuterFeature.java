@@ -13,20 +13,20 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSubtraction;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class BushWithOuterFeature extends Feature<NoFeatureConfig> {
+public class BushWithOuterFeature extends Feature<NoneFeatureConfiguration> {
 	private static final Direction[] DIRECTIONS = Direction.values();
 	private static final Function<BlockState, Boolean> REPLACE;
 	private final Block outer_leaves;
@@ -34,17 +34,17 @@ public class BushWithOuterFeature extends Feature<NoFeatureConfig> {
 	private final Block stem;
 
 	public BushWithOuterFeature(Block leaves, Block outer_leaves, Block stem) {
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoneFeatureConfiguration.CODEC);
 		this.outer_leaves = outer_leaves;
 		this.leaves = leaves;
 		this.stem = stem;
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator_, Random random, BlockPos pos,
-			NoFeatureConfig config) {
-		if (!world.getBlockState(pos.down()).getBlock().isIn(ModTags.END_GROUND)
-				&& !world.getBlockState(pos.up()).getBlock().isIn(ModTags.END_GROUND))
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator_, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
+		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND)
+				&& !world.getBlockState(pos.above()).getBlock().is(ModTags.END_GROUND))
 			return false;
 
 		float radius = ModMathHelper.randRange(1.8F, 3.5F, random);
@@ -52,7 +52,7 @@ public class BushWithOuterFeature extends Feature<NoFeatureConfig> {
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(this.leaves);
 		sphere = new SDFScale3D().setScale(1, 0.5F, 1).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3;
+			return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3;
 		}).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return ModMathHelper.randRange(-2F, 2F, random);
@@ -62,11 +62,11 @@ public class BushWithOuterFeature extends Feature<NoFeatureConfig> {
 		sphere.setReplaceFunction(REPLACE);
 		sphere.addPostProcess((info) -> {
 			if (info.getState().getBlock() instanceof LeavesBlock) {
-				int distance = info.getPos().manhattanDistance(pos);
+				int distance = info.getPos().distManhattan(pos);
 				if (distance < 7) {
-					return info.getState().with(LeavesBlock.DISTANCE, distance);
+					return info.getState().setValue(LeavesBlock.DISTANCE, distance);
 				} else {
-					return Blocks.AIR.getDefaultState();
+					return Blocks.AIR.defaultBlockState();
 				}
 			}
 			return info.getState();
@@ -75,8 +75,8 @@ public class BushWithOuterFeature extends Feature<NoFeatureConfig> {
 				ModMathHelper.shuffle(DIRECTIONS, random);
 				for (Direction dir : DIRECTIONS) {
 					if (info.getState(dir).isAir()) {
-						info.setBlockPos(info.getPos().offset(dir),
-								outer_leaves.getDefaultState().with(BlockStateProperties.FACING, dir));
+						info.setBlockPos(info.getPos().relative(dir),
+								outer_leaves.defaultBlockState().setValue(BlockStateProperties.FACING, dir));
 					}
 				}
 			}
@@ -85,12 +85,12 @@ public class BushWithOuterFeature extends Feature<NoFeatureConfig> {
 		sphere.fillRecursive(world, pos);
 		BlockHelper.setWithoutUpdate(world, pos, stem);
 		for (Direction d : Direction.values()) {
-			BlockPos p = pos.offset(d);
-			if (world.isAirBlock(p)) {
+			BlockPos p = pos.relative(d);
+			if (world.isEmptyBlock(p)) {
 				if (leaves instanceof LeavesBlock) {
-					BlockHelper.setWithoutUpdate(world, p, leaves.getDefaultState().with(LeavesBlock.DISTANCE, 1));
+					BlockHelper.setWithoutUpdate(world, p, leaves.defaultBlockState().setValue(LeavesBlock.DISTANCE, 1));
 				} else {
-					BlockHelper.setWithoutUpdate(world, p, leaves.getDefaultState());
+					BlockHelper.setWithoutUpdate(world, p, leaves.defaultBlockState());
 				}
 			}
 		}
@@ -100,7 +100,7 @@ public class BushWithOuterFeature extends Feature<NoFeatureConfig> {
 
 	static {
 		REPLACE = (state) -> {
-			if (state.getMaterial().equals(Material.PLANTS)) {
+			if (state.getMaterial().equals(Material.PLANT)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

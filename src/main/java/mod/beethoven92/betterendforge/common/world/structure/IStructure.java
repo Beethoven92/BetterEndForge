@@ -1,10 +1,10 @@
 package mod.beethoven92.betterendforge.common.world.structure;
 
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ServerLevelAccessor;
 
 import java.util.Random;
 
 public interface IStructure {
-	public void generate(IServerWorld world, BlockPos pos, Random random);
+	public void generate(ServerLevelAccessor world, BlockPos pos, Random random);
 }

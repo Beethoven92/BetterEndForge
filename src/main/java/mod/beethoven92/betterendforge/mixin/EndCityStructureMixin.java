@@ -7,34 +7,33 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import mod.beethoven92.betterendforge.config.CommonConfig;
-import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.provider.BiomeProvider;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.EndCityStructure;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeSource;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.EndCityFeature;
 
-@Mixin(EndCityStructure.class)
+@Mixin(EndCityFeature.class)
 public abstract class EndCityStructureMixin 
 {
-	@Inject(method = "func_230363_a_", at = @At("HEAD"), cancellable = true)
-	private void be_shouldStartAt(ChunkGenerator chunkGenerator, BiomeProvider biomeSource, long l, 
-			SharedSeedRandom chunkRandom, int i, int j, Biome biome, ChunkPos chunkPos,
-			NoFeatureConfig config, CallbackInfoReturnable<Boolean> info) 
+	@Inject(method = "isFeatureChunk", at = @At("HEAD"), cancellable = true)
+	private void be_shouldStartAt(ChunkGenerator chunkGenerator, BiomeSource biomeSource, long l, 
+			WorldgenRandom chunkRandom, int i, int j, Biome biome, ChunkPos chunkPos,
+			NoneFeatureConfiguration config, CallbackInfoReturnable<Boolean> info) 
 	{
 		if (GeneratorOptions.useNewGenerator())
 		{
 			int chance = GeneratorOptions.getEndCityFailChance();
 			if (chance == 0) 
 			{
-				info.setReturnValue(getYPosForStructure(i, j, chunkGenerator) >= 60);
+				info.setReturnValue(getYPositionForFeature(i, j, chunkGenerator) >= 60);
 				info.cancel();
 			}
 			else if (chunkRandom.nextInt(chance) == 0)
 			{
-				info.setReturnValue(getYPosForStructure(i, j, chunkGenerator) >= 60);
+				info.setReturnValue(getYPositionForFeature(i, j, chunkGenerator) >= 60);
 				info.cancel();
 			}
 			else 
@@ -46,7 +45,7 @@ public abstract class EndCityStructureMixin
 	}
 	
 	@Shadow
-	private static int getYPosForStructure(int chunkX, int chunkY, ChunkGenerator generatorIn)
+	private static int getYPositionForFeature(int chunkX, int chunkY, ChunkGenerator generatorIn)
 	{
 		return 0;
 	}

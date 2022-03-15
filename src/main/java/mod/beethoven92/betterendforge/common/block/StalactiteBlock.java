@@ -1,30 +1,32 @@
 package mod.beethoven92.betterendforge.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
 
-public class StalactiteBlock extends Block implements IWaterLoggable
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class StalactiteBlock extends Block implements SimpleWaterloggedBlock
 {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty IS_FLOOR = BlockProperties.IS_FLOOR;
@@ -38,43 +40,43 @@ public class StalactiteBlock extends Block implements IWaterLoggable
 		SHAPES = new VoxelShape[8];
 		for (int i = 0; i < 8; i++) 
 		{
-			int side = MathHelper.floor(MathHelper.lerp(i / 7F, start, end) * 8F + 0.5F);
-			SHAPES[i] = Block.makeCuboidShape(side, 0, side, 16 - side, 16, 16 - side);
+			int side = Mth.floor(Mth.lerp(i / 7F, start, end) * 8F + 0.5F);
+			SHAPES[i] = Block.box(side, 0, side, 16 - side, 16, 16 - side);
 		}
 	}
 	
 	public StalactiteBlock(Properties properties) 
 	{
 		super(properties);
-		this.setDefaultState(getStateContainer().getBaseState().with(SIZE, 0).with(IS_FLOOR, true).with(WATERLOGGED, false));
+		this.registerDefaultState(getStateDefinition().any().setValue(SIZE, 0).setValue(IS_FLOOR, true).setValue(WATERLOGGED, false));
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
-		return SHAPES[state.get(SIZE)];
+		return SHAPES[state.getValue(SIZE)];
 	}
 	
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) 
+	public BlockState getStateForPlacement(BlockPlaceContext context) 
 	{
-		IWorldReader world = context.getWorld();
-		BlockPos pos = context.getPos();
-		Direction dir = context.getFace();
-		boolean water = world.getFluidState(pos).getFluid() == Fluids.WATER;
+		LevelReader world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
+		Direction dir = context.getClickedFace();
+		boolean water = world.getFluidState(pos).getType() == Fluids.WATER;
 		
 		if (dir == Direction.DOWN) 
 		{
 			System.out.println("Check up!");
-			if (isThis(world, pos.up()) || this.hasEnoughSolidSide(world, pos.up(), Direction.DOWN)) 
+			if (isThis(world, pos.above()) || this.canSupportCenter(world, pos.above(), Direction.DOWN)) 
 			{
 				System.out.println("Up true!");
-				return getDefaultState().with(IS_FLOOR, false).with(WATERLOGGED, water);
+				return defaultBlockState().setValue(IS_FLOOR, false).setValue(WATERLOGGED, water);
 			}
-			else if (isThis(world, pos.down()) || hasEnoughSolidSide(world, pos.down(), Direction.UP)) 
+			else if (isThis(world, pos.below()) || canSupportCenter(world, pos.below(), Direction.UP)) 
 			{
 				System.out.println("Up false!");
-				return getDefaultState().with(IS_FLOOR, true).with(WATERLOGGED, water);
+				return defaultBlockState().setValue(IS_FLOOR, true).setValue(WATERLOGGED, water);
 			}
 			else 
 			{
@@ -84,15 +86,15 @@ public class StalactiteBlock extends Block implements IWaterLoggable
 		else 
 		{
 			System.out.println("Check down!");
-			if (isThis(world, pos.down()) || hasEnoughSolidSide(world, pos.down(), Direction.UP)) 
+			if (isThis(world, pos.below()) || canSupportCenter(world, pos.below(), Direction.UP)) 
 			{
 				System.out.println("Down true!");
-				return getDefaultState().with(IS_FLOOR, true).with(WATERLOGGED, water);
+				return defaultBlockState().setValue(IS_FLOOR, true).setValue(WATERLOGGED, water);
 			}
-			else if (isThis(world, pos.up()) || hasEnoughSolidSide(world, pos.up(), Direction.DOWN)) 
+			else if (isThis(world, pos.above()) || canSupportCenter(world, pos.above(), Direction.DOWN)) 
 			{
 				System.out.println("Down false!");
-				return getDefaultState().with(IS_FLOOR, false).with(WATERLOGGED, water);
+				return defaultBlockState().setValue(IS_FLOOR, false).setValue(WATERLOGGED, water);
 			}
 			else 
 			{
@@ -102,35 +104,35 @@ public class StalactiteBlock extends Block implements IWaterLoggable
 	}
 	
 	@Override
-	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) 
+	public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) 
 	{
-		boolean hasUp = isThis(world, pos.up());
-		boolean hasDown = isThis(world, pos.down());
-		Mutable mut = new Mutable();
+		boolean hasUp = isThis(world, pos.above());
+		boolean hasDown = isThis(world, pos.below());
+		MutableBlockPos mut = new MutableBlockPos();
 		if (hasUp && hasDown) 
 		{
-			boolean floor = state.get(IS_FLOOR);
-			BlockPos second = floor ? pos.up() : pos.down();
+			boolean floor = state.getValue(IS_FLOOR);
+			BlockPos second = floor ? pos.above() : pos.below();
 			BlockState bState = world.getBlockState(second);
-			world.setBlockState(pos, state.with(SIZE, 1).with(IS_FLOOR, floor));
-			world.setBlockState(second, bState.with(SIZE, 1).with(IS_FLOOR, !floor));
+			world.setBlockAndUpdate(pos, state.setValue(SIZE, 1).setValue(IS_FLOOR, floor));
+			world.setBlockAndUpdate(second, bState.setValue(SIZE, 1).setValue(IS_FLOOR, !floor));
 			
 			bState = state;
 			int startSize = floor ? 1 : 2;
-			mut.setPos(pos.getX(), pos.getY() + 1, pos.getZ());
+			mut.set(pos.getX(), pos.getY() + 1, pos.getZ());
 			for (int i = 0; i < 8 && isThis(bState); i++) 
 			{
-				world.setBlockState(mut, bState.with(SIZE, startSize++).with(IS_FLOOR, false));
+				world.setBlockAndUpdate(mut, bState.setValue(SIZE, startSize++).setValue(IS_FLOOR, false));
 				mut.setY(mut.getY() + 1);
 				bState = world.getBlockState(mut);
 			}
 			
 			bState = state;
 			startSize = floor ? 2 : 1;
-			mut.setPos(pos.getX(), pos.getY() - 1, pos.getZ());
+			mut.set(pos.getX(), pos.getY() - 1, pos.getZ());
 			for (int i = 0; i < 8 && isThis(bState); i++) 
 			{
-				world.setBlockState(mut, bState.with(SIZE, startSize++).with(IS_FLOOR, true));
+				world.setBlockAndUpdate(mut, bState.setValue(SIZE, startSize++).setValue(IS_FLOOR, true));
 				mut.setY(mut.getY() - 1);
 				bState = world.getBlockState(mut);
 			}
@@ -145,10 +147,10 @@ public class StalactiteBlock extends Block implements IWaterLoggable
 				if (isThis(world, mut)) 
 				{
 					BlockState state2 = world.getBlockState(mut);
-					int size = state2.get(SIZE);
+					int size = state2.getValue(SIZE);
 					if (size < i) 
 					{
-						world.setBlockState(mut, state2.with(SIZE, i).with(IS_FLOOR, true));
+						world.setBlockAndUpdate(mut, state2.setValue(SIZE, i).setValue(IS_FLOOR, true));
 					}
 					else 
 					{
@@ -171,10 +173,10 @@ public class StalactiteBlock extends Block implements IWaterLoggable
 				if (isThis(world, mut)) 
 				{
 					BlockState state2 = world.getBlockState(mut);
-					int size = state2.get(SIZE);
+					int size = state2.getValue(SIZE);
 					if (size < i) 
 					{
-						world.setBlockState(mut, state2.with(SIZE, i).with(IS_FLOOR, false));
+						world.setBlockAndUpdate(mut, state2.setValue(SIZE, i).setValue(IS_FLOOR, false));
 					}
 					else 
 					{
@@ -190,24 +192,24 @@ public class StalactiteBlock extends Block implements IWaterLoggable
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos)) 
+		if (!canSurvive(stateIn, worldIn, currentPos)) 
 		{
-			return Blocks.AIR.getDefaultState();
+			return Blocks.AIR.defaultBlockState();
 		}
 		return stateIn;
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) 
 	{
-		int size = state.get(SIZE);
+		int size = state.getValue(SIZE);
 		return checkUp(worldIn, pos, size) || checkDown(worldIn, pos, size);
 	}
 	
-	private boolean isThis(IWorldReader world, BlockPos pos)
+	private boolean isThis(LevelReader world, BlockPos pos)
 	{
 		return isThis(world.getBlockState(pos));
 	}
@@ -217,28 +219,28 @@ public class StalactiteBlock extends Block implements IWaterLoggable
 		return state.getBlock() instanceof StalactiteBlock;
 	}
 	
-	private boolean checkUp(IBlockReader world, BlockPos pos, int size) 
+	private boolean checkUp(BlockGetter world, BlockPos pos, int size) 
 	{
-		BlockPos p = pos.up();
+		BlockPos p = pos.above();
 		BlockState state = world.getBlockState(p);
-		return (isThis(state) && state.get(SIZE) >= size) || state.isNormalCube(world, p);
+		return (isThis(state) && state.getValue(SIZE) >= size) || state.isRedstoneConductor(world, p);
 	}
 	
-	private boolean checkDown(IBlockReader world, BlockPos pos, int size) 
+	private boolean checkDown(BlockGetter world, BlockPos pos, int size) 
 	{
-		BlockPos p = pos.down();
+		BlockPos p = pos.below();
 		BlockState state = world.getBlockState(p);
-		return (isThis(state) && state.get(SIZE) >= size) || state.isNormalCube(world, p);
+		return (isThis(state) && state.getValue(SIZE) >= size) || state.isRedstoneConductor(world, p);
 	}
 	
 	@Override
 	public FluidState getFluidState(BlockState state) 
 	{
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : Fluids.EMPTY.getDefaultState();
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : Fluids.EMPTY.defaultFluidState();
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(WATERLOGGED, IS_FLOOR, SIZE);
 	}

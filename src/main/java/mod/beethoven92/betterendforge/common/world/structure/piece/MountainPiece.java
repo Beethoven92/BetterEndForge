@@ -11,24 +11,24 @@ import mod.beethoven92.betterendforge.common.init.ModStructurePieces;
 import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.Heightmap.Type;
-import net.minecraft.world.gen.feature.structure.StructureManager;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
 public class MountainPiece extends StructurePiece
 {
@@ -56,12 +56,12 @@ public class MountainPiece extends StructurePiece
 		this.seed2 = rand.nextInt();
 		this.noise1 = new OpenSimplexNoise(this.seed1);
 		this.noise2 = new OpenSimplexNoise(this.seed2);
-		top = biome.getGenerationSettings().getSurfaceBuilderConfig().getTop();
+		top = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 		this.biomeID = ModBiomes.getBiomeID(biome);
 		makeBoundingBox();
 	}
     
-	public MountainPiece(TemplateManager p_i50677_1_, CompoundNBT nbt) 
+	public MountainPiece(StructureManager p_i50677_1_, CompoundTag nbt) 
 	{
         super(ModStructurePieces.MOUNTAIN_PIECE, nbt);
         // READ STRUCTURE DATA
@@ -74,13 +74,13 @@ public class MountainPiece extends StructurePiece
 		seed2 = nbt.getInt("seed2");
 		noise1 = new OpenSimplexNoise(seed1);
 		noise2 = new OpenSimplexNoise(seed2);
-		top = ModBiomes.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTop();
+		top = ModBiomes.getBiome(biomeID).getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
         makeBoundingBox();
     }
 	
 	
 	@Override
-	protected void readAdditional(CompoundNBT tagCompound) 
+	protected void addAdditionalSaveData(CompoundTag tagCompound) 
 	{
 		// WRITE ADDITIONAL STRUCTURE DATA
 		tagCompound.putInt("centerX", this.center.getX());
@@ -95,23 +95,23 @@ public class MountainPiece extends StructurePiece
 	
 	private void makeBoundingBox() 
 	{
-		int minX = MathHelper.floor(center.getX() - radius);
-		int minZ = MathHelper.floor(center.getZ() - radius);
-		int maxX = MathHelper.floor(center.getX() + radius + 1);
-		int maxZ = MathHelper.floor(center.getZ() + radius + 1);
-		this.boundingBox = new MutableBoundingBox(minX, minZ, maxX, maxZ);
+		int minX = Mth.floor(center.getX() - radius);
+		int minZ = Mth.floor(center.getZ() - radius);
+		int maxX = Mth.floor(center.getX() + radius + 1);
+		int maxZ = Mth.floor(center.getZ() + radius + 1);
+		this.boundingBox = new BoundingBox(minX, minZ, maxX, maxZ);
 	}
 
 	@Override
-	public boolean func_230383_a_(ISeedReader world, StructureManager manager, ChunkGenerator chunkGenerator,
-			Random random, MutableBoundingBox box, ChunkPos chunkPos, BlockPos blockPos) 
+	public boolean postProcess(WorldGenLevel world, StructureFeatureManager manager, ChunkGenerator chunkGenerator,
+			Random random, BoundingBox box, ChunkPos chunkPos, BlockPos blockPos) 
 	{
-		int sx = chunkPos.getXStart();
-		int sz = chunkPos.getZStart();
-		Mutable pos = new Mutable();
-		IChunk chunk = world.getChunk(chunkPos.x, chunkPos.z);
-		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE);
-		Heightmap map2 = chunk.getHeightmap(Type.WORLD_SURFACE_WG);
+		int sx = chunkPos.getMinBlockX();
+		int sz = chunkPos.getMinBlockZ();
+		MutableBlockPos pos = new MutableBlockPos();
+		ChunkAccess chunk = world.getChunk(chunkPos.x, chunkPos.z);
+		Heightmap map = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE);
+		Heightmap map2 = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE_WG);
 		for (int x = 0; x < 16; x++) 
 		{
 			int px = x + sx;
@@ -127,18 +127,18 @@ public class MountainPiece extends StructurePiece
 				if (dist < r2) {
 					pos.setZ(z);
 					dist = 1 - (float) Math.pow(dist / r2, 0.3);
-					int minY = map.getHeight(x, z);
+					int minY = map.getFirstAvailable(x, z);
 					if (minY < 10) 
 					{
 						continue;
 					}
 					pos.setY(minY);
-					while (!chunk.getBlockState(pos).isIn(ModTags.GEN_TERRAIN) && pos.getY() > 56 && !chunk.getBlockState(pos.down()).isIn(Blocks.CAVE_AIR))
+					while (!chunk.getBlockState(pos).is(ModTags.GEN_TERRAIN) && pos.getY() > 56 && !chunk.getBlockState(pos.below()).is(Blocks.CAVE_AIR))
 					{
 						pos.setY(pos.getY() - 1);
 					}
 					minY = pos.getY();
-					minY = Math.max(minY, map2.getHeight(x, z));
+					minY = Math.max(minY, map2.getFirstAvailable(x, z));
 					//if (minY > 10) 
 					//{
 						//float maxY = dist * height * getHeightClamp(world, 8, px, pz);
@@ -158,7 +158,7 @@ public class MountainPiece extends StructurePiece
 							for (int y = minY - 1; y < maxYI; y++) 
 							{
 								pos.setY(y);                                                
-								chunk.setBlockState(pos, needCover && y == cover ? top : Blocks.END_STONE.getDefaultState(), false);
+								chunk.setBlockState(pos, needCover && y == cover ? top : Blocks.END_STONE.defaultBlockState(), false);
 							}
 						}
 					}
@@ -166,25 +166,25 @@ public class MountainPiece extends StructurePiece
 			}
 		}
 		
-		map = chunk.getHeightmap(Type.WORLD_SURFACE);
+		map = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE);
 		
 		// Big crystals
 		//int count = (map.getHeight(8, 8) - 80) / 7;
-		int count = (map.getHeight(8, 8) - (center.getY() + 24)) / 7;
-		count = MathHelper.clamp(count, 0, 8);
+		int count = (map.getFirstAvailable(8, 8) - (center.getY() + 24)) / 7;
+		count = Mth.clamp(count, 0, 8);
 		for (int i = 0; i < count; i++) 
 		{
-			int radius = MathHelper.nextInt(random, 2, 3);
-			float fill = MathHelper.nextFloat(random, 0F, 1F);
-			int x = MathHelper.nextInt(random, radius, 15 - radius);
-			int z = MathHelper.nextInt(random, radius, 15 - radius);
-			int y = map.getHeight(x, z);
+			int radius = Mth.nextInt(random, 2, 3);
+			float fill = Mth.nextFloat(random, 0F, 1F);
+			int x = Mth.nextInt(random, radius, 15 - radius);
+			int z = Mth.nextInt(random, radius, 15 - radius);
+			int y = map.getFirstAvailable(x, z);
 			if (y > 80) 
 			{
-				pos.setPos(x, y, z);
-				if (chunk.getBlockState(pos.down()).getBlock() == Blocks.END_STONE) 
+				pos.set(x, y, z);
+				if (chunk.getBlockState(pos.below()).getBlock() == Blocks.END_STONE) 
 				{
-					int height = MathHelper.floor(radius * MathHelper.nextFloat(random, 1.5F, 3F) + (y - 80) * 0.3F);
+					int height = Mth.floor(radius * Mth.nextFloat(random, 1.5F, 3F) + (y - 80) * 0.3F);
 					crystal(chunk, pos, radius, height, fill, random);
 				}
 			}
@@ -192,21 +192,21 @@ public class MountainPiece extends StructurePiece
 		
 		// Small crystals
 		//count = (map.getHeight(8, 8) - 80) / 2;
-		count = (map.getHeight(8, 8) - (center.getY() + 24)) / 2;
-		count = MathHelper.clamp(count, 4, 8);
+		count = (map.getFirstAvailable(8, 8) - (center.getY() + 24)) / 2;
+		count = Mth.clamp(count, 4, 8);
 		for (int i = 0; i < count; i++) 
 		{
-			int radius = MathHelper.nextInt(random, 1, 2);
+			int radius = Mth.nextInt(random, 1, 2);
 			float fill = random.nextBoolean() ? 0 : 1;
-			int x = MathHelper.nextInt(random, radius, 15 - radius);
-			int z = MathHelper.nextInt(random, radius, 15 - radius);
-			int y = map.getHeight(x, z);
+			int x = Mth.nextInt(random, radius, 15 - radius);
+			int z = Mth.nextInt(random, radius, 15 - radius);
+			int y = map.getFirstAvailable(x, z);
 			if (y > 80) 
 			{
-				pos.setPos(x, y, z);
-				if (chunk.getBlockState(pos.down()).getBlock() == Blocks.END_STONE) 
+				pos.set(x, y, z);
+				if (chunk.getBlockState(pos.below()).getBlock() == Blocks.END_STONE) 
 				{
-					int height = MathHelper.floor(radius * MathHelper.nextFloat(random, 1.5F, 3F) + (y - 80) * 0.3F);
+					int height = Mth.floor(radius * Mth.nextFloat(random, 1.5F, 3F) + (y - 80) * 0.3F);
 					crystal(chunk, pos, radius, height, fill, random);
 				}
 			}
@@ -215,7 +215,7 @@ public class MountainPiece extends StructurePiece
 		return true;
 	}
 	
-	private int getHeight(ISeedReader world, BlockPos pos) 
+	private int getHeight(WorldGenLevel world, BlockPos pos) 
 	{
 		int p = ((pos.getX() & 2047) << 11) | (pos.getZ() & 2047);
 		int h = heightmap.getOrDefault(p, Integer.MIN_VALUE);
@@ -231,13 +231,13 @@ public class MountainPiece extends StructurePiece
 			return -10;
 		}
 		
-		h = world.getHeight(Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		h = world.getHeight(Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
 		/*if (h < 57) 
 		{
 			heightmap.put(p, -4);
 			return -4;
 		}*/
-		h = MathHelper.abs(h - center.getY());
+		h = Mth.abs(h - center.getY());
 		if (h > 4)
 		{
 			h = 4 - h;
@@ -245,7 +245,7 @@ public class MountainPiece extends StructurePiece
 			return h;
 		}
 		
-		h = MathHelper.floor(noise2.eval(pos.getX() * 0.01, pos.getZ() * 0.01) * noise2.eval(pos.getX() * 0.002, pos.getZ() * 0.002) * 8 + 8);
+		h = Mth.floor(noise2.eval(pos.getX() * 0.01, pos.getZ() * 0.01) * noise2.eval(pos.getX() * 0.002, pos.getZ() * 0.002) * 8 + 8);
 		if (h < 0)
 		{
 			heightmap.put(p, 0);
@@ -257,9 +257,9 @@ public class MountainPiece extends StructurePiece
 		return h;		
 	}
 	
-	private float getHeightClamp(ISeedReader world, int radius, int posX, int posZ) 
+	private float getHeightClamp(WorldGenLevel world, int radius, int posX, int posZ) 
 	{
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		int r2 = radius * radius;
 		float height = 0;
 		float max = 0;
@@ -280,17 +280,17 @@ public class MountainPiece extends StructurePiece
 			}
 		}
 		height /= max;
-		return MathHelper.clamp(height / radius, 0, 1);
+		return Mth.clamp(height / radius, 0, 1);
 	}
 
-	private void crystal(IChunk chunk, BlockPos pos, int radius, int height, float fill, Random random) 
+	private void crystal(ChunkAccess chunk, BlockPos pos, int radius, int height, float fill, Random random) 
 	{
-		Mutable mut = new Mutable();
-		int max = MathHelper.floor(fill * radius + radius + 0.5F);
+		MutableBlockPos mut = new MutableBlockPos();
+		int max = Mth.floor(fill * radius + radius + 0.5F);
 		height += pos.getY();
-		Heightmap map = chunk.getHeightmap(Type.WORLD_SURFACE);
-		int coefX = MathHelper.nextInt(random, -1, 1);
-		int coefZ = MathHelper.nextInt(random, -1, 1);
+		Heightmap map = chunk.getOrCreateHeightmapUnprimed(Types.WORLD_SURFACE);
+		int coefX = Mth.nextInt(random, -1, 1);
+		int coefZ = Mth.nextInt(random, -1, 1);
 		for (int x = -radius; x <= radius; x++) 
 		{
 			mut.setX(x + pos.getX());
@@ -305,7 +305,7 @@ public class MountainPiece extends StructurePiece
 						int az = Math.abs(z);
 						if (ax + az < max) 
 						{
-							int minY = map.getHeight(mut.getX(), mut.getZ()) - MathHelper.nextInt(random, 3, 7);
+							int minY = map.getFirstAvailable(mut.getX(), mut.getZ()) - Mth.nextInt(random, 3, 7);
 							if (pos.getY() - minY > 8) 
 							{
 								minY = pos.getY() - 8;
@@ -314,7 +314,7 @@ public class MountainPiece extends StructurePiece
 							for (int y = minY; y < h; y++) 
 							{
 								mut.setY(y);
-								chunk.setBlockState(mut, ModBlocks.AURORA_CRYSTAL.get().getDefaultState(), false);
+								chunk.setBlockState(mut, ModBlocks.AURORA_CRYSTAL.get().defaultBlockState(), false);
 							}
 						}
 					}

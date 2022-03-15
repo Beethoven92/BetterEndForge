@@ -2,14 +2,14 @@ package mod.beethoven92.betterendforge.common.util.sdf;
 
 import java.util.Map;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
 
 public class PosInfo implements Comparable<PosInfo>
 {
-	private static final BlockState AIR = Blocks.AIR.getDefaultState();
+	private static final BlockState AIR = Blocks.AIR.defaultBlockState();
 	private final Map<BlockPos, PosInfo> blocks;
 	private final Map<BlockPos, PosInfo> add;
 	private final BlockPos pos;
@@ -54,16 +54,16 @@ public class PosInfo implements Comparable<PosInfo>
 	
 	public BlockState getState(Direction dir) 
 	{
-		PosInfo info = blocks.get(pos.offset(dir));
+		PosInfo info = blocks.get(pos.relative(dir));
 		if (info == null) {
-			info = add.get(pos.offset(dir));
+			info = add.get(pos.relative(dir));
 			return info == null ? AIR : info.getState();
 		}
 		return info.getState();
 	}
 
 	public BlockState getState(Direction dir, int distance) {
-		PosInfo info = blocks.get(pos.offset(dir, distance));
+		PosInfo info = blocks.get(pos.relative(dir, distance));
 		if (info == null) {
 			return AIR;
 		}

@@ -17,20 +17,20 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSubtraction;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class PythadendronFeature extends Feature<NoFeatureConfig>
+public class PythadendronFeature extends Feature<NoneFeatureConfiguration>
 {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Function<BlockState, Boolean> IGNORE;
@@ -38,7 +38,7 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 	static 
 	{
 		REPLACE = (state) -> {
-			if (state.isIn(ModTags.END_GROUND)) 
+			if (state.is(ModTags.END_GROUND)) 
 			{
 				return true;
 			}
@@ -46,7 +46,7 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 			{
 				return true;
 			}
-			if (state.getMaterial().equals(Material.PLANTS)) 
+			if (state.getMaterial().equals(Material.PLANT)) 
 			{
 				return true;
 			}
@@ -60,7 +60,7 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 		POST = (info) -> {
 			if (ModBlocks.PYTHADENDRON.isTreeLog(info.getStateUp()) && ModBlocks.PYTHADENDRON.isTreeLog(info.getStateDown()))
 			{
-				return ModBlocks.PYTHADENDRON.log.get().getDefaultState();
+				return ModBlocks.PYTHADENDRON.log.get().defaultBlockState();
 			}
 			return info.getState();
 		};
@@ -68,15 +68,15 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 	
 	public PythadendronFeature()
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
-			BlockPos pos, NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random,
+			BlockPos pos, NoneFeatureConfiguration config) 
 	{
-		if (world.getBlockState(pos.down()).getBlock() != ModBlocks.CHORUS_NYLIUM.get() &&
-				world.getBlockState(pos.down()).getBlock() != ModBlocks.ENDSTONE_DUST.get())
+		if (world.getBlockState(pos.below()).getBlock() != ModBlocks.CHORUS_NYLIUM.get() &&
+				world.getBlockState(pos.below()).getBlock() != ModBlocks.ENDSTONE_DUST.get())
 		{
 			return false;			
 		}
@@ -90,10 +90,10 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 		
 		int depth = ModMathHelper.floor((size - 10F) * 3F / 10F + 1F);
 		float bsize = (10F - (size - 10F)) / 10F + 1.5F;
-		branch(last.getX(), last.getY(), last.getZ(), size * bsize, ModMathHelper.randRange(0, ModMathHelper.PI2, random), random, depth, world, pos);
+		branch(last.x(), last.y(), last.z(), size * bsize, ModMathHelper.randRange(0, ModMathHelper.PI2, random), random, depth, world, pos);
 		
 		SDF function = SplineHelper.buildSDF(spline, 1.7F, 1.1F, (bpos) -> {
-			return ModBlocks.PYTHADENDRON.bark.get().getDefaultState();
+			return ModBlocks.PYTHADENDRON.bark.get().defaultBlockState();
 		});
 		function.setReplaceFunction(REPLACE);
 		function.addPostProcess(POST);
@@ -102,7 +102,7 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 		return true;
 	}
 	
-	private void branch(float x, float y, float z, float size, float angle, Random random, int depth, ISeedReader world, BlockPos pos) 
+	private void branch(float x, float y, float z, float size, float angle, Random random, int depth, WorldGenLevel world, BlockPos pos) 
 	{
 		if (depth == 0) return;
 		
@@ -119,23 +119,23 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 		SplineHelper.offsetParts(spline, random, 0.3F, 0, 0.3F);
 		Vector3f pos1 = spline.get(spline.size() - 1);
 		
-		boolean s1 = SplineHelper.fillSpline(spline, world, ModBlocks.PYTHADENDRON.bark.get().getDefaultState(), pos, REPLACE);
+		boolean s1 = SplineHelper.fillSpline(spline, world, ModBlocks.PYTHADENDRON.bark.get().defaultBlockState(), pos, REPLACE);
 		
 		spline = SplineHelper.makeSpline(x, y, z, x2, y, z2, 5);
 		SplineHelper.powerOffset(spline, size * ModMathHelper.randRange(1.0F, 2.0F, random), 4);
 		SplineHelper.offsetParts(spline, random, 0.3F, 0, 0.3F);
 		Vector3f pos2 = spline.get(spline.size() - 1);
 		
-		boolean s2 = SplineHelper.fillSpline(spline, world, ModBlocks.PYTHADENDRON.bark.get().getDefaultState(), pos, REPLACE);
+		boolean s2 = SplineHelper.fillSpline(spline, world, ModBlocks.PYTHADENDRON.bark.get().defaultBlockState(), pos, REPLACE);
 		
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextInt());
 		if (depth < 3) 
 		{
 			if (s1) {
-				leavesBall(world, pos.add(pos1.getX(), pos1.getY(), pos1.getZ()), random, noise);
+				leavesBall(world, pos.offset(pos1.x(), pos1.y(), pos1.z()), random, noise);
 			}
 			if (s2) {
-				leavesBall(world, pos.add(pos2.getX(), pos2.getY(), pos2.getZ()), random, noise);
+				leavesBall(world, pos.offset(pos2.x(), pos2.y(), pos2.z()), random, noise);
 			}
 		}
 		
@@ -146,24 +146,24 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 		
 		if (s1) 
 		{
-			branch(pos1.getX(), pos1.getY(), pos1.getZ(), size1, angle1, random, depth - 1, world, pos);
+			branch(pos1.x(), pos1.y(), pos1.z(), size1, angle1, random, depth - 1, world, pos);
 		}
 		if (s2) 
 		{
-			branch(pos2.getX(), pos2.getY(), pos2.getZ(), size2, angle2, random, depth - 1, world, pos);
+			branch(pos2.x(), pos2.y(), pos2.z(), size2, angle2, random, depth - 1, world, pos);
 		}
 	}
 	
-	private void leavesBall(ISeedReader world, BlockPos pos, Random random, OpenSimplexNoise noise)
+	private void leavesBall(WorldGenLevel world, BlockPos pos, Random random, OpenSimplexNoise noise)
 	{
 		float radius = ModMathHelper.randRange(4.5F, 6.5F, random);
 		
-		SDF sphere = new SDFSphere().setRadius(radius).setBlock(ModBlocks.PYTHADENDRON_LEAVES.get().getDefaultState().with(LeavesBlock.DISTANCE, 6));
+		SDF sphere = new SDFSphere().setRadius(radius).setBlock(ModBlocks.PYTHADENDRON_LEAVES.get().defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
 		sphere = new SDFScale3D().setScale(1, 0.6F, 1).setSource(sphere);
-		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 3; }).setSource(sphere);
+		sphere = new SDFDisplacement().setFunction((vec) -> { return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 3; }).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> { return random.nextFloat() * 3F - 1.5F; }).setSource(sphere);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(new SDFTranslate().setTranslate(0, -radius, 0).setSource(sphere));
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		sphere.addPostProcess((info) -> {
 			if (random.nextInt(5) == 0) 
 			{
@@ -174,7 +174,7 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 						return info.getState();
 					}
 				}
-				info.setState(ModBlocks.PYTHADENDRON.bark.get().getDefaultState());
+				info.setState(ModBlocks.PYTHADENDRON.bark.get().defaultBlockState());
 				for (int x = -6; x < 7; x++) 
 				{
 					int ax = Math.abs(x);
@@ -192,10 +192,10 @@ public class PythadendronFeature extends Feature<NoFeatureConfig>
 								BlockState state = info.getState(mut);
 								if (state.getBlock() instanceof LeavesBlock) 
 								{
-									int distance = state.get(LeavesBlock.DISTANCE);
+									int distance = state.getValue(LeavesBlock.DISTANCE);
 									if (d < distance) 
 									{
-										info.setState(mut, state.with(LeavesBlock.DISTANCE, d));
+										info.setState(mut, state.setValue(LeavesBlock.DISTANCE, d));
 									}
 								}
 							}

@@ -9,34 +9,34 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import mod.beethoven92.betterendforge.common.tileentity.ESignTileEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketThreadUtil;
-import net.minecraft.network.play.ServerPlayNetHandler;
-import net.minecraft.network.play.client.CUpdateSignPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.protocol.PacketUtils;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
+import net.minecraft.network.protocol.game.ServerboundSignUpdatePacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.server.level.ServerLevel;
 
-@Mixin(ServerPlayNetHandler.class)
+@Mixin(ServerGamePacketListenerImpl.class)
 public class ServerPlayNetHandlerMixin {
 	@Shadow
 	private static final Logger LOGGER = LogManager.getLogger();
 
 	@Shadow
-	public ServerPlayerEntity player;
+	public ServerPlayer player;
 
-	@Inject(method = "processUpdateSign", at = @At(value = "HEAD"), cancellable = true)
-	private void be_signUpdate(CUpdateSignPacket packet, CallbackInfo info) {
-		PacketThreadUtil.checkThreadAndEnqueue(packet, ServerPlayNetHandler.class.cast(this), this.player.getServerWorld());
-		this.player.markPlayerActive();
-		ServerWorld serverWorld = this.player.getServerWorld();
-		BlockPos blockPos = packet.getPosition();
-		if (serverWorld.isBlockLoaded(blockPos)) {
+	@Inject(method = "handleSignUpdate", at = @At(value = "HEAD"), cancellable = true)
+	private void be_signUpdate(ServerboundSignUpdatePacket packet, CallbackInfo info) {
+		PacketUtils.ensureRunningOnSameThread(packet, ServerGamePacketListenerImpl.class.cast(this), this.player.getLevel());
+		this.player.resetLastActionTime();
+		ServerLevel serverWorld = this.player.getLevel();
+		BlockPos blockPos = packet.getPos();
+		if (serverWorld.hasChunkAt(blockPos)) {
 			BlockState blockState = serverWorld.getBlockState(blockPos);
-			TileEntity blockEntity = serverWorld.getTileEntity(blockPos);
+			BlockEntity blockEntity = serverWorld.getBlockEntity(blockPos);
 			if (blockEntity instanceof ESignTileEntity) {
 				ESignTileEntity signBlockEntity = (ESignTileEntity) blockEntity;
 				if (!signBlockEntity.isEditable() || signBlockEntity.getEditor() != this.player) {
@@ -47,11 +47,11 @@ public class ServerPlayNetHandlerMixin {
 				String[] strings = packet.getLines();
 
 				for (int i = 0; i < strings.length; ++i) {
-					signBlockEntity.setTextOnRow(i, new StringTextComponent(TextFormatting.getTextWithoutFormattingCodes(strings[i])));
+					signBlockEntity.setTextOnRow(i, new TextComponent(ChatFormatting.stripFormatting(strings[i])));
 				}
 
-				signBlockEntity.markDirty();
-				serverWorld.notifyBlockUpdate(blockPos, blockState, blockState, 3);
+				signBlockEntity.setChanged();
+				serverWorld.sendBlockUpdated(blockPos, blockState, blockState, 3);
 
 				info.cancel();
 			}

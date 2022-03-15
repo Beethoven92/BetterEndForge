@@ -2,27 +2,29 @@ package mod.beethoven92.betterendforge.common.tileentity;
 
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.rituals.InfusionRitual;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
 public class InfusionPedestalTileEntity extends PedestalTileEntity
 {
 	private InfusionRitual linkedRitual;
 	
-	public InfusionPedestalTileEntity() 
+	public InfusionPedestalTileEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntityTypes.INFUSION_PEDESTAL.get());
+		super(ModTileEntityTypes.INFUSION_PEDESTAL.get(), pos, state);
 	}
-	
+
 	@Override
-	public void setWorldAndPos(World world, BlockPos pos) 
+	public void setLevel(Level world)
 	{
-		super.setWorldAndPos(world, pos);
-		if (hasRitual()) 
-		{
-			this.linkedRitual.setLocation(world, pos);
+		super.setLevel(world);
+		if (hasRitual()) {
+			linkedRitual.setLocation(world, this.getBlockPos());
+		}
+		else {
+			linkRitual(new InfusionRitual(this, world, this.getBlockPos()));
 		}
 	}
 	
@@ -42,33 +44,32 @@ public class InfusionPedestalTileEntity extends PedestalTileEntity
 	}
 	
 	@Override
-	public void tick() 
+	public void tick(Level level, BlockPos pos, BlockState state)
 	{
 		if (hasRitual()) 
 		{
 			this.linkedRitual.tick();
 		}
-		super.tick();
+		super.tick(level, pos, state);
 	}
 	
 	@Override
-	public CompoundNBT write(CompoundNBT compound) 
+	public void saveAdditional(CompoundTag compound)
 	{
-		super.write(compound);
+		super.saveAdditional(compound);
 		if (hasRitual()) 
 		{
-			compound.put("ritual", linkedRitual.write(new CompoundNBT()));
+			compound.put("ritual", linkedRitual.write(new CompoundTag()));
 		}
-		return compound;
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT nbt) 
+	public void load(CompoundTag nbt)
 	{
-		super.read(state, nbt);
+		super.load(nbt);
 		if (nbt.contains("ritual")) 
 		{
-			this.linkedRitual = new InfusionRitual(world, pos);
+			this.linkedRitual = new InfusionRitual(this, level, worldPosition);
 			this.linkedRitual.read(nbt.getCompound("ritual"));
 		}
 	}

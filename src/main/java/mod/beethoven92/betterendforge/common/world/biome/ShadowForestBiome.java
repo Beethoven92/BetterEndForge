@@ -4,12 +4,12 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModEntityTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.structure.StructureFeatures;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.data.worldgen.StructureFeatures;
 
 public class ShadowForestBiome extends BetterEndBiome
 {
@@ -41,7 +41,7 @@ public class ShadowForestBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_PURPLE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_RED_RARE).
 				addStructure(StructureFeatures.END_CITY).
-				addMobSpawn(EntityClassification.MONSTER, ModEntityTypes.SHADOW_WALKER.get(), 80, 2, 4).
-				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 40, 1, 4));
+				addMobSpawn(MobCategory.MONSTER, ModEntityTypes.SHADOW_WALKER.get(), 80, 2, 4).
+				addMobSpawn(MobCategory.MONSTER, EntityType.ENDERMAN, 40, 1, 4));
 	}
 }

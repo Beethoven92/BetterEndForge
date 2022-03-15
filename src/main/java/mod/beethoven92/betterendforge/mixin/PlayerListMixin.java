@@ -14,48 +14,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.mojang.authlib.GameProfile;
-import com.mojang.serialization.Dynamic;
-
-import io.netty.buffer.Unpooled;
-import mod.beethoven92.betterendforge.config.CommonConfig;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTDynamicOps;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.ServerPlayNetHandler;
-import net.minecraft.network.play.server.SCustomPayloadPlayPacket;
-import net.minecraft.network.play.server.SHeldItemChangePacket;
-import net.minecraft.network.play.server.SJoinGamePacket;
-import net.minecraft.network.play.server.SPlayEntityEffectPacket;
-import net.minecraft.network.play.server.SPlayerAbilitiesPacket;
-import net.minecraft.network.play.server.SPlayerListItemPacket;
-import net.minecraft.network.play.server.SServerDifficultyPacket;
-import net.minecraft.network.play.server.STagsListPacket;
-import net.minecraft.network.play.server.SUpdateRecipesPacket;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.scoreboard.ServerScoreboard;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.Connection;
+import net.minecraft.server.ServerScoreboard;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.management.PlayerList;
-import net.minecraft.server.management.PlayerProfileCache;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.Util;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.util.text.ChatType;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.DimensionType;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeManager;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.IWorldInfo;
+import net.minecraft.server.players.PlayerList;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.network.chat.ChatType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 
 @Mixin(PlayerList.class)
 public class PlayerListMixin 
@@ -70,21 +39,21 @@ public class PlayerListMixin
 	
 	@Final
 	@Shadow
-	private List<ServerPlayerEntity> players;
+	private List<ServerPlayer> players;
 	
 	@Final
 	@Shadow
-	private Map<UUID, ServerPlayerEntity> uuidToPlayerMap;
+	private Map<UUID, ServerPlayer> playersByUUID;
 	
 	@Final
 	@Shadow
-	private DynamicRegistries.Impl field_232639_s_;;
+	private RegistryAccess.Frozen registryHolder;
 
 	@Shadow
 	private int viewDistance;
 	
 	@Shadow
-	public CompoundNBT readPlayerDataFromFile(ServerPlayerEntity player)
+	public CompoundTag load(ServerPlayer player)
 	{
 		return null;
 	}
@@ -96,7 +65,7 @@ public class PlayerListMixin
 	}
 	
 	@Shadow
-	private void setPlayerGameTypeBasedOnOther(ServerPlayerEntity player, @Nullable ServerPlayerEntity oldPlayer, ServerWorld world) {}
+	private void updatePlayerGameMode(ServerPlayer player, @Nullable ServerPlayer oldPlayer, ServerLevel world) {}
 	
 	@Shadow
 	public MinecraftServer getServer() 
@@ -104,22 +73,22 @@ public class PlayerListMixin
 		return null;
 	}
 	@Shadow
-	public void updatePermissionLevel(ServerPlayerEntity player) {}
+	public void sendPlayerPermissionLevel(ServerPlayer player) {}
 	
 	@Shadow
-	protected void sendScoreboard(ServerScoreboard scoreboardIn, ServerPlayerEntity playerIn) {}
+	protected void updateEntireScoreboard(ServerScoreboard scoreboardIn, ServerPlayer playerIn) {}
 	
 	@Shadow
-	public void func_232641_a_(ITextComponent p_232641_1_, ChatType p_232641_2_, UUID p_232641_3_) {}
+	public void broadcastMessage(Component p_232641_1_, ChatType p_232641_2_, UUID p_232641_3_) {}
 	
 	@Shadow
-	public void sendPacketToAllPlayers(IPacket<?> packetIn) {}
+	public void broadcastAll(Packet<?> packetIn) {}
 	 
 	@Shadow
-	public void sendWorldInfo(ServerPlayerEntity playerIn, ServerWorld worldIn) {}
+	public void sendLevelInfo(ServerPlayer playerIn, ServerLevel worldIn) {}
 	
-	@Inject(method = "initializeConnectionToPlayer", at = @At(value = "HEAD"), cancellable = true)
-	public void be_initializeConnectionToPlayer(NetworkManager netManager, ServerPlayerEntity playerIn, CallbackInfo info) 
+	@Inject(method = "placeNewPlayer", at = @At(value = "HEAD"), cancellable = true)
+	public void be_placeNewPlayer(Connection netManager, ServerPlayer playerIn, CallbackInfo info)
 	{
 //		if (CommonConfig.swapOverworldWithEnd())
 //		{
@@ -135,7 +104,7 @@ public class PlayerListMixin
 //		    if (serverworld == null) 
 //		    {
 //		    	LOGGER.warn("Unknown respawn dimension {}, defaulting to overworld", (Object)registrykey);
-//		        serverworld1 = this.server.func_241755_D_();
+//		        serverworld1 = this.server.overworld();
 //		    } 
 //		    else 
 //		    {
@@ -158,14 +127,14 @@ public class PlayerListMixin
 //		    GameRules gamerules = serverworld1.getGameRules();
 //		    boolean flag = gamerules.getBoolean(GameRules.DO_IMMEDIATE_RESPAWN);
 //		    boolean flag1 = gamerules.getBoolean(GameRules.REDUCED_DEBUG_INFO);
-//		    serverplaynethandler.sendPacket(new SJoinGamePacket(playerIn.getEntityId(), playerIn.interactionManager.getGameType(), playerIn.interactionManager.func_241815_c_(), BiomeManager.getHashedSeed(serverworld1.getSeed()), iworldinfo.isHardcore(), this.server.func_240770_D_(), this.field_232639_s_, serverworld1.getDimensionType(), serverworld1.getDimensionKey(), this.getMaxPlayers(), this.viewDistance, flag1, !flag, serverworld1.isDebug(), serverworld1.func_241109_A_()));
+//		    serverplaynethandler.sendPacket(new SJoinGamePacket(playerIn.getEntityId(), playerIn.interactionManager.getGameType(), playerIn.interactionManager.getPreviousGameModeForPlayer(), BiomeManager.getHashedSeed(serverworld1.getSeed()), iworldinfo.isHardcore(), this.server.levelKeys(), this.registryHolder, serverworld1.getDimensionType(), serverworld1.getDimensionKey(), this.getMaxPlayers(), this.viewDistance, flag1, !flag, serverworld1.isDebug(), serverworld1.isFlat()));
 //		    serverplaynethandler.sendPacket(new SCustomPayloadPlayPacket(SCustomPayloadPlayPacket.BRAND, (new PacketBuffer(Unpooled.buffer())).writeString(this.getServer().getServerModName())));
 //		    serverplaynethandler.sendPacket(new SServerDifficultyPacket(iworldinfo.getDifficulty(), iworldinfo.isDifficultyLocked()));
 //		    serverplaynethandler.sendPacket(new SPlayerAbilitiesPacket(playerIn.abilities));
 //		    serverplaynethandler.sendPacket(new SHeldItemChangePacket(playerIn.inventory.currentItem));
 //		    serverplaynethandler.sendPacket(new SUpdateRecipesPacket(this.server.getRecipeManager().getRecipes()));
-//		    serverplaynethandler.sendPacket(new STagsListPacket(this.server.func_244266_aF()));
-//		    net.minecraftforge.fml.network.NetworkHooks.syncCustomTagTypes(playerIn, this.server.func_244266_aF());
+//		    serverplaynethandler.sendPacket(new STagsListPacket(this.server.getTags()));
+//		    net.minecraftforge.fml.network.NetworkHooks.syncCustomTagTypes(playerIn, this.server.getTags());
 //		    this.updatePermissionLevel(playerIn);
 //		    playerIn.getStats().markAllDirty();
 //		    playerIn.getRecipeBook().init(playerIn);
@@ -181,7 +150,7 @@ public class PlayerListMixin
 //		    	iformattabletextcomponent = new TranslationTextComponent("multiplayer.player.joined.renamed", playerIn.getDisplayName(), s);
 //		    }
 //		    
-//		    this.func_232641_a_(iformattabletextcomponent.mergeStyle(TextFormatting.YELLOW), ChatType.SYSTEM, Util.DUMMY_UUID);
+//		    this.broadcastMessage(iformattabletextcomponent.mergeStyle(TextFormatting.YELLOW), ChatType.SYSTEM, Util.DUMMY_UUID);
 //		    serverplaynethandler.setPlayerLocation(playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), playerIn.rotationYaw, playerIn.rotationPitch);
 //		    this.players.add(playerIn);
 //		    this.uuidToPlayerMap.put(playerIn.getUniqueID(), playerIn);

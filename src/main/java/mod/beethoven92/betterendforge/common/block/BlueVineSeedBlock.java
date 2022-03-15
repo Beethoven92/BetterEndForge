@@ -8,12 +8,14 @@ import mod.beethoven92.betterendforge.common.block.template.PlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlueVineSeedBlock extends PlantBlockWithAge
 {
@@ -23,7 +25,7 @@ public class BlueVineSeedBlock extends PlantBlockWithAge
 	}
 
 	@Override
-	public void growAdult(ISeedReader world, Random random, BlockPos pos) 
+	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) 
 	{
 		int height = ModMathHelper.randRange(2, 5, random);
 		int h = BlockHelper.upRay(world, pos, height + 2);
@@ -31,29 +33,29 @@ public class BlueVineSeedBlock extends PlantBlockWithAge
 		{
 			return;
 		}
-		BlockHelper.setWithoutUpdate(world, pos, ModBlocks.BLUE_VINE.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
+		BlockHelper.setWithoutUpdate(world, pos, ModBlocks.BLUE_VINE.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 		for (int i = 1; i < height; i++) 
 		{
-			BlockHelper.setWithoutUpdate(world, pos.up(i), ModBlocks.BLUE_VINE.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
+			BlockHelper.setWithoutUpdate(world, pos.above(i), ModBlocks.BLUE_VINE.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
 		}
-		BlockHelper.setWithoutUpdate(world, pos.up(height), ModBlocks.BLUE_VINE.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
-		placeLantern(world, pos.up(height + 1));
+		BlockHelper.setWithoutUpdate(world, pos.above(height), ModBlocks.BLUE_VINE.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
+		placeLantern(world, pos.above(height + 1));
 	}
 	
-	private void placeLantern(ISeedReader world, BlockPos pos) 
+	private void placeLantern(WorldGenLevel world, BlockPos pos) 
 	{
-		BlockHelper.setWithoutUpdate(world, pos, ModBlocks.BLUE_VINE_LANTERN.get().getDefaultState().with(BlueVineLanternBlock.NATURAL, true));
+		BlockHelper.setWithoutUpdate(world, pos, ModBlocks.BLUE_VINE_LANTERN.get().defaultBlockState().setValue(BlueVineLanternBlock.NATURAL, true));
 		for (Direction dir: BlockHelper.HORIZONTAL_DIRECTIONS) 
 		{
-			BlockPos p = pos.offset(dir);
-			if (world.isAirBlock(p)) 
+			BlockPos p = pos.relative(dir);
+			if (world.isEmptyBlock(p)) 
 			{
-				BlockHelper.setWithoutUpdate(world, p, ModBlocks.BLUE_VINE_FUR.get().getDefaultState().with(FurBlock.FACING, dir));
+				BlockHelper.setWithoutUpdate(world, p, ModBlocks.BLUE_VINE_FUR.get().defaultBlockState().setValue(FurBlock.FACING, dir));
 			}
 		}
-		if (world.isAirBlock(pos.up())) 
+		if (world.isEmptyBlock(pos.above())) 
 		{
-			BlockHelper.setWithoutUpdate(world, pos.up(), ModBlocks.BLUE_VINE_FUR.get().getDefaultState().with(FurBlock.FACING, Direction.UP));
+			BlockHelper.setWithoutUpdate(world, pos.above(), ModBlocks.BLUE_VINE_FUR.get().defaultBlockState().setValue(FurBlock.FACING, Direction.UP));
 		}
 	}
 	
@@ -64,13 +66,13 @@ public class BlueVineSeedBlock extends PlantBlockWithAge
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return true;
 	}
 	
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}

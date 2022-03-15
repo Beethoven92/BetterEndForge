@@ -6,12 +6,14 @@ import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.block.template.UnderwaterPlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class EndLilySeedBlock extends UnderwaterPlantBlockWithAge
 {
@@ -21,39 +23,39 @@ public class EndLilySeedBlock extends UnderwaterPlantBlockWithAge
 	}
 
 	@Override
-	public void doGrow(ISeedReader world, Random random, BlockPos pos) 
+	public void doGrow(WorldGenLevel world, Random random, BlockPos pos) 
 	{	
 		if (searchForAirAbove(world, pos)) 
 		{
-			BlockHelper.setWithoutUpdate(world, pos, ModBlocks.END_LILY.get().getDefaultState().with(EndLilyBlock.SHAPE, TripleShape.BOTTOM));
-			BlockPos up = pos.up();
+			BlockHelper.setWithoutUpdate(world, pos, ModBlocks.END_LILY.get().defaultBlockState().setValue(EndLilyBlock.SHAPE, TripleShape.BOTTOM));
+			BlockPos up = pos.above();
 			while (world.getFluidState(up).isSource()) 
 			{
-				BlockHelper.setWithoutUpdate(world, up, ModBlocks.END_LILY.get().getDefaultState().with(EndLilyBlock.SHAPE, TripleShape.MIDDLE));
-				up = up.up();
+				BlockHelper.setWithoutUpdate(world, up, ModBlocks.END_LILY.get().defaultBlockState().setValue(EndLilyBlock.SHAPE, TripleShape.MIDDLE));
+				up = up.above();
 			}
-			BlockHelper.setWithoutUpdate(world, up, ModBlocks.END_LILY.get().getDefaultState().with(EndLilyBlock.SHAPE, TripleShape.TOP));
+			BlockHelper.setWithoutUpdate(world, up, ModBlocks.END_LILY.get().defaultBlockState().setValue(EndLilyBlock.SHAPE, TripleShape.TOP));
 		}
 	}
 	
-	private boolean searchForAirAbove(ISeedReader world, BlockPos pos)
+	private boolean searchForAirAbove(WorldGenLevel world, BlockPos pos)
 	{
-		BlockPos up = pos.up();
-		while (world.getBlockState(up).getFluidState().getFluid().equals(Fluids.WATER.getStillFluid())) 
+		BlockPos up = pos.above();
+		while (world.getBlockState(up).getFluidState().getType().equals(Fluids.WATER.getSource())) 
 		{
-			up = up.up();
+			up = up.above();
 		}
-		return world.isAirBlock(up);
+		return world.isEmptyBlock(up);
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return true;
 	}
 	
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}

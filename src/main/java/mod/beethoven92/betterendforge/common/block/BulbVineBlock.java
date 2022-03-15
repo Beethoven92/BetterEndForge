@@ -2,6 +2,8 @@ package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
 public class BulbVineBlock extends EndVineBlock
 {
 	public BulbVineBlock(Properties properties) 

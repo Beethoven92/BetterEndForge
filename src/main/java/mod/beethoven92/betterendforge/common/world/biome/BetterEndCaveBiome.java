@@ -2,10 +2,10 @@ package mod.beethoven92.betterendforge.common.world.biome;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.WeightedList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.ai.behavior.WeightedList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.feature.Feature;
 
 public class BetterEndCaveBiome extends BetterEndBiome
 {
@@ -19,22 +19,22 @@ public class BetterEndCaveBiome extends BetterEndBiome
 
 	public void addFloorFeature(Feature<?> feature, int weight) 
 	{
-		floorFeatures.func_226313_a_(feature, weight);
+		floorFeatures.add(feature, weight);
 	}
 
 	public void addCeilFeature(Feature<?> feature, int weight) 
 	{
-		ceilFeatures.func_226313_a_(feature, weight);
+		ceilFeatures.add(feature, weight);
 	}
 
 	public Feature<?> getFloorFeature(Random random) 
 	{
-		return floorFeatures.func_234005_b_() ? null : floorFeatures.func_226318_b_(random);
+		return floorFeatures.isEmpty() ? null : floorFeatures.getOne(random);
 	}
 
 	public Feature<?> getCeilFeature(Random random) 
 	{
-		return ceilFeatures.func_234005_b_() ? null : ceilFeatures.func_226318_b_(random);
+		return ceilFeatures.isEmpty() ? null : ceilFeatures.getOne(random);
 	}
 	
 	public float getFloorDensity() 

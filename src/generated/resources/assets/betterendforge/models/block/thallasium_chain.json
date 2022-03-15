@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/chain",
-  "textures": {
-    "particle": "betterendforge:block/thallasium_chain",
-    "all": "betterendforge:block/thallasium_chain"
-  }
-}

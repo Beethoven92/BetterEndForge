@@ -5,32 +5,35 @@ import java.util.EnumMap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class WallPlantBlock extends PlantBlock
 {
 	private static final EnumMap<Direction, VoxelShape> SHAPES = Maps.newEnumMap(ImmutableMap.of(
-			Direction.NORTH, Block.makeCuboidShape(1, 1, 8, 15, 15, 16),
-			Direction.SOUTH, Block.makeCuboidShape(1, 1, 0, 15, 15, 8),
-			Direction.WEST, Block.makeCuboidShape(8, 1, 1, 16, 15, 15),
-			Direction.EAST, Block.makeCuboidShape(0, 1, 1, 8, 15, 15)));
+			Direction.NORTH, Block.box(1, 1, 8, 15, 15, 16),
+			Direction.SOUTH, Block.box(1, 1, 0, 15, 15, 8),
+			Direction.WEST, Block.box(8, 1, 1, 16, 15, 15),
+			Direction.EAST, Block.box(0, 1, 1, 8, 15, 15)));
 	
-	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	
 	public WallPlantBlock(Properties properties) 
 	{
@@ -38,9 +41,9 @@ public class WallPlantBlock extends PlantBlock
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
-		return SHAPES.get(state.get(FACING));
+		return SHAPES.get(state.getValue(FACING));
 	}
 	
 	@Override
@@ -50,25 +53,25 @@ public class WallPlantBlock extends PlantBlock
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) 
 	{
-		Direction direction = (Direction)state.get(FACING);
-		BlockPos blockPos = pos.offset(direction.getOpposite());
+		Direction direction = (Direction)state.getValue(FACING);
+		BlockPos blockPos = pos.relative(direction.getOpposite());
 		BlockState blockState = worldIn.getBlockState(blockPos);
 		return isValidSupport(worldIn, blockPos, blockState, direction);
 	}
 	
-	public boolean isValidSupport(IWorldReader world, BlockPos pos, BlockState blockState, Direction direction) 
+	public boolean isValidSupport(LevelReader world, BlockPos pos, BlockState blockState, Direction direction) 
 	{
-		return blockState.getMaterial().isSolid() && blockState.isSolidSide(world, pos, direction);
+		return blockState.getMaterial().isSolid() && blockState.isFaceSturdy(world, pos, direction);
 	}
 	
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) 
+	public BlockState getStateForPlacement(BlockPlaceContext context) 
 	{
-		BlockState blockState = this.getDefaultState();
-		IWorldReader worldView = context.getWorld();
-		BlockPos blockPos = context.getPos();
+		BlockState blockState = this.defaultBlockState();
+		LevelReader worldView = context.getLevel();
+		BlockPos blockPos = context.getClickedPos();
 		Direction[] directions = context.getNearestLookingDirections();
 		for (int i = 0; i < directions.length; ++i) 
 		{
@@ -76,8 +79,8 @@ public class WallPlantBlock extends PlantBlock
 			if (direction.getAxis().isHorizontal()) 
 			{
 				Direction direction2 = direction.getOpposite();
-				blockState = blockState.with(FACING, direction2);
-				if (blockState.isValidPosition(worldView, blockPos)) 
+				blockState = blockState.setValue(FACING, direction2);
+				if (blockState.canSurvive(worldView, blockPos)) 
 				{
 					return blockState;
 				}
@@ -87,12 +90,12 @@ public class WallPlantBlock extends PlantBlock
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos))
+		if (!canSurvive(stateIn, worldIn, currentPos))
 		{
-			return Blocks.AIR.getDefaultState();
+			return Blocks.AIR.defaultBlockState();
 		}
 		else 
 		{
@@ -101,18 +104,18 @@ public class WallPlantBlock extends PlantBlock
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(FACING);
 	}
 	
 	public BlockState rotate(BlockState state, Rotation rot) 
 	{
-		return state.with(FACING, rot.rotate(state.get(FACING)));
+		return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
 
 	public BlockState mirror(BlockState state, Mirror mirrorIn) 
 	{
-		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
 	}
 }

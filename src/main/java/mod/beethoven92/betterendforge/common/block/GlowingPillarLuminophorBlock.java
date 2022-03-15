@@ -1,41 +1,43 @@
 package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class GlowingPillarLuminophorBlock extends Block {
 	public static final BooleanProperty NATURAL = BooleanProperty.create("natural");
 
 	public GlowingPillarLuminophorBlock(Properties properties) {
 		super(properties);
-		this.setDefaultState(this.getDefaultState().with(NATURAL, false));
+		this.registerDefaultState(this.defaultBlockState().setValue(NATURAL, false));
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader world, BlockPos pos) {
-		return state.get(NATURAL) ? world.getBlockState(pos.down()).isIn(ModBlocks.GLOWING_PILLAR_ROOTS.get()) : true;
+	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+		return state.getValue(NATURAL) ? world.getBlockState(pos.below()).is(ModBlocks.GLOWING_PILLAR_ROOTS.get()) : true;
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world,
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world,
 			BlockPos pos, BlockPos facingPos) {
-		if (!isValidPosition(state, world, pos)) {
-			return Blocks.AIR.getDefaultState();
+		if (!canSurvive(state, world, pos)) {
+			return Blocks.AIR.defaultBlockState();
 		} else {
 			return state;
 		}
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) {
 		builder.add(NATURAL);
 	}
 }

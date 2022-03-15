@@ -1,7 +1,7 @@
 package mod.beethoven92.betterendforge.common.world.biome;
 
 import mod.beethoven92.betterendforge.common.init.*;
-import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.level.levelgen.GenerationStep;
 //import ru.bclib.world.biomes.BCLBiomeDef;
 //import ru.betterend.BetterEnd;
 //import ru.betterend.registry.EndFeatures;
@@ -22,10 +22,10 @@ public class UmbraValleyBiome extends BetterEndBiome
 			.setSurface(ModConfiguredSurfaceBuilders.get(ModConfiguredSurfaceBuilders.UMBRA_SURFACE))
 			.setParticles(ModParticleTypes.AMBER_SPHERE.get(), 0.0001F)
 			.setMusic(ModSoundEvents.AMBIENT_UMBRA_VALLEY.get())
-				.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.INFLEXIA)
-				.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.FLAMMALIX)
-				.addFeature(GenerationStage.Decoration.RAW_GENERATION, ModConfiguredFeatures.THIN_ARCH)
-				.addFeature(GenerationStage.Decoration.RAW_GENERATION, ModConfiguredFeatures.UMBRALITH_ARCH)
+				.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.INFLEXIA)
+				.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.FLAMMALIX)
+				.addFeature(GenerationStep.Decoration.RAW_GENERATION, ModConfiguredFeatures.THIN_ARCH)
+				.addFeature(GenerationStep.Decoration.RAW_GENERATION, ModConfiguredFeatures.UMBRALITH_ARCH)
 
 
 		);

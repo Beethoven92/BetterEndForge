@@ -7,68 +7,68 @@ import mod.beethoven92.betterendforge.common.block.template.PlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.Level;
 
 public class GlowingPillarSeedBlock extends PlantBlockWithAge {
-	public GlowingPillarSeedBlock(AbstractBlock.Properties properties) {
+	public GlowingPillarSeedBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	public void growAdult(ISeedReader world, Random random, BlockPos pos) {
+	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
 		int height = ModMathHelper.randRange(1, 2, random);
 		int h = BlockHelper.upRay(world, pos, height + 2);
 		if (h < height) {
 			return;
 		}
 
-		Mutable mut = new Mutable().setPos(pos);
-		BlockState roots = ModBlocks.GLOWING_PILLAR_ROOTS.get().getDefaultState();
+		MutableBlockPos mut = new MutableBlockPos().set(pos);
+		BlockState roots = ModBlocks.GLOWING_PILLAR_ROOTS.get().defaultBlockState();
 		if (height < 2) {
-			BlockHelper.setWithUpdate(world, mut, roots.with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
+			BlockHelper.setWithUpdate(world, mut, roots.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
 			mut.move(Direction.UP);
 		} else {
-			BlockHelper.setWithUpdate(world, mut, roots.with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
+			BlockHelper.setWithUpdate(world, mut, roots.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 			mut.move(Direction.UP);
-			BlockHelper.setWithUpdate(world, mut, roots.with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
+			BlockHelper.setWithUpdate(world, mut, roots.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
 			mut.move(Direction.UP);
 		}
 		BlockHelper.setWithUpdate(world, mut,
-				ModBlocks.GLOWING_PILLAR_LUMINOPHOR.get().getDefaultState().with(BlueVineLanternBlock.NATURAL, true));
+				ModBlocks.GLOWING_PILLAR_LUMINOPHOR.get().defaultBlockState().setValue(BlueVineLanternBlock.NATURAL, true));
 		for (Direction dir : BlockHelper.DIRECTIONS) {
-			pos = mut.offset(dir);
-			if (world.isAirBlock(pos)) {
+			pos = mut.relative(dir);
+			if (world.isEmptyBlock(pos)) {
 				BlockHelper.setWithUpdate(world, pos,
-						ModBlocks.GLOWING_PILLAR_LEAVES.get().getDefaultState().with(BlockStateProperties.FACING, dir));
+						ModBlocks.GLOWING_PILLAR_LEAVES.get().defaultBlockState().setValue(BlockStateProperties.FACING, dir));
 			}
 		}
 		mut.move(Direction.UP);
-		if (world.isAirBlock(mut)) {
-			BlockHelper.setWithUpdate(world, mut, ModBlocks.GLOWING_PILLAR_LEAVES.get().getDefaultState()
-					.with(BlockStateProperties.FACING, Direction.UP));
+		if (world.isEmptyBlock(mut)) {
+			BlockHelper.setWithUpdate(world, mut, ModBlocks.GLOWING_PILLAR_LEAVES.get().defaultBlockState()
+					.setValue(BlockStateProperties.FACING, Direction.UP));
 		}
 	}
 
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(ModBlocks.AMBER_MOSS.get());
+		return state.is(ModBlocks.AMBER_MOSS.get());
 	}
 
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) {
 		return true;
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) {
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) {
 		return true;
 	}
 }

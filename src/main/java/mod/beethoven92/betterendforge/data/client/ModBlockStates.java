@@ -18,33 +18,33 @@ import mod.beethoven92.betterendforge.common.block.template.EndAnvilBlock;
 import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
 import mod.beethoven92.betterendforge.common.block.template.PillarBlockTemplate;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import net.minecraft.block.AbstractButtonBlock;
-import net.minecraft.block.AnvilBlock;
-import net.minecraft.block.BarrelBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.ComposterBlock;
-import net.minecraft.block.CraftingTableBlock;
-import net.minecraft.block.DoorBlock;
-import net.minecraft.block.FenceBlock;
-import net.minecraft.block.FenceGateBlock;
-import net.minecraft.block.FlowerPotBlock;
-import net.minecraft.block.FurnaceBlock;
-import net.minecraft.block.LadderBlock;
-import net.minecraft.block.LanternBlock;
-import net.minecraft.block.PressurePlateBlock;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.SixWayBlock;
-import net.minecraft.block.SlabBlock;
-import net.minecraft.block.StairsBlock;
-import net.minecraft.block.StoneButtonBlock;
-import net.minecraft.block.TrapDoorBlock;
-import net.minecraft.block.WallBlock;
-import net.minecraft.block.WoodButtonBlock;
+import net.minecraft.world.level.block.ButtonBlock;
+import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ComposterBlock;
+import net.minecraft.world.level.block.CraftingTableBlock;
+import net.minecraft.world.level.block.DoorBlock;
+import net.minecraft.world.level.block.FenceBlock;
+import net.minecraft.world.level.block.FenceGateBlock;
+import net.minecraft.world.level.block.FlowerPotBlock;
+import net.minecraft.world.level.block.FurnaceBlock;
+import net.minecraft.world.level.block.LadderBlock;
+import net.minecraft.world.level.block.Lantern;
+import net.minecraft.world.level.block.PressurePlateBlock;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.StoneButtonBlock;
+import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.WoodButtonBlock;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.state.properties.AttachFace;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.AttachFace;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -131,7 +131,7 @@ public class ModBlockStates extends BlockStateProvider
 		
 		axisBlock((RotatedPillarBlock) ModBlocks.NEON_CACTUS_BLOCK.get(), modLoc("block/neon_cactus_block_side"), modLoc("block/neon_cactus_block_top"));
 		makeBlockItemFromExistingModel(ModBlocks.NEON_CACTUS_BLOCK.get());
-		stairsBlock((StairsBlock) ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get(), modLoc("block/neon_cactus_block_side"), modLoc("block/neon_cactus_block_top"), modLoc("block/neon_cactus_block_top"));
+		stairsBlock((StairBlock) ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get(), modLoc("block/neon_cactus_block_side"), modLoc("block/neon_cactus_block_top"), modLoc("block/neon_cactus_block_top"));
 		makeBlockItemFromExistingModel(ModBlocks.NEON_CACTUS_BLOCK_STAIRS.get());
 		slabBlock((SlabBlock) ModBlocks.NEON_CACTUS_BLOCK_SLAB.get(), modLoc("block/neon_cactus_block"), modLoc("block/neon_cactus_block_side"), modLoc("block/neon_cactus_block_top"), modLoc("block/neon_cactus_block_top"));
 		makeBlockItemFromExistingModel(ModBlocks.NEON_CACTUS_BLOCK_SLAB.get());
@@ -177,7 +177,7 @@ public class ModBlockStates extends BlockStateProvider
 		ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach((block) -> {
 			if (block instanceof FlowerPotBlock)
 			{
-				flowerPotBlock(block, ((FlowerPotBlock) block).getFlower());
+				flowerPotBlock(block, ((FlowerPotBlock) block).getContent());
 			}
 		});
 	}
@@ -189,7 +189,7 @@ public class ModBlockStates extends BlockStateProvider
 		simpleBlock(material.planks.get());
 		makeBlockItemFromExistingModel(material.planks.get());
 		
-		stairsBlock((StairsBlock) material.stairs.get(), planksTexture);
+		stairsBlock((StairBlock) material.stairs.get(), planksTexture);
 		makeBlockItemFromExistingModel(material.stairs.get());
 		
 		slabBlock((SlabBlock) material.slab.get(), material.planks.get().getRegistryName(), planksTexture);
@@ -245,7 +245,7 @@ public class ModBlockStates extends BlockStateProvider
 		axisBlock((PillarBlockTemplate)material.pillar.get(), modLoc("block/" + material.name + "_pillar_side"), modLoc("block/" + material.name + "_pillar_top"));
 		makeBlockItemFromExistingModel(material.pillar.get());
 		
-		stairsBlock((StairsBlock) material.stairs.get(), modLoc("block/" + material.name));
+		stairsBlock((StairBlock) material.stairs.get(), modLoc("block/" + material.name));
 		makeBlockItemFromExistingModel(material.stairs.get());
 		
 		slabBlock((SlabBlock) material.slab.get(), material.stone.get().getRegistryName(), modLoc("block/" + material.name));
@@ -257,7 +257,7 @@ public class ModBlockStates extends BlockStateProvider
 		simpleBlock(material.bricks.get());
 		makeBlockItemFromExistingModel(material.bricks.get());
 		
-		stairsBlock((StairsBlock) material.brick_stairs.get(), modLoc("block/" + material.name + "_bricks"));
+		stairsBlock((StairBlock) material.brick_stairs.get(), modLoc("block/" + material.name + "_bricks"));
 		makeBlockItemFromExistingModel(material.brick_stairs.get());
 		
 		slabBlock((SlabBlock) material.brick_slab.get(), material.bricks.get().getRegistryName(), modLoc("block/" + material.name + "_bricks"));
@@ -296,7 +296,7 @@ public class ModBlockStates extends BlockStateProvider
 		simpleBlock(material.tile.get());
 		makeBlockItemFromExistingModel(material.tile.get());
 		
-		stairsBlock((StairsBlock) material.stairs.get(), modLoc("block/" + material.name + "_tile"));
+		stairsBlock((StairBlock) material.stairs.get(), modLoc("block/" + material.name + "_tile"));
 		makeBlockItemFromExistingModel(material.stairs.get());
 		
 		slabBlock((SlabBlock) material.slab.get(), material.tile.get().getRegistryName(), modLoc("block/" + material.name + "_tile"));
@@ -348,19 +348,19 @@ public class ModBlockStates extends BlockStateProvider
 		simpleBlockItem(block, model);
 	}
 	
-    private void buttonBlock(AbstractButtonBlock block, String material, ResourceLocation texture) 
+    private void buttonBlock(ButtonBlock block, String material, ResourceLocation texture) 
     {
     	ModelFile button = models().singleTexture(material + "_button", mcLoc("block/button"), texture);
     	ModelFile buttonPressed = models().singleTexture(material + "_button_pressed", mcLoc("block/button_pressed"), texture);
     	int angleOffset = 180;
         getVariantBuilder(block)
             .forAllStates(state -> {
-               boolean powered = state.get(WoodButtonBlock.POWERED);
+               boolean powered = state.getValue(WoodButtonBlock.POWERED);
 
                return ConfiguredModel.builder()
                .modelFile(powered == true ? buttonPressed : button)
-               .rotationX(state.get(BlockStateProperties.FACE).ordinal() * 90)
-               .rotationY((((int) state.get(BlockStateProperties.HORIZONTAL_FACING).getHorizontalAngle() + angleOffset) + (state.get(BlockStateProperties.FACE) == AttachFace.CEILING ? 180 : 0)) % 360)
+               .rotationX(state.getValue(BlockStateProperties.ATTACH_FACE).ordinal() * 90)
+               .rotationY((((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + angleOffset) + (state.getValue(BlockStateProperties.ATTACH_FACE) == AttachFace.CEILING ? 180 : 0)) % 360)
                .build();
             });
     }
@@ -371,7 +371,7 @@ public class ModBlockStates extends BlockStateProvider
     	ModelFile plateDown = models().singleTexture(material + "_pressure_plate_down", mcLoc("block/pressure_plate_down"), texture);
         getVariantBuilder(block)
         .forAllStates(state -> {
-           boolean powered = state.get(PressurePlateBlock.POWERED);
+           boolean powered = state.getValue(PressurePlateBlock.POWERED);
 
            return ConfiguredModel.builder()
            .modelFile(powered == true ? plateDown : plate)
@@ -445,8 +445,8 @@ public class ModBlockStates extends BlockStateProvider
     			.texture("side", modLoc("block/" + material + "_barrel_side"));
         getVariantBuilder(block)
         .forAllStates(state -> {
-           boolean opened = state.get(BarrelBlock.PROPERTY_OPEN);
-           Direction dir = state.get(BarrelBlock.PROPERTY_FACING);
+           boolean opened = state.getValue(BarrelBlock.OPEN);
+           Direction dir = state.getValue(BarrelBlock.FACING);
            int x = 0;
            int y = 0;
            switch (dir) {
@@ -503,7 +503,7 @@ public class ModBlockStates extends BlockStateProvider
     			.texture("bottom", modLoc("block/" + material + "_lantern_bottom"));
         getVariantBuilder(block)
         .forAllStates(state -> {
-           boolean isFloor = !state.get(LanternBlock.HANGING);
+           boolean isFloor = !state.getValue(Lantern.HANGING);
            return ConfiguredModel.builder()
            .modelFile(isFloor ? floor : ceil)
            .build();
@@ -536,7 +536,7 @@ public class ModBlockStates extends BlockStateProvider
     			.texture("pillar", pillar)
     			.texture("bottom", polished));
 		getVariantBuilder(block).forAllStates(state -> {
-			PedestalState pedestalState = state.get(PedestalBlock.STATE);
+			PedestalState pedestalState = state.getValue(PedestalBlock.STATE);
 			return ConfiguredModel.builder().modelFile(models.get(pedestalState)).build();
 		});
     }
@@ -554,7 +554,7 @@ public class ModBlockStates extends BlockStateProvider
         for (Block lantern : lanterns) {
 	        getVariantBuilder(lantern)
 	        .forAllStates(state -> {
-	           boolean isFloor = !state.get(LanternBlock.HANGING);
+	           boolean isFloor = !state.getValue(Lantern.HANGING);
 	           return ConfiguredModel.builder()
 	           .modelFile(isFloor ? floor : ceil)
 	           .build();
@@ -590,10 +590,10 @@ public class ModBlockStates extends BlockStateProvider
        
         MultiPartBlockStateBuilder builder = getMultipartBuilder(barsBlock)
                 .part().modelFile(post).addModel().
-                condition(SixWayBlock.FACING_TO_PROPERTY_MAP.get(Direction.NORTH), false).
-                condition(SixWayBlock.FACING_TO_PROPERTY_MAP.get(Direction.SOUTH), false).
-                condition(SixWayBlock.FACING_TO_PROPERTY_MAP.get(Direction.EAST), false).
-                condition(SixWayBlock.FACING_TO_PROPERTY_MAP.get(Direction.WEST), false).end();
+                condition(PipeBlock.PROPERTY_BY_DIRECTION.get(Direction.NORTH), false).
+                condition(PipeBlock.PROPERTY_BY_DIRECTION.get(Direction.SOUTH), false).
+                condition(PipeBlock.PROPERTY_BY_DIRECTION.get(Direction.EAST), false).
+                condition(PipeBlock.PROPERTY_BY_DIRECTION.get(Direction.WEST), false).end();
 
         fourWayMultipart(builder, side);
     }
@@ -613,7 +613,7 @@ public class ModBlockStates extends BlockStateProvider
 		
 		getVariantBuilder(chandelier)
         .forAllStates(state -> {
-           Direction dir = state.get(AttachedBlock.FACING);
+           Direction dir = state.getValue(AttachedBlock.FACING);
            int y = 0;
            switch (dir) 
            {
@@ -645,7 +645,7 @@ public class ModBlockStates extends BlockStateProvider
     {
         getVariantBuilder(block)
         .forAllStates(state -> {
-           int destruction = state.get(EndAnvilBlock.DESTRUCTION);
+           int destruction = state.getValue(EndAnvilBlock.DESTRUCTION);
        	   
            ModelFile anvil = models().withExistingParent(material + "_anvil_" + destruction, modLoc("block/anvil"))
         		   .texture("front", modLoc("block/" + material + "_anvil_front"))
@@ -654,7 +654,7 @@ public class ModBlockStates extends BlockStateProvider
     			   .texture("panel", modLoc("block/" + material + "_anvil_panel"))
     			   .texture("top", modLoc("block/" + material + "_anvil_top_" + destruction));
            
-           Direction dir = state.get(AnvilBlock.FACING);
+           Direction dir = state.getValue(AnvilBlock.FACING);
            int x = 0;
            int y = 0;
            switch (dir) 
@@ -698,9 +698,9 @@ public class ModBlockStates extends BlockStateProvider
         
         getVariantBuilder(block)
         .forAllStates(state -> {
-           boolean isLit = state.get(FurnaceBlock.LIT);
+           boolean isLit = state.getValue(FurnaceBlock.LIT);
        	           
-           Direction dir = state.get(FurnaceBlock.FACING);
+           Direction dir = state.getValue(FurnaceBlock.FACING);
            int x = 0;
            int y = 0;
            switch (dir) 
@@ -732,9 +732,9 @@ public class ModBlockStates extends BlockStateProvider
     {       
         getVariantBuilder(block)
         .forAllStates(state -> {
-           boolean isFloor = state.get(StalactiteBlock.IS_FLOOR);
+           boolean isFloor = state.getValue(StalactiteBlock.IS_FLOOR);
        	           
-           int size = state.get(StalactiteBlock.SIZE);
+           int size = state.getValue(StalactiteBlock.SIZE);
            
            ModelFile currentSize = models().withExistingParent(block.getRegistryName().getPath() + "_" + size, mcLoc("block/cross"))
          		   .texture("cross", modLoc("block/" + block.getRegistryName().getPath() + "_" + size));

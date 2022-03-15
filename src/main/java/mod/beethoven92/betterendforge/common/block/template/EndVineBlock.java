@@ -5,42 +5,45 @@ import java.util.Random;
 import mod.beethoven92.betterendforge.common.block.BlockProperties;
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IGrowable;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer.Builder;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.common.IForgeShearable;
 
-public class EndVineBlock extends Block implements IGrowable, IForgeShearable
+import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class EndVineBlock extends Block implements BonemealableBlock, IForgeShearable
 {
 	public static final EnumProperty<TripleShape> SHAPE = BlockProperties.TRIPLE_SHAPE;
-	private static final VoxelShape VOXEL_SHAPE = Block.makeCuboidShape(2, 0, 2, 14, 16, 14);
+	private static final VoxelShape VOXEL_SHAPE = Block.box(2, 0, 2, 14, 16, 14);
 	
 	public EndVineBlock(Properties properties) 
 	{
 		super(properties);
 		
-		this.setDefaultState(this.getDefaultState().with(SHAPE, TripleShape.BOTTOM));
+		this.registerDefaultState(this.defaultBlockState().setValue(SHAPE, TripleShape.BOTTOM));
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
-		Vector3d vec3d = state.getOffset(worldIn, pos);
-		return VOXEL_SHAPE.withOffset(vec3d.x, vec3d.y, vec3d.z);
+		Vec3 vec3d = state.getOffset(worldIn, pos);
+		return VOXEL_SHAPE.move(vec3d.x, vec3d.y, vec3d.z);
 	}
 	
 	@Override
@@ -50,68 +53,68 @@ public class EndVineBlock extends Block implements IGrowable, IForgeShearable
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) 
 	{
 		return isValidSupport(state, worldIn, pos);
 	}
 	
-	protected boolean isValidSupport(BlockState state, IWorldReader world, BlockPos pos) 
+	protected boolean isValidSupport(BlockState state, LevelReader world, BlockPos pos) 
 	{
-		BlockState up = world.getBlockState(pos.up()); 
-		return up.isIn(this) || up.isIn(BlockTags.LEAVES) || hasEnoughSolidSide(world, pos.up(), Direction.DOWN);
+		BlockState up = world.getBlockState(pos.above()); 
+		return up.is(this) || up.is(BlockTags.LEAVES) || canSupportCenter(world, pos.above(), Direction.DOWN);
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos)) 
+		if (!canSurvive(stateIn, worldIn, currentPos)) 
 		{
-			return Blocks.AIR.getDefaultState();
+			return Blocks.AIR.defaultBlockState();
 		}
 		else
 		{
-			if (worldIn.getBlockState(currentPos.down()).getBlock() != this)
-				return stateIn.with(SHAPE, TripleShape.BOTTOM);
-			else if (worldIn.getBlockState(currentPos.up()).getBlock() != this)
-				return stateIn.with(SHAPE, TripleShape.TOP);
-			return stateIn.with(SHAPE, TripleShape.MIDDLE);
+			if (worldIn.getBlockState(currentPos.below()).getBlock() != this)
+				return stateIn.setValue(SHAPE, TripleShape.BOTTOM);
+			else if (worldIn.getBlockState(currentPos.above()).getBlock() != this)
+				return stateIn.setValue(SHAPE, TripleShape.TOP);
+			return stateIn.setValue(SHAPE, TripleShape.MIDDLE);
 		}
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		while (worldIn.getBlockState(pos).getBlock() == this) 
 		{
-			pos = pos.down();
+			pos = pos.below();
 		}
 		return worldIn.getBlockState(pos).isAir();
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		while (worldIn.getBlockState(pos).getBlock() == this) 
 		{
-			pos = pos.down();
+			pos = pos.below();
 		}
 		return worldIn.getBlockState(pos).isAir();
 	}
 
 	@Override
-	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
+	public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		while (worldIn.getBlockState(pos).getBlock() == this) 
 		{
-			pos = pos.down();
+			pos = pos.below();
 		}
-		worldIn.setBlockState(pos, getDefaultState());
-		BlockHelper.setWithoutUpdate(worldIn, pos, getDefaultState());
+		worldIn.setBlockAndUpdate(pos, defaultBlockState());
+		BlockHelper.setWithoutUpdate(worldIn, pos, defaultBlockState());
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(SHAPE);
 	}

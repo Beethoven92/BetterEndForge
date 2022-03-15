@@ -4,19 +4,19 @@ import java.util.function.Supplier;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModItems;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
 
-public enum ModItemTier implements IItemTier
+public enum ModItemTier implements Tier
 {
 	THALLASIUM(2, 320, 7.0F, 1.5F, 12, () -> {
-		return Ingredient.fromItems(ModBlocks.THALLASIUM.ingot.get());
+		return Ingredient.of(ModBlocks.THALLASIUM.ingot.get());
 	}),
 	TERMINITE(3, 1230, 8.5F, 3.0F, 14, () -> {
-		return Ingredient.fromItems(ModBlocks.TERMINITE.ingot.get());
+		return Ingredient.of(ModBlocks.TERMINITE.ingot.get());
 	}),
 	AETERNIUM(5, 2196, 10.0F, 4.5F, 18, () -> {
-		return Ingredient.fromItems(ModItems.AETERNIUM_INGOT.get());
+		return Ingredient.of(ModItems.AETERNIUM_INGOT.get());
 	});
 	
 	private final int maxUses;
@@ -38,37 +38,37 @@ public enum ModItemTier implements IItemTier
 	}
 
 	@Override
-	public int getMaxUses() 
+	public int getUses() 
 	{
 		return maxUses;
 	}
 
 	@Override
-	public float getEfficiency()
+	public float getSpeed()
 	{
 		return efficiency;
 	}
 
 	@Override
-	public float getAttackDamage() 
+	public float getAttackDamageBonus() 
 	{
 		return attackDamage;
 	}
 
 	@Override
-	public int getHarvestLevel() 
+	public int getLevel() 
 	{
 		return harvestLevel;
 	}
 
 	@Override
-	public int getEnchantability() 
+	public int getEnchantmentValue() 
 	{
 		return enchantability;
 	}
 
 	@Override
-	public Ingredient getRepairMaterial() 
+	public Ingredient getRepairIngredient() 
 	{
 		return repairMaterial.get();
 	}

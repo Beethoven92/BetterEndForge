@@ -1,6 +1,0 @@
-{
-  "parent": "betterendforge:block/pedestal_pillar",
-  "textures": {
-    "pillar": "betterendforge:block/sulphuric_rock_pillar_side"
-  }
-}

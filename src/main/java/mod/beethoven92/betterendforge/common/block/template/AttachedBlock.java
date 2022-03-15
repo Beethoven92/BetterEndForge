@@ -1,19 +1,21 @@
 package mod.beethoven92.betterendforge.common.block.template;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class AttachedBlock extends Block
 {
@@ -22,22 +24,22 @@ public class AttachedBlock extends Block
 	public AttachedBlock(Properties properties) 
 	{
 		super(properties);
-		this.setDefaultState(this.getDefaultState().with(FACING, Direction.UP));
+		this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.UP));
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) 
+	public BlockState getStateForPlacement(BlockPlaceContext context) 
 	{
-		BlockState blockState = this.getDefaultState();
-		IWorldReader worldView = context.getWorld();
-		BlockPos blockPos = context.getPos();
+		BlockState blockState = this.defaultBlockState();
+		LevelReader worldView = context.getLevel();
+		BlockPos blockPos = context.getClickedPos();
 		Direction[] directions = context.getNearestLookingDirections();
 		for (int i = 0; i < directions.length; ++i) 
 		{
 			Direction direction = directions[i];
 			Direction direction2 = direction.getOpposite();
-			blockState = (BlockState) blockState.with(FACING, direction2);
-			if (blockState.isValidPosition(worldView, blockPos)) 
+			blockState = (BlockState) blockState.setValue(FACING, direction2);
+			if (blockState.canSurvive(worldView, blockPos)) 
 			{
 				return blockState;
 			}
@@ -46,12 +48,12 @@ public class AttachedBlock extends Block
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos)) 
+		if (!canSurvive(stateIn, worldIn, currentPos)) 
 		{
-			return Blocks.AIR.getDefaultState();
+			return Blocks.AIR.defaultBlockState();
 		}
 		else 
 		{
@@ -60,26 +62,26 @@ public class AttachedBlock extends Block
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos)
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos)
 	{
-		Direction direction = (Direction) state.get(FACING);
-		BlockPos blockPos = pos.offset(direction.getOpposite());
-		return hasEnoughSolidSide(worldIn, blockPos, direction) || worldIn.getBlockState(blockPos).isIn(BlockTags.LEAVES);
+		Direction direction = (Direction) state.getValue(FACING);
+		BlockPos blockPos = pos.relative(direction.getOpposite());
+		return canSupportCenter(worldIn, blockPos, direction) || worldIn.getBlockState(blockPos).is(BlockTags.LEAVES);
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(FACING);
 	}
 	
 	public BlockState rotate(BlockState state, Rotation rot) 
 	{
-		return state.with(FACING, rot.rotate(state.get(FACING)));
+		return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
     }
 
 	public BlockState mirror(BlockState state, Mirror mirrorIn) 
 	{
-		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
 	}
 }

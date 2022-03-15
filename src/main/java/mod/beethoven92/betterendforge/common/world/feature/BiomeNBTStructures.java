@@ -10,13 +10,13 @@ import mod.beethoven92.betterendforge.common.init.ModBiomes;
 import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.StructureHelper;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 
 public class BiomeNBTStructures extends NBTFeature
 {
@@ -37,7 +37,7 @@ public class BiomeNBTStructures extends NBTFeature
 	}
 	
 	@Override
-	protected Template getStructure(ISeedReader world, BlockPos pos, Random random) 
+	protected StructureTemplate getStructure(WorldGenLevel world, BlockPos pos, Random random) 
 	{
 		Biome biome = world.getBiome(pos);
 		BetterEndBiome endBiome = ModBiomes.getFromBiome(biome);
@@ -48,7 +48,7 @@ public class BiomeNBTStructures extends NBTFeature
 	}
 
 	@Override
-	protected boolean canSpawn(ISeedReader world, BlockPos pos, Random random) 
+	protected boolean canSpawn(WorldGenLevel world, BlockPos pos, Random random) 
 	{
 		if (!nbtStructures.containsKey(ModBiomes.getFromBiome(world.getBiome(pos))))
 		{
@@ -57,35 +57,35 @@ public class BiomeNBTStructures extends NBTFeature
 		
 		int cx = pos.getX() >> 4;
 		int cz = pos.getZ() >> 4;
-		return ((cx + cz) & 1) == 0 && pos.getY() > 58 && world.getBlockState(pos.down()).isIn(ModTags.GEN_TERRAIN);
+		return ((cx + cz) & 1) == 0 && pos.getY() > 58 && world.getBlockState(pos.below()).is(ModTags.GEN_TERRAIN);
 	}
 
 	@Override
-	protected Rotation getRotation(ISeedReader world, BlockPos pos, Random random) 
+	protected Rotation getRotation(WorldGenLevel world, BlockPos pos, Random random) 
 	{
-		return Rotation.randomRotation(random);
+		return Rotation.getRandom(random);
 	}
 
 	@Override
-	protected Mirror getMirror(ISeedReader world, BlockPos pos, Random random) 
+	protected Mirror getMirror(WorldGenLevel world, BlockPos pos, Random random) 
 	{
 		return Mirror.values()[random.nextInt(3)];
 	}
 
 	@Override
-	protected int getYOffset(Template structure, ISeedReader world, BlockPos pos, Random random) 
+	protected int getYOffset(StructureTemplate structure, WorldGenLevel world, BlockPos pos, Random random) 
 	{
 		return selected.offsetY;
 	}
 
 	@Override
-	protected TerrainMerge getTerrainMerge(ISeedReader world, BlockPos pos, Random random) 
+	protected TerrainMerge getTerrainMerge(WorldGenLevel world, BlockPos pos, Random random) 
 	{
 		return selected.terrainMerge;
 	}
 
 	@Override
-	protected void addStructureData(PlacementSettings data) 
+	protected void addStructureData(StructurePlaceSettings data) 
 	{
 	}
 	
@@ -96,7 +96,7 @@ public class BiomeNBTStructures extends NBTFeature
 		public final String replacePath;
 		public final int offsetY;
 		
-		private Template structure;
+		private StructureTemplate structure;
 		
 		public StructureInfo(String structurePath, String replacePath, int offsetY, TerrainMerge terrainMerge) 
 		{
@@ -106,7 +106,7 @@ public class BiomeNBTStructures extends NBTFeature
 			this.offsetY = offsetY;
 		}
 		
-		public Template getStructure() 
+		public StructureTemplate getStructure() 
 		{
 			if (structure == null) 
 			{	

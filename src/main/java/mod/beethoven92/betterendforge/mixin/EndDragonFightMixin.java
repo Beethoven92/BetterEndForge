@@ -3,24 +3,24 @@ package mod.beethoven92.betterendforge.mixin;
 import com.google.common.collect.Lists;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.pattern.BlockPattern;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.pattern.BlockPattern;
 //import net.minecraft.core.BlockPos;
 //import net.minecraft.core.Direction;
-import net.minecraft.entity.item.EnderCrystalEntity;
+import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
 //import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.end.DragonFightManager;
-import net.minecraft.world.end.DragonSpawnState;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.dimension.end.EndDragonFight;
+import net.minecraft.world.level.dimension.end.DragonRespawnAnimation;
 //import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
 //import net.minecraft.world.level.block.Blocks;
 //import net.minecraft.world.level.block.state.pattern.BlockPattern;
 //import net.minecraft.world.level.dimension.end.DragonRespawnAnimation;
 //import net.minecraft.world.level.dimension.end.EndDragonFight;
 //import net.minecraft.world.phys.AABB;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -33,65 +33,65 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
-@Mixin(DragonFightManager.class)
+@Mixin(EndDragonFight.class)
 public class EndDragonFightMixin {
 	@Shadow
-	private DragonSpawnState respawnState;
+	private DragonRespawnAnimation respawnStage;
 	@Shadow
 	private boolean dragonKilled;
 	@Shadow
-	private BlockPos exitPortalLocation;
+	private BlockPos portalLocation;
 	@Final
 	@Shadow
 	private static Logger LOGGER;
 	@Final
 	@Shadow
-	private ServerWorld world;
+	private ServerLevel level;
 	
 	@Shadow
-	private BlockPattern.PatternHelper findExitPortal() {
+	private BlockPattern.BlockPatternMatch findExitPortal() {
 		return null;
 	}
 	
 	@Shadow
-	private void generatePortal(boolean bl) {
+	private void spawnExitPortal(boolean bl) {
 	}
 	
 	@Shadow
-	private void respawnDragon(List<EnderCrystalEntity> list) {
+	private void respawnDragon(List<EndCrystal> list) {
 	}
 	
-	@Inject(method = "tryRespawnDragon", at = @At("HEAD"), cancellable = true)
-	private void be_tryRespawnDragon(CallbackInfo info) {
-		if (GeneratorOptions.replacePortal() && GeneratorOptions.hasDragonFights() && this.dragonKilled && this.respawnState == null) {
-			BlockPos blockPos = exitPortalLocation;
+	@Inject(method = "tryRespawn", at = @At("HEAD"), cancellable = true)
+	private void be_tryRespawn(CallbackInfo info) {
+		if (GeneratorOptions.replacePortal() && GeneratorOptions.hasDragonFights() && this.dragonKilled && this.respawnStage == null) {
+			BlockPos blockPos = portalLocation;
 			if (blockPos == null) {
 				LOGGER.debug("Tried to respawn, but need to find the portal first.");
-				BlockPattern.PatternHelper blockPatternMatch = this.findExitPortal();
+				BlockPattern.BlockPatternMatch blockPatternMatch = this.findExitPortal();
 				if (blockPatternMatch == null) {
 					LOGGER.debug("Couldn't find a portal, so we made one.");
-					generatePortal(true);
+					spawnExitPortal(true);
 				}
 				else {
 					LOGGER.debug("Found the exit portal & temporarily using it.");
 				}
 				
-				blockPos = exitPortalLocation;
+				blockPos = portalLocation;
 			}
 			
-			List<EnderCrystalEntity> crystals = Lists.newArrayList();
-			BlockPos center = GeneratorOptions.getPortalPos().up(5);
+			List<EndCrystal> crystals = Lists.newArrayList();
+			BlockPos center = GeneratorOptions.getPortalPos().above(5);
 			for (Direction dir : BlockHelper.HORIZONTAL_DIRECTIONS) {
-				BlockPos central = center.offset(dir, 4);
-				List<EnderCrystalEntity> crystalList = world.getEntitiesWithinAABB(
-					EnderCrystalEntity.class,
-					new AxisAlignedBB(central.down(255).south().west(), central.up(255).north().east())
+				BlockPos central = center.relative(dir, 4);
+				List<EndCrystal> crystalList = level.getEntitiesOfClass(
+					EndCrystal.class,
+					new AABB(central.below(255).south().west(), central.above(255).north().east())
 				);
 				
 				int count = crystalList.size();
 				for (int n = 0; n < count; n++) {
-					EnderCrystalEntity crystal = crystalList.get(n);
-					if (!world.getBlockState(crystal.getPosition().down()).isIn(Blocks.BEDROCK)) {
+					EndCrystal crystal = crystalList.get(n);
+					if (!level.getBlockState(crystal.blockPosition().below()).is(Blocks.BEDROCK)) {
 						crystalList.remove(n);
 						count--;
 						n--;

@@ -15,9 +15,9 @@ import mod.beethoven92.betterendforge.common.world.feature.BiomeNBTStructures.St
 import mod.beethoven92.betterendforge.common.world.feature.NBTFeature.TerrainMerge;
 import mod.beethoven92.betterendforge.config.Configs;
 import mod.beethoven92.betterendforge.config.jsons.JsonConfigs;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.biome.Biome;
 
 public class BetterEndBiome 
 {
@@ -176,7 +176,7 @@ public class BetterEndBiome
 		if (edge != null && edge != this) {
 			edge.updateActualBiomes(biomeRegistry);
 		}
-		this.actualBiome = biomeRegistry.getOrDefault(id);
+		this.actualBiome = biomeRegistry.get(id);
 	}
 	
 	public boolean hasCaves() 

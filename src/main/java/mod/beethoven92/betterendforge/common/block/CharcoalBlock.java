@@ -6,8 +6,8 @@ import mod.beethoven92.betterendforge.common.init.FuelRegistry;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModCreativeTabs;
 import mod.beethoven92.betterendforge.common.init.ModItems;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 
 public class CharcoalBlock extends Block{
 
-    public CharcoalBlock(AbstractBlock.Properties properties)
+    public CharcoalBlock(BlockBehaviour.Properties properties)
     {
         super(properties);
     }

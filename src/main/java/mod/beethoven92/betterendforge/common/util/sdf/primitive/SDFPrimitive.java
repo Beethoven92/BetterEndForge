@@ -3,9 +3,9 @@ package mod.beethoven92.betterendforge.common.util.sdf.primitive;
 import java.util.function.Function;
 
 import mod.beethoven92.betterendforge.common.util.sdf.SDF;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
 
 public abstract class SDFPrimitive extends SDF
 {
@@ -28,7 +28,7 @@ public abstract class SDFPrimitive extends SDF
 	public SDFPrimitive setBlock(Block block) 
 	{
 		this.placerFunction = (pos) -> {
-			return block.getDefaultState();
+			return block.defaultBlockState();
 		};
 		return this;
 	}

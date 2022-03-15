@@ -4,11 +4,11 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.structure.StructureFeatures;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.data.worldgen.StructureFeatures;
 
 public class AmberLandBiome extends BetterEndBiome {
 	public AmberLandBiome() {
@@ -34,6 +34,6 @@ public class AmberLandBiome extends BetterEndBiome {
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_ORANGE)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_RED)
 				.addStructure(StructureFeatures.END_CITY)
-				.addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 4));
+				.addMobSpawn(MobCategory.MONSTER, EntityType.ENDERMAN, 50, 1, 4));
 	}
 }

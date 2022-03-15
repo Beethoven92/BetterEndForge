@@ -6,25 +6,25 @@ import mod.beethoven92.betterendforge.common.particles.InfusionParticleData;
 import mod.beethoven92.betterendforge.common.recipes.InfusionRecipe;
 import mod.beethoven92.betterendforge.common.tileentity.InfusionPedestalTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.PedestalTileEntity;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
-public class InfusionRitual implements IInventory
+public class InfusionRitual implements Container
 {
 	private static final Point[] PEDESTALS_MAP = new Point[] {
 			new Point(0, 3), new Point(2, 2), new Point(3, 0), new Point(2, -2),
 			new Point(0, -3), new Point(-2, -2), new Point(-3, 0), new Point(-2, 2)
 		};
 
-	private World world;
+	private Level world;
 	private BlockPos worldPos;
 	private InfusionRecipe activeRecipe;
 	private boolean isDirty = false;
@@ -32,11 +32,12 @@ public class InfusionRitual implements IInventory
 	private int progress = 0;
 	private int time = 0;
 		
-	private InfusionPedestalTileEntity input;
+	private final InfusionPedestalTileEntity input;
 	private PedestalTileEntity[] catalysts = new PedestalTileEntity[8];
 	
-	public InfusionRitual(World world, BlockPos pos) 
+	public InfusionRitual(InfusionPedestalTileEntity pedestal, Level world, BlockPos pos)
 	{
+		this.input = pedestal;
 		this.world = world;
 		this.worldPos = pos;
 		this.configure();
@@ -49,17 +50,12 @@ public class InfusionRitual implements IInventory
 	
 	public void configure() 
 	{
-		if (world == null || world.isRemote || worldPos == null) return;
-		TileEntity inputEntity = world.getTileEntity(worldPos);
-		if (inputEntity instanceof InfusionPedestalTileEntity) 
-		{
-			this.input = (InfusionPedestalTileEntity) inputEntity;
-		}
+		if (world == null || world.isClientSide || worldPos == null) return;
 		int i = 0;
 		for(Point point : PEDESTALS_MAP) 
 		{
-			BlockPos.Mutable checkPos = worldPos.toMutable().move(Direction.EAST, point.x).move(Direction.NORTH, point.y);
-			TileEntity catalystEntity = world.getTileEntity(checkPos);
+			BlockPos.MutableBlockPos checkPos = worldPos.mutable().move(Direction.EAST, point.x).move(Direction.NORTH, point.y);
+			BlockEntity catalystEntity = world.getBlockEntity(checkPos);
 			if (catalystEntity instanceof PedestalTileEntity) 
 			{
 				catalysts[i] = (PedestalTileEntity) catalystEntity;
@@ -75,7 +71,7 @@ public class InfusionRitual implements IInventory
 	public boolean checkRecipe() 
 	{
 		if (!isValid()) return false;
-		InfusionRecipe recipe = this.world.getRecipeManager().getRecipe(InfusionRecipe.TYPE, this, world).orElse(null);
+		InfusionRecipe recipe = this.world.getRecipeManager().getRecipeFor(InfusionRecipe.TYPE, this, world).orElse(null);
 		if (hasRecipe()) 
 		{
 			if (recipe == null) 
@@ -88,7 +84,7 @@ public class InfusionRitual implements IInventory
 				this.activeRecipe = recipe;
 				this.time = this.activeRecipe.getInfusionTime();
 				this.progress = 0;
-				this.markDirty();
+				this.setChanged();
 			} 
 			else if (activeRecipe == null) 
 			{
@@ -102,7 +98,7 @@ public class InfusionRitual implements IInventory
 			this.time = this.activeRecipe.getInfusionTime();
 			this.hasRecipe = true;
 			this.progress = 0;
-			this.markDirty();
+			this.setChanged();
 			return true;
 		}
 		return false;
@@ -114,7 +110,7 @@ public class InfusionRitual implements IInventory
 		this.hasRecipe = false;
 		this.progress = 0;
 		this.time = 0;
-		this.markDirty();
+		this.setChanged();
 	}
 	
 	public void tick() 
@@ -129,19 +125,19 @@ public class InfusionRitual implements IInventory
 		this.progress++;
 		if (progress == time) 
 		{
-			BlockState inputState = world.getBlockState(input.getPos());
+			BlockState inputState = world.getBlockState(input.getBlockPos());
 			this.input.removeStack(world, inputState);
-			this.input.setStack(activeRecipe.getCraftingResult(this));
+			this.input.setStack(activeRecipe.assemble(this));
 			for (PedestalTileEntity catalyst : catalysts) 
 			{
-				catalyst.removeStack(world, world.getBlockState(catalyst.getPos()));
+				catalyst.removeStack(world, world.getBlockState(catalyst.getBlockPos()));
 			}
 			this.stop();
 		} 
 		else 
 		{
-			ServerWorld world = (ServerWorld) this.world;
-			BlockPos target = this.worldPos.up();
+			ServerLevel world = (ServerLevel) this.world;
+			BlockPos target = this.worldPos.above();
 			double tx = target.getX() + 0.5;
 			double ty = target.getY() + 0.5;
 			double tz = target.getZ() + 0.5;
@@ -150,25 +146,25 @@ public class InfusionRitual implements IInventory
 				ItemStack stack = catalyst.getStack();
 				if (!stack.isEmpty()) 
 				{
-					BlockPos start = catalyst.getPos();
+					BlockPos start = catalyst.getBlockPos();
 					double sx = start.getX() + 0.5;
 					double sy = start.getY() + 1.25;
 					double sz = start.getZ() + 0.5;					
-					world.spawnParticle(new InfusionParticleData(stack), sx, sy, sz, 0, tx - sx, ty - sy, tz - sz, 0.5);
+					world.sendParticles(new InfusionParticleData(stack), sx, sy, sz, 0, tx - sx, ty - sy, tz - sz, 0.5);
 				}
 			}
 		}		
 	}
 	
 	@Override
-	public boolean isItemValidForSlot(int index, ItemStack stack) 
+	public boolean canPlaceItem(int index, ItemStack stack) 
 	{
 		return this.isValid();
 	}
 	
 	public boolean isValid()
 	{
-		if (world == null || world.isRemote || worldPos == null || input == null) return false;
+		if (world == null || world.isClientSide || worldPos == null || input == null) return false;
 		for (PedestalTileEntity catalyst : catalysts) 
 		{
 			if (catalyst == null) return false;
@@ -181,7 +177,7 @@ public class InfusionRitual implements IInventory
 		return this.hasRecipe;
 	}
 
-	public void setLocation(World world, BlockPos pos) 
+	public void setLocation(Level world, BlockPos pos) 
 	{
 		this.world = world;
 		this.worldPos = pos;
@@ -189,7 +185,7 @@ public class InfusionRitual implements IInventory
 	}
 	
 	@Override
-	public void clear() 
+	public void clearContent() 
 	{
 		if (!isValid()) return;
 		this.input.clear();
@@ -200,7 +196,7 @@ public class InfusionRitual implements IInventory
 	}
 
 	@Override
-	public int getSizeInventory() 
+	public int getContainerSize() 
 	{
 		return 9;
 	}
@@ -212,7 +208,7 @@ public class InfusionRitual implements IInventory
 	}
 
 	@Override
-	public ItemStack getStackInSlot(int index) 
+	public ItemStack getItem(int index) 
 	{
 		if (index > 8) return ItemStack.EMPTY;
 		if (index== 0) 
@@ -226,13 +222,13 @@ public class InfusionRitual implements IInventory
 	}
 
 	@Override
-	public ItemStack decrStackSize(int index, int count) 
+	public ItemStack removeItem(int index, int count) 
 	{
-		return this.removeStackFromSlot(index);
+		return this.removeItemNoUpdate(index);
 	}
 
 	@Override
-	public ItemStack removeStackFromSlot(int index)
+	public ItemStack removeItemNoUpdate(int index)
 	{
 		if (index > 8) return ItemStack.EMPTY;
 		if (index == 0) 
@@ -246,7 +242,7 @@ public class InfusionRitual implements IInventory
 	}
 
 	@Override
-	public void setInventorySlotContents(int index, ItemStack stack) 
+	public void setItem(int index, ItemStack stack) 
 	{
 		if (index > 8) return;
 		if (index == 0) 
@@ -260,25 +256,25 @@ public class InfusionRitual implements IInventory
 	}
 
 	@Override
-	public void markDirty() 
+	public void setChanged() 
 	{	
 		if (isValid()) 
 		{
-			this.input.markDirty();
+			this.input.setChanged();
 			for (PedestalTileEntity catalyst : catalysts) 
 			{
-				catalyst.markDirty();
+				catalyst.setChanged();
 			}
 		}
 	}
 
 	@Override
-	public boolean isUsableByPlayer(PlayerEntity player) 
+	public boolean stillValid(Player player) 
 	{
 		return true;
 	}
 
-	public void read(CompoundNBT tag) 
+	public void read(CompoundTag tag) 
 	{
 		if (tag.contains("recipe")) 
 		{
@@ -288,7 +284,7 @@ public class InfusionRitual implements IInventory
 		}
 	}
 
-	public CompoundNBT write(CompoundNBT tag)
+	public CompoundTag write(CompoundTag tag)
 	{
 		if (hasRecipe()) 
 		{

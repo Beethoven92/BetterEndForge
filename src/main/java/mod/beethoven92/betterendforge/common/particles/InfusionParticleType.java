@@ -2,7 +2,7 @@ package mod.beethoven92.betterendforge.common.particles;
 
 import com.mojang.serialization.Codec;
 
-import net.minecraft.particles.ParticleType;
+import net.minecraft.core.particles.ParticleType;
 
 public class InfusionParticleType extends ParticleType<InfusionParticleData>
 {
@@ -12,7 +12,7 @@ public class InfusionParticleType extends ParticleType<InfusionParticleData>
 	}
 
 	@Override
-	public Codec<InfusionParticleData> func_230522_e_() 
+	public Codec<InfusionParticleData> codec() 
 	{
 		return InfusionParticleData.CODEC;
 	}

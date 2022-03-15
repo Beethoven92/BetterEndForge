@@ -8,42 +8,42 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class LargeAmaranitaFeature extends Feature<NoFeatureConfig> {
+public class LargeAmaranitaFeature extends Feature<NoneFeatureConfiguration> {
 	
 	public LargeAmaranitaFeature() {
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random random,
-			BlockPos pos, NoFeatureConfig config) {
-		if (!world.getBlockState(pos.down()).getBlock().isIn(ModTags.END_GROUND)) return false;
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random,
+			BlockPos pos, NoneFeatureConfiguration config) {
+		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND)) return false;
 		
-		Mutable mut = new Mutable().setPos(pos);
+		MutableBlockPos mut = new MutableBlockPos().set(pos);
 		int height = ModMathHelper.randRange(2, 3, random);
 		for (int i = 1; i < height; i++) {
 			mut.setY(mut.getY() + 1);
-			if (!world.isAirBlock(mut)) {
+			if (!world.isEmptyBlock(mut)) {
 				return false;
 			}
 		}
-		mut.setPos(pos);
+		mut.set(pos);
 		
-		BlockState state =  ModBlocks.LARGE_AMARANITA_MUSHROOM.get().getDefaultState();
-		BlockHelper.setWithUpdate(world, mut, state.with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
+		BlockState state =  ModBlocks.LARGE_AMARANITA_MUSHROOM.get().defaultBlockState();
+		BlockHelper.setWithUpdate(world, mut, state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 		if (height > 2) {
-			BlockHelper.setWithUpdate(world, mut.move(Direction.UP), state.with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
+			BlockHelper.setWithUpdate(world, mut.move(Direction.UP), state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
 		}
-		BlockHelper.setWithUpdate(world, mut.move(Direction.UP), state.with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
+		BlockHelper.setWithUpdate(world, mut.move(Direction.UP), state.setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
 		
 		return true;
 	}

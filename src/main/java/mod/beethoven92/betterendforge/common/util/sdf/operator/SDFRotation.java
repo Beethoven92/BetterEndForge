@@ -1,7 +1,7 @@
 package mod.beethoven92.betterendforge.common.util.sdf.operator;
 
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3f;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 
 public class SDFRotation extends SDFUnary
 {
@@ -19,6 +19,6 @@ public class SDFRotation extends SDFUnary
 	{
 		POS.set(x, y, z);
 		POS.transform(rotation);
-		return source.getDistance(POS.getX(), POS.getY(), POS.getZ());
+		return source.getDistance(POS.x(), POS.y(), POS.z());
 	}
 }

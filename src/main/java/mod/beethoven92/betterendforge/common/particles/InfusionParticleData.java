@@ -6,32 +6,32 @@ import com.mojang.serialization.Codec;
 
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.util.ColorHelper;
-import net.minecraft.command.arguments.ItemInput;
-import net.minecraft.command.arguments.ItemParser;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.commands.arguments.item.ItemInput;
+import net.minecraft.commands.arguments.item.ItemParser;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.Registry;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class InfusionParticleData implements IParticleData
+public class InfusionParticleData implements ParticleOptions
 {
-	public static final IParticleData.IDeserializer<InfusionParticleData> DESERIALIZER = 
-			new IParticleData.IDeserializer<InfusionParticleData>()
+	public static final ParticleOptions.Deserializer<InfusionParticleData> DESERIALIZER = 
+			new ParticleOptions.Deserializer<InfusionParticleData>()
 	{
-		public InfusionParticleData deserialize(ParticleType<InfusionParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException
+		public InfusionParticleData fromCommand(ParticleType<InfusionParticleData> particleTypeIn, StringReader reader) throws CommandSyntaxException
 		{
 			reader.expect(' ');
 		    ItemParser itemparser = (new ItemParser(reader, false)).parse();
-		    ItemStack itemstack = (new ItemInput(itemparser.getItem(), itemparser.getNbt())).createStack(1, false);
+		    ItemStack itemstack = (new ItemInput(itemparser.getItem(), itemparser.getNbt())).createItemStack(1, false);
 		    return new InfusionParticleData(itemstack);
 		}
 
-		public InfusionParticleData read(ParticleType<InfusionParticleData> particleTypeIn, PacketBuffer buffer) 
+		public InfusionParticleData fromNetwork(ParticleType<InfusionParticleData> particleTypeIn, FriendlyByteBuf buffer) 
 		{
-			return new InfusionParticleData(buffer.readItemStack());
+			return new InfusionParticleData(buffer.readItem());
 		}
 	};
 
@@ -64,13 +64,13 @@ public class InfusionParticleData implements IParticleData
 	}
 
 	@Override
-	public void write(PacketBuffer buffer) 
+	public void writeToNetwork(FriendlyByteBuf buffer) 
 	{
-		buffer.writeItemStack(itemStack);
+		buffer.writeItem(itemStack);
 	}
 
 	@Override
-	public String getParameters() 
+	public String writeToString() 
 	{
 		return Registry.PARTICLE_TYPE.getKey(this.getType()).toString();
 	}

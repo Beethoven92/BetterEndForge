@@ -2,22 +2,22 @@ package mod.beethoven92.betterendforge.common.recipes;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModRecipeSerializers;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.Container;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.Level;
 
-public class AlloyingRecipe implements IRecipe<IInventory>
+public class AlloyingRecipe implements Recipe<Container>
 {
 	public final static String GROUP = "alloying";
-	public final static IRecipeType<AlloyingRecipe> TYPE = ModRecipeSerializers.registerRecipeType(GROUP);
+	public final static RecipeType<AlloyingRecipe> TYPE = ModRecipeSerializers.registerRecipeType(GROUP);
 	
-	protected final IRecipeType<?> type;
+	protected final RecipeType<?> type;
 	protected final ResourceLocation id;
 	protected final Ingredient primaryInput;
 	protected final Ingredient secondaryInput;
@@ -60,26 +60,26 @@ public class AlloyingRecipe implements IRecipe<IInventory>
 	}
 	
 	@Override
-	public boolean matches(IInventory inv, World worldIn) 
+	public boolean matches(Container inv, Level worldIn) 
 	{
-		return this.primaryInput.test(inv.getStackInSlot(0)) && this.secondaryInput.test(inv.getStackInSlot(1)) ||
-				this.primaryInput.test(inv.getStackInSlot(1)) && this.secondaryInput.test(inv.getStackInSlot(0));
+		return this.primaryInput.test(inv.getItem(0)) && this.secondaryInput.test(inv.getItem(1)) ||
+				this.primaryInput.test(inv.getItem(1)) && this.secondaryInput.test(inv.getItem(0));
 	}
 
 	@Override
-	public ItemStack getCraftingResult(IInventory inv) 
+	public ItemStack assemble(Container inv) 
 	{
 		return this.output.copy();
 	}
 
 	@Override
-	public boolean canFit(int width, int height)
+	public boolean canCraftInDimensions(int width, int height)
 	{
 		return true;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() 
+	public ItemStack getResultItem() 
 	{
 		return this.output;
 	}
@@ -91,13 +91,13 @@ public class AlloyingRecipe implements IRecipe<IInventory>
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer() 
+	public RecipeSerializer<?> getSerializer() 
 	{
 		return ModRecipeSerializers.ALLOYING.get();
 	}
 
 	@Override
-	public IRecipeType<?> getType() 
+	public RecipeType<?> getType() 
 	{
 		return this.type;
 	}
@@ -109,7 +109,7 @@ public class AlloyingRecipe implements IRecipe<IInventory>
 	}
 	
 	@Override
-	public ItemStack getIcon() 
+	public ItemStack getToastSymbol() 
 	{
 		return new ItemStack(ModBlocks.END_STONE_SMELTER.get());
 	}

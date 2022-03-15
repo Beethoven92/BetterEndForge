@@ -5,9 +5,9 @@ import mod.beethoven92.betterendforge.common.init.ModConfiguredSurfaceBuilders;
 import mod.beethoven92.betterendforge.common.init.ModEntityTypes;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.world.gen.GenerationStage.Decoration;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 
 public class SulphurSpringsBiome extends BetterEndBiome
 {
@@ -31,8 +31,8 @@ public class SulphurSpringsBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_ORANGE).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_GREEN).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CHARNIA_RED_RARE).
-				addMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.END_FISH.get(), 50, 3, 8).
-				addMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.CUBOZOA.get(), 50, 3, 8).
-				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 4));
+				addMobSpawn(MobCategory.AMBIENT, ModEntityTypes.END_FISH.get(), 50, 3, 8).
+				addMobSpawn(MobCategory.AMBIENT, ModEntityTypes.CUBOZOA.get(), 50, 3, 8).
+				addMobSpawn(MobCategory.MONSTER, EntityType.ENDERMAN, 50, 1, 4));
 	}
 }

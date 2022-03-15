@@ -16,7 +16,7 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFCappedCone;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFRadialNoiseMap;
 import mod.beethoven92.betterendforge.config.CommonConfig;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 
 public class IslandLayer
 {

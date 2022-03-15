@@ -5,15 +5,15 @@ import java.util.function.Consumer;
 
 import mod.beethoven92.betterendforge.common.init.ModStructurePieces;
 import mod.beethoven92.betterendforge.common.world.structure.StructureWorld;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.structure.StructureManager;
-import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
 public class VoxelPiece extends StructurePiece
 {
@@ -27,7 +27,7 @@ public class VoxelPiece extends StructurePiece
 		this.boundingBox = world.getBounds();
 	}
 	
-	public VoxelPiece(TemplateManager p_i50677_1_, CompoundNBT nbt) 
+	public VoxelPiece(StructureManager p_i50677_1_, CompoundTag nbt) 
 	{
 		super(ModStructurePieces.VOXEL_PIECE, nbt);
 		world = new StructureWorld(nbt.getCompound("world"));
@@ -35,14 +35,14 @@ public class VoxelPiece extends StructurePiece
 	}
 
 	@Override
-	protected void readAdditional(CompoundNBT tagCompound) 
+	protected void addAdditionalSaveData(CompoundTag tagCompound) 
 	{
 		tagCompound.put("world", world.toNBT());
 	}
 
 	@Override
-	public boolean func_230383_a_(ISeedReader worldIn, StructureManager p_230383_2_, ChunkGenerator p_230383_3_,
-			Random p_230383_4_, MutableBoundingBox p_230383_5_, ChunkPos chunkPos, BlockPos p_230383_7_) 
+	public boolean postProcess(WorldGenLevel worldIn, StructureFeatureManager p_230383_2_, ChunkGenerator p_230383_3_,
+			Random p_230383_4_, BoundingBox p_230383_5_, ChunkPos chunkPos, BlockPos p_230383_7_) 
 	{
 		this.world.placeChunk(worldIn, chunkPos);
 		return true;

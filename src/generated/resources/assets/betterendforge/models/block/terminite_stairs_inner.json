@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "side": "betterendforge:block/terminite_tile",
-    "bottom": "betterendforge:block/terminite_tile",
-    "top": "betterendforge:block/terminite_tile"
-  }
-}

@@ -4,10 +4,10 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.GenerationStage.Decoration;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 
 public class DragonGraveyardsBiome extends BetterEndBiome {
 	public DragonGraveyardsBiome() {
@@ -28,6 +28,6 @@ public class DragonGraveyardsBiome extends BetterEndBiome {
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.SMALL_AMARANITA)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.GLOBULAGUS)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.CLAWFERN)
-				.addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
+				.addMobSpawn(MobCategory.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

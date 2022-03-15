@@ -1,71 +1,71 @@
 package mod.beethoven92.betterendforge.common.particles;
 
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
-import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.SpriteTexturedParticle;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.particle.TextureSheetParticle;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class InfusionParticle extends SpriteTexturedParticle
+public class InfusionParticle extends TextureSheetParticle
 {
-	private final IAnimatedSprite spriteWithAge;
+	private final SpriteSet spriteWithAge;
 
-	public InfusionParticle(ClientWorld clientWorld, double x, double y, double z, double velocityX, 
-			double velocityY, double velocityZ, float[] palette, IAnimatedSprite spriteWithAge)
+	public InfusionParticle(ClientLevel clientWorld, double x, double y, double z, double velocityX, 
+			double velocityY, double velocityZ, float[] palette, SpriteSet spriteWithAge)
 	{
 		super(clientWorld, x, y, z, 0.0, 0.0, 0.0);
 		this.spriteWithAge = spriteWithAge;
-		this.selectSpriteWithAge(spriteWithAge);
+		this.setSpriteFromAge(spriteWithAge);
 		this.setColor(palette[0], palette[1], palette[2]);
-		this.particleAlpha = palette[3];
-		this.motionX = velocityX * 0.1D;
-		this.motionY = velocityY * 0.1D;
-		this.motionZ = velocityZ * 0.1D;
-		this.maxAge = (int) (3.0F / (this.rand.nextFloat() * 0.9F + 0.1F));
-		this.particleScale *= 0.9F;
+		this.alpha = palette[3];
+		this.xd = velocityX * 0.1D;
+		this.yd = velocityY * 0.1D;
+		this.zd = velocityZ * 0.1D;
+		this.lifetime = (int) (3.0F / (this.random.nextFloat() * 0.9F + 0.1F));
+		this.quadSize *= 0.9F;
 	}
 
 	@Override
-	public IParticleRenderType getRenderType() 
+	public ParticleRenderType getRenderType() 
 	{
-		return IParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
 	}
 
 	@Override
 	public void tick() 
 	{
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
-		if (this.age++ >= this.maxAge) 
+		this.xo = this.x;
+		this.yo = this.y;
+		this.zo = this.z;
+		if (this.age++ >= this.lifetime) 
 		{
-			this.setExpired();
+			this.remove();
 		}
 		else 
 		{
-			this.selectSpriteWithAge(this.spriteWithAge);
-			double velocityX = 2.0D * this.motionX * this.rand.nextDouble();
-			double velocityY = 3.0D * this.motionY * this.rand.nextDouble();
-			double velocityZ = 2.0D * this.motionZ * this.rand.nextDouble();
+			this.setSpriteFromAge(this.spriteWithAge);
+			double velocityX = 2.0D * this.xd * this.random.nextDouble();
+			double velocityY = 3.0D * this.yd * this.random.nextDouble();
+			double velocityZ = 2.0D * this.zd * this.random.nextDouble();
 			this.move(velocityX, velocityY, velocityZ);
 		}
 	}
 	
 	@OnlyIn(Dist.CLIENT)
-	public static class Factory implements IParticleFactory<InfusionParticleData> 
+	public static class Factory implements ParticleProvider<InfusionParticleData> 
 	{
-		private final IAnimatedSprite sprite;
+		private final SpriteSet sprite;
 
-	    public Factory(IAnimatedSprite sprite) 
+	    public Factory(SpriteSet sprite) 
 	    {
 	         this.sprite = sprite;
 	    }
 	    
 	    @Override
-	    public Particle makeParticle(InfusionParticleData data, ClientWorld worldIn, double x, double y, double z,
+	    public Particle createParticle(InfusionParticleData data, ClientLevel worldIn, double x, double y, double z,
 	    		double xSpeed, double ySpeed, double zSpeed) 
 	    {
 	    	return new InfusionParticle(worldIn, x, y, z, xSpeed, ySpeed, zSpeed, data.getPalette(), this.sprite);

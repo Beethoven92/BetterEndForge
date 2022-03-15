@@ -27,29 +27,29 @@ import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFCappedCone;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFPrimitive;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.gen.GenerationStage.Decoration;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 public class GiantMossyGlowshroomStructure extends SDFStructure
 {
-	public GiantMossyGlowshroomStructure(Codec<NoFeatureConfig> p_i231997_1_)
+	public GiantMossyGlowshroomStructure(Codec<NoneFeatureConfiguration> p_i231997_1_)
 	{
 		super(p_i231997_1_);
 	}
 
 	@Override
-	public Decoration getDecorationStage() 
+	public Decoration step() 
 	{
 		return Decoration.SURFACE_STRUCTURES;
 	}
 	
 	@Override
-	public String getStructureName() 
+	public String getFeatureName() 
 	{
 		return BetterEnd.MOD_ID + ":giant_mossy_glowshroom_structure";
 	}
@@ -78,9 +78,9 @@ public class GiantMossyGlowshroomStructure extends SDFStructure
 		
 		OpenSimplexNoise noise = new OpenSimplexNoise(1234);
 		cones = new SDFCoordModify().setFunction((pos) -> {
-			float dist = ModMathHelper.length(pos.getX(), pos.getZ());
-			float y = pos.getY() + (float) noise.eval(pos.getX() * 0.1 + center.getX(), pos.getZ() * 0.1 + center.getZ()) * dist * 0.3F - dist * 0.15F;
-			pos.set(pos.getX(), y, pos.getZ());
+			float dist = ModMathHelper.length(pos.x(), pos.z());
+			float y = pos.y() + (float) noise.eval(pos.x() * 0.1 + center.getX(), pos.z() * 0.1 + center.getZ()) * dist * 0.3F - dist * 0.15F;
+			pos.set(pos.x(), y, pos.z());
 		}).setSource(cones);
 		
 		SDFTranslate HEAD_POS = (SDFTranslate) new SDFTranslate().setSource(new SDFTranslate().setTranslate(0, 2.5F, 0).setSource(cones));
@@ -97,17 +97,17 @@ public class GiantMossyGlowshroomStructure extends SDFStructure
 		priGlowCone.setBlock(ModBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE.get());
 		primRoots.setBlock(ModBlocks.MOSSY_GLOWSHROOM.bark.get());
 		
-		float height = MathHelper.nextFloat(random, 10F, 25F);
-		int count = MathHelper.floor(height / 4);
+		float height = Mth.nextFloat(random, 10F, 25F);
+		int count = Mth.floor(height / 4);
 		List<Vector3f> spline = SplineHelper.makeSpline(0, 0, 0, 0, height, 0, count);
 		SplineHelper.offsetParts(spline, random, 1F, 0, 1F);
 		SDF sdf = SplineHelper.buildSDF(spline, 2.1F, 1.5F, (pos) -> {
-			return ModBlocks.MOSSY_GLOWSHROOM.log.get().getDefaultState();
+			return ModBlocks.MOSSY_GLOWSHROOM.log.get().defaultBlockState();
 		});
 		Vector3f pos = spline.get(spline.size() - 1);
-		float scale = MathHelper.nextFloat(random, 2F, 3.5F);
+		float scale = Mth.nextFloat(random, 2F, 3.5F);
 		
-		HEAD_POS.setTranslate(pos.getX(), pos.getY(), pos.getZ());
+		HEAD_POS.setTranslate(pos.x(), pos.y(), pos.z());
 		rotRoots.setAngle(random.nextFloat() * ((float)Math.PI * 2));
 		function.setSourceA(sdf);
 		
@@ -119,12 +119,12 @@ public class GiantMossyGlowshroomStructure extends SDFStructure
 					{
 						if (random.nextBoolean() && info.getStateUp().getBlock() == ModBlocks.MOSSY_GLOWSHROOM_CAP.get()) 
 						{
-							info.setState(ModBlocks.MOSSY_GLOWSHROOM_CAP.get().getDefaultState().with(MossyGlowshroomCapBlock.TRANSITION, true));
+							info.setState(ModBlocks.MOSSY_GLOWSHROOM_CAP.get().defaultBlockState().setValue(MossyGlowshroomCapBlock.TRANSITION, true));
 							return info.getState();
 						}
 						else if (!ModBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getStateUp()) || !ModBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown()))
 						{
-							info.setState(ModBlocks.MOSSY_GLOWSHROOM.bark.get().getDefaultState());
+							info.setState(ModBlocks.MOSSY_GLOWSHROOM.bark.get().defaultBlockState());
 							return info.getState();
 						}
 					}
@@ -132,26 +132,26 @@ public class GiantMossyGlowshroomStructure extends SDFStructure
 					{
 						if (ModBlocks.MOSSY_GLOWSHROOM.isTreeLog(info.getStateDown().getBlock())) 
 						{
-							info.setState(ModBlocks.MOSSY_GLOWSHROOM_CAP.get().getDefaultState().with(MossyGlowshroomCapBlock.TRANSITION, true));
+							info.setState(ModBlocks.MOSSY_GLOWSHROOM_CAP.get().defaultBlockState().setValue(MossyGlowshroomCapBlock.TRANSITION, true));
 							return info.getState();
 						}
 						
-						info.setState(ModBlocks.MOSSY_GLOWSHROOM_CAP.get().getDefaultState());
+						info.setState(ModBlocks.MOSSY_GLOWSHROOM_CAP.get().defaultBlockState());
 						return info.getState();
 					}
 					else if (info.getState().getBlock() == ModBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE.get()) 
 					{
 						for (Direction dir: BlockHelper.HORIZONTAL_DIRECTIONS) 
 						{
-							if (info.getState(dir) == Blocks.AIR.getDefaultState()) 
+							if (info.getState(dir) == Blocks.AIR.defaultBlockState()) 
 							{
-								info.setBlockPos(info.getPos().offset(dir), ModBlocks.MOSSY_GLOWSHROOM_FUR.get().getDefaultState().with(FurBlock.FACING, dir));
+								info.setBlockPos(info.getPos().relative(dir), ModBlocks.MOSSY_GLOWSHROOM_FUR.get().defaultBlockState().setValue(FurBlock.FACING, dir));
 							}
 						}
 						
 						if (info.getStateDown().getBlock() != ModBlocks.MOSSY_GLOWSHROOM_HYMENOPHORE.get()) 
 						{
-							info.setBlockPos(info.getPos().down(), ModBlocks.MOSSY_GLOWSHROOM_FUR.get().getDefaultState().with(FurBlock.FACING, Direction.DOWN));
+							info.setBlockPos(info.getPos().below(), ModBlocks.MOSSY_GLOWSHROOM_FUR.get().defaultBlockState().setValue(FurBlock.FACING, Direction.DOWN));
 						}
 					}
 					return info.getState();

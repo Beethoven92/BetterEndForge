@@ -1,7 +1,7 @@
 package mod.beethoven92.betterendforge.common.util.sdf.primitive;
 
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 public class SDFCappedCone extends SDFPrimitive 
 {
@@ -35,7 +35,7 @@ public class SDFCappedCone extends SDFPrimitive
 		float k2y = 2 * height;
 		float cax = qx - ModMathHelper.min(qx, (y < 0F) ? radius1 : radius2);
 		float cay = Math.abs(y) - height;
-		float mlt = MathHelper.clamp(ModMathHelper.dot(radius2 - qx, height - y, k2x, k2y) / ModMathHelper.dot(k2x, k2y, k2x, k2y), 0F, 1F);
+		float mlt = Mth.clamp(ModMathHelper.dot(radius2 - qx, height - y, k2x, k2y) / ModMathHelper.dot(k2x, k2y, k2x, k2y), 0F, 1F);
 		float cbx = qx - radius2 + k2x * mlt;
 		float cby = y - height + k2y * mlt;
 		float s = (cbx < 0F && cay < 0F) ? -1F : 1F;

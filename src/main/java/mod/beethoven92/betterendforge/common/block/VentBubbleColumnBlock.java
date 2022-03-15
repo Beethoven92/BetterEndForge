@@ -4,30 +4,32 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IBucketPickupHandler;
-import net.minecraft.entity.Entity;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
-public class VentBubbleColumnBlock extends Block implements IBucketPickupHandler
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class VentBubbleColumnBlock extends Block implements BucketPickup
 {
 	public VentBubbleColumnBlock(Properties properties) 
 	{
@@ -35,95 +37,95 @@ public class VentBubbleColumnBlock extends Block implements IBucketPickupHandler
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
-		return VoxelShapes.empty();
+		return Shapes.empty();
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) 
 	{
-		BlockState blockState = worldIn.getBlockState(pos.down());
-		return blockState.isIn(this) || blockState.isIn(ModBlocks.HYDROTHERMAL_VENT.get());
+		BlockState blockState = worldIn.getBlockState(pos.below());
+		return blockState.is(this) || blockState.is(ModBlocks.HYDROTHERMAL_VENT.get());
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!stateIn.isValidPosition(worldIn, currentPos)) 
+		if (!stateIn.canSurvive(worldIn, currentPos)) 
 		{
-			return Blocks.WATER.getDefaultState();
+			return Blocks.WATER.defaultBlockState();
 		}
 		else 
 		{
-			BlockPos up = currentPos.up();
-			if (worldIn.getBlockState(up).isIn(Blocks.WATER)) 
+			BlockPos up = currentPos.above();
+			if (worldIn.getBlockState(up).is(Blocks.WATER)) 
 			{
 				BlockHelper.setWithoutUpdate(worldIn, up, this);
-				worldIn.getPendingBlockTicks().scheduleTick(up, this, 5);
+				worldIn.getBlockTicks().scheduleTick(up, this, 5);
 			}
 		}
 		return stateIn;
 	}
 	
 	@Override
-	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn)
+	public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entityIn)
 	{
-		BlockState blockState = worldIn.getBlockState(pos.up());
+		BlockState blockState = worldIn.getBlockState(pos.above());
 		if (blockState.isAir())
 		{
-			entityIn.onEnterBubbleColumnWithAirAbove(false);
-			if (!worldIn.isRemote()) 
+			entityIn.onAboveBubbleCol(false);
+			if (!worldIn.isClientSide()) 
 			{
-				ServerWorld serverWorld = (ServerWorld) worldIn;
+				ServerLevel serverWorld = (ServerLevel) worldIn;
 
 				for (int i = 0; i < 2; ++i) 
 				{
-					serverWorld.spawnParticle(ParticleTypes.SPLASH, (double) pos.getX() + worldIn.rand.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ() + worldIn.rand.nextDouble(), 1, 0.0D, 0.0D, 0.0D, 1.0D);
-					serverWorld.spawnParticle(ParticleTypes.BUBBLE, (double) pos.getX() + worldIn.rand.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ() + worldIn.rand.nextDouble(), 1, 0.0D, 0.01D, 0.0D, 0.2D);
+					serverWorld.sendParticles(ParticleTypes.SPLASH, (double) pos.getX() + worldIn.random.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ() + worldIn.random.nextDouble(), 1, 0.0D, 0.0D, 0.0D, 1.0D);
+					serverWorld.sendParticles(ParticleTypes.BUBBLE, (double) pos.getX() + worldIn.random.nextDouble(), (double) (pos.getY() + 1), (double) pos.getZ() + worldIn.random.nextDouble(), 1, 0.0D, 0.01D, 0.0D, 0.2D);
 				}
 			}
 		}
 		else 
 		{
-			entityIn.onEnterBubbleColumn(false);
+			entityIn.onInsideBubbleColumn(false);
 		}
 	}
 	
 	@Override
-	public void animateTick(BlockState stateIn, World worldIn, BlockPos pos, Random rand) 
+	public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, Random rand) 
 	{
 		if (rand.nextInt(4) == 0) 
 		{
 			double px = pos.getX() + rand.nextDouble();
 			double py = pos.getY() + rand.nextDouble();
 			double pz = pos.getZ() + rand.nextDouble();
-			worldIn.addOptionalParticle(ParticleTypes.BUBBLE_COLUMN_UP, px, py, pz, 0, 0.04, 0);
+			worldIn.addAlwaysVisibleParticle(ParticleTypes.BUBBLE_COLUMN_UP, px, py, pz, 0, 0.04, 0);
 		}
 		if (rand.nextInt(200) == 0) 
 		{
-			worldIn.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_BUBBLE_COLUMN_UPWARDS_AMBIENT, 
-					SoundCategory.BLOCKS, 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
+			worldIn.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BUBBLE_COLUMN_UPWARDS_AMBIENT, 
+					SoundSource.BLOCKS, 0.2F + rand.nextFloat() * 0.2F, 0.9F + rand.nextFloat() * 0.15F, false);
 		}
 	}
 	
 	@Override
-	public BlockRenderType getRenderType(BlockState state) 
+	public RenderShape getRenderShape(BlockState state) 
 	{
-		return BlockRenderType.INVISIBLE;
+		return RenderShape.INVISIBLE;
 	}
 	
 	@Override
 	public FluidState getFluidState(BlockState state) 
 	{
-		return Fluids.WATER.getStillFluidState(false);
+		return Fluids.WATER.getSource(false);
 	}
 
 	@Override
-	public Fluid pickupFluid(IWorld worldIn, BlockPos pos, BlockState state) 
+	public Fluid takeLiquid(LevelAccessor worldIn, BlockPos pos, BlockState state) 
 	{
-		worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 11);
+		worldIn.setBlock(pos, Blocks.AIR.defaultBlockState(), 11);
 		return Fluids.WATER;
 	}
 }

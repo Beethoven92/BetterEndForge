@@ -11,41 +11,41 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFRotation;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFTorus;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
 import mod.beethoven92.betterendforge.data.AABBAcc;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
-public class ArchFeature extends Feature<NoFeatureConfig> {
+public class ArchFeature extends Feature<NoneFeatureConfiguration> {
 	private Function<BlockPos, BlockState> surfaceFunction;
 	private Block block;
 	
 	public ArchFeature(Block block, Function<BlockPos, BlockState> surfaceFunction) {
-        super(NoFeatureConfig.field_236558_a_);
+        super(NoneFeatureConfiguration.CODEC);
         this.surfaceFunction = surfaceFunction;
 		this.block = block;
 	}
 	
 	@Override
-	public boolean generate(ISeedReader level, ChunkGenerator generator, Random random, BlockPos origin,
-                            NoFeatureConfig config) {
-		final ISeedReader world = level;
+	public boolean place(WorldGenLevel level, ChunkGenerator generator, Random random, BlockPos origin,
+                            NoneFeatureConfiguration config) {
+		final WorldGenLevel world = level;
 
 		
 		BlockPos pos = FeatureHelper.getPosOnSurfaceWG(
 			world,
 			new BlockPos((origin.getX() & 0xFFFFFFF0) | 7, 0, (origin.getZ() & 0xFFFFFFF0) | 7)
 		);
-		if (!world.getBlockState(pos.down(5)).isIn(ModTags.GEN_TERRAIN)) {
+		if (!world.getBlockState(pos.below(5)).is(ModTags.GEN_TERRAIN)) {
 			return false;
 		}
 		
@@ -60,14 +60,14 @@ public class ArchFeature extends Feature<NoFeatureConfig> {
 		final float smallRadiusF = smallRadius;
 		OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
 		arch = new SDFDisplacement().setFunction((vec) -> {
-			return (float) (Math.abs(noise.eval(vec.getX() * 0.1,
-				vec.getY() * 0.1,
-				vec.getZ() * 0.1
+			return (float) (Math.abs(noise.eval(vec.x() * 0.1,
+				vec.y() * 0.1,
+				vec.z() * 0.1
 			)) * 3F + Math.abs(noise.eval(
-				vec.getX() * 0.3,
-				vec.getY() * 0.3 + 100,
-				vec.getZ() * 0.3
-			)) * 1.3F) - smallRadiusF * Math.abs(1 - vec.getY() / bigRadius);
+				vec.x() * 0.3,
+				vec.y() * 0.3 + 100,
+				vec.z() * 0.3
+			)) * 1.3F) - smallRadiusF * Math.abs(1 - vec.y() / bigRadius);
 		}).setSource(arch);
 		
 		List<BlockPos> surface = Lists.newArrayList();
@@ -82,7 +82,7 @@ public class ArchFeature extends Feature<NoFeatureConfig> {
 		if (side > 47) {
 			side = 47;
 		}
-		arch.fillArea(world, pos, AABBAcc.ofSize(Vector3d.copyCentered(pos), side, side, side));
+		arch.fillArea(world, pos, AABBAcc.ofSize(Vec3.atCenterOf(pos), side, side, side));
 		
 		return true;
 	}

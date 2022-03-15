@@ -4,14 +4,14 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 
-import net.minecraft.loot.ILootSerializer;
-import net.minecraft.loot.LootConditionType;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.storage.loot.Serializer;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 
-public class FromLootTable implements ILootCondition {
+public class FromLootTable implements LootItemCondition {
 
 	private ResourceLocation table;
 	
@@ -25,17 +25,17 @@ public class FromLootTable implements ILootCondition {
 	}
 
 	@Override
-	public LootConditionType func_230419_b_() {
+	public LootItemConditionType getType() {
 		return LootConditions.FROM_LOOT_TABLE;
 	}
 
-	public static class Serializer implements ILootSerializer<FromLootTable> {
+	public static class Serializer implements Serializer<FromLootTable> {
 		public void serialize(JsonObject json, FromLootTable instance, JsonSerializationContext context) {
 			json.addProperty("loot_table", instance.table.toString());
 		}
 
 		public FromLootTable deserialize(JsonObject json, JsonDeserializationContext context) {
-			ResourceLocation table = new ResourceLocation(JSONUtils.getString(json, "loot_table"));
+			ResourceLocation table = new ResourceLocation(GsonHelper.getAsString(json, "loot_table"));
 			return new FromLootTable(table);
 		}
 	}

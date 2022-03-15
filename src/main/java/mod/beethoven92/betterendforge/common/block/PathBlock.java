@@ -1,20 +1,20 @@
 package mod.beethoven92.betterendforge.common.block;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
 
 public class PathBlock extends Block
 {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(0, 0, 0, 16, 15, 16);
+	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 15, 16);
 	
 	public PathBlock(Block block)
 	{
-		super(AbstractBlock.Properties.from(block).setAllowsSpawn((state, world, pos, type) -> { return false; }));
+		super(BlockBehaviour.Properties.copy(block).isValidSpawn((state, world, pos, type) -> { return false; }));
 		if (block instanceof TerrainBlock)
 		{
 			TerrainBlock terrain = (TerrainBlock)block;
@@ -23,14 +23,14 @@ public class PathBlock extends Block
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
 		return SHAPE;
 	}
 	
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos,
-			ISelectionContext context) 
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter worldIn, BlockPos pos,
+			CollisionContext context) 
 	{
 		return SHAPE;
 	}

@@ -6,61 +6,63 @@ import com.mojang.serialization.Codec;
 
 import mod.beethoven92.betterendforge.common.util.sdf.SDF;
 import mod.beethoven92.betterendforge.common.world.structure.piece.VoxelPiece;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap.Type;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.feature.structure.StructureStart;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 
-public abstract class SDFStructure extends Structure<NoFeatureConfig>
+import net.minecraft.world.level.levelgen.feature.StructureFeature.StructureStartFactory;
+
+public abstract class SDFStructure extends StructureFeature<NoneFeatureConfiguration>
 {
-	public SDFStructure(Codec<NoFeatureConfig> p_i231997_1_) 
+	public SDFStructure(Codec<NoneFeatureConfiguration> p_i231997_1_) 
 	{
 		super(p_i231997_1_);
 	}
 	
 	/*public SDFStructure() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoFeatureConfig.CODEC);
 	}*/
 
 	protected abstract SDF getSDF(BlockPos pos, Random random);
 	
 	@Override
-	public IStartFactory<NoFeatureConfig> getStartFactory() 
+	public StructureStartFactory<NoneFeatureConfiguration> getStartFactory() 
 	{
 		return SDFStructureStart::new;
 	}
 	
-	public static class SDFStructureStart extends StructureStart<NoFeatureConfig> 
+	public static class SDFStructureStart extends StructureStart<NoneFeatureConfiguration> 
 	{
 
-		public SDFStructureStart(Structure<NoFeatureConfig> p_i225876_1_, int p_i225876_2_, int p_i225876_3_,
-				MutableBoundingBox p_i225876_4_, int p_i225876_5_, long p_i225876_6_) {
+		public SDFStructureStart(StructureFeature<NoneFeatureConfiguration> p_i225876_1_, int p_i225876_2_, int p_i225876_3_,
+				BoundingBox p_i225876_4_, int p_i225876_5_, long p_i225876_6_) {
 			super(p_i225876_1_, p_i225876_2_, p_i225876_3_, p_i225876_4_, p_i225876_5_, p_i225876_6_);
 		}
 
 		@Override
-		public void func_230364_a_(DynamicRegistries p_230364_1_, ChunkGenerator chunkGenerator,
-				TemplateManager p_230364_3_, int chunkX, int chunkZ, Biome p_230364_6_,
-				NoFeatureConfig p_230364_7_) 
+		public void generatePieces(RegistryAccess p_230364_1_, ChunkGenerator chunkGenerator,
+				StructureManager p_230364_3_, int chunkX, int chunkZ, Biome p_230364_6_,
+				NoneFeatureConfiguration p_230364_7_) 
 		{
-			int x = (chunkX << 4) | MathHelper.nextInt(rand, 4, 12);
-			int z = (chunkZ << 4) | MathHelper.nextInt(rand, 4, 12);
-			int y = chunkGenerator.getHeight(x, z, Type.WORLD_SURFACE_WG);
+			int x = (chunkX << 4) | Mth.nextInt(random, 4, 12);
+			int z = (chunkZ << 4) | Mth.nextInt(random, 4, 12);
+			int y = chunkGenerator.getBaseHeight(x, z, Types.WORLD_SURFACE_WG);
 			if (y > 5) 
 			{
 				BlockPos start = new BlockPos(x, y, z);
-				VoxelPiece piece = new VoxelPiece((world) -> { ((SDFStructure) this.getStructure()).getSDF(start, this.rand).fillRecursive(world, start); }, rand.nextInt());
-				this.components.add(piece);
+				VoxelPiece piece = new VoxelPiece((world) -> { ((SDFStructure) this.getFeature()).getSDF(start, this.random).fillRecursive(world, start); }, random.nextInt());
+				this.pieces.add(piece);
 			}
-			this.recalculateStructureSize();
+			this.calculateBoundingBox();
 		}
 
 	}

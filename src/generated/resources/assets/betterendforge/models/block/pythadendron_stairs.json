@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "side": "betterendforge:block/pythadendron_planks",
-    "bottom": "betterendforge:block/pythadendron_planks",
-    "top": "betterendforge:block/pythadendron_planks"
-  }
-}

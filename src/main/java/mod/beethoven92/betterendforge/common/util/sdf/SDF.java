@@ -13,12 +13,12 @@ import com.google.common.collect.Sets;
 
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.world.structure.StructureWorld;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.Direction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.IWorld;
 
 public abstract class SDF 
@@ -45,7 +45,7 @@ public abstract class SDF
 		return this;
 	}
 
-	public void fillRecursive(IWorld world, BlockPos start)
+	public void fillRecursive(LevelAccessor world, BlockPos start)
 	{
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
@@ -55,7 +55,7 @@ public abstract class SDF
 		ends.add(new BlockPos(0, 0, 0));
 		boolean run = true;
 		
-		BlockPos.Mutable bPos = new BlockPos.Mutable();
+		BlockPos.MutableBlockPos bPos = new BlockPos.MutableBlockPos();
 		
 		while (run) 
 		{
@@ -63,8 +63,8 @@ public abstract class SDF
 			{
 				for (Direction dir: Direction.values()) 
 				{
-					bPos.setPos(center).move(dir);
-					BlockPos wpos = bPos.add(start);
+					bPos.set(center).move(dir);
+					BlockPos wpos = bPos.offset(start);
 					
 					if (!blocks.contains(bPos) && canReplace.apply(world.getBlockState(wpos))) 
 					{
@@ -72,7 +72,7 @@ public abstract class SDF
 						{
 							BlockState state = getBlockState(wpos);
 							PosInfo.create(mapWorld, addInfo, wpos).setState(state);
-							add.add(bPos.toImmutable());
+							add.add(bPos.immutable());
 						}
 					}
 				}
@@ -115,12 +115,12 @@ public abstract class SDF
 		}
 	}
 	
-	public void fillArea(IWorld world, BlockPos center, AxisAlignedBB box)
+	public void fillArea(LevelAccessor world, BlockPos center, AABB box)
 	{
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
 		
-		BlockPos.Mutable mut = new BlockPos.Mutable();
+		BlockPos.MutableBlockPos mut = new BlockPos.MutableBlockPos();
 		for (int y = (int) box.minY; y <= box.maxY; y++) {
 			mut.setY(y);
 			for (int x = (int) box.minX; x <= box.maxX; x++) {
@@ -130,7 +130,7 @@ public abstract class SDF
 					if (canReplace.apply(world.getBlockState(mut))) {
 						BlockPos fpos = mut.subtract(center);
 						if (this.getDistance(fpos.getX(), fpos.getY(), fpos.getZ()) < 0) {
-							PosInfo.create(mapWorld, addInfo, mut.toImmutable()).setState(getBlockState(mut));
+							PosInfo.create(mapWorld, addInfo, mut.immutable()).setState(getBlockState(mut));
 						}
 					}
 				}
@@ -165,7 +165,7 @@ public abstract class SDF
 		}
 	}
 	
-	public void fillRecursiveIgnore(IWorld world, BlockPos start, Function<BlockState, Boolean> ignore)
+	public void fillRecursiveIgnore(LevelAccessor world, BlockPos start, Function<BlockState, Boolean> ignore)
 	{
 		Map<BlockPos, PosInfo> mapWorld = Maps.newHashMap();
 		Map<BlockPos, PosInfo> addInfo = Maps.newHashMap();
@@ -175,7 +175,7 @@ public abstract class SDF
 		ends.add(new BlockPos(0, 0, 0));
 		boolean run = true;
 
-		BlockPos.Mutable bPos = new BlockPos.Mutable();
+		BlockPos.MutableBlockPos bPos = new BlockPos.MutableBlockPos();
 		
 		while (run) 
 		{
@@ -183,8 +183,8 @@ public abstract class SDF
 			{
 				for (Direction dir: Direction.values()) 
 				{
-					bPos.setPos(center).move(dir);
-					BlockPos wpos = bPos.add(start);
+					bPos.set(center).move(dir);
+					BlockPos wpos = bPos.offset(start);
 					BlockState state = world.getBlockState(wpos);
 					boolean ign = ignore.apply(state);
 					if (!blocks.contains(bPos) && (ign || canReplace.apply(state))) 
@@ -192,7 +192,7 @@ public abstract class SDF
 						if (this.getDistance(bPos.getX(), bPos.getY(), bPos.getZ()) < 0) 
 						{
 							PosInfo.create(mapWorld, addInfo, wpos).setState(ign ? state : getBlockState(bPos));
-							add.add(bPos.toImmutable());
+							add.add(bPos.immutable());
 						}
 					}
 				}
@@ -245,7 +245,7 @@ public abstract class SDF
 		ends.add(new BlockPos(0, 0, 0));
 		boolean run = true;
 
-		BlockPos.Mutable bPos = new BlockPos.Mutable();
+		BlockPos.MutableBlockPos bPos = new BlockPos.MutableBlockPos();
 		
 		while (run) 
 		{
@@ -253,15 +253,15 @@ public abstract class SDF
 			{
 				for (Direction dir: Direction.values()) 
 				{
-					bPos.setPos(center).move(dir);
-					BlockPos wpos = bPos.add(start);
+					bPos.set(center).move(dir);
+					BlockPos wpos = bPos.offset(start);
 					
 					if (!blocks.contains(bPos)) {
 						if (this.getDistance(bPos.getX(), bPos.getY(), bPos.getZ()) < 0) 
 						{
 							BlockState state = getBlockState(wpos);
 							PosInfo.create(mapWorld, addInfo, wpos).setState(state);
-							add.add(bPos.toImmutable());
+							add.add(bPos.immutable());
 						}
 					}
 				}
@@ -300,30 +300,30 @@ public abstract class SDF
 	}
 
 
-	public Set<BlockPos> getPositions(IWorld world, BlockPos start) {
+	public Set<BlockPos> getPositions(LevelAccessor world, BlockPos start) {
 		Set<BlockPos> blocks = Sets.newHashSet();
 		Set<BlockPos> ends = Sets.newHashSet();
 		Set<BlockPos> add = Sets.newHashSet();
 		ends.add(new BlockPos(0, 0, 0));
 		boolean run = true;
 
-		BlockPos.Mutable bPos = new BlockPos.Mutable();
+		BlockPos.MutableBlockPos bPos = new BlockPos.MutableBlockPos();
 
 		while (run) {
 			for (BlockPos center : ends) {
 				for (Direction dir : Direction.values()) {
-					bPos.setPos(center).move(dir);
-					BlockPos wpos = bPos.add(start);
+					bPos.set(center).move(dir);
+					BlockPos wpos = bPos.offset(start);
 					BlockState state = world.getBlockState(wpos);
 					if (!blocks.contains(wpos) && canReplace.apply(state)) {
 						if (this.getDistance(bPos.getX(), bPos.getY(), bPos.getZ()) < 0) {
-							add.add(bPos.toImmutable());
+							add.add(bPos.immutable());
 						}
 					}
 				}
 			}
 
-			ends.forEach((end) -> blocks.add(end.add(start)));
+			ends.forEach((end) -> blocks.add(end.offset(start)));
 			ends.clear();
 			ends.addAll(add);
 			add.clear();

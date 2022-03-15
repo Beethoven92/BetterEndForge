@@ -4,12 +4,12 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredStructures;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.GenerationStage.Decoration;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.gen.feature.Features;
-import net.minecraft.world.gen.feature.structure.StructureFeatures;
+import net.minecraft.data.worldgen.StructureFeatures;
 
 public class DryShrublandBiome extends BetterEndBiome {
 	public DryShrublandBiome() {
@@ -27,6 +27,6 @@ public class DryShrublandBiome extends BetterEndBiome {
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.LAMELLARIUM)
 				.addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.LUCERNIA_BUSH_RARE)
 				.addStructure(StructureFeatures.END_CITY)
-				.addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
+				.addMobSpawn(MobCategory.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

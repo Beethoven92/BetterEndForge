@@ -2,39 +2,39 @@ package mod.beethoven92.betterendforge.common.block;
 
 import java.util.Random;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SnowBlock;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.lighting.LightEngine;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SnowLayerBlock;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.lighting.LayerLightEngine;
+import net.minecraft.server.level.ServerLevel;
 
 public class MossyObsidianBlock extends Block {
 	public MossyObsidianBlock() {
-		super(AbstractBlock.Properties.from(Blocks.OBSIDIAN).hardnessAndResistance(3).tickRandomly());
+		super(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN).strength(3).randomTicks());
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (random.nextInt(16) == 0 && !canSurvive(state, world, pos)) {
-			world.setBlockState(pos, Blocks.OBSIDIAN.getDefaultState());
+			world.setBlockAndUpdate(pos, Blocks.OBSIDIAN.defaultBlockState());
 		}
 	}
 
-	public static boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
-		BlockPos blockPos = pos.up();
+	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+		BlockPos blockPos = pos.above();
 		BlockState blockState = world.getBlockState(blockPos);
-		if (blockState.isIn(Blocks.SNOW) && (Integer) blockState.get(SnowBlock.LAYERS) == 1) {
+		if (blockState.is(Blocks.SNOW) && (Integer) blockState.getValue(SnowLayerBlock.LAYERS) == 1) {
 			return true;
-		} else if (blockState.getFluidState().getLevel() == 8) {
+		} else if (blockState.getFluidState().getAmount() == 8) {
 			return false;
 		} else {
-			int i = LightEngine.func_215613_a(world, state, pos, blockState, blockPos, Direction.UP,
-					state.getOpacity(world, blockPos));
+			int i = LayerLightEngine.getLightBlockInto(world, state, pos, blockState, blockPos, Direction.UP,
+					state.getLightBlock(world, blockPos));
 			return i < 5;
 		}
 	}

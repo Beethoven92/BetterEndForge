@@ -5,33 +5,33 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.RandomWalkingGoal;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.Level;
 
-public class ShadowWalkerEntity extends MonsterEntity
+public class ShadowWalkerEntity extends Monster
 {
-	public ShadowWalkerEntity(EntityType<? extends MonsterEntity> type, World worldIn) 
+	public ShadowWalkerEntity(EntityType<? extends Monster> type, Level worldIn) 
 	{
 		super(type, worldIn);
 	}
@@ -40,41 +40,41 @@ public class ShadowWalkerEntity extends MonsterEntity
 	protected void registerGoals() 
 	{
 		this.goalSelector.addGoal(2, new AttackGoal(this, 1.0D, false));
-		this.goalSelector.addGoal(7, new RandomWalkingGoal(this, 1.0D));
-		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		this.goalSelector.addGoal(7, new RandomStrollGoal(this, 1.0D));
+		this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		this.goalSelector.addGoal(8, new RandomLookAroundGoal(this));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 	
-	public static AttributeModifierMap.MutableAttribute registerAttributes() 
+	public static AttributeSupplier.Builder registerAttributes() 
 	{
-		return MonsterEntity.func_234295_eP_().
+		return Monster.createMonsterAttributes().
 				//createMutableAttribute(Attributes.MAX_HEALTH, 8.0).
-				createMutableAttribute(Attributes.FOLLOW_RANGE, 35.0).
-				createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.15).
-				createMutableAttribute(Attributes.ATTACK_DAMAGE, 4.5).
-				createMutableAttribute(Attributes.ARMOR, 2.0).
-				createMutableAttribute(Attributes.ZOMBIE_SPAWN_REINFORCEMENTS);
+				add(Attributes.FOLLOW_RANGE, 35.0).
+				add(Attributes.MOVEMENT_SPEED, 0.15).
+				add(Attributes.ATTACK_DAMAGE, 4.5).
+				add(Attributes.ARMOR, 2.0).
+				add(Attributes.SPAWN_REINFORCEMENTS_CHANCE);
 	}
 	
 	@Override
 	public void tick() 
 	{
 		super.tick();
-		world.addParticle(ParticleTypes.ASH,
-				getPosX() + rand.nextGaussian() * 0.2,
-				getPosY() + rand.nextGaussian() * 0.5 + 1,
-				getPosZ() + rand.nextGaussian() * 0.2,
+		level.addParticle(ParticleTypes.ASH,
+				getX() + random.nextGaussian() * 0.2,
+				getY() + random.nextGaussian() * 0.5 + 1,
+				getZ() + random.nextGaussian() * 0.2,
 				0, 0, 0);
-		world.addParticle(ParticleTypes.SMOKE,
-				getPosX() + rand.nextGaussian() * 0.2,
-				getPosY() + rand.nextGaussian() * 0.5 + 1,
-				getPosZ() + rand.nextGaussian() * 0.2,
+		level.addParticle(ParticleTypes.SMOKE,
+				getX() + random.nextGaussian() * 0.2,
+				getY() + random.nextGaussian() * 0.5 + 1,
+				getZ() + random.nextGaussian() * 0.2,
 				0, 0, 0);
-		world.addParticle(ParticleTypes.ENTITY_EFFECT,
-				getPosX() + rand.nextGaussian() * 0.2,
-				getPosY() + rand.nextGaussian() * 0.5 + 1,
-				getPosZ() + rand.nextGaussian() * 0.2,
+		level.addParticle(ParticleTypes.ENTITY_EFFECT,
+				getX() + random.nextGaussian() * 0.2,
+				getY() + random.nextGaussian() * 0.5 + 1,
+				getZ() + random.nextGaussian() * 0.2,
 				0, 0, 0);
 	}
 	
@@ -103,37 +103,37 @@ public class ShadowWalkerEntity extends MonsterEntity
 	@Override
 	protected float getSoundVolume() 
 	{
-		return ModMathHelper.randRange(0.25F, 0.5F, rand);
+		return ModMathHelper.randRange(0.25F, 0.5F, random);
 	}
 	
 	@Override
-	protected float getSoundPitch() 
+	protected float getVoicePitch() 
 	{
-		return ModMathHelper.randRange(0.75F, 1.25F, rand);
+		return ModMathHelper.randRange(0.75F, 1.25F, random);
 	}
 	
-	public static boolean canSpawn(EntityType<ShadowWalkerEntity> type, IServerWorld world, SpawnReason spawnReason,
+	public static boolean canSpawn(EntityType<ShadowWalkerEntity> type, ServerLevelAccessor world, MobSpawnType spawnReason,
 			BlockPos pos, Random random) 
 	{
-		if (MonsterEntity.canMonsterSpawnInLight(type, world, spawnReason, pos, random)) 
+		if (Monster.checkMonsterSpawnRules(type, world, spawnReason, pos, random)) 
 		{
-			AxisAlignedBB box = new AxisAlignedBB(pos).grow(16);
-			List<ShadowWalkerEntity> entities = world.getEntitiesWithinAABB(ShadowWalkerEntity.class, box, (entity) -> { return true; });
+			AABB box = new AABB(pos).inflate(16);
+			List<ShadowWalkerEntity> entities = world.getEntitiesOfClass(ShadowWalkerEntity.class, box, (entity) -> { return true; });
 			return entities.size() < 6;
 		}
 		return false;
 	}
 	
 	@Override
-	public boolean attackEntityAsMob(Entity entityIn) 
+	public boolean doHurtTarget(Entity entityIn) 
 	{
-		boolean attack = super.attackEntityAsMob(entityIn);
+		boolean attack = super.doHurtTarget(entityIn);
 		if (attack && entityIn instanceof LivingEntity) 
 		{
 			LivingEntity living = (LivingEntity) entityIn;
-			if (!(living.isPotionActive(Effects.BLINDNESS))) 
+			if (!(living.hasEffect(MobEffects.BLINDNESS))) 
 			{
-				living.addPotionEffect(new EffectInstance(Effects.BLINDNESS, 60));
+				living.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60));
 			}
 		}
 		return attack;
@@ -151,17 +151,17 @@ public class ShadowWalkerEntity extends MonsterEntity
 		}
 
 		@Override
-		public void startExecuting()
+		public void start()
 		{
-			super.startExecuting();
+			super.start();
 			this.ticks = 0;
 		}
 		
 		@Override
-		public void resetTask() 
+		public void stop() 
 		{
-			super.resetTask();
-			this.walker.setAggroed(false);
+			super.stop();
+			this.walker.setAggressive(false);
 		}
 
 		@Override
@@ -169,13 +169,13 @@ public class ShadowWalkerEntity extends MonsterEntity
 		{
 			super.tick();
 			++this.ticks;
-			if (this.ticks >= 5 && this.func_234041_j_() < this.func_234042_k_() / 2) 
+			if (this.ticks >= 5 && this.getTicksUntilNextAttack() < this.getAttackInterval() / 2) 
 			{
-				this.walker.setAggroed(true);
+				this.walker.setAggressive(true);
 			}
 			else 
 			{
-				this.walker.setAggroed(false);
+				this.walker.setAggressive(false);
 			}
 		}
 	}

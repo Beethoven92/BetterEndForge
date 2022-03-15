@@ -2,15 +2,15 @@ package mod.beethoven92.betterendforge.common.util;
 
 import java.util.Random;
 
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.math.vector.Vector3i;
+import net.minecraft.util.Mth;
+import com.mojang.math.Vector3f;
+import net.minecraft.core.Vec3i;
 
 public class ModMathHelper 
 {
 	public static final Random RANDOM = new Random();
 
-	private static final Vector3i[] RANDOM_OFFSETS = new Vector3i[3 * 3 * 3 - 1];
+	private static final Vec3i[] RANDOM_OFFSETS = new Vec3i[3 * 3 * 3 - 1];
 
 	public static final float PI2 = (float) (Math.PI * 2);
 
@@ -27,9 +27,9 @@ public class ModMathHelper
 
 	public static int getColor(int r, int g, int b) 
 	{
-		r = MathHelper.clamp(r, 0, 255);
-		g = MathHelper.clamp(g, 0, 255);
-		b = MathHelper.clamp(b, 0, 255);
+		r = Mth.clamp(r, 0, 255);
+		g = Mth.clamp(g, 0, 255);
+		b = Mth.clamp(b, 0, 255);
 		return color(r, g, b);
 	}
 	
@@ -294,21 +294,21 @@ public class ModMathHelper
 	
 	public static Vector3f cross(Vector3f vec1, Vector3f vec2)
 	{
-		float cx = vec1.getY() * vec2.getZ() - vec1.getZ() * vec2.getY();
-		float cy = vec1.getZ() * vec2.getX() - vec1.getX() * vec2.getZ();
-		float cz = vec1.getX() * vec2.getY() - vec1.getY() * vec2.getX();
+		float cx = vec1.y() * vec2.z() - vec1.z() * vec2.y();
+		float cy = vec1.z() * vec2.x() - vec1.x() * vec2.z();
+		float cz = vec1.x() * vec2.y() - vec1.y() * vec2.x();
 		return new Vector3f(cx, cy, cz);
 	}
 	
 	public static Vector3f normalize(Vector3f vec) 
 	{
-		float length = lengthSqr(vec.getX(), vec.getY(), vec.getZ());
+		float length = lengthSqr(vec.x(), vec.y(), vec.z());
 		if (length > 0) 
 		{
 			length = (float) Math.sqrt(length);
-			float x = vec.getX() / length;
-			float y = vec.getY() / length;
-			float z = vec.getZ() / length;
+			float x = vec.x() / length;
+			float y = vec.y() / length;
+			float z = vec.z() / length;
 			vec.set(x, y, z);
 		}
 		return vec;
@@ -316,9 +316,9 @@ public class ModMathHelper
 	
 	public static float angle(Vector3f vec1, Vector3f vec2)
 	{
-		float dot = vec1.getX() * vec2.getX() + vec1.getY() * vec2.getY() + vec1.getZ() * vec2.getZ();
-		float length1 = lengthSqr(vec1.getX(), vec1.getY(), vec1.getZ());
-		float length2 = lengthSqr(vec2.getX(), vec2.getY(), vec2.getZ());
+		float dot = vec1.x() * vec2.x() + vec1.y() * vec2.y() + vec1.z() * vec2.z();
+		float length1 = lengthSqr(vec1.x(), vec1.y(), vec1.z());
+		float length2 = lengthSqr(vec2.x(), vec2.y(), vec2.z());
 		return (float) Math.acos(dot / Math.sqrt(length1 * length2));
 	}
 	
@@ -330,7 +330,7 @@ public class ModMathHelper
 		return new Vector3f(vx, 0, vz);
 	}
 
-	public static Vector3i[] getOffsets(Random random) {
+	public static Vec3i[] getOffsets(Random random) {
 		shuffle(RANDOM_OFFSETS, random);
 		return RANDOM_OFFSETS;
 	}
@@ -342,7 +342,7 @@ public class ModMathHelper
 			for (int y = -1; y <= 1; y++) {
 				for (int z = -1; z <= 1; z++) {
 					if (x != 0 || y != 0 || z != 0) {
-						RANDOM_OFFSETS[index++] = new Vector3i(x, y, z);
+						RANDOM_OFFSETS[index++] = new Vec3i(x, y, z);
 					}
 				}
 			}

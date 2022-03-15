@@ -10,40 +10,40 @@ import mod.beethoven92.betterendforge.client.gui.BlockSignEditScreen;
 import mod.beethoven92.betterendforge.common.tileentity.ESignTileEntity;
 import mod.beethoven92.betterendforge.common.tileentity.PedestalTileEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.network.play.ClientPlayNetHandler;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.network.PacketThreadUtil;
-import net.minecraft.network.play.server.SOpenSignMenuPacket;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.network.protocol.PacketUtils;
+import net.minecraft.network.protocol.game.ClientboundOpenSignEditorPacket;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.BlockPos;
 
-@Mixin(ClientPlayNetHandler.class)
+@Mixin(ClientPacketListener.class)
 public class ClientPlayNetHandlerMixin {
 	@Shadow
-	private Minecraft client;
+	private Minecraft minecraft;
 
 	@Shadow
-	private ClientWorld world;
+	private ClientLevel level;
 
-	@Inject(method = "handleSignEditorOpen", at = @At(value = "HEAD"), cancellable = true)
-	public void be_openSignEditor(SOpenSignMenuPacket packet, CallbackInfo info) {
-		PacketThreadUtil.checkThreadAndEnqueue(packet, (ClientPlayNetHandler) (Object) this, client);
-		TileEntity blockEntity = this.world.getTileEntity(packet.getSignPosition());
+	@Inject(method = "handleOpenSignEditor", at = @At(value = "HEAD"), cancellable = true)
+	public void be_openSignEditor(ClientboundOpenSignEditorPacket packet, CallbackInfo info) {
+		PacketUtils.ensureRunningOnSameThread(packet, (ClientPacketListener) (Object) this, minecraft);
+		BlockEntity blockEntity = this.level.getBlockEntity(packet.getPos());
 		if (blockEntity instanceof ESignTileEntity) {
 			ESignTileEntity sign = (ESignTileEntity) blockEntity;
-			client.displayGuiScreen(new BlockSignEditScreen(sign));
+			minecraft.setScreen(new BlockSignEditScreen(sign));
 			info.cancel();
 		}
 	}
 
-	@Inject(method = "handleUpdateTileEntity", at = @At(value = "HEAD"), cancellable = true)
-	public void be_onEntityUpdate(SUpdateTileEntityPacket packet, CallbackInfo info) {
-		PacketThreadUtil.checkThreadAndEnqueue(packet, (ClientPlayNetHandler) (Object) this, client);
+	@Inject(method = "handleBlockEntityData", at = @At(value = "HEAD"), cancellable = true)
+	public void be_onEntityUpdate(ClientboundBlockEntityDataPacket packet, CallbackInfo info) {
+		PacketUtils.ensureRunningOnSameThread(packet, (ClientPacketListener) (Object) this, minecraft);
 		BlockPos blockPos = packet.getPos();
-		TileEntity blockEntity = this.client.world.getTileEntity(blockPos);
+		BlockEntity blockEntity = this.minecraft.level.getBlockEntity(blockPos);
 		if (blockEntity instanceof ESignTileEntity || blockEntity instanceof PedestalTileEntity) {
-			blockEntity.read(this.client.world.getBlockState(blockPos), packet.getNbtCompound());
+			blockEntity.load(this.minecraft.level.getBlockState(blockPos), packet.getTag());
 			info.cancel();
 		}
 	}

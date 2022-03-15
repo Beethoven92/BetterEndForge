@@ -3,7 +3,7 @@ package mod.beethoven92.betterendforge.common.init;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.lootmodifier.BetterEndMusicDiscLootModifier;
 import mod.beethoven92.betterendforge.common.lootmodifier.lootcondition.LootConditions;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

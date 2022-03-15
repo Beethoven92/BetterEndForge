@@ -4,10 +4,10 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModEntityTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.GenerationStage.Decoration;
+import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 
 public class BlossomingSpiresBiome extends BetterEndBiome
 {
@@ -34,7 +34,7 @@ public class BlossomingSpiresBiome extends BetterEndBiome
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.TWISTED_MOSS_WOOD).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BLOSSOM_BERRY).
 				addFeature(Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.SILK_MOTH_NEST).
-				addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 4).
-		        addMobSpawn(EntityClassification.AMBIENT, ModEntityTypes.SILK_MOTH.get(), 5, 1, 2));
+				addMobSpawn(MobCategory.MONSTER, EntityType.ENDERMAN, 50, 1, 4).
+		        addMobSpawn(MobCategory.AMBIENT, ModEntityTypes.SILK_MOTH.get(), 5, 1, 2));
 	}
 }

@@ -7,13 +7,15 @@ import mod.beethoven92.betterendforge.common.block.template.PlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
-import net.minecraft.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BulbVineSeedBlock extends PlantBlockWithAge
 {
@@ -23,35 +25,35 @@ public class BulbVineSeedBlock extends PlantBlockWithAge
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos)
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos)
 	{
-		BlockState up = worldIn.getBlockState(pos.up());
-		return up.isIn(ModTags.GEN_TERRAIN) || up.isIn(BlockTags.LOGS) || up.isIn(BlockTags.LEAVES);
+		BlockState up = worldIn.getBlockState(pos.above());
+		return up.is(ModTags.GEN_TERRAIN) || up.is(BlockTags.LOGS) || up.is(BlockTags.LEAVES);
 	}
 	
 	@Override
-	public void growAdult(ISeedReader world, Random random, BlockPos pos) 
+	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) 
 	{
 		int h = BlockHelper.downRay(world, pos, random.nextInt(24)) - 1;
 		if (h > 2) 
 		{
-			BlockHelper.setWithoutUpdate(world, pos, ModBlocks.BULB_VINE.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
+			BlockHelper.setWithoutUpdate(world, pos, ModBlocks.BULB_VINE.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP));
 			for (int i = 1; i < h; i++)
 			{
-				BlockHelper.setWithoutUpdate(world, pos.down(i), ModBlocks.BULB_VINE.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
+				BlockHelper.setWithoutUpdate(world, pos.below(i), ModBlocks.BULB_VINE.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE));
 			}
-			BlockHelper.setWithoutUpdate(world, pos.down(h), ModBlocks.BULB_VINE.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
+			BlockHelper.setWithoutUpdate(world, pos.below(h), ModBlocks.BULB_VINE.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM));
 		}
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return true;
 	}
 	
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}

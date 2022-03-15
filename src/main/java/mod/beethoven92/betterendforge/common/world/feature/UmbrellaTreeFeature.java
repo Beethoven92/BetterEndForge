@@ -21,19 +21,19 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSubtraction;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFUnion;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.util.Mth;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
+public class UmbrellaTreeFeature extends Feature<NoneFeatureConfiguration>
 {
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final List<Vector3f> SPLINE;
@@ -59,7 +59,7 @@ public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
 		SplineHelper.offset(ROOT, new Vector3f(0, -0.45F, 0));
 		
 		REPLACE = (state) -> {
-			if (state.isIn(ModTags.END_GROUND) || state.getMaterial().equals(Material.PLANTS) || state.isIn(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()))
+			if (state.is(ModTags.END_GROUND) || state.getMaterial().equals(Material.PLANT) || state.is(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()))
 			{
 				return true;
 			}
@@ -69,19 +69,19 @@ public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
 	
 	public UmbrellaTreeFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
-			NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos pos,
+			NoneFeatureConfiguration config) 
 	{
-		if (!world.getBlockState(pos.down()).getBlock().isIn(ModTags.END_GROUND)) return false;
+		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND)) return false;
 		
-		BlockState wood = ModBlocks.UMBRELLA_TREE.bark.get().getDefaultState();
-		BlockState membrane = ModBlocks.UMBRELLA_TREE_MEMBRANE.get().getDefaultState().with(UmbrellaTreeMembraneBlock.COLOR, 1);
-		BlockState center = ModBlocks.UMBRELLA_TREE_MEMBRANE.get().getDefaultState().with(UmbrellaTreeMembraneBlock.COLOR, 0);
-		BlockState fruit = ModBlocks.UMBRELLA_TREE_CLUSTER.get().getDefaultState().with(UmbrellaTreeClusterBlock.NATURAL, true);
+		BlockState wood = ModBlocks.UMBRELLA_TREE.bark.get().defaultBlockState();
+		BlockState membrane = ModBlocks.UMBRELLA_TREE_MEMBRANE.get().defaultBlockState().setValue(UmbrellaTreeMembraneBlock.COLOR, 1);
+		BlockState center = ModBlocks.UMBRELLA_TREE_MEMBRANE.get().defaultBlockState().setValue(UmbrellaTreeMembraneBlock.COLOR, 0);
+		BlockState fruit = ModBlocks.UMBRELLA_TREE_CLUSTER.get().defaultBlockState().setValue(UmbrellaTreeClusterBlock.NATURAL, true);
 		
 		float size = ModMathHelper.randRange(10, 20, rand);
 		int count = (int) (size * 0.15F);
@@ -119,9 +119,9 @@ public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
 				sdf = (sdf == null) ? branch : new SDFUnion().setSourceA(sdf).setSourceB(branch);
 				SDF mem = makeMembrane(world, radius, rand, membrane, center);
 				
-				float px = ModMathHelper.floor(vec.getX()) + 0.5F;
-				float py = ModMathHelper.floor(vec.getY()) + 0.5F;
-				float pz = ModMathHelper.floor(vec.getZ()) + 0.5F;
+				float px = ModMathHelper.floor(vec.x()) + 0.5F;
+				float py = ModMathHelper.floor(vec.y()) + 0.5F;
+				float pz = ModMathHelper.floor(vec.z()) + 0.5F;
 				mem = new SDFTranslate().setTranslate(px, py, pz).setSource(mem);
 				sdf = new SDFSmoothUnion().setRadius(2).setSourceA(sdf).setSourceB(mem);
 				centers.add(new Center(pos.getX() + (double) (px * scale), pos.getY() + (double) (py * scale), pos.getZ() + (double) (pz * scale), radius * scale));
@@ -143,7 +143,7 @@ public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
 		sdf.setReplaceFunction(REPLACE).addPostProcess((info) -> {
 			if (ModBlocks.UMBRELLA_TREE.isTreeLog(info.getStateUp()) && ModBlocks.UMBRELLA_TREE.isTreeLog(info.getStateDown())) 
 			{
-				return ModBlocks.UMBRELLA_TREE.log.get().getDefaultState();
+				return ModBlocks.UMBRELLA_TREE.log.get().defaultBlockState();
 			}
 			else if (info.getState().equals(membrane)) 
 			{
@@ -158,8 +158,8 @@ public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
 					}
 				}
 				int color = ModMathHelper.floor(d / min.radius * 7);
-				color = MathHelper.clamp(color, 1, 7);
-				return info.getState().with(UmbrellaTreeMembraneBlock.COLOR, color);
+				color = Mth.clamp(color, 1, 7);
+				return info.getState().setValue(UmbrellaTreeMembraneBlock.COLOR, color);
 			}
 			return info.getState();
 		}).fillRecursive(world, pos);
@@ -184,7 +184,7 @@ public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
 		return true;
 	}
 
-	private void makeRoots(ISeedReader world, BlockPos pos, float radius, Random random, BlockState wood) 
+	private void makeRoots(WorldGenLevel world, BlockPos pos, float radius, Random random, BlockState wood) 
 	{
 		int count = (int) (radius * 1.5F);
 		for (int i = 0; i < count; i++) 
@@ -196,14 +196,14 @@ public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.add(last.getX(), last.getY(), last.getZ())).isIn(ModTags.GEN_TERRAIN)) 
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(ModTags.GEN_TERRAIN)) 
 			{
 				SplineHelper.fillSplineForce(branch, world, wood, pos, REPLACE);
 			}
 		}
 	}
 	
-	private SDF makeMembrane(ISeedReader world, float radius, Random random, BlockState membrane, BlockState center) 
+	private SDF makeMembrane(WorldGenLevel world, float radius, Random random, BlockState membrane, BlockState center) 
 	{
 		SDF sphere = new SDFSphere().setRadius(radius).setBlock(membrane);
 		SDF sub = new SDFTranslate().setTranslate(0, -4, 0).setSource(sphere);
@@ -225,15 +225,15 @@ public class UmbrellaTreeFeature extends Feature<NoFeatureConfig>
 		return sphere;
 	}
 	
-	private void makeFruits(ISeedReader world, double px, double py, double pz, BlockState fruit, float scale) 
+	private void makeFruits(WorldGenLevel world, double px, double py, double pz, BlockState fruit, float scale) 
 	{
-		Mutable mut = new Mutable().setPos(px, py, pz);
+		MutableBlockPos mut = new MutableBlockPos().set(px, py, pz);
 		for (int i = 0; i < 8; i++) {
 			mut.move(Direction.DOWN);
-			if (world.isAirBlock(mut)) 
+			if (world.isEmptyBlock(mut)) 
 			{
-				BlockState state = world.getBlockState(mut.up());
-				if (state.isIn(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()) && state.get(UmbrellaTreeMembraneBlock.COLOR) < 2)
+				BlockState state = world.getBlockState(mut.above());
+				if (state.is(ModBlocks.UMBRELLA_TREE_MEMBRANE.get()) && state.getValue(UmbrellaTreeMembraneBlock.COLOR) < 2)
 				{
 					BlockHelper.setWithoutUpdate(world, mut, fruit);
 				}

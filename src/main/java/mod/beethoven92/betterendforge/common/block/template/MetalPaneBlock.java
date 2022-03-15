@@ -1,10 +1,12 @@
 package mod.beethoven92.betterendforge.common.block.template;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.PaneBlock;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.IronBarsBlock;
+import net.minecraft.core.Direction;
 
-public class MetalPaneBlock extends PaneBlock
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class MetalPaneBlock extends IronBarsBlock
 {
 	public MetalPaneBlock(Properties builder)
 	{
@@ -12,12 +14,12 @@ public class MetalPaneBlock extends PaneBlock
 	}
 	
 	@Override
-	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) 
+	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) 
 	{
 		if (side.getAxis().isVertical() && adjacentBlockState.getBlock().equals(this) && !adjacentBlockState.equals(state)) 
 		{
 			return false;
 		}
-		return super.isSideInvisible(state, adjacentBlockState, side);
+		return super.skipRendering(state, adjacentBlockState, side);
 	}
 }

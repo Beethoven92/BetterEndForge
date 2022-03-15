@@ -6,9 +6,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import mod.beethoven92.betterendforge.common.block.template.EndAnvilBlock;
-import net.minecraft.block.AnvilBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.IntegerProperty;
+import net.minecraft.world.level.block.AnvilBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 @Mixin(AnvilBlock.class)
 public class AnvilBlockMixin 
@@ -19,10 +19,10 @@ public class AnvilBlockMixin
 		if (fallingState.getBlock() instanceof EndAnvilBlock) 
 		{
 			IntegerProperty destructionProperty = ((EndAnvilBlock) fallingState.getBlock()).getDestructionProperty();
-			int destruction = fallingState.get(destructionProperty);
+			int destruction = fallingState.getValue(destructionProperty);
 			try 
 			{
-				BlockState state = fallingState.with(destructionProperty, destruction + 1);
+				BlockState state = fallingState.setValue(destructionProperty, destruction + 1);
 				info.setReturnValue(state);
 				info.cancel();
 			} 

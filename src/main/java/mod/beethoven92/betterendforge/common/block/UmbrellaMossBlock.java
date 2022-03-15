@@ -6,11 +6,13 @@ import mod.beethoven92.betterendforge.common.block.template.DoublePlantBlock;
 import mod.beethoven92.betterendforge.common.block.template.PlantBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class UmbrellaMossBlock extends PlantBlock
 {
@@ -20,7 +22,7 @@ public class UmbrellaMossBlock extends PlantBlock
 	}
 	
 	@Override
-	public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos) 
+	public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) 
 	{
 		return 1F;
 	}
@@ -32,23 +34,23 @@ public class UmbrellaMossBlock extends PlantBlock
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
-		return worldIn.getBlockState(pos.up()).isAir();
+		return worldIn.getBlockState(pos.above()).isAir();
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}
 	
 	@Override
-	public void grow(ServerWorld worldIn, Random rand, BlockPos pos, BlockState state) 
+	public void performBonemeal(ServerLevel worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
-    	int rot = worldIn.rand.nextInt(4);
-		BlockState bs = ModBlocks.UMBRELLA_MOSS_TALL.get().getDefaultState().with(DoublePlantBlock.ROTATION, rot);
+    	int rot = worldIn.random.nextInt(4);
+		BlockState bs = ModBlocks.UMBRELLA_MOSS_TALL.get().defaultBlockState().setValue(DoublePlantBlock.ROTATION, rot);
 		BlockHelper.setWithoutUpdate(worldIn, pos, bs);
-		BlockHelper.setWithoutUpdate(worldIn, pos.up(), bs.with(DoublePlantBlock.TOP, true));
+		BlockHelper.setWithoutUpdate(worldIn, pos.above(), bs.setValue(DoublePlantBlock.TOP, true));
 	}
 }

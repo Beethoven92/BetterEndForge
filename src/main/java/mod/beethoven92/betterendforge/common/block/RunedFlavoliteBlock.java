@@ -1,11 +1,13 @@
 package mod.beethoven92.betterendforge.common.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class RunedFlavoliteBlock extends Block
 {
@@ -14,17 +16,17 @@ public class RunedFlavoliteBlock extends Block
 	public RunedFlavoliteBlock(Properties properties) 
 	{
 		super(properties);
-		this.setDefaultState(getDefaultState().with(ACTIVATED, false));
+		this.registerDefaultState(defaultBlockState().setValue(ACTIVATED, false));
 	}
 	
 	@Override
-	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) 
+	public int getLightValue(BlockState state, BlockGetter world, BlockPos pos) 
 	{
-		return state.get(ACTIVATED) ? 8 : 0;
+		return state.getValue(ACTIVATED) ? 8 : 0;
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(ACTIVATED);
 	}

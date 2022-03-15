@@ -5,18 +5,18 @@ import mod.beethoven92.betterendforge.common.recipes.AlloyingRecipe;
 import mod.beethoven92.betterendforge.common.recipes.AlloyingRecipeSerializer;
 import mod.beethoven92.betterendforge.common.recipes.AnvilSmithingRecipeSerializer;
 import mod.beethoven92.betterendforge.common.recipes.InfusionRecipeSerializer;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModRecipeSerializers 
 {
-	public static final DeferredRegister<IRecipeSerializer<?>> RECIPE_SERIALIZERS = 
+	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = 
 			DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, BetterEnd.MOD_ID);
 	
 	public static final RegistryObject<AlloyingRecipeSerializer<AlloyingRecipe>> ALLOYING = RECIPE_SERIALIZERS.register("alloying", 
@@ -28,10 +28,10 @@ public class ModRecipeSerializers
 	public static final RegistryObject<AnvilSmithingRecipeSerializer> ANVIL_SMITHING = RECIPE_SERIALIZERS.register("anvil_smithing", 
 			() -> new AnvilSmithingRecipeSerializer());
 	
-	public static <T extends IRecipe<?>> IRecipeType<T> registerRecipeType(String type) 
+	public static <T extends Recipe<?>> RecipeType<T> registerRecipeType(String type) 
 	{
 		ResourceLocation recipeTypeId = new ResourceLocation(BetterEnd.MOD_ID, type);
-		return Registry.register(Registry.RECIPE_TYPE, recipeTypeId, new IRecipeType<T>() 
+		return Registry.register(Registry.RECIPE_TYPE, recipeTypeId, new RecipeType<T>() 
 		{
 			public String toString() 
 			{

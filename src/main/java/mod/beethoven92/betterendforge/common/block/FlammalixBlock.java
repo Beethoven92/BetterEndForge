@@ -2,35 +2,37 @@ package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.block.template.PlantBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.client.renderer.model.BlockModel;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType;
 
 public class FlammalixBlock extends PlantBlock {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(2, 0, 2, 14, 14, 14);
+	private static final VoxelShape SHAPE = Block.box(2, 0, 2, 14, 14, 14);
 
 	public FlammalixBlock() {
-		super(AbstractBlock.Properties.create(Material.ROCK).sound(SoundType.STONE));
+		super(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE));
 	}
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(ModBlocks.PALLIDIUM_FULL.get()) ||
-			state.isIn(ModBlocks.PALLIDIUM_HEAVY.get()) ||
-			state.isIn(ModBlocks.PALLIDIUM_THIN.get()) ||
-			state.isIn(ModBlocks.PALLIDIUM_TINY.get());
+		return state.is(ModBlocks.PALLIDIUM_FULL.get()) ||
+			state.is(ModBlocks.PALLIDIUM_HEAVY.get()) ||
+			state.is(ModBlocks.PALLIDIUM_THIN.get()) ||
+			state.is(ModBlocks.PALLIDIUM_TINY.get());
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader view, BlockPos pos, ISelectionContext ePos) {
+	public VoxelShape getShape(BlockState state, BlockGetter view, BlockPos pos, CollisionContext ePos) {
 		return SHAPE;
 	}
 	

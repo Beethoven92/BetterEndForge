@@ -2,13 +2,15 @@ package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SlimeBlock;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.IntegerProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.Direction;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SlimeBlock;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.core.Direction;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class UmbrellaTreeMembraneBlock extends SlimeBlock
 {
@@ -21,26 +23,26 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock
 	}
 	
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) 
+	public BlockState getStateForPlacement(BlockPlaceContext context) 
 	{
-		double px = context.getPos().getX() * 0.1;
-		double py = context.getPos().getY() * 0.1;
-		double pz = context.getPos().getZ() * 0.1;
-		return this.getDefaultState().with(COLOR, ModMathHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
+		double px = context.getClickedPos().getX() * 0.1;
+		double py = context.getClickedPos().getY() * 0.1;
+		double pz = context.getClickedPos().getZ() * 0.1;
+		return this.defaultBlockState().setValue(COLOR, ModMathHelper.floor(NOISE.eval(px, py, pz) * 3.5 + 4));
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(COLOR);
 	}
 	
 	@Override
-	public boolean isSideInvisible(BlockState state, BlockState adjacentBlockState, Direction side) 
+	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) 
 	{
-		if (state.get(COLOR) > 0) 
+		if (state.getValue(COLOR) > 0) 
 		{
-			return super.isSideInvisible(state, adjacentBlockState, side);
+			return super.skipRendering(state, adjacentBlockState, side);
 		}
 		else
 		{
@@ -49,8 +51,8 @@ public class UmbrellaTreeMembraneBlock extends SlimeBlock
 	}
 	
 	@Override
-	public boolean isTransparent(BlockState state) 
+	public boolean useShapeForLightOcclusion(BlockState state) 
 	{
-		return state.get(COLOR) > 0;
+		return state.getValue(COLOR) > 0;
 	}
 }

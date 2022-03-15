@@ -9,13 +9,13 @@ import com.google.common.collect.Maps;
 
 import mod.beethoven92.betterendforge.BetterEnd;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.texture.NativeImage;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.resources.IResource;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
+import com.mojang.blaze3d.platform.NativeImage;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -98,10 +98,10 @@ public class ColorHelper
 	public static NativeImage loadImage(ResourceLocation image, int w, int h) 
 	{
 		Minecraft minecraft = Minecraft.getInstance();
-		IResourceManager resourceManager = minecraft.getResourceManager();
+		ResourceManager resourceManager = minecraft.getResourceManager();
 		if (resourceManager.hasResource(image)) 
 		{
-			try (IResource resource = resourceManager.getResource(image)) 
+			try (Resource resource = resourceManager.getResource(image)) 
 			{
 				return NativeImage.read(resource.getInputStream());			
 			} 

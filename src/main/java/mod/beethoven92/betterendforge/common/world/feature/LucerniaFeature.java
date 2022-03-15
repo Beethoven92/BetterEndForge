@@ -22,19 +22,19 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFSubtraction;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFSphere;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.LeavesBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class LucerniaFeature extends Feature<NoFeatureConfig> {
+public class LucerniaFeature extends Feature<NoneFeatureConfiguration> {
 	private static final Direction[] DIRECTIONS = Direction.values();
 	private static final Function<BlockState, Boolean> REPLACE;
 	private static final Function<BlockState, Boolean> IGNORE;
@@ -42,13 +42,13 @@ public class LucerniaFeature extends Feature<NoFeatureConfig> {
 	private static final List<Vector3f> ROOT;
 
 	public LucerniaFeature() {
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
-			NoFeatureConfig config) {
-		if (!world.getBlockState(pos.down()).getBlock().isIn(ModTags.END_GROUND))
+	public boolean place(WorldGenLevel world, ChunkGenerator chunkGenerator, Random random, BlockPos pos,
+			NoneFeatureConfiguration config) {
+		if (!world.getBlockState(pos.below()).getBlock().is(ModTags.END_GROUND))
 			return false;
 
 		float size = ModMathHelper.randRange(12, 20, random);
@@ -61,53 +61,53 @@ public class LucerniaFeature extends Feature<NoFeatureConfig> {
 			SplineHelper.rotateSpline(spline, angle);
 			SplineHelper.scale(spline, size * ModMathHelper.randRange(0.5F, 1F, random));
 			SplineHelper.offsetParts(spline, random, 1F, 0, 1F);
-			SplineHelper.fillSpline(spline, world, ModBlocks.LUCERNIA.bark.get().getDefaultState(), pos, REPLACE);
+			SplineHelper.fillSpline(spline, world, ModBlocks.LUCERNIA.bark.get().defaultBlockState(), pos, REPLACE);
 			Vector3f last = spline.get(spline.size() - 1);
 			float leavesRadius = (size * 0.13F + ModMathHelper.randRange(0.8F, 1.5F, random)) * 1.4F;
 			OpenSimplexNoise noise = new OpenSimplexNoise(random.nextLong());
-			leavesBall(world, pos.add(last.getX(), last.getY(), last.getZ()), leavesRadius, random, noise,
+			leavesBall(world, pos.offset(last.x(), last.y(), last.z()), leavesRadius, random, noise,
 					config != null);
 		}
 
-		makeRoots(world, pos.add(0, ModMathHelper.randRange(3, 5, random), 0), size * 0.35F, random);
+		makeRoots(world, pos.offset(0, ModMathHelper.randRange(3, 5, random), 0), size * 0.35F, random);
 
 		return true;
 	}
 
-	private void leavesBall(ISeedReader world, BlockPos pos, float radius, Random random,
+	private void leavesBall(WorldGenLevel world, BlockPos pos, float radius, Random random,
 			OpenSimplexNoise noise, boolean natural) {
 		SDF sphere = new SDFSphere().setRadius(radius)
-				.setBlock(ModBlocks.LUCERNIA_LEAVES.get().getDefaultState().with(LeavesBlock.DISTANCE, 6));
+				.setBlock(ModBlocks.LUCERNIA_LEAVES.get().defaultBlockState().setValue(LeavesBlock.DISTANCE, 6));
 		SDF sub = new SDFScale().setScale(5).setSource(sphere);
 		sub = new SDFTranslate().setTranslate(0, -radius * 5, 0).setSource(sub);
 		sphere = new SDFSubtraction().setSourceA(sphere).setSourceB(sub);
 		sphere = new SDFScale3D().setScale(1, 0.75F, 1).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
-			return (float) noise.eval(vec.getX() * 0.2, vec.getY() * 0.2, vec.getZ() * 0.2) * 2F;
+			return (float) noise.eval(vec.x() * 0.2, vec.y() * 0.2, vec.z() * 0.2) * 2F;
 		}).setSource(sphere);
 		sphere = new SDFDisplacement().setFunction((vec) -> {
 			return ModMathHelper.randRange(-1.5F, 1.5F, random);
 		}).setSource(sphere);
 
-		Mutable mut = new Mutable();
+		MutableBlockPos mut = new MutableBlockPos();
 		for (Direction d1 : BlockHelper.HORIZONTAL_DIRECTIONS) {
-			BlockPos p = mut.setPos(pos).move(Direction.UP).move(d1).toImmutable();
-			BlockHelper.setWithoutUpdate(world, p, ModBlocks.LUCERNIA.bark.get().getDefaultState());
+			BlockPos p = mut.set(pos).move(Direction.UP).move(d1).immutable();
+			BlockHelper.setWithoutUpdate(world, p, ModBlocks.LUCERNIA.bark.get().defaultBlockState());
 			for (Direction d2 : BlockHelper.HORIZONTAL_DIRECTIONS) {
-				mut.setPos(p).move(Direction.UP).move(d2);
-				BlockHelper.setWithoutUpdate(world, p, ModBlocks.LUCERNIA.bark.get().getDefaultState());
+				mut.set(p).move(Direction.UP).move(d2);
+				BlockHelper.setWithoutUpdate(world, p, ModBlocks.LUCERNIA.bark.get().defaultBlockState());
 			}
 		}
 
-		BlockState top = ModBlocks.FILALUX.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
-		BlockState middle = ModBlocks.FILALUX.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE);
-		BlockState bottom = ModBlocks.FILALUX.get().getDefaultState().with(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM);
-		BlockState outer = ModBlocks.LUCERNIA_OUTER_LEAVES.get().getDefaultState();
+		BlockState top = ModBlocks.FILALUX.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.TOP);
+		BlockState middle = ModBlocks.FILALUX.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.MIDDLE);
+		BlockState bottom = ModBlocks.FILALUX.get().defaultBlockState().setValue(BlockProperties.TRIPLE_SHAPE, TripleShape.BOTTOM);
+		BlockState outer = ModBlocks.LUCERNIA_OUTER_LEAVES.get().defaultBlockState();
 
 		List<BlockPos> support = Lists.newArrayList();
 		sphere.addPostProcess((info) -> {
 			if (natural && random.nextInt(6) == 0 && info.getStateDown().isAir()) {
-				BlockPos d = info.getPos().down();
+				BlockPos d = info.getPos().below();
 				support.add(d);
 			}
 			if (random.nextInt(15) == 0) {
@@ -117,13 +117,13 @@ public class LucerniaFeature extends Feature<NoFeatureConfig> {
 						return info.getState();
 					}
 				}
-				info.setState(ModBlocks.LUCERNIA.bark.get().getDefaultState());
+				info.setState(ModBlocks.LUCERNIA.bark.get().defaultBlockState());
 			}
 
 			ModMathHelper.shuffle(DIRECTIONS, random);
 			for (Direction d : DIRECTIONS) {
 				if (info.getState(d).isAir()) {
-					info.setBlockPos(info.getPos().offset(d), outer.with(FurBlock.FACING, d));
+					info.setBlockPos(info.getPos().relative(d), outer.setValue(FurBlock.FACING, d));
 				}
 			}
 
@@ -141,9 +141,9 @@ public class LucerniaFeature extends Feature<NoFeatureConfig> {
 								mut.setY(y + info.getPos().getY());
 								BlockState state = info.getState(mut);
 								if (state.getBlock() instanceof LeavesBlock) {
-									int distance = state.get(LeavesBlock.DISTANCE);
+									int distance = state.getValue(LeavesBlock.DISTANCE);
 									if (d < distance) {
-										info.setState(mut, state.with(LeavesBlock.DISTANCE, d));
+										info.setState(mut, state.setValue(LeavesBlock.DISTANCE, d));
 									}
 								}
 							}
@@ -158,14 +158,14 @@ public class LucerniaFeature extends Feature<NoFeatureConfig> {
 
 		support.forEach((bpos) -> {
 			BlockState state = world.getBlockState(bpos);
-			if (state.isAir() || state.isIn(ModBlocks.LUCERNIA_OUTER_LEAVES.get())) {
+			if (state.isAir() || state.is(ModBlocks.LUCERNIA_OUTER_LEAVES.get())) {
 				int count = ModMathHelper.randRange(3, 8, random);
-				mut.setPos(bpos);
-				if (world.getBlockState(mut.up()).isIn(ModBlocks.LUCERNIA_LEAVES.get())) {
+				mut.set(bpos);
+				if (world.getBlockState(mut.above()).is(ModBlocks.LUCERNIA_LEAVES.get())) {
 					BlockHelper.setWithoutUpdate(world, mut, top);
 					for (int i = 1; i < count; i++) {
 						mut.setY(mut.getY() - 1);
-						if (world.isAirBlock(mut.down())) {
+						if (world.isEmptyBlock(mut.below())) {
 							BlockHelper.setWithoutUpdate(world, mut, middle);
 						} else {
 							break;
@@ -177,7 +177,7 @@ public class LucerniaFeature extends Feature<NoFeatureConfig> {
 		});
 	}
 
-	private void makeRoots(ISeedReader world, BlockPos pos, float radius, Random random) {
+	private void makeRoots(WorldGenLevel world, BlockPos pos, float radius, Random random) {
 		int count = (int) (radius * 1.5F);
 		for (int i = 0; i < count; i++) {
 			float angle = (float) i / (float) count * ModMathHelper.PI2;
@@ -187,21 +187,21 @@ public class LucerniaFeature extends Feature<NoFeatureConfig> {
 			SplineHelper.rotateSpline(branch, angle);
 			SplineHelper.scale(branch, scale);
 			Vector3f last = branch.get(branch.size() - 1);
-			if (world.getBlockState(pos.add(last.getX(), last.getY(), last.getZ())).isIn(ModTags.GEN_TERRAIN)) {
-				SplineHelper.fillSplineForce(branch, world, ModBlocks.LUCERNIA.bark.get().getDefaultState(), pos, REPLACE);
+			if (world.getBlockState(pos.offset(last.x(), last.y(), last.z())).is(ModTags.GEN_TERRAIN)) {
+				SplineHelper.fillSplineForce(branch, world, ModBlocks.LUCERNIA.bark.get().defaultBlockState(), pos, REPLACE);
 			}
 		}
 	}
 
 	static {
 		REPLACE = (state) -> {
-			if (state.isIn(ModTags.END_GROUND)) {
+			if (state.is(ModTags.END_GROUND)) {
 				return true;
 			}
 			if (state.getBlock() == ModBlocks.LUCERNIA_LEAVES.get()) {
 				return true;
 			}
-			if (state.getMaterial().equals(Material.PLANTS)) {
+			if (state.getMaterial().equals(Material.PLANT)) {
 				return true;
 			}
 			return state.getMaterial().isReplaceable();

@@ -3,8 +3,8 @@ package mod.beethoven92.betterendforge.common.init;
 import java.util.function.Supplier;
 
 import mod.beethoven92.betterendforge.BetterEnd;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 
 
 public class ModCreativeTabs 
@@ -12,7 +12,7 @@ public class ModCreativeTabs
 	public static final BetterEndCreativeTab CREATIVE_TAB = 
 			new BetterEndCreativeTab(BetterEnd.MOD_ID, () -> new ItemStack(ModBlocks.ETERNAL_PEDESTAL.get()));
 	
-	private static class BetterEndCreativeTab extends ItemGroup
+	private static class BetterEndCreativeTab extends CreativeModeTab
     {
     	private final Supplier<ItemStack> icon;
     	
@@ -23,7 +23,7 @@ public class ModCreativeTabs
 		}
 
 		@Override
-		public ItemStack createIcon() 
+		public ItemStack makeIcon() 
 		{
 			return icon.get();
 		}

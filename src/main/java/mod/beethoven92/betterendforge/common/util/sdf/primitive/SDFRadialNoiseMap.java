@@ -3,11 +3,11 @@ package mod.beethoven92.betterendforge.common.util.sdf.primitive;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFDisplacement;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 public class SDFRadialNoiseMap extends SDFDisplacement {
-    private static final float SIN = MathHelper.sin(0.5F);
-    private static final float COS = MathHelper.cos(0.5F);
+    private static final float SIN = Mth.sin(0.5F);
+    private static final float COS = Mth.cos(0.5F);
 
     private OpenSimplexNoise noise;
     private float intensity = 1F;
@@ -20,13 +20,13 @@ public class SDFRadialNoiseMap extends SDFDisplacement {
             if (intensity == 0) {
                 return 0F;
             }
-            float px = pos.getX() / radius;
-            float pz = pos.getZ() / radius;
+            float px = pos.x() / radius;
+            float pz = pos.z() / radius;
             float distance = ModMathHelper.lengthSqr(px, pz);
             if (distance > 1) {
                 return 0F;
             }
-            distance = 1 - MathHelper.sqrt(distance);
+            distance = 1 - Mth.sqrt(distance);
             float nx = px * COS - pz * SIN;
             float nz = pz * COS + px * SIN;
             distance *= getNoise(nx * 0.75 + offsetX, nz * 0.75 + offsetZ);

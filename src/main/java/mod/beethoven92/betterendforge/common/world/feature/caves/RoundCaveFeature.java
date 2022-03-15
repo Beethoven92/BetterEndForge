@@ -9,17 +9,17 @@ import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.ISeedReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraftforge.common.Tags;
 
 public class RoundCaveFeature extends EndCaveFeature
 {
 	@Override
-	protected Set<BlockPos> generateCaveBlocks(ISeedReader world, BlockPos center, int radius, Random random) 
+	protected Set<BlockPos> generateCaveBlocks(WorldGenLevel world, BlockPos center, int radius, Random random) 
 	{
 		OpenSimplexNoise noise = new OpenSimplexNoise(ModMathHelper.getSeed(534, center.getX(), center.getZ()));
 
@@ -34,7 +34,7 @@ public class RoundCaveFeature extends EndCaveFeature
 		double nr = radius * 0.25;
 
 		BlockState state;
-		Mutable bpos = new Mutable();
+		MutableBlockPos bpos = new MutableBlockPos();
 		Set<BlockPos> blocks = Sets.newHashSet();
 		for (int x = x1; x <= x2; x++) 
 		{
@@ -61,7 +61,7 @@ public class RoundCaveFeature extends EndCaveFeature
 						if (isReplaceable(state)) 
 						{
 							BlockHelper.setWithoutUpdate(world, bpos, CAVE_AIR);
-							blocks.add(bpos.toImmutable());
+							blocks.add(bpos.immutable());
 
 							while (state.getMaterial().equals(Material.LEAVES)) 
 							{
@@ -88,11 +88,11 @@ public class RoundCaveFeature extends EndCaveFeature
 	
 	private boolean isReplaceable(BlockState state) 
 	{
-		return state.isIn(ModTags.GEN_TERRAIN)
+		return state.is(ModTags.GEN_TERRAIN)
 				|| state.getMaterial().isReplaceable()
-				|| state.getMaterial().equals(Material.PLANTS)
+				|| state.getMaterial().equals(Material.PLANT)
 				|| state.getMaterial().equals(Material.LEAVES)
-				|| state.isIn(Tags.Blocks.ORES) // Handles floating ores
-				|| state.isIn(Tags.Blocks.END_STONES); // Handles other blocks that could be left floating
+				|| state.is(Tags.Blocks.ORES) // Handles floating ores
+				|| state.is(Tags.Blocks.END_STONES); // Handles other blocks that could be left floating
 	}
 }

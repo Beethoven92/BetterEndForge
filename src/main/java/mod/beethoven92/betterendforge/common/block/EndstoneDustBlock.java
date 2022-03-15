@@ -1,10 +1,12 @@
 package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FallingBlock;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class EndstoneDustBlock extends FallingBlock
 {
@@ -16,7 +18,7 @@ public class EndstoneDustBlock extends FallingBlock
 	}
 
 	@Override
-	public int getDustColor(BlockState state, IBlockReader reader, BlockPos pos) 
+	public int getDustColor(BlockState state, BlockGetter reader, BlockPos pos) 
 	{
 		return COLOR;
 	}

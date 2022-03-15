@@ -7,9 +7,9 @@ import com.google.common.collect.Maps;
 
 import mod.beethoven92.betterendforge.common.block.IDyedBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.item.DyeColor;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.DyeColor;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ColoredMaterial
 {
@@ -31,7 +31,7 @@ public class ColoredMaterial
 
 		for (DyeColor color: DyeColor.values()) 
 		{
-			String coloredName = name + "_" + color.getString();
+			String coloredName = name + "_" + color.getSerializedName();
 
 			RegistryObject<Block> block = ModBlocks.registerBlockWithDefaultItem(coloredName, () -> source.get().createFromColor(color));
 			

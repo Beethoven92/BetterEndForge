@@ -1,18 +1,20 @@
 package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.DyeColor;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.common.ToolType;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class HydraluxPetalBlockColored extends HydraluxPetalBlock implements IDyedBlock
 {
 	public HydraluxPetalBlockColored() 
 	{
-		super(AbstractBlock.Properties.from(ModBlocks.HYDRALUX_PETAL_BLOCK.get()));
+		super(BlockBehaviour.Properties.copy(ModBlocks.HYDRALUX_PETAL_BLOCK.get()));
 	}
 	
 	public HydraluxPetalBlockColored(Properties properties) 
@@ -23,9 +25,9 @@ public class HydraluxPetalBlockColored extends HydraluxPetalBlock implements IDy
 	@Override
 	public Block createFromColor(DyeColor color) 
 	{
-		return new HydraluxPetalBlockColored(AbstractBlock.Properties.create(Material.PLANTS, color).
-					                                                  sound(SoundType.WART).
-					                                                  hardnessAndResistance(1F).
+		return new HydraluxPetalBlockColored(BlockBehaviour.Properties.of(Material.PLANT, color).
+					                                                  sound(SoundType.WART_BLOCK).
+					                                                  strength(1F).
 					                                                  harvestTool(ToolType.AXE));
 	}
 }

@@ -1,6 +1,6 @@
 package mod.beethoven92.betterendforge.common.integration.jei.anvil;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
@@ -12,15 +12,15 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.block.template.EndAnvilBlock;
 import mod.beethoven92.betterendforge.common.recipes.AnvilSmithingRecipe;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.client.gui.Font;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class AnvilSmithingRecipeCategory implements IRecipeCategory<AnvilSmithingRecipe>
 {
@@ -56,7 +56,7 @@ public class AnvilSmithingRecipeCategory implements IRecipeCategory<AnvilSmithin
 	@Override
 	public String getTitle()
 	{
-		return new TranslationTextComponent("gui.jei.category.anvil_smithing").getString();
+		return new TranslatableComponent("gui.jei.category.anvil_smithing").getString();
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class AnvilSmithingRecipeCategory implements IRecipeCategory<AnvilSmithin
 		inputs.addAll(recipe.getIngredients());
 		
 		// Required anvil level
-		inputs.add(Ingredient.fromStacks(BlockTags.ANVIL.getAllElements().stream().filter(anvil -> {
+		inputs.add(Ingredient.of(BlockTags.ANVIL.getValues().stream().filter(anvil -> {
 			if (anvil instanceof EndAnvilBlock) 
 			{
 				return ((EndAnvilBlock) anvil).getCraftingLevel() >= recipe.anvilLevel;
@@ -90,7 +90,7 @@ public class AnvilSmithingRecipeCategory implements IRecipeCategory<AnvilSmithin
 		
 		ingredients.setInputIngredients(inputs);
 		
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
+		ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
 	}
 
 	@Override
@@ -106,21 +106,21 @@ public class AnvilSmithingRecipeCategory implements IRecipeCategory<AnvilSmithin
 		guiItemStacks.set(ingredients);
 	}
 	
-	protected void drawToolDamage(AnvilSmithingRecipe recipe, MatrixStack matrixStack, int y) 
+	protected void drawToolDamage(AnvilSmithingRecipe recipe, PoseStack matrixStack, int y) 
 	{
 		int damage = recipe.damage;
 		if (damage > 0) 
 		{
-			TranslationTextComponent timeString = new TranslationTextComponent("gui.jei.category.anvil_smithing.damage", damage);
+			TranslatableComponent timeString = new TranslatableComponent("gui.jei.category.anvil_smithing.damage", damage);
 			Minecraft minecraft = Minecraft.getInstance();
-			FontRenderer fontRenderer = minecraft.fontRenderer;
-			int stringWidth = fontRenderer.getStringPropertyWidth(timeString);
-			fontRenderer.func_243248_b(matrixStack, timeString, background.getWidth() - stringWidth, y, 0xFF808080);
+			Font fontRenderer = minecraft.font;
+			int stringWidth = fontRenderer.width(timeString);
+			fontRenderer.draw(matrixStack, timeString, background.getWidth() - stringWidth, y, 0xFF808080);
 		}
 	}
 	
 	@Override
-	public void draw(AnvilSmithingRecipe recipe, MatrixStack matrixStack, double mouseX, double mouseY) 
+	public void draw(AnvilSmithingRecipe recipe, PoseStack matrixStack, double mouseX, double mouseY) 
 	{
 		drawToolDamage(recipe, matrixStack, 27);
 	}

@@ -4,8 +4,8 @@ import mod.beethoven92.betterendforge.config.Configs;
 import mod.beethoven92.betterendforge.config.jsons.JsonConfigs;
 //import net.minecraft.core.BlockPos;
 //import net.minecraft.util.Mth;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraftforge.common.ForgeConfigSpec;
 //import ru.betterend.config.Configs;
 
@@ -99,15 +99,15 @@ public class GeneratorOptions {
 	}
 
 	public static int getBiomeSizeLand() {
-		return MathHelper.clamp(biomeSizeLand, 1, 8192);
+		return Mth.clamp(biomeSizeLand, 1, 8192);
 	}
 
 	public static int getBiomeSizeVoid() {
-		return MathHelper.clamp(biomeSizeVoid, 1, 8192);
+		return Mth.clamp(biomeSizeVoid, 1, 8192);
 	}
 
 	public static int getBiomeSizeCaves() {
-		return MathHelper.clamp(biomeSizeCaves, 1, 8192);
+		return Mth.clamp(biomeSizeCaves, 1, 8192);
 	}
 
 	public static boolean hasPortal() {

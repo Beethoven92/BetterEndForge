@@ -3,10 +3,10 @@ package mod.beethoven92.betterendforge.common.event.forge;
 import mod.beethoven92.betterendforge.BetterEnd;
 import mod.beethoven92.betterendforge.common.capability.EndData;
 import mod.beethoven92.betterendforge.common.init.ModAttributes;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
@@ -24,19 +24,19 @@ public class ForgeEvents {
 
 	@SubscribeEvent
 	public static void loginEvent(PlayerLoggedInEvent event) {
-		EndData.playerLogin((ServerPlayerEntity) event.getPlayer());
+		EndData.playerLogin((ServerPlayer) event.getPlayer());
 	}
 
 	@SubscribeEvent
 	public static void respawnEvent(PlayerRespawnEvent event) {
-		EndData.playerRespawn((ServerPlayerEntity) event.getPlayer());
+		EndData.playerRespawn((ServerPlayer) event.getPlayer());
 	}
 
 	@SubscribeEvent
 	public static void removeBlindness(PotionApplicableEvent event) {
 		LivingEntity entity = event.getEntityLiving();
-		if (event.getPotionEffect().getPotion() == Effects.BLINDNESS
-				&& entity.getAttributeManager().hasAttributeInstance(ModAttributes.BLINDNESS_RESISTANCE.get())
+		if (event.getPotionEffect().getEffect() == MobEffects.BLINDNESS
+				&& entity.getAttributes().hasAttribute(ModAttributes.BLINDNESS_RESISTANCE.get())
 				&& entity.getAttributeValue(ModAttributes.BLINDNESS_RESISTANCE.get()) > 0)
 			event.setResult(Result.DENY);
 	}

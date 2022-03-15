@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_top",
-  "textures": {
-    "bottom": "betterendforge:block/thallasium_door_bottom",
-    "top": "betterendforge:block/thallasium_door_top"
-  }
-}

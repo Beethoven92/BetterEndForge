@@ -8,7 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class BiomePicker 
 {

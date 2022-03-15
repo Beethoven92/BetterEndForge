@@ -5,33 +5,50 @@ import javax.annotation.Nullable;
 import mod.beethoven92.betterendforge.common.block.template.PedestalBlock;
 import mod.beethoven92.betterendforge.common.init.ModItems;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.Connection;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class PedestalTileEntity extends TileEntity implements ITickableTileEntity
+public class PedestalTileEntity extends BlockEntity implements Container
 {
 	private ItemStack activeItem = ItemStack.EMPTY;
 	
 	private final int maxAge = 314;
 	private int age;
 	
-	public PedestalTileEntity() 
+	public PedestalTileEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntityTypes.PEDESTAL.get());
+		super(ModTileEntityTypes.PEDESTAL.get(), pos, state);
 	}
 	
-	public PedestalTileEntity(TileEntityType<?> tileEntityTypeIn) 
+	public PedestalTileEntity(BlockEntityType<?> tileEntityTypeIn, BlockPos pos, BlockState state)
 	{
-		super(tileEntityTypeIn);
+		super(tileEntityTypeIn, pos, state);
+	}
+
+	protected void toTag(CompoundTag tag)
+	{
+		if (activeItem != ItemStack.EMPTY) {
+			tag.put("active_item", activeItem.save(new CompoundTag()));
+		}
+	}
+
+	protected void fromTag(CompoundTag tag)
+	{
+		if (tag.contains("active_item")) {
+			CompoundTag itemTag = tag.getCompound("active_item");
+			activeItem = ItemStack.of(itemTag);
+		}
 	}
 	
 	public int getAge() 
@@ -48,12 +65,45 @@ public class PedestalTileEntity extends TileEntity implements ITickableTileEntit
 	{
 		activeItem = ItemStack.EMPTY;
 	}
-	
+
+	@Override
+	public int getContainerSize()
+	{
+		return 1;
+	}
+
 	public boolean isEmpty()
 	{
 		return activeItem.isEmpty();
 	}
-	
+
+	@Override
+	public ItemStack getItem(int slot)
+	{
+		return activeItem;
+	}
+
+	@Override
+	public ItemStack removeItem(int slot, int amount)
+	{
+		return removeItemNoUpdate(slot);
+	}
+
+	@Override
+	public ItemStack removeItemNoUpdate(int slot)
+	{
+		ItemStack stored = activeItem;
+		clearContent();
+		return stored;
+	}
+
+	@Override
+	public void setItem(int slot, ItemStack stack)
+	{
+		activeItem = stack.split(1);
+		setChanged();
+	}
+
 	public ItemStack getStack()
 	{
 		return activeItem;
@@ -62,50 +112,54 @@ public class PedestalTileEntity extends TileEntity implements ITickableTileEntit
 	public void setStack(ItemStack split) 
 	{
 		this.activeItem = split;
-		this.markDirty();
-		this.getWorld().notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
+		this.setChanged();
+		this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
 	}
 
-	public void removeStack(World world, BlockState state) 
+	public void removeStack(Level world, BlockState state) 
 	{
-		world.setBlockState(pos, state.with(PedestalBlock.HAS_ITEM, false).with(PedestalBlock.HAS_LIGHT, false));
+		world.setBlockAndUpdate(worldPosition, state.setValue(PedestalBlock.HAS_ITEM, false).setValue(PedestalBlock.HAS_LIGHT, false));
 		this.activeItem = ItemStack.EMPTY;
-		this.markDirty();
+		this.setChanged();
 	}
 
 	public ItemStack removeStack() 
 	{
 		ItemStack stored = this.activeItem;
 		this.activeItem = ItemStack.EMPTY;
-		this.markDirty();
+		this.setChanged();
 		return stored;
 	}
 	
 	@Override
-	public void markDirty() 
+	public void setChanged() 
 	{
-		if (world != null && !world.isRemote) 
+		if (level != null && !level.isClientSide) 
 		{
-			BlockState state = world.getBlockState(pos);
+			BlockState state = level.getBlockState(worldPosition);
 			if (state.getBlock() instanceof PedestalBlock)
 			{
-				state = state.with(PedestalBlock.HAS_ITEM, !isEmpty());
+				state = state.setValue(PedestalBlock.HAS_ITEM, !isEmpty());
 				if (activeItem.getItem() == ModItems.ETERNAL_CRYSTAL.get()) 
 				{
-					state = state.with(PedestalBlock.HAS_LIGHT, true);
+					state = state.setValue(PedestalBlock.HAS_LIGHT, true);
 				} 
 				else 
 				{
-					state = state.with(PedestalBlock.HAS_LIGHT, false);
+					state = state.setValue(PedestalBlock.HAS_LIGHT, false);
 				}
-				world.setBlockState(pos, state);
+				level.setBlockAndUpdate(worldPosition, state);
 			}
 		}
-		super.markDirty();
+		super.setChanged();
 	}
-	
+
 	@Override
-	public void tick() 
+	public boolean stillValid(Player p_18946_) {
+		return false;
+	}
+
+	public void tick(Level level, BlockPos pos, BlockState state)
 	{	
 		if (!isEmpty()) 
 		{
@@ -117,68 +171,78 @@ public class PedestalTileEntity extends TileEntity implements ITickableTileEntit
 		}
 	}
 	
-	@OnlyIn(Dist.CLIENT)
+	/*@OnlyIn(Dist.CLIENT)
 	@Override
-	public double getMaxRenderDistanceSquared() 
+	public double getViewDistance() 
 	{
 		return 256.0D;
-	}
+	}*/
 	
 	@Override
 	@Nullable
-	public SUpdateTileEntityPacket getUpdatePacket()
+	public ClientboundBlockEntityDataPacket getUpdatePacket()
 	{
-		CompoundNBT nbtTagCompound = new CompoundNBT();
-	    write(nbtTagCompound);
-	    int tileEntityType = 42;
-	    return new SUpdateTileEntityPacket(this.pos, tileEntityType, nbtTagCompound);
+		CompoundTag nbtTagCompound = new CompoundTag();
+	    saveAdditional(nbtTagCompound);
+	    return ClientboundBlockEntityDataPacket.create(this, t -> nbtTagCompound);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) 
+	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) 
 	{
-		BlockState blockState = world.getBlockState(pos);
-	    read(blockState, pkt.getNbtCompound());
+	    load(pkt.getTag());
 	}
 
 	@Override
-	public CompoundNBT getUpdateTag()
+	public CompoundTag getUpdateTag()
 	{
-		CompoundNBT nbtTagCompound = new CompoundNBT();
-	    write(nbtTagCompound);
+		CompoundTag nbtTagCompound = new CompoundTag();
+	    saveAdditional(nbtTagCompound);
 	    return nbtTagCompound;
 	}
 	
 	@Override
-    public void handleUpdateTag(BlockState blockState, CompoundNBT parentNBTTagCompound)
+    public void handleUpdateTag(CompoundTag parentNBTTagCompound)
 	{
-		this.read(blockState, parentNBTTagCompound);
+		this.load(parentNBTTagCompound);
 	}
 	
 	@Override
-	public CompoundNBT write(CompoundNBT compound)
+	public void saveAdditional(CompoundTag compound)
 	{
-		super.write(compound);
-		CompoundNBT itemStackNBT = new CompoundNBT();
+		super.saveAdditional(compound);
+		CompoundTag itemStackNBT = new CompoundTag();
 		if (!activeItem.isEmpty())
 		{
-			activeItem.write(itemStackNBT);
+			activeItem.save(itemStackNBT);
 			compound.put("activeItem", itemStackNBT);
 		}
-		return compound;
 	}
 	
 	@Override
-	public void read(BlockState state, CompoundNBT nbt) 
+	public void load(CompoundTag nbt)
 	{
-		super.read(state, nbt);
+		super.load(nbt);
         if (nbt.contains("activeItem")) 
         {
-            activeItem = ItemStack.read(nbt.getCompound("activeItem"));
+            activeItem = ItemStack.of(nbt.getCompound("activeItem"));
         }
         else 
         {
             activeItem = ItemStack.EMPTY;
         }
+	}
+
+	public static <T extends BlockEntity> void commonTick(Level level, BlockPos pos, BlockState state, T tile) {
+		if (tile instanceof PedestalTileEntity tick) {
+			tick.tick(level, pos, state);
+		}
+	}
+
+	@Override
+	public void clearContent()
+	{
+		activeItem = ItemStack.EMPTY;
+		setChanged();
 	}
 }

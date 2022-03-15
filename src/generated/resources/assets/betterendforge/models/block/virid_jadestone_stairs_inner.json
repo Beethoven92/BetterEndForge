@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "side": "betterendforge:block/virid_jadestone",
-    "bottom": "betterendforge:block/virid_jadestone",
-    "top": "betterendforge:block/virid_jadestone"
-  }
-}

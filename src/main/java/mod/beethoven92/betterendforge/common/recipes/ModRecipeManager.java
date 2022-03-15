@@ -5,17 +5,17 @@ import java.util.Map.Entry;
 
 import com.google.common.collect.Maps;
 
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.resources.ResourceLocation;
 
 public class ModRecipeManager 
 {
-	public static final Map<IRecipeType<?>, Map<ResourceLocation, IRecipe<?>>> RECIPES = Maps.newHashMap();
+	public static final Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> RECIPES = Maps.newHashMap();
 
-	public static void addRecipe(IRecipeType<?> type, IRecipe<?> recipe) 
+	public static void addRecipe(RecipeType<?> type, Recipe<?> recipe) 
 	{
-		Map<ResourceLocation, IRecipe<?>> list = RECIPES.get(type);
+		Map<ResourceLocation, Recipe<?>> list = RECIPES.get(type);
 		if (list == null) 
 		{
 			list = Maps.newHashMap();
@@ -24,29 +24,29 @@ public class ModRecipeManager
 		list.put(recipe.getId(), recipe);
 	}
 	
-	public static Map<IRecipeType<?>, Map<ResourceLocation, IRecipe<?>>> getMap(Map<IRecipeType<?>, Map<ResourceLocation, IRecipe<?>>> recipes) 
+	public static Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> getMap(Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> recipes) 
 	{
-		Map<IRecipeType<?>, Map<ResourceLocation, IRecipe<?>>> result = Maps.newHashMap();
+		Map<RecipeType<?>, Map<ResourceLocation, Recipe<?>>> result = Maps.newHashMap();
 
-		for (IRecipeType<?> type : recipes.keySet()) 
+		for (RecipeType<?> type : recipes.keySet()) 
 		{
-			Map<ResourceLocation, IRecipe<?>> typeList = Maps.newHashMap();
+			Map<ResourceLocation, Recipe<?>> typeList = Maps.newHashMap();
 			typeList.putAll(recipes.get(type));
 			result.put(type, typeList);
 		}
 
-		for (IRecipeType<?> type : RECIPES.keySet()) 
+		for (RecipeType<?> type : RECIPES.keySet()) 
 		{
-			Map<ResourceLocation, IRecipe<?>> list = RECIPES.get(type);
+			Map<ResourceLocation, Recipe<?>> list = RECIPES.get(type);
 			if (list != null)
 			{
-				Map<ResourceLocation, IRecipe<?>> typeList = result.get(type);
+				Map<ResourceLocation, Recipe<?>> typeList = result.get(type);
 				if (typeList == null) 
 				{
 					typeList = Maps.newHashMap();
 					result.put(type, typeList);
 				}
-				for (Entry<ResourceLocation, IRecipe<?>> entry : list.entrySet()) {
+				for (Entry<ResourceLocation, Recipe<?>> entry : list.entrySet()) {
 					ResourceLocation id = entry.getKey();
 					if (!typeList.containsKey(id))
 						typeList.put(id, entry.getValue());

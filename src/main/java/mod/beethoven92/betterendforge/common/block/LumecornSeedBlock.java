@@ -5,12 +5,14 @@ import java.util.Random;
 import mod.beethoven92.betterendforge.common.block.template.PlantBlockWithAge;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModFeatures;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class LumecornSeedBlock extends PlantBlockWithAge {
 	
@@ -19,28 +21,28 @@ public class LumecornSeedBlock extends PlantBlockWithAge {
 	}
 
 	@Override
-	public void growAdult(ISeedReader world, Random random, BlockPos pos) {
-		ModFeatures.LUMECORN.generate(world, null, random, pos, null);
+	public void growAdult(WorldGenLevel world, Random random, BlockPos pos) {
+		ModFeatures.LUMECORN.place(world, null, random, pos, null);
 	}
 	
 	@Override
 	protected boolean isTerrain(BlockState state) {
-		return state.isIn(ModBlocks.END_MOSS.get());
+		return state.is(ModBlocks.END_MOSS.get());
 	}
 	
 	@Override
-	public AbstractBlock.OffsetType getOffsetType() {
-		return AbstractBlock.OffsetType.NONE;
+	public BlockBehaviour.OffsetType getOffsetType() {
+		return BlockBehaviour.OffsetType.NONE;
 	}
 	
 	@Override
-	public boolean canGrow(IBlockReader worldIn, BlockPos pos, BlockState state, boolean isClient) 
+	public boolean isValidBonemealTarget(BlockGetter worldIn, BlockPos pos, BlockState state, boolean isClient) 
 	{
 		return true;
 	}
 	
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, BlockState state) 
+	public boolean isBonemealSuccess(Level worldIn, Random rand, BlockPos pos, BlockState state) 
 	{
 		return true;
 	}

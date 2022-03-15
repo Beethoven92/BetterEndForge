@@ -1,61 +1,61 @@
 package mod.beethoven92.betterendforge.common.inventory.slot;
 
 import mod.beethoven92.betterendforge.common.tileentity.EndStoneSmelterTileEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.Container;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 public class SmelterOutputSlot extends Slot
 {
-	private PlayerEntity player;
+	private Player player;
 	private int amount;
 
-	public SmelterOutputSlot(PlayerEntity player, IInventory inventoryIn, int index, int xPosition, int yPosition) 
+	public SmelterOutputSlot(Player player, Container inventoryIn, int index, int xPosition, int yPosition) 
 	{
 		super(inventoryIn, index, xPosition, yPosition);
 		this.player = player;
 	}	
 	
 	@Override
-	public boolean isItemValid(ItemStack stack) 
+	public boolean mayPlace(ItemStack stack) 
 	{
 		return false;
 	}
 	
 	@Override
-	public ItemStack decrStackSize(int amount)
+	public ItemStack remove(int amount)
 	{
-		if (this.getHasStack()) 
+		if (this.hasItem()) 
 		{
-			this.amount += Math.min(amount, this.getStack().getCount());
+			this.amount += Math.min(amount, this.getItem().getCount());
 		}
 
-		return super.decrStackSize(amount);
+		return super.remove(amount);
 	}
 	
 	@Override
-	public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) 
+	public ItemStack onTake(Player thePlayer, ItemStack stack) 
 	{
-		this.onCrafting(stack);
+		this.checkTakeAchievements(stack);
 		super.onTake(player, stack);
 		return stack;
 	}
 	
 	@Override
-	protected void onCrafting(ItemStack stack, int amount) 
+	protected void onQuickCraft(ItemStack stack, int amount) 
 	{
 		this.amount += amount;
-		this.onCrafting(stack);
+		this.checkTakeAchievements(stack);
 	}
 	
 	@Override
-	protected void onCrafting(ItemStack stack) 
+	protected void checkTakeAchievements(ItemStack stack) 
 	{
-		stack.onCrafting(this.player.world, this.player, this.amount);
-		if (!this.player.world.isRemote && this.inventory instanceof EndStoneSmelterTileEntity) 
+		stack.onCraftedBy(this.player.level, this.player, this.amount);
+		if (!this.player.level.isClientSide && this.container instanceof EndStoneSmelterTileEntity) 
 		{
-			((EndStoneSmelterTileEntity) this.inventory).dropExperience(player);
+			((EndStoneSmelterTileEntity) this.container).dropExperience(player);
 		}
 		this.amount = 0;
 	}

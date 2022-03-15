@@ -5,29 +5,31 @@ import java.util.Map;
 import com.google.common.collect.Maps;
 
 import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.Direction.Axis;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.Level;
 
-public class EndLotusStemBlock extends Block implements IWaterLoggable
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+public class EndLotusStemBlock extends Block implements SimpleWaterloggedBlock
 {
 	public static final DirectionProperty FACING = BlockStateProperties.FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -37,52 +39,52 @@ public class EndLotusStemBlock extends Block implements IWaterLoggable
 	
 	static 
 	{
-		SHAPES.put(Axis.X, Block.makeCuboidShape(0, 6, 6, 16, 10, 10));
-		SHAPES.put(Axis.Y, Block.makeCuboidShape(6, 0, 6, 10, 16, 10));
-		SHAPES.put(Axis.Z, Block.makeCuboidShape(6, 6, 0, 10, 10, 16));
+		SHAPES.put(Axis.X, Block.box(0, 6, 6, 16, 10, 10));
+		SHAPES.put(Axis.Y, Block.box(6, 0, 6, 10, 16, 10));
+		SHAPES.put(Axis.Z, Block.box(6, 6, 0, 10, 10, 16));
 	}
 	
 	public EndLotusStemBlock(Properties properties) 
 	{
 		super(properties);
-		this.setDefaultState(getDefaultState().with(WATERLOGGED, false).with(SHAPE, TripleShape.MIDDLE).
-				with(LEAF, false).with(FACING, Direction.UP));
+		this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false).setValue(SHAPE, TripleShape.MIDDLE).
+				setValue(LEAF, false).setValue(FACING, Direction.UP));
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(FACING, LEAF, WATERLOGGED, SHAPE);
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
-		return state.get(LEAF) ? SHAPES.get(Axis.Y) : SHAPES.get(state.get(FACING).getAxis());
+		return state.getValue(LEAF) ? SHAPES.get(Axis.Y) : SHAPES.get(state.getValue(FACING).getAxis());
 	}
 	
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) 
+	public BlockState getStateForPlacement(BlockPlaceContext context) 
 	{
-		World world = context.getWorld();
-		BlockPos pos = context.getPos();
-		return this.getDefaultState().with(WATERLOGGED, world.getFluidState(pos).getFluid() == Fluids.WATER).
-				with(FACING, context.getFace());
+		Level world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
+		return this.defaultBlockState().setValue(WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER).
+				setValue(FACING, context.getClickedFace());
 	}
 	
 	@Override
 	public FluidState getFluidState(BlockState state) 
 	{
-		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (stateIn.get(WATERLOGGED)) 
+		if (stateIn.getValue(WATERLOGGED)) 
 		{
-			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
+			worldIn.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(worldIn));
 	    }
 		
 		return stateIn;
@@ -91,12 +93,12 @@ public class EndLotusStemBlock extends Block implements IWaterLoggable
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot)
 	{
-		return state.with(FACING, rot.rotate(state.get(FACING)));
+		return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
 	}
 	
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn) 
 	{
-		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
+		return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
 	}
 }

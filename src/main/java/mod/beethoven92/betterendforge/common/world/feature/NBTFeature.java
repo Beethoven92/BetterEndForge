@@ -9,50 +9,50 @@ import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.FeatureHelper;
 import mod.beethoven92.betterendforge.common.util.NbtModIdReplacer;
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.CompressedStreamTools;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtIo;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.surfacebuilders.SurfaceBuilderConfiguration;
 
-public abstract class NBTFeature extends Feature<NoFeatureConfig>
+public abstract class NBTFeature extends Feature<NoneFeatureConfiguration>
 {
 	public NBTFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 	
 	//protected static final DestructionStructureProcessor DESTRUCTION = new DestructionStructureProcessor();
 	
-	protected abstract Template getStructure(ISeedReader world, BlockPos pos, Random random);
+	protected abstract StructureTemplate getStructure(WorldGenLevel world, BlockPos pos, Random random);
 	
-	protected abstract boolean canSpawn(ISeedReader world, BlockPos pos, Random random);
+	protected abstract boolean canSpawn(WorldGenLevel world, BlockPos pos, Random random);
 	
-	protected abstract Rotation getRotation(ISeedReader world, BlockPos pos, Random random);
+	protected abstract Rotation getRotation(WorldGenLevel world, BlockPos pos, Random random);
 	
-	protected abstract Mirror getMirror(ISeedReader world, BlockPos pos, Random random);
+	protected abstract Mirror getMirror(WorldGenLevel world, BlockPos pos, Random random);
 	
-	protected abstract int getYOffset(Template structure, ISeedReader world, BlockPos pos, Random random);
+	protected abstract int getYOffset(StructureTemplate structure, WorldGenLevel world, BlockPos pos, Random random);
 	
-	protected abstract TerrainMerge getTerrainMerge(ISeedReader world, BlockPos pos, Random random);
+	protected abstract TerrainMerge getTerrainMerge(WorldGenLevel world, BlockPos pos, Random random);
 	
-	protected abstract void addStructureData(PlacementSettings data);
+	protected abstract void addStructureData(StructurePlaceSettings data);
 	
-	protected BlockPos getGround(ISeedReader world, BlockPos center) 
+	protected BlockPos getGround(WorldGenLevel world, BlockPos center) 
 	{
 		Biome biome = world.getBiome(center);
 		ResourceLocation id = ModBiomes.getBiomeID(biome);
@@ -68,7 +68,7 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 		}
 	}
 	
-	protected int getAverageY(ISeedReader world, BlockPos center) {
+	protected int getAverageY(WorldGenLevel world, BlockPos center) {
 		int y = FeatureHelper.getYOnSurface(world, center.getX(), center.getZ());
 		y += FeatureHelper.getYOnSurface(world, center.getX() - 2, center.getZ() - 2);
 		y += FeatureHelper.getYOnSurface(world, center.getX() + 2, center.getZ() - 2);
@@ -77,7 +77,7 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 		return y / 5;
 	}
 	
-	protected int getAverageYWG(ISeedReader world, BlockPos center) {
+	protected int getAverageYWG(WorldGenLevel world, BlockPos center) {
 		int y = FeatureHelper.getYOnSurfaceWG(world, center.getX(), center.getZ());
 		y += FeatureHelper.getYOnSurfaceWG(world, center.getX() - 2, center.getZ() - 2);
 		y += FeatureHelper.getYOnSurfaceWG(world, center.getX() + 2, center.getZ() - 2);
@@ -87,8 +87,8 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 	}
 	
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos center,
-			NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos center,
+			NoneFeatureConfiguration config) 
 	{
 		center = new BlockPos(((center.getX() >> 4) << 4) | 8, 128, ((center.getZ() >> 4) << 4) | 8);
 		center = getGround(world, center);
@@ -100,17 +100,17 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 		
 		int posY = center.getY() + 1;
 		
-		Template structure = getStructure(world, center, rand);
+		StructureTemplate structure = getStructure(world, center, rand);
 		Rotation rotation = getRotation(world, center, rand);
 		Mirror mirror = getMirror(world, center, rand);
-		BlockPos offset = Template.getTransformedPos(structure.getSize(), mirror, rotation, BlockPos.ZERO);
-		center = center.add(0, getYOffset(structure, world, center, rand) + 0.5, 0);
+		BlockPos offset = StructureTemplate.transform(structure.getSize(), mirror, rotation, BlockPos.ZERO);
+		center = center.offset(0, getYOffset(structure, world, center, rand) + 0.5, 0);
 		
-		MutableBoundingBox bounds = makeBox(center);
-		PlacementSettings placementData = new PlacementSettings().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
+		BoundingBox bounds = makeBox(center);
+		StructurePlaceSettings placementData = new StructurePlaceSettings().setRotation(rotation).setMirror(mirror).setBoundingBox(bounds);
 		addStructureData(placementData);
-		center = center.add(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
-		structure.func_237152_b_(world, center, placementData, rand);
+		center = center.offset(-offset.getX() * 0.5, 0, -offset.getZ() * 0.5);
+		structure.placeInWorld(world, center, placementData, rand);
 		
 		TerrainMerge merge = getTerrainMerge(world, center, rand);
 		int x1 = center.getX();
@@ -119,7 +119,7 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 		int z2 = z1 + offset.getZ();
 		if (merge != TerrainMerge.NONE) 
 		{
-			Mutable mut = new Mutable();
+			MutableBlockPos mut = new MutableBlockPos();
 			
 			if (x2 < x1) 
 			{
@@ -144,19 +144,19 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 					mut.setZ(z);
 					mut.setY(surfMax);
 					BlockState state = world.getBlockState(mut);
-					if (!state.isIn(ModTags.GEN_TERRAIN) && state.isSolidSide(world, mut, Direction.DOWN)) 
+					if (!state.is(ModTags.GEN_TERRAIN) && state.isFaceSturdy(world, mut, Direction.DOWN)) 
 					{
 						for (int i = 0; i < 10; i++) 
 						{
 							mut.setY(mut.getY() - 1);
 							BlockState stateSt = world.getBlockState(mut);
-							if (!stateSt.isIn(ModTags.GEN_TERRAIN)) 
+							if (!stateSt.is(ModTags.GEN_TERRAIN)) 
 							{
 								if (merge == TerrainMerge.SURFACE) 
 								{
-									ISurfaceBuilderConfig surfaceConfig = world.getBiome(mut).getGenerationSettings().getSurfaceBuilderConfig();
-									boolean isTop = mut.getY() == surfMax && state.getMaterial().isOpaque();
-									BlockState top = isTop ? surfaceConfig.getTop() : surfaceConfig.getUnder();
+									SurfaceBuilderConfiguration surfaceConfig = world.getBiome(mut).getGenerationSettings().getSurfaceBuilderConfig();
+									boolean isTop = mut.getY() == surfMax && state.getMaterial().isSolidBlocking();
+									BlockState top = isTop ? surfaceConfig.getTopMaterial() : surfaceConfig.getUnderMaterial();
 									BlockHelper.setWithoutUpdate(world, mut, top);
 								}
 								else 
@@ -166,12 +166,12 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 							}
 							else 
 							{
-								if (stateSt.isIn(ModTags.END_GROUND) && state.getMaterial().isOpaque()) 
+								if (stateSt.is(ModTags.END_GROUND) && state.getMaterial().isSolidBlocking()) 
 								{
 									if (merge == TerrainMerge.SURFACE)
 									{
-										ISurfaceBuilderConfig surfaceConfig = world.getBiome(mut).getGenerationSettings().getSurfaceBuilderConfig();
-										BlockHelper.setWithoutUpdate(world, mut, surfaceConfig.getUnder());
+										SurfaceBuilderConfiguration surfaceConfig = world.getBiome(mut).getGenerationSettings().getSurfaceBuilderConfig();
+										BlockHelper.setWithoutUpdate(world, mut, surfaceConfig.getUnderMaterial());
 									}
 									else 
 									{
@@ -190,16 +190,16 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 		return true;
 	}
 
-	protected MutableBoundingBox makeBox(BlockPos pos) 
+	protected BoundingBox makeBox(BlockPos pos) 
 	{
 		int sx = ((pos.getX() >> 4) << 4) - 16;
 		int sz = ((pos.getZ() >> 4) << 4) - 16;
 		int ex = sx + 47;
 		int ez = sz + 47;
-		return MutableBoundingBox.createProper(sx, 0, sz, ex, 255, ez);
+		return BoundingBox.createProper(sx, 0, sz, ex, 255, ez);
 	}
 	
-	public static Template readStructure(String path, String replacePath) 
+	public static StructureTemplate readStructure(String path, String replacePath) 
 	{
 		try 
 		{
@@ -213,7 +213,7 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 		return null;
 	}
 	
-	protected static Template readStructure(ResourceLocation resource) 
+	protected static StructureTemplate readStructure(ResourceLocation resource) 
 	{
 		String ns = resource.getNamespace();
 		String nm = resource.getPath();
@@ -231,14 +231,14 @@ public abstract class NBTFeature extends Feature<NoFeatureConfig>
 		return null;
 	}
 	
-	private static Template readStructureFromStream(InputStream stream, String replacePath) throws IOException 
+	private static StructureTemplate readStructureFromStream(InputStream stream, String replacePath) throws IOException 
 	{
-		CompoundNBT nbttagcompound = CompressedStreamTools.readCompressed(stream);
+		CompoundTag nbttagcompound = NbtIo.readCompressed(stream);
 		
 		NbtModIdReplacer.readAndReplace(nbttagcompound, replacePath);
 		
-		Template template = new Template();
-		template.read(nbttagcompound);
+		StructureTemplate template = new StructureTemplate();
+		template.load(nbttagcompound);
 		
 		return template;
 	}

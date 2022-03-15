@@ -2,38 +2,38 @@ package mod.beethoven92.betterendforge.common.recipes;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
 
-public class AnvilSmithingRecipeSerializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AnvilSmithingRecipe>
+public class AnvilSmithingRecipeSerializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<AnvilSmithingRecipe>
 {
 	@Override
-	public AnvilSmithingRecipe read(ResourceLocation id, JsonObject json)
+	public AnvilSmithingRecipe fromJson(ResourceLocation id, JsonObject json)
 	{
-		Ingredient input = Ingredient.deserialize(json.get("input"));
-		String resultStr = JSONUtils.getString(json, "result");
+		Ingredient input = Ingredient.fromJson(json.get("input"));
+		String resultStr = GsonHelper.getAsString(json, "result");
 		ResourceLocation resultId = new ResourceLocation(resultStr);
 		ItemStack output = new ItemStack(Registry.ITEM.getOptional(resultId).orElseThrow(() -> {
 			return new IllegalStateException("Item: " + resultStr + " does not exists!");
 		}));
-		int inputCount = JSONUtils.getInt(json, "inputCount", 1);
-		int level = JSONUtils.getInt(json, "level", 1);
-		int damage = JSONUtils.getInt(json, "damage", 1);
-		int anvilLevel = JSONUtils.getInt(json, "anvilLevel", 1);
+		int inputCount = GsonHelper.getAsInt(json, "inputCount", 1);
+		int level = GsonHelper.getAsInt(json, "level", 1);
+		int damage = GsonHelper.getAsInt(json, "damage", 1);
+		int anvilLevel = GsonHelper.getAsInt(json, "anvilLevel", 1);
 		
 		return new AnvilSmithingRecipe(id, input, output, inputCount, level, damage, anvilLevel);
 	}
 
 	@Override
-	public AnvilSmithingRecipe read(ResourceLocation id, PacketBuffer buffer) 
+	public AnvilSmithingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buffer) 
 	{
-		Ingredient input = Ingredient.read(buffer);
-		ItemStack output = buffer.readItemStack();
+		Ingredient input = Ingredient.fromNetwork(buffer);
+		ItemStack output = buffer.readItem();
 		int inputCount = buffer.readVarInt();
 		int level = buffer.readVarInt();
 		int damage = buffer.readVarInt();
@@ -43,10 +43,10 @@ public class AnvilSmithingRecipeSerializer extends net.minecraftforge.registries
 	}
 
 	@Override
-	public void write(PacketBuffer buffer, AnvilSmithingRecipe recipe) 
+	public void toNetwork(FriendlyByteBuf buffer, AnvilSmithingRecipe recipe) 
 	{	
-		recipe.input.write(buffer);
-		buffer.writeItemStack(recipe.output);
+		recipe.input.toNetwork(buffer);
+		buffer.writeItem(recipe.output);
 		buffer.writeVarInt(recipe.inputCount);
 		buffer.writeVarInt(recipe.level);
 		buffer.writeVarInt(recipe.damage);

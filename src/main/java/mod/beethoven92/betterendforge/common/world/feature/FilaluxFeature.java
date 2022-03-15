@@ -7,11 +7,11 @@ import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
 
 public class FilaluxFeature extends SkyScatterFeature {
 	public FilaluxFeature() {
@@ -19,13 +19,13 @@ public class FilaluxFeature extends SkyScatterFeature {
 	}
 
 	@Override
-	public void generate(ISeedReader world, Random random, BlockPos blockPos) {
-		BlockState vine = ModBlocks.FILALUX.get().getDefaultState();
-		BlockState wings = ModBlocks.FILALUX_WINGS.get().getDefaultState();
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos) {
+		BlockState vine = ModBlocks.FILALUX.get().defaultBlockState();
+		BlockState wings = ModBlocks.FILALUX_WINGS.get().defaultBlockState();
 		BlockHelper.setWithoutUpdate(world, blockPos, ModBlocks.FILALUX_LANTERN.get());
-		BlockHelper.setWithoutUpdate(world, blockPos.up(), wings.with(BlockStateProperties.FACING, Direction.UP));
+		BlockHelper.setWithoutUpdate(world, blockPos.above(), wings.setValue(BlockStateProperties.FACING, Direction.UP));
 		for (Direction dir: BlockHelper.HORIZONTAL_DIRECTIONS) {
-			BlockHelper.setWithoutUpdate(world, blockPos.offset(dir), wings.with(BlockStateProperties.FACING, dir));
+			BlockHelper.setWithoutUpdate(world, blockPos.relative(dir), wings.setValue(BlockStateProperties.FACING, dir));
 		}
 		int length = ModMathHelper.randRange(1, 3, random);
 		for (int i = 1; i <= length; i++) {
@@ -33,7 +33,7 @@ public class FilaluxFeature extends SkyScatterFeature {
 			if (i > 1) {
 				shape = i == length ? TripleShape.BOTTOM : TripleShape.MIDDLE;
 			}
-			BlockHelper.setWithoutUpdate(world, blockPos.down(i), vine.with(BlockProperties.TRIPLE_SHAPE, shape));
+			BlockHelper.setWithoutUpdate(world, blockPos.below(i), vine.setValue(BlockProperties.TRIPLE_SHAPE, shape));
 		}
 	}
 }

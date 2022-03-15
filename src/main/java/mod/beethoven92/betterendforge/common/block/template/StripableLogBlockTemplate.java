@@ -1,20 +1,20 @@
 package mod.beethoven92.betterendforge.common.block.template;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.RotatedPillarBlock;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.level.Level;
 
 public class StripableLogBlockTemplate extends PillarBlockTemplate 
 {
@@ -23,34 +23,34 @@ public class StripableLogBlockTemplate extends PillarBlockTemplate
 	
 	public StripableLogBlockTemplate(MaterialColor color, Block striped) 
 	{
-		super(AbstractBlock.Properties.from(striped));
+		super(BlockBehaviour.Properties.copy(striped));
 		this.striped = striped;
 		this.color = color;
 	}
 
 	@Override
-	public MaterialColor getMaterialColor() 
+	public MaterialColor defaultMaterialColor() 
 	{
 		return color;
 	}
 	
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player,
-			Hand handIn, BlockRayTraceResult hit) 
+	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player,
+			InteractionHand handIn, BlockHitResult hit) 
 	{
-		if (player.getHeldItemMainhand().getItem() instanceof AxeItem) 
+		if (player.getMainHandItem().getItem() instanceof AxeItem) 
 		{
-			worldIn.playSound(player, pos, SoundEvents.ITEM_AXE_STRIP, SoundCategory.BLOCKS, 1.0F, 1.0F);
-			if (!worldIn.isRemote()) 
+			worldIn.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
+			if (!worldIn.isClientSide()) 
 			{
-				worldIn.setBlockState(pos, striped.getDefaultState().with(RotatedPillarBlock.AXIS, state.get(RotatedPillarBlock.AXIS)), 11);
+				worldIn.setBlock(pos, striped.defaultBlockState().setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS)), 11);
 				if (player != null && !player.isCreative()) 
 				{
-					player.getHeldItemMainhand().attemptDamageItem(1, worldIn.rand, (ServerPlayerEntity) player);
+					player.getMainHandItem().hurt(1, worldIn.random, (ServerPlayer) player);
 				}
 			}
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
-		return ActionResultType.FAIL;
+		return InteractionResult.FAIL;
 	}
 }

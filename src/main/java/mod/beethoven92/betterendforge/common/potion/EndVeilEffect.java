@@ -1,12 +1,12 @@
 package mod.beethoven92.betterendforge.common.potion;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 
-public class EndVeilEffect extends Effect
+public class EndVeilEffect extends MobEffect
 {
 	public EndVeilEffect() 
 	{
-		super(EffectType.BENEFICIAL, 0x0D554A);
+		super(MobEffectCategory.BENEFICIAL, 0x0D554A);
 	}
 }

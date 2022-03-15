@@ -1,22 +1,24 @@
 package mod.beethoven92.betterendforge.common.block.template;
 
 import mod.beethoven92.betterendforge.common.init.ModTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class UpDownPlantBlock extends Block
 {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 16, 12);
+	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 16, 12);
 	
 	public UpDownPlantBlock(Properties properties) 
 	{
@@ -24,36 +26,36 @@ public class UpDownPlantBlock extends Block
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) 
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) 
 	{
 		return SHAPE;
 	}
 	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) 
 	{
-		BlockState down = worldIn.getBlockState(pos.down());
-		BlockState up = worldIn.getBlockState(pos.up());
+		BlockState down = worldIn.getBlockState(pos.below());
+		BlockState up = worldIn.getBlockState(pos.above());
 		return (isTerrain(down) || down.getBlock() == this) && (isSupport(up, worldIn, pos) || up.getBlock() == this);
 	}
 	
 	protected boolean isTerrain(BlockState state) 
 	{
-		return state.isIn(ModTags.END_GROUND);
+		return state.is(ModTags.END_GROUND);
 	}
 	
-	protected boolean isSupport(BlockState state, IWorldReader world, BlockPos pos) 
+	protected boolean isSupport(BlockState state, LevelReader world, BlockPos pos) 
 	{
-		return hasEnoughSolidSide(world, pos.up(), Direction.UP);
+		return canSupportCenter(world, pos.above(), Direction.UP);
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos)) 
+		if (!canSurvive(stateIn, worldIn, currentPos)) 
 		{
-			return Blocks.AIR.getDefaultState();
+			return Blocks.AIR.defaultBlockState();
 		}
 		else 
 		{
@@ -62,9 +64,9 @@ public class UpDownPlantBlock extends Block
 	}
 	
 	@Override
-	public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) 
+	public void playerWillDestroy(Level worldIn, BlockPos pos, BlockState state, Player player) 
 	{
-		super.onBlockHarvested(worldIn, pos, state, player);
-		worldIn.neighborChanged(pos, Blocks.AIR, pos.down());
+		super.playerWillDestroy(worldIn, pos, state, player);
+		worldIn.neighborChanged(pos, Blocks.AIR, pos.below());
 	}
 }

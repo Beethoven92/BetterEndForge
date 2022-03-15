@@ -6,13 +6,13 @@ import mod.beethoven92.betterendforge.common.block.BlockProperties.TripleShape;
 import mod.beethoven92.betterendforge.common.block.EndLotusLeafBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.Heightmap.Type;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.levelgen.Heightmap.Types;
 
 public class EndLotusLeafFeature extends ScatterFeature
 {
@@ -21,9 +21,9 @@ public class EndLotusLeafFeature extends ScatterFeature
 		super(radius);
 	}
 
-	private boolean canGenerate(ISeedReader world, BlockPos blockPos) 
+	private boolean canGenerate(WorldGenLevel world, BlockPos blockPos) 
 	{
-		Mutable p = new Mutable();
+		MutableBlockPos p = new MutableBlockPos();
 		p.setY(blockPos.getY());
 		int count = 0;
 		for (int x = -1; x < 2; x ++) 
@@ -32,7 +32,7 @@ public class EndLotusLeafFeature extends ScatterFeature
 			for (int z = -1; z < 2; z ++) 
 			{
 				p.setZ(blockPos.getZ() + z);
-				if (world.isAirBlock(p) && world.getBlockState(p.down()).isIn(Blocks.WATER))
+				if (world.isEmptyBlock(p) && world.getBlockState(p.below()).is(Blocks.WATER))
 					count ++;
 			}
 		}
@@ -40,13 +40,13 @@ public class EndLotusLeafFeature extends ScatterFeature
 	}
 
 	@Override
-	public boolean canGenerate(ISeedReader world, Random random, BlockPos center, BlockPos blockPos, float radius) 
+	public boolean canGenerate(WorldGenLevel world, Random random, BlockPos center, BlockPos blockPos, float radius) 
 	{
-		return world.isAirBlock(blockPos) && world.getBlockState(blockPos.down()).isIn(Blocks.WATER);
+		return world.isEmptyBlock(blockPos) && world.getBlockState(blockPos.below()).is(Blocks.WATER);
 	}
 
 	@Override
-	public void generate(ISeedReader world, Random random, BlockPos blockPos)
+	public void generate(WorldGenLevel world, Random random, BlockPos blockPos)
 	{
 		if (canGenerate(world, blockPos)) 
 		{
@@ -54,22 +54,22 @@ public class EndLotusLeafFeature extends ScatterFeature
 		}
 	}
 	
-	private void generateLeaf(ISeedReader world, BlockPos pos) 
+	private void generateLeaf(WorldGenLevel world, BlockPos pos) 
 	{
-		Mutable p = new Mutable();
-		BlockState leaf = ModBlocks.END_LOTUS_LEAF.get().getDefaultState();
-		BlockHelper.setWithoutUpdate(world, pos, leaf.with(EndLotusLeafBlock.SHAPE, TripleShape.BOTTOM));
+		MutableBlockPos p = new MutableBlockPos();
+		BlockState leaf = ModBlocks.END_LOTUS_LEAF.get().defaultBlockState();
+		BlockHelper.setWithoutUpdate(world, pos, leaf.setValue(EndLotusLeafBlock.SHAPE, TripleShape.BOTTOM));
 
 		for (Direction move: BlockHelper.HORIZONTAL_DIRECTIONS) 
 		{
-			BlockHelper.setWithoutUpdate(world, p.setPos(pos).move(move), leaf.with(EndLotusLeafBlock.HORIZONTAL_FACING, move).with(EndLotusLeafBlock.SHAPE, TripleShape.MIDDLE));
+			BlockHelper.setWithoutUpdate(world, p.set(pos).move(move), leaf.setValue(EndLotusLeafBlock.HORIZONTAL_FACING, move).setValue(EndLotusLeafBlock.SHAPE, TripleShape.MIDDLE));
 		}
 
 		for (int i = 0; i < 4; i ++) 
 		{
 			Direction d1 = BlockHelper.HORIZONTAL_DIRECTIONS[i];
 			Direction d2 = BlockHelper.HORIZONTAL_DIRECTIONS[(i + 1) & 3];
-			BlockHelper.setWithoutUpdate(world, p.setPos(pos).move(d1).move(d2), leaf.with(EndLotusLeafBlock.HORIZONTAL_FACING, d1).with(EndLotusLeafBlock.SHAPE, TripleShape.TOP));
+			BlockHelper.setWithoutUpdate(world, p.set(pos).move(d1).move(d2), leaf.setValue(EndLotusLeafBlock.HORIZONTAL_FACING, d1).setValue(EndLotusLeafBlock.SHAPE, TripleShape.TOP));
 		}
 		//BlockHelper.setWithoutUpdate(world, p.setPos(pos).move(Direction.NORTH).move(Direction.EAST), leaf.with(EndLotusLeafBlock.HORIZONTAL_FACING, Direction.NORTH).with(EndLotusLeafBlock.SHAPE, TripleShape.TOP));
 		//BlockHelper.setWithoutUpdate(world, p.setPos(pos).move(Direction.EAST).move(Direction.SOUTH), leaf.with(EndLotusLeafBlock.HORIZONTAL_FACING, Direction.EAST).with(EndLotusLeafBlock.SHAPE, TripleShape.TOP));
@@ -84,8 +84,8 @@ public class EndLotusLeafFeature extends ScatterFeature
 	}
 	
 	@Override
-	protected BlockPos getCenterGround(ISeedReader world, BlockPos pos) 
+	protected BlockPos getCenterGround(WorldGenLevel world, BlockPos pos) 
 	{
-		return world.getHeight(Type.WORLD_SURFACE, pos);
+		return world.getHeightmapPos(Types.WORLD_SURFACE, pos);
 	}
 }

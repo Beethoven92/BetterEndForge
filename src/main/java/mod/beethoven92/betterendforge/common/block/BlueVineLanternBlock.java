@@ -1,15 +1,17 @@
 package mod.beethoven92.betterendforge.common.block;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class BlueVineLanternBlock extends Block
 {
@@ -18,22 +20,22 @@ public class BlueVineLanternBlock extends Block
 	public BlueVineLanternBlock(Properties properties) 
 	{
 		super(properties);
-		this.setDefaultState(this.getDefaultState().with(NATURAL, false));
+		this.registerDefaultState(this.defaultBlockState().setValue(NATURAL, false));
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) 
 	{
-		return state.get(NATURAL) ? worldIn.getBlockState(pos.down()).getBlock() == ModBlocks.BLUE_VINE.get() : true;
+		return state.getValue(NATURAL) ? worldIn.getBlockState(pos.below()).getBlock() == ModBlocks.BLUE_VINE.get() : true;
 	}
 	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) 
 	{
-		if (!isValidPosition(stateIn, worldIn, currentPos)) 
+		if (!canSurvive(stateIn, worldIn, currentPos)) 
 		{
-			return Blocks.AIR.getDefaultState();
+			return Blocks.AIR.defaultBlockState();
 		}
 		else {
 			return stateIn;
@@ -41,7 +43,7 @@ public class BlueVineLanternBlock extends Block
 	}
 	
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) 
+	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(NATURAL);
 	}

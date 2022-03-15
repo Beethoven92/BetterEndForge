@@ -12,21 +12,21 @@ import mod.beethoven92.betterendforge.common.block.template.EndVineBlock;
 import mod.beethoven92.betterendforge.common.block.template.FurBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FallingBlock;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.DirectionProperty;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.IWorldWriter;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.LevelWriter;
 
 public class BlockHelper 
 {
@@ -44,29 +44,29 @@ public class BlockHelper
 	public static final Direction[] HORIZONTAL_DIRECTIONS = makeHorizontal();
 	public static final Direction[] DIRECTIONS = Direction.values();
 	
-	private static final Mutable POS = new Mutable();
-	protected static final BlockState AIR = Blocks.AIR.getDefaultState();
-	protected static final BlockState WATER = Blocks.WATER.getDefaultState();
+	private static final MutableBlockPos POS = new MutableBlockPos();
+	protected static final BlockState AIR = Blocks.AIR.defaultBlockState();
+	protected static final BlockState WATER = Blocks.WATER.defaultBlockState();
 	
-	public static int upRay(IWorldReader world, BlockPos pos, int maxDist) 
+	public static int upRay(LevelReader world, BlockPos pos, int maxDist) 
 	{
 		int length = 0;
-		for (int j = 1; j < maxDist && (world.isAirBlock(pos.up(j))); j++)
+		for (int j = 1; j < maxDist && (world.isEmptyBlock(pos.above(j))); j++)
 			length++;
 		return length;
 	}
 	
-	public static int downRay(IWorldReader world, BlockPos pos, int maxDist) 
+	public static int downRay(LevelReader world, BlockPos pos, int maxDist) 
 	{
 		int length = 0;
-		for (int j = 1; j < maxDist && (world.isAirBlock(pos.down(j))); j++)
+		for (int j = 1; j < maxDist && (world.isEmptyBlock(pos.below(j))); j++)
 			length++;
 		return length;
 	}
 	
-	public static int downRayRep(IWorldReader world, BlockPos pos, int maxDist) 
+	public static int downRayRep(LevelReader world, BlockPos pos, int maxDist) 
 	{
-		POS.setPos(pos);
+		POS.set(pos);
 		for (int j = 1; j < maxDist && (world.getBlockState(POS)).getMaterial().isReplaceable(); j++)
 		{
 			POS.setY(POS.getY() - 1);
@@ -90,11 +90,11 @@ public class BlockHelper
 	}
 	
 	public static BlockState rotateHorizontal(BlockState state, Rotation rotation, DirectionProperty facing) {
-		return (BlockState) state.with(facing, rotation.rotate((Direction) state.get(facing)));
+		return (BlockState) state.setValue(facing, rotation.rotate((Direction) state.getValue(facing)));
 	}
 
 	public static BlockState mirrorHorizontal(BlockState state, Mirror mirror, DirectionProperty facing) {
-		return state.rotate(mirror.toRotation((Direction) state.get(facing)));
+		return state.rotate(mirror.getRotation((Direction) state.getValue(facing)));
 	}
 	
 	public static Direction getRandomHorizontalDirection(Random rand)
@@ -102,25 +102,25 @@ public class BlockHelper
 		return HORIZONTAL_DIRECTIONS[rand.nextInt(4)];
 	}
 	
-	public static void setWithoutUpdate(IWorldWriter world, BlockPos pos, BlockState state) 
+	public static void setWithoutUpdate(LevelWriter world, BlockPos pos, BlockState state) 
 	{
-		world.setBlockState(pos, state, SET_SILENT);
+		world.setBlock(pos, state, SET_SILENT);
 	}
 	
-	public static void setWithUpdate(IWorldWriter world, BlockPos pos, BlockState state) {
-		world.setBlockState(pos, state, SET_OBSERV);
+	public static void setWithUpdate(LevelWriter world, BlockPos pos, BlockState state) {
+		world.setBlock(pos, state, SET_OBSERV);
 	}
 	
-	public static void setWithUpdate(IWorldWriter world, BlockPos pos, Block block) {
-		world.setBlockState(pos, block.getDefaultState(), SET_OBSERV);
+	public static void setWithUpdate(LevelWriter world, BlockPos pos, Block block) {
+		world.setBlock(pos, block.defaultBlockState(), SET_OBSERV);
 	}
 	
-	public static void setWithoutUpdate(IWorldWriter world, BlockPos pos, Block block) 
+	public static void setWithoutUpdate(LevelWriter world, BlockPos pos, Block block) 
 	{
-		world.setBlockState(pos, block.getDefaultState(), SET_SILENT);
+		world.setBlock(pos, block.defaultBlockState(), SET_SILENT);
 	}
 	
-	public static void fixBlocks(IWorld world, BlockPos start, BlockPos end) 
+	public static void fixBlocks(LevelAccessor world, BlockPos start, BlockPos end) 
 	{
 		BlockState state;
 		Set<BlockPos> doubleCheck = Sets.newHashSet();
@@ -137,17 +137,17 @@ public class BlockHelper
 					
 					if (state.getBlock() instanceof FurBlock) 
 					{
-						doubleCheck.add(POS.toImmutable());
+						doubleCheck.add(POS.immutable());
 					}
 					// Liquids
 					else if (!state.getFluidState().isEmpty()) 
 					{
-						if (!state.isValidPosition(world, POS)) 
+						if (!state.canSurvive(world, POS)) 
 						{
 							setWithoutUpdate(world, POS, WATER);
 							POS.setY(POS.getY() - 1);
 							state = world.getBlockState(POS);
-							while (!state.isValidPosition(world, POS)) 
+							while (!state.canSurvive(world, POS)) 
 							{
 								state = state.getFluidState().isEmpty() ? AIR : WATER;
 								setWithoutUpdate(world, POS, state);
@@ -156,7 +156,7 @@ public class BlockHelper
 							}
 						}
 						POS.setY(y - 1);
-						if (world.isAirBlock(POS)) 
+						if (world.isEmptyBlock(POS)) 
 						{
 							POS.setY(y);
 							while (!world.getFluidState(POS).isEmpty()) 
@@ -168,20 +168,20 @@ public class BlockHelper
 						}
 						for (Direction dir : HORIZONTAL_DIRECTIONS)
 						{
-							if (world.isAirBlock(POS.offset(dir))) 
+							if (world.isEmptyBlock(POS.relative(dir))) 
 							{
-								world.getPendingFluidTicks().scheduleTick(POS, state.getFluidState().getFluid(), 0);
+								world.getLiquidTicks().scheduleTick(POS, state.getFluidState().getType(), 0);
 								break;
 							}
 						}
 					}
-					else if (state.isIn(ModBlocks.SMARAGDANT_CRYSTAL.get())) 
+					else if (state.is(ModBlocks.SMARAGDANT_CRYSTAL.get())) 
 					{
 						POS.setY(POS.getY() - 1);
-						if (world.isAirBlock(POS)) 
+						if (world.isEmptyBlock(POS)) 
 						{
 							POS.setY(POS.getY() + 1);
-							while (state.isIn(ModBlocks.SMARAGDANT_CRYSTAL.get())) 
+							while (state.is(ModBlocks.SMARAGDANT_CRYSTAL.get())) 
 							{
 								setWithoutUpdate(world, POS, AIR);
 								POS.setY(POS.getY() + 1);
@@ -191,9 +191,9 @@ public class BlockHelper
 					}
 					else if (state.getBlock() instanceof StalactiteBlock) 
 					{					
-						if (!state.isValidPosition(world, POS)) 
+						if (!state.canSurvive(world, POS)) 
 						{
-							if (world.getBlockState(POS.up()).getBlock() instanceof StalactiteBlock) 
+							if (world.getBlockState(POS.above()).getBlock() instanceof StalactiteBlock) 
 							{
 								while (state.getBlock() instanceof StalactiteBlock) 
 								{
@@ -213,14 +213,14 @@ public class BlockHelper
 							}
 						}
 					}
-					else if (!state.isValidPosition(world, POS)) 
+					else if (!state.canSurvive(world, POS)) 
 					{
 						// Chorus
-						if (state.isIn(Blocks.CHORUS_PLANT)) 
+						if (state.is(Blocks.CHORUS_PLANT)) 
 						{
 							Set<BlockPos> ends = Sets.newHashSet();
 							Set<BlockPos> add = Sets.newHashSet();
-							ends.add(POS.toImmutable());
+							ends.add(POS.immutable());
 
 							for (int i = 0; i < 64 && !ends.isEmpty(); i++) 
 							{
@@ -228,16 +228,16 @@ public class BlockHelper
 									setWithoutUpdate(world, pos, AIR);
 									for (Direction dir : HORIZONTAL_DIRECTIONS) 
 									{
-										BlockPos p = pos.offset(dir);
+										BlockPos p = pos.relative(dir);
 										BlockState st = world.getBlockState(p);
-										if ((st.isIn(Blocks.CHORUS_PLANT) || st.isIn(Blocks.CHORUS_FLOWER)) && !st.isValidPosition(world, p)) 
+										if ((st.is(Blocks.CHORUS_PLANT) || st.is(Blocks.CHORUS_FLOWER)) && !st.canSurvive(world, p)) 
 										{
 											add.add(p);
 										}
 									}
-									BlockPos p = pos.up();
+									BlockPos p = pos.above();
 									BlockState st = world.getBlockState(p);
-									if ((st.isIn(Blocks.CHORUS_PLANT) || st.isIn(Blocks.CHORUS_FLOWER)) && !st.isValidPosition(world, p))
+									if ((st.is(Blocks.CHORUS_PLANT) || st.is(Blocks.CHORUS_FLOWER)) && !st.canSurvive(world, p))
 									{
 										add.add(p);
 									}
@@ -264,15 +264,15 @@ public class BlockHelper
 							POS.setY(POS.getY() - 1);
 							state = world.getBlockState(POS);
 
-							int ray = downRayRep(world, POS.toImmutable(), 64);
+							int ray = downRayRep(world, POS.immutable(), 64);
 							if (ray > 32) 
 							{
-								BlockHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.getDefaultState());
+								BlockHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.defaultBlockState());
 								if (world.getRandom().nextBoolean()) 
 								{
 									POS.setY(POS.getY() - 1);
 									state = world.getBlockState(POS);
-									BlockHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.getDefaultState());
+									BlockHelper.setWithoutUpdate(world, POS, Blocks.END_STONE.defaultBlockState());
 								}
 							}
 							else 
@@ -281,7 +281,7 @@ public class BlockHelper
 								BlockState replacement = AIR;
 								for (Direction dir : HORIZONTAL_DIRECTIONS) 
 								{
-									state = world.getBlockState(POS.offset(dir));
+									state = world.getBlockState(POS.relative(dir));
 									if (!state.getFluidState().isEmpty()) 
 									{
 										replacement = state;
@@ -299,7 +299,7 @@ public class BlockHelper
 							// Blue Vine
 							if (state.getBlock() instanceof BlueVineBlock) 
 							{
-								while (state.isIn(ModBlocks.BLUE_VINE.get()) || state.isIn(ModBlocks.BLUE_VINE_LANTERN.get()) || state.isIn(ModBlocks.BLUE_VINE_FUR.get()))
+								while (state.is(ModBlocks.BLUE_VINE.get()) || state.is(ModBlocks.BLUE_VINE_LANTERN.get()) || state.is(ModBlocks.BLUE_VINE_FUR.get()))
 								{
 									BlockHelper.setWithoutUpdate(world, POS, AIR);
 									POS.setY(POS.getY() + 1);
@@ -325,7 +325,7 @@ public class BlockHelper
 		}
 		
 		doubleCheck.forEach((pos) -> {
-			if (!world.getBlockState(pos).isValidPosition(world, pos)) 
+			if (!world.getBlockState(pos).canSurvive(world, pos)) 
 			{
 				BlockHelper.setWithoutUpdate(world, pos, AIR);
 			}
@@ -334,12 +334,12 @@ public class BlockHelper
 	
 	private static BlockState getAirOrFluid(BlockState state) 
 	{
-		return state.getFluidState().isEmpty() ? AIR : state.getFluidState().getBlockState();
+		return state.getFluidState().isEmpty() ? AIR : state.getFluidState().createLegacyBlock();
 	}
 	
 	public static boolean isEndNylium(Block block) 
 	{
-		return block.isIn(BlockTags.NYLIUM) && block.isIn(ModTags.END_GROUND);
+		return block.is(BlockTags.NYLIUM) && block.is(ModTags.END_GROUND);
 	}
 	
 	public static boolean isEndNylium(BlockState state) 

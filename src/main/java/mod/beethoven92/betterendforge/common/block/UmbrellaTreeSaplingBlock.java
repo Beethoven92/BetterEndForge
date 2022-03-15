@@ -3,10 +3,12 @@ package mod.beethoven92.betterendforge.common.block;
 import mod.beethoven92.betterendforge.common.block.template.EndSaplingBlock;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModFeatures;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.levelgen.feature.Feature;
+
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class UmbrellaTreeSaplingBlock extends EndSaplingBlock
 {
@@ -22,8 +24,8 @@ public class UmbrellaTreeSaplingBlock extends EndSaplingBlock
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) 
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) 
 	{
-		return worldIn.getBlockState(pos.down()).isIn(ModBlocks.JUNGLE_MOSS.get());
+		return worldIn.getBlockState(pos.below()).is(ModBlocks.JUNGLE_MOSS.get());
 	}
 }

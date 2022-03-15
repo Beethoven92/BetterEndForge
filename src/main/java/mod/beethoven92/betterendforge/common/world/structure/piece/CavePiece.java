@@ -6,18 +6,18 @@ import mod.beethoven92.betterendforge.common.init.ModTags;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.common.world.generator.OpenSimplexNoise;
-import net.minecraft.block.Blocks;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.structure.StructureManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.StructureFeatureManager;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.Random;
@@ -35,7 +35,7 @@ public class CavePiece extends BasePiece {
 		makeBoundingBox();
 	}
 
-	public CavePiece(TemplateManager templateManager, CompoundNBT tag) {
+	public CavePiece(StructureManager templateManager, CompoundTag tag) {
 		super(ModStructurePieces.CAVE_PIECE, tag);
 		makeBoundingBox();
 	}
@@ -44,17 +44,17 @@ public class CavePiece extends BasePiece {
 
 
     @Override
-	public boolean func_230383_a_(ISeedReader world, StructureManager arg, ChunkGenerator chunkGenerator, Random random, MutableBoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
-		int x1 = ModMathHelper.max(this.getBoundingBox().minX, blockBox.minX);
-		int z1 = ModMathHelper.max(this.getBoundingBox().minZ, blockBox.minZ);
-		int x2 = ModMathHelper.min(this.getBoundingBox().maxX, blockBox.maxX);
-		int z2 = ModMathHelper.min(this.getBoundingBox().maxZ, blockBox.maxZ);
-		int y1 = this.getBoundingBox().minY;
-		int y2 = this.getBoundingBox().maxY;
+	public boolean postProcess(WorldGenLevel world, StructureFeatureManager arg, ChunkGenerator chunkGenerator, Random random, BoundingBox blockBox, ChunkPos chunkPos, BlockPos blockPos) {
+		int x1 = ModMathHelper.max(this.getBoundingBox().x0, blockBox.x0);
+		int z1 = ModMathHelper.max(this.getBoundingBox().z0, blockBox.z0);
+		int x2 = ModMathHelper.min(this.getBoundingBox().x1, blockBox.x1);
+		int z2 = ModMathHelper.min(this.getBoundingBox().z1, blockBox.z1);
+		int y1 = this.getBoundingBox().y0;
+		int y2 = this.getBoundingBox().y1;
 		
 		double hr = radius * 0.75;
 		double nr = radius * 0.25;
-		BlockPos.Mutable pos = new BlockPos.Mutable();
+		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 		for (int x = x1; x <= x2; x++) {
 			int xsq = x - center.getX();
 			xsq *= xsq;
@@ -72,7 +72,7 @@ public class CavePiece extends BasePiece {
 					double r2 = r - 4.5;
 					double dist = xsq + ysq + zsq;
 					if (dist < r2 * r2) {
-						if (world.getBlockState(pos).isIn(ModTags.END_GROUND)) {
+						if (world.getBlockState(pos).is(ModTags.END_GROUND)) {
 							BlockHelper.setWithoutUpdate(world, pos, CAVE_AIR);
 						}
 					}
@@ -90,8 +90,8 @@ public class CavePiece extends BasePiece {
 
 	
 	@Override
-	protected void readAdditional(CompoundNBT tag) {
-		center = NBTUtil.readBlockPos(tag.getCompound("center"));
+	protected void addAdditionalSaveData(CompoundTag tag) {
+		center = NbtUtils.readBlockPos(tag.getCompound("center"));
 		radius = tag.getFloat("radius");
 	}
 
@@ -103,12 +103,12 @@ public class CavePiece extends BasePiece {
 		int maxX = ModMathHelper.floor(center.getX() + radius + 1);
 		int maxY = ModMathHelper.floor(center.getY() + radius + 1);
 		int maxZ = ModMathHelper.floor(center.getZ() + radius + 1);
-		this.boundingBox = new MutableBoundingBox(minX, minY, minZ, maxX, maxY, maxZ);
+		this.boundingBox = new BoundingBox(minX, minY, minZ, maxX, maxY, maxZ);
 	}
 
 	@Override
-	protected void fromNbt(CompoundNBT tag) {
-		tag.put("center", NBTUtil.writeBlockPos(center));
+	protected void fromNbt(CompoundTag tag) {
+		tag.put("center", NbtUtils.writeBlockPos(center));
 		tag.putFloat("radius", radius);
 		noise = new OpenSimplexNoise(ModMathHelper.getSeed(534, center.getX(), center.getZ()));
 

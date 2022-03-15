@@ -8,69 +8,71 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
 import io.netty.util.internal.ThreadLocalRandom;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ToolItem;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
+import mod.beethoven92.betterendforge.common.init.ModTags;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 
-public class HammerItem extends ToolItem
+import net.minecraft.world.item.Item.Properties;
+
+public class HammerItem extends DiggerItem
 {
-	public final static UUID ATTACK_KNOCKBACK_MODIFIER = MathHelper.getRandomUUID(ThreadLocalRandom.current());
+	public final static UUID ATTACK_KNOCKBACK_MODIFIER = Mth.createInsecureUUID(ThreadLocalRandom.current());
 	
 	private final Multimap<Attribute, AttributeModifier> attributeModifiers;
 	
-	public HammerItem(IItemTier tier, float attackDamage, float attackSpeed, double knockback, Properties builderIn) 
+	public HammerItem(Tier tier, float attackDamage, float attackSpeed, double knockback, Properties builderIn) 
 	{
-		super(attackDamage, attackSpeed, tier, Sets.newHashSet(), builderIn.addToolType(ToolType.get("hammer"), tier.getHarvestLevel()));
+		super(attackDamage, attackSpeed, tier, ModTags.MINING_HAMMER, builderIn);
 		
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Weapon modifier", attackDamage + tier.getAttackDamage(), AttributeModifier.Operation.ADDITION));
-		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MODIFIER, "Weapon modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", attackDamage + tier.getAttackDamageBonus(), AttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
 		builder.put(Attributes.ATTACK_KNOCKBACK, new AttributeModifier(ATTACK_KNOCKBACK_MODIFIER, "Weapon modifier", knockback, AttributeModifier.Operation.ADDITION));
 		this.attributeModifiers = builder.build();
 	}
 
 	@Override
-	public boolean canPlayerBreakBlockWhileHolding(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) 
+	public boolean canAttackBlock(BlockState state, Level worldIn, BlockPos pos, Player player) 
 	{
-		return state.getMaterial().equals(Material.ROCK) ||
+		return state.getMaterial().equals(Material.STONE) ||
 				   state.getMaterial().equals(Material.GLASS) ||
-				   state.isIn(Blocks.DIAMOND_BLOCK) ||
-				   state.isIn(Blocks.EMERALD_BLOCK) ||
-				   state.isIn(Blocks.LAPIS_BLOCK) ||
-				   state.isIn(Blocks.REDSTONE_BLOCK);
+				   state.is(Blocks.DIAMOND_BLOCK) ||
+				   state.is(Blocks.EMERALD_BLOCK) ||
+				   state.is(Blocks.LAPIS_BLOCK) ||
+				   state.is(Blocks.REDSTONE_BLOCK);
 	}
 	
 	@Override
-	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) 
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) 
 	{
-		stack.damageItem(1, attacker, ((entity) -> {
-			entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+		stack.hurtAndBreak(1, attacker, ((entity) -> {
+			entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
 		}));
 		
 		return true;
 	}
 	
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World worldIn, BlockState state, BlockPos pos,
+	public boolean mineBlock(ItemStack stack, Level worldIn, BlockState state, BlockPos pos,
 			LivingEntity entityLiving) 
 	{
-		if (!worldIn.isRemote && state.getBlockHardness(worldIn, pos) != 0.0F) 
+		if (!worldIn.isClientSide && state.getDestroySpeed(worldIn, pos) != 0.0F) 
 		{
-			stack.damageItem(1, entityLiving, ((entity) -> {
-				entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+			stack.hurtAndBreak(1, entityLiving, ((entity) -> {
+				entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
 			}));
 		}
 
@@ -82,19 +84,19 @@ public class HammerItem extends ToolItem
 	{
 		if (state.getMaterial().equals(Material.GLASS)) 
 		{
-			return this.getTier().getEfficiency() * 2.0F;
+			return this.getTier().getSpeed() * 2.0F;
 		}
-		if (this.canHarvestBlock(state))
+		if (this.isCorrectToolForDrops(state))
 		{
 			float mult = 1.0F;
-			if (state.isIn(Blocks.DIAMOND_BLOCK) || state.isIn(Blocks.EMERALD_BLOCK) || state.isIn(Blocks.LAPIS_BLOCK) 
-					|| state.isIn(Blocks.REDSTONE_BLOCK)) 
+			if (state.is(Blocks.DIAMOND_BLOCK) || state.is(Blocks.EMERALD_BLOCK) || state.is(Blocks.LAPIS_BLOCK) 
+					|| state.is(Blocks.REDSTONE_BLOCK)) 
 			{
-				mult = this.getTier().getEfficiency();
+				mult = this.getTier().getSpeed();
 			} 
 			else 
 			{
-				mult = this.getTier().getEfficiency() / 2.0F;
+				mult = this.getTier().getSpeed() / 2.0F;
 			}
 			return mult > 1.0F ? mult : 1.0F;
 		}
@@ -102,26 +104,26 @@ public class HammerItem extends ToolItem
 	}
 	
 	@Override
-	public boolean canHarvestBlock(BlockState state) 
+	public boolean isCorrectToolForDrops(BlockState state) 
 	{
 		if (state.getMaterial().equals(Material.GLASS)) 
 		{
 			return true;
 		}
-		if (!state.isIn(Blocks.REDSTONE_BLOCK) && !state.isIn(Blocks.DIAMOND_BLOCK) && !state.isIn(Blocks.EMERALD_BLOCK) && !state.isIn(Blocks.LAPIS_BLOCK) && !state.getMaterial().equals(Material.ROCK)) 
+		if (!state.is(Blocks.REDSTONE_BLOCK) && !state.is(Blocks.DIAMOND_BLOCK) && !state.is(Blocks.EMERALD_BLOCK) && !state.is(Blocks.LAPIS_BLOCK) && !state.getMaterial().equals(Material.STONE)) 
 		{
 			return false;
 		}
-		int level = this.getTier().getHarvestLevel();
-		if (state.isIn(Blocks.IRON_ORE) || state.isIn(Blocks.LAPIS_BLOCK) || state.isIn(Blocks.LAPIS_ORE)) 
+		int level = this.getTier().getLevel();
+		if (state.is(Blocks.IRON_ORE) || state.is(Blocks.LAPIS_BLOCK) || state.is(Blocks.LAPIS_ORE)) 
 		{
 			return level >= 1;
 		}
-		if (state.isIn(Blocks.DIAMOND_BLOCK) && !state.isIn(Blocks.DIAMOND_ORE) || state.isIn(Blocks.EMERALD_ORE) || state.isIn(Blocks.EMERALD_BLOCK) || state.isIn(Blocks.GOLD_ORE) || state.isIn(Blocks.REDSTONE_ORE))
+		if (state.is(Blocks.DIAMOND_BLOCK) && !state.is(Blocks.DIAMOND_ORE) || state.is(Blocks.EMERALD_ORE) || state.is(Blocks.EMERALD_BLOCK) || state.is(Blocks.GOLD_ORE) || state.is(Blocks.REDSTONE_ORE))
 		{
 			return level >= 2;
 		}
-		if (state.isIn(Blocks.OBSIDIAN) || state.isIn(Blocks.CRYING_OBSIDIAN) || state.isIn(Blocks.RESPAWN_ANCHOR) || state.isIn(Blocks.ANCIENT_DEBRIS)) 
+		if (state.is(Blocks.OBSIDIAN) || state.is(Blocks.CRYING_OBSIDIAN) || state.is(Blocks.RESPAWN_ANCHOR) || state.is(Blocks.ANCIENT_DEBRIS)) 
 		{
 			return level >= 3;
 		}
@@ -129,8 +131,8 @@ public class HammerItem extends ToolItem
 	}
 	
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) 
+	public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot equipmentSlot) 
 	{
-		return equipmentSlot == EquipmentSlotType.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(equipmentSlot);
+		return equipmentSlot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getDefaultAttributeModifiers(equipmentSlot);
 	}
 }

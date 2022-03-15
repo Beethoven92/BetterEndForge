@@ -16,34 +16,34 @@ import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndCaveBiome;
 import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import mod.beethoven92.betterendforge.config.CommonConfig;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockPos.Mutable;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockPos.MutableBlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
+public abstract class EndCaveFeature extends Feature<NoneFeatureConfiguration>
 {
-	protected static final BlockState CAVE_AIR = Blocks.CAVE_AIR.getDefaultState();
-	protected static final BlockState END_STONE = Blocks.END_STONE.getDefaultState();
-	protected static final BlockState WATER = Blocks.WATER.getDefaultState();
-	private static final Vector3i[] SPHERE;
+	protected static final BlockState CAVE_AIR = Blocks.CAVE_AIR.defaultBlockState();
+	protected static final BlockState END_STONE = Blocks.END_STONE.defaultBlockState();
+	protected static final BlockState WATER = Blocks.WATER.defaultBlockState();
+	private static final Vec3i[] SPHERE;
 	
 	public EndCaveFeature() 
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand,
-			BlockPos pos, NoFeatureConfig config)
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand,
+			BlockPos pos, NoneFeatureConfiguration config)
 	{
 		/*if (!(CommonConfig.isNewGeneratorEnabled() && GeneratorOptions.noRingVoid()) || pos.getX() * pos.getX() + pos.getZ() * pos.getZ() <= 22500)
 		{
@@ -79,24 +79,24 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 				setBiomes(world, biome, caveBlocks);
 				Set<BlockPos> floorPositions = Sets.newHashSet();
 				Set<BlockPos> ceilPositions = Sets.newHashSet();
-				Mutable mut = new Mutable();
+				MutableBlockPos mut = new MutableBlockPos();
 				caveBlocks.forEach((bpos) -> {
-					mut.setPos(bpos);
+					mut.set(bpos);
 					if (world.getBlockState(mut).getMaterial().isReplaceable())
 					{
 						mut.setY(bpos.getY() - 1);
-						if (world.getBlockState(mut).isIn(ModTags.GEN_TERRAIN))
+						if (world.getBlockState(mut).is(ModTags.GEN_TERRAIN))
 						{
-							floorPositions.add(mut.toImmutable());
+							floorPositions.add(mut.immutable());
 						}
 						mut.setY(bpos.getY() + 1);
-						if (world.getBlockState(mut).isIn(ModTags.GEN_TERRAIN))
+						if (world.getBlockState(mut).is(ModTags.GEN_TERRAIN))
 						{
-							ceilPositions.add(mut.toImmutable());
+							ceilPositions.add(mut.immutable());
 						}
 					}
 				});
-				BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTop();
+				BlockState surfaceBlock = biome.getBiome().getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
 				placeFloor(world, biome, floorPositions, rand, surfaceBlock);
 				placeCeil(world, biome, ceilPositions, rand);
 				placeWalls(world, biome, caveBlocks, rand);
@@ -107,9 +107,9 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 		return true;
 	}
 
-	protected abstract Set<BlockPos> generateCaveBlocks(ISeedReader world, BlockPos center, int radius, Random random);
+	protected abstract Set<BlockPos> generateCaveBlocks(WorldGenLevel world, BlockPos center, int radius, Random random);
 
-	protected void placeFloor(ISeedReader world, BetterEndCaveBiome biome, Set<BlockPos> floorPositions, 
+	protected void placeFloor(WorldGenLevel world, BetterEndCaveBiome biome, Set<BlockPos> floorPositions, 
 			Random random, BlockState surfaceBlock) 
 	{
 		float density = biome.getFloorDensity();
@@ -120,13 +120,13 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 				Feature<?> feature = biome.getFloorFeature(random);
 				if (feature != null) 
 				{
-					feature.generate(world, null, random, pos.up(), null);
+					feature.place(world, null, random, pos.above(), null);
 				}
 			}
 		});
 	}
 	
-	protected void placeCeil(ISeedReader world, BetterEndCaveBiome biome, Set<BlockPos> ceilPositions, Random random) 
+	protected void placeCeil(WorldGenLevel world, BetterEndCaveBiome biome, Set<BlockPos> ceilPositions, Random random) 
 	{
 		float density = biome.getCeilDensity();
 		ceilPositions.forEach((pos) -> {
@@ -139,23 +139,23 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 				Feature<?> feature = biome.getCeilFeature(random);
 				if (feature != null) 
 				{
-					feature.generate(world, null, random, pos.down(), null);
+					feature.place(world, null, random, pos.below(), null);
 				}
 			}
 		});
 	}
 
 
-	protected void placeWalls(ISeedReader world, BetterEndCaveBiome biome, Set<BlockPos> positions, Random random) {
+	protected void placeWalls(WorldGenLevel world, BetterEndCaveBiome biome, Set<BlockPos> positions, Random random) {
 		Set<BlockPos> placed = Sets.newHashSet();
 		positions.forEach(pos -> {
 			if (random.nextInt(4) == 0 && hasOpenSide(pos, positions)) {
 				BlockState wallBlock = biome.getWall(pos);
 				if (wallBlock != null) {
-					for (Vector3i offset : SPHERE) {
-						BlockPos wallPos = pos.add(offset);
+					for (Vec3i offset : SPHERE) {
+						BlockPos wallPos = pos.offset(offset);
 						if (!positions.contains(wallPos) && !placed.contains(wallPos) && world.getBlockState(wallPos)
-								.isIn(ModTags.GEN_TERRAIN)) {
+								.is(ModTags.GEN_TERRAIN)) {
 							wallBlock = biome.getWall(wallPos);
 							BlockHelper.setWithoutUpdate(world, wallPos, wallBlock);
 							placed.add(wallPos);
@@ -170,7 +170,7 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 
 	private boolean hasOpenSide(BlockPos pos, Set<BlockPos> positions) {
 		for (Direction dir : BlockHelper.DIRECTIONS) {
-			if (!positions.contains(pos.offset(dir))) {
+			if (!positions.contains(pos.relative(dir))) {
 				return true;
 			}
 		}
@@ -178,12 +178,12 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 	}
 
 	
-	protected void setBiomes(ISeedReader world, BetterEndCaveBiome biome, Set<BlockPos> blocks) 
+	protected void setBiomes(WorldGenLevel world, BetterEndCaveBiome biome, Set<BlockPos> blocks) 
 	{
 		blocks.forEach((pos) -> setBiome(world, pos, biome));
 	}
 	
-	public void setBiome(ISeedReader world, BlockPos pos, BetterEndCaveBiome biome)
+	public void setBiome(WorldGenLevel world, BlockPos pos, BetterEndCaveBiome biome)
 	{
 		IBiomeArray array = (IBiomeArray) world.getChunk(pos).getBiomes();
 		if (array != null) 
@@ -192,16 +192,16 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 		}
 	}
 	
-	private BlockPos findPos(ISeedReader world, BlockPos pos, int radius, Random random) 
+	private BlockPos findPos(WorldGenLevel world, BlockPos pos, int radius, Random random) 
 	{
-		int top = world.getHeight(Heightmap.Type.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
-		Mutable bpos = new Mutable();
+		int top = world.getHeight(Heightmap.Types.WORLD_SURFACE_WG, pos.getX(), pos.getZ());
+		MutableBlockPos bpos = new MutableBlockPos();
 		bpos.setX(pos.getX());
 		bpos.setZ(pos.getZ());
 		bpos.setY(top - 1);
 		
 		BlockState state = world.getBlockState(bpos);
-		while (!state.isIn(ModTags.GEN_TERRAIN) && bpos.getY() > 5) 
+		while (!state.is(ModTags.GEN_TERRAIN) && bpos.getY() > 5) 
 		{
 			bpos.setY(bpos.getY() - 1);
 			state = world.getBlockState(bpos);
@@ -212,7 +212,7 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 		}
 		top = (int) (bpos.getY() - (radius * 1.3F + 5));
 		
-		while (state.isIn(ModTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) 
+		while (state.is(ModTags.GEN_TERRAIN) || !state.getFluidState().isEmpty() && bpos.getY() > 5) 
 		{
 			bpos.setY(bpos.getY() - 1);
 			state = world.getBlockState(bpos);
@@ -227,11 +227,11 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 		return new BlockPos(pos.getX(), ModMathHelper.randRange(bottom, top, random), pos.getZ());
 	}
 	
-	protected void fixBlocks(ISeedReader world, Set<BlockPos> caveBlocks)
+	protected void fixBlocks(WorldGenLevel world, Set<BlockPos> caveBlocks)
 	{
 		BlockPos pos = caveBlocks.iterator().next();
-		Mutable start = new Mutable().setPos(pos);
-		Mutable end = new Mutable().setPos(pos);
+		MutableBlockPos start = new MutableBlockPos().set(pos);
+		MutableBlockPos end = new MutableBlockPos().set(pos);
 		caveBlocks.forEach((bpos) -> {
 			if (bpos.getX() < start.getX())
 			{
@@ -260,14 +260,14 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 				end.setZ(bpos.getZ());
 			}
 		});
-		BlockHelper.fixBlocks(world, start.add(-5, -5, -5), end.add(5, 5, 5));
+		BlockHelper.fixBlocks(world, start.offset(-5, -5, -5), end.offset(5, 5, 5));
 	}
 	
-	protected boolean isWaterNear(ISeedReader world, BlockPos pos) 
+	protected boolean isWaterNear(WorldGenLevel world, BlockPos pos) 
 	{
 		for (Direction dir: BlockHelper.DIRECTIONS) 
 		{
-			if (!world.getFluidState(pos.offset(dir, 5)).isEmpty()) 
+			if (!world.getFluidState(pos.relative(dir, 5)).isEmpty()) 
 			{
 				return true;
 			}
@@ -277,13 +277,13 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 
 
 
-	protected boolean biomeMissingCaves(ISeedReader world, BlockPos pos) 
+	protected boolean biomeMissingCaves(WorldGenLevel world, BlockPos pos) 
 	{
 		for (int x = -2; x < 3; x++) 
 		{
 			for (int z = -2; z < 3; z++)
 			{
-				Biome biome = world.getBiome(pos.add(x << 4, 0, z << 4));
+				Biome biome = world.getBiome(pos.offset(x << 4, 0, z << 4));
 				BetterEndBiome endBiome = ModBiomes.getFromBiome(biome);
 				if (!endBiome.hasCaves()) 
 				{
@@ -295,7 +295,7 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 	}
 
 	static {
-		List<Vector3i> prePos = Lists.newArrayList();
+		List<Vec3i> prePos = Lists.newArrayList();
 		int radius = 5;
 		int r2 = radius * radius;
 		for (int x = -radius; x <= radius; x++) {
@@ -305,11 +305,11 @@ public abstract class EndCaveFeature extends Feature<NoFeatureConfig>
 				for (int z = -radius; z <= radius; z++) {
 					int z2 = z * z;
 					if (x2 + y2 + z2 < r2) {
-						prePos.add(new Vector3i(x, y, z));
+						prePos.add(new Vec3i(x, y, z));
 					}
 				}
 			}
 		}
-		SPHERE = prePos.toArray(new Vector3i[] {});
+		SPHERE = prePos.toArray(new Vec3i[] {});
 	}
 }

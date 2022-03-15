@@ -11,15 +11,15 @@ import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFRotation;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFTranslate;
 import mod.beethoven92.betterendforge.common.util.sdf.operator.SDFUnion;
 import mod.beethoven92.betterendforge.common.util.sdf.primitive.SDFCappedCone;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.core.BlockPos;
+import com.mojang.math.Vector3f;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class IceStarFeature extends Feature<NoFeatureConfig>
+public class IceStarFeature extends Feature<NoneFeatureConfiguration>
 {
 	private final float minSize;
 	private final float maxSize;
@@ -28,7 +28,7 @@ public class IceStarFeature extends Feature<NoFeatureConfig>
 	
 	public IceStarFeature(float minSize, float maxSize, int minCount, int maxCount)
 	{
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoneFeatureConfiguration.CODEC);
 		
 		this.minSize = minSize;
 		this.maxSize = maxSize;
@@ -37,8 +37,8 @@ public class IceStarFeature extends Feature<NoFeatureConfig>
 	}
 
 	@Override
-	public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos,
-			NoFeatureConfig config) 
+	public boolean place(WorldGenLevel world, ChunkGenerator generator, Random rand, BlockPos pos,
+			NoneFeatureConfiguration config) 
 	{
 		float size = ModMathHelper.randRange(minSize, maxSize, rand);
 		int count = ModMathHelper.randRange(minCount, maxCount, rand);
@@ -73,9 +73,9 @@ public class IceStarFeature extends Feature<NoFeatureConfig>
 		final float randScale = size * 0.3F;
 		
 		final BlockPos center = pos;
-		final BlockState ice = ModBlocks.EMERALD_ICE.get().getDefaultState();
-		final BlockState dense = ModBlocks.DENSE_EMERALD_ICE.get().getDefaultState();
-		final BlockState ancient = ModBlocks.ANCIENT_EMERALD_ICE.get().getDefaultState();
+		final BlockState ice = ModBlocks.EMERALD_ICE.get().defaultBlockState();
+		final BlockState dense = ModBlocks.DENSE_EMERALD_ICE.get().defaultBlockState();
+		final BlockState ancient = ModBlocks.ANCIENT_EMERALD_ICE.get().defaultBlockState();
 		final SDF sdfCopy = sdf;
 		
 		sdf.addPostProcess((info) -> {

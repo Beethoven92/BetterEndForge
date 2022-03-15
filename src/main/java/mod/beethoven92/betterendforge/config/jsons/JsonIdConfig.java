@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import mod.beethoven92.betterendforge.config.jsons.JsonConfigKeeper.Entry;
 import mod.beethoven92.betterendforge.config.jsons.JsonConfigKeeper.FloatRange;
 import mod.beethoven92.betterendforge.config.jsons.JsonConfigKeeper.IntegerRange;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class JsonIdConfig extends JsonConfig
 {

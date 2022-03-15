@@ -1,25 +1,25 @@
 package mod.beethoven92.betterendforge.common.init;
 
 import mod.beethoven92.betterendforge.BetterEnd;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.WorldGenRegistries;
-import net.minecraft.world.gen.FlatGenerationSettings;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.feature.StructureFeature;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 
 public class ModConfiguredStructures 
 {
-	public static final StructureFeature<?, ?> MOUNTAIN_STRUCTURE = ModStructures.MOUNTAIN.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
-    public static final StructureFeature<?, ?> MEGALAKE_STRUCTURE = ModStructures.MEGALAKE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
-    public static final StructureFeature<?, ?> MEGALAKE_SMALL_STRUCTURE = ModStructures.MEGALAKE_SMALL.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
-    public static final StructureFeature<?, ?> GIANT_MOSSY_GLOWSHROOM = ModStructures.GIANT_MOSSY_GLOWSHROOM.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
-    public static final StructureFeature<?, ?> PAINTED_MOUNTAIN = ModStructures.PAINTED_MOUNTAIN.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
-    public static final StructureFeature<?, ?> ETERNAL_PORTAL = ModStructures.ETERNAL_PORTAL.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
-    public static final StructureFeature<?, ?> GIANT_ICE_STAR = ModStructures.GIANT_ICE_STAR.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG);
+	public static final ConfiguredStructureFeature<?, ?> MOUNTAIN_STRUCTURE = ModStructures.MOUNTAIN.configured(FeatureConfiguration.NONE);
+    public static final ConfiguredStructureFeature<?, ?> MEGALAKE_STRUCTURE = ModStructures.MEGALAKE.configured(FeatureConfiguration.NONE);
+    public static final ConfiguredStructureFeature<?, ?> MEGALAKE_SMALL_STRUCTURE = ModStructures.MEGALAKE_SMALL.configured(FeatureConfiguration.NONE);
+    public static final ConfiguredStructureFeature<?, ?> GIANT_MOSSY_GLOWSHROOM = ModStructures.GIANT_MOSSY_GLOWSHROOM.configured(FeatureConfiguration.NONE);
+    public static final ConfiguredStructureFeature<?, ?> PAINTED_MOUNTAIN = ModStructures.PAINTED_MOUNTAIN.configured(FeatureConfiguration.NONE);
+    public static final ConfiguredStructureFeature<?, ?> ETERNAL_PORTAL = ModStructures.ETERNAL_PORTAL.configured(FeatureConfiguration.NONE);
+    public static final ConfiguredStructureFeature<?, ?> GIANT_ICE_STAR = ModStructures.GIANT_ICE_STAR.configured(FeatureConfiguration.NONE);
     public static void registerConfiguredStructures() 
 	{
-        Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
+        Registry<ConfiguredStructureFeature<?, ?>> registry = BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE;
 
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "mountain_structure"), MOUNTAIN_STRUCTURE);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "megalake_structure"), MEGALAKE_STRUCTURE);
@@ -29,12 +29,12 @@ public class ModConfiguredStructures
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "eternal_portal_structure"), ETERNAL_PORTAL);
         Registry.register(registry, new ResourceLocation(BetterEnd.MOD_ID, "giant_ice_star_structure"), GIANT_ICE_STAR);
 
-        FlatGenerationSettings.STRUCTURES.put(ModStructures.MOUNTAIN, MOUNTAIN_STRUCTURE);
-        FlatGenerationSettings.STRUCTURES.put(ModStructures.MEGALAKE, MEGALAKE_STRUCTURE);
-        FlatGenerationSettings.STRUCTURES.put(ModStructures.MEGALAKE_SMALL, MEGALAKE_SMALL_STRUCTURE);
-        FlatGenerationSettings.STRUCTURES.put(ModStructures.GIANT_MOSSY_GLOWSHROOM, GIANT_MOSSY_GLOWSHROOM);
-        FlatGenerationSettings.STRUCTURES.put(ModStructures.PAINTED_MOUNTAIN, PAINTED_MOUNTAIN);
-        FlatGenerationSettings.STRUCTURES.put(ModStructures.ETERNAL_PORTAL, ETERNAL_PORTAL);
-        FlatGenerationSettings.STRUCTURES.put(ModStructures.GIANT_ICE_STAR, GIANT_ICE_STAR);
+        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(ModStructures.MOUNTAIN, MOUNTAIN_STRUCTURE);
+        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(ModStructures.MEGALAKE, MEGALAKE_STRUCTURE);
+        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(ModStructures.MEGALAKE_SMALL, MEGALAKE_SMALL_STRUCTURE);
+        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(ModStructures.GIANT_MOSSY_GLOWSHROOM, GIANT_MOSSY_GLOWSHROOM);
+        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(ModStructures.PAINTED_MOUNTAIN, PAINTED_MOUNTAIN);
+        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(ModStructures.ETERNAL_PORTAL, ETERNAL_PORTAL);
+        FlatLevelGeneratorSettings.STRUCTURE_FEATURES.put(ModStructures.GIANT_ICE_STAR, GIANT_ICE_STAR);
 	}   
 }

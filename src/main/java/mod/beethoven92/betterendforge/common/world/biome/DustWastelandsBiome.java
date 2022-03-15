@@ -3,11 +3,11 @@ package mod.beethoven92.betterendforge.common.world.biome;
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntityType;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.structure.StructureFeatures;
+import net.minecraft.data.worldgen.StructureFeatures;
 
 public class DustWastelandsBiome extends BetterEndBiome
 {
@@ -25,6 +25,6 @@ public class DustWastelandsBiome extends BetterEndBiome
 				setSurface(ModBlocks.ENDSTONE_DUST.get()).
 				setParticles(ParticleTypes.WHITE_ASH, 0.01F).
                 addStructure(StructureFeatures.END_CITY).
-                addMobSpawn(EntityClassification.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
+                addMobSpawn(MobCategory.MONSTER, EntityType.ENDERMAN, 50, 1, 2));
 	}
 }

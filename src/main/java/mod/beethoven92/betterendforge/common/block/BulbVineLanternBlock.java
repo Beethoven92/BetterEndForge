@@ -1,43 +1,44 @@
 package mod.beethoven92.betterendforge.common.block;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.LanternBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.DyeColor;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.LanternBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Lantern;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.common.ToolType;
 
 public class BulbVineLanternBlock extends LanternBlock implements IDyedBlock {
 	
-	private static final VoxelShape SHAPE_CEIL = Block.makeCuboidShape(4, 4, 4, 12, 16, 12);
-	private static final VoxelShape SHAPE_FLOOR = Block.makeCuboidShape(4, 0, 4, 12, 12, 12);
+	private static final VoxelShape SHAPE_CEIL = Block.box(4, 4, 4, 12, 16, 12);
+	private static final VoxelShape SHAPE_FLOOR = Block.box(4, 0, 4, 12, 12, 12);
 
-	public BulbVineLanternBlock(AbstractBlock.Properties properties) 
+	public BulbVineLanternBlock(BlockBehaviour.Properties properties) 
 	{
 		super(properties.sound(SoundType.LANTERN)
-				.hardnessAndResistance(1).harvestTool(ToolType.PICKAXE).setRequiresTool().setLightLevel(s -> 15));
+				.strength(1).requiresCorrectToolForDrops().lightLevel(s -> 15));
 	}
 	
 	public BulbVineLanternBlock() {
-		super(AbstractBlock.Properties.create(Material.IRON, MaterialColor.LIGHT_GRAY).sound(SoundType.LANTERN)
-				.hardnessAndResistance(1).harvestTool(ToolType.PICKAXE).setRequiresTool().setLightLevel(s -> 15));
+		super(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.COLOR_LIGHT_GRAY).sound(SoundType.LANTERN)
+				.strength(1).requiresCorrectToolForDrops().lightLevel(s -> 15));
 	}
 	
 	public BulbVineLanternBlock(DyeColor color) {
-		super(AbstractBlock.Properties.create(Material.IRON, color).sound(SoundType.LANTERN)
-				.hardnessAndResistance(1).harvestTool(ToolType.PICKAXE).setRequiresTool().setLightLevel(s -> 15));
+		super(BlockBehaviour.Properties.of(Material.METAL, color).sound(SoundType.LANTERN)
+				.strength(1).requiresCorrectToolForDrops().lightLevel(s -> 15));
 	}
 	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return state.get(LanternBlock.HANGING) ? SHAPE_CEIL : SHAPE_FLOOR;
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		return state.getValue(LanternBlock.HANGING) ? SHAPE_CEIL : SHAPE_FLOOR;
 	}
 	
 	@Override

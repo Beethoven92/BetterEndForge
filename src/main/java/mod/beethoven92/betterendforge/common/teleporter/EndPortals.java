@@ -11,8 +11,8 @@ import mod.beethoven92.betterendforge.common.util.JsonFactory;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
 import mod.beethoven92.betterendforge.config.jsons.JsonConfigWriter;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 
 
 public class EndPortals 
@@ -54,11 +54,11 @@ public class EndPortals
 		return ModMathHelper.max(portals.length - 1, 1);
 	}
 	
-	public static ServerWorld getWorld(MinecraftServer server, int state) 
+	public static ServerLevel getWorld(MinecraftServer server, int state) 
 	{
 		if (state >= portals.length) 
 		{
-			return server.func_241755_D_(); // Get overworld
+			return server.overworld(); // Get overworld
 		}
 		return portals[state].getWorld(server);
 	}
@@ -112,7 +112,7 @@ public class EndPortals
 		private final ResourceLocation dimension;
 		private final ResourceLocation item;
 		private final int color;
-		private ServerWorld world;
+		private ServerLevel world;
 		
 		PortalInfo(JsonObject obj) 
 		{
@@ -132,23 +132,23 @@ public class EndPortals
 			this.color = ModMathHelper.color(r, g, b);
 		}
 		
-		ServerWorld getWorld(MinecraftServer server) 
+		ServerLevel getWorld(MinecraftServer server) 
 		{
 			if (world != null) 
 			{
 				return world;
 			}
-			Iterator<ServerWorld> iterator = server.getWorlds().iterator();
+			Iterator<ServerLevel> iterator = server.getAllLevels().iterator();
 			while (iterator.hasNext()) 
 			{
-				ServerWorld world = iterator.next();
-				if (world.getDimensionKey().getLocation().equals(dimension)) 
+				ServerLevel world = iterator.next();
+				if (world.dimension().location().equals(dimension)) 
 				{
 					this.world = world;
 					return world;
 				}
 			}
-			return server.func_241755_D_(); // Get Overworld
+			return server.overworld(); // Get Overworld
 		}
 		
 		JsonObject toJson() 

@@ -3,13 +3,13 @@ package mod.beethoven92.betterendforge.common.world.generator;
 import java.util.HashMap;
 
 import mod.beethoven92.betterendforge.common.world.biome.BetterEndBiome;
-import net.minecraft.util.SharedSeedRandom;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.util.Mth;
 
 public class BiomeMap 
 {
-	private static final SharedSeedRandom RANDOM = new SharedSeedRandom();
+	private static final WorldgenRandom RANDOM = new WorldgenRandom();
 	
 	private final HashMap<ChunkPos, BiomeChunk> maps = new HashMap<ChunkPos, BiomeChunk>();
 	private final int size;
@@ -67,8 +67,8 @@ public class BiomeMap
 			pz = pz / 2 + i;
 		}
 		
-		bx = MathHelper.floor(x);
-		bz = MathHelper.floor(z);
+		bx = Mth.floor(x);
+		bz = Mth.floor(z);
 		
 		if ((bx & BiomeChunk.MASK_WIDTH) == BiomeChunk.MASK_WIDTH) 
 		{
@@ -80,7 +80,7 @@ public class BiomeMap
 			z += (bx / 2) & 1;
 		}
 		
-		ChunkPos cpos = new ChunkPos(MathHelper.floor(x / BiomeChunk.WIDTH), MathHelper.floor(z / BiomeChunk.WIDTH));
+		ChunkPos cpos = new ChunkPos(Mth.floor(x / BiomeChunk.WIDTH), Mth.floor(z / BiomeChunk.WIDTH));
 		BiomeChunk chunk = maps.get(cpos);
 		if (chunk == null)
 		{
@@ -89,7 +89,7 @@ public class BiomeMap
 			maps.put(cpos, chunk);
 		}
 		
-		return chunk.getBiome(MathHelper.floor(x), MathHelper.floor(z));
+		return chunk.getBiome(Mth.floor(x), Mth.floor(z));
 	}
 	
 	public BetterEndBiome getBiome(int x, int z)
