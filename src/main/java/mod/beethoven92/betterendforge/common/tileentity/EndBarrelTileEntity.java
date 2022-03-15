@@ -2,7 +2,10 @@ package mod.beethoven92.betterendforge.common.tileentity;
 
 import mod.beethoven92.betterendforge.common.block.EndBarrelBlock;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -27,28 +30,26 @@ public class EndBarrelTileEntity extends RandomizableContainerBlockEntity {
 	private NonNullList<ItemStack> inventory;
 	private int viewerCount;
 
-	private EndBarrelTileEntity(BlockEntityType<?> type) {
-		super(type);
+	private EndBarrelTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
 		this.inventory = NonNullList.withSize(27, ItemStack.EMPTY);
 	}
 	
-	public EndBarrelTileEntity() {
-		this(ModTileEntityTypes.BARREL.get());
+	public EndBarrelTileEntity(BlockPos pos, BlockState state) {
+		this(ModTileEntityTypes.BARREL.get(), pos, state);
 	}
 
 	@Override
-	public CompoundTag save(CompoundTag tag) {
-		super.save(tag);
+	public void saveAdditional(CompoundTag tag) {
+		super.saveAdditional(tag);
 		if (!this.trySaveLootTable(tag)) {
 			ContainerHelper.saveAllItems(tag, this.inventory);
 		}
-
-		return tag;
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag tag) {
-		super.load(state, tag);
+	public void load(CompoundTag tag) {
+		super.load(tag);
 		this.inventory = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 		if (!this.tryLoadLootTable(tag)) {
 			ContainerHelper.loadAllItems(tag, this.inventory);
@@ -102,14 +103,14 @@ public class EndBarrelTileEntity extends RandomizableContainerBlockEntity {
 	}
 
 	private void scheduleTick() {
-		this.level.getBlockTicks().scheduleTick(this.getBlockPos(), this.getBlockState().getBlock(), 5);
+		this.level.scheduleTick(this.getBlockPos(), this.getBlockState().getBlock(), 5);
 	}
 
-	public void tick() {
+	public void tick(Level level, BlockPos pos, BlockState state) {
 		int i = this.worldPosition.getX();
 		int j = this.worldPosition.getY();
 		int k = this.worldPosition.getZ();
-		this.viewerCount = ChestBlockEntity.getOpenCount(this.level, this, i, j, k);
+		this.viewerCount = ChestBlockEntity.getOpenCount(level, pos);
 		if (this.viewerCount > 0) {
 			this.scheduleTick();
 		} else {
@@ -119,7 +120,7 @@ public class EndBarrelTileEntity extends RandomizableContainerBlockEntity {
 				return;
 			}
 
-			boolean bl = (Boolean) blockState.getValue(BarrelBlock.OPEN);
+			boolean bl = blockState.getValue(BarrelBlock.OPEN);
 			if (bl) {
 				this.playSound(blockState, SoundEvents.BARREL_CLOSE);
 				this.setOpen(blockState, false);
@@ -137,11 +138,11 @@ public class EndBarrelTileEntity extends RandomizableContainerBlockEntity {
 	}
 
 	private void setOpen(BlockState state, boolean open) {
-		this.level.setBlock(this.getBlockPos(), (BlockState) state.setValue(BarrelBlock.OPEN, open), 3);
+		this.level.setBlock(this.getBlockPos(), state.setValue(BarrelBlock.OPEN, open), 3);
 	}
 
 	private void playSound(BlockState blockState, SoundEvent soundEvent) {
-		Vec3i vec3i = ((Direction) blockState.getValue(BarrelBlock.FACING)).getNormal();
+		Vec3i vec3i = blockState.getValue(BarrelBlock.FACING).getNormal();
 		double d = (double) this.worldPosition.getX() + 0.5D + (double) vec3i.getX() / 2.0D;
 		double e = (double) this.worldPosition.getY() + 0.5D + (double) vec3i.getY() / 2.0D;
 		double f = (double) this.worldPosition.getZ() + 0.5D + (double) vec3i.getZ() / 2.0D;

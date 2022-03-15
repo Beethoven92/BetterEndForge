@@ -42,9 +42,9 @@ public class ModRecipes extends RecipeProvider
 	private ResourceLocation rl(String s) {
 		return new ResourceLocation(BetterEnd.MOD_ID, s);
 	}
-	
+
 	@Override
-	protected void buildShapelessRecipes(Consumer<FinishedRecipe> consumer) 
+	protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer)
 	{
 		// BLOCKS
 	    ShapedRecipeBuilder.shaped(ModBlocks.ENDER_BLOCK.get()).define('#', Items.ENDER_PEARL).pattern("##").pattern("##").unlockedBy("has_ender_pearl", has(Items.ENDER_PEARL)).save(consumer);	    
@@ -245,20 +245,20 @@ public class ModRecipes extends RecipeProvider
 	    ShapedRecipeBuilder.shaped(material.furnace.get()).define('#', material.stone.get()).pattern("###").pattern("# #").pattern("###").group("end_stone_furnaces").unlockedBy("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer);
 
 		// Stonecutting
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.bricks.get()).unlocks("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_bricks_from_" + material.name + "_stonecutting"));
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.polished.get()).unlocks("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_polished_from_" + material.name + "_stonecutting"));
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.tiles.get()).unlocks("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_tiles_from_" + material.name + "_stonecutting"));
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.pillar.get()).unlocks("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_pillar_from_" + material.name + "_stonecutting"));
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.stairs.get()).unlocks("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_stairs_from_" + material.name + "_stonecutting"));
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.slab.get(), 2).unlocks("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_slab_from_" + material.name + "_stonecutting"));
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.brick_stairs.get()).unlocks("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_bricks_stairs_from_" + material.name + "_stonecutting"));
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.brick_slab.get(), 2).unlocks("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_bricks_slab_from_" + material.name + "_stonecutting"));
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.wall.get()).unlocks("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_wall_from_" + material.name + "_stonecutting"));
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.brick_wall.get()).unlocks("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_bricks_wall_from_" + material.name + "_stonecutting"));
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.button.get()).unlocks("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_button_from_" + material.name + "_stonecutting"));
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.bricks.get()), material.brick_stairs.get()).unlocks("has_" + material.bricks.get().getRegistryName().getPath(), has(material.bricks.get())).save(consumer, rl(material.name + "_bricks_stairs_from_" + material.name + "_bricks_stonecutting"));
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.bricks.get()), material.brick_slab.get(), 2).unlocks("has_" + material.bricks.get().getRegistryName().getPath(), has(material.bricks.get())).save(consumer, rl(material.name + "_bricks_slab_from_" + material.name + "_bricks_stonecutting"));
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.bricks.get()), material.brick_wall.get()).unlocks("has_" + material.bricks.get().getRegistryName().getPath(), has(material.bricks.get())).save(consumer, rl(material.name + "_bricks_wall_from_" + material.name + "_bricks_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.bricks.get()).unlockedBy("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_bricks_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.polished.get()).unlockedBy("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_polished_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.tiles.get()).unlockedBy("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_tiles_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.pillar.get()).unlockedBy("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_pillar_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.stairs.get()).unlockedBy("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_stairs_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.slab.get(), 2).unlockedBy("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_slab_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.brick_stairs.get()).unlockedBy("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_bricks_stairs_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.brick_slab.get(), 2).unlockedBy("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_bricks_slab_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.wall.get()).unlockedBy("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_wall_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.brick_wall.get()).unlockedBy("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_bricks_wall_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.stone.get()), material.button.get()).unlockedBy("has_" + material.stone.get().getRegistryName().getPath(), has(material.stone.get())).save(consumer, rl(material.name + "_button_from_" + material.name + "_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.bricks.get()), material.brick_stairs.get()).unlockedBy("has_" + material.bricks.get().getRegistryName().getPath(), has(material.bricks.get())).save(consumer, rl(material.name + "_bricks_stairs_from_" + material.name + "_bricks_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.bricks.get()), material.brick_slab.get(), 2).unlockedBy("has_" + material.bricks.get().getRegistryName().getPath(), has(material.bricks.get())).save(consumer, rl(material.name + "_bricks_slab_from_" + material.name + "_bricks_stonecutting"));
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material.bricks.get()), material.brick_wall.get()).unlockedBy("has_" + material.bricks.get().getRegistryName().getPath(), has(material.bricks.get())).save(consumer, rl(material.name + "_bricks_wall_from_" + material.name + "_bricks_stonecutting"));
 	}
 	
 	private void makeMetalMaterialRecipes(MetalMaterial material, Consumer<FinishedRecipe> consumer)

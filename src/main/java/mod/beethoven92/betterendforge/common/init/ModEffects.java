@@ -13,5 +13,5 @@ public class ModEffects
 			DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, BetterEnd.MOD_ID);
 
 	public static final RegistryObject<EndVeilEffect> END_VEIL = EFFECTS.register("end_veil",
-			() -> new EndVeilEffect());
+			EndVeilEffect::new);
 }

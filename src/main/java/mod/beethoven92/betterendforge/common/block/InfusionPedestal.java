@@ -108,7 +108,7 @@ public class InfusionPedestal extends PedestalBlock
 				} 
 				else 
 				{
-					InfusionRitual ritual = new InfusionRitual(worldIn, pos);
+					InfusionRitual ritual = new InfusionRitual(pedestal, worldIn, pos);
 					pedestal.linkRitual(ritual);
 					ritual.checkRecipe();
 				}
@@ -138,8 +138,8 @@ public class InfusionPedestal extends PedestalBlock
 	}*/
 	
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) 
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new InfusionPedestalTileEntity();
+		return new InfusionPedestalTileEntity(pos, state);
 	}
 }

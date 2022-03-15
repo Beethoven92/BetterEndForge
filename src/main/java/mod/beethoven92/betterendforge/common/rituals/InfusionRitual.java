@@ -32,11 +32,12 @@ public class InfusionRitual implements Container
 	private int progress = 0;
 	private int time = 0;
 		
-	private InfusionPedestalTileEntity input;
+	private final InfusionPedestalTileEntity input;
 	private PedestalTileEntity[] catalysts = new PedestalTileEntity[8];
 	
-	public InfusionRitual(Level world, BlockPos pos) 
+	public InfusionRitual(InfusionPedestalTileEntity pedestal, Level world, BlockPos pos)
 	{
+		this.input = pedestal;
 		this.world = world;
 		this.worldPos = pos;
 		this.configure();
@@ -50,11 +51,6 @@ public class InfusionRitual implements Container
 	public void configure() 
 	{
 		if (world == null || world.isClientSide || worldPos == null) return;
-		BlockEntity inputEntity = world.getBlockEntity(worldPos);
-		if (inputEntity instanceof InfusionPedestalTileEntity) 
-		{
-			this.input = (InfusionPedestalTileEntity) inputEntity;
-		}
 		int i = 0;
 		for(Point point : PEDESTALS_MAP) 
 		{

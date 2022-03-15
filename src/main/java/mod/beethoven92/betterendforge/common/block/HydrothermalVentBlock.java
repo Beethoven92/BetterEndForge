@@ -4,9 +4,13 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModParticleTypes;
+import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.tileentity.HydrothermalVentTileEntity;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
@@ -32,7 +36,9 @@ import net.minecraft.server.level.ServerLevel;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class HydrothermalVentBlock extends Block implements SimpleWaterloggedBlock
+import javax.annotation.Nullable;
+
+public class HydrothermalVentBlock extends Block implements SimpleWaterloggedBlock, EntityBlock
 {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	public static final BooleanProperty ACTIVATED = BlockProperties.ACTIVATED;
@@ -49,17 +55,11 @@ public class HydrothermalVentBlock extends Block implements SimpleWaterloggedBlo
 	{
 		return SHAPE;
 	}
-	
+
+	@org.jetbrains.annotations.Nullable
 	@Override
-	public boolean hasTileEntity(BlockState state)
-	{
-		return true;
-	}
-	
-	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) 
-	{
-		return new HydrothermalVentTileEntity();
+	public BlockEntity newBlockEntity(BlockPos p_153215_, BlockState p_153216_) {
+		return new HydrothermalVentTileEntity(p_153215_, p_153216_);
 	}
 	
 	@Override
@@ -96,7 +96,7 @@ public class HydrothermalVentBlock extends Block implements SimpleWaterloggedBlo
 		}
 		else if (stateIn.getValue(WATERLOGGED) && facing == Direction.UP && facingState.is(Blocks.WATER)) 
 		{
-			worldIn.getBlockTicks().scheduleTick(currentPos, this, 20);
+			worldIn.scheduleTick(currentPos, this, 20);
 		}
 		return stateIn;
 	}
@@ -127,7 +127,7 @@ public class HydrothermalVentBlock extends Block implements SimpleWaterloggedBlo
 		if (worldIn.getBlockState(up).is(Blocks.WATER)) 
 		{
 			BlockHelper.setWithoutUpdate(worldIn, up, ModBlocks.VENT_BUBBLE_COLUMN.get());
-			worldIn.getBlockTicks().scheduleTick(up, ModBlocks.VENT_BUBBLE_COLUMN.get(), 5);
+			worldIn.scheduleTick(up, ModBlocks.VENT_BUBBLE_COLUMN.get(), 5);
 		}
 	}
 	
@@ -141,5 +141,11 @@ public class HydrothermalVentBlock extends Block implements SimpleWaterloggedBlo
 	protected void createBlockStateDefinition(Builder<Block, BlockState> builder) 
 	{
 		builder.add(WATERLOGGED, ACTIVATED);
+	}
+
+	@Nullable
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+		return HydrothermalVentTileEntity::commonTick;
 	}
 }

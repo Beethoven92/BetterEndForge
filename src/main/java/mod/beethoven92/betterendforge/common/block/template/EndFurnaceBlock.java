@@ -1,6 +1,7 @@
 package mod.beethoven92.betterendforge.common.block.template;
 
 import mod.beethoven92.betterendforge.common.tileentity.EndFurnaceTileEntity;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.FurnaceBlock;
 import net.minecraft.world.entity.player.Player;
@@ -13,23 +14,17 @@ import net.minecraft.world.level.Level;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class EndFurnaceBlock extends FurnaceBlock
+public class EndFurnaceBlock extends FurnaceBlock implements EntityBlock
 {
 	public EndFurnaceBlock(Properties builder) 
 	{
 		super(builder);
 	}
-
-	@Override
-	public boolean hasTileEntity(BlockState state) 
-	{
-		return true;
-	}
 	
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) 
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return new EndFurnaceTileEntity();
+		return new EndFurnaceTileEntity(pos, state);
 	}
 	
 	@Override

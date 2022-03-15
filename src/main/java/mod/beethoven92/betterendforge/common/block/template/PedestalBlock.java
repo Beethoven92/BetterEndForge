@@ -8,6 +8,9 @@ import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.tileentity.PedestalTileEntity;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.Containers;
@@ -31,8 +34,9 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import org.jetbrains.annotations.Nullable;
 
-public class PedestalBlock extends Block
+public class PedestalBlock extends Block implements EntityBlock
 {
 	public static final EnumProperty<PedestalState> STATE = BlockProperties.PEDESTAL_STATE;
 	public static final BooleanProperty HAS_ITEM = BlockProperties.HAS_ITEM;
@@ -122,19 +126,19 @@ public class PedestalBlock extends Block
 		}
 		return Shapes.block();
 	}
+	
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
+	{
+		return ModTileEntityTypes.PEDESTAL.get().create(pos, state);
+	}
 
+	@Nullable
 	@Override
-	public boolean hasTileEntity(BlockState state) 
-	{
-		return true;
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level p_153212_, BlockState p_153213_, BlockEntityType<T> p_153214_) {
+		return PedestalTileEntity::commonTick;
 	}
-	
-	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) 
-	{
-		return ModTileEntityTypes.PEDESTAL.get().create();
-	}
-	
+
 	@Override
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player,
 			InteractionHand handIn, BlockHitResult hit) 
@@ -152,7 +156,7 @@ public class PedestalBlock extends Block
 			{
 				ItemStack itemStack = player.getItemInHand(handIn);
 				if (itemStack.isEmpty()) return InteractionResult.CONSUME;
-				pedestal.setStack(player.abilities.instabuild ? itemStack.copy().split(1) : itemStack.split(1));
+				pedestal.setStack(player.getAbilities().instabuild ? itemStack.copy().split(1) : itemStack.split(1));
 				//this.checkRitual(worldIn, pos);
 				return InteractionResult.SUCCESS;
 			} 

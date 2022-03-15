@@ -11,18 +11,20 @@ public class InfusionPedestalTileEntity extends PedestalTileEntity
 {
 	private InfusionRitual linkedRitual;
 	
-	public InfusionPedestalTileEntity() 
+	public InfusionPedestalTileEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntityTypes.INFUSION_PEDESTAL.get());
+		super(ModTileEntityTypes.INFUSION_PEDESTAL.get(), pos, state);
 	}
-	
+
 	@Override
-	public void setLevelAndPosition(Level world, BlockPos pos) 
+	public void setLevel(Level world)
 	{
-		super.setLevelAndPosition(world, pos);
-		if (hasRitual()) 
-		{
-			this.linkedRitual.setLocation(world, pos);
+		super.setLevel(world);
+		if (hasRitual()) {
+			linkedRitual.setLocation(world, this.getBlockPos());
+		}
+		else {
+			linkRitual(new InfusionRitual(this, world, this.getBlockPos()));
 		}
 	}
 	
@@ -42,33 +44,32 @@ public class InfusionPedestalTileEntity extends PedestalTileEntity
 	}
 	
 	@Override
-	public void tick() 
+	public void tick(Level level, BlockPos pos, BlockState state)
 	{
 		if (hasRitual()) 
 		{
 			this.linkedRitual.tick();
 		}
-		super.tick();
+		super.tick(level, pos, state);
 	}
 	
 	@Override
-	public CompoundTag save(CompoundTag compound) 
+	public void saveAdditional(CompoundTag compound)
 	{
-		super.save(compound);
+		super.saveAdditional(compound);
 		if (hasRitual()) 
 		{
 			compound.put("ritual", linkedRitual.write(new CompoundTag()));
 		}
-		return compound;
 	}
 	
 	@Override
-	public void load(BlockState state, CompoundTag nbt) 
+	public void load(CompoundTag nbt)
 	{
-		super.load(state, nbt);
+		super.load(nbt);
 		if (nbt.contains("ritual")) 
 		{
-			this.linkedRitual = new InfusionRitual(level, worldPosition);
+			this.linkedRitual = new InfusionRitual(this, level, worldPosition);
 			this.linkedRitual.read(nbt.getCompound("ritual"));
 		}
 	}

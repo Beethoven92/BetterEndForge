@@ -3,6 +3,7 @@ package mod.beethoven92.betterendforge.common.block;
 import javax.annotation.Nullable;
 
 import mod.beethoven92.betterendforge.common.tileentity.ESignTileEntity;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.SignBlock;
 import net.minecraft.world.level.block.Block;
@@ -36,7 +37,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
 
-public class EndSignBlock extends SignBlock {
+public class EndSignBlock extends SignBlock implements EntityBlock {
 	public static final IntegerProperty ROTATION = BlockStateProperties.ROTATION_16;
 	public static final BooleanProperty FLOOR = BooleanProperty.create("floor");
 	private static final VoxelShape[] WALL_SHAPES = new VoxelShape[] {
@@ -62,15 +63,15 @@ public class EndSignBlock extends SignBlock {
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockGetter worldIn) {
-		return new ESignTileEntity();
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new ESignTileEntity(pos, state);
 	}
 
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player,
 			InteractionHand hand, BlockHitResult hit) {
 		ItemStack itemStack = player.getItemInHand(hand);
-		boolean bl = itemStack.getItem() instanceof DyeItem && player.abilities.mayBuild;
+		boolean bl = itemStack.getItem() instanceof DyeItem && player.getAbilities().mayBuild;
 		if (world.isClientSide) {
 			return bl ? InteractionResult.SUCCESS : InteractionResult.CONSUME;
 		} else {
@@ -106,7 +107,7 @@ public class EndSignBlock extends SignBlock {
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState,
 			LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
 		if ((Boolean) state.getValue(WATERLOGGED)) {
-			world.getLiquidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+			world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 		}
 
 		return super.updateShape(state, facing, neighborState, world, pos, neighborPos);

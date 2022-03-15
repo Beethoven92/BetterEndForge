@@ -1,8 +1,10 @@
 package mod.beethoven92.betterendforge.common.block.template;
 
 import mod.beethoven92.betterendforge.common.block.BlockProperties;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.AnvilBlock;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
@@ -14,7 +16,7 @@ import net.minecraftforge.fml.ModList;
 
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
-public class EndAnvilBlock extends AnvilBlock
+public class EndAnvilBlock extends AnvilBlock implements EntityBlock
 {
 	public static final IntegerProperty DESTRUCTION = BlockProperties.DESTRUCTION;
 	protected final int level;
@@ -24,23 +26,16 @@ public class EndAnvilBlock extends AnvilBlock
 		super(properties);
 		this.level = level;
 	}
-
-	@Override
-	public boolean hasTileEntity(BlockState state) 
-	{
-		if (ModList.get().isLoaded("apotheosis") && Registry.BLOCK_ENTITY_TYPE.getOptional(new ResourceLocation("apotheosis", "anvil")).isPresent()) return true;
-		return false;
-	}
 	
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) 
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
 		// Need to check if the mod is loaded and also if their anvil module is enabled, otherwise this would crash!
 		if (ModList.get().isLoaded("apotheosis") && Registry.BLOCK_ENTITY_TYPE.getOptional(new ResourceLocation("apotheosis", "anvil")).isPresent())
 		{
 			// Need to specify apotheosis anvil tile entity as the tile entity of this block if apotheosis is present.
 			// This helps fixing an incompatibility with their anvil mechanics overhaul.
-			return Registry.BLOCK_ENTITY_TYPE.getOptional(new ResourceLocation("apotheosis", "anvil")).get().create();
+			return Registry.BLOCK_ENTITY_TYPE.getOptional(new ResourceLocation("apotheosis", "anvil")).get().create(pos, state);
 		}
 		return null;
 	}

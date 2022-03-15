@@ -17,6 +17,8 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
 import mod.beethoven92.betterendforge.common.inventory.EndStoneSmelterContainer;
 import mod.beethoven92.betterendforge.common.recipes.AlloyingRecipe;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -36,7 +38,6 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.Tag;
-import net.minecraft.world.level.block.entity.TickableBlockEntity;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.core.Direction;
 import net.minecraft.world.inventory.ContainerData;
@@ -49,7 +50,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 
-public class EndStoneSmelterTileEntity extends BaseContainerBlockEntity implements TickableBlockEntity, RecipeHolder, StackedContentsCompatible, WorldlyContainer
+public class EndStoneSmelterTileEntity extends BaseContainerBlockEntity implements RecipeHolder, StackedContentsCompatible, WorldlyContainer
 {
 	private static final int[] TOP_SLOTS = new int[] { 0, 1 };
 	private static final int[] BOTTOM_SLOTS = new int[] { 2, 3 };
@@ -65,9 +66,9 @@ public class EndStoneSmelterTileEntity extends BaseContainerBlockEntity implemen
 	private int burnTime;
 	private int fuelTime;
 
-	public EndStoneSmelterTileEntity()
+	public EndStoneSmelterTileEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntityTypes.END_STONE_SMELTER.get());
+		super(ModTileEntityTypes.END_STONE_SMELTER.get(), pos, state);
 		
 		this.recipesUsed = new Object2IntOpenHashMap<ResourceLocation>();
 		this.items= NonNullList.withSize(4, ItemStack.EMPTY);
@@ -117,9 +118,9 @@ public class EndStoneSmelterTileEntity extends BaseContainerBlockEntity implemen
 	}
 	
 	@Override
-	public CompoundTag save(CompoundTag compound)
+	public void saveAdditional(CompoundTag compound)
 	{
-		super.save(compound);
+		super.saveAdditional(compound);
 		compound.putShort("BurnTime", (short) burnTime);
 		compound.putShort("FuelTime", (short) fuelTime);
 		compound.putShort("SmeltTime", (short) smeltTime);
@@ -130,14 +131,12 @@ public class EndStoneSmelterTileEntity extends BaseContainerBlockEntity implemen
 			usedRecipes.putInt(identifier.toString(), integer);
 		});
 		compound.put("RecipesUsed", usedRecipes);
-		
-		return compound;
 	}
 	
 	@Override
-	public void load(BlockState state, CompoundTag nbt)
+	public void load(CompoundTag nbt)
 	{	
-		super.load(state, nbt);
+		super.load(nbt);
 		this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 		ContainerHelper.loadAllItems(nbt, items);
 		this.burnTime = nbt.getShort("BurnTime");
@@ -204,9 +203,14 @@ public class EndStoneSmelterTileEntity extends BaseContainerBlockEntity implemen
 			world.addFreshEntity(new ExperienceOrb(world, vec3d.x, vec3d.y, vec3d.z, k));
 		}
 	}
-	
-	@Override
-	public void tick() 
+
+	public static <T extends BlockEntity> void commonTick(Level level, BlockPos pos, BlockState state, T tile) {
+		if (tile instanceof EndStoneSmelterTileEntity tick) {
+			tick.tick(level, pos, state);
+		}
+	}
+
+	public void tick(Level level, BlockPos pos, BlockState state)
 	{
 		boolean initialBurning = this.isBurning();
 		if (initialBurning) 
@@ -215,22 +219,22 @@ public class EndStoneSmelterTileEntity extends BaseContainerBlockEntity implemen
 		}
 		
 		boolean burning = this.isBurning();
-		if (!this.level.isClientSide) 
+		if (!level.isClientSide)
 		{
 			ItemStack fuel = this.items.get(2);
 			if (!burning && (fuel.isEmpty() || items.get(0).isEmpty() && items.get(1).isEmpty())) 
 			{
-				if (!burning && smeltTime > 0) 
+				if (smeltTime > 0)
 				{
 					this.smeltTime = Mth.clamp(smeltTime - 2, 0, smeltTimeTotal);
 				}
 			} 
 			else 
 			{
-				Recipe<?> recipe = this.level.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, this, level).orElse(null);
+				Recipe<?> recipe = level.getRecipeManager().getRecipeFor(AlloyingRecipe.TYPE, this, level).orElse(null);
 				if (recipe == null) 
 				{
-					recipe = this.level.getRecipeManager().getRecipeFor(RecipeType.BLASTING, this, level).orElse(null);
+					recipe = level.getRecipeManager().getRecipeFor(RecipeType.BLASTING, this, level).orElse(null);
 				}
 				boolean accepted = this.canAcceptRecipeOutput(recipe);
 				if (!burning && accepted) 
@@ -273,7 +277,7 @@ public class EndStoneSmelterTileEntity extends BaseContainerBlockEntity implemen
 
 			if (initialBurning != burning) 
 			{
-				this.level.setBlock(worldPosition, level.getBlockState(worldPosition).setValue(EndStoneSmelter.LIT, burning), 3);
+				level.setBlock(worldPosition, state.setValue(EndStoneSmelter.LIT, burning), 3);
 				this.setChanged();
 			}
 		}
@@ -542,7 +546,7 @@ public class EndStoneSmelterTileEntity extends BaseContainerBlockEntity implemen
 	
 	public static boolean isFuel(ItemStack stack) 
 	{
-		return AVAILABLE_FUELS.containsKey(stack.getItem()) && net.minecraftforge.common.ForgeHooks.getBurnTime(stack) > 0;
+		return AVAILABLE_FUELS.containsKey(stack.getItem()) && net.minecraftforge.common.ForgeHooks.getBurnTime(stack, RecipeType.SMELTING) > 0;
 	}
 	
 	protected int getBurnTime(ItemStack fuel) 
@@ -597,7 +601,7 @@ public class EndStoneSmelterTileEntity extends BaseContainerBlockEntity implemen
 	}
 
 	@Override
-    protected void invalidateCaps() 
+	public void invalidateCaps()
 	{
 		super.invalidateCaps();
 	    for (int x = 0; x < handlers.length; x++) handlers[x].invalidate();

@@ -5,6 +5,7 @@ import java.util.function.Function;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import mod.beethoven92.betterendforge.common.init.ModTileEntityTypes;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.CommandSource;
@@ -35,13 +36,13 @@ public class ESignTileEntity extends BlockEntity {
 	private final FormattedCharSequence[] textBeingEdited = new FormattedCharSequence[4];
 	private DyeColor textColor = DyeColor.BLACK;
 
-	public ESignTileEntity() {
-		super(ModTileEntityTypes.SIGN.get());
+	public ESignTileEntity(BlockPos pos, BlockState state) {
+		super(ModTileEntityTypes.SIGN.get(), pos, state);
 	}
 
 	@Override
-	public CompoundTag save(CompoundTag tag) {
-		super.save(tag);
+	public void saveAdditional(CompoundTag tag) {
+		super.saveAdditional(tag);
 
 		for (int i = 0; i < 4; ++i) {
 			String string = Component.Serializer.toJson(this.text[i]);
@@ -49,13 +50,12 @@ public class ESignTileEntity extends BlockEntity {
 		}
 
 		tag.putString("Color", this.textColor.getName());
-		return tag;
 	}
 
 	@Override
-	public void load(BlockState state, CompoundTag tag) {
+	public void load(CompoundTag tag) {
 		this.editable = false;
-		super.load(state, tag);
+		super.load(tag);
 		this.textColor = DyeColor.byName(tag.getString("Color"), DyeColor.BLACK);
 
 		for (int i = 0; i < 4; ++i) {
@@ -93,12 +93,14 @@ public class ESignTileEntity extends BlockEntity {
 
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return new ClientboundBlockEntityDataPacket(this.worldPosition, 9, this.getUpdateTag());
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	@Override
 	public CompoundTag getUpdateTag() {
-		return this.save(new CompoundTag());
+		CompoundTag tag = new CompoundTag();
+		this.saveAdditional(tag);
+		return tag;
 	}
 
 	@Override

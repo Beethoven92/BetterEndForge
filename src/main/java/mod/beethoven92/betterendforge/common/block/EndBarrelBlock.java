@@ -5,6 +5,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import mod.beethoven92.betterendforge.common.tileentity.EndBarrelTileEntity;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.BarrelBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -23,14 +24,14 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerLevel;
 
-public class EndBarrelBlock extends BarrelBlock {
+public class EndBarrelBlock extends BarrelBlock implements EntityBlock {
 	public EndBarrelBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	public BlockEntity newBlockEntity(BlockGetter worldIn) {
-		return new EndBarrelTileEntity();
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new EndBarrelTileEntity(pos, state);
 	}
 
 	@Override
@@ -40,8 +41,8 @@ public class EndBarrelBlock extends BarrelBlock {
 			return InteractionResult.SUCCESS;
 		} else {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof EndBarrelTileEntity) {
-				player.openMenu((EndBarrelTileEntity) blockEntity);
+			if (blockEntity instanceof EndBarrelTileEntity e) {
+				player.openMenu(e);
 				player.awardStat(Stats.OPEN_BARREL);
 				PiglinAi.angerNearbyPiglins(player, true);
 			}
@@ -53,8 +54,8 @@ public class EndBarrelBlock extends BarrelBlock {
 	@Override
 	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
 		BlockEntity blockEntity = world.getBlockEntity(pos);
-		if (blockEntity instanceof EndBarrelTileEntity) {
-			((EndBarrelTileEntity) blockEntity).tick();
+		if (blockEntity instanceof EndBarrelTileEntity e) {
+			e.tick(world, pos, state);
 		}
 	}
 
@@ -68,8 +69,8 @@ public class EndBarrelBlock extends BarrelBlock {
 			ItemStack stack) {
 		if (stack.hasCustomHoverName()) {
 			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof EndBarrelTileEntity) {
-				((EndBarrelTileEntity) blockEntity).setCustomName(stack.getHoverName());
+			if (blockEntity instanceof EndBarrelTileEntity e) {
+				e.setCustomName(stack.getHoverName());
 			}
 		}
 	}

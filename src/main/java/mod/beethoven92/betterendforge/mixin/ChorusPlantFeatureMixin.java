@@ -4,6 +4,7 @@ import java.util.Random;
 
 import mod.beethoven92.betterendforge.common.world.generator.GeneratorOptions;
 import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,13 +27,13 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 public abstract class ChorusPlantFeatureMixin 
 {
 	@Inject(method = "place", at = @At("HEAD"), cancellable = true)
-	private void be_place(WorldGenLevel worldIn, ChunkGenerator chunkGenerator, Random random,
-			BlockPos blockPos, NoneFeatureConfiguration config, CallbackInfoReturnable<Boolean> info) 
+	private void be_place(FeaturePlaceContext<NoneFeatureConfiguration> context, CallbackInfoReturnable<Boolean> info)
 	{
 
-		final WorldGenLevel structureWorldAccess = worldIn;
+		final WorldGenLevel structureWorldAccess = context.level();
+		BlockPos blockPos = context.origin();
 		if (structureWorldAccess.isEmptyBlock(blockPos) && structureWorldAccess.getBlockState(blockPos.below()).is(ModBlocks.CHORUS_NYLIUM.get())) {
-			ChorusFlowerBlock.generatePlant(structureWorldAccess, blockPos, random, ModMathHelper.randRange(8, 16, random));
+			ChorusFlowerBlock.generatePlant(structureWorldAccess, blockPos, context.random(), ModMathHelper.randRange(8, 16, context.random()));
 			BlockState bottom = structureWorldAccess.getBlockState(blockPos);
 			if (bottom.is(Blocks.CHORUS_PLANT)) {
 				BlockHelper.setWithoutUpdate(

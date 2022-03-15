@@ -11,9 +11,9 @@ public class EternalPedestalTileEntity extends PedestalTileEntity
 {
 	private EternalRitual linkedRitual;
 	
-	public EternalPedestalTileEntity() 
+	public EternalPedestalTileEntity(BlockPos pos, BlockState state)
 	{
-		super(ModTileEntityTypes.ETERNAL_PEDESTAL.get());
+		super(ModTileEntityTypes.ETERNAL_PEDESTAL.get(), pos, state);
 	}
 	
 	public boolean hasRitual() 
@@ -32,9 +32,9 @@ public class EternalPedestalTileEntity extends PedestalTileEntity
 	}
 	
 	@Override
-	public void setLevelAndPosition(Level world, BlockPos pos) 
+	public void setLevel(Level world)
 	{
-		super.setLevelAndPosition(world, pos);
+		super.setLevel(world);
 		if (hasRitual()) 
 		{
 			this.linkedRitual.setWorld(world);
@@ -42,9 +42,9 @@ public class EternalPedestalTileEntity extends PedestalTileEntity
 	}
 	
 	@Override
-	public void load(BlockState state, CompoundTag nbt) 
+	public void load(CompoundTag nbt)
 	{
-		super.load(state, nbt);
+		super.load(nbt);
 		if (nbt.contains("ritual")) 
 		{
 			this.linkedRitual = new EternalRitual(level);
@@ -53,13 +53,12 @@ public class EternalPedestalTileEntity extends PedestalTileEntity
 	}
 	
 	@Override
-	public CompoundTag save(CompoundTag compound) 
+	public void saveAdditional(CompoundTag compound)
 	{
-		super.save(compound);
+		super.saveAdditional(compound);
 		if (this.hasRitual()) 
 		{
 			compound.put("ritual", linkedRitual.write(new CompoundTag()));
 		}
-		return compound;
 	}
 }

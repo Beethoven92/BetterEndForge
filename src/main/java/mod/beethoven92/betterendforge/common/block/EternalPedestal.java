@@ -107,8 +107,8 @@ public class EternalPedestal extends PedestalBlock
 	}
 	
 	@Override
-	public BlockEntity createTileEntity(BlockState state, BlockGetter world) 
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state)
 	{
-		return ModTileEntityTypes.ETERNAL_PEDESTAL.get().create();
+		return ModTileEntityTypes.ETERNAL_PEDESTAL.get().create(pos, state);
 	}
 }
