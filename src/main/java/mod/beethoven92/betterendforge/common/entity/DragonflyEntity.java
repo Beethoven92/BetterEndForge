@@ -8,8 +8,12 @@ import mod.beethoven92.betterendforge.common.init.ModEntityTypes;
 import mod.beethoven92.betterendforge.common.init.ModSoundEvents;
 import mod.beethoven92.betterendforge.common.util.BlockHelper;
 import mod.beethoven92.betterendforge.common.util.ModMathHelper;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
+import net.minecraft.world.entity.ai.util.HoverRandomPos;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.entity.AgableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -69,6 +73,11 @@ public class DragonflyEntity extends Animal implements FlyingAnimal
 	}
 
 	@Override
+	public boolean canBeLeashed(Player player) {
+		return false;
+	}
+
+	@Override
 	public float getWalkTargetValue(BlockPos pos, LevelReader worldIn) 
 	{
 		return worldIn.getBlockState(pos).isAir() ? 10.0F : 0.0F;
@@ -109,11 +118,20 @@ public class DragonflyEntity extends Animal implements FlyingAnimal
 	{
 		return true;
 	}
-	
-	 @Override
-	public boolean causeFallDamage(float distance, float damageMultiplier) 
-	{
+
+	@Override
+	public boolean causeFallDamage(float p_147187_, float p_147188_, DamageSource p_147189_) {
 		return false;
+	}
+
+	@Override
+	protected MovementEmission getMovementEmission() {
+		return MovementEmission.EVENTS;
+	}
+
+	@Override
+	public boolean isFlying() {
+		return !this.onGround;
 	}
 	 
 	@Override
@@ -126,9 +144,10 @@ public class DragonflyEntity extends Animal implements FlyingAnimal
 	{
 		return ModMathHelper.randRange(0.25F, 0.5F, random);
 	}
-		
+
+
 	@Override
-	public AgableMob getBreedOffspring(ServerLevel p_241840_1_, AgableMob p_241840_2_) 
+	public AgeableMob getBreedOffspring(ServerLevel p_241840_1_, AgeableMob p_241840_2_)
 	{
 		return ModEntityTypes.DRAGONFLY.get().create(level);
 	}
@@ -202,9 +221,10 @@ public class DragonflyEntity extends Animal implements FlyingAnimal
 			int h = BlockHelper.downRay(DragonflyEntity.this.level, DragonflyEntity.this.blockPosition(), 16);
 
 			Vec3 rotation = DragonflyEntity.this.getViewVector(0.0F);
-			
-			Vec3 airPos = RandomPos.getAboveLandPos(DragonflyEntity.this, 8, 7, 
-					rotation, 1.5707964F, 2, 1);
+
+
+			Vec3 airPos = HoverRandomPos.getPos(DragonflyEntity.this, 8, 7,
+					rotation.x, rotation.y, 1.5707964F, 2, 1);
 			
 			if (airPos != null) 
 			{
@@ -212,7 +232,16 @@ public class DragonflyEntity extends Animal implements FlyingAnimal
 				{
 					for (int i = 0; i < 8; i++) 
 					{
-						airPos = RandomPos.getAboveLandPos(DragonflyEntity.this, 16, 7, rotation, (ModMathHelper.PI2), 2, 1);
+						airPos = HoverRandomPos.getPos(
+								DragonflyEntity.this,
+								16,
+								7,
+								rotation.x,
+								rotation.z,
+								MHelper.PI2,
+								3,
+								1
+						);
 						if (airPos != null && !isInVoid(airPos)) 
 						{
 							return airPos;
@@ -226,7 +255,15 @@ public class DragonflyEntity extends Animal implements FlyingAnimal
 				}
 				return airPos;
 			}
-			return RandomPos.getAirPos(DragonflyEntity.this, 8, 4, -2, rotation, 1.5707963705062866D);
+			return AirAndWaterRandomPos.getPos(
+					DragonflyEntity.this,
+					8,
+					4,
+					-2,
+					rotation.x,
+					rotation.z,
+					1.5707963705062866D
+			);
 		}
 		
 		private boolean isInVoid(Vec3 pos) 

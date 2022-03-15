@@ -47,7 +47,7 @@ public class PlayerListMixin
 	
 	@Final
 	@Shadow
-	private RegistryAccess.RegistryHolder registryHolder;
+	private RegistryAccess.Frozen registryHolder;
 
 	@Shadow
 	private int viewDistance;

@@ -71,8 +71,8 @@ public class WoodenMaterial
 	public final RegistryObject<Block> shelf;
 	public final RegistryObject<Block> composter;
 
-	public final Tag.Named<Block> logBlockTag;
-	public final Tag.Named<Item> logItemTag;
+	public final TagKey<Block> logBlockTag;
+	public final TagKey<Item> logItemTag;
 
 	public WoodenMaterial(String name, MaterialColor woodColor, MaterialColor planksColor) 
 	{

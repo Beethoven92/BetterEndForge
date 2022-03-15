@@ -8,6 +8,7 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 
 import io.netty.util.internal.ThreadLocalRandom;
+import mod.beethoven92.betterendforge.common.init.ModTags;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Material;
@@ -23,7 +24,6 @@ import net.minecraft.world.item.DiggerItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ToolType;
 
 import net.minecraft.world.item.Item.Properties;
 
@@ -35,7 +35,7 @@ public class HammerItem extends DiggerItem
 	
 	public HammerItem(Tier tier, float attackDamage, float attackSpeed, double knockback, Properties builderIn) 
 	{
-		super(attackDamage, attackSpeed, tier, Sets.newHashSet(), builderIn.addToolType(ToolType.get("hammer"), tier.getLevel()));
+		super(attackDamage, attackSpeed, tier, ModTags.MINING_HAMMER, builderIn);
 		
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", attackDamage + tier.getAttackDamageBonus(), AttributeModifier.Operation.ADDITION));

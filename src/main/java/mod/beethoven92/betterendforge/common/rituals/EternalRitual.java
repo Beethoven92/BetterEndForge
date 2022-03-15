@@ -14,6 +14,7 @@ import mod.beethoven92.betterendforge.common.init.ModBlocks;
 import mod.beethoven92.betterendforge.common.init.ModConfiguredFeatures;
 import mod.beethoven92.betterendforge.common.teleporter.EndPortals;
 import mod.beethoven92.betterendforge.common.tileentity.EternalPedestalTileEntity;
+import net.minecraft.data.worldgen.features.EndFeatures;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -33,7 +34,6 @@ import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.data.worldgen.Features;
 import net.minecraft.server.level.ServerLevel;
 
 public class EternalRitual 
@@ -347,7 +347,7 @@ public class EternalRitual
 		
 		if (targetWorld.dimension() == Level.END) 
 		{
-			Features.END_ISLAND.place(targetWorld, targetWorld.getChunkSource().getGenerator(), new Random(basePos.asLong()), basePos.below());
+			EndFeatures.END_ISLAND.place(targetWorld, targetWorld.getChunkSource().getGenerator(), new Random(basePos.asLong()), basePos.below());
 		} 
 		else 
 		{
