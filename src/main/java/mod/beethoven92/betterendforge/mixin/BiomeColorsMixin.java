@@ -26,12 +26,12 @@ public class BiomeColorsMixin {
 	private static final int POISON_COLOR = ModMathHelper.color(92, 160, 78);
 	private static final int STREAM_COLOR = ModMathHelper.color(105, 213, 244);
 	private static final Point[] OFFSETS;
-	private static final boolean HAS_MAGNESIUM;
+	private static final boolean HAS_SODIUM;
 
 	@Inject(method = "getWaterColor", at = @At("RETURN"), cancellable = true)
 	private static void be_getWaterColor(IBlockDisplayReader world, BlockPos blockPos, CallbackInfoReturnable<Integer> info) {
 		if (ClientOptions.useSulfurWaterColor()) {
-			IBlockDisplayReader view = HAS_MAGNESIUM ? Minecraft.getInstance().world : world;
+			IBlockDisplayReader view = HAS_SODIUM ? Minecraft.getInstance().world : world;
 			Mutable mut = new Mutable();
 			mut.setY(blockPos.getY());
 			for (int i = 0; i < OFFSETS.length; i++) {
@@ -46,9 +46,9 @@ public class BiomeColorsMixin {
 
 	}
 
-	//Magnesium Compat
+	//Sodium-related mods compat
 	static {
-		HAS_MAGNESIUM = ModList.get().isLoaded("magnesium");
+		HAS_SODIUM = ModList.get().isLoaded("magnesium") || ModList.get().isLoaded("rubidium");
 
 		int index = 0;
 		OFFSETS = new Point[20];
